@@ -52,12 +52,12 @@ var p1 = new player(12, 22, 3,0);
 var tw = new Tower();
             
 function myDIx(canvas, img, PosAry, P, scale) {
-	configCanvas()
+    configCanvas()
     if (img == null) {
         
     }
     else {
-        canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] * (scale+1))+ P.PortalX, (PosAry[5] * (scale+1)) + P.PortalY, PosAry[2] * scale, PosAry[3] * scale)
+        canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] *scale)+ P.PortalX, (PosAry[5] * scale) + P.PortalY, PosAry[2] * scale, PosAry[3] * scale)
     }
     
 }
