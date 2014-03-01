@@ -158,7 +158,7 @@ player.prototype.pView = function gView(m){
     
 player.prototype.drawView = function vD() {
     
-    for (var i = 0; i < 28; i++) {
+    for (var i = 0; i < 29; i++) {
         
         switch (i) {
             
@@ -190,7 +190,7 @@ player.prototype.drawView = function vD() {
             case 25:{myDIx(ctx, getImage(this.View[15]), gfxPos[2], this, scale);};break;
             case 26:{myDIx(ctx, getImage(this.View[17]), gfxPos[1], this, scale);};break;
             case 27:{myDIx(ctx, getImage(this.View[18]), gfxPos[0], this, scale);};break;
-            //case 28:{myDIx(ctx, getImage(this.View[10]), gfxPos[0], this, 2);};break; <- Current floor pad
+            case 28:{myDIx(ctx, getImage(this.View[0]), gfxPos[28], this, scale);};break;
         }        
     } 
 };
