@@ -7,7 +7,7 @@ ctx.imageSmoothingEnabled = false;
 ctx.webkitImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
 
-var scale = 5;
+var scale = 2;
 
 var img = document.getElementById("bg");
 var background = new Array();
