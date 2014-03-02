@@ -75,3 +75,69 @@ function SpriteSheetArray(){
         }
         
     };
+    
+    function getWallDirection(d,s) {
+        
+        // d = player direction
+        // s = screen gfx position
+        
+	//I should be able to use the below in an array to work out all directions
+        //current plus direction = wall face i.e.
+        //If a wall is currently North which is a 0 + player direction say Player is facing East = 1
+        // 0 + 1 = 1 (North Wall becomes East)
+        
+       var Wall = [];
+            
+            Wall[0] = 0;
+            Wall[1] = 1;
+            Wall[2] = 2;
+            Wall[3] = 3;
+            Wall[4] = 2;                
+            Wall[5] = 1;
+            Wall[6] = 2;
+            Wall[7] = 3;
+            Wall[8] = 2;
+            Wall[9] = 2;
+            Wall[10] = 1;
+            Wall[11] = 2;
+            Wall[12] = 3;
+            Wall[13] = 2;
+            Wall[14] = 2;
+            Wall[15] = 1;
+            Wall[16] = 2;
+            Wall[17] = 3;
+            Wall[18] = 2;
+            Wall[19] = 1;
+            Wall[20] = 2;
+            Wall[21] = 1;
+            Wall[22] = 3;
+            Wall[23] = 2;
+            Wall[24] = 3;
+            Wall[25] = 2;
+            Wall[26] = 1;
+            Wall[27] = 3;
+            Wall[28] = 2;
+		            
+            Wall[s] = Wall[s] + d;
+            
+            if (Wall[s] > 3) {Wall[s] = Wall[s] - 3;}
+            
+            if (debug) {console.log (s + " = " + getDirection(Wall[s]));}
+            
+       return Wall[s];
+        
+    };
+    
+    function getDirection(n) {
+     
+        switch (n) {
+            
+            case 0:{return "North";};
+            case 1:{return "East";};
+            case 2:{return "South";};
+            case 3:{return "West";};
+        
+        }
+    };
+    
+    

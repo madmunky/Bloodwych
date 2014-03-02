@@ -160,6 +160,8 @@ player.prototype.drawView = function vD() {
     
     for (var i = 0; i < 29; i++) {
         
+        getWallDirection(p1.Rotation,i);
+        
         switch (i) {
             
             case 0:{myDIx(ctx, getImage(this.View[0]), gfxPos[28], this, scale);};break;
