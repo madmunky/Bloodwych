@@ -64,7 +64,7 @@ function SpriteSheetArray(){
         switch (CC){
             case 0:return null;break;
             case 1:return getStoneWall(Hex,d,pos,p);break;
-            case 2:return gfxWooden[0];break;
+            case 2:return getWooden(Hex,d,pos,p);break;
             case 3:return gfxMisc[0];break;
             case 4:{if (Hex.substring(1,2) === "1"){return gfxStairs[0];}
                      else {return gfxStairs[1];};break;}
@@ -79,6 +79,62 @@ function SpriteSheetArray(){
         }
         
     };
+    
+    function getWooden(HexCode,d,pos,P) {
+        
+        var b = hexToBinary(HexCode.substring(0,2));
+        
+        var s = [];
+        s[0] = b.result.substring(6,8); //North Face
+        s[1] = b.result.substring(4,6); //East Face
+        s[2] = b.result.substring(2,4); //South Face
+        s[3] = b.result.substring(0,2); //West Face
+        
+        switch (d) {
+            
+            case 0:{return bin2type(s[0]);};
+            case 1:{return bin2type(s[1]);};
+            case 2:{return bin2type(s[2]);};
+            case 3:{return bin2type(s[3]);};
+            
+        }
+        
+        return gfxWooden[0];
+        
+        function bin2type(b) {
+            
+            switch (b) {
+                
+                case 00:{return null;};
+                case 01:{return gfxWooden[0];};
+                case 10:{return gfxWooden[2];};
+                case 11:{return gfxWooden[1];};
+                
+            }            
+        }
+    }
+    
+    function hexToBinary(s) {
+        var i, k, part, ret = '';
+        // lookup table for easier conversion. '0' characters are padded for '1' to '7'
+        var lookupTable = {
+            '0': '0000', '1': '0001', '2': '0010', '3': '0011', '4': '0100',
+            '5': '0101', '6': '0110', '7': '0111', '8': '1000', '9': '1001',
+            'a': '1010', 'b': '1011', 'c': '1100', 'd': '1101',
+            'e': '1110', 'f': '1111',
+            'A': '1010', 'B': '1011', 'C': '1100', 'D': '1101',
+            'E': '1110', 'F': '1111'
+        };
+        for (i = 0; i < s.length; i += 1) {
+            if (lookupTable.hasOwnProperty(s[i])) {
+                ret += lookupTable[s[i]];
+            } else {
+                return { valid: false };
+            }
+        }
+        return { valid: true, result: ret };
+}
+    
     
     function getStoneWall(HexCode,d,pos,P) {
         

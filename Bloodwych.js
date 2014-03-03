@@ -8,7 +8,7 @@ ctx.webkitImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
 
 var scale = 2;
-var debug = true;
+var debug = false;
 
 var img = document.getElementById("bg");
 var background = new Array();
@@ -53,8 +53,6 @@ gfxFloor[0] = document.getElementById("PitDown");
 gfxFloor[1] = document.getElementById("PitUp");
 gfxFloor[2] = document.getElementById("FloorPad");
 
-//var x = 100;
-//var y = 100;
 var gfxPos = SpriteSheetArray();
 var b = 0;
 var p1 = new player(12, 22, 3,0);
