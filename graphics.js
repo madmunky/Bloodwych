@@ -48,18 +48,22 @@ function SpriteSheetArray(){
 	  
     }
     
-    function getImage(Hex){
+    function getImage(Hex,d,pos,p){
       
-      //This function will return the correct graphic to be draw for the Hex Code passed
-      //I may need to pass the Graphics Position to be drawn so I can work out which graphic
-      //to be return for each wall side.
+      // Hex = Bloodwych Hex Code
+      // d = direction of required wall (North,East,South,West)
+      // pos = Position on the screen we are drawing
+      // 
+      // This function will return the correct graphic to be draw for the Hex Code passed
+      // I may need to pass the Graphics Position to be drawn so I can work out which graphic
+      // to be return for each wall side.
       
       var CC = parseInt(Hex.substring(3),16);
       var BB = parseInt(Hex.substring(1,2),16);
       
         switch (CC){
             case 0:return null;break;
-            case 1:return gfxStone;break;
+            case 1:return getStoneWall(Hex,d,pos,p);break;
             case 2:return gfxWooden[0];break;
             case 3:return gfxMisc[0];break;
             case 4:{if (Hex.substring(1,2) === "1"){return gfxStairs[0];}
@@ -76,6 +80,67 @@ function SpriteSheetArray(){
         
     };
     
+    function getStoneWall(HexCode,d,pos,P) {
+        
+        var AA = parseInt(HexCode.substring(0, 1),16);
+        var BB = parseInt(HexCode.substring(1, 2),16);
+        var CC = parseInt(HexCode.substring(2, 3),16);
+
+        if (CC === 0) {return gfxStone;};
+
+        ctx.drawImage(gfxStone, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+
+        switch (CC) { 
+            
+            case 8:{if (d === 0) {return getWallDeco();}else {return gfxStone;};break;} //North Wall has Deco
+            case 9:{if (d === 1) {return getWallDeco();}else {return gfxStone;};break;} //East Wall has Deco
+            case 10:{if (d === 2) {return getWallDeco();}else {return gfxStone;};break;} //South Wall has Deco
+            case 11:{if (d === 3) {return getWallDeco();}else {return gfxStone;};break;} //West Wall has Deco
+            default:{console.log ("Unhandled StoneWall CC: " + CC.toString());return gfxStone;};
+                    
+        }
+        
+        function getWallDeco(){
+        
+        try{
+            if (CC >= 8) { //Wall has something on it
+                if (BB % 4 === 0) { //Shelf
+                    return gfxShelf;
+                } else if (BB % 4 === 1) { //Sign
+                    if (AA === 0 && BB === 1) { //Random Color
+                        return gfxScriptBanner;
+                    } else if (AA === 0 && BB === 5) { //Serpent Flag
+                        ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfxSerpBanner;                       
+                    } else if (AA === 0 && BB === 9) { //Dragon Flag
+                         ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfxDragonBanner;  
+                    } else if (AA === 0 && BB === 13) { //Moon Flag
+                         ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfxMoonBanner;                     
+                    } else if (AA === 1 && BB === 1) { //Choas Flag
+                         ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfxChaosBanner;
+                    } else if (BB % 4 === 1) {                        
+                        //i = bwMergeImage(GraphicsData[1][0][x],GraphicsData[1][1][x]);                   
+                    } else {
+                       // i = GraphicsData[1][0][x];
+                    }
+                } else if (BB % 4 === 2) { //Switch
+                        return gfxWallSwitch;
+                } else if (BB % 4 === 3) { //Crystal Switch
+                       return gfxGemSlot;
+                } else {
+                 return gfxStone;
+                }
+            } else {
+                return gfxStone;
+            }}catch(e){}  
+         
+        return gfxStone;
+    }
+    }
+    
     function getWallDirection(d,s) {
         
         // d = player direction
@@ -83,7 +148,7 @@ function SpriteSheetArray(){
         
 	//I should be able to use the below in an array to work out all directions
         //current plus direction = wall face i.e.
-        //If a wall is currently North which is a 0 + player direction say Player is facing East = 1
+        //If a wall is currently North which is a 0 + player direction. Say Player is facing East = 1
         // 0 + 1 = 1 (North Wall becomes East)
         
        var Wall = [];
@@ -120,7 +185,9 @@ function SpriteSheetArray(){
 		            
             Wall[s] = Wall[s] + d;
             
-            if (Wall[s] > 3) {Wall[s] = Wall[s] - 3;}
+            if (Wall[s] > 3) {
+                Wall[s] = (Wall[s] - 3) -1;
+            }
             
             if (debug) {console.log (s + " = " + getDirection(Wall[s]));}
             

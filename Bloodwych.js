@@ -26,6 +26,14 @@ var gfxFloor = [];
 
 //Load images into the Arrays
 gfxStone = document.getElementById("stoneWalls");
+gfxShelf = document.getElementById("Shelf");
+gfxSerpBanner = document.getElementById("SerpBanner");
+gfxDragonBanner = document.getElementById("DragonBanner");
+gfxMoonBanner = document.getElementById("MoonBanner");
+gfxChaosBanner = document.getElementById("ChaosBanner");
+gfxScriptBanner = document.getElementById("ScriptBanner");
+gfxWallSwitch = document.getElementById("WallSwitch");
+gfxGemSlot = document.getElementById("GemSlot");
 
 gfxWooden[0] = document.getElementById("WoodenWalls1");
 gfxWooden[1] = document.getElementById("WoodenWalls2");
@@ -53,12 +61,12 @@ var p1 = new player(12, 22, 3,0);
 var tw = new Tower();
             
 function myDIx(canvas, img, PosAry, P, scale) {
-    configCanvas()
-    if (img == null) {
+    configCanvas();
+    if (img === null) {
         
     }
     else {
-        canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] *scale)+ P.PortalX, (PosAry[5] * scale) + P.PortalY, PosAry[2] * scale, PosAry[3] * scale)
+        canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] *scale)+ P.PortalX, (PosAry[5] * scale) + P.PortalY, PosAry[2] * scale, PosAry[3] * scale);
     }
     
 }
@@ -69,9 +77,7 @@ function configCanvas() {
 	ctx.mozImageSmoothingEnabled = false;
 }
 
-
 function doKeyDown(e) {
-
 
     switch (e.keyCode)
     {
@@ -81,12 +87,11 @@ function doKeyDown(e) {
             //====================
 
         case 87:
-            clearCanvas();
-			
+            clearCanvas();			
             myDIx(ctx, img, background[b], p1, scale);
             p1.moveForward();
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView();
+            p1.drawView(p1);
             break;
 
             //====================
@@ -98,7 +103,7 @@ function doKeyDown(e) {
             myDIx(ctx, img, background[b], p1, scale);
             p1.moveBackwards();
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView();
+            p1.drawView(p1);
             break;
 
             //====================
@@ -109,7 +114,7 @@ function doKeyDown(e) {
             myDIx(ctx, img, background[b], p1, scale);
             p1.moveLeft();
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView();
+            p1.drawView(p1);
             break;
 
             //====================
@@ -120,7 +125,7 @@ function doKeyDown(e) {
             myDIx(ctx, img, background[b], p1, scale);
             p1.moveRight();
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView();
+            p1.drawView(p1);
             break;
         
             //====================
@@ -132,7 +137,7 @@ function doKeyDown(e) {
             myDIx(ctx, img, background[b], p1, scale);
             p1.RotatePlayer(0);
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView();
+            p1.drawView(p1);
             break;
             
             //====================
@@ -143,12 +148,12 @@ function doKeyDown(e) {
             myDIx(ctx, img, background[b], p1, scale);
             p1.RotatePlayer(1);
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView();
+            p1.drawView(p1);
             break;
     }
 
 
-    if (b == 0) {
+    if (b === 0) {
         b = 1;
     }
     else {

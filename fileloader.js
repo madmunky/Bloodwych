@@ -41,7 +41,7 @@ function mapdate(evt) {
         
         myDIx(ctx, img, background[b], p1, scale);
         p1.pView(tw.Levels[p1.level].Map);
-        p1.drawView();
+        p1.drawView(p1);
             
         ctx.font = "15px Calibri";    
         ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,50);    
@@ -89,7 +89,7 @@ function StringBuilder() {
     };
 
     this.isEmpty = function() {
-        return strings.length == 0;
+        return strings.length === 0;
     };
 
     this.toString = function() {
@@ -100,7 +100,7 @@ function StringBuilder() {
     {
         if (!defined(string))
             return "";
-        if (getType(string) != getType(new String()))
+        if (getType(string) !== getType(new String()))
             return String(string);
         return string;
     };
@@ -108,7 +108,7 @@ function StringBuilder() {
     var defined = function(el)
     {
         // Changed per Ryan O'Hara's comment:
-        return el != null && typeof (el) != "undefined";
+        return el !== null && typeof (el) !== "undefined";
     };
 
     var getType = function(instance)

@@ -156,43 +156,43 @@ player.prototype.pView = function gView(m){
         
     };
     
-player.prototype.drawView = function vD() {
+player.prototype.drawView = function vD(p) {
     
     for (var i = 0; i < 29; i++) {
         
-        getWallDirection(p1.Rotation,i);
+        getWallDirection(p.Rotation,i);
         
         switch (i) {
             
-            case 0:{myDIx(ctx, getImage(this.View[0]), gfxPos[28], this, scale);};break;
-            case 1:{myDIx(ctx, getImage(this.View[0]), gfxPos[27], this, scale);};break;
-            case 2:{myDIx(ctx, getImage(this.View[1]), gfxPos[26], this, scale);};break;
-            case 3:{myDIx(ctx, getImage(this.View[1]), gfxPos[25], this, scale);};break;
-            case 4:{myDIx(ctx, getImage(this.View[5]), gfxPos[24], this, scale);};break;                
-            case 5:{myDIx(ctx, getImage(this.View[2]), gfxPos[23], this, scale);};break;
-            case 6:{myDIx(ctx, getImage(this.View[2]), gfxPos[22], this, scale);};break;
-            case 7:{myDIx(ctx, getImage(this.View[3]), gfxPos[21], this, scale);};break;
-            case 8:{myDIx(ctx, getImage(this.View[3]), gfxPos[20], this, scale);};break;
-            case 9:{myDIx(ctx, getImage(this.View[6]), gfxPos[19], this, scale);};break;
-            case 10:{myDIx(ctx, getImage(this.View[7]), gfxPos[18], this, scale);};break;
-            case 11:{myDIx(ctx, getImage(this.View[7]), gfxPos[17], this, scale);};break;
-            case 12:{myDIx(ctx, getImage(this.View[4]), gfxPos[16], this, scale);};break;
-            case 13:{myDIx(ctx, getImage(this.View[8]), gfxPos[15], this, scale);};break;
-            case 14:{myDIx(ctx, getImage(this.View[8]), gfxPos[14], this, scale);};break;
-            case 15:{myDIx(ctx, getImage(this.View[10]), gfxPos[13], this, scale);};break;
-            case 16:{myDIx(ctx, getImage(this.View[10]), gfxPos[12], this, scale);};break;
-            case 17:{myDIx(ctx, getImage(this.View[9]), gfxPos[11], this, scale);};break;
-            case 18:{myDIx(ctx, getImage(this.View[11]), gfxPos[10], this, scale);};break;
-            case 19:{myDIx(ctx, getImage(this.View[11]), gfxPos[9], this, scale);};break;
-            case 20:{myDIx(ctx, getImage(this.View[13]), gfxPos[8], this, scale);};break;
-            case 21:{myDIx(ctx, getImage(this.View[13]), gfxPos[7], this, scale);};break;
-            case 22:{myDIx(ctx, getImage(this.View[12]), gfxPos[6], this, scale);};break;
-            case 23:{myDIx(ctx, getImage(this.View[14]), gfxPos[5], this, scale);};break;
-            case 24:{myDIx(ctx, getImage(this.View[14]), gfxPos[4], this, scale);};break;
-            case 25:{myDIx(ctx, getImage(this.View[16]), gfxPos[3], this, scale);};break;
-            case 26:{myDIx(ctx, getImage(this.View[15]), gfxPos[2], this, scale);};break;
-            case 27:{myDIx(ctx, getImage(this.View[17]), gfxPos[1], this, scale);};break;
-            case 28:{myDIx(ctx, getImage(this.View[18]), gfxPos[0], this, scale);};break;
+            case 0:{myDIx(ctx, getImage(this.View[0],getWallDirection(p.Rotation,28),28,p), gfxPos[28], this, scale);};break;
+            case 1:{myDIx(ctx, getImage(this.View[0],getWallDirection(p.Rotation,27),27,p), gfxPos[27], this, scale);};break;
+            case 2:{myDIx(ctx, getImage(this.View[1],getWallDirection(p.Rotation,26),26,p), gfxPos[26], this, scale);};break;
+            case 3:{myDIx(ctx, getImage(this.View[1],getWallDirection(p.Rotation,25),25,p), gfxPos[25], this, scale);};break;
+            case 4:{myDIx(ctx, getImage(this.View[5],getWallDirection(p.Rotation,24),24,p), gfxPos[24], this, scale);};break;                
+            case 5:{myDIx(ctx, getImage(this.View[2],getWallDirection(p.Rotation,23),23,p), gfxPos[23], this, scale);};break;
+            case 6:{myDIx(ctx, getImage(this.View[2],getWallDirection(p.Rotation,22),22,p), gfxPos[22], this, scale);};break;
+            case 7:{myDIx(ctx, getImage(this.View[3],getWallDirection(p.Rotation,21),21,p), gfxPos[21], this, scale);};break;
+            case 8:{myDIx(ctx, getImage(this.View[3],getWallDirection(p.Rotation,20),20,p), gfxPos[20], this, scale);};break;
+            case 9:{myDIx(ctx, getImage(this.View[6],getWallDirection(p.Rotation,19),19,p), gfxPos[19], this, scale);};break;
+            case 10:{myDIx(ctx, getImage(this.View[7],getWallDirection(p.Rotation,18),18,p), gfxPos[18], this, scale);};break;
+            case 11:{myDIx(ctx, getImage(this.View[7],getWallDirection(p.Rotation,17),17,p), gfxPos[17], this, scale);};break;
+            case 12:{myDIx(ctx, getImage(this.View[4],getWallDirection(p.Rotation,16),16,p), gfxPos[16], this, scale);};break;
+            case 13:{myDIx(ctx, getImage(this.View[8],getWallDirection(p.Rotation,15),15,p), gfxPos[15], this, scale);};break;
+            case 14:{myDIx(ctx, getImage(this.View[8],getWallDirection(p.Rotation,14),14,p), gfxPos[14], this, scale);};break;
+            case 15:{myDIx(ctx, getImage(this.View[10],getWallDirection(p.Rotation,13),13,p), gfxPos[13], this, scale);};break;
+            case 16:{myDIx(ctx, getImage(this.View[10],getWallDirection(p.Rotation,12),12,p), gfxPos[12], this, scale);};break;
+            case 17:{myDIx(ctx, getImage(this.View[9],getWallDirection(p.Rotation,11),11,p), gfxPos[11], this, scale);};break;
+            case 18:{myDIx(ctx, getImage(this.View[11],getWallDirection(p.Rotation,10),10,p), gfxPos[10], this, scale);};break;
+            case 19:{myDIx(ctx, getImage(this.View[11],getWallDirection(p.Rotation,9),9,p), gfxPos[9], this, scale);};break;
+            case 20:{myDIx(ctx, getImage(this.View[13],getWallDirection(p.Rotation,8),8,p), gfxPos[8], this, scale);};break;
+            case 21:{myDIx(ctx, getImage(this.View[13],getWallDirection(p.Rotation,7),7,p), gfxPos[7], this, scale);};break;
+            case 22:{myDIx(ctx, getImage(this.View[12],getWallDirection(p.Rotation,6),6,p), gfxPos[6], this, scale);};break;
+            case 23:{myDIx(ctx, getImage(this.View[14],getWallDirection(p.Rotation,5),5,p), gfxPos[5], this, scale);};break;
+            case 24:{myDIx(ctx, getImage(this.View[14],getWallDirection(p.Rotation,4),4,p), gfxPos[4], this, scale);};break;
+            case 25:{myDIx(ctx, getImage(this.View[16],getWallDirection(p.Rotation,3),3,p), gfxPos[3], this, scale);};break;
+            case 26:{myDIx(ctx, getImage(this.View[15],getWallDirection(p.Rotation,2),2,p), gfxPos[2], this, scale);};break;
+            case 27:{myDIx(ctx, getImage(this.View[17],getWallDirection(p.Rotation,1),1,p), gfxPos[1], this, scale);};break;
+            case 28:{myDIx(ctx, getImage(this.View[18],getWallDirection(p.Rotation,0),0,p), gfxPos[0], this, scale);};break;
             
         }        
     } 
