@@ -18,8 +18,8 @@ function player(posX,posY,level,rotation)
     this.Y=posY;
     this.level=level;
     this.Rotation= rotation;
-    this.PortalX=100;
-    this.PortalY=100;
+    this.PortalX=0;
+    this.PortalY=0;
     this.View = [];
     
 }
