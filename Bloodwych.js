@@ -8,9 +8,12 @@ ctx.webkitImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var scale = 2;
 var debug = false;
 =======
+=======
+>>>>>>> 614ab16a48931e705725abb57ed756f744f21e22
 var scale = 6;
 var debug = true;
 >>>>>>> 614ab16a48931e705725abb57ed756f744f21e22
