@@ -41,10 +41,10 @@ function mapdate(evt) {
         
         myDIx(ctx, img, background[b], p1, scale);
         p1.pView(tw.Levels[p1.level].Map);
-        p1.drawView(p1);
+        drawPlayersView(p1);
             
-        ctx.font = "15px Calibri";    
-        ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,50);    
+                ctx.font = "bold 20px Calibri";
+                //ctx.fillText(getDirection(Wall[s]),10,265);   
 
     }
     

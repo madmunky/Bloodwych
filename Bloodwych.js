@@ -7,8 +7,7 @@ ctx.imageSmoothingEnabled = false;
 ctx.webkitImageSmoothingEnabled = false;
 ctx.mozImageSmoothingEnabled = false;
 
-
-var scale = 2;
+var scale = 3;
 var debug = false;
 
 
@@ -61,7 +60,7 @@ var p1 = new player(12, 22, 3,0);
 var tw = new Tower();
             
 function myDIx(canvas, img, PosAry, P, scale) {
-    configCanvas();
+    
     if (img === null) {
         
     }
@@ -87,11 +86,13 @@ function doKeyDown(e) {
             //====================
 
         case 87:
-            clearCanvas();			
+            clearCanvas();
+            configCanvas();
             myDIx(ctx, img, background[b], p1, scale);
             p1.moveForward();
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView(p1);
+            //p1.drawView(p1);
+            drawPlayersView(p1);
             break;
 
             //====================
@@ -100,10 +101,12 @@ function doKeyDown(e) {
             
         case 83:
             clearCanvas();
+            configCanvas();
             myDIx(ctx, img, background[b], p1, scale);
             p1.moveBackwards();
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView(p1);
+            drawPlayersView(p1);
+            //p1.drawView(p1);
             break;
 
             //====================
@@ -111,10 +114,12 @@ function doKeyDown(e) {
             //====================
         case 65:
             clearCanvas();
+            configCanvas();
             myDIx(ctx, img, background[b], p1, scale);
             p1.moveLeft();
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView(p1);
+            drawPlayersView(p1);
+            //p1.drawView(p1);
             break;
 
             //====================
@@ -122,10 +127,12 @@ function doKeyDown(e) {
             //====================
         case 68:
             clearCanvas();
+            configCanvas();
             myDIx(ctx, img, background[b], p1, scale);
             p1.moveRight();
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView(p1);
+            drawPlayersView(p1);
+            //p1.drawView(p1);
             break;
         
             //====================
@@ -133,11 +140,12 @@ function doKeyDown(e) {
             //====================
         case 69:
             clearCanvas();
-            //x = x + 1;
+            configCanvas();
             myDIx(ctx, img, background[b], p1, scale);
             p1.RotatePlayer(0);
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView(p1);
+            drawPlayersView(p1);
+            //p1.drawView(p1);
             break;
             
             //====================
@@ -145,10 +153,13 @@ function doKeyDown(e) {
             //====================
         case 81:
             clearCanvas();
+            configCanvas();
             myDIx(ctx, img, background[b], p1, scale);
             p1.RotatePlayer(1);
             p1.pView(tw.Levels[p1.level].Map);
-            p1.drawView(p1);
+            drawPlayersView(p1);
+            //p1.drawView(p1);
+            
             break;
     }
 
@@ -160,8 +171,8 @@ function doKeyDown(e) {
         b = 0;
     }
 
-    ctx.font = "15px Calibri";
-    ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,50);
+    ctx.font = "bold 20px Calibri";
+    ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
 
 }
 

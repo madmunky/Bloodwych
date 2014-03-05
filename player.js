@@ -1,6 +1,18 @@
 function player(posX,posY,level,rotation)
 {
-     var Direction = {
+       
+    
+    this.X=posX;
+    this.Y=posY;
+    this.level=level;
+    this.Rotation= rotation;
+    this.PortalX=0;
+    this.PortalY=0;
+    this.View = [];
+    
+}
+
+var Direction = {
         North: 0,
         East: 1,
         South: 2,
@@ -12,17 +24,6 @@ function player(posX,posY,level,rotation)
             3: {name: "West", value: 3}
         }
     };
-    
-    
-    this.X=posX;
-    this.Y=posY;
-    this.level=level;
-    this.Rotation= rotation;
-    this.PortalX=0;
-    this.PortalY=0;
-    this.View = [];
-    
-}
 
 player.prototype.moveForward = function mF() {
 
@@ -160,7 +161,7 @@ player.prototype.drawView = function vD(p) {
     
     for (var i = 0; i < 29; i++) {
         
-        getWallDirection(p.Rotation,i);
+        //getWallDirection(p.Rotation,i);
         
         switch (i) {
             
@@ -192,7 +193,7 @@ player.prototype.drawView = function vD(p) {
             case 25:{myDIx(ctx, getImage(this.View[16],getWallDirection(p.Rotation,3),3,p), gfxPos[3], this, scale);};break;
             case 26:{myDIx(ctx, getImage(this.View[15],getWallDirection(p.Rotation,2),2,p), gfxPos[2], this, scale);};break;
             case 27:{myDIx(ctx, getImage(this.View[17],getWallDirection(p.Rotation,1),1,p), gfxPos[1], this, scale);};break;
-            case 28:{myDIx(ctx, getImage(this.View[18],getWallDirection(p.Rotation,0),0,p), gfxPos[0], this, scale);};break;
+            //case 28:{myDIx(ctx, getImage(this.View[18],getWallDirection(p.Rotation,0),0,p), gfxPos[0], this, scale);};break;
             
         }        
     } 

@@ -5,7 +5,7 @@ function SpriteSheetArray(){
       
       var ImageArray = new Array();
 	
-      ImageArray[0] = new Array(0, 0, 15, 76, 0, 0);
+      ImageArray[0] = new Array(15, 0, 98, 76, 15, 0);
       ImageArray[1] = new Array(0, 0, 15, 76, 0, 0);
       ImageArray[2] = new Array(15, 0, 98, 76, 15, 0);
       ImageArray[3] = new Array(113, 0, 15, 76, 113, 0);
@@ -64,7 +64,7 @@ function SpriteSheetArray(){
         switch (CC){
             case 0:return null;break;
             case 1:return getStoneWall(Hex,d,pos,p);break;
-            case 2:return getWooden(Hex,d,pos,p);break;
+            case 2:return getWoodenObject(Hex,d,pos,p);break;
             case 3:return gfxMisc[0];break;
             case 4:{if (Hex.substring(1,2) === "1"){return gfxStairs[0];}
                      else {return gfxStairs[1];};break;}
@@ -80,15 +80,42 @@ function SpriteSheetArray(){
         
     };
     
-    function getWooden(HexCode,d,pos,P) {
+    function getWoodenObject(HexCode,d,pos,P) {
         
         var b = hexToBinary(HexCode.substring(0,2));
-        
         var s = [];
         s[0] = b.result.substring(6,8); //North Face
         s[1] = b.result.substring(4,6); //East Face
         s[2] = b.result.substring(2,4); //South Face
-        s[3] = b.result.substring(0,2); //West Face
+        s[3] = b.result.substring(0,2);
+//        switch (P.Rotation) {
+//            
+//            case 0:{    
+//                        s[0] = b.result.substring(6,8); //North Face
+//                        s[1] = b.result.substring(4,6); //East Face
+//                        s[2] = b.result.substring(2,4); //South Face
+//                        s[3] = b.result.substring(0,2); //West Face
+//                    }break;
+//            case 1: {   
+//                        s[0] = b.result.substring(6,8); //North Face
+//                        s[1] = b.result.substring(4,6); //East Face
+//                        s[2] = b.result.substring(2,4); //South Face
+//                        s[3] = b.result.substring(0,2); //West Face                        
+//                }break;
+//            case 2: {   
+//                        s[2] = b.result.substring(6,8); //North Face
+//                        s[3] = b.result.substring(4,6); //East Face
+//                        s[0] = b.result.substring(2,4); //South Face
+//                        s[1] = b.result.substring(0,2); //West Face                        
+//                }break;
+//            case 3: {   
+//                        s[0] = b.result.substring(6,8); //North Face
+//                        s[1] = b.result.substring(4,6); //East Face
+//                        s[2] = b.result.substring(2,4); //South Face
+//                        s[3] = b.result.substring(0,2); //West Face                        
+//                }break;
+//            
+//        }
         
         switch (d) {
             
@@ -96,7 +123,7 @@ function SpriteSheetArray(){
             case 1:{return bin2type(s[1]);};
             case 2:{return bin2type(s[2]);};
             case 3:{return bin2type(s[3]);};
-            
+            default:{return null;};
         }
         
         return gfxWooden[0];
@@ -105,11 +132,11 @@ function SpriteSheetArray(){
             
             switch (b) {
                 
-                case 00:{return null;};
-                case 01:{return gfxWooden[0];};
-                case 10:{return gfxWooden[2];};
-                case 11:{return gfxWooden[1];};
-                
+                case "00":{return null;};
+                case "01":{return gfxWooden[0];};
+                case "10":{return gfxWooden[2];};
+                case "11":{return gfxWooden[1];};
+                default:{return null;};
             }            
         }
     }
@@ -134,8 +161,7 @@ function SpriteSheetArray(){
         }
         return { valid: true, result: ret };
 }
-    
-    
+        
     function getStoneWall(HexCode,d,pos,P) {
         
         var AA = parseInt(HexCode.substring(0, 1),16);
@@ -145,16 +171,18 @@ function SpriteSheetArray(){
         if (CC === 0) {return gfxStone;};
 
         ctx.drawImage(gfxStone, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-
+       
         switch (CC) { 
             
-            case 8:{if (d === 0) {return getWallDeco();}else {return gfxStone;};break;} //North Wall has Deco
-            case 9:{if (d === 1) {return getWallDeco();}else {return gfxStone;};break;} //East Wall has Deco
-            case 10:{if (d === 2) {return getWallDeco();}else {return gfxStone;};break;} //South Wall has Deco
-            case 11:{if (d === 3) {return getWallDeco();}else {return gfxStone;};break;} //West Wall has Deco
+            case 8:{if (d === 0) {return getWallDeco();}break;} //North Wall has Deco
+            case 9:{if (d === 1) {return getWallDeco();}break;} //East Wall has Deco
+            case 10:{if (d === 2) {return getWallDeco();}break;} //South Wall has Deco
+            case 11:{if (d === 3) {return getWallDeco();}break;} //West Wall has Deco
             default:{console.log ("Unhandled StoneWall CC: " + CC.toString());return gfxStone;};
                     
         }
+        
+        return gfxStone;
         
         function getWallDeco(){
         
@@ -172,7 +200,7 @@ function SpriteSheetArray(){
                          ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxDragonBanner;  
                     } else if (AA === 0 && BB === 13) { //Moon Flag
-                         ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxMoonBanner;                     
                     } else if (AA === 1 && BB === 1) { //Choas Flag
                          ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
@@ -247,6 +275,11 @@ function SpriteSheetArray(){
             
             if (debug) {console.log (s + " = " + getDirection(Wall[s]));}
             
+            if (s === 28) {
+                ctx.font = "bold 20px Calibri";
+                ctx.fillText(getDirection(Wall[s]),10,265);
+            }
+            
        return Wall[s];
         
     };
@@ -262,5 +295,140 @@ function SpriteSheetArray(){
         
         }
     };
+    
+    function drawPlayersView(p) {
+        
+        // p = Player
+        
+        // What we do now is take the 18 Blocks which make up the players view
+        // We can then make a virtual cube of 4 sides which could possibly be
+        // drawn for each block, if the block is a Wall or Wooden object which
+        // has 4 sides we draw each of the sides, if it is not a Wooden object
+        // or Wall we just draw a single image.
+        
+        for (x = 0;x < 19;x++){
+          
+          var BlockType = parseInt(p.View[x].substring(3,4));
+          
+        switch (x){
+            case 0:{
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,28),28,p), gfxPos[28], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,27),27,p), gfxPos[27], p, scale);
+            };break;
+            case 1:{
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,26),26,p), gfxPos[26], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,25),25,p), gfxPos[25], p, scale);
+            };break;
+            case 2:{
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,27),27,p), gfxPos[27], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,23),23,p), gfxPos[23], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,22),22,p), gfxPos[22], p, scale);
+            };break;
+            case 3:{
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,26),26,p), gfxPos[26], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,21),21,p), gfxPos[21], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,20),20,p), gfxPos[20], p, scale);                
+            };break;
+            case 4:{
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,22),22,p), gfxPos[22], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,21),21,p), gfxPos[21], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,16),16,p), gfxPos[16], p, scale);                
+            };break;
+            case 5:{
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,28),28,p), gfxPos[28], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,24),24,p), gfxPos[24], p, scale);
+            };break;
+            case 6:{
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,25),25,p), gfxPos[25], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,19),19,p), gfxPos[19], p, scale);
+            };break;    
+            case 7:{
+                    if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,23),23,p), gfxPos[23], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,24),24,p), gfxPos[24], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,17),17,p), gfxPos[17], p, scale);
+                    }
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,18),18,p), gfxPos[18], p, scale);                
+            };break;
+            case 8:{
+                    if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,20),20,p), gfxPos[20], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,19),19,p), gfxPos[19], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,15),15,p), gfxPos[15], p, scale);
+                    }
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,14),14,p), gfxPos[14], p, scale);              
+            };break;
+            case 9:{
+                    if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,17),17,p), gfxPos[17], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,16),16,p), gfxPos[16], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,15),15,p), gfxPos[15], p, scale);
+                    }
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,11),11,p), gfxPos[11], p, scale);                               
+            };break;
+            case 10:{
+                    if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,18),18,p), gfxPos[18], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,12),12,p), gfxPos[12], p, scale);
+                    }
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,13),13,p), gfxPos[13], p, scale);                
+            };break;
+            case 11:{
+                    if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,14),14,p), gfxPos[14], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,10),10,p), gfxPos[10], p, scale);
+                    }
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,9),9,p), gfxPos[9], p, scale);
+            };break;
+            case 12:{
+                     if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,12),12,p), gfxPos[12], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,11),11,p), gfxPos[11], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,10),10,p), gfxPos[10], p, scale);                
+                     }
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,6),6,p), gfxPos[6], p, scale);     
+            };break;
+            case 13:{
+                    if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,13),13,p), gfxPos[13], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,7),7,p), gfxPos[7], p, scale);                        
+                    }                    
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,8),8,p), gfxPos[8], p, scale);               
+                    
+            };break;
+            case 14:{
+                    if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,9),9,p), gfxPos[9], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,5),5,p), gfxPos[5], p, scale);
+                    }
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,4),4,p), gfxPos[4], p, scale);               
+                    
+            };break;
+            case 15:{
+                    if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,6),6,p), gfxPos[6], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,7),7,p), gfxPos[7], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,5),5,p), gfxPos[5], p, scale);
+                    }                    
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,2),2,p), gfxPos[2], p, scale);
+                   
+            };break;
+            case 16:{
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,3),3,p), gfxPos[3], p, scale);
+            };break;
+            case 17:{
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,1),1,p), gfxPos[1], p, scale);
+            };break;
+            case 18:{
+              if (BlockType === 1 || BlockType === 2) {
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,1),1,p), gfxPos[1], p, scale);
+                        myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,3),3,p), gfxPos[3], p, scale);                                               
+                    }                    
+                        //myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,2),2,p), gfxPos[2], p, scale);
+            };break;
+         }
+    }
+        
+    }
     
     

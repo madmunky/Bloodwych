@@ -4,6 +4,15 @@
  * and open the template in the editor.
  */
 
+bw.direction = {
+    North : 0,
+    East : 1,
+    South : 2,
+    West : 3
+}
+
+
+
 function bwObject(Hex) {
     
     createSides();
