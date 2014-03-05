@@ -79,17 +79,7 @@ function SpriteSheetArray(){
         }
         
     };
-    
-    function getWoodenObject(HexCode,p) {
-        
-        
-        
-
-
-        
-        
-    }
-    
+      
     function bin2type(b) {
             
             switch (b) {
@@ -438,21 +428,21 @@ function SpriteSheetArray(){
                         };break;
                 case 1:{                        
                         if (BlockSides[x][0] > -1){myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][0]], p, scale);}
-                        if (BlockSides[x][1] > -1){myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][1]], p, scale);}
-                        if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][2]], p, scale);}
+                        if (BlockSides[x][1] > -1){myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][1]], p, scale);}                        
                         if (BlockSides[x][3] > -1){myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][3]], p, scale);}
+                        if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][2]], p, scale);}
                         };break;
                 case 2:{                        
                         if (BlockSides[x][0] > -1){myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][0]], p, scale);}
                         if (BlockSides[x][1] > -1){myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][1]], p, scale);}
-                        if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][2]], p, scale);}
                         if (BlockSides[x][3] > -1){myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][3]], p, scale);}
+                        if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][2]], p, scale);}
                         };break;
                 case 3:{                        
                         if (BlockSides[x][0] > -1){myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][0]], p, scale);}
                         if (BlockSides[x][1] > -1){myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][1]], p, scale);}
-                        if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][2]], p, scale);}
                         if (BlockSides[x][3] > -1){myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][3]], p, scale);}
+                        if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][2]], p, scale);}
                         };break;
                 }
     }
