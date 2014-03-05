@@ -291,11 +291,11 @@ function SpriteSheetArray(){
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,16),16,p), gfxPos[16], p, scale);                
                 };break;
                 case 5:{
-                    myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,28),28,p), gfxPos[28], p, scale);
+                   // myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,28),28,p), gfxPos[28], p, scale);
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,24),24,p), gfxPos[24], p, scale);
                 };break;
                 case 6:{
-                    myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,25),25,p), gfxPos[25], p, scale);
+                  //  myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,25),25,p), gfxPos[25], p, scale);
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,19),19,p), gfxPos[19], p, scale);
                 };break;    
                 case 7:{
