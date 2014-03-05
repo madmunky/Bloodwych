@@ -4,8 +4,12 @@
 
 	<HEADER>
 		<P>Bloodwych</P>
+                <P>Move: Q,W,E,A,S,D</P>
+                <P>Change Level: T,G</P>
+                <P>Change Tower: L</P>
 	</HEADER>
-
+        <script src="jquery-2.1.0.js"></script>
+        
 	<img id="bg" src="images/back.png" style="display:none">
 	<img id="stoneWalls" src="images/screen1.png" style="display:none">
         <img id="WoodenWalls1" src="images/screen2.png" style="display:none">
@@ -30,10 +34,10 @@
         <img id="FloorPad" src="images/screen21.png" style="display:none">
         <img id="GemSlot" src="images/screen22.png" style="display:none">
         
-        <input type="file" id="files" name="files[]" multiple />
+        
 	
 	<SECTION style="width: 800px;">
-		<CANVAS WIDTH="800" HEIGHT="600" ID="gamePort" tabindex="0" style="-ms-interpolation-mode: nearest-neighbor;">
+		<CANVAS WIDTH="800" HEIGHT="300" ID="gamePort" tabindex="0" style="-ms-interpolation-mode: nearest-neighbor;">
 			Canvas tag not supported
 		</CANVAS>
 	</SECTION>
@@ -46,10 +50,8 @@
         
 	<SCRIPT>
 		var canvas = document.getElementById("gamePort");
-		canvas.addEventListener('keydown', doKeyDown, true);
-                window.onload = files.addEventListener('change', function(e) {
-                handleFileSelect(e);
-    });
+		canvas.addEventListener('keydown', doKeyDown, true);                
+   
 	</SCRIPT>
 
 	</BODY>

@@ -1,3 +1,28 @@
+$(document).ready(function() {
+  GetDataView("http://bloodwych.co.uk/bwhtml/MOD0.MAP",mapdate);
+  //GetDataView("http://localhost:8383/Bloodwych%20HTML/Bloodwych/maps/MOD0.MAP",mapdate);
+});
+
+ function GetDataView(file_name, callback){
+
+        var xmlhttp = new XMLHttpRequest();
+
+        //var data_view = [];
+
+        xmlhttp.onreadystatechange= function(){
+            if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete"){
+
+              //data_view = new DataView(this.response);   //DataView is not defined here
+              callback(this.response);
+
+             }
+        };
+
+        xmlhttp.open("GET", file_name,true);
+        xmlhttp.responseType = "arraybuffer";
+        xmlhttp.send();
+    }
+
 function handleFileSelect(evt) {
     
     var files = evt.target.files; // FileList object
@@ -5,13 +30,14 @@ function handleFileSelect(evt) {
     var reader = new FileReader();
     reader.readAsArrayBuffer(file);
     reader.onloadend = mapdate;
-
+    }
+    
 function mapdate(evt) {
         
         //Function to read the orginal Bloodwych PC map data and put it into an array of
         //hex codes so we can convert back to objects ingame.
         
-        var uInt8Array = new Uint8Array(evt.target.result);
+        var uInt8Array = new Uint8Array(evt);
 
         //The first part of the map files contains to the data about how many levels are stored
         //in the tower file and the Width,Height,OffsetX,OffsetY so the levels can line up correctly
@@ -42,13 +68,16 @@ function mapdate(evt) {
         myDIx(ctx, img, background[b], p1, scale);
         p1.pView(tw.Levels[p1.level].Map);
         drawPlayersView(p1);
-            
-                ctx.font = "bold 20px Calibri";
-                //ctx.fillText(getDirection(Wall[s]),10,265);   
-
+        
+        myDIx(ctx, img, background[b], p2, scale);
+        p2.pView(tw.Levels[p2.level].Map);
+        drawPlayersView(p2);
+        
+    
+    
     }
     
-}
+
 
 function decimalToHex(d) {
     var hex = Number(d).toString(16);

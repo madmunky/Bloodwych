@@ -7,7 +7,7 @@
 	
       ImageArray[0] = new Array(15, 0, 98, 76, 15, 0);
       ImageArray[1] = new Array(0, 0, 15, 76, 0, 0);
-      ImageArray[2] = new Array(15, 0, 98, 76, 14, 0);
+      ImageArray[2] = new Array(15, 0, 98, 76, 15, 0);
       ImageArray[3] = new Array(113, 0, 15, 76, 113, 0);
 
       ImageArray[4] = new Array(128, 0, 15, 76, 0, 0);
@@ -65,7 +65,7 @@
             case 0:return null;break;
             case 1:return getStoneWall(Hex,d,pos,p);break;
             case 2:return getWoodenObject(Hex,d,pos,p);break;
-            case 3:return gfxMisc[0];break;
+            case 3:return getMiscObject(BB);break;
             case 4:{if (Hex.substring(1,2) === "1"){return gfxStairs[0];}
                      else {return gfxStairs[1];};break;}
             case 5:{if (BB%4 === 2 || BB%4 === 3) {return gfxDoor[1];}else{return gfxDoor[0];}}break;
@@ -75,11 +75,22 @@
                     else if (BB % 4 === 2) {return gfxFloor[2];} //Green Pad
                     else if (BB % 4 === 3) {return null;} //Blank space
                     else {return null;}} //Default blank space
-            case 7:return gfxUnknown;break;                
+            case 7:return null;break;                
         }
         
     };
-      
+    
+    function getMiscObject(BB){
+                
+         switch (BB) {
+            case 0: //Return a Bed
+                return gfxMisc[1];                
+            case 1: //Return a Piller
+                return gfxMisc[0];   
+            default: return gfxMisc[0];                
+        }
+    }
+        
     function bin2type(b) {
             
             switch (b) {
@@ -142,7 +153,8 @@
                 if (BB % 4 === 0) { //Shelf
                     return gfxShelf;
                 } else if (BB % 4 === 1) { //Sign
-                    if (AA === 0 && BB === 1) { //Random Color
+                    if (BB === 1) { //Random Color
+                        ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxScriptBanner;
                     } else if (AA === 0 && BB === 5) { //Serpent Flag
                         ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
@@ -419,7 +431,14 @@
 }
     
     function drawWoodenObject(p,x) {
-               
+          
+        // p = Player
+        // x = Current Block being drawn
+        
+        //We create an array of all the sides for each 18 blocks
+        //because wooden walls have 4 sides me need to loop though them all
+        //and return the correct wall depending on the players rotation
+        
          var BlockSides = [];
          
             BlockSides[0] = [-1,-1,28,27];

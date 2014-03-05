@@ -10,7 +10,8 @@ ctx.mozImageSmoothingEnabled = false;
 var scale = 3;
 var debug = false;
 
-
+var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP"];
+var CurrentMap = 0;
 var img = document.getElementById("bg");
 var background = new Array();
 background[0] = new Array(0, 0, 128, 76, 0, 0);
@@ -56,7 +57,8 @@ gfxFloor[2] = document.getElementById("FloorPad");
 
 var gfxPos = SpriteSheetArray();
 var b = 0;
-var p1 = new player(12, 22, 3,0);
+var p1 = new player(12, 22, 3,0,0,0);
+var p2 = new player(14,22,3,0,0,350);
 var tw = new Tower();
             
 function myDIx(canvas, img, PosAry, P, scale) {
@@ -80,6 +82,52 @@ function doKeyDown(e) {
 
     switch (e.keyCode)
     {
+        //===============
+        // THE L KEY
+        //===============
+        
+        case 76: {
+            tw = new Tower();
+            CurrentMap = CurrentMap + 1;
+            if (CurrentMap > Maps.length -1){
+                CurrentMap = 0;
+            }
+            GetDataView("http://bloodwych.co.uk/bwhtml/maps/"+Maps[CurrentMap]+".MAP",mapdate);            
+            //GetDataView("http://localhost:8383/Bloodwych%20HTML/Bloodwych/maps/"+Maps[CurrentMap]+".MAP",mapdate);            
+            break; 
+        }
+        
+        
+        //===============
+        // THE T KEY
+        //===============
+        
+        case 84: {
+            clearCanvas();
+            configCanvas();
+            myDIx(ctx, img, background[b], p1, scale);
+            p1.ChangeUpLevel();
+            p1.pView(tw.Levels[p1.level].Map);
+            //p1.drawView(p1);
+            drawPlayersView(p1);
+            break; 
+        }
+        
+        //===============
+        // THE G KEY
+        //===============
+        
+        case 71: {
+            clearCanvas();
+            configCanvas();
+            myDIx(ctx, img, background[b], p1, scale);
+            p1.ChangeDownLevel();
+            p1.pView(tw.Levels[p1.level].Map);
+            //p1.drawView(p1);
+            drawPlayersView(p1);
+            break;   
+        }
+        
         
             //====================
             //	THE W KEY
@@ -158,9 +206,9 @@ function doKeyDown(e) {
             p1.RotatePlayer(1);
             p1.pView(tw.Levels[p1.level].Map);
             drawPlayersView(p1);
-            //p1.drawView(p1);
-            
+            //p1.drawView(p1);            
             break;
+        default:{};break;
     }
 
 

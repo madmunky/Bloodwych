@@ -1,13 +1,11 @@
-function player(posX,posY,level,rotation)
-{
-       
+function player(posX,posY,level,rotation,PortX,PortY) {
     
     this.X=posX;
     this.Y=posY;
     this.level=level;
     this.Rotation= rotation;
-    this.PortalX=0;
-    this.PortalY=0;
+    this.PortalX=PortX;
+    this.PortalY=PortY;
     this.View = [];
     
 }
@@ -24,6 +22,37 @@ var Direction = {
             3: {name: "West", value: 3}
         }
     };
+
+player.prototype.ChangeUpLevel = function CuL() {
+    
+    this.level = this.level + 1;
+    if (this.level > tw.length){
+        this.level = 0;
+    }
+    else {
+        this.moveForward();
+        this.moveForward();
+    }
+    
+};
+
+player.prototype.ChangeDownLevel = function CuL() {
+    
+    this.level = this.level - 1;
+    if (this.level < tw.length){
+        this.level = tw.length;
+    }
+    else{
+        this.moveBackwards();
+        this.moveBackwards();
+    }
+};
+
+player.prototype.UpdateAction = function uA() {
+    
+    
+    
+};
 
 player.prototype.moveForward = function mF() {
 
@@ -86,7 +115,6 @@ player.prototype.moveRight = function mR() {
     this.Y = this.Y - (0 * yo) + (1 * xo);
     this.X = this.X - (0 * xo) - (1 * yo);
 };
-
 
 player.prototype.RotatePlayer = function rotate(d){
     
