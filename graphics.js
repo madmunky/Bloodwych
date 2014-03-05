@@ -1,4 +1,4 @@
-function SpriteSheetArray(){
+    function SpriteSheetArray(){
 
       //Convert the graphics sprite sheets into individual images and put them in an array
       //The Array consists of StartX,StartY,WidthX,HeightY,ScreenX,ScreenY
@@ -7,7 +7,7 @@ function SpriteSheetArray(){
 	
       ImageArray[0] = new Array(15, 0, 98, 76, 15, 0);
       ImageArray[1] = new Array(0, 0, 15, 76, 0, 0);
-      ImageArray[2] = new Array(15, 0, 98, 76, 15, 0);
+      ImageArray[2] = new Array(15, 0, 98, 76, 14, 0);
       ImageArray[3] = new Array(113, 0, 15, 76, 113, 0);
 
       ImageArray[4] = new Array(128, 0, 15, 76, 0, 0);
@@ -40,9 +40,9 @@ function SpriteSheetArray(){
       ImageArray[27] = new Array(123, 118, 10, 28, 104, 18);
       ImageArray[28] = new Array(133, 118, 14, 28, 114, 18);
       
-      //ImageArray[28] = new Array(292, 222, 60, 151, 0, 0);
-      //ImageArray[29] = new Array(324, 222, 190, 151, 0, 0);
-     // ImageArray[30] = new Array(485, 222, 60, 151, 0, 0);
+      ImageArray[29] = new Array(146, 111, 16, 76, 0, 0);
+      ImageArray[30] = new Array(162, 111, 96, 76, 16, 0);
+      ImageArray[31] = new Array(258, 111, 16, 76, 112, 0);
 	  
 	  return ImageArray;
 	  
@@ -217,6 +217,9 @@ function SpriteSheetArray(){
             Wall[26] = 1;
             Wall[27] = 3;
             Wall[28] = 2;
+            Wall[29] = 3;
+            Wall[30] = 0;
+            Wall[31] = 1;
 		            
             Wall[s] = Wall[s] + d;
             
@@ -225,11 +228,6 @@ function SpriteSheetArray(){
             }
             
             if (debug) {console.log (s + " = " + getDirection(Wall[s]));}
-            
-            if (s === 28) {
-                ctx.font = "bold 20px Calibri";
-                ctx.fillText(getDirection(Wall[s]),10,265);
-            }
             
        return Wall[s];
         
@@ -290,12 +288,10 @@ function SpriteSheetArray(){
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,21),21,p), gfxPos[21], p, scale);
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,16),16,p), gfxPos[16], p, scale);                
                 };break;
-                case 5:{
-                   // myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,28),28,p), gfxPos[28], p, scale);
+                case 5:{                   
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,24),24,p), gfxPos[24], p, scale);
                 };break;
-                case 6:{
-                  //  myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,25),25,p), gfxPos[25], p, scale);
+                case 6:{                  
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,19),19,p), gfxPos[19], p, scale);
                 };break;    
                 case 7:{
@@ -375,18 +371,52 @@ function SpriteSheetArray(){
                 case 17:{
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,1),1,p), gfxPos[1], p, scale);
                 };break;
-                case 18:{
-                  if (BlockType === 1 || BlockType === 2) {
-                            myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,1),1,p), gfxPos[1], p, scale);
-                            myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,3),3,p), gfxPos[3], p, scale);                                               
-                        }                    
-                            //myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,2),2,p), gfxPos[2], p, scale);
+                case 18:{  
+                           if (BlockType === 5) {
+                               drawDoorFrame(p);
+                           }
+                           else {
+                               myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,31),31,p), gfxPos[31], p, scale);
+                               myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,29),29,p), gfxPos[29], p, scale);
+                               myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,30),30,p), gfxPos[30], p, scale);
+                           };                          
                 };break;
          }
      }
     }
         
     }
+    
+    function drawDoorFrame(p){
+        
+        var HexCode = p.View[18];
+        
+        //var AA = parseInt(HexCode.substring(0, 1),16);
+        var BB = parseInt(HexCode.substring(1, 2),16);
+        //var CC = parseInt(HexCode.substring(2, 3),16);
+        
+        if (BB >= 0 & BB <= 3 || BB >= 8 & BB <= 11) { //"North/South"
+            if (p.Rotation === 0 || p.Rotation === 2) {
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,29),29,p), gfxPos[29], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,31),31,p), gfxPos[31], p, scale);
+            }
+            else {
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,30),30,p), gfxPos[30], p, scale);                               
+            }
+        }
+        else { if (BB >= 4 & BB <= 7 || BB >= 12 & BB <= 15) { //"East/West"
+            if (p.Rotation === 1 || p.Rotation === 3) {
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,29),29,p), gfxPos[29], p, scale);
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,31),31,p), gfxPos[31], p, scale);
+                    
+            }
+            else {
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,30),30,p), gfxPos[30], p, scale);
+            }
+        };                  
+        
+    }
+}
     
     function drawWoodenObject(p,x) {
                
@@ -446,4 +476,5 @@ function SpriteSheetArray(){
                         };break;
                 }
     }
+
     

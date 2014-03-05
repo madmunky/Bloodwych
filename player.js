@@ -193,7 +193,7 @@ player.prototype.drawView = function vD(p) {
             case 25:{myDIx(ctx, getImage(this.View[16],getWallDirection(p.Rotation,3),3,p), gfxPos[3], this, scale);};break;
             case 26:{myDIx(ctx, getImage(this.View[15],getWallDirection(p.Rotation,2),2,p), gfxPos[2], this, scale);};break;
             case 27:{myDIx(ctx, getImage(this.View[17],getWallDirection(p.Rotation,1),1,p), gfxPos[1], this, scale);};break;
-            //case 28:{myDIx(ctx, getImage(this.View[18],getWallDirection(p.Rotation,0),0,p), gfxPos[0], this, scale);};break;
+            case 28:{myDIx(ctx, getImage(this.View[18],getWallDirection(p.Rotation,0),0,p), gfxPos[0], this, scale);};break;
             
         }        
     } 
