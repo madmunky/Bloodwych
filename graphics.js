@@ -156,7 +156,7 @@
                 } else if (BB % 4 === 1) { //Sign
                     if (AA === 0 && BB === 1) { //Random Color
                         ctx.drawImage(gfxBrown, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-                        return gfxScriptBanner;
+                        return null;
                     } else if (AA === 0 && BB === 5) { //Serpent Flag
                         ctx.drawImage(gfxSerp, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxSerpBanner;                       
@@ -170,9 +170,11 @@
                          ctx.drawImage(gfxChaos, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxChaosBanner;
                     } else if (BB % 4 === 1) {                        
-                        //i = bwMergeImage(GraphicsData[1][0][x],GraphicsData[1][1][x]);                   
+                        ctx.drawImage(gfxBrown, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfxScriptBanner;                   
                     } else {
-                       // i = GraphicsData[1][0][x];
+                       ctx.drawImage(gfxBrown, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                       return gfxScriptBanner;
                     }
                 } else if (BB % 4 === 2) { //Switch
                         return gfxWallSwitch;

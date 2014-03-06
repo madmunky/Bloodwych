@@ -154,7 +154,6 @@ function doKeyDown(e) {
             myDIx(ctx, img, background[b], p1, scale);
             p1.ChangeUpLevel();
             p1.pView(tw.Levels[p1.level].Map);
-            //p1.drawView(p1);
             drawPlayersView(p1);
             
             break; 
@@ -170,7 +169,6 @@ function doKeyDown(e) {
             myDIx(ctx, img, background[b], p1, scale);
             p1.ChangeDownLevel();
             p1.pView(tw.Levels[p1.level].Map);
-            //p1.drawView(p1);
             drawPlayersView(p1);
             break;   
         }
@@ -186,9 +184,7 @@ function doKeyDown(e) {
             myDIx(ctx, img, background[b], p1, scale);
             p1.moveForward();
             p1.pView(tw.Levels[p1.level].Map);
-            //p1.drawView(p1);
             drawPlayersView(p1);
-            //myDIx(ctx, gfxDragon, gfxPos[2], p1, scale);
             break;
 
             //====================
@@ -202,7 +198,6 @@ function doKeyDown(e) {
             p1.moveBackwards();
             p1.pView(tw.Levels[p1.level].Map);
             drawPlayersView(p1);
-            //p1.drawView(p1);
             break;
 
             //====================
@@ -215,7 +210,6 @@ function doKeyDown(e) {
             p1.moveLeft();
             p1.pView(tw.Levels[p1.level].Map);
             drawPlayersView(p1);
-            //p1.drawView(p1);
             break;
 
             //====================
@@ -228,7 +222,6 @@ function doKeyDown(e) {
             p1.moveRight();
             p1.pView(tw.Levels[p1.level].Map);
             drawPlayersView(p1);
-            //p1.drawView(p1);
             break;
         
             //====================
@@ -241,7 +234,6 @@ function doKeyDown(e) {
             p1.RotatePlayer(0);
             p1.pView(tw.Levels[p1.level].Map);
             drawPlayersView(p1);
-            //p1.drawView(p1);
             break;
             
             //====================
@@ -253,8 +245,7 @@ function doKeyDown(e) {
             myDIx(ctx, img, background[b], p1, scale);
             p1.RotatePlayer(1);
             p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);
-            //p1.drawView(p1);            
+            drawPlayersView(p1);    
             break;
         default:{};break;
     }
