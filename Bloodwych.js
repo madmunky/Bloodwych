@@ -10,7 +10,7 @@ ctx.mozImageSmoothingEnabled = false;
 var scale = 3;
 var debug = false;
 
-var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP"];
+var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4"];
 var CurrentMap = 0;
 var img = document.getElementById("bg");
 var background = new Array();
@@ -139,6 +139,8 @@ function doKeyDown(e) {
             if (CurrentMap > Maps.length -1){
                 CurrentMap = 0;
             }
+            p1.X = 0;
+            p1.Y = 0;
             GetDataView("maps/"+Maps[CurrentMap]+".MAP",mapdate);                        
             break; 
         }
@@ -261,6 +263,7 @@ function doKeyDown(e) {
     
     ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
     ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
+    ctx.fillText("Level: " + p1.level.toString(),10,290);
 }
 
 function clearCanvas() {

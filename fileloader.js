@@ -75,8 +75,8 @@ function mapdate(evt) {
         p2.pView(tw.Levels[p2.level].Map);
         drawPlayersView(p2);
         ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
-    
-    
+        ctx.fillText("Level: " + p1.level.toString(),10,290);
+     
     }
     
 
