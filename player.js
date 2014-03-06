@@ -43,14 +43,19 @@ player.prototype.ChangeDownLevel = function CuL() {
         this.level = tw.length;
     }
     else{
-        this.moveBackwards();
-        this.moveBackwards();
+        this.moveForward();
+        this.moveForward();
     }
 };
 
 player.prototype.UpdateAction = function uA() {
     
-    
+     clearCanvas();
+     configCanvas();
+     myDIx(ctx, img, background[b], p1, scale);
+     p1.moveForward();
+     p1.pView(tw.Levels[p1.level].Map);
+     drawPlayersView(p1);            
     
 };
 

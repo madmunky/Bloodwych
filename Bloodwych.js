@@ -76,6 +76,42 @@ function configCanvas() {
 	ctx.imageSmoothingEnabled = false;
 	ctx.webkitImageSmoothingEnabled = false;
 	ctx.mozImageSmoothingEnabled = false;
+        ctx.font = "bold 20px Calibri";
+}
+
+function doTouchStart(e) {
+    
+            canvas_x = event.targetTouches[0].pageX;
+            canvas_y = event.targetTouches[0].pageY;
+    
+            if (canvas_y < 300 & (canvas_x > 120 & canvas_x < 270)){
+                clearCanvas();
+                configCanvas();
+                myDIx(ctx, img, background[b], p1, scale);
+                p1.moveForward();
+                p1.pView(tw.Levels[p1.level].Map);
+                drawPlayersView(p1);
+                ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
+                ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
+                event.preventDefault();
+                ctx.fillText(canvas_x + " - " + canvas_y,10,290);
+            }
+            else if (canvas_y > 300 & (canvas_x > 120 & canvas_x < 270)){
+                clearCanvas();
+                configCanvas();
+                myDIx(ctx, img, background[b], p1, scale);
+                p1.moveBackwards()();
+                p1.pView(tw.Levels[p1.level].Map);
+                drawPlayersView(p1);
+                ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
+                ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
+                event.preventDefault();
+                ctx.fillText(canvas_x + " - " + canvas_y,10,290);
+            }
+            
+
+                       
+        
 }
 
 function doKeyDown(e) {
@@ -92,7 +128,7 @@ function doKeyDown(e) {
             if (CurrentMap > Maps.length -1){
                 CurrentMap = 0;
             }
-            GetDataView("http://bloodwych.co.uk/bwhtml/maps/"+Maps[CurrentMap]+".MAP",mapdate);            
+            GetDataView("maps/"+Maps[CurrentMap]+".MAP",mapdate);            
             //GetDataView("http://localhost:8383/Bloodwych%20HTML/Bloodwych/maps/"+Maps[CurrentMap]+".MAP",mapdate);            
             break; 
         }
@@ -219,9 +255,9 @@ function doKeyDown(e) {
         b = 0;
     }
 
-    ctx.font = "bold 20px Calibri";
+    
     ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
-
+    ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
 }
 
 function clearCanvas() {

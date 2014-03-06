@@ -402,10 +402,8 @@
     function drawDoorFrame(p){
         
         var HexCode = p.View[18];
-        
-        //var AA = parseInt(HexCode.substring(0, 1),16);
+      
         var BB = parseInt(HexCode.substring(1, 2),16);
-        //var CC = parseInt(HexCode.substring(2, 3),16);
         
         if (BB >= 0 & BB <= 3 || BB >= 8 & BB <= 11) { //"North/South"
             if (p.Rotation === 0 || p.Rotation === 2) {
@@ -419,14 +417,12 @@
         else { if (BB >= 4 & BB <= 7 || BB >= 12 & BB <= 15) { //"East/West"
             if (p.Rotation === 1 || p.Rotation === 3) {
                 myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,29),29,p), gfxPos[29], p, scale);
-                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,31),31,p), gfxPos[31], p, scale);
-                    
+                myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,31),31,p), gfxPos[31], p, scale);                   
             }
             else {
                 myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,30),30,p), gfxPos[30], p, scale);
             }
-        };                  
-        
+        }; 
     }
 }
     

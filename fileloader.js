@@ -1,6 +1,7 @@
 $(document).ready(function() {
-  GetDataView("http://bloodwych.co.uk/bwhtml/MOD0.MAP",mapdate);
-  //GetDataView("http://localhost:8383/Bloodwych%20HTML/Bloodwych/maps/MOD0.MAP",mapdate);
+ //GetDataView("http://bloodwych.co.uk/bwhtml/MOD0.MAP",mapdate);
+ //GetDataView("http://localhost:8383/Bloodwych%20HTML/Bloodwych/maps/MOD0.MAP",mapdate);
+ GetDataView("maps/MOD0.MAP",mapdate);
 });
 
  function GetDataView(file_name, callback){
@@ -65,6 +66,9 @@ function mapdate(evt) {
             tw.Levels[i].Map = mdata;
         }
         
+        clearCanvas();
+        configCanvas()
+        
         myDIx(ctx, img, background[b], p1, scale);
         p1.pView(tw.Levels[p1.level].Map);
         drawPlayersView(p1);
@@ -72,7 +76,7 @@ function mapdate(evt) {
         myDIx(ctx, img, background[b], p2, scale);
         p2.pView(tw.Levels[p2.level].Map);
         drawPlayersView(p2);
-        
+        ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
     
     
     }
