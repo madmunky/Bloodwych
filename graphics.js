@@ -126,6 +126,7 @@
         
     function getStoneWall(HexCode,d,pos,P) {
         
+        
         var AA = parseInt(HexCode.substring(0, 1),16);
         var BB = parseInt(HexCode.substring(1, 2),16);
         var CC = parseInt(HexCode.substring(2, 3),16);
@@ -136,37 +137,37 @@
        
         switch (CC) { 
             
-            case 8:{if (d === 0) {return getWallDeco();}break;} //North Wall has Deco
-            case 9:{if (d === 1) {return getWallDeco();}break;} //East Wall has Deco
-            case 10:{if (d === 2) {return getWallDeco();}break;} //South Wall has Deco
-            case 11:{if (d === 3) {return getWallDeco();}break;} //West Wall has Deco
+            case 8:{if (d === 0) {return getWallDeco(AA,BB,CC);}break;} //North Wall has Deco
+            case 9:{if (d === 1) {return getWallDeco(AA,BB,CC);}break;} //East Wall has Deco
+            case 10:{if (d === 2) {return getWallDeco(AA,BB,CC);}break;} //South Wall has Deco
+            case 11:{if (d === 3) {return getWallDeco(AA,BB,CC);}break;} //West Wall has Deco
             default:{console.log ("Unhandled StoneWall CC: " + CC.toString());return gfxStone;};
                     
         }
         
         return gfxStone;
         
-        function getWallDeco(){
+        function getWallDeco(AA,BB,CC){
         
         try{
             if (CC >= 8) { //Wall has something on it
                 if (BB % 4 === 0) { //Shelf
                     return gfxShelf;
                 } else if (BB % 4 === 1) { //Sign
-                    if (BB === 1) { //Random Color
-                        ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                    if (AA === 0 && BB === 1) { //Random Color
+                        ctx.drawImage(gfxBrown, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxScriptBanner;
                     } else if (AA === 0 && BB === 5) { //Serpent Flag
-                        ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        ctx.drawImage(gfxSerp, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxSerpBanner;                       
                     } else if (AA === 0 && BB === 9) { //Dragon Flag
-                         ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                         ctx.drawImage(gfxDragon, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxDragonBanner;  
                     } else if (AA === 0 && BB === 13) { //Moon Flag
                         ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxMoonBanner;                     
                     } else if (AA === 1 && BB === 1) { //Choas Flag
-                         ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                         ctx.drawImage(gfxChaos, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfxChaosBanner;
                     } else if (BB % 4 === 1) {                        
                         //i = bwMergeImage(GraphicsData[1][0][x],GraphicsData[1][1][x]);                   
@@ -492,4 +493,76 @@
                 }
     }
 
-    
+    function recolorImage(img,pallet,type){
+
+        var c = document.createElement('canvas');
+        var ctx1=c.getContext("2d");
+        var w = img.width;
+        var h = img.height;
+
+        c.width = w;
+        c.height = h;
+        
+        var oC = [[64,128,224],[32,32,224],[160,160,160]];
+        
+        var Dragon = [[129,32,0],[224, 0, 0],[224, 129, 96]];
+        var Serpent = [[0,129,0],[0, 192, 0],[224, 129, 96]];
+        var Chaos = [[224,129,96],[224, 192, 0],[224, 129, 96]];
+        var Brown = [[129,32,0],[160, 64, 32],[224, 129, 96]];
+        var Plain = [64,64,64];
+        
+        switch (pallet) {
+            
+            case "Dragon": {pallet=Dragon;};break;
+            case "Chaos": {pallet=Chaos;};break;
+            case "Brown": {pallet=Brown;};break;
+            case "Serp": {pallet=Serpent;};break;
+            case "Plain": {pallet=Plain;};break;
+            
+        }    
+        
+        // draw the image on the temporary canvas
+        ctx1.drawImage(img, 0, 0, w, h);
+
+        // pull the entire image into an array of pixel data
+        var imageData = ctx1.getImageData(0, 0, w, h);
+
+        // examine every pixel, 
+        // change any old rgb to the new-rgb
+        for (var i=0;i<imageData.data.length;i+=4)
+          {
+              // is this pixel the old rgb?
+              if (type === "Banner"){
+                  
+                 if(imageData.data[i]===oC[0][0] && imageData.data[i+1]===oC[0][1] && imageData.data[i+2]===oC[0][2]){
+                  // change to your new rgb
+                  imageData.data[i]=pallet[0][0];imageData.data[i+1]=pallet[0][1];imageData.data[i+2]=pallet[0][2];
+                 }
+                 else if(imageData.data[i]===oC[1][0] && imageData.data[i+1]===oC[1][1] && imageData.data[i+2]===oC[1][2]){
+                  // change to your new rgb
+                  imageData.data[i]=pallet[1][0];imageData.data[i+1]=pallet[1][1];imageData.data[i+2]=pallet[1][2];
+                 }
+                 else if(imageData.data[i]===oC[2][0] && imageData.data[i+1]===oC[2][1] && imageData.data[i+2]===oC[2][2]){
+                  // change to your new rgb
+                  imageData.data[i]=pallet[2][0];imageData.data[i+1]=pallet[2][1];imageData.data[i+2]=pallet[2][2];
+                 }
+                  
+              }
+              else if (type === "Door"){
+                  if(imageData.data[i]===oC[0][0] && imageData.data[i+1]===oC[0][1] && imageData.data[i+2]===oC[0][2]){
+                  // change to your new rgb
+                  imageData.data[i]=type[0][0];imageData.data[i+1]=type[0][1];imageData.data[i+2]=type[0][2];
+                 }
+              };
+          }
+        // put the altered data back on the canvas  
+        ctx1.putImageData(imageData,0,0);
+        // put the re-colored image back on the image
+        
+        var img1 = new Image();
+        img1.width = imageData.width;
+        img1.height = imageData.height;
+        img1.src = c.toDataURL();
+
+        return img1;
+    }

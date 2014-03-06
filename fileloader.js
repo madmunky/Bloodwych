@@ -1,6 +1,4 @@
 $(document).ready(function() {
- //GetDataView("http://bloodwych.co.uk/bwhtml/MOD0.MAP",mapdate);
- //GetDataView("http://localhost:8383/Bloodwych%20HTML/Bloodwych/maps/MOD0.MAP",mapdate);
  GetDataView("maps/MOD0.MAP",mapdate);
 });
 

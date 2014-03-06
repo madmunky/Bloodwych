@@ -36,6 +36,17 @@ gfxChaosBanner = document.getElementById("ChaosBanner");
 gfxScriptBanner = document.getElementById("ScriptBanner");
 gfxWallSwitch = document.getElementById("WallSwitch");
 gfxGemSlot = document.getElementById("GemSlot");
+var gfxDragon;
+var gfxChaos;
+var gfxSerp;
+var gfxBrown;
+
+gfxScriptBanner.onload = function () {    
+    gfxDragon = recolorImage(gfxScriptBanner,"Dragon","Banner");
+    gfxChaos = recolorImage(gfxScriptBanner,"Chaos","Banner");
+    gfxSerp = recolorImage(gfxScriptBanner,"Serp","Banner");
+    gfxBrown = recolorImage(gfxScriptBanner,"Brown","Banner");
+};
 
 gfxWooden[0] = document.getElementById("WoodenWalls1");
 gfxWooden[1] = document.getElementById("WoodenWalls2");
@@ -128,8 +139,7 @@ function doKeyDown(e) {
             if (CurrentMap > Maps.length -1){
                 CurrentMap = 0;
             }
-            GetDataView("maps/"+Maps[CurrentMap]+".MAP",mapdate);            
-            //GetDataView("http://localhost:8383/Bloodwych%20HTML/Bloodwych/maps/"+Maps[CurrentMap]+".MAP",mapdate);            
+            GetDataView("maps/"+Maps[CurrentMap]+".MAP",mapdate);                        
             break; 
         }
         
@@ -146,6 +156,7 @@ function doKeyDown(e) {
             p1.pView(tw.Levels[p1.level].Map);
             //p1.drawView(p1);
             drawPlayersView(p1);
+            
             break; 
         }
         
@@ -177,6 +188,7 @@ function doKeyDown(e) {
             p1.pView(tw.Levels[p1.level].Map);
             //p1.drawView(p1);
             drawPlayersView(p1);
+            //myDIx(ctx, gfxDragon, gfxPos[2], p1, scale);
             break;
 
             //====================
