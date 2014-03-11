@@ -9,6 +9,7 @@ ctx.mozImageSmoothingEnabled = false;
 
 var scale = 3;
 var debug = false;
+var debugHigh = false;
 
 var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4"];
 var CurrentMap = 0;
@@ -71,16 +72,71 @@ var b = 0;
 var p1 = new player(12, 22, 3,0,0,0);
 var p2 = new player(14,22,3,0,0,350);
 var tw = new Tower();
-            
+
+var FPS = 60;
+var now, dt = 0,
+    last = timestamp();
+    step = 5/60;
+
+//Touch Screen Stuff
+var canvas_x;
+var canvas_y;
+
+setInterval(function() {        
+    if (debug){fps.getFPS();}
+    now = timestamp();
+    dt = (dt + Math.min(1, (now - last) / 1000));
+    while(dt > step) {
+        dt = dt - step;
+        updateScreen();         
+    } 
+    if (debug) {PrintLog("Updated - "+ dt);}
+    last = now;
+}, 1000/FPS);
+
+function timestamp() {
+  return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
+}
+
+var fps = {
+	startTime : 0,
+	frameNumber : 0,
+	getFPS : function(){
+		this.frameNumber++;
+		var d = new Date().getTime(),
+			currentTime = ( d - this.startTime ) / 1000,
+			result = Math.floor( ( this.frameNumber / currentTime ) );
+
+		if( currentTime > 1 ){
+			this.startTime = new Date().getTime();
+			this.frameNumber = 0;
+		}
+		PrintLog("FPS: " + result);
+	}	
+};
+
+function updateScreen(){  
+    
+    if (typeof tw !== "undefined") {
+            clearCanvas();
+            configCanvas();
+            myDIx(ctx, img, background[b], p1, scale);
+            p1.pView(tw.Levels[p1.level].Map);
+            drawPlayersView(p1);
+            ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
+            ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
+            ctx.fillText("Level: " + p1.level.toString(),10,290);
+            ctx.fillText(canvas_x + " - " + canvas_y,10,310);
+            if (debug){PrintLog("Screen Updated");}
+    }
+}
+
 function myDIx(canvas, img, PosAry, P, scale) {
     
-    if (img === null) {
-        
-    }
+    if (img === null) {}
     else {
         canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] *scale)+ P.PortalX, (PosAry[5] * scale) + P.PortalY, PosAry[2] * scale, PosAry[3] * scale);
-    }
-    
+    }    
 }
 
 function configCanvas() {	
@@ -102,24 +158,34 @@ function doTouchStart(e) {
                 p1.moveForward();
                 p1.pView(tw.Levels[p1.level].Map);
                 drawPlayersView(p1);
-                ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
-                ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
                 event.preventDefault();
-                ctx.fillText(canvas_x + " - " + canvas_y,10,290);
             }
             else if (canvas_y > 300 & (canvas_x > 120 & canvas_x < 270)){
                 clearCanvas();
                 configCanvas();
                 myDIx(ctx, img, background[b], p1, scale);
-                p1.moveBackwards()();
+                p1.moveBackwards();
                 p1.pView(tw.Levels[p1.level].Map);
                 drawPlayersView(p1);
-                ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
-                ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
-                event.preventDefault();
-                ctx.fillText(canvas_x + " - " + canvas_y,10,290);
+            }
+            else if (canvas_y < 300 & (canvas_x > 270)){
+                clearCanvas();
+                configCanvas();
+                myDIx(ctx, img, background[b], p1, scale);
+                p1.RotatePlayer(0);
+                p1.pView(tw.Levels[p1.level].Map);
+                drawPlayersView(p1);                
+            }
+            else if (canvas_y < 300 & (canvas_x < 120)){
+                clearCanvas();
+                configCanvas();
+                myDIx(ctx, img, background[b], p1, scale);
+                p1.RotatePlayer(1);
+                p1.pView(tw.Levels[p1.level].Map);
+                drawPlayersView(p1);                
             }
             
+    
 
                        
         
@@ -150,14 +216,8 @@ function doKeyDown(e) {
         // THE T KEY
         //===============
         
-        case 84: {
-            clearCanvas();
-            configCanvas();
-            myDIx(ctx, img, background[b], p1, scale);
-            p1.ChangeUpLevel();
-            p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);
-            
+        case 84: {           
+            p1.ChangeUpLevel();                      
             break; 
         }
         
@@ -165,13 +225,8 @@ function doKeyDown(e) {
         // THE G KEY
         //===============
         
-        case 71: {
-            clearCanvas();
-            configCanvas();
-            myDIx(ctx, img, background[b], p1, scale);
-            p1.ChangeDownLevel();
-            p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);
+        case 71: {            
+            p1.ChangeDownLevel();            
             break;   
         }
         
@@ -181,12 +236,7 @@ function doKeyDown(e) {
             //====================
 
         case 87:
-            clearCanvas();
-            configCanvas();
-            myDIx(ctx, img, background[b], p1, scale);
-            p1.moveForward();
-            p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);
+            p1.moveForward();            
             break;
 
             //====================
@@ -194,60 +244,35 @@ function doKeyDown(e) {
             //====================
             
         case 83:
-            clearCanvas();
-            configCanvas();
-            myDIx(ctx, img, background[b], p1, scale);
             p1.moveBackwards();
-            p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);
             break;
 
             //====================
             //	THE A KEY
             //====================
         case 65:
-            clearCanvas();
-            configCanvas();
-            myDIx(ctx, img, background[b], p1, scale);
             p1.moveLeft();
-            p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);
             break;
 
             //====================
             //	THE D KEY
             //====================
         case 68:
-            clearCanvas();
-            configCanvas();
-            myDIx(ctx, img, background[b], p1, scale);
             p1.moveRight();
-            p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);
             break;
         
             //====================
             //	THE Q KEY
             //====================
         case 69:
-            clearCanvas();
-            configCanvas();
-            myDIx(ctx, img, background[b], p1, scale);
             p1.RotatePlayer(0);
-            p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);
             break;
             
             //====================
             //	THE E KEY
             //====================
         case 81:
-            clearCanvas();
-            configCanvas();
-            myDIx(ctx, img, background[b], p1, scale);
             p1.RotatePlayer(1);
-            p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);    
             break;
         default:{};break;
     }
@@ -259,11 +284,6 @@ function doKeyDown(e) {
     else {
         b = 0;
     }
-
-    
-    ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
-    ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
-    ctx.fillText("Level: " + p1.level.toString(),10,290);
 }
 
 function clearCanvas() {

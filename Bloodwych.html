@@ -35,7 +35,7 @@
         <img id="GemSlot" src="images/screen22.png" style="display:none">
 	
 	<SECTION style="width: 800px;">
-		<CANVAS WIDTH="800" HEIGHT="300" ID="gamePort" tabindex="0" style="-ms-interpolation-mode: nearest-neighbor;">
+		<CANVAS WIDTH="800" HEIGHT="350" ID="gamePort" tabindex="0" style="-ms-interpolation-mode: nearest-neighbor;">
 			Canvas tag not supported
 		</CANVAS>
 	</SECTION>
@@ -48,8 +48,9 @@
         
 	<SCRIPT>
 		var canvas = document.getElementById("gamePort");
-		canvas.addEventListener('keydown', doKeyDown, true);                
+		canvas.addEventListener('keyup', doKeyDown, true);                
                 canvas.addEventListener('touchstart', doTouchStart, false);
+             
 	</SCRIPT>
 
 	</BODY>

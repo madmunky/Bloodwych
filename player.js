@@ -72,7 +72,7 @@ player.prototype.moveForward = function mF() {
         
        this.Y = this.Y + (1 * yo) - (0 * xo);
        this.X = this.X + (1 * xo) + (0 * yo);
-
+       if (debug) {PrintLog("Player Moved Forward");}
 };
 
 player.prototype.moveBackwards = function mF() {
@@ -88,7 +88,7 @@ player.prototype.moveBackwards = function mF() {
         
        this.Y = this.Y - (1 * yo) - (0 * xo);
        this.X = this.X - (1 * xo) + (0 * yo);
-
+       if (debug) {PrintLog("Player Moved Backwards");}
 };
 
 player.prototype.moveLeft = function mL() {
@@ -104,6 +104,7 @@ player.prototype.moveLeft = function mL() {
     
     this.Y = this.Y - (0 * yo) - (1 * xo);
     this.X = this.X - (0 * xo) + (1 * yo);
+    if (debug) {PrintLog("Player Moved Left");}
 };
 
 player.prototype.moveRight = function mR() {
@@ -119,6 +120,7 @@ player.prototype.moveRight = function mR() {
     
     this.Y = this.Y - (0 * yo) + (1 * xo);
     this.X = this.X - (0 * xo) - (1 * yo);
+    if (debug) {PrintLog("Player Moved Right");}
 };
 
 player.prototype.RotatePlayer = function rotate(d){
@@ -127,13 +129,15 @@ player.prototype.RotatePlayer = function rotate(d){
         this.Rotation = this.Rotation -1;
         if (this.Rotation < 0) {
             this.Rotation = 3;
-        }            
+        }
+        if (debug) {PrintLog("Player Rotated Anti-Clockwise");}
     }
     else {
         this.Rotation = this.Rotation +1;
         if (this.Rotation > 3) {
             this.Rotation = 0;
         }
+        if (debug) {PrintLog("Player Rotated Clockwise");}
     }    
 };
 
