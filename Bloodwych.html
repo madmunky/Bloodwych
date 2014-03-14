@@ -34,23 +34,23 @@
         <img id="FloorPad" src="images/screen21.png" style="display:none">
         <img id="GemSlot" src="images/screen22.png" style="display:none">
 	
-	<SECTION style="width: 800px;">
-		<CANVAS WIDTH="800" HEIGHT="350" ID="gamePort" tabindex="0" style="-ms-interpolation-mode: nearest-neighbor;">
-			Canvas tag not supported
-		</CANVAS>
-	</SECTION>
+        <canvas id="gamePort" width="800" height="400" tabindex="1"></canvas>
         
         <script src="Map.js"></script>
         <script src="fileloader.js"></script>
         <script src="player.js"></script>
-	<script src="graphics.js"></script>
-	<script src="Bloodwych.js"></script>
+	<script src="graphics.js"></script>	
         
+	<script src="game.js" type="text/javascript" charset="utf-8"></script>
+	<script src="renderer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="main.js" type="text/javascript" charset="utf-8"></script>
+        <script src="Bloodwych.js"></script>
+    
 	<SCRIPT>
 		var canvas = document.getElementById("gamePort");
-		canvas.addEventListener('keyup', doKeyDown, true);                
+		canvas.addEventListener('keydown', doKeyDown, true);  
                 canvas.addEventListener('touchstart', doTouchStart, false);
-             
+                var ctx = canvas.getContext("2d");
 	</SCRIPT>
 
 	</BODY>

@@ -1,18 +1,19 @@
-$(document).ready(function() {
- GetDataView("maps/MOD0.MAP",mapdate);
-});
+//$(document).ready(function() {
+// GetDataView("maps/MOD0.MAP",mapdate);
+//});
 
  function GetDataView(file_name, callback){
 
         var xmlhttp = new XMLHttpRequest();
 
         //var data_view = [];
+        
 
         xmlhttp.onreadystatechange= function(){
             if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete"){
 
               //data_view = new DataView(this.response);   //DataView is not defined here
-              callback(this.response);
+              return tower = callback(this.response);
 
              }
         };
@@ -20,6 +21,7 @@ $(document).ready(function() {
         xmlhttp.open("GET", file_name,true);
         xmlhttp.responseType = "arraybuffer";
         xmlhttp.send();
+        
     }
 
 function handleFileSelect(evt) {
@@ -41,6 +43,9 @@ function mapdate(evt) {
         //The first part of the map files contains to the data about how many levels are stored
         //in the tower file and the Width,Height,OffsetX,OffsetY so the levels can line up correctly
         //for falling though pits or walking down stairs.
+        
+        tw = new Tower();
+        tw.onload = Run();
         
         for (x = 0; x < 8; x++) {
             var Level = new Map(uInt8Array[x+8], uInt8Array[x], uInt8Array[x + 32], uInt8Array[x + 40]);
@@ -64,19 +69,6 @@ function mapdate(evt) {
             tw.Levels[i].Map = mdata;
         }
         
-        clearCanvas();
-        configCanvas()
-        
-        myDIx(ctx, img, background[b], p1, scale);
-        p1.pView(tw.Levels[p1.level].Map);
-        drawPlayersView(p1);
-        
-        myDIx(ctx, img, background[b], p2, scale);
-        p2.pView(tw.Levels[p2.level].Map);
-        drawPlayersView(p2);
-        ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
-        ctx.fillText("Level: " + p1.level.toString(),10,290);
-     
     }
     
 

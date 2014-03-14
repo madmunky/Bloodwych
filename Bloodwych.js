@@ -1,14 +1,15 @@
 
 //Setup some global Varibles for needed
-var canvas = document.getElementById("gamePort");
-
-var ctx = canvas.getContext("2d");
-ctx.imageSmoothingEnabled = false;
-ctx.webkitImageSmoothingEnabled = false;
-ctx.mozImageSmoothingEnabled = false;
+//var canvas = document.getElementById("gamePort");
+//
+//var ctx = canvas.getContext("2d");
+//ctx.imageSmoothingEnabled = false;
+//ctx.webkitImageSmoothingEnabled = false;
+//ctx.mozImageSmoothingEnabled = false;
+GetDataView("maps/MOD0.MAP",mapdate);
 
 var scale = 3;
-var debug = false;
+var debug = true;
 var debugHigh = false;
 
 var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4"];
@@ -72,50 +73,16 @@ var b = 0;
 var p1 = new player(12, 22, 3,0,0,0);
 var p2 = new player(14,22,3,0,0,350);
 var tw = new Tower();
-
-var FPS = 60;
-var now, dt = 0,
-    last = timestamp();
-    step = 5/60;
+     
+document.addEventListener('touchstart', doTouchStart, false);
 
 //Touch Screen Stuff
 var canvas_x;
 var canvas_y;
 
-setInterval(function() {        
-    if (debug){fps.getFPS();}
-    now = timestamp();
-    dt = (dt + Math.min(1, (now - last) / 1000));
-    while(dt > step) {
-        dt = dt - step;
-        updateScreen();         
-    } 
-    if (debug) {PrintLog("Updated - "+ dt);}
-    last = now;
-}, 1000/FPS);
 
-function timestamp() {
-  return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
-}
 
-var fps = {
-	startTime : 0,
-	frameNumber : 0,
-	getFPS : function(){
-		this.frameNumber++;
-		var d = new Date().getTime(),
-			currentTime = ( d - this.startTime ) / 1000,
-			result = Math.floor( ( this.frameNumber / currentTime ) );
-
-		if( currentTime > 1 ){
-			this.startTime = new Date().getTime();
-			this.frameNumber = 0;
-		}
-		PrintLog("FPS: " + result);
-	}	
-};
-
-function updateScreen(){  
+function updatePlayerViewScreen(){  
     
     if (typeof tw !== "undefined") {
             clearCanvas();
@@ -139,7 +106,7 @@ function myDIx(canvas, img, PosAry, P, scale) {
     }    
 }
 
-function configCanvas() {	
+function configCanvas() {
 	ctx.imageSmoothingEnabled = false;
 	ctx.webkitImageSmoothingEnabled = false;
 	ctx.mozImageSmoothingEnabled = false;
@@ -289,3 +256,4 @@ function doKeyDown(e) {
 function clearCanvas() {
     canvas.width = canvas.width;
 }
+
