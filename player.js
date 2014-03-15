@@ -7,7 +7,8 @@ function player(posX,posY,level,rotation,PortX,PortY) {
     this.PortalX=PortX;
     this.PortalY=PortY;
     this.View = [];
-    
+    this.pbg = 0;    
+   
 }
 
 var Direction = {
@@ -23,7 +24,29 @@ var Direction = {
         }
     };
 
-player.prototype.ChangeUpLevel = function CuL() {
+
+
+function checkObject(hex) {
+    
+    //var t = hex.substring(3,4);
+    
+    if (hex.substring(1,2) === "8"){
+        return;false;
+    }
+    
+    switch (hex.substring(3,4)) {
+    
+        case "0": {return true;};
+        case "1": {return false;};
+        case "3": {return false;};
+        case "5": {if (hex.substring(1, 2) % 2 === 0){return true;}else{return false;}};
+        default: {return true;break};
+        
+    }       
+    
+}
+
+player.prototype.ChangeUpLevel = function() {
     
     this.level = this.level + 1;
     if (this.level > tw.length){
@@ -36,7 +59,7 @@ player.prototype.ChangeUpLevel = function CuL() {
     
 };
 
-player.prototype.ChangeDownLevel = function CuL() {
+player.prototype.ChangeDownLevel = function() {
     
     this.level = this.level - 1;
     if (this.level < tw.length){
@@ -48,18 +71,62 @@ player.prototype.ChangeDownLevel = function CuL() {
     }
 };
 
-player.prototype.UpdateAction = function uA() {
+player.prototype.switchPlayerBackground = function() {
     
-     clearCanvas();
-     configCanvas();
-     myDIx(ctx, img, background[b], p1, scale);
-     p1.moveForward();
-     p1.pView(tw.Levels[p1.level].Map);
-     drawPlayersView(p1);            
+    if (this.pbg === 0)
+    {this.pbg = 1;}
+    else {this.pbg = 0;}   
     
 };
 
-player.prototype.moveForward = function mF() {
+player.prototype.UpdateAction = function() {
+    
+    if (this.View[15].substring(3,4) === "5") {
+    
+        xo = 0, yo = 0;
+        var MapX;
+        var MapY;
+
+            switch (this.Rotation){
+              case 0: xo = 0; yo = -1; break;
+              case 1: xo = 1; yo = 0; break;
+              case 2: xo = 0; yo = 1; break;
+              case 3: xo = -1; yo = 0; break;
+            }
+
+           MapY = this.Y + (1 * yo) - (0 * xo);
+           MapX = this.X + (1 * xo) + (0 * yo);
+
+           var tmp1 = (tw.Levels[this.level].Map[MapY][MapX]);
+           var tmp = (tw.Levels[this.level].Map[MapY][MapX].replace("1","0"));
+           var tmp3 = this.View[15].substring(1,2);
+
+        switch (this.View[15].substring(1,2)) {
+
+         case "0" :{tw.Levels[this.level].Map[MapY][MapX] = "0105";break;};
+         case "1" :{tw.Levels[this.level].Map[MapY][MapX] = "0005";break;};
+         case "2" :{tw.Levels[this.level].Map[MapY][MapX] = "0305";break;};
+         case "3" :{tw.Levels[this.level].Map[MapY][MapX] = "0205";break;};
+         case "4" :{tw.Levels[this.level].Map[MapY][MapX] = "0505";break;};
+         case "5" :{tw.Levels[this.level].Map[MapY][MapX] = "0405";break;};
+         case "6" :{tw.Levels[this.level].Map[MapY][MapX] = "0705";break;};
+         case "7" :{tw.Levels[this.level].Map[MapY][MapX] = "0605";break;};
+         
+         default:{break;};
+
+        }
+    }    
+};
+
+player.prototype.UpdateMap = function() {
+    
+    
+    
+}
+
+player.prototype.moveForward = function() {
+
+    if (checkObject(this.View[15])) {
 
         xo = 0, yo = 0;
         
@@ -72,11 +139,14 @@ player.prototype.moveForward = function mF() {
         
        this.Y = this.Y + (1 * yo) - (0 * xo);
        this.X = this.X + (1 * xo) + (0 * yo);
+       this.switchPlayerBackground();
        if (debug) {PrintLog("Player Moved Forward");}
+    }    
 };
 
-player.prototype.moveBackwards = function mF() {
+player.prototype.moveBackwards = function() {
 
+    if (checkObject(this.View[19])) {
         xo = 0, yo = 0;
         
         switch (this.Rotation){
@@ -88,12 +158,16 @@ player.prototype.moveBackwards = function mF() {
         
        this.Y = this.Y - (1 * yo) - (0 * xo);
        this.X = this.X - (1 * xo) + (0 * yo);
+       this.switchPlayerBackground();
        if (debug) {PrintLog("Player Moved Backwards");}
+
+    }
 };
 
-player.prototype.moveLeft = function mL() {
+player.prototype.moveLeft = function() {
     
-            xo = 0, yo = 0;
+   if (checkObject(this.View[17])) {
+    xo = 0, yo = 0;
         
         switch (this.Rotation){
           case 0: xo = 0; yo = -1; break;
@@ -104,11 +178,13 @@ player.prototype.moveLeft = function mL() {
     
     this.Y = this.Y - (0 * yo) - (1 * xo);
     this.X = this.X - (0 * xo) + (1 * yo);
-    if (debug) {PrintLog("Player Moved Left");}
+    this.switchPlayerBackground();
+    if (debug) {PrintLog("Player Moved Left");}    
+   }
 };
 
-player.prototype.moveRight = function mR() {
-    
+player.prototype.moveRight = function() {
+   if (checkObject(this.View[16])) { 
             xo = 0, yo = 0;
         
         switch (this.Rotation){
@@ -120,10 +196,13 @@ player.prototype.moveRight = function mR() {
     
     this.Y = this.Y - (0 * yo) + (1 * xo);
     this.X = this.X - (0 * xo) - (1 * yo);
+    this.switchPlayerBackground();
     if (debug) {PrintLog("Player Moved Right");}
+    
+   }
 };
 
-player.prototype.RotatePlayer = function rotate(d){
+player.prototype.RotatePlayer = function(d){
     
     if (d === 1) {
         this.Rotation = this.Rotation -1;
@@ -138,10 +217,12 @@ player.prototype.RotatePlayer = function rotate(d){
             this.Rotation = 0;
         }
         if (debug) {PrintLog("Player Rotated Clockwise");}
-    }    
+    }   
+    this.switchPlayerBackground();
+    
 };
 
-player.prototype.pView = function gView(m){
+player.prototype.pView = function(m){
         
         this.View = [];    
         
@@ -155,7 +236,7 @@ player.prototype.pView = function gView(m){
     var t1 = this.Y + (3 * yo) + (1 * xo);
     var t2 = this.X + (3 * xo) - (1 * yo);
     
-        for (x = 0;x < 19;x++){
+        for (x = 0;x < 20;x++){
             
             try {
             switch (x){
@@ -178,6 +259,7 @@ player.prototype.pView = function gView(m){
                 case 16:{this.View.push(m[this.Y + (0 * yo) + (1 * xo)][this.X + (0 * xo) - (1 * yo)]);};break; //0 +1
                 case 17:{this.View.push(m[this.Y + (0 * yo) - (1 * xo)][this.X + (0 * xo) + (1 * yo)]);};break; //0 -1
                 case 18:{this.View.push(m[this.Y][this.X]);};break; //0 0
+                case 19:{this.View.push(m[this.Y - (1 * yo) - (0 * xo)][this.X - (1 * xo) + (0 * yo)]);};break; //-1 0
                 default:{this.View.push("0001");};break;
             }
         }catch(e){
@@ -185,7 +267,7 @@ player.prototype.pView = function gView(m){
         }        
         }
         
-        for (x = 0;x < 19;x++){
+        for (x = 0;x < 20;x++){
             if (this.View[x] === undefined) {
                 this.View[x] = "0001";
             }
@@ -194,7 +276,7 @@ player.prototype.pView = function gView(m){
         
     };
     
-player.prototype.drawView = function vD(p) {
+player.prototype.drawView = function(p) {
     
     for (var i = 0; i < 29; i++) {
         

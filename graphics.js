@@ -75,7 +75,12 @@
             case 3:return getMiscObject(BB);break;
             case 4:{if (Hex.substring(1,2) === "1"){return gfxStairs[0];}
                      else {return gfxStairs[1];};break;}
-            case 5:{if (BB%4 === 2 || BB%4 === 3) {return gfxDoor[1];}else{return gfxDoor[0];}}break;
+            case 5:{if ((BB%4 === 2 || BB%4 === 3) && BB%2 === 1) {
+                        return gfxDoor[1];
+                    }else if((BB%4 === 0 || BB%4 === 1) && BB%2 === 1){
+                        return gfxDoor[0];}
+                    else if(BB%2 === 0){return gfxDoor[2];};
+                }break;
             case 6:{if (Hex === "0706"){return gfxFloor[1];} //Roof Pit
                     if (BB % 4 === 0) {return null;} 
                     else if (BB % 4 === 1) {return gfxFloor[0];} //Floor Pit
@@ -277,7 +282,10 @@
         // drawn for each block, if the block is a Wall or Wooden object which
         // has 4 sides we draw each of the sides, if it is not a Wooden object
         // or Wall we just draw a single image.
-        try {
+        
+        myDIx(ctx, img, background[p.pbg], p, scale);
+        
+//        try {
         for (x = 0;x < 19;x++){
           
           var BlockType = parseInt(p.View[x].substring(3,4));
@@ -408,8 +416,8 @@
      }
     }
         } 
-        catch (c){PrintLog("Error Reading Players View - " + c.toString())};
-    }
+//        catch (c){PrintLog("Error Reading Players View - " + c.toString());};
+//    }
     
     function drawDoorFrame(p){
         

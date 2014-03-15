@@ -71,7 +71,7 @@ gfxFloor[2] = document.getElementById("FloorPad");
 var gfxPos = SpriteSheetArray();
 var b = 0;
 var p1 = new player(12, 22, 3,0,0,0);
-var p2 = new player(14,22,3,0,0,350);
+var p2 = new player(14,22,3,0,400,0);
 var tw = new Tower();
      
 document.addEventListener('touchstart', doTouchStart, false);
@@ -87,14 +87,23 @@ function updatePlayerViewScreen(){
     if (typeof tw !== "undefined") {
             clearCanvas();
             configCanvas();
-            myDIx(ctx, img, background[b], p1, scale);
+            //myDIx(ctx, img, background[b], p1, scale);
             p1.pView(tw.Levels[p1.level].Map);
             drawPlayersView(p1);
-            ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,250);
-            ctx.fillText("Current Map: " +Maps[CurrentMap],10,270);
-            ctx.fillText("Level: " + p1.level.toString(),10,290);
-            ctx.fillText(canvas_x + " - " + canvas_y,10,310);
+            ctx.fillText("Player 1",10,250);
+            ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,270);
+            ctx.fillText("Current Map: " +Maps[CurrentMap],10,290);
+            ctx.fillText("Level: " + p1.level.toString(),10,310);
+            ctx.fillText(canvas_x + " - " + canvas_y,10,330);
+            ctx.fillText("FPS: " + fps.getFPS(),10,350);
             if (debug){PrintLog("Screen Updated");}
+            //myDIx(ctx, img, background[b], p2, scale);
+            p2.pView(tw.Levels[p2.level].Map);
+            drawPlayersView(p2);
+            ctx.fillText("Player 2",410,250);
+            ctx.fillText("X:" + p2.X.toString() + "\n Y:"  + p2.Y.toString(),410,270);
+            ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
+            ctx.fillText("Level: " + p2.level.toString(),410,310);
     }
 }
 
@@ -113,145 +122,7 @@ function configCanvas() {
         ctx.font = "bold 20px Calibri";
 }
 
-function doTouchStart(e) {
-    
-            canvas_x = event.targetTouches[0].pageX;
-            canvas_y = event.targetTouches[0].pageY;
-    
-            if (canvas_y < 300 & (canvas_x > 120 & canvas_x < 270)){
-                clearCanvas();
-                configCanvas();
-                myDIx(ctx, img, background[b], p1, scale);
-                p1.moveForward();
-                p1.pView(tw.Levels[p1.level].Map);
-                drawPlayersView(p1);
-                event.preventDefault();
-            }
-            else if (canvas_y > 300 & (canvas_x > 120 & canvas_x < 270)){
-                clearCanvas();
-                configCanvas();
-                myDIx(ctx, img, background[b], p1, scale);
-                p1.moveBackwards();
-                p1.pView(tw.Levels[p1.level].Map);
-                drawPlayersView(p1);
-            }
-            else if (canvas_y < 300 & (canvas_x > 270)){
-                clearCanvas();
-                configCanvas();
-                myDIx(ctx, img, background[b], p1, scale);
-                p1.RotatePlayer(0);
-                p1.pView(tw.Levels[p1.level].Map);
-                drawPlayersView(p1);                
-            }
-            else if (canvas_y < 300 & (canvas_x < 120)){
-                clearCanvas();
-                configCanvas();
-                myDIx(ctx, img, background[b], p1, scale);
-                p1.RotatePlayer(1);
-                p1.pView(tw.Levels[p1.level].Map);
-                drawPlayersView(p1);                
-            }
-            
-    
 
-                       
-        
-}
-
-function doKeyDown(e) {
-
-    switch (e.keyCode)
-    {
-        //===============
-        // THE L KEY
-        //===============
-        
-        case 76: {
-            tw = new Tower();
-            CurrentMap = CurrentMap + 1;
-            if (CurrentMap > Maps.length -1){
-                CurrentMap = 0;
-            }
-            p1.X = 0;
-            p1.Y = 0;
-            GetDataView("maps/"+Maps[CurrentMap]+".MAP",mapdate);                        
-            break; 
-        }
-        
-        
-        //===============
-        // THE T KEY
-        //===============
-        
-        case 84: {           
-            p1.ChangeUpLevel();                      
-            break; 
-        }
-        
-        //===============
-        // THE G KEY
-        //===============
-        
-        case 71: {            
-            p1.ChangeDownLevel();            
-            break;   
-        }
-        
-        
-            //====================
-            //	THE W KEY
-            //====================
-
-        case 87:
-            p1.moveForward();            
-            break;
-
-            //====================
-            //	THE S KEY
-            //====================
-            
-        case 83:
-            p1.moveBackwards();
-            break;
-
-            //====================
-            //	THE A KEY
-            //====================
-        case 65:
-            p1.moveLeft();
-            break;
-
-            //====================
-            //	THE D KEY
-            //====================
-        case 68:
-            p1.moveRight();
-            break;
-        
-            //====================
-            //	THE Q KEY
-            //====================
-        case 69:
-            p1.RotatePlayer(0);
-            break;
-            
-            //====================
-            //	THE E KEY
-            //====================
-        case 81:
-            p1.RotatePlayer(1);
-            break;
-        default:{};break;
-    }
-
-
-    if (b === 0) {
-        b = 1;
-    }
-    else {
-        b = 0;
-    }
-}
 
 function clearCanvas() {
     canvas.width = canvas.width;

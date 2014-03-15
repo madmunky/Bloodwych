@@ -5,6 +5,7 @@ Game.prototype = {
         this.fps = 5;
         this.step = 1 / this.fps;
         this.reset();
+        this.eventQueue = [];
     },
     
     // Reset the game
@@ -15,6 +16,9 @@ Game.prototype = {
     // Update the game model
     update: function() {
         PrintLog("Game Updated");
+        for (i = 0; i < this.eventQueue.length; i += 1) {
+            
+        }
     },
 
     subscribe: function(e, callback, target) {
