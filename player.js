@@ -7,7 +7,11 @@ function player(posX,posY,level,rotation,PortX,PortY) {
     this.PortalX=PortX;
     this.PortalY=PortY;
     this.View = [];
-    this.pbg = 0;    
+    this.pbg = 0;
+    this.lastX = posX;
+    this.lastY = posY;
+   
+   tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
    
 }
 
@@ -30,7 +34,7 @@ function checkObject(hex) {
     
     //var t = hex.substring(3,4);
     
-    if (hex.substring(1,2) === "8"){
+    if (hex.substring(2,3) === "8"){
         return;false;
     }
     
@@ -40,6 +44,7 @@ function checkObject(hex) {
         case "1": {return false;};
         case "3": {return false;};
         case "5": {if (hex.substring(1, 2) % 2 === 0){return true;}else{return false;}};
+        
         default: {return true;break};
         
     }       
@@ -79,7 +84,7 @@ player.prototype.switchPlayerBackground = function() {
     
 };
 
-player.prototype.UpdateAction = function() {
+player.prototype.Action = function() {
     
     if (this.View[15].substring(3,4) === "5") {
     
@@ -103,14 +108,14 @@ player.prototype.UpdateAction = function() {
 
         switch (this.View[15].substring(1,2)) {
 
-         case "0" :{tw.Levels[this.level].Map[MapY][MapX] = "0105";break;};
-         case "1" :{tw.Levels[this.level].Map[MapY][MapX] = "0005";break;};
-         case "2" :{tw.Levels[this.level].Map[MapY][MapX] = "0305";break;};
-         case "3" :{tw.Levels[this.level].Map[MapY][MapX] = "0205";break;};
-         case "4" :{tw.Levels[this.level].Map[MapY][MapX] = "0505";break;};
-         case "5" :{tw.Levels[this.level].Map[MapY][MapX] = "0405";break;};
-         case "6" :{tw.Levels[this.level].Map[MapY][MapX] = "0705";break;};
-         case "7" :{tw.Levels[this.level].Map[MapY][MapX] = "0605";break;};
+         case "0" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"1");break;};
+         case "1" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"0");break;};
+         case "2" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"3");break;};
+         case "3" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"2");break;};
+         case "4" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"5");break;};
+         case "5" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"4");break;};
+         case "6" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"7");break;};
+         case "7" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"6");break;};
          
          default:{break;};
 
@@ -118,11 +123,17 @@ player.prototype.UpdateAction = function() {
     }    
 };
 
+String.prototype.replaceAt=function(index, character) {
+    return this.substr(0, index) + character + this.substr(index+character.length);
+};
+
 player.prototype.UpdateMap = function() {
     
-    
-    
-}
+  tw.Levels[this.level].Map[this.lastY][this.lastX] = tw.Levels[this.level].Map[this.lastY][this.lastX].replaceAt(2,"0");  
+  tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");  
+  this.lastX = this.X;
+  this.lastY = this.Y;
+};
 
 player.prototype.moveForward = function() {
 
@@ -140,6 +151,7 @@ player.prototype.moveForward = function() {
        this.Y = this.Y + (1 * yo) - (0 * xo);
        this.X = this.X + (1 * xo) + (0 * yo);
        this.switchPlayerBackground();
+       this.UpdateMap();
        if (debug) {PrintLog("Player Moved Forward");}
     }    
 };
@@ -159,6 +171,7 @@ player.prototype.moveBackwards = function() {
        this.Y = this.Y - (1 * yo) - (0 * xo);
        this.X = this.X - (1 * xo) + (0 * yo);
        this.switchPlayerBackground();
+       this.UpdateMap();
        if (debug) {PrintLog("Player Moved Backwards");}
 
     }
@@ -179,6 +192,7 @@ player.prototype.moveLeft = function() {
     this.Y = this.Y - (0 * yo) - (1 * xo);
     this.X = this.X - (0 * xo) + (1 * yo);
     this.switchPlayerBackground();
+    this.UpdateMap();
     if (debug) {PrintLog("Player Moved Left");}    
    }
 };
@@ -197,6 +211,7 @@ player.prototype.moveRight = function() {
     this.Y = this.Y - (0 * yo) + (1 * xo);
     this.X = this.X - (0 * xo) - (1 * yo);
     this.switchPlayerBackground();
+    this.UpdateMap();
     if (debug) {PrintLog("Player Moved Right");}
     
    }

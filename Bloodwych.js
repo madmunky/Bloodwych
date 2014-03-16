@@ -70,10 +70,12 @@ gfxFloor[2] = document.getElementById("FloorPad");
 
 var gfxPos = SpriteSheetArray();
 var b = 0;
-var p1 = new player(12, 22, 3,0,0,0);
-var p2 = new player(14,22,3,0,400,0);
+var p1;
+var p2;
 var tw = new Tower();
-     
+
+
+
 document.addEventListener('touchstart', doTouchStart, false);
 
 //Touch Screen Stuff

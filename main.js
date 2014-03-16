@@ -39,5 +39,5 @@ Run = function() {
         game.init && game.init();
         render.init && render.init();
         run();
-    }
+    };
 }();

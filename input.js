@@ -59,7 +59,7 @@ function doKeyDown(e) {
         case 39: {p2.moveRight();break} //Right Arrow
         case 46: {p2.RotatePlayer(1);break} //Delete
         case 34: {p2.RotatePlayer(0);break} //Page Dn
-        case 35: {p2.UpdateAction();break} //End Key
+        case 35: {p2.Action();break} //End Key
         
         case 76: {  // THE L KEY
             tw = new Tower();
@@ -74,7 +74,7 @@ function doKeyDown(e) {
         }
         
         case 84: {p1.ChangeUpLevel();break;}    // T KEY     
-        case 32: {p1.UpdateAction();break;}      // SpaceBar        
+        case 32: {p1.Action();break;}      // SpaceBar        
         case 71: {p1.ChangeDownLevel(); break;} // G KEY  
         case 87: {p1.moveForward();break;}      // W KEY
         case 83: {p1.moveBackwards();break;}    // S KEY
