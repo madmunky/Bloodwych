@@ -15,7 +15,7 @@ Game.prototype = {
     
     // Update the game model
     update: function() {
-        PrintLog("Game Updated");
+        //PrintLog("Game Updated");
         for (i = 0; i < this.eventQueue.length; i += 1) {
             
         }

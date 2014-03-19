@@ -1,11 +1,6 @@
 
 //Setup some global Varibles for needed
-//var canvas = document.getElementById("gamePort");
-//
-//var ctx = canvas.getContext("2d");
-//ctx.imageSmoothingEnabled = false;
-//ctx.webkitImageSmoothingEnabled = false;
-//ctx.mozImageSmoothingEnabled = false;
+
 GetDataView("maps/MOD0.MAP",mapdate);
 
 var scale = 3;
@@ -89,17 +84,15 @@ function updatePlayerViewScreen(){
     if (typeof tw !== "undefined") {
             clearCanvas();
             configCanvas();
-            //myDIx(ctx, img, background[b], p1, scale);
             p1.pView(tw.Levels[p1.level].Map);
             drawPlayersView(p1);
-            ctx.fillText("Player 1",10,250);
-            ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),10,270);
-            ctx.fillText("Current Map: " +Maps[CurrentMap],10,290);
-            ctx.fillText("Level: " + p1.level.toString(),10,310);
-            ctx.fillText(canvas_x + " - " + canvas_y,10,330);
-            ctx.fillText("FPS: " + fps.getFPS(),10,350);
-            if (debug){PrintLog("Screen Updated");}
-            //myDIx(ctx, img, background[b], p2, scale);
+            ctx.fillText("Player 1",0,250);
+            ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),0,270);
+            ctx.fillText("Current Map: " +Maps[CurrentMap],0,290);
+            ctx.fillText("Level: " + p1.level.toString(),0,310);
+            ctx.fillText(canvas_x + " - " + canvas_y,0,330);
+            ctx.fillText("FPS: " + fps.getFPS(),0,350);
+            //if (debug){PrintLog("Screen Updated");}
             p2.pView(tw.Levels[p2.level].Map);
             drawPlayersView(p2);
             ctx.fillText("Player 2",410,250);

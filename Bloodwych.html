@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-<body>
+<body style="overflow:hidden;">
 
 	<HEADER>
 		<img id="bloodwych" src="images/logo.png">
                 <P>Player 1 Key: Q,W,E,A,S,D - SpaceBar Opens Doors</P>
-                <P>Player 2 Key: Arrow Keys, Del/Page Dn to Rotate - End Key Opens Doors</P>
+                <P>Player 2 Key: Number Pad 7,8,9,4,5,6 - 0 Opens Doors</P>
                 <P>Change Level: T,G</P>
                 <P>Change Tower: L</P>
 	</HEADER>
@@ -35,7 +35,7 @@
         <img id="FloorPad" src="images/screen21.png" style="display:none">
         <img id="GemSlot" src="images/screen22.png" style="display:none">
 	
-        <canvas id="gamePort" width="800" height="400" tabindex="1"></canvas>
+        <canvas id="gamePort" width="795" height="400" tabindex="1" style="border: 2px solid black;padding: 2px;"></canvas>
         
         <script src="Map.js"></script>
         <script src="fileloader.js"></script>
@@ -45,6 +45,7 @@
 	<script src="game.js" type="text/javascript" charset="utf-8"></script>
 	<script src="renderer.js" type="text/javascript" charset="utf-8"></script>
 	<script src="main.js" type="text/javascript" charset="utf-8"></script>
+        <script src="tools.js" type="text/javascript" charset="utf-8"></script>
         <script src="Bloodwych.js"></script>
     
 	<SCRIPT>

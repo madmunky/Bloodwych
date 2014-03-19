@@ -44,7 +44,7 @@
     
     function PrintLog(myString) {       
         
-        console.log(getTimeStamp() +" Debug: " +myString);
+        if (debug) {console.log(getTimeStamp() +" Debug: " +myString);}
         
     }
     
@@ -65,6 +65,7 @@
       // I may need to pass the Graphics Position to be drawn so I can work out which graphic
       // to be return for each wall side.
       
+      
       var CC = parseInt(Hex.substring(3),16);
       var BB = parseInt(Hex.substring(1,2),16);
       
@@ -73,10 +74,8 @@
             case 1:return getStoneWall(Hex,d,pos,p);break;
             case 2:return getWoodenObject(Hex,d,pos,p);break;
             case 3:return getMiscObject(BB);break;
-            case 4:{if (Hex.substring(1,2) === "1"){return gfxStairs[0];}
-                     else {return gfxStairs[1];};break;}
-            case 5:{if ((BB%4 === 2 || BB%4 === 3) && BB%2 === 1) {
-                        return gfxDoor[1];
+            case 4:{if (BB % 2 === 1){return gfxStairs[0];}else {return gfxStairs[1];};break;}
+            case 5:{if ((BB%4 === 2 || BB%4 === 3) && BB%2 === 1) {return gfxDoor[1];
                     }else if((BB%4 === 0 || BB%4 === 1) && BB%2 === 1){
                         return gfxDoor[0];}
                     else if(BB%2 === 0){return gfxDoor[2];};
@@ -88,7 +87,7 @@
                     else if (BB % 4 === 3) {return null;} //Blank space
                     else {PrintLog("Get Image Failed - " + Hex);return null;}} //Default blank space
             case 7:PrintLog("Get Image Failed - " + Hex);return null;break;
-            default:PrintLog("Get Image Failed - " + Hex)
+            default:PrintLog("Get Image Failed - " + Hex);
         }
         
     };
@@ -416,8 +415,6 @@
      }
     }
         } 
-//        catch (c){PrintLog("Error Reading Players View - " + c.toString());};
-//    }
     
     function drawDoorFrame(p){
         

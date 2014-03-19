@@ -10,8 +10,9 @@ function player(posX,posY,level,rotation,PortX,PortY) {
     this.pbg = 0;
     this.lastX = posX;
     this.lastY = posY;
+    //this.lastLevel = this.level;
    
-   tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
+  tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
    
 }
 
@@ -28,13 +29,11 @@ var Direction = {
         }
     };
 
-
-
 function checkObject(hex) {
     
     //var t = hex.substring(3,4);
     
-    if (hex.substring(2,3) === "8"){
+    if (parseInt(hex.substring(2,3),16) === 8){
         return;false;
     }
     
@@ -43,7 +42,7 @@ function checkObject(hex) {
         case "0": {return true;};
         case "1": {return false;};
         case "3": {return false;};
-        case "5": {if (hex.substring(1, 2) % 2 === 0){return true;}else{return false;}};
+        case "5": {if (parseInt(hex.substring(1, 2),16) % 2 === 0){return true;}else{return false;}};
         
         default: {return true;break};
         
@@ -53,7 +52,7 @@ function checkObject(hex) {
 
 player.prototype.ChangeUpLevel = function() {
     
-    this.level = this.level + 1;
+    this.level++;
     if (this.level > tw.length){
         this.level = 0;
     }
@@ -66,7 +65,7 @@ player.prototype.ChangeUpLevel = function() {
 
 player.prototype.ChangeDownLevel = function() {
     
-    this.level = this.level - 1;
+    this.level--;
     if (this.level < tw.length){
         this.level = tw.length;
     }
@@ -101,38 +100,40 @@ player.prototype.Action = function() {
 
            MapY = this.Y + (1 * yo) - (0 * xo);
            MapX = this.X + (1 * xo) + (0 * yo);
+ 
+        var t = parseInt(this.View[15].substring(1,2),16);
+ 
+ 
+        switch (t) {
 
-           var tmp1 = (tw.Levels[this.level].Map[MapY][MapX]);
-           var tmp = (tw.Levels[this.level].Map[MapY][MapX].replace("1","0"));
-           var tmp3 = this.View[15].substring(1,2);
-
-        switch (this.View[15].substring(1,2)) {
-
-         case "0" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"1");break;};
-         case "1" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"0");break;};
-         case "2" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"3");break;};
-         case "3" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"2");break;};
-         case "4" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"5");break;};
-         case "5" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"4");break;};
-         case "6" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"7");break;};
-         case "7" :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"6");break;};
-         
+         case 0 :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"1");break;};
+         case 1 :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"0");break;};
+         case 2 :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"3");break;};
+         case 3 :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"2");break;};
+         case 4 :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"5");break;};
+         case 5 :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"4");break;};
+         case 6 :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"7");break;};
+         case 7 :{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"6");break;};
+         case 14:{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"F");break;};
+         case 15:{tw.Levels[this.level].Map[MapY][MapX] = tw.Levels[this.level].Map[MapY][MapX].replaceAt(1,"E");break;};
          default:{break;};
 
         }
     }    
 };
 
-String.prototype.replaceAt=function(index, character) {
-    return this.substr(0, index) + character + this.substr(index+character.length);
-};
-
 player.prototype.UpdateMap = function() {
-    
-  tw.Levels[this.level].Map[this.lastY][this.lastX] = tw.Levels[this.level].Map[this.lastY][this.lastX].replaceAt(2,"0");  
-  tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");  
+
+
+  try {  
+        tw.Levels[this.level].Map[this.lastY][this.lastX] = tw.Levels[this.level].Map[this.lastY][this.lastX].replaceAt(2,"0");  
+        tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");  
+     }catch (e){PrintLog("Error: " + e);};
+  
   this.lastX = this.X;
   this.lastY = this.Y;
+  //this.lastLevel = this.level;
+  
 };
 
 player.prototype.moveForward = function() {
@@ -150,9 +151,8 @@ player.prototype.moveForward = function() {
         
        this.Y = this.Y + (1 * yo) - (0 * xo);
        this.X = this.X + (1 * xo) + (0 * yo);
-       this.switchPlayerBackground();
-       this.UpdateMap();
        if (debug) {PrintLog("Player Moved Forward");}
+       playerEvents(this);
     }    
 };
 
@@ -170,11 +170,11 @@ player.prototype.moveBackwards = function() {
         
        this.Y = this.Y - (1 * yo) - (0 * xo);
        this.X = this.X - (1 * xo) + (0 * yo);
-       this.switchPlayerBackground();
-       this.UpdateMap();
-       if (debug) {PrintLog("Player Moved Backwards");}
-
+       if (debug) {PrintLog("Player Moved Backwards");}       
+       
+       
     }
+    playerEvents(this);
 };
 
 player.prototype.moveLeft = function() {
@@ -191,9 +191,8 @@ player.prototype.moveLeft = function() {
     
     this.Y = this.Y - (0 * yo) - (1 * xo);
     this.X = this.X - (0 * xo) + (1 * yo);
-    this.switchPlayerBackground();
-    this.UpdateMap();
-    if (debug) {PrintLog("Player Moved Left");}    
+    if (debug) {PrintLog("Player Moved Left");}   
+    playerEvents(this);
    }
 };
 
@@ -210,10 +209,9 @@ player.prototype.moveRight = function() {
     
     this.Y = this.Y - (0 * yo) + (1 * xo);
     this.X = this.X - (0 * xo) - (1 * yo);
-    this.switchPlayerBackground();
-    this.UpdateMap();
     if (debug) {PrintLog("Player Moved Right");}
-    
+    playerEvents(this);
+    this.View[18]
    }
 };
 
@@ -234,7 +232,7 @@ player.prototype.RotatePlayer = function(d){
         if (debug) {PrintLog("Player Rotated Clockwise");}
     }   
     this.switchPlayerBackground();
-    
+    checkCurrentSqaure(this);
 };
 
 player.prototype.pView = function(m){
@@ -331,4 +329,109 @@ player.prototype.drawView = function(p) {
             
         }        
     } 
+    
+    
+    
 };
+
+function playerEvents(p) {
+    
+       p.switchPlayerBackground();
+       p.UpdateMap();
+       p1.pView(tw.Levels[p1.level].Map);
+       drawPlayersView(p);
+       checkCurrentSqaure(p);
+       
+}
+
+function checkCurrentSqaure(p) {
+    
+    switch (parseInt(p.View[18].substring(3,4),16)) {
+        
+        case 4: {playerOnStair(p);};break;
+        default: break;        
+        
+    }
+     
+}
+
+function playerOnStair(p){
+    
+     BB = parseInt(p.View[18].substring(1, 2));
+        
+        if (BB % 2 === 0){changePlayerLevel(p,true);} // "Stairs Up";            
+        else if (BB % 2 === 1){changePlayerLevel(p,false);} // "Stairs Down";
+        
+         switch (BB) {
+            case 0:
+            case 1: // "South"
+                p.Rotation = 2;
+                if (BB % 2 === 0){
+                    p.X = p.X - tw.Levels[p.level].xOffset;
+                    p.Y = (p.Y - tw.Levels[p.level].yOffset) +2;
+                }
+                else {
+                    p.X = p.X + tw.Levels[p.level +1].xOffset;
+                    p.Y = (p.Y + tw.Levels[p.level +1].yOffset) +2;
+                }
+                break;
+            case 2:
+            case 3: // "West";
+                p.Rotation = 3;
+                if (BB % 2 === 0){  
+                    p.X = p.X - (tw.Levels[p.level].xOffset - tw.Levels[p.level -1].xOffset) -2;
+                    p.Y = (p.Y - (tw.Levels[p.level].yOffset - tw.Levels[p.level -1].yOffset)) ;
+                }
+                else {
+                    p.X = p.X + (tw.Levels[p.level +1].xOffset - tw.Levels[p.level].xOffset) -2;
+                    p.Y = (p.Y + (tw.Levels[p.level +1].yOffset - tw.Levels[p.level].yOffset)) ;
+                }
+                break;
+            case 4:
+            case 5: // "North";
+                p.Rotation = 0;
+                if (BB % 2 === 0){
+                    p.X = p.X - tw.Levels[p.level].xOffset;
+                    p.Y = (p.Y - tw.Levels[p.level].yOffset) -2;
+                }
+                else {
+                    p.X = p.X + tw.Levels[p.level +1].xOffset;
+                    p.Y = (p.Y + tw.Levels[p.level +1].yOffset) -2;
+                }
+                break;
+            case 6:
+            case 7: // "East";
+                p.Rotation = 1;
+                if (BB % 2 === 0){  
+                    p.X = p.X - (tw.Levels[p.level].xOffset - tw.Levels[p.level -1].xOffset) +2;
+                    p.Y = (p.Y - (tw.Levels[p.level].yOffset - tw.Levels[p.level -1].yOffset)) ;
+                }
+                else {                    
+                    p.X = p.X + (tw.Levels[p.level +1].xOffset - tw.Levels[p.level].xOffset) +2;
+                    p.Y = (p.Y + (tw.Levels[p.level +1].yOffset - tw.Levels[p.level].yOffset)) ;
+                }
+                break;
+            default:
+                break;
+        }
+    p.UpdateMap();
+}
+
+function changePlayerLevel(p,l){
+    
+    //Change the Players Level
+    //l = Boolean
+    //True = Move Player Up a Level
+    //False = Move Player Down a Level
+    
+    p.lastlevel = p.level;
+    
+    if (l) {        
+        p.level = p.level +1 ;        
+    }
+    else {
+        p.level = p.level -1 ;
+    }
+    
+}
+

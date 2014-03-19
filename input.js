@@ -53,13 +53,13 @@ function doKeyDown(e) {
     switch (e.keyCode)
     {
         
-        case 38: {p2.moveForward();break} //Up Arrow
-        case 40: {p2.moveBackwards();break} //Down Arrow
-        case 37: {p2.moveLeft();break} //Left Arrow
-        case 39: {p2.moveRight();break} //Right Arrow
-        case 46: {p2.RotatePlayer(1);break} //Delete
-        case 34: {p2.RotatePlayer(0);break} //Page Dn
-        case 35: {p2.Action();break} //End Key
+        case 104: {p2.moveForward();break} //Up Arrow
+        case 101: {p2.moveBackwards();break} //Down Arrow
+        case 100: {p2.moveLeft();break} //Left Arrow
+        case 102: {p2.moveRight();break} //Right Arrow
+        case 103: {p2.RotatePlayer(1);break} //Delete
+        case 105: {p2.RotatePlayer(0);break} //Page Dn
+        case  96: {p2.Action();break} //End Key
         
         case 76: {  // THE L KEY
             tw = new Tower();
