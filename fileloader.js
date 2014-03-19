@@ -45,8 +45,7 @@ function mapdate(evt) {
         //for falling though pits or walking down stairs.
         
         tw = new Tower();
-       
-        
+               
         for (x = 0; x < 8; x++) {
             var Level = new Map(uInt8Array[x+8], uInt8Array[x], uInt8Array[x + 32], uInt8Array[x + 40]);
             tw.Levels.push(Level);
@@ -70,7 +69,7 @@ function mapdate(evt) {
         }
         
         //p1 = new player(12, 22, 3,0,0,0);
-        p1 = new player(3, 0, 5,3,0,0);
+        p1 = new player(18,13,3,3,0,0);
         p2 = new player(14,22,3,0,410,0);
         tw.onload = Run();
     }
