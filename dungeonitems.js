@@ -53,4 +53,256 @@ function returnType(t) {
     
 }
 
+function WoodenObjectPassable(hex,p) {
+    
+        var b = hexToBinary(hex.substring(0,2));
+        var s = [];
+        s[0] = b.result.substring(6,8); //North Face
+        s[1] = b.result.substring(4,6); //East Face
+        s[2] = b.result.substring(2,4); //South Face
+        s[3] = b.result.substring(0,2); //West Face
+        
+        var CurrentBlock = false;
+        
+        if (hex === p.View[18]){CurrentBlock = true;};
+        
+        if (CurrentBlock){
+            
+            switch (p.Rotation) {
+            
+        case 0:{
+                switch (p.moving) {                    
+                    case 0:{return WoodType(s[0]);};break;
+                    case 1:{return WoodType(s[3]);};break;
+                    case 2:{return WoodType(s[2]);};break;
+                    case 3:{return WoodType(s[1]);};break;                        
+                }                
+        };break;
+        case 1:{
+                switch (p.moving) {                    
+                    case 0:{return WoodType(s[1]);};break;
+                    case 1:{return WoodType(s[0]);};break;
+                    case 2:{return WoodType(s[3]);};break;
+                    case 3:{return WoodType(s[2]);};break;                        
+                }  
+        };break;
+        case 2:{
+                switch (p.moving) {                    
+                    case 0:{return WoodType(s[2]);};break;
+                    case 1:{return WoodType(s[1]);};break;
+                    case 2:{return WoodType(s[0]);};break;
+                    case 3:{return WoodType(s[3]);};break;                        
+                }  
+        };break;
+        case 3:{
+                switch (p.moving) {                    
+                    case 0:{return WoodType(s[3]);};break;
+                    case 1:{return WoodType(s[2]);};break;
+                    case 2:{return WoodType(s[1]);};break;
+                    case 3:{return WoodType(s[0]);};break;                        
+                }  
+        };break;}            
+        }
+        else {
+            
+        switch (p.Rotation) {
+            
+        case 0:{
+                switch (p.moving) {                    
+                    case 0:{return WoodType(s[2]);};break;
+                    case 1:{return WoodType(s[1]);};break;
+                    case 2:{return WoodType(s[0]);};break;
+                    case 3:{return WoodType(s[3]);};break;                        
+                }                
+        };break;
+        case 1:{
+                switch (p.moving) {                    
+                    case 0:{return WoodType(s[3]);};break;
+                    case 1:{return WoodType(s[2]);};break;
+                    case 2:{return WoodType(s[1]);};break;
+                    case 3:{return WoodType(s[0]);};break;                        
+                }  
+        };break;
+        case 2:{
+                switch (p.moving) {                    
+                    case 0:{return WoodType(s[0]);};break;
+                    case 1:{return WoodType(s[3]);};break;
+                    case 2:{return WoodType(s[2]);};break;
+                    case 3:{return WoodType(s[1]);};break;                        
+                }  
+        };break;
+        case 3:{
+                switch (p.moving) {                    
+                    case 0:{return WoodType(s[1]);};break;
+                    case 1:{return WoodType(s[0]);};break;
+                    case 2:{return WoodType(s[3]);};break;
+                    case 3:{return WoodType(s[2]);};break;                        
+                }  
+        };break;
+            
+        }}    
+    
+}
+
+function ReturnWoodenObject(hex,p) {
+    
+        var b = hexToBinary(hex.substring(0,2));
+        var s = [];
+        s[0] = b.result.substring(6,8); //North Face
+        s[1] = b.result.substring(4,6); //East Face
+        s[2] = b.result.substring(2,4); //South Face
+        s[3] = b.result.substring(0,2); //West Face
+        
+        var CurrentBlock = false;
+        
+        if (hex === p.View[18]){CurrentBlock = true;};
+        
+        if (CurrentBlock){
+            
+            switch (p.Rotation) {
+            
+        case 0:{
+                switch (p.moving) {                    
+                    case 0:{return s[0];};break;
+                    case 1:{return s[3];};break;
+                    case 2:{return s[2];};break;
+                    case 3:{return s[1];};break;                        
+                }                
+        };break;
+        case 1:{
+                switch (p.moving) {                    
+                    case 0:{return s[3];};break;
+                    case 1:{return s[0];};break;
+                    case 2:{return s[1];};break;
+                    case 3:{return s[2];};break;                        
+                }  
+        };break;
+        case 2:{
+                switch (p.moving) {                    
+                    case 0:{return s[2];};break;
+                    case 1:{return s[1];};break;
+                    case 2:{return s[0];};break;
+                    case 3:{return s[3];};break;                        
+                }  
+        };break;
+        case 3:{
+                switch (p.moving) {                    
+                    case 0:{return s[1];};break;
+                    case 1:{return s[2];};break;
+                    case 2:{return s[3];};break;
+                    case 3:{return s[0];};break;                        
+                }  
+        };break;
+            
+        }
+            
+        }
+        else {
+        
+        switch (p.Rotation) {
+            
+        case 0:{
+                switch (p.moving) {                    
+                    case 0:{return s[2];};break;
+                    case 1:{return s[1];};break;
+                    case 2:{return s[0];};break;
+                    case 3:{return s[3];};break;                        
+                }                
+        };break;
+        case 1:{
+                switch (p.moving) {                    
+                    case 0:{return s[3];};break;
+                    case 1:{return s[2];};break;
+                    case 2:{return s[1];};break;
+                    case 3:{return s[0];};break;                        
+                }  
+        };break;
+        case 2:{
+                switch (p.moving) {                    
+                    case 0:{return s[0];};break;
+                    case 1:{return s[3];};break;
+                    case 2:{return s[2];};break;
+                    case 3:{return s[1];};break;                        
+                }  
+        };break;
+        case 3:{
+                switch (p.moving) {                    
+                    case 0:{return s[1];};break;
+                    case 1:{return s[0];};break;
+                    case 2:{return s[3];};break;
+                    case 3:{return s[2];};break;                        
+                }  
+        };break;
+            
+        }}    
+    
+}
+
+function WoodType(hex) {
+    
+    var t = parseInt(hex,16);
+    
+    switch (parseInt(hex,16)) {
+        
+        case 0:{return true;};break;
+        case 1:{return false;};break;
+        case 16:{return true;};break;
+        case 17:{return false;};break;
+            
+    }
+    
+}
+
+function changeWoodenObject(hex,p){
+    
+        var b = hexToBinary(hex.substring(0,2));
+        var s = [];
+        s[0] = b.result.substring(6,8); //North Face
+        s[1] = b.result.substring(4,6); //East Face
+        s[2] = b.result.substring(2,4); //South Face
+        s[3] = b.result.substring(0,2); //West Face
+        
+        var CurrentBlock = false;
+        
+        if (hex === p.View[18]){CurrentBlock = true;};
+        
+        if (CurrentBlock){
+            
+            switch (p.Rotation) {            
+                case 0:{s[0] = toggleWoodenDoor(s[0]);};break;
+                case 1:{s[1] = toggleWoodenDoor(s[1]);};break;
+                case 2:{s[2] = toggleWoodenDoor(s[2]);};break;
+                case 3:{s[3] = toggleWoodenDoor(s[3]);};break;    
+        }                   
+        }
+        else {switch (p.Rotation) {            
+                case 0:{s[2] = toggleWoodenDoor(s[2]);};break;
+                case 1:{s[3] = toggleWoodenDoor(s[3]);};break;
+                case 2:{s[0] = toggleWoodenDoor(s[0]);};break;
+                case 3:{s[1] = toggleWoodenDoor(s[1]);};break;    
+        }} 
+        
+        var tt = s[3];
+        tt = tt + s[2];
+        tt = tt + s[1];
+        tt = tt + s[0];
+    
+        var t1 = tt.substring(0,4);
+        var t2 = tt.substring(4,8);
+        var t = binaryToHex(t1);
+        var ttt = binaryToHex(t2);
+        
+        return t.result + ttt.result;
+                
+}
+
+function toggleWoodenDoor(bit) {
+    
+    if (bit !== "00" && bit !== "01"){
+        if (bit === "11"){bit = "10";}else{bit = "11";}
+    }    
+    
+    return bit;
+    
+}
 

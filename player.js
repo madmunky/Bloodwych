@@ -10,8 +10,10 @@ function player(posX,posY,level,rotation,PortX,PortY) {
     this.pbg = 0;
     this.lastX = posX;
     this.lastY = posY;
+    this.lastLevel = level;
+    this.moving = 0; //0 = Forward,1 = Left, 2 = Backwards, 3 = Right
    
- // tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
+  tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
    
 }
 
@@ -28,18 +30,19 @@ var Direction = {
         }
     };
 
-function checkObject(hex) {
+function checkObject(hex,p) {
     
     //var t = hex.substring(3,4);
     
-    if (parseInt(hex.substring(2,3),16) === 8){
-        return;false;
-    }
+//    if (parseInt(hex.substring(2,3),16) === 8){
+//        return;false;
+//    }
     
     switch (hex.substring(3,4)) {
     
         case "0": {return true;};
         case "1": {return false;};
+        case "2": {return WoodenObjectPassable(hex,p);}
         case "3": {return false;};
         case "5": {if (parseInt(hex.substring(1, 2),16) % 2 === 0){return true;}else{return false;}};
         
@@ -116,32 +119,79 @@ player.prototype.Action = function() {
          default:{break;};
 
         }
-    }    
+    }  
+    
+    if (this.View[15].substring(3,4) === "2") {
+        
+        xo = 0, yo = 0;
+        var MapX;
+        var MapY;
+
+            switch (this.Rotation){
+              case 0: xo = 0; yo = -1; break;
+              case 1: xo = 1; yo = 0; break;
+              case 2: xo = 0; yo = 1; break;
+              case 3: xo = -1; yo = 0; break;
+            }
+
+           MapY = this.Y + (1 * yo) - (0 * xo);
+           MapX = this.X + (1 * xo) + (0 * yo);
+           
+           var t = changeWoodenObject(this.View[15],this);
+           var tt = this.View[15].substring(2,4);
+           tt = t+tt;
+           tw.Levels[this.level].Map[MapY][MapX] = tt;
+        
+    }
+    
+        if (this.View[18].substring(3,4) === "2"){
+        
+        xo = 0, yo = 0;
+        var MapX;
+        var MapY;
+
+            switch (this.Rotation){
+              case 0: xo = 0; yo = -1; break;
+              case 1: xo = 1; yo = 0; break;
+              case 2: xo = 0; yo = 1; break;
+              case 3: xo = -1; yo = 0; break;
+            }
+
+           MapY = this.Y ;
+           MapX = this.X ;
+           
+           var t = changeWoodenObject(this.View[18],this);
+           var tt = this.View[18].substring(2,4);
+           tt = t+tt;
+           tw.Levels[this.level].Map[MapY][MapX] = tt;
+           
+    }
+    
+    
+    
 };
 
 player.prototype.UpdateMap = function() {
-
-
-  try {  
-        tw.Levels[this.level].Map[this.lastY][this.lastX] = tw.Levels[this.level].Map[this.lastY][this.lastX].replaceAt(2,"0");
-        
-        if (this.View[18].substring(3,4) !== "6"){
-            tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");  
-        }
-     }catch (e){PrintLog("Error: " + e);};
+   
+        tw.Levels[this.lastLevel].Map[this.lastY][this.lastX] = tw.Levels[this.lastLevel].Map[this.lastY][this.lastX].replaceAt(2,"0");
+        tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");  
+         
   
   this.lastX = this.X;
   this.lastY = this.Y;
+  this.lastLevel = this.level;
   //this.lastLevel = this.level;
   
 };
 
 player.prototype.moveForward = function() {
-
+    
+    this.moving = 0;
+    this.UpdateMap();
     this.lastX = this.X;
     this.lastY = this.Y;
 
-    if (checkObject(this.View[15])) {
+    if (checkObject(this.View[15],this) && (checkObject(this.View[18],this))) {
 
         xo = 0, yo = 0;
         
@@ -162,11 +212,12 @@ player.prototype.moveForward = function() {
 };
 
 player.prototype.moveBackwards = function() {
-
+    this.moving = 2;
+    this.UpdateMap();
     this.lastX = this.X;
     this.lastY = this.Y;
 
-    if (checkObject(this.View[19])) {
+    if (checkObject(this.View[19],this) && (checkObject(this.View[18],this))) {
         xo = 0, yo = 0;
         
         switch (this.Rotation){
@@ -186,11 +237,12 @@ player.prototype.moveBackwards = function() {
 };
 
 player.prototype.moveLeft = function() {
-    
+    this.moving = 1;
+    this.UpdateMap();
     this.lastX = this.X;
     this.lastY = this.Y;
     
-   if (checkObject(this.View[17])) {
+   if (checkObject(this.View[17],this)&& (checkObject(this.View[18],this))) {
     xo = 0, yo = 0;
         
         switch (this.Rotation){
@@ -209,11 +261,12 @@ player.prototype.moveLeft = function() {
 };
 
 player.prototype.moveRight = function() {
-  
+    this.moving = 3;
+    this.UpdateMap();
     this.lastX = this.X;
     this.lastY = this.Y;
     
-   if (checkObject(this.View[16])) { 
+   if (checkObject(this.View[16],this)&& (checkObject(this.View[18],this))) { 
             xo = 0, yo = 0;
         
         switch (this.Rotation){
@@ -353,7 +406,7 @@ player.prototype.drawView = function(p) {
 
 function playerEvents(p) {
            
-      // p.UpdateMap();
+       p.UpdateMap();
        p.pView(tw.Levels[p.level].Map);
        drawPlayersView(p);
        checkCurrentSqaure(p);      
@@ -361,7 +414,7 @@ function playerEvents(p) {
 
 function checkCurrentSqaure(p) {    
   
-   //p.UpdateMap();
+   p.UpdateMap();
   
     switch (parseInt(p.View[18].substring(3,4),16)) {
         
@@ -440,7 +493,7 @@ function playerOnStair(p,stairs){
             default:
                 break;
         }
-    //p.UpdateMap();
+  //  p.UpdateMap();
 }
 
 function changePlayerLevel(p,l){
@@ -450,7 +503,7 @@ function changePlayerLevel(p,l){
     //True = Move Player Up a Level
     //False = Move Player Down a Level
     
-    p.lastlevel = p.level;
+    p.lastLevel = p.level;
     
     if (l) {        
         p.level = p.level +1 ;        

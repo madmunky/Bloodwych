@@ -68,8 +68,9 @@ function mapdate(evt) {
             tw.Levels[i].Map = mdata;
         }
         
-        //p1 = new player(12, 22, 3,0,0,0);
-        p1 = new player(18,13,3,3,0,0);
+        p1 = new player(12, 22, 3,0,0,0);
+        //p1 = new player(25,14,3,3,0,0);
+        //p2 = new player(24,14,3,0,410,0);
         p2 = new player(14,22,3,0,410,0);
         tw.onload = Run();
     }
