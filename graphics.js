@@ -42,7 +42,7 @@
 	  
     }
     
-    function PrintLog(myString) {       
+    function PrintLog(myString) {
         
         if (debug) {console.log(getTimeStamp() +" Debug: " +myString);}
         
@@ -68,26 +68,44 @@
       
       var CC = parseInt(Hex.substring(3),16);
       var BB = parseInt(Hex.substring(1,2),16);
+      var AA = parseInt(Hex.substring(0,1),16);
       
         switch (CC){
-            case 0:return null;break;
-            case 1:return getStoneWall(Hex,d,pos,p);break;
-            case 2:return getWoodenObject(Hex,d,pos,p);break;
-            case 3:return getMiscObject(BB);break;
-            case 4:{if (BB % 2 === 1){return gfxStairs[0];}else {return gfxStairs[1];};break;}
-            case 5:{if ((BB%4 === 2 || BB%4 === 3) && BB%2 === 1) {return gfxDoor[1];
-                    }else if((BB%4 === 0 || BB%4 === 1) && BB%2 === 1){
-                        return gfxDoor[0];}
-                    else if(BB%2 === 0){return gfxDoor[2];};
-                }break;
-            case 6:{if (Hex === "0706"){return gfxFloor[1];} //Roof Pit
+            case 0: return null;break;
+            case 1: return getStoneWall(Hex,d,pos,p);break;
+            case 2: return getWoodenObject(Hex,d,pos,p);break;
+            case 3: return getMiscObject(BB);break;
+            case 4: {if (BB % 2 === 1){return gfxStairs[0];}else {return gfxStairs[1];};break;}
+            case 5: {
+                if ((BB%4 === 2 || BB%4 === 3) && BB%2 === 1) {
+                    if(AA < 8) {
+                        return gfxDoor[DOOR_GATE][AA];
+                    } else {
+                        return gfxDoor[DOOR_GATE][8];
+                    }
+                } else if((BB%4 === 0 || BB%4 === 1) && BB%2 === 1) {
+                    if(AA < 8) {
+                        return gfxDoor[DOOR_SOLID][AA];
+                    } else {
+                        return gfxDoor[DOOR_SOLID][8];
+                    }
+                } else if(BB%2 === 0) {
+                    if(AA < 8) {
+                        return gfxDoor[DOOR_OPEN][AA];
+                    } else {
+                        return gfxDoor[DOOR_OPEN][8];
+                    }
+                };
+            }
+            break;
+            case 6: {if (Hex === "0706"){return gfxFloor[1];} //Roof Pit
                     if (BB % 4 === 0) {return null;} 
                     else if (BB % 4 === 1) {return gfxFloor[0];} //Floor Pit
                     else if (BB % 4 === 2) {return gfxFloor[2];} //Green Pad
                     else if (BB % 4 === 3) {return null;} //Blank space
                     else {PrintLog("Get Image Failed - " + Hex);return null;}} //Default blank space
-            case 7:PrintLog("Get Image Failed - " + Hex);return null;break;
-            default:PrintLog("Get Image Failed - " + Hex);
+            case 7: PrintLog("Get Image Failed - " + Hex);return null;break;
+            default: PrintLog("Get Image Failed - " + Hex);
         }
         
     };
@@ -500,21 +518,27 @@
         c.width = w;
         c.height = h;
         
-        var oC = [[64,128,224],[32,32,224],[160,160,160]];
-        
-        var Dragon = [[129,32,0],[224, 0, 0],[224, 129, 96]];
-        var Serpent = [[0,129,0],[0, 192, 0],[224, 129, 96]];
-        var Chaos = [[224,129,96],[224, 192, 0],[224, 129, 96]];
-        var Brown = [[129,32,0],[160, 64, 32],[224, 129, 96]];
-        var Plain = [64,64,64];
+        var PALETTE_NORMAL = [[96,96,96],[64,64,64],[0,0,0]];
+        var PALETTE_MOON = [[64,128,224],[32,32,224],[160,160,160]];
+        var PALETTE_DRAGON = [[129,32,0],[224, 0, 0],[224, 129, 96]];
+        var PALETTE_SERPENT = [[0,129,0],[0, 192, 0],[224, 129, 96]];
+        var PALETTE_CHAOS = [[224,129,96],[224, 192, 0],[224, 129, 96]];
+        var PALETTE_BRONZE = [[129,32,0],[160, 64, 32],[224, 129, 96]];
+        var PALETTE_IRON = [[196,196,196],[128,128,128],[96,96,96]];
+        var PALETTE_CHROMATIC = [[255,255,255],[255,255,255],[160,160,160]];
+        var PALETTE_LOCKED = [[0,0,0],[0,0,0],[64,64,64]];
         
         switch (pallet) {
             
-            case "Dragon": {pallet=Dragon;};break;
-            case "Chaos": {pallet=Chaos;};break;
-            case "Brown": {pallet=Brown;};break;
-            case "Serp": {pallet=Serpent;};break;
-            case "Plain": {pallet=Plain;};break;
+            case COLOUR_NORMAL: {pallet=PALETTE_NORMAL;};break;
+            case COLOUR_MOON: {pallet=PALETTE_MOON;};break;
+            case COLOUR_DRAGON: {pallet=PALETTE_DRAGON;};break;
+            case COLOUR_CHAOS: {pallet=PALETTE_CHAOS;};break;
+            case COLOUR_SERPENT: {pallet=PALETTE_SERPENT;};break;
+            case COLOUR_BRONZE: {pallet=PALETTE_BRONZE;};break;
+            case COLOUR_IRON: {pallet=PALETTE_IRON;};break;
+            case COLOUR_CHROMATIC: {pallet=PALETTE_CHROMATIC;};break;
+            case COLOUR_LOCKED: {pallet=PALETTE_LOCKED;};break;
             
         }    
         
@@ -531,25 +555,25 @@
               // is this pixel the old rgb?
               if (type === "Banner"){
                   
-                 if(imageData.data[i]===oC[0][0] && imageData.data[i+1]===oC[0][1] && imageData.data[i+2]===oC[0][2]){
+                 if(imageData.data[i]===PALETTE_MOON[0][0] && imageData.data[i+1]===PALETTE_MOON[0][1] && imageData.data[i+2]===PALETTE_MOON[0][2]){
                   // change to your new rgb
                   imageData.data[i]=pallet[0][0];imageData.data[i+1]=pallet[0][1];imageData.data[i+2]=pallet[0][2];
                  }
-                 else if(imageData.data[i]===oC[1][0] && imageData.data[i+1]===oC[1][1] && imageData.data[i+2]===oC[1][2]){
+                 else if(imageData.data[i]===PALETTE_MOON[1][0] && imageData.data[i+1]===PALETTE_MOON[1][1] && imageData.data[i+2]===PALETTE_MOON[1][2]){
                   // change to your new rgb
                   imageData.data[i]=pallet[1][0];imageData.data[i+1]=pallet[1][1];imageData.data[i+2]=pallet[1][2];
                  }
-                 else if(imageData.data[i]===oC[2][0] && imageData.data[i+1]===oC[2][1] && imageData.data[i+2]===oC[2][2]){
+                 else if(imageData.data[i]===PALETTE_MOON[2][0] && imageData.data[i+1]===PALETTE_MOON[2][1] && imageData.data[i+2]===PALETTE_MOON[2][2]){
                   // change to your new rgb
                   imageData.data[i]=pallet[2][0];imageData.data[i+1]=pallet[2][1];imageData.data[i+2]=pallet[2][2];
                  }
                   
               }
               else if (type === "Door"){
-                  if(imageData.data[i]===oC[0][0] && imageData.data[i+1]===oC[0][1] && imageData.data[i+2]===oC[0][2]){
-                  // change to your new rgb
-                  imageData.data[i]=type[0][0];imageData.data[i+1]=type[0][1];imageData.data[i+2]=type[0][2];
-                 }
+                if(imageData.data[i]===PALETTE_MOON[0][0] && imageData.data[i+1]===PALETTE_MOON[0][1] && imageData.data[i+2]===PALETTE_MOON[0][2]){
+                      // change to your new rgb
+                      imageData.data[i]=pallet[1][0];imageData.data[i+1]=pallet[1][1];imageData.data[i+2]=pallet[1][2];
+                }
               };
           }
         // put the altered data back on the canvas  
