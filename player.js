@@ -12,9 +12,11 @@ function player(posX,posY,level,rotation,PortX,PortY) {
     this.lastY = posY;
     this.lastLevel = level;
     this.moving = 0; //0 = Forward,1 = Left, 2 = Backwards, 3 = Right
-   
+  
+  try{
   tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
-   
+  }
+  catch(c){};
 }
 
 var Direction = {

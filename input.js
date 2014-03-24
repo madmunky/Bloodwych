@@ -65,7 +65,7 @@ function doKeyDown(e) {
             tw = new Tower();
             CurrentMap = CurrentMap + 1;
             if (CurrentMap > Maps.length -1){
-                CurrentMap = ww0;
+                CurrentMap = 0;
             }
             p1.X = 0;p2.X = 0;
             p1.Y = 0;p2.Y = 0;

@@ -35,7 +35,7 @@ var FLOOR_PIT_DOWN = 0,
     FLOOR_PIT_UP = 1,
     FLOOR_PAD = 2;
 
-var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4"];
+var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4","horace_mod0","horace_moon","horace_drag","horace_serp","horace_zendik","horace_chaos"];
 
 var CurrentMap = 0;
 var img = document.getElementById("bg");
