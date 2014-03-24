@@ -44,51 +44,66 @@ background[0] = new Array(0, 0, 128, 76, 0, 0);
 background[1] = new Array(128, 0, 128, 76, 0, 0);
 
 //Declare Arrays for the Graphics
-var gfxStone;
-var gfxWooden = [];
-var gfxStairs = [];
-var gfxMisc = [];
+var gfx = {};
+gfx["Stone"] = {};
+gfx["Wood"] = {};
+gfx["Banner"] = {};
+gfx["Stairs"] = {};
+gfx["Misc"] = {};
+
+/*
+gfx["Stairs"][];
+gfx["Misc"][];
+gfx["Door"] = new Array(3);
+gfx["Misc"][];
+gfx["Unknown"][];
+gfx["Floor"][];*/
+
+//var gfxStone;
+//var gfxWooden = [];
+//var gfxStairs = [];
+//var gfxMisc = [];
 var gfxDoor = new Array(3);
 var gfxUnknown = [];
 var gfxFloor = [];
 
 //Load images into the Arrays
-gfxStone = document.getElementById("stoneWalls");
-gfxShelf = document.getElementById("Shelf");
-gfxSerpBanner = document.getElementById("SerpBanner");
-gfxDragonBanner = document.getElementById("DragonBanner");
-gfxMoonBanner = document.getElementById("MoonBanner");
-gfxChaosBanner = document.getElementById("ChaosBanner");
-gfxScriptBanner = document.getElementById("ScriptBanner");
+gfx["Stone"]["Wall"] = document.getElementById("stoneWalls");
+gfx["Stone"]["Shelf"] = document.getElementById("Shelf");
+gfx["Banner"]["SerpentHead"] = document.getElementById("SerpBanner");
+gfx["Banner"]["DragonHead"] = document.getElementById("DragonBanner");
+gfx["Banner"]["MoonHead"] = document.getElementById("MoonBanner");
+gfx["Banner"]["ChaosHead"] = document.getElementById("ChaosBanner");
+gfx["Banner"]["Script"] = document.getElementById("ScriptBanner");
 gfxWallSwitch = document.getElementById("WallSwitch");
 gfxGemSlot = document.getElementById("GemSlot");
-var gfxDragon;
+/*var gfxDragon;
 var gfxChaos;
 var gfxSerp;
-var gfxBrown;
+var gfxBrown;*/
 
-gfxScriptBanner.onload = function () {    
-    gfxDragon = recolorImage(gfxScriptBanner,COLOUR_DRAGON,"Banner");
-    gfxChaos = recolorImage(gfxScriptBanner,COLOUR_CHAOS,"Banner");
-    gfxSerp = recolorImage(gfxScriptBanner,COLOUR_SERPENT,"Banner");
-    gfxBrown = recolorImage(gfxScriptBanner,COLOUR_BRONZE,"Banner");
+gfx["Banner"]["Script"].onload = function () {    
+    gfx["Banner"]["Dragon"] = recolorImage(gfx["Banner"]["Script"],COLOUR_DRAGON,"Banner");
+    gfx["Banner"]["Chaos"] = recolorImage(gfx["Banner"]["Script"],COLOUR_CHAOS,"Banner");
+    gfx["Banner"]["Serpent"] = recolorImage(gfx["Banner"]["Script"],COLOUR_SERPENT,"Banner");
+    gfx["Banner"]["Bronze"] = recolorImage(gfx["Banner"]["Script"],COLOUR_BRONZE,"Banner");
+    gfx["Banner"]["Iron"] = recolorImage(gfx["Banner"]["Script"],COLOUR_IRON,"Banner");
 };
 
-gfxWooden[0] = document.getElementById("WoodenWalls1");
-gfxWooden[1] = document.getElementById("WoodenWalls2");
-gfxWooden[2] = document.getElementById("WoodenWalls3");
+gfx["Wood"]["Wall"] = document.getElementById("WoodenWalls1");
+gfx["Wood"]["Door"] = document.getElementById("WoodenWalls2");
+gfx["Wood"]["DoorOpen"] = document.getElementById("WoodenWalls3");
 
-gfxMisc[0] = document.getElementById("Pillar");
-gfxMisc[1] = document.getElementById("Bed");
+gfx["Misc"]["Pillar"] = document.getElementById("Pillar");
+gfx["Misc"]["Bed"] = document.getElementById("Bed");
 
-
+//Solid doors
 gfxDoor[DOOR_SOLID] = new Array(8);
 gfxDoor[DOOR_GATE] = new Array(8);
 gfxDoor[DOOR_OPEN] = new Array(8);
 gfxDoor[DOOR_SOLID][COLOUR_NORMAL] = document.getElementById("ChromaticDoor");
 gfxDoor[DOOR_GATE][COLOUR_NORMAL] = document.getElementById("GateDoor");
 gfxDoor[DOOR_OPEN][COLOUR_NORMAL] = document.getElementById("OpenDoor");
-
 gfxDoor[DOOR_SOLID][COLOUR_NORMAL].onload = function () {   
     colourDoors(DOOR_SOLID);
 }
@@ -99,8 +114,8 @@ gfxDoor[DOOR_OPEN][COLOUR_NORMAL].onload = function () {
     colourDoors(DOOR_OPEN);
 }
 
-gfxStairs[0] = document.getElementById("StairsDown");
-gfxStairs[1] = document.getElementById("StairsUp");
+gfx["Stairs"]["Down"] = document.getElementById("StairsDown");
+gfx["Stairs"]["Up"] = document.getElementById("StairsUp");
 
 gfxFloor[0] = document.getElementById("PitDown");
 gfxFloor[1] = document.getElementById("PitUp");

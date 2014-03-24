@@ -75,7 +75,7 @@
             case 1: return getStoneWall(Hex,d,pos,p);break;
             case 2: return getWoodenObject(Hex,d,pos,p);break;
             case 3: return getMiscObject(BB);break;
-            case 4: {if (BB % 2 === 1){return gfxStairs[0];}else {return gfxStairs[1];};break;}
+            case 4: {if (BB % 2 === 1){return gfx["Stairs"]["Down"];}else {return gfx["Stairs"]["Up"];};break;}
             case 5: {
                 if ((BB%4 === 2 || BB%4 === 3) && BB%2 === 1) {
                     if(AA < 8) {
@@ -114,10 +114,10 @@
                 
          switch (BB) {
             case 0: //Return a Bed
-                return gfxMisc[1];                
+                return gfx["Misc"]["Bed"];                
             case 1: //Return a Piller
-                return gfxMisc[0];   
-            default:PrintLog("Get Image Failed - " + BB); return gfxMisc[0];                
+                return gfx["Misc"]["Pillar"];   
+            default:PrintLog("Get Image Failed - " + BB); return gfx["Misc"]["Pillar"];                
         }
     }
         
@@ -125,10 +125,10 @@
             
             switch (b) {
                 
-                case "00":{return null;};
-                case "01":{return gfxWooden[0];};
-                case "10":{return gfxWooden[2];};
-                case "11":{return gfxWooden[1];};
+                case "00":{return null; break;};
+                case "01":{return gfx["Wood"]["Wall"]; break;};
+                case "10":{return gfx["Wood"]["DoorOpen"]; break;};
+                case "11":{return gfx["Wood"]["Door"]; break;};
                 default:{return null;};
             }            
         }
@@ -142,9 +142,9 @@
         var BB = parseInt(HexCode.substring(1, 2),16);
         var CC = parseInt(HexCode.substring(2, 3),16);
 
-        if (CC === 0) {return gfxStone;};
+        if (CC === 0) {return gfx["Stone"]["Wall"];};
 
-        ctx.drawImage(gfxStone, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+        ctx.drawImage(gfx["Stone"]["Wall"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
        
         switch (CC) { 
             
@@ -156,49 +156,49 @@
                     
         }
         
-        return gfxStone;
+        return gfx["Stone"]["Wall"];
         
         function getWallDeco(AA,BB,CC){
         
         try{
             if (CC >= 8) { //Wall has something on it
                 if (BB % 4 === 0) { //Shelf
-                    return gfxShelf;
+                    return gfx["Stone"]["Shelf"];
                 } else if (BB % 4 === 1) { //Sign
                     if (AA === 0 && BB === 1) { //Random Color
-                        ctx.drawImage(gfxBrown, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        ctx.drawImage(gfx["Banner"]["Bronze"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return null;
                     } else if (AA === 0 && BB === 5) { //Serpent Flag
-                        ctx.drawImage(gfxSerp, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-                        return gfxSerpBanner;                       
+                        ctx.drawImage(gfx["Banner"]["Serpent"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfx["Banner"]["SerpentHead"];                       
                     } else if (AA === 0 && BB === 9) { //Dragon Flag
-                         ctx.drawImage(gfxDragon, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-                        return gfxDragonBanner;  
+                         ctx.drawImage(gfx["Banner"]["Dragon"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfx["Banner"]["DragonHead"];  
                     } else if (AA === 0 && BB === 13) { //Moon Flag
-                        ctx.drawImage(gfxScriptBanner, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-                        return gfxMoonBanner;                     
+                        ctx.drawImage(gfx["Banner"]["Script"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfx["Banner"]["MoonHead"];                     
                     } else if (AA === 1 && BB === 1) { //Choas Flag
-                         ctx.drawImage(gfxChaos, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-                        return gfxChaosBanner;
+                         ctx.drawImage(gfx["Banner"]["Chaos"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfx["Banner"]["ChaosHead"];
                     } else if (BB % 4 === 1) {                        
-                        ctx.drawImage(gfxBrown, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-                        return gfxScriptBanner;                   
+                        ctx.drawImage(gfx["Banner"]["Bronze"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        return gfx["Banner"]["Script"];                   
                     } else {
-                       ctx.drawImage(gfxBrown, gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-                       return gfxScriptBanner;
+                       ctx.drawImage(gfx["Banner"]["Bronze"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                       return gfx["Banner"]["Script"];
                     }
                 } else if (BB % 4 === 2) { //Switch
                         return gfxWallSwitch;
                 } else if (BB % 4 === 3) { //Crystal Switch
                        return gfxGemSlot;
                 } else {
-                 return gfxStone;
+                 return gfx["Stone"]["Wall"];
                 }
             } else {PrintLog("Unhandled Banner - " + HexCode);
-                return gfxStone;
+                return gfx["Stone"]["Wall"];
             }}catch(e){}  
          
-        return gfxStone;
+        return gfx["Stone"]["Wall"];
     }
     }
     
