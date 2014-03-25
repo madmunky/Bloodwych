@@ -66,3 +66,13 @@ function binaryToHex(s) {
     }
     return { valid: true, result: ret };
 }
+
+function seededRandom(seed) {
+    max = 1.0;
+    min = 0.0;
+
+    seed = (seed * 9301 + 49297) % 233280;
+    var rnd = seed / 233280.0;
+
+    return min + rnd * (max - min);
+}

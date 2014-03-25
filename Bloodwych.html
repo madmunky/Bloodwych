@@ -1,68 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <title>Bloodwych HTML</title>
-        <link href="css/style.css" type="text/css" rel="stylesheet">
+    <title>Bloodwych HTML</title>
+    <script src="jquery-2.1.0.js" type="text/javascript"></script>
+    <link href="css/style.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-        <div class="content">
-                <div class="logo"><img id="bloodwych" src="images/logo.png"></div>
-        	<section class="info">
-                        <P>Player 1 Key: Q, W, E, A, S, D - Spacebar opens doors</P>
-                        <P>Player 2 Key: Numpad 7, 8, 9, 4, 5, 6 - 0 opens doors</P>
-                        <P>Change Level: T, G</P>
-                        <P>Change Tower: L</P>
-        	</section>
-                <section class="debug">
-                        <p></p>
-                </section>
-                <script src="jquery-2.1.0.js" type="text/javascript"></script>
-                
-        	<img id="bg" src="images/back.png" style="display:none">
-        	<img id="stoneWalls" src="images/screen1.png" style="display:none">
-                <img id="WoodenWalls1" src="images/screen2.png" style="display:none">
-                <img id="WoodenWalls2" src="images/screen3.png" style="display:none">
-                <img id="WoodenWalls3" src="images/screen4.png" style="display:none">
-                <img id="Pillar" src="images/screen5.png" style="display:none">
-                <img id="ChromaticDoor" src="images/screen6.png" style="display:none">
-                <img id="GateDoor" src="images/screen7.png" style="display:none">
-                <img id="OpenDoor" src="images/screen8.png" style="display:none">
-                <img id="StairsUp" src="images/screen9.png" style="display:none">
-                <img id="StairsDown" src="images/screen10.png" style="display:none">
-                <img id="Bed" src="images/screen11.png" style="display:none">
-                <img id="Shelf" src="images/screen12.png" style="display:none">
-                <img id="SerpBanner" src="images/screen13.png" style="display:none">
-                <img id="DragonBanner" src="images/screen14.png" style="display:none">
-                <img id="MoonBanner" src="images/screen15.png" style="display:none">
-                <img id="ChaosBanner" src="images/screen16.png" style="display:none">
-                <img id="ScriptBanner" src="images/screen17.png" style="display:none">
-                <img id="WallSwitch" src="images/screen20.png" style="display:none">
-                <img id="PitDown" src="images/screen18.png" style="display:none">
-                <img id="PitUp" src="images/screen19.png" style="display:none">
-                <img id="FloorPad" src="images/screen21.png" style="display:none">
-                <img id="GemSlot" src="images/screen22.png" style="display:none">
-        	
-                <canvas id="gamePort" width="795" height="400" tabindex="1"></canvas>
-        </div>
+    <div class="content">
+        <div class="logo"><img id="bloodwych" src="images/logo.png"></div>
+        <section class="info">
+            <P>Player 1 Key: Q, W, E, A, S, D - Spacebar opens doors</P>
+            <P>Player 2 Key: Numpad 7, 8, 9, 4, 5, 6 - 0 opens doors</P>
+            <P>Change Level: T, G</P>
+            <P>Change Tower: L</P>
+        </section>
+        <section class="debug"><p></p></section>
         
-        <script src="dungeonitems.js" type="text/javascript"></script>
-        <script src="Map.js" type="text/javascript"></script>
-        <script src="fileloader.js" type="text/javascript"></script>
-        <script src="player.js" type="text/javascript"></script>
-	<script src="graphics.js" type="text/javascript"></script>	
-        <script src="input.js" type="text/javascript" charset="utf-8"></script>
-	<script src="game.js" type="text/javascript" charset="utf-8"></script>
-	<script src="renderer.js" type="text/javascript" charset="utf-8"></script>
-	<script src="main.js" type="text/javascript" charset="utf-8"></script>
-        <script src="tools.js" type="text/javascript" charset="utf-8"></script>
-        <script src="Bloodwych.js" type="text/javascript"></script>
+        <canvas id="game-port" width="795" height="400" tabindex="1"></canvas>
+    </div>
     
-	<script type="text/javascript">
-		var canvas = document.getElementById("gamePort");
-		canvas.addEventListener('keydown', doKeyDown, true);  
-                canvas.addEventListener('touchstart', doTouchStart, false);
-                var ctx = canvas.getContext("2d");
-	</script>
-
+    <script src="dungeonitems.js" type="text/javascript"></script>
+    <script src="Map.js" type="text/javascript"></script>
+    <script src="fileloader.js" type="text/javascript"></script>
+    <script src="player.js" type="text/javascript"></script>
+    <script src="graphics.js" type="text/javascript"></script>	
+    <script src="input.js" type="text/javascript" charset="utf-8"></script>
+    <script src="game.js" type="text/javascript" charset="utf-8"></script>
+    <script src="renderer.js" type="text/javascript" charset="utf-8"></script>
+    <script src="main.js" type="text/javascript" charset="utf-8"></script>
+    <script src="tools.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Bloodwych.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var canvas = document.getElementById("game-port");
+        var ctx = canvas.getContext("2d");
+        $(function() {
+            canvas.addEventListener('keydown', doKeyDown, true);  
+            canvas.addEventListener('touchstart', doTouchStart, false);
+        });
+    </script>
 </body>
 </html>
