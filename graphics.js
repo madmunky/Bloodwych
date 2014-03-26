@@ -6,7 +6,7 @@ function SpriteSheetArray(){
   var ImageArray = new Array();
 
     ImageArray[0] = new Array(15, 0, 98, 76, 15, 0);
-  	ImageArray[1] = new Array(0, 0, 15, 76, 0, 0);
+    ImageArray[1] = new Array(0, 0, 15, 76, 0, 0);
     ImageArray[2] = new Array(15, 0, 98, 76, 15, 0);
     ImageArray[3] = new Array(113, 0, 15, 76, 113, 0);
     ImageArray[4] = new Array(128, 0, 16, 76, 0, 0);

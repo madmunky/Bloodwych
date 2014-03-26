@@ -34,11 +34,7 @@ var Direction = {
 
 function checkObject(hex,p) {
     
-    //var t = hex.substring(3,4);
-    
-//    if (parseInt(hex.substring(2,3),16) === 8){
-//        return;false;
-//    }
+//Passes in a MAP HEX Code and returns a True or False
     
     switch (hex.substring(3,4)) {
     
@@ -56,6 +52,9 @@ function checkObject(hex,p) {
 
 player.prototype.ChangeUpLevel = function() {
     
+    //In bloodwych when the player moves levels they also moved 2 places forward
+    //This function changes the players level and moves the player forward 2x spaces
+    
     this.level++;
     if (this.level > tw.length){
         this.level = 0;
@@ -68,6 +67,9 @@ player.prototype.ChangeUpLevel = function() {
 };
 
 player.prototype.ChangeDownLevel = function() {
+    
+    //In bloodwych when the player moves levels they also moved 2 places forward
+    //This function changes the players level and moves the player forward 2x spaces
     
     this.level--;
     if (this.level < tw.length){
@@ -86,6 +88,8 @@ player.prototype.switchPlayerBackground = function() {
 };
 
 player.prototype.Action = function() {
+    
+    //Take the map code which is in front of the player and see if the player can interact with it.
     
     if (this.View[15].substring(3,4) === "5") {
     
@@ -308,6 +312,11 @@ player.prototype.RotatePlayer = function(d){
 };
 
 player.prototype.pView = function(m){
+    
+    //m = Map Data
+    //This function takes the map file and stores the 20 positions required 
+    //to either draw the players view or objects which the player are likely to interact with
+    //like standing on a presure pad or stairs or if there is a door infront of the player etc..
         
         this.View = [];    
         
@@ -362,6 +371,10 @@ player.prototype.pView = function(m){
     };
     
 player.prototype.drawView = function(p) {
+    
+    //To draw the players view it consists of 30 tiles to build up the screen view
+    //we use the players view to work out what each of these 30 images should be based
+    //on the player direction and the map code 
     
     for (var i = 0; i < 29; i++) {
         
