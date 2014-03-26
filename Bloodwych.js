@@ -3,15 +3,28 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 
-var COLOUR_NORMAL = 0,
-    COLOUR_BRONZE = 1,
-    COLOUR_IRON = 2,
-    COLOUR_SERPENT = 3,
-    COLOUR_CHAOS = 4,
-    COLOUR_DRAGON = 5,
-    COLOUR_MOON = 6,
-    COLOUR_CHROMATIC = 7,
-    COLOUR_LOCKED = 8;
+var COLOUR_DOOR_NORMAL = 0,
+    COLOUR_DOOR_BRONZE = 1,
+    COLOUR_DOOR_IRON = 2,
+    COLOUR_DOOR_SERPENT = 3,
+    COLOUR_DOOR_CHAOS = 4,
+    COLOUR_DOOR_DRAGON = 5,
+    COLOUR_DOOR_MOON = 6,
+    COLOUR_DOOR_CHROMATIC = 7,
+    COLOUR_DOOR_LOCKED = 8;
+
+var COLOUR_DECO_SERPENT = 0,
+    COLOUR_DECO_CHAOS = 1,
+    COLOUR_DECO_DRAGON = 2,
+    COLOUR_DECO_MOON = 3,
+    COLOUR_DECO_BRONZE = 4,
+    COLOUR_DECO_IRON = 5;
+    COLOUR_DECO_SERPENT_OFF = 6,
+    COLOUR_DECO_CHAOS_OFF = 7,
+    COLOUR_DECO_DRAGON_OFF = 8,
+    COLOUR_DECO_MOON_OFF = 9,
+    COLOUR_DECO_BRONZE_OFF = 10,
+    COLOUR_DECO_IRON_OFF = 11;
 
 var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4","horace_mod0","horace_moon","horace_drag","horace_serp","horace_zendik","horace_chaos"];
 
@@ -48,10 +61,10 @@ $(function() {
     gfxLoadImage("deco", "moon-head");
     gfxLoadImage("deco", "dragon-head");
     gfxLoadImage("deco", "chaos-head");
-    gfxLoadImage("deco", "switch");
-    gfxLoadImage("deco", "gem");
-    gfxLoadImage("deco", "script");
-    gfxLoadImage("deco", "banner", 8);
+    gfxLoadImage("deco", "switch", 11);
+    gfxLoadImage("deco", "gem", 11);
+    gfxLoadImage("deco", "script", 5);
+    gfxLoadImage("deco", "banner", 5);
 
     //Wooden walls and doors
     gfxLoadImage("wood", "wall");
@@ -127,9 +140,9 @@ function clearCanvas() {
 //Renders the sub-coloured objects. E.g. for locked doors and banners
 function gfxColourSubs(type, item, sub) {
     for (i = 1; i <= sub; i++) {
-        gfx[type][item][i] = recolorImage(gfx[type][item][COLOUR_NORMAL], i, type);
+        gfx[type][item][i] = recolorImage(gfx[type][item][0], i, type);
     }
-    gfx[type][item][COLOUR_NORMAL] = recolorImage(gfx[type][item][COLOUR_NORMAL], COLOUR_NORMAL, type);
+    gfx[type][item][0] = recolorImage(gfx[type][item][0], 0, type);
 }
 
 //Loads image into the gfx array
@@ -153,8 +166,8 @@ function gfxLoadImage(type, item, sub) {
 
         $('body').append('<img id="' + id + '" src="images/' + id + '.png" class="gfx" />');
         if(typeof sub === 'number' && sub != null) {
-            gfx[type][item][COLOUR_NORMAL] = document.getElementById(id);
-            $(gfx[type][item][COLOUR_NORMAL]).load(function() {
+            gfx[type][item][0] = document.getElementById(id);
+            $(gfx[type][item][0]).load(function() {
                 gfxColourSubs(type, item, sub);
             });
         } else if(typeof item === 'string' && item != '') {
