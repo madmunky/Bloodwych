@@ -55,58 +55,66 @@ function getTimeStamp() {
                  .getSeconds()) : (now.getSeconds())));
 }
 
-function getImage(Hex,d,pos,p,pos18){
+function getImage(Hex,d,pos,p,pos18) {
+    // Hex = Bloodwych Hex Code
+    // d = direction of required wall (North,East,South,West)
+    // pos = Position on the screen we are drawing
+    // 
+    // This function will return the correct graphic to be draw for the Hex Code passed
+    // I may need to pass the Graphics Position to be drawn so I can work out which graphic
+    // to be return for each wall side.
+
+    var BB = parseInt(Hex.substring(1,2),16);
+    var AA = parseInt(Hex.substring(0,1),16);
   
-  // Hex = Bloodwych Hex Code
-  // d = direction of required wall (North,East,South,West)
-  // pos = Position on the screen we are drawing
-  // 
-  // This function will return the correct graphic to be draw for the Hex Code passed
-  // I may need to pass the Graphics Position to be drawn so I can work out which graphic
-  // to be return for each wall side.
-  
-  
-  var CC = parseInt(Hex.substring(3),16);
-  var BB = parseInt(Hex.substring(1,2),16);
-  var AA = parseInt(Hex.substring(0,1),16);
-  var A8 = (AA > 8) ? 8 : AA;
-  
-    switch (CC){
-        case 0: return null;break;
-        case 1: return getStoneWall(Hex,d,pos,p,pos18);break;
-        case 2: return getWoodenObject(Hex,d,pos,p);break;
-        case 3: return getMiscObject(BB);break;
-        case 4: {if (BB % 2 === 1){return gfx["stairs"]["down"];}else {return gfx["stairs"]["up"];};break;}
-        case 5: {
-            if ((BB%4 === 2 || BB%4 === 3) && BB%2 === 1) {
-                return gfx["door"]["gate"][A8];
-            } else if((BB%4 === 0 || BB%4 === 1) && BB%2 === 1) {
-                return gfx["door"]["solid"][A8];
-            } else if(BB%2 === 0) {
-                return gfx["door"]["open"][A8];
-            };
-        }
-        break;
-        case 6: {if (Hex === "0706"){return gfx["floor"]["pit-up"];} //Roof Pit
-                if (BB % 4 === 0) {return null;} 
-                else if (BB % 4 === 1) {return gfx["floor"]["pit-down"];} //Floor Pit
-                else if (BB % 4 === 2) {return gfx["floor"]["switch"];} //Green Pad
-                else if (BB % 4 === 3) {return null;} //Blank space
-                else {PrintLog("Get Image Failed - " + Hex);return null;}} //Default blank space
-        case 7: PrintLog("Get Image Failed - " + Hex);return null;break;
+    switch (getHexToBinaryPosition(Hex, 12, 4)) {
+        case '0': return null; break;
+        case '1': return getStoneWall(Hex,d,pos,p,pos18); break;
+        case '2': return getWoodenObject(Hex,d,pos,p); break;
+        case '3': return getMiscObject(Hex); break;
+        case '4':
+            if (getHexToBinaryPosition(Hex, 7) == '0') {
+                return gfx["stairs"]["up"];
+            } else {
+                return gfx["stairs"]["down"];
+            }
+            break;
+        case '5':
+            if(getHexToBinaryPosition(Hex, 4) == '1') {
+                var colourDoor = COLOUR_DOOR_VOID;
+            } else {
+                var colourDoor = getHexToBinaryPosition(Hex, 1, 3);
+            }
+            if(getHexToBinaryPosition(Hex, 7) == '0') {
+                return gfx["door"]["open"][colourDoor];
+            } else if (getHexToBinaryPosition(Hex, 6) == '0') {
+                return gfx["door"]["solid"][colourDoor];
+            } else {
+                return gfx["door"]["gate"][colourDoor];
+            }
+            break;
+        case '6':
+            //Roof Pit. Can be visible for any floor location
+            if (getHexToBinaryPosition(Hex, 5) == '1') {
+                ctx.drawImage(gfx["floor"]["pit-up"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ p.PortalX, (gfxPos[pos][5] * scale) + p.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+            }
+            switch(getHexToBinaryPosition(Hex, 6, 2)) {
+                case '1': return gfx["floor"]["pit-down"];
+                case '2': return gfx["floor"]["switch"];
+                default: return null;
+            }
+            break;
+        case '7': return null;
         default: PrintLog("Get Image Failed - " + Hex);
     }
-};
+}
 
-function getMiscObject(BB){
-            
-     switch (BB) {
-        case 0: //Return a Bed
-            return gfx["misc"]["bed"];                
-        case 1: //Return a Piller
-            return gfx["misc"]["pillar"];   
-        default:PrintLog("Get Image Failed - " + BB); return gfx["misc"]["pillar"];                
+function getMiscObject(hex){
+    var m = getHexToBinaryPosition(hex, 0, 8)
+    if(m == 1) {
+        return gfx["misc"]["pillar"];
     }
+    return gfx["misc"]["bed"];
 }
     
 function bin2type(b) {
@@ -124,38 +132,27 @@ function bin2type(b) {
 
     
 function getStoneWall(HexCode,d,pos,P,pos18) {
-    
-    
-    var AA = parseInt(HexCode.substring(0, 1),16);
-    var BB = parseInt(HexCode.substring(1, 2),16);
-    var CC = parseInt(HexCode.substring(2, 3),16);
-    if (CC === 0) {return gfx["stone"]["wall"];};
-
+    //if (getHexToBinaryPosition(HexCode, 8) == '0') { ???????????????
+    //    return gfx["stone"]["wall"];
+    //}
     ctx.drawImage(gfx["stone"]["wall"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-
-    switch (CC) { 
-        
-        case 8:{if (d === 0) {return getWallDeco();}break;} //North Wall has Deco
-        case 9:{if (d === 1) {return getWallDeco();}break;} //East Wall has Deco
-        case 10:{if (d === 2) {return getWallDeco();}break;} //South Wall has Deco
-        case 11:{if (d === 3) {return getWallDeco();}break;} //West Wall has Deco
-        default:{console.log ("Unhandled StoneWall CC: " + CC.toString()); return gfx['stone']['wall']};
+    if(d == getHexToBinaryPosition(HexCode, 10, 2)) {
+        return getWallDeco();
     }
-    
     return gfx["stone"]["wall"];
     
-    function getWallDeco() {     
+    function getWallDeco() {
         var xy = posToCoordinates(pos18, P.X, P.Y, P.Rotation);
-        var R4 = (xy["x"] * 3 + xy["y"] + d * 5) % 4;
-        var R6 = (xy["x"] + xy["y"] * 4 + d * 5) % 6;
+        var RND4 = (xy["x"] * 3 + xy["y"] + d * 5) % 4;
+        var RND6 = (xy["x"] + xy["y"] * 5 + d * 7) % 6;
         try{
-            if (CC >= 8) { //Wall has something on it
+            if (getHexToBinaryPosition(HexCode, 8) == '1') { //Wall has something on it
                 if (getHexToBinaryPosition(HexCode, 6, 2) == '0') { //Shelf
                     return gfx["stone"]["shelf"];
                 } else if (getHexToBinaryPosition(HexCode, 6, 2) == '1') { //Sign
                     if (getHexToBinaryPosition(HexCode, 0, 6) == '0') { //Random Color
-                        ctx.drawImage(gfx["deco"]["banner"][R6], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-                        switch(R4) {
+                        ctx.drawImage(gfx["deco"]["banner"][RND6], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+                        switch(RND4) {
                             case 0: return gfx["deco"]["serpent-head"];
                             case 1: return gfx["deco"]["moon-head"];
                             case 2: return gfx["deco"]["dragon-head"];
@@ -175,16 +172,16 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
                          ctx.drawImage(gfx["deco"]["banner"][COLOUR_DECO_CHAOS], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfx["deco"]["chaos-head"];
                     } else {
-                       return gfx["deco"]["script"][R6];
+                       return gfx["deco"]["script"][RND6];
                     }
                 } else if (getHexToBinaryPosition(HexCode, 6, 2) == '2') { //Switch
                     if(getHexToBinaryPosition(HexCode, 5) == '1') {
-                        return gfx["deco"]["switch"][R6 + 7]; // Off switch
+                        return gfx["deco"]["switch"][RND6 + 7]; // Off switch
                     } else {
-                        return gfx["deco"]["switch"][R6]; // On switch
+                        return gfx["deco"]["switch"][RND6]; // On switch
                     }
                 } else if (getHexToBinaryPosition(HexCode, 6, 2) == '3') { //Crystal Gem
-                    return gfx["deco"]["gem"][R6];
+                    return gfx["deco"]["gem"][RND6];
                 } else {
                     return gfx["stone"]["wall"];
                 }
@@ -434,7 +431,6 @@ function drawPlayersView(p) {
 }
 
 function drawWoodenObject(p,x) {
-      
     // p = Player
     // x = Current Block being drawn
     
@@ -560,7 +556,7 @@ function recolorImage(img, colour, type){
             case COLOUR_DOOR_BRONZE: pallet =       COLOUR_BROWN;   break;
             case COLOUR_DOOR_IRON: pallet =         COLOUR_GREY_1;  break;
             case COLOUR_DOOR_CHROMATIC: pallet =    COLOUR_WHITE;   break;
-            case COLOUR_DOOR_LOCKED: pallet =       COLOUR_BLACK;   break;
+            case COLOUR_DOOR_VOID: pallet =         COLOUR_BLACK;   break;
             default: break;
         }
         for (var i = 0; i < imageData.data.length; i += 4) {

@@ -87,67 +87,29 @@ player.prototype.switchPlayerBackground = function() {
     
 };
 
+//Take the map code which is in front of the player and see if the player can interact with it.
 player.prototype.Action = function() {
-    //Take the map code which is in front of the player and see if the player can interact with it.
-    if (this.View[15].substring(3,4) === "5") {
-        //Doors
-        var t = parseInt(this.View[15].substring(1,2),16);
+    //Doors
+    if (this.getBinaryView(15, 12, 4) == '5') {
+        var t = this.getBinaryView(15, 1, 3);
         switch (t) {
-          case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 14: case 15:
-            this.setBinaryView(15, 7);
+          case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7':
+            this.setBinaryView(15, 7); break;
+          default: break;
         }
     }
-    if (this.getBinaryView(15, 6, 2) == '2') {
-        //Wall switches
+    //Wall switches
+    if (this.getBinaryView(15, 8) == '1' && this.getBinaryView(15, 6, 2) == '2') {
         this.setBinaryView(15, 5);
     }
-    if (this.View[15].substring(3,4) === "2") {
-        //Wooden doors (in front of player)
-        xo = 0, yo = 0;
-        var MapX;
-        var MapY;
-
-            switch (this.Rotation){
-              case 0: xo = 0; yo = -1; break;
-              case 1: xo = 1; yo = 0; break;
-              case 2: xo = 0; yo = 1; break;
-              case 3: xo = -1; yo = 0; break;
-            }
-
-           MapY = this.Y + (1 * yo) - (0 * xo);
-           MapX = this.X + (1 * xo) + (0 * yo);
-           
-           var t = changeWoodenObject(this.View[15],this);
-           var tt = this.View[15].substring(2,4);
-           tt = t+tt;
-           tw.Levels[this.level].Map[MapY][MapX] = tt;
-        
+    //Wooden doors (in front of player)
+    if (this.getBinaryView(15, 12, 4) == '2' && this.getBinaryView(15, ((5 - this.Rotation) % 4) * 2) == '1') {
+      this.setBinaryView(15, ((5 - this.Rotation) % 4) * 2 + 1);
     }
-    if (this.View[18].substring(3,4) === "2"){
-        //Wooden doors (on player)
-        xo = 0, yo = 0;
-        var MapX;
-        var MapY;
-
-            switch (this.Rotation){
-              case 0: xo = 0; yo = -1; break;
-              case 1: xo = 1; yo = 0; break;
-              case 2: xo = 0; yo = 1; break;
-              case 3: xo = -1; yo = 0; break;
-            }
-
-           MapY = this.Y ;
-           MapX = this.X ;
-           
-           var t = changeWoodenObject(this.View[18],this);
-           var tt = this.View[18].substring(2,4);
-           tt = t+tt;
-           tw.Levels[this.level].Map[MapY][MapX] = tt;
-           
+    //Wooden doors (on player)
+    if (this.getBinaryView(18, 12, 4) == '2' && this.getBinaryView(18, ((7 - this.Rotation) % 4) * 2) == '1'){
+      this.setBinaryView(18, ((7 - this.Rotation) % 4) * 2 + 1);       
     }
-    
-    
-    
 };
 
 //Sets a binary index on a hexadecimal string to a certain binary flag
@@ -158,7 +120,11 @@ player.prototype.setBinaryView = function(pos18, index, to) {
 
 player.prototype.getBinaryView = function(pos18, index, length) {
   var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
-  return getHexToBinaryPosition(tw.Levels[this.level].Map[xy["y"]][xy["x"]], index, length);
+  try {
+    return getHexToBinaryPosition(tw.Levels[this.level].Map[xy["y"]][xy["x"]], index, length);
+  } catch(e) {
+    return '0001';
+  }
 };
 
 player.prototype.UpdateMap = function() {

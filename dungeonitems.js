@@ -249,7 +249,7 @@ function WoodType(hex) {
     }
     
 }
-
+/*
 function changeWoodenObject(hex,p){
     
         var b = hex2bin(hex.substring(0,2));
@@ -302,4 +302,4 @@ function toggleWoodenDoor(bit) {
     return bit;
     
 }
-
+*/
