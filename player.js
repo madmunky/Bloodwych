@@ -147,7 +147,7 @@ player.prototype.moveForward = function() {
     this.lastX = this.X;
     this.lastY = this.Y;
 
-    if (checkObject(this.View[15],this) && (checkObject(this.View[18],this))) {
+    if (checkObject(this.View[15],this)/* && (checkObject(this.View[18],this))*/) {
 
         xo = 0, yo = 0;
         
@@ -173,7 +173,7 @@ player.prototype.moveBackwards = function() {
     this.lastX = this.X;
     this.lastY = this.Y;
 
-    if (checkObject(this.View[19],this) && (checkObject(this.View[18],this))) {
+    if (checkObject(this.View[19],this)/* && (checkObject(this.View[18],this))*/) {
         xo = 0, yo = 0;
         
         switch (this.Rotation){
@@ -198,7 +198,7 @@ player.prototype.moveLeft = function() {
     this.lastX = this.X;
     this.lastY = this.Y;
     
-   if (checkObject(this.View[17],this)&& (checkObject(this.View[18],this))) {
+   if (checkObject(this.View[17],this)/* && (checkObject(this.View[18],this))*/) {
     xo = 0, yo = 0;
         
         switch (this.Rotation){
@@ -222,7 +222,7 @@ player.prototype.moveRight = function() {
     this.lastX = this.X;
     this.lastY = this.Y;
     
-   if (checkObject(this.View[16],this)&& (checkObject(this.View[18],this))) { 
+   if (checkObject(this.View[16],this)/* && (checkObject(this.View[18],this))*/) { 
             xo = 0, yo = 0;
         
         switch (this.Rotation){

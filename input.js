@@ -74,7 +74,7 @@ function doKeyDown(e) {
         }
         
         case 84: {p1.ChangeUpLevel();break;}    // T KEY     
-        case 32: {p1.Action();break;}      // SpaceBar        
+        case 32: {p1.Action();break;}           // SpaceBar        
         case 71: {p1.ChangeDownLevel(); break;} // G KEY  
         case 87: {p1.moveForward();break;}      // W KEY
         case 83: {p1.moveBackwards();break;}    // S KEY

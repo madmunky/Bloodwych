@@ -277,9 +277,9 @@ function drawPlayersView(p) {
 //        try {
     for (x = 0;x < 19;x++){
       
-        var BlockType = parseInt(p.View[x].substring(3,4));
+        var BlockType = getHexToBinaryPosition(p.View[x], 12, 4);
       
-        if (BlockType === 2) {
+        if (BlockType === '2') {
             drawWoodenObject(p,x);
         } else {
             switch (x){
@@ -313,7 +313,7 @@ function drawPlayersView(p) {
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,19),19,p, x), gfxPos[19], p, scale);
                 };break;    
                 case 7:{
-                        if (BlockType === 1 || BlockType === 2) {
+                        if (BlockType === '1') {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,23),23,p, x), gfxPos[23], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,24),24,p, x), gfxPos[24], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,17),17,p, x), gfxPos[17], p, scale);
@@ -321,7 +321,7 @@ function drawPlayersView(p) {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,18),18,p, x), gfxPos[18], p, scale);                
                 };break;
                 case 8:{
-                        if (BlockType === 1 || BlockType === 2) {
+                        if (BlockType === '1') {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,20),20,p, x), gfxPos[20], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,19),19,p, x), gfxPos[19], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,15),15,p, x), gfxPos[15], p, scale);
@@ -329,7 +329,7 @@ function drawPlayersView(p) {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,14),14,p, x), gfxPos[14], p, scale);              
                 };break;
                 case 9:{
-                        if (BlockType === 1 || BlockType === 2) {
+                        if (BlockType === '1') {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,17),17,p, x), gfxPos[17], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,16),16,p, x), gfxPos[16], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,15),15,p, x), gfxPos[15], p, scale);
@@ -337,21 +337,21 @@ function drawPlayersView(p) {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,11),11,p, x), gfxPos[11], p, scale);                               
                 };break;
                 case 10:{
-                        if (BlockType === 1 || BlockType === 2) {
+                        if (BlockType === '1') {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,18),18,p, x), gfxPos[18], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,12),12,p, x), gfxPos[12], p, scale);
                         }
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,13),13,p, x), gfxPos[13], p, scale);                
                 };break;
                 case 11:{
-                        if (BlockType === 1 || BlockType === 2) {
+                        if (BlockType === '1') {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,14),14,p, x), gfxPos[14], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,10),10,p, x), gfxPos[10], p, scale);
                         }
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,9),9,p, x), gfxPos[9], p, scale);
                 };break;
                 case 12:{
-                         if (BlockType === 1 || BlockType === 2) {
+                        if (BlockType === '1') {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,12),12,p, x), gfxPos[12], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,11),11,p, x), gfxPos[11], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,10),10,p, x), gfxPos[10], p, scale);                
@@ -359,7 +359,7 @@ function drawPlayersView(p) {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,6),6,p, x), gfxPos[6], p, scale);     
                 };break;
                 case 13:{
-                        if (BlockType === 1 || BlockType === 2) {
+                        if (BlockType === '1') {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,13),13,p, x), gfxPos[13], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,7),7,p, x), gfxPos[7], p, scale);                        
                         }                    
@@ -367,7 +367,7 @@ function drawPlayersView(p) {
 
                 };break;
                 case 14:{
-                        if (BlockType === 1 || BlockType === 2) {
+                        if (BlockType === '1') {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,9),9,p, x), gfxPos[9], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,5),5,p, x), gfxPos[5], p, scale);
                         }
@@ -375,7 +375,7 @@ function drawPlayersView(p) {
 
                 };break;
                 case 15:{
-                        if (BlockType === 1 || BlockType === 2) {
+                        if (BlockType === '1') {
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,6),6,p, x), gfxPos[6], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,7),7,p, x), gfxPos[7], p, scale);
                             myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,5),5,p, x), gfxPos[5], p, scale);
@@ -389,7 +389,7 @@ function drawPlayersView(p) {
                     myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,1),1,p, x), gfxPos[1], p, scale);
                 };break;
                 case 18:{  
-                           if (BlockType === 5) {
+                           if (BlockType === '5') {
                                drawDoorFrame(p);
                            }
                            else {
@@ -437,7 +437,7 @@ function drawWoodenObject(p,x) {
     //We create an array of all the sides for each 18 blocks
     //because wooden walls have 4 sides me need to loop though them all
     //and return the correct wall depending on the players rotation
-    
+
      var BlockSides = [];
      
         BlockSides[0] = [-1,-1,28,27];

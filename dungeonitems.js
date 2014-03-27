@@ -51,93 +51,106 @@ function returnType(t) {
 }
 
 function WoodenObjectPassable(hex,p) {
+    /*var s = new Array();
+    s[0] = new Array();
+    s[1] = new Array();
+    for(j = 0; j < 2; j++) {
+        alert(hex2bin(p.View[18]) + ': ' + s[0] + ' - ' + hex2bin(hex) + ': ' + s[1]);
+        for(i = 0; i < 4; i++) {
+            s[0][i] = getHexToBinaryPosition(p.View[18], ((3 + i) % 4) * 2 + 1, 1); //7135
+            s[1][i] = getHexToBinaryPosition(hex, ((1 + i) % 4) * 2 + 1, 1); //3571
+            if(s[j][(p.moving + i) % 4] == '1') return false;
+        }
+    }
+    return true;*/
+
+    var b = hex2bin(hex.substring(0,2));
+    var s = [];
+    s[0] = b.substring(6,8); //North Face
+    s[1] = b.substring(4,6); //East Face
+    s[2] = b.substring(2,4); //South Face
+    s[3] = b.substring(0,2); //West Face
     
-        var b = hex2bin(hex.substring(0,2));
-        var s = [];
-        s[0] = b.substring(6,8); //North Face
-        s[1] = b.substring(4,6); //East Face
-        s[2] = b.substring(2,4); //South Face
-        s[3] = b.substring(0,2); //West Face
+    var CurrentBlock = false;
+    
+    if (hex === p.View[18]){CurrentBlock = true;};
+    
+    if (CurrentBlock){
         
-        var CurrentBlock = false;
+        switch (p.Rotation) {
         
-        if (hex === p.View[18]){CurrentBlock = true;};
-        
-        if (CurrentBlock){
-            
-            switch (p.Rotation) {
-            
-        case 0:{
+            case 0:{
                 switch (p.moving) {                    
                     case 0:{return WoodType(s[0]);};break;
                     case 1:{return WoodType(s[3]);};break;
                     case 2:{return WoodType(s[2]);};break;
                     case 3:{return WoodType(s[1]);};break;                        
                 }                
-        };break;
-        case 1:{
+            };break;
+            case 1:{
                 switch (p.moving) {                    
                     case 0:{return WoodType(s[1]);};break;
                     case 1:{return WoodType(s[0]);};break;
                     case 2:{return WoodType(s[3]);};break;
                     case 3:{return WoodType(s[2]);};break;                        
                 }  
-        };break;
-        case 2:{
+            };break;
+            case 2:{
                 switch (p.moving) {                    
                     case 0:{return WoodType(s[2]);};break;
                     case 1:{return WoodType(s[1]);};break;
                     case 2:{return WoodType(s[0]);};break;
                     case 3:{return WoodType(s[3]);};break;                        
                 }  
-        };break;
-        case 3:{
+            };break;
+            case 3:{
                 switch (p.moving) {                    
                     case 0:{return WoodType(s[3]);};break;
                     case 1:{return WoodType(s[2]);};break;
                     case 2:{return WoodType(s[1]);};break;
                     case 3:{return WoodType(s[0]);};break;                        
                 }  
-        };break;}            
-        }
-        else {
-            
+            }
+        ;break;}            
+    } else {
+        
         switch (p.Rotation) {
             
-        case 0:{
-                switch (p.moving) {                    
-                    case 0:{return WoodType(s[2]);};break;
-                    case 1:{return WoodType(s[1]);};break;
-                    case 2:{return WoodType(s[0]);};break;
-                    case 3:{return WoodType(s[3]);};break;                        
-                }                
-        };break;
-        case 1:{
-                switch (p.moving) {                    
-                    case 0:{return WoodType(s[3]);};break;
-                    case 1:{return WoodType(s[2]);};break;
-                    case 2:{return WoodType(s[1]);};break;
-                    case 3:{return WoodType(s[0]);};break;                        
-                }  
-        };break;
-        case 2:{
-                switch (p.moving) {                    
-                    case 0:{return WoodType(s[0]);};break;
-                    case 1:{return WoodType(s[3]);};break;
-                    case 2:{return WoodType(s[2]);};break;
-                    case 3:{return WoodType(s[1]);};break;                        
-                }  
-        };break;
-        case 3:{
-                switch (p.moving) {                    
-                    case 0:{return WoodType(s[1]);};break;
-                    case 1:{return WoodType(s[0]);};break;
-                    case 2:{return WoodType(s[3]);};break;
-                    case 3:{return WoodType(s[2]);};break;                        
-                }  
-        };break;
+            case 0:{
+                    switch (p.moving) {                    
+                        case 0:{return WoodType(s[2]);};break;
+                        case 1:{return WoodType(s[1]);};break;
+                        case 2:{return WoodType(s[0]);};break;
+                        case 3:{return WoodType(s[3]);};break;                        
+                    }                
+            };break;
+            case 1:{
+                    switch (p.moving) {                    
+                        case 0:{return WoodType(s[3]);};break;
+                        case 1:{return WoodType(s[2]);};break;
+                        case 2:{return WoodType(s[1]);};break;
+                        case 3:{return WoodType(s[0]);};break;                        
+                    }  
+            };break;
+            case 2:{
+                    switch (p.moving) {                    
+                        case 0:{return WoodType(s[0]);};break;
+                        case 1:{return WoodType(s[3]);};break;
+                        case 2:{return WoodType(s[2]);};break;
+                        case 3:{return WoodType(s[1]);};break;                        
+                    }  
+            };break;
+            case 3:{
+                    switch (p.moving) {                    
+                        case 0:{return WoodType(s[1]);};break;
+                        case 1:{return WoodType(s[0]);};break;
+                        case 2:{return WoodType(s[3]);};break;
+                        case 3:{return WoodType(s[2]);};break;                        
+                    }  
+            };break;
             
-        }}    
+        }
+    }
     
 }
 
@@ -249,57 +262,3 @@ function WoodType(hex) {
     }
     
 }
-/*
-function changeWoodenObject(hex,p){
-    
-        var b = hex2bin(hex.substring(0,2));
-        var s = [];
-        s[0] = b.substring(6,8); //North Face
-        s[1] = b.substring(4,6); //East Face
-        s[2] = b.substring(2,4); //South Face
-        s[3] = b.substring(0,2); //West Face
-        
-        var CurrentBlock = false;
-        
-        if (hex === p.View[18]){CurrentBlock = true;};
-        
-        if (CurrentBlock){
-            
-            switch (p.Rotation) {            
-                case 0:{s[0] = toggleWoodenDoor(s[0]);};break;
-                case 1:{s[1] = toggleWoodenDoor(s[1]);};break;
-                case 2:{s[2] = toggleWoodenDoor(s[2]);};break;
-                case 3:{s[3] = toggleWoodenDoor(s[3]);};break;    
-        }                   
-        }
-        else {switch (p.Rotation) {            
-                case 0:{s[2] = toggleWoodenDoor(s[2]);};break;
-                case 1:{s[3] = toggleWoodenDoor(s[3]);};break;
-                case 2:{s[0] = toggleWoodenDoor(s[0]);};break;
-                case 3:{s[1] = toggleWoodenDoor(s[1]);};break;    
-        }} 
-        
-        var tt = s[3];
-        tt = tt + s[2];
-        tt = tt + s[1];
-        tt = tt + s[0];
-    
-        var t1 = tt.substring(0,4);
-        var t2 = tt.substring(4,8);
-        var t = bin2hex(t1);
-        var ttt = bin2hex(t2);
-        
-        return t + ttt;
-                
-}
-
-function toggleWoodenDoor(bit) {
-    
-    if (bit !== "00" && bit !== "01"){
-        if (bit === "11"){bit = "10";}else{bit = "11";}
-    }    
-    
-    return bit;
-    
-}
-*/
