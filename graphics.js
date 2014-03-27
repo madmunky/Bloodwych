@@ -129,19 +129,17 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
     var AA = parseInt(HexCode.substring(0, 1),16);
     var BB = parseInt(HexCode.substring(1, 2),16);
     var CC = parseInt(HexCode.substring(2, 3),16);
-
     if (CC === 0) {return gfx["stone"]["wall"];};
 
     ctx.drawImage(gfx["stone"]["wall"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-   
+
     switch (CC) { 
         
         case 8:{if (d === 0) {return getWallDeco();}break;} //North Wall has Deco
         case 9:{if (d === 1) {return getWallDeco();}break;} //East Wall has Deco
         case 10:{if (d === 2) {return getWallDeco();}break;} //South Wall has Deco
         case 11:{if (d === 3) {return getWallDeco();}break;} //West Wall has Deco
-        default:{console.log ("Unhandled StoneWall CC: " + CC.toString());return gfxStone;};
-                
+        default:{console.log ("Unhandled StoneWall CC: " + CC.toString()); return gfx['stone']['wall']};
     }
     
     return gfx["stone"]["wall"];
@@ -150,13 +148,12 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
         var xy = posToCoordinates(pos18, P.X, P.Y, P.Rotation);
         var R4 = (xy["x"] * 3 + xy["y"] + d * 5) % 4;
         var R6 = (xy["x"] + xy["y"] * 4 + d * 5) % 6;
-
         try{
             if (CC >= 8) { //Wall has something on it
-                if (BB % 4 === 0) { //Shelf
+                if (getHexToBinaryPosition(HexCode, 6, 2) == '0') { //Shelf
                     return gfx["stone"]["shelf"];
-                } else if (BB % 4 === 1) { //Sign
-                    if (AA === 0 && BB === 1) { //Random Color
+                } else if (getHexToBinaryPosition(HexCode, 6, 2) == '1') { //Sign
+                    if (getHexToBinaryPosition(HexCode, 0, 6) == '0') { //Random Color
                         ctx.drawImage(gfx["deco"]["banner"][R6], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         switch(R4) {
                             case 0: return gfx["deco"]["serpent-head"];
@@ -165,27 +162,28 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
                             case 3: return gfx["deco"]["chaos-head"];
                             default: return null;
                         }
-                    } else if (AA === 0 && BB === 5) { //Serpent Flag
+                    } else if (getHexToBinaryPosition(HexCode, 0, 6) == '1') { //Serpent Flag
                         ctx.drawImage(gfx["deco"]["banner"][COLOUR_DECO_SERPENT], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfx["deco"]["serpent-head"];                       
-                    } else if (AA === 0 && BB === 9) { //Dragon Flag
+                    } else if (getHexToBinaryPosition(HexCode, 0, 6) == '2') { //Dragon Flag
                          ctx.drawImage(gfx["deco"]["banner"][COLOUR_DECO_DRAGON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfx["deco"]["dragon-head"];  
-                    } else if (AA === 0 && BB === 13) { //Moon Flag
+                    } else if (getHexToBinaryPosition(HexCode, 0, 6) == '3') { //Moon Flag
                         ctx.drawImage(gfx["deco"]["banner"][COLOUR_DECO_MOON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfx["deco"]["moon-head"];                     
-                    } else if (AA === 1 && BB === 1) { //Choas Flag
+                    } else if (getHexToBinaryPosition(HexCode, 0, 6) == '4') { //Choas Flag
                          ctx.drawImage(gfx["deco"]["banner"][COLOUR_DECO_CHAOS], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
                         return gfx["deco"]["chaos-head"];
-                    } else if (BB % 4 === 1) {
-                        return gfx["deco"]["script"][R6];
                     } else {
                        return gfx["deco"]["script"][R6];
                     }
-                } else if (BB % 4 === 2) { //Switch
-                    debugText("2. " + HexCode);
-                    return gfx["deco"]["switch"][R6];
-                } else if (BB % 4 === 3) { //Crystal Switch
+                } else if (getHexToBinaryPosition(HexCode, 6, 2) == '2') { //Switch
+                    if(getHexToBinaryPosition(HexCode, 5) == '1') {
+                        return gfx["deco"]["switch"][R6 + 7]; // Off switch
+                    } else {
+                        return gfx["deco"]["switch"][R6]; // On switch
+                    }
+                } else if (getHexToBinaryPosition(HexCode, 6, 2) == '3') { //Crystal Gem
                     return gfx["deco"]["gem"][R6];
                 } else {
                     return gfx["stone"]["wall"];
@@ -466,12 +464,12 @@ function drawWoodenObject(p,x) {
         BlockSides[17] = [4,1,-1,-1];
         BlockSides[18] = [2,3,-1,1];
     
-    var b = hexToBinary(p.View[x].substring(0,2));
+    var b = hex2bin(p.View[x].substring(0,2));
     var s = [];
-    s[0] = b.result.substring(6,8); //North Face
-    s[1] = b.result.substring(4,6); //East Face
-    s[2] = b.result.substring(2,4); //South Face
-    s[3] = b.result.substring(0,2); //West Face
+    s[0] = b.substring(6,8); //North Face
+    s[1] = b.substring(4,6); //East Face
+    s[2] = b.substring(2,4); //South Face
+    s[3] = b.substring(0,2); //West Face
     
     switch (p.Rotation){
             case 0:{                        
@@ -520,21 +518,23 @@ function recolorImage(img, colour, type){
     // examine every pixel, 
     // change any old rgb to the new-rgb
     if (type === "deco") {
-        var palletMoon =                            [[160, 160, 160],   [64, 128, 224],     [32, 32, 224]];
+        var palletMoon =                            [COLOUR_GREY_1,     COLOUR_BLUE,        COLOUR_BLUE_DARK];
         switch (colour) {
-            case COLOUR_DECO_SERPENT: pallet =      [[224, 192, 0],     [0, 192, 0],        [0, 128, 0]];       break;
+            case COLOUR_DECO_SERPENT: pallet =      [COLOUR_YELLOW,     COLOUR_GREEN,       COLOUR_GREEN_DARK]; break;
             case COLOUR_DECO_MOON: pallet =         palletMoon;                                                 break;
-            case COLOUR_DECO_DRAGON: pallet =       [[224, 128, 96],    [224, 0, 0],        [128, 32, 0]];      break;
-            case COLOUR_DECO_CHAOS: pallet =        [[224, 192, 0],     [224, 128, 96],     [160, 64, 32]];     break;
-            case COLOUR_DECO_BRONZE: pallet =       [[224, 128, 96],    [160, 64, 32],      [128, 32, 0]];      break;
-            case COLOUR_DECO_IRON: pallet =         [[160, 160, 160],   [128, 128, 128],    [96, 96, 96]];      break;
+            case COLOUR_DECO_DRAGON: pallet =       [COLOUR_ORANGE,     COLOUR_RED,         COLOUR_RED_DARK];   break;
+            case COLOUR_DECO_CHAOS: pallet =        [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_BROWN];      break;
+            case COLOUR_DECO_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_RED_DARK];   break;
+            case COLOUR_DECO_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_3];     break;
+            case COLOUR_DECO_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,       COLOUR_BLACK];      break;
 
-            case COLOUR_DECO_SERPENT_OFF: pallet =  [[0, 192, 0],        [0, 128, 0],       [0, 0, 0]];         break;
-            case COLOUR_DECO_MOON_OFF: pallet =     [[64, 128, 224],     [32, 32, 224],     [0, 0, 0]];         break;
-            case COLOUR_DECO_DRAGON_OFF: pallet =   [[224, 0, 0],        [128, 32, 0],      [0, 0, 0]];         break;
-            case COLOUR_DECO_CHAOS_OFF: pallet =    [[224, 128, 96],     [160, 64, 32],     [128, 32, 0]];      break;
-            case COLOUR_DECO_BRONZE_OFF: pallet =   [[160, 64, 32],      [128, 32, 0],      [0, 0, 0]];         break;
-            case COLOUR_DECO_IRON_OFF: pallet =     [[128, 128, 128],    [96, 96, 96],      [64, 64, 64]];      break;
+            case COLOUR_DECO_SERPENT_OFF: pallet =  [COLOUR_GREEN,      COLOUR_GREEN_DARK,  COLOUR_BLACK];      break;
+            case COLOUR_DECO_MOON_OFF: pallet =     [COLOUR_BLUE,       COLOUR_BLUE_DARK,   COLOUR_BLACK];      break;
+            case COLOUR_DECO_DRAGON_OFF: pallet =   [COLOUR_RED,        COLOUR_RED_DARK,    COLOUR_BLACK];      break;
+            case COLOUR_DECO_CHAOS_OFF: pallet =    [COLOUR_ORANGE,     COLOUR_RED_DARK,    COLOUR_BLACK];      break;
+            case COLOUR_DECO_BRONZE_OFF: pallet =   [COLOUR_BROWN,      COLOUR_RED_DARK,    COLOUR_BLACK];      break;
+            case COLOUR_DECO_IRON_OFF: pallet =     [COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_BLACK];      break;
+            case COLOUR_DECO_BLACK_OFF: pallet =    [COLOUR_BLACK,      COLOUR_BLACK,       COLOUR_BLACK];      break;
             default: break;
         }
         for (var i = 0; i < imageData.data.length; i += 4) {
@@ -550,17 +550,17 @@ function recolorImage(img, colour, type){
             }
         }
     } else if (type === "door") {
-        var palletMoon = [64, 128, 224];
+        var palletMoon = COLOUR_BLUE;
         switch (colour) {
-            case COLOUR_DOOR_NORMAL: pallet =       [64, 64, 64];       break;
-            case COLOUR_DOOR_MOON: pallet =         palletMoon;         break;
-            case COLOUR_DOOR_DRAGON: pallet =       [224, 0, 0];        break;
-            case COLOUR_DOOR_SERPENT: pallet =      [0, 192, 0];        break;
-            case COLOUR_DOOR_CHAOS: pallet =        [224, 192, 0];      break;
-            case COLOUR_DOOR_BRONZE: pallet =       [160, 64, 32];      break;
-            case COLOUR_DOOR_IRON: pallet =         [160, 160, 160];    break;
-            case COLOUR_DOOR_CHROMATIC: pallet =    [224,224,224];      break;
-            case COLOUR_DOOR_LOCKED: pallet =       [0, 0, 0];          break;
+            case COLOUR_DOOR_NORMAL: pallet =       COLOUR_GREY_4;  break;
+            case COLOUR_DOOR_MOON: pallet =         palletMoon;     break;
+            case COLOUR_DOOR_DRAGON: pallet =       COLOUR_RED;     break;
+            case COLOUR_DOOR_SERPENT: pallet =      COLOUR_GREEN;   break;
+            case COLOUR_DOOR_CHAOS: pallet =        COLOUR_YELLOW;  break;
+            case COLOUR_DOOR_BRONZE: pallet =       COLOUR_BROWN;   break;
+            case COLOUR_DOOR_IRON: pallet =         COLOUR_GREY_1;  break;
+            case COLOUR_DOOR_CHROMATIC: pallet =    COLOUR_WHITE;   break;
+            case COLOUR_DOOR_LOCKED: pallet =       COLOUR_BLACK;   break;
             default: break;
         }
         for (var i = 0; i < imageData.data.length; i += 4) {

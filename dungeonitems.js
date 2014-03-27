@@ -52,12 +52,12 @@ function returnType(t) {
 
 function WoodenObjectPassable(hex,p) {
     
-        var b = hexToBinary(hex.substring(0,2));
+        var b = hex2bin(hex.substring(0,2));
         var s = [];
-        s[0] = b.result.substring(6,8); //North Face
-        s[1] = b.result.substring(4,6); //East Face
-        s[2] = b.result.substring(2,4); //South Face
-        s[3] = b.result.substring(0,2); //West Face
+        s[0] = b.substring(6,8); //North Face
+        s[1] = b.substring(4,6); //East Face
+        s[2] = b.substring(2,4); //South Face
+        s[3] = b.substring(0,2); //West Face
         
         var CurrentBlock = false;
         
@@ -143,12 +143,12 @@ function WoodenObjectPassable(hex,p) {
 
 function ReturnWoodenObject(hex,p) {
     
-        var b = hexToBinary(hex.substring(0,2));
+        var b = hex2bin(hex.substring(0,2));
         var s = [];
-        s[0] = b.result.substring(6,8); //North Face
-        s[1] = b.result.substring(4,6); //East Face
-        s[2] = b.result.substring(2,4); //South Face
-        s[3] = b.result.substring(0,2); //West Face
+        s[0] = b.substring(6,8); //North Face
+        s[1] = b.substring(4,6); //East Face
+        s[2] = b.substring(2,4); //South Face
+        s[3] = b.substring(0,2); //West Face
         
         var CurrentBlock = false;
         
@@ -252,12 +252,12 @@ function WoodType(hex) {
 
 function changeWoodenObject(hex,p){
     
-        var b = hexToBinary(hex.substring(0,2));
+        var b = hex2bin(hex.substring(0,2));
         var s = [];
-        s[0] = b.result.substring(6,8); //North Face
-        s[1] = b.result.substring(4,6); //East Face
-        s[2] = b.result.substring(2,4); //South Face
-        s[3] = b.result.substring(0,2); //West Face
+        s[0] = b.substring(6,8); //North Face
+        s[1] = b.substring(4,6); //East Face
+        s[2] = b.substring(2,4); //South Face
+        s[3] = b.substring(0,2); //West Face
         
         var CurrentBlock = false;
         
@@ -286,10 +286,10 @@ function changeWoodenObject(hex,p){
     
         var t1 = tt.substring(0,4);
         var t2 = tt.substring(4,8);
-        var t = binaryToHex(t1);
-        var ttt = binaryToHex(t2);
+        var t = bin2hex(t1);
+        var ttt = bin2hex(t2);
         
-        return t.result + ttt.result;
+        return t + ttt;
                 
 }
 

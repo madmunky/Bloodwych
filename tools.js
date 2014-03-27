@@ -8,7 +8,7 @@ String.prototype.replaceAt=function(index, character) {
     return this.substr(0, index) + character + this.substr(index+character.length);
 };
 
-function hexToBinary(s) {
+/*function hex2bin(s) {
     var i, k, part, ret = '';
     // lookup table for easier conversion. '0' characters are padded for '1' to '7'
     var lookupTable = {
@@ -23,35 +23,50 @@ function hexToBinary(s) {
         if (lookupTable.hasOwnProperty(s[i])) {
             ret += lookupTable[s[i]];
         } else {
-            return { valid: false };
+            return null;
         }
     }
-    return { valid: true, result: ret };
-}
+    return ret;
+}*/
 
 //Sets a hex value at a certain index
 function setHexToBinaryPosition(s, index, to) {
-    var bin = hexToBinary(s).result;
+    var bin = hex2bin(s);
     if(typeof to === "undefined" || to == "") {
         from = bin.substr(index, 1);
         to = "" + (1 - from);
     } else {
-        to = hexToBinary(s).result;
+        to = hex2bin(s);
     }
     bin = bin.substr(0, index) + to + bin.substr(index + to.length);
-    var ret = binaryToHex(bin).result;
+    var ret = bin2hex(bin);
     return ret;
 }
 
 //Gets a hex value at a certain index, and a certain length
 function getHexToBinaryPosition(s, index, length) {
-    var bin = hexToBinary(s).result;
+    if(typeof length == 'undefined') {
+        length = 1;
+    }
+    var bin = hex2bin(s);
     var bin = bin.substr(index, length);
-    var ret = binaryToHex(bin).result;
+    var ret = bin2hex(bin);
     return ret;
 }
 
-function binaryToHex(s) {
+function hex2bin(num) {
+    var ret = parseInt(num, 16).toString(2);
+    var zeros = Array(Math.floor(num.length * 4 - ret.length) + 1).join('0');
+    return zeros + ret;
+}
+
+function bin2hex(num) {
+    var ret = parseInt(num, 2).toString(16).toUpperCase();
+    var zeros = Array(Math.floor(num.length / 4 - ret.length) + 1).join('0');
+    return zeros + ret;
+}
+
+/*function bin2hex(s) {
     var i, k, part, accum, ret = '';
     for (i = s.length-1; i >= 3; i -= 4) {
         // extract out in substrings of 4 and convert to hex
@@ -60,7 +75,7 @@ function binaryToHex(s) {
         for (k = 0; k < 4; k += 1) {
             if (part[k] !== '0' && part[k] !== '1') {
                 // invalid character
-                return { valid: false };
+                return null;
             }
             // compute the length 4 substring
             accum = accum * 2 + parseInt(part[k], 10);
@@ -79,14 +94,24 @@ function binaryToHex(s) {
         // convert from front
         for (k = 0; k <= i; k += 1) {
             if (s[k] !== '0' && s[k] !== '1') {
-                return { valid: false };
+                return null;
             }
             accum = accum * 2 + parseInt(s[k], 10);
         }
         // 3 bits, value cannot exceed 2^3 - 1 = 7, just convert
         ret = String(accum) + ret;
     }
-    return { valid: true, result: ret };
+    return ret;
+}*/
+
+function convertBase(num) {
+    this.from = function (baseFrom) {
+        this.to = function (baseTo) {
+            return parseInt(num, baseFrom).toString(baseTo);
+        }
+        return this;
+    }
+    return this;
 }
 
 function seededRandom(seed) {

@@ -88,9 +88,7 @@ player.prototype.switchPlayerBackground = function() {
 };
 
 player.prototype.Action = function() {
-    
     //Take the map code which is in front of the player and see if the player can interact with it.
-    
     if (this.View[15].substring(3,4) === "5") {
         //Doors
         var t = parseInt(this.View[15].substring(1,2),16);
@@ -98,10 +96,12 @@ player.prototype.Action = function() {
           case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 14: case 15:
             this.setBinaryView(15, 7);
         }
-    } else if (this.View[15].substring(1,2) === "5") {
+    }
+    if (this.getBinaryView(15, 6, 2) == '2') {
         //Wall switches
-        this.setBinaryView(15, 7);
-    } else if (this.View[15].substring(3,4) === "2") {
+        this.setBinaryView(15, 5);
+    }
+    if (this.View[15].substring(3,4) === "2") {
         //Wooden doors (in front of player)
         xo = 0, yo = 0;
         var MapX;
@@ -122,7 +122,8 @@ player.prototype.Action = function() {
            tt = t+tt;
            tw.Levels[this.level].Map[MapY][MapX] = tt;
         
-    } if (this.View[18].substring(3,4) === "2"){
+    }
+    if (this.View[18].substring(3,4) === "2"){
         //Wooden doors (on player)
         xo = 0, yo = 0;
         var MapX;
@@ -155,8 +156,9 @@ player.prototype.setBinaryView = function(pos18, index, to) {
   tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.Levels[this.level].Map[xy["y"]][xy["x"]], index, to);
 };
 
-player.prototype.getBinaryView = function(pos18, from, to) {
-  this.View[15]
+player.prototype.getBinaryView = function(pos18, index, length) {
+  var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
+  return getHexToBinaryPosition(tw.Levels[this.level].Map[xy["y"]][xy["x"]], index, length);
 };
 
 player.prototype.UpdateMap = function() {

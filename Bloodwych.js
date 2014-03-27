@@ -3,6 +3,22 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 
+var COLOUR_WHITE =          [224, 224, 224],
+    COLOUR_GREY_1 =         [160, 160, 160],
+    COLOUR_GREY_2 =         [128, 128, 128],
+    COLOUR_GREY_3 =         [96, 96, 96],
+    COLOUR_GREY_4 =         [64, 64, 64],
+    COLOUR_GREEN =          [0, 192, 0],
+    COLOUR_GREEN_DARK =     [0, 128, 0],
+    COLOUR_BLUE =           [64, 128, 224],
+    COLOUR_BLUE_DARK =      [32, 32, 224],
+    COLOUR_YELLOW =         [224, 192, 0],
+    COLOUR_ORANGE =         [224, 128, 96],
+    COLOUR_BROWN =          [160, 64, 32],
+    COLOUR_RED =            [224, 0, 0],
+    COLOUR_RED_DARK =       [128, 32, 0],
+    COLOUR_BLACK =          [0, 0, 0];
+
 var COLOUR_DOOR_NORMAL = 0,
     COLOUR_DOOR_BRONZE = 1,
     COLOUR_DOOR_IRON = 2,
@@ -18,13 +34,15 @@ var COLOUR_DECO_SERPENT = 0,
     COLOUR_DECO_DRAGON = 2,
     COLOUR_DECO_MOON = 3,
     COLOUR_DECO_BRONZE = 4,
-    COLOUR_DECO_IRON = 5;
-    COLOUR_DECO_SERPENT_OFF = 6,
-    COLOUR_DECO_CHAOS_OFF = 7,
-    COLOUR_DECO_DRAGON_OFF = 8,
-    COLOUR_DECO_MOON_OFF = 9,
-    COLOUR_DECO_BRONZE_OFF = 10,
-    COLOUR_DECO_IRON_OFF = 11;
+    COLOUR_DECO_IRON = 5,
+    COLOUR_DECO_BLACK = 6,
+    COLOUR_DECO_SERPENT_OFF = 7,
+    COLOUR_DECO_CHAOS_OFF = 8,
+    COLOUR_DECO_DRAGON_OFF = 9,
+    COLOUR_DECO_MOON_OFF = 10,
+    COLOUR_DECO_BRONZE_OFF = 11,
+    COLOUR_DECO_IRON_OFF = 12,
+    COLOUR_DECO_BLACK_OFF = 13;
 
 var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4","horace_mod0","horace_moon","horace_drag","horace_serp","horace_zendik","horace_chaos"];
 
@@ -61,8 +79,8 @@ $(function() {
     gfxLoadImage("deco", "moon-head");
     gfxLoadImage("deco", "dragon-head");
     gfxLoadImage("deco", "chaos-head");
-    gfxLoadImage("deco", "switch", 11);
-    gfxLoadImage("deco", "gem", 11);
+    gfxLoadImage("deco", "switch", 13);
+    gfxLoadImage("deco", "gem", 13);
     gfxLoadImage("deco", "script", 5);
     gfxLoadImage("deco", "banner", 5);
 
@@ -179,5 +197,7 @@ function gfxLoadImage(type, item, sub) {
 }
 
 function debugText(txt) {
-    $('section.debug p').append(txt + '<br/>');
+    if(debug) {
+        $('section.debug p').append(txt + '<br/>');
+    }
 }
