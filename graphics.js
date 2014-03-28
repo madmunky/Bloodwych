@@ -10,7 +10,7 @@ function SpriteSheetArray(){
     ImageArray[2] = new Array(15, 0, 98, 76, 15, 0);
     ImageArray[3] = new Array(113, 0, 15, 76, 113, 0);
     ImageArray[4] = new Array(128, 0, 16, 76, 0, 0);
-    ImageArray[5] = new Array(144, 0, 16, 76, 16, 0);
+    ImageArray[5] = new Array(143, 0, 16, 76, 15, 0);
     ImageArray[6] = new Array(160, 0, 64, 76, 32, 0);
     ImageArray[7] = new Array(224, 0, 17, 76, 96, 0);
     ImageArray[8] = new Array(241, 0, 16, 76, 113, 0);
@@ -63,9 +63,6 @@ function getImage(Hex,d,pos,p,pos18) {
     // This function will return the correct graphic to be draw for the Hex Code passed
     // I may need to pass the Graphics Position to be drawn so I can work out which graphic
     // to be return for each wall side.
-
-    var BB = parseInt(Hex.substring(1,2),16);
-    var AA = parseInt(Hex.substring(0,1),16);
   
     switch (getHexToBinaryPosition(Hex, 12, 4)) {
         case '0': return null; break;
@@ -143,8 +140,8 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
     
     function getWallDeco() {
         var xy = posToCoordinates(pos18, P.X, P.Y, P.Rotation);
-        var RND4 = (xy["x"] * 3 + xy["y"] + d * 5) % 4;
-        var RND6 = (xy["x"] + xy["y"] * 5 + d * 7) % 6;
+        var RND4 = (xy["x"] * 3 + xy["y"] + d * 5) % 4; //For random banner faces
+        var RND6 = (xy["x"] + xy["y"] * 5 + d * 7) % 6; //For random banner frames
         try{
             if (getHexToBinaryPosition(HexCode, 8) == '1') { //Wall has something on it
                 if (getHexToBinaryPosition(HexCode, 6, 2) == '0') { //Shelf
@@ -185,69 +182,28 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
                 } else {
                     return gfx["stone"]["wall"];
                 }
-            } else {PrintLog("Unhandled Banner - " + HexCode);
-                return gfx["stone"]["wall"];
             }}catch(e){}  
          
         return gfx["stone"]["wall"];
     }
 }
 
-function getWallDirection(d,s) {
+function getWallDirection(d, s) {
     
     // d = player direction
     // s = screen gfx position
     
-//I should be able to use the below in an array to work out all directions
+    //I should be able to use the below in an array to work out all directions
     //current plus direction = wall face i.e.
     //If a wall is currently North which is a 0 + player direction. Say Player is facing East = 1
     // 0 + 1 = 1 (North Wall becomes East)
     
-   var Wall = [];
+    var Wall = [0, 1, 2, 3, 2, 1, 2, 3, 2, 2, 1, 2, 3, 2, 2, 1, 2, 3, 2, 1, 2, 1, 3, 2, 3, 2, 1, 3, 2, 3, 0, 1];        
+    Wall[s] = (Wall[s] + d) % 4;
+
+    if (debugHigh) {console.log (s + " = " + getDirection(Wall[s]));}
         
-        Wall[0] = 0;
-        Wall[1] = 1;
-        Wall[2] = 2;
-        Wall[3] = 3;
-        Wall[4] = 2;                
-        Wall[5] = 1;
-        Wall[6] = 2;
-        Wall[7] = 3;
-        Wall[8] = 2;
-        Wall[9] = 2;
-        Wall[10] = 1;
-        Wall[11] = 2;
-        Wall[12] = 3;
-        Wall[13] = 2;
-        Wall[14] = 2;
-        Wall[15] = 1;
-        Wall[16] = 2;
-        Wall[17] = 3;
-        Wall[18] = 2;
-        Wall[19] = 1;
-        Wall[20] = 2;
-        Wall[21] = 1;
-        Wall[22] = 3;
-        Wall[23] = 2;
-        Wall[24] = 3;
-        Wall[25] = 2;
-        Wall[26] = 1;
-        Wall[27] = 3;
-        Wall[28] = 2;
-        Wall[29] = 3;
-        Wall[30] = 0;
-        Wall[31] = 1;
-	            
-        Wall[s] = Wall[s] + d;
-        
-        if (Wall[s] > 3) {
-            Wall[s] = (Wall[s] - 3) -1;
-        }
-        
-        if (debugHigh) {console.log (s + " = " + getDirection(Wall[s]));}
-        
-   return Wall[s];
-    
+    return Wall[s];
 };
 
 function getDirection(n) {
@@ -272,7 +228,7 @@ function drawPlayersView(p) {
     // has 4 sides we draw each of the sides, if it is not a Wooden object
     // or Wall we just draw a single image.
     
-    myDIx(ctx, gfx["background"], background[p.pbg], p, scale);
+    myDIx(ctx, gfx["background"], background[(p.X + p.Y + p.Rotation) % 2], p, scale);
     
 //        try {
     for (x = 0;x < 19;x++){
@@ -437,28 +393,26 @@ function drawWoodenObject(p,x) {
     //We create an array of all the sides for each 18 blocks
     //because wooden walls have 4 sides me need to loop though them all
     //and return the correct wall depending on the players rotation
-
-     var BlockSides = [];
-     
-        BlockSides[0] = [-1,-1,28,27];
-        BlockSides[1] = [-1,26,25,-1];
-        BlockSides[2] = [-1,27,23,22];
-        BlockSides[3] = [-1,21,20,26];
-        BlockSides[4] = [-1,22,16,21];
-        BlockSides[5] = [28,-1,-1,24];
-        BlockSides[6] = [25,19,-1,-1];
-        BlockSides[7] = [23,24,18,17];
-        BlockSides[8] = [20,15,14,19];
-        BlockSides[9] = [16,17,11,15];
-        BlockSides[10] = [18,-1,13,12];
-        BlockSides[11] = [14,10,9,-1];
-        BlockSides[12] = [11,12,6,10];
-        BlockSides[13] = [13,-1,8,7];
-        BlockSides[14] = [9,5,4,-1];
-        BlockSides[15] = [6,7,2,5];
-        BlockSides[16] = [8,-1,-1,3];
-        BlockSides[17] = [4,1,-1,-1];
-        BlockSides[18] = [2,3,-1,1];
+    var BlockSides = [];
+    BlockSides[0] = [-1,-1,28,27];
+    BlockSides[1] = [-1,26,25,-1];
+    BlockSides[2] = [-1,27,23,22];
+    BlockSides[3] = [-1,21,20,26];
+    BlockSides[4] = [-1,22,16,21];
+    BlockSides[5] = [28,-1,-1,24];
+    BlockSides[6] = [25,19,-1,-1];
+    BlockSides[7] = [23,24,18,17];
+    BlockSides[8] = [20,15,14,19];
+    BlockSides[9] = [16,17,11,15];
+    BlockSides[10] = [18,-1,13,12];
+    BlockSides[11] = [14,10,9,-1];
+    BlockSides[12] = [11,12,6,10];
+    BlockSides[13] = [13,-1,8,7];
+    BlockSides[14] = [9,5,4,-1];
+    BlockSides[15] = [6,7,2,5];
+    BlockSides[16] = [8,-1,-1,3];
+    BlockSides[17] = [4,1,-1,-1];
+    BlockSides[18] = [2,3,-1,1];
     
     var b = hex2bin(p.View[x].substring(0,2));
     var s = [];

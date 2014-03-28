@@ -99,3 +99,15 @@ function posToCoordinates(pos, x, y, d) {
     }
     return newCoord;
 }
+
+function getOffsetByRotation(r) {
+    xo = 0, yo = 0;
+    switch (r){
+      case 0: xo = 0; yo = -1; break;
+      case 1: xo = 1; yo = 0; break;
+      case 2: xo = 0; yo = 1; break;
+      case 3: xo = -1; yo = 0; break;
+      default: break;
+    }
+    return {'x': xo, 'y': yo};
+}

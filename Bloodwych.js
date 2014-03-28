@@ -44,6 +44,11 @@ var COLOUR_DECO_SERPENT = 0,
     COLOUR_DECO_IRON_OFF = 12,
     COLOUR_DECO_BLACK_OFF = 13;
 
+var DIRECTION_NORTH = 0,
+    DIRECTION_EAST = 1,
+    DIRECTION_SOUTH = 2,
+    DIRECTION_WEST = 3;
+
 var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4","horace_mod0","horace_moon","horace_drag","horace_serp","horace_zendik","horace_chaos"];
 
 var CurrentMap = 0;

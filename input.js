@@ -12,7 +12,7 @@ function doTouchStart(e) {
                 clearCanvas();
                 configCanvas();
                 myDIx(ctx, img, background[b], p1, scale);
-                p1.moveForward();
+                p1.move(DIRECTION_NORTH);
                 p1.pView(tw.Levels[p1.level].Map);
                 drawPlayersView(p1);
                 event.preventDefault();
@@ -21,7 +21,7 @@ function doTouchStart(e) {
                 clearCanvas();
                 configCanvas();
                 myDIx(ctx, img, background[b], p1, scale);
-                p1.moveBackwards();
+                p1.move(DIRECTION_SOUTH);
                 p1.pView(tw.Levels[p1.level].Map);
                 drawPlayersView(p1);
             }
@@ -53,10 +53,10 @@ function doKeyDown(e) {
     switch (e.keyCode)
     {
         
-        case 104: {p2.moveForward();break} //Up Arrow
-        case 101: {p2.moveBackwards();break} //Down Arrow
-        case 100: {p2.moveLeft();break} //Left Arrow
-        case 102: {p2.moveRight();break} //Right Arrow
+        case 104: {p2.move(DIRECTION_NORTH);break} //Up Arrow
+        case 101: {p2.move(DIRECTION_SOUTH);break} //Down Arrow
+        case 100: {p2.move(DIRECTION_WEST);break} //Left Arrow
+        case 102: {p2.move(DIRECTION_EAST);break} //Right Arrow
         case 103: {p2.RotatePlayer(1);break} //Delete
         case 105: {p2.RotatePlayer(0);break} //Page Dn
         case  96: {p2.Action();break} //End Key
@@ -76,10 +76,10 @@ function doKeyDown(e) {
         case 84: {p1.ChangeUpLevel();break;}    // T KEY     
         case 32: {p1.Action();break;}           // SpaceBar        
         case 71: {p1.ChangeDownLevel(); break;} // G KEY  
-        case 87: {p1.moveForward();break;}      // W KEY
-        case 83: {p1.moveBackwards();break;}    // S KEY
-        case 65: {p1.moveLeft();break;}         // A KEY
-        case 68: {p1.moveRight();break;}        // D KEY
+        case 87: {p1.move(DIRECTION_NORTH);break;}      // W KEY
+        case 83: {p1.move(DIRECTION_SOUTH);break;}    // S KEY
+        case 65: {p1.move(DIRECTION_WEST);break;}         // A KEY
+        case 68: {p1.move(DIRECTION_EAST);break;}        // D KEY
         case 69: {p1.RotatePlayer(0);break;}    // Q KEY
         case 81: {p1.RotatePlayer(1);break;}    // E KEY
 

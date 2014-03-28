@@ -7,7 +7,6 @@ function player(posX,posY,level,rotation,PortX,PortY) {
     this.PortalX=PortX;
     this.PortalY=PortY;
     this.View = [];
-    this.pbg = 0;
     this.lastX = posX;
     this.lastY = posY;
     this.lastLevel = level;
@@ -32,22 +31,30 @@ var Direction = {
         }
     };
 
-function checkObject(hex,p) {
-    
-//Passes in a MAP HEX Code and returns a True or False
-    
-    switch (hex.substring(3,4)) {
-    
-        case "0": {return true;};
-        case "1": {return false;};
-        case "2": {return WoodenObjectPassable(hex,p);}
-        case "3": {return false;};
-        case "5": {if (parseInt(hex.substring(1, 2),16) % 2 === 0){return true;}else{return false;}};
-        
-        default: {return true;break};
-        
-    }       
-    
+function checkObject(hex, p) {
+  var objThis = getHexToBinaryPosition(p.View[18], 12, 4);
+  var objNext = getHexToBinaryPosition(hex, 12, 4);
+
+  //Check wooden walls and doors
+  if(objThis == '2' || objNext == '2') {
+    if(!WoodenObjectPassable(hex, p)) {
+      return false;
+    }
+  }
+
+  //Check other objects
+  switch (objNext) {
+    case '0': return true; //Empty
+    case '1': return false; //Wall
+    case '3': return false; //Misc
+    case '5': //Doors
+    if (getHexToBinaryPosition(hex, 7, 1) == '0') {
+      return true;
+    } else {
+      return false;
+    }
+    default: return true;
+  }       
 }
 
 player.prototype.ChangeUpLevel = function() {
@@ -60,8 +67,8 @@ player.prototype.ChangeUpLevel = function() {
         this.level = 0;
     }
     else {
-        this.moveForward();
-        this.moveForward();
+        this.move(DIRECTION_NORTH);
+        this.move(DIRECTION_NORTH);
     }
     
 };
@@ -76,15 +83,9 @@ player.prototype.ChangeDownLevel = function() {
         this.level = tw.length;
     }
     else{
-        this.moveForward();
-        this.moveForward();
+        this.move(DIRECTION_NORTH);
+        this.move(DIRECTION_NORTH);
     }
-};
-
-player.prototype.switchPlayerBackground = function() {
-  
-    if (this.pbg === 0){this.pbg = 1;}else {this.pbg = 0;}  
-    
 };
 
 //Take the map code which is in front of the player and see if the player can interact with it.
@@ -140,107 +141,6 @@ player.prototype.UpdateMap = function() {
   
 };
 
-player.prototype.moveForward = function() {
-    
-    this.moving = 0;
-    this.UpdateMap();
-    this.lastX = this.X;
-    this.lastY = this.Y;
-
-    if (checkObject(this.View[15],this)/* && (checkObject(this.View[18],this))*/) {
-
-        xo = 0, yo = 0;
-        
-        switch (this.Rotation){
-          case 0: xo = 0; yo = -1; break;
-          case 1: xo = 1; yo = 0; break;
-          case 2: xo = 0; yo = 1; break;
-          case 3: xo = -1; yo = 0; break;
-        }
-        
-       this.Y = this.Y + (1 * yo) - (0 * xo);
-       this.X = this.X + (1 * xo) + (0 * yo);
-       if (debug) {PrintLog("Player Moved Forward");}
-       ;
-       this.switchPlayerBackground();
-    } 
-    playerEvents(this);
-};
-
-player.prototype.moveBackwards = function() {
-    this.moving = 2;
-    this.UpdateMap();
-    this.lastX = this.X;
-    this.lastY = this.Y;
-
-    if (checkObject(this.View[19],this)/* && (checkObject(this.View[18],this))*/) {
-        xo = 0, yo = 0;
-        
-        switch (this.Rotation){
-          case 0: xo = 0; yo = -1; break;
-          case 1: xo = 1; yo = 0; break;
-          case 2: xo = 0; yo = 1; break;
-          case 3: xo = -1; yo = 0; break;
-        }
-        
-       this.Y = this.Y - (1 * yo) - (0 * xo);
-       this.X = this.X - (1 * xo) + (0 * yo);
-       if (debug) {PrintLog("Player Moved Backwards");}       
-       
-       this.switchPlayerBackground();
-    }
-    playerEvents(this);
-};
-
-player.prototype.moveLeft = function() {
-    this.moving = 1;
-    this.UpdateMap();
-    this.lastX = this.X;
-    this.lastY = this.Y;
-    
-   if (checkObject(this.View[17],this)/* && (checkObject(this.View[18],this))*/) {
-    xo = 0, yo = 0;
-        
-        switch (this.Rotation){
-          case 0: xo = 0; yo = -1; break;
-          case 1: xo = 1; yo = 0; break;
-          case 2: xo = 0; yo = 1; break;
-          case 3: xo = -1; yo = 0; break;
-        }
-    
-    this.Y = this.Y - (0 * yo) - (1 * xo);
-    this.X = this.X - (0 * xo) + (1 * yo);
-    if (debug) {PrintLog("Player Moved Left");}   
-    playerEvents(this);
-    this.switchPlayerBackground();
-   }
-};
-
-player.prototype.moveRight = function() {
-    this.moving = 3;
-    this.UpdateMap();
-    this.lastX = this.X;
-    this.lastY = this.Y;
-    
-   if (checkObject(this.View[16],this)/* && (checkObject(this.View[18],this))*/) { 
-            xo = 0, yo = 0;
-        
-        switch (this.Rotation){
-          case 0: xo = 0; yo = -1; break;
-          case 1: xo = 1; yo = 0; break;
-          case 2: xo = 0; yo = 1; break;
-          case 3: xo = -1; yo = 0; break;
-        }
-    
-    this.Y = this.Y - (0 * yo) + (1 * xo);
-    this.X = this.X - (0 * xo) - (1 * yo);
-    if (debug) {PrintLog("Player Moved Right");}
-    playerEvents(this);
-    this.switchPlayerBackground();
-    
-   }
-};
-
 player.prototype.RotatePlayer = function(d){
     
     if (d === 1) {
@@ -257,8 +157,22 @@ player.prototype.RotatePlayer = function(d){
         }
         if (debug) {PrintLog("Player Rotated Clockwise");}
     }   
-    this.switchPlayerBackground();
     checkCurrentSqaure(this);
+};
+
+player.prototype.move = function(d) {
+  this.moving = d;
+  this.UpdateMap();
+  this.lastX = this.X;
+  this.lastY = this.Y;
+  var viewIndex = [15, 16, 19, 17];
+  if (checkObject(this.View[viewIndex[d]], this)) { 
+    xy = getOffsetByRotation((this.Rotation + d) % 4);
+    this.X = this.X + xy['x'];
+    this.Y = this.Y + xy['y'];
+    if (debug) {PrintLog("Player Moved " + getDirection(this.Rotation));}
+    playerEvents(this);
+  }
 };
 
 player.prototype.pView = function(m){
