@@ -60,8 +60,7 @@ background[1] = new Array(128, 0, 128, 76, 0, 0);
 var gfx = {};
 var gfxPos = SpriteSheetArray();
 var b = 0;
-var p1;
-var p2;
+var player = new Array();
 var tw = new Tower();
 
 //Touch Screen Stuff
@@ -121,23 +120,23 @@ function updatePlayerViewScreen(){
             $('section.debug p').html('');
             clearCanvas();
             configCanvas();
-            p1.pView(tw.Levels[p1.level].Map);
-            drawPlayersView(p1);
+            player[0].pView(tw.Levels[player[0].level].Map);
+            drawPlayersView(player[0]);
             ctx.font = "normal 11px verdana, sans-serif";
             ctx.fillStyle = "#FFF";
             ctx.fillText("Player 1",0,250);
-            ctx.fillText("X:" + p1.X.toString() + "\n Y:"  + p1.Y.toString(),0,270);
+            ctx.fillText("X:" + player[0].X.toString() + "\n Y:"  + player[0].Y.toString(),0,270);
             ctx.fillText("Current Map: " +Maps[CurrentMap],0,290);
-            ctx.fillText("Level: " + p1.level.toString(),0,310);
+            ctx.fillText("Level: " + player[0].level.toString(),0,310);
             //ctx.fillText(canvas_x + " - " + canvas_y,0,330);
             ctx.fillText("FPS: " + fps.getFPS(),0,350);
             //if (debug){PrintLog("Screen Updated");}
-            p2.pView(tw.Levels[p2.level].Map);
-            drawPlayersView(p2);
+            player[1].pView(tw.Levels[player[1].level].Map);
+            drawPlayersView(player[1]);
             ctx.fillText("Player 2",410,250);
-            ctx.fillText("X:" + p2.X.toString() + "\n Y:"  + p2.Y.toString(),410,270);
+            ctx.fillText("X:" + player[1].X.toString() + "\n Y:"  + player[1].Y.toString(),410,270);
             ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
-            ctx.fillText("Level: " + p2.level.toString(),410,310);
+            ctx.fillText("Level: " + player[1].level.toString(),410,310);
     }
 }
 

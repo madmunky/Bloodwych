@@ -1,4 +1,4 @@
-function player(posX,posY,level,rotation,PortX,PortY) {
+function Player(posX,posY,level,rotation,PortX,PortY) {
     
     this.X=posX;
     this.Y=posY;
@@ -10,15 +10,16 @@ function player(posX,posY,level,rotation,PortX,PortY) {
     this.lastX = posX;
     this.lastY = posY;
     this.lastLevel = level;
-    this.moving = 0; //0 = Forward,1 = Left, 2 = Backwards, 3 = Right
+    this.moving = 0; //0 = Forward,1 = Right, 2 = Backwards, 3 = Left
   
-  try{
-  tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
-  }
-  catch(c){};
+    try{
+        this.setBinaryView(18, 8, '1');
+        //tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
+    }
+    catch(c){};
 }
 
-var Direction = {
+/*var Direction = {
         North: 0,
         East: 1,
         South: 2,
@@ -29,35 +30,37 @@ var Direction = {
             2: {name: "South", value: 2},
             3: {name: "West", value: 3}
         }
-    };
+    };*/
 
-function checkObject(hex, p) {
+function checkObjectPassable(hex, p) {
+  //Check other player
+  if(getHexToBinaryPosition(hex, 8) == '1') {
+        return false;
+  }
+
   var objThis = getHexToBinaryPosition(p.View[18], 12, 4);
   var objNext = getHexToBinaryPosition(hex, 12, 4);
 
   //Check wooden walls and doors
   if(objThis == '2' || objNext == '2') {
-    if(!WoodenObjectPassable(hex, p)) {
+    if(!checkWoodenObjectPassable(hex, p)) {
       return false;
     }
   }
 
   //Check other objects
   switch (objNext) {
-    case '0': return true; //Empty
     case '1': return false; //Wall
     case '3': return false; //Misc
     case '5': //Doors
-    if (getHexToBinaryPosition(hex, 7, 1) == '0') {
-      return true;
-    } else {
+    if (getHexToBinaryPosition(hex, 7, 1) == '1') {
       return false;
     }
-    default: return true;
-  }       
+  }
+  return true;
 }
 
-player.prototype.ChangeUpLevel = function() {
+Player.prototype.changeUpLevel = function() {
     
     //In bloodwych when the player moves levels they also moved 2 places forward
     //This function changes the players level and moves the player forward 2x spaces
@@ -73,7 +76,7 @@ player.prototype.ChangeUpLevel = function() {
     
 };
 
-player.prototype.ChangeDownLevel = function() {
+Player.prototype.changeDownLevel = function() {
     
     //In bloodwych when the player moves levels they also moved 2 places forward
     //This function changes the players level and moves the player forward 2x spaces
@@ -89,7 +92,7 @@ player.prototype.ChangeDownLevel = function() {
 };
 
 //Take the map code which is in front of the player and see if the player can interact with it.
-player.prototype.Action = function() {
+Player.prototype.action = function() {
     //Doors
     if (this.getBinaryView(15, 12, 4) == '5') {
         var t = this.getBinaryView(15, 1, 3);
@@ -100,7 +103,7 @@ player.prototype.Action = function() {
         }
     }
     //Wall switches
-    if (this.getBinaryView(15, 8) == '1' && this.getBinaryView(15, 6, 2) == '2') {
+    if (this.getBinaryView(15, 0, 4) != '0' && this.getBinaryView(15, 8) == '1' && this.getBinaryView(15, 6, 2) == '2') {
         this.setBinaryView(15, 5);
     }
     //Wooden doors (in front of player)
@@ -113,13 +116,17 @@ player.prototype.Action = function() {
     }
 };
 
+Player.prototype.toggleObject = function() {
+    this.setBinaryView(15, 12);
+}
+
 //Sets a binary index on a hexadecimal string to a certain binary flag
-player.prototype.setBinaryView = function(pos18, index, to) {
+Player.prototype.setBinaryView = function(pos18, index, to) {
   var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
   tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.Levels[this.level].Map[xy["y"]][xy["x"]], index, to);
 };
 
-player.prototype.getBinaryView = function(pos18, index, length) {
+Player.prototype.getBinaryView = function(pos18, index, length) {
   var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
   try {
     return getHexToBinaryPosition(tw.Levels[this.level].Map[xy["y"]][xy["x"]], index, length);
@@ -128,20 +135,16 @@ player.prototype.getBinaryView = function(pos18, index, length) {
   }
 };
 
-player.prototype.UpdateMap = function() {
-   
-        tw.Levels[this.lastLevel].Map[this.lastY][this.lastX] = tw.Levels[this.lastLevel].Map[this.lastY][this.lastX].replaceAt(2,"0");
-        tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");  
-         
-  
-  this.lastX = this.X;
-  this.lastY = this.Y;
-  this.lastLevel = this.level;
-  //this.lastLevel = this.level;
-  
+Player.prototype.updateMap = function() {
+    tw.Levels[this.lastLevel].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tw.Levels[this.lastLevel].Map[this.lastY][this.lastX], 8, '0');
+    player[0].setBinaryView(18, 8, '1');
+    player[1].setBinaryView(18, 8, '1');
+    this.lastX = this.X;
+    this.lastY = this.Y;
+    this.lastLevel = this.level;
 };
 
-player.prototype.RotatePlayer = function(d){
+Player.prototype.rotatePlayer = function(d){
     
     if (d === 1) {
         this.Rotation = this.Rotation -1;
@@ -157,16 +160,16 @@ player.prototype.RotatePlayer = function(d){
         }
         if (debug) {PrintLog("Player Rotated Clockwise");}
     }   
-    checkCurrentSqaure(this);
+    checkCurrentSquare(this);
 };
 
-player.prototype.move = function(d) {
+Player.prototype.move = function(d) {
   this.moving = d;
-  this.UpdateMap();
+  this.updateMap();
   this.lastX = this.X;
   this.lastY = this.Y;
   var viewIndex = [15, 16, 19, 17];
-  if (checkObject(this.View[viewIndex[d]], this)) { 
+  if (checkObjectPassable(this.View[viewIndex[d]], this)) { 
     xy = getOffsetByRotation((this.Rotation + d) % 4);
     this.X = this.X + xy['x'];
     this.Y = this.Y + xy['y'];
@@ -175,7 +178,7 @@ player.prototype.move = function(d) {
   }
 };
 
-player.prototype.pView = function(m){
+Player.prototype.pView = function(m){
     
     //m = Map Data
     //This function takes the map file and stores the 20 positions required 
@@ -234,7 +237,7 @@ player.prototype.pView = function(m){
         
     };
     
-player.prototype.drawView = function(p) {
+Player.prototype.drawView = function(p) {
     
     //To draw the players view it consists of 30 tiles to build up the screen view
     //we use the players view to work out what each of these 30 images should be based
@@ -285,15 +288,15 @@ player.prototype.drawView = function(p) {
 
 function playerEvents(p) {
            
-       p.UpdateMap();
+       p.updateMap();
        p.pView(tw.Levels[p.level].Map);
        drawPlayersView(p);
-       checkCurrentSqaure(p);      
+       checkCurrentSquare(p);      
 }
 
-function checkCurrentSqaure(p) {    
+function checkCurrentSquare(p) {    
   
-   p.UpdateMap();
+   p.updateMap();
   
     switch (parseInt(p.View[18].substring(3,4),16)) {
         
@@ -372,7 +375,7 @@ function playerOnStair(p,stairs){
             default:
                 break;
         }
-  //  p.UpdateMap();
+  //  p.updateMap();
 }
 
 function changePlayerLevel(p,l){

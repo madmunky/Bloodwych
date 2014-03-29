@@ -51,7 +51,7 @@ function returnType(t) {
     
 }
 
-function WoodenObjectPassable(hex, p) {
+function checkWoodenObjectPassable(hex, p) {
     //Check the space the player is standing on
     if(getHexToBinaryPosition(p.View[18], 12, 4) == '2' && getHexToBinaryPosition(p.View[18], ((7 - ((p.Rotation + p.moving) % 4)) % 4) * 2 + 1, 1) == '1') {
         return false;

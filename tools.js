@@ -15,7 +15,7 @@ function setHexToBinaryPosition(s, index, to) {
         from = bin.substr(index, 1);
         to = "" + (1 - from);
     } else {
-        to = hex2bin(s);
+        to = parseInt(to, 16).toString(2);
     }
     bin = bin.substr(0, index) + to + bin.substr(index + to.length);
     var ret = bin2hex(bin);
@@ -65,6 +65,19 @@ function seededRandom(seed) {
     return min + rnd * (max - min);
 }
 
+/*
+1  3  4  2  0
+
+6  8  9  7  5
+
+  11 12 10
+
+  14 15 13
+
+  17>18<16
+
+     19
+*/
 //Given a specific position (0 - 19) relative to an x, y and d(irection), return the x and y coordinates
 function posToCoordinates(pos, x, y, d) {
     newCoord = {};
