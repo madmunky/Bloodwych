@@ -14,8 +14,6 @@ function setHexToBinaryPosition(s, index, to) {
     if(typeof to === "undefined" || to == "") {
         from = bin.substr(index, 1);
         to = "" + (1 - from);
-    } else {
-        to = parseInt(to, 16).toString(2);
     }
     bin = bin.substr(0, index) + to + bin.substr(index + to.length);
     var ret = bin2hex(bin);

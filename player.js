@@ -94,13 +94,9 @@ Player.prototype.changeDownLevel = function() {
 //Take the map code which is in front of the player and see if the player can interact with it.
 Player.prototype.action = function() {
     //Doors
-    if (this.getBinaryView(15, 12, 4) == '5') {
-        var t = this.getBinaryView(15, 1, 3);
-        switch (t) {
-          case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7':
-            this.setBinaryView(15, 7); break;
-          default: break;
-        }
+    if (this.getBinaryView(15, 12, 4) == '5' && this.getBinaryView(15, 4) == '0') {
+        this.setBinaryView(15, 7);
+        //this.setBinaryView(15, 1, '000'); //Will set the door to 'normal'
     }
     //Wall switches
     if (this.getBinaryView(15, 0, 4) != '0' && this.getBinaryView(15, 8) == '1' && this.getBinaryView(15, 6, 2) == '2') {
@@ -121,6 +117,7 @@ Player.prototype.toggleObject = function() {
 }
 
 //Sets a binary index on a hexadecimal string to a certain binary flag
+//'to' will be a binary string, e.g. '1010'
 Player.prototype.setBinaryView = function(pos18, index, to) {
   var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
   tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.Levels[this.level].Map[xy["y"]][xy["x"]], index, to);

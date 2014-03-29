@@ -35,14 +35,9 @@ var COLOUR_DECO_SERPENT = 0,
     COLOUR_DECO_MOON = 3,
     COLOUR_DECO_BRONZE = 4,
     COLOUR_DECO_IRON = 5,
-    COLOUR_DECO_BLACK = 6,
-    COLOUR_DECO_SERPENT_OFF = 7,
-    COLOUR_DECO_CHAOS_OFF = 8,
-    COLOUR_DECO_DRAGON_OFF = 9,
-    COLOUR_DECO_MOON_OFF = 10,
-    COLOUR_DECO_BRONZE_OFF = 11,
-    COLOUR_DECO_IRON_OFF = 12,
-    COLOUR_DECO_BLACK_OFF = 13;
+    COLOUR_DECO_BROWN = 6,
+    COLOUR_DECO_TAN = 7,
+    COLOUR_DECO_BLACK = 8;
 
 var DIRECTION_NORTH = 0,
     DIRECTION_EAST = 1,
@@ -83,10 +78,11 @@ $(function() {
     gfxLoadImage("deco", "moon-head");
     gfxLoadImage("deco", "dragon-head");
     gfxLoadImage("deco", "chaos-head");
-    gfxLoadImage("deco", "switch", 13);
-    gfxLoadImage("deco", "gem", 13);
-    gfxLoadImage("deco", "script", 5);
-    gfxLoadImage("deco", "banner", 5);
+    gfxLoadImage("deco", "switch", 8);
+    gfxLoadImage("deco", "switch-off", 8);
+    gfxLoadImage("deco", "gem", 8);
+    gfxLoadImage("deco", "script", 7);
+    gfxLoadImage("deco", "banner", 7);
 
     //Wooden walls and doors
     gfxLoadImage("wood", "wall");
