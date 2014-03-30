@@ -224,6 +224,10 @@ function getDirection(n) {
 
 function drawPlayersView(p) {
     debugText(hex2bin(p.getBinaryView(15, 0, 16)));
+    debugText(p.View[15]);
+    //debugText(p.View[15].substring(0,2));
+    debugText(getHexToBinaryPosition(p.View[15], 0, 5));
+    //debugText(parseInt(p.View[15].substring(0,2), 16).toString(10));
     // p = Player
     
     // What we do now is take the 18 Blocks which make up the players view
