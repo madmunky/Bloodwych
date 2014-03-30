@@ -7,7 +7,7 @@
 function Tower() {
     
     this.Levels = [];
-    
+    this.Switches = [];
 }
 
 function Map(Width,Height,xOff,yOff){

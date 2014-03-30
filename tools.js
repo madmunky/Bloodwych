@@ -122,3 +122,13 @@ function getOffsetByRotation(r) {
     }
     return {'x': xo, 'y': yo};
 }
+
+function decimalToHex(d) {
+    var hex = Number(d).toString(16);
+    hex = "".substr(0, 2 - hex.length) + hex;
+    hex = hex.toUpperCase();
+    if (hex.length === 1) {
+        hex = "0" + hex;
+    }
+    return hex;
+}

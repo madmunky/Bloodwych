@@ -2,7 +2,7 @@
 // GetDataView("maps/MOD0.MAP",mapdate);
 //});
 
- function GetDataView(file_name, callback){
+function GetDataView(file_name, callback){
 
         var xmlhttp = new XMLHttpRequest();
 
@@ -13,8 +13,7 @@
             if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete"){
 
               //data_view = new DataView(this.response);   //DataView is not defined here
-              return tower = callback(this.response);
-
+              tower = callback(this.response,file_name);
              }
         };
 
@@ -33,7 +32,7 @@ function handleFileSelect(evt) {
     reader.onloadend = mapdate;
     }
     
-function mapdate(evt) {
+function mapdate(evt,file_name) {
         
         //Function to read the orginal Bloodwych PC map data and put it into an array of
         //hex codes so we can convert back to objects ingame.
@@ -68,22 +67,51 @@ function mapdate(evt) {
             tw.Levels[i].Map = mdata;
         }
         
-        player[0] = new Player(12, 22, 3, 0, 0,   0);
+        player[0] = new Player(12, 22, 3, 0, 0,   0);       
         player[1] = new Player(14, 22, 3, 0, 410, 0);
+        getSwitchData(file_name.replace("MAP","switches"),readSwitchData,tw);
         tw.onload = Run();
     }
     
+function getSwitchData(file_name, callback,tw){
 
+        var xmlhttp = new XMLHttpRequest();
 
-function decimalToHex(d) {
-    var hex = Number(d).toString(16);
-    hex = "".substr(0, 2 - hex.length) + hex;
-    hex = hex.toUpperCase();
-    if (hex.length === 1) {
-        hex = "0" + hex;
+        //var data_view = [];
+        
+
+        xmlhttp.onreadystatechange= function(){
+            if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete"){
+
+              //data_view = new DataView(this.response);   //DataView is not defined here
+              tw.Switches = callback(this.response);
+
+             }
+        };
+
+        xmlhttp.open("GET", file_name,true);
+        xmlhttp.responseType = "arraybuffer";
+        xmlhttp.send();
+        
     }
-    return hex;
-}
+    
+function readSwitchData(evt) {
+        
+        var uInt8Array = new Uint8Array(evt);
+        var Switches = [];   
+        
+        for (x = 0; x < uInt8Array.length; x++) {
+            //var test = [uInt8Array[x],uInt8Array[x+1],uInt8Array[x+2],uInt8Array[x+3]];
+            Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
+            x=x+3;
+        }
+        
+        return Switches;
+
+      
+    }
+
+
 
 function StringBuilder() {
     var strings = [];
