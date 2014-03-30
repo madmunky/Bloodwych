@@ -101,6 +101,7 @@ Player.prototype.action = function() {
     //Wall switches
     if (this.getBinaryView(15, 0, 4) != '0' && this.getBinaryView(15, 8) == '1' && this.getBinaryView(15, 6, 2) == '2') {
         this.setBinaryView(15, 5);
+        switchAction(0,parseInt(getHexToBinaryPosition(this.View[15], 0, 5), 16).toString(10),this);
     }
     //Wooden doors (in front of player)
     if (this.getBinaryView(15, 12, 4) == '2' && this.getBinaryView(15, ((5 - this.Rotation) % 4) * 2) == '1') {
@@ -304,6 +305,7 @@ function checkCurrentSquare(p) {
     }
 
 }
+
 function playerOnPit(p) {
     
     changePlayerLevel(p,false);
@@ -311,7 +313,6 @@ function playerOnPit(p) {
     p.Y = p.Y + (tw.Levels[p.level +1].yOffset - tw.Levels[p.level].yOffset);
     
 }
-
 
 function playerOnStair(p,stairs){
     
