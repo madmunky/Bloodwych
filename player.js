@@ -1,8 +1,12 @@
-function Player(posX,posY,level,rotation,PortX,PortY) {
-    
+function Player(champID,posX,posY,level,rotation,PortX,PortY) {
+    this.champion = new Array();
+    this.champion[0] = champion[champID];
+    for(i = 1; i < 4; i++) {
+        this.champion[i] = new Champion();
+    }
     this.X=posX;
     this.Y=posY;
-    this.level=level;
+    this.level=level;   
     this.Rotation= rotation;
     this.PortalX=PortX;
     this.PortalY=PortY;
@@ -17,6 +21,11 @@ function Player(posX,posY,level,rotation,PortX,PortY) {
         //tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
     }
     catch(c){};
+}
+
+function initPlayers() {
+    player[0] = new Player(CHAMP_BLODWYN, 12, 22, 3, 0, 0,   0);       
+    player[1] = new Player(CHAMP_ASTROTH, 14, 22, 3, 0, 410, 0);
 }
 
 /*var Direction = {
@@ -58,6 +67,10 @@ function checkObjectPassable(hex, p) {
     }
   }
   return true;
+}
+
+Player.prototype.addCharacter = function() {
+
 }
 
 Player.prototype.changeUpLevel = function() {
@@ -236,7 +249,7 @@ Player.prototype.pView = function(m){
     };
     
 Player.prototype.drawView = function(p) {
-    
+
     //To draw the players view it consists of 30 tiles to build up the screen view
     //we use the players view to work out what each of these 30 images should be based
     //on the player direction and the map code 

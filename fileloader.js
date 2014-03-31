@@ -67,8 +67,9 @@ function mapdate(evt,file_name) {
             tw.Levels[i].Map = mdata;
         }
         
-        player[0] = new Player(12, 22, 3, 0, 0,   0);       
-        player[1] = new Player(14, 22, 3, 0, 410, 0);
+        initChampions();
+        initPlayers();
+
         getSwitchData(file_name.replace("MAP","switches"),readSwitchData,tw);
         tw.onload = Run();
     }

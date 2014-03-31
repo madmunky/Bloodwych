@@ -1,6 +1,6 @@
 //Setup some global Varibles for needed
 var scale = 3;
-var debug = false;
+var debug = true;
 var debugHigh = false;
 
 var COLOUR_WHITE =          [224, 224, 224],
