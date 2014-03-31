@@ -112,8 +112,6 @@ function readSwitchData(evt) {
       
     }
 
-
-
 function StringBuilder() {
     var strings = [];
 
