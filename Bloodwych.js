@@ -112,7 +112,7 @@ document.addEventListener('touchstart', doTouchStart, false);
 
 function updatePlayerViewScreen(){  
     
-    if (typeof tw !== "undefined") {
+    if (typeof tw.Triggers !== "undefined") {
             $('section.debug p').html('');
             clearCanvas();
             configCanvas();

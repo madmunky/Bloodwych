@@ -70,11 +70,12 @@ function mapdate(evt,file_name) {
         initChampions();
         initPlayers();
 
-        getSwitchData(file_name.replace("MAP","switches"),readSwitchData,tw);
+        getSwitchData(file_name.replace("MAP","switches"),readSwitchData,tw,"Switches");
+        getSwitchData(file_name.replace("MAP","triggers"),readSwitchData,tw),"Triggers";
         tw.onload = Run();
     }
     
-function getSwitchData(file_name, callback,tw){
+function getSwitchData(file_name, callback,tw,type){
 
         var xmlhttp = new XMLHttpRequest();
 
@@ -85,7 +86,13 @@ function getSwitchData(file_name, callback,tw){
             if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete"){
 
               //data_view = new DataView(this.response);   //DataView is not defined here
-              tw.Switches = callback(this.response);
+              if (type === "Switches"){
+                tw.Switches = callback(this.response);
+              }
+              else {
+                tw.Triggers = callback(this.response);   
+              }
+              
 
              }
         };
@@ -111,6 +118,8 @@ function readSwitchData(evt) {
 
       
     }
+
+
 
 function StringBuilder() {
     var strings = [];
