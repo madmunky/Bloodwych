@@ -138,7 +138,7 @@ Player.prototype.getBinaryView = function(pos18, index, length) {
   }
 };
 
-Player.prototype.updateMap = function() {
+Player.prototype.setMovementData = function() {
     tw.Levels[this.lastLevel].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tw.Levels[this.lastLevel].Map[this.lastY][this.lastX], 8, '0');
     player[0].setBinaryView(18, 8, '1');
     player[1].setBinaryView(18, 8, '1');
@@ -147,28 +147,14 @@ Player.prototype.updateMap = function() {
     this.lastLevel = this.level;
 };
 
-Player.prototype.rotatePlayer = function(d){
-    
-    if (d === 1) {
-        this.Rotation = this.Rotation -1;
-        if (this.Rotation < 0) {
-            this.Rotation = 3;
-        }
-        if (debug) {PrintLog("Player Rotated Anti-Clockwise");}
-    }
-    else {
-        this.Rotation = this.Rotation +1;
-        if (this.Rotation > 3) {
-            this.Rotation = 0;
-        }
-        if (debug) {PrintLog("Player Rotated Clockwise");}
-    }   
+Player.prototype.rotateTo = function(d){
+    this.Rotation = (d + 4) % 4;
     //this.doEventSquare();
 };
 
 Player.prototype.move = function(d) {
     this.moving = d;
-    this.updateMap();
+    this.setMovementData();
     this.lastX = this.X;
     this.lastY = this.Y;
     var viewIndex = [15, 16, 19, 17];
@@ -204,15 +190,17 @@ Player.prototype.updateView = function(m){
 };
 
 Player.prototype.doEvent = function() {
-       this.updateMap();
+       this.setMovementData();
        this.updateView(tw.Levels[this.level].Map);
        drawPlayersView(this);
        this.doEventSquare();
 }
 
-Player.prototype.doEventSquare = function() {    
+//mr = true : player moves
+//mr = false: player rotates
+Player.prototype.doEventSquare = function(mr) {    
   
-   this.updateMap();
+   this.setMovementData();
   
     switch (parseInt(this.View[18].substring(3,4),16)) {
         

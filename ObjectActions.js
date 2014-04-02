@@ -101,8 +101,8 @@ function floorActionType(trig,p){
     switch (trig[0]){
     
         case SWITCH_FLOOR_NONE :{};break;
-        case SWITCH_FLOOR_SPIN_180 :{p.rotatePlayer((p.Rotation + 2) % 4);};break;
-        case SWITCH_FLOOR_SPIN_RANDOM :{p.rotatePlayer(Math.floor(Math.random() * 4));};break;
+        case SWITCH_FLOOR_SPIN_180 :{p.rotateTo((p.Rotation + 2) % 4);};break;
+        case SWITCH_FLOOR_SPIN_RANDOM :{p.rotateTo(Math.floor(Math.random() * 4));};break;
         case SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR :{tw.Levels[p.level].Map[trig[2]][trig[3]] = setHexToBinaryPosition(tw.Levels[p.level].Map[trig[2]][trig[3]], 7, '0');};break;  // - OPEN VOID-LOCK DOOR (X/Y) *
         case SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL :{tw.Levels[p.level].Map[p.Y][p.X+1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X+1], 7, '1');};break;    
         case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL :{tw.Levels[p.level].Map[p.Y][p.X-1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X-1], 7, '1');};break;
