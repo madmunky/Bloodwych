@@ -60,7 +60,7 @@ function doKeyDown(e) {
         case 103: {player[1].rotateTo(player[1].Rotation - 1);break} //7
         case 105: {player[1].rotateTo(player[1].Rotation + 1);break} //9
         case  96: {player[1].action();break} //End Key
-        case 107: {player[1].toggleObject();break} //+ Key
+        case 107: {player[1].toggleFrontObject();break} //+ Key
         
         case 76: {  // THE L KEY
             tw = new Tower();
@@ -83,7 +83,8 @@ function doKeyDown(e) {
         case 68: {player[0].move(DIRECTION_EAST);break;}        // D KEY
         case 81: {player[0].rotateTo(player[0].Rotation - 1);break;}    // Q KEY
         case 69: {player[0].rotateTo(player[0].Rotation + 1);break;}    // E KEY
-        case 82: {player[0].toggleObject();break} //R Key
+        case 82: {player[0].toggleFrontObject();break} //R Key
+        case 70: {player[0].testMode();break;} // F cheat
 
         default:{};break;
     }
