@@ -63,16 +63,17 @@ function togglePillar(hex){
 }
 
 function floorActionType(trig,p){
-    //00 - NONE
-    //02 - SPIN 180 **
-    //04 - SPIN RANDOM **
-    //06 - OPEN VOID-LOCK DOOR (X/Y) *
-    //08 - VIVIFY MACHINE EXTERNAL PAD **
-    //10 - VIVIFY MACHINE INTERNAL PAD **
-    //12 - WOOD DOOR CLOSER #1 (SPECIAL CASE) **
-    //14 - WOOD DOOR CLOSER #2 (SPECIAL CASE) **
-    //16 - TRADER DOOR **
-    //18 - TOWER ENTRANCE (SIDE PAD) (X/Y OF OPPOSITE PAD)
+    
+    var SWITCH_FLOOR_NONE = 0,
+        SWITCH_FLOOR_SPIN_180 = 2,
+        SWITCH_FLOOR_SPIN_RANDOM = 4,
+        SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR = 6,
+        SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL = 8,
+        SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL = 10,
+        SWITCH_FLOOR_WOOD_DOOR_CLOSER = 12,
+        SWITCH_FLOOR_WOOD_DOOR_CLOSER_2 = 14,
+        SWITCH_FLOOR_TRADER_DOOR = 16,
+        SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD = 18; //(X/Y OF OPPOSITE PAD)
     //20 - TOWER ENTRANCE (CENTRAL PAD) 
     //22 - REMOVE (X/Y) *
     //24 - CLOSE VOID-LOCK DOOR (X/Y) *
@@ -95,6 +96,18 @@ function floorActionType(trig,p){
     //58 - GAME COMPLETION PAD **
     //60 - REMOVE PILLAR / OTHER EVENT (X/Y) **
 
-
+    if(parseInt(p.View[18].substring(1,2),16) % 4 === 1){playerOnPit(p);end;};
+    
+    switch (trig[0]){
+    
+        case SWITCH_FLOOR_NONE:{};break;
+        case SWITCH_FLOOR_SPIN_180:{p.rotatePlayer((p.Rotation + 2) % 4);};break;
+        case SWITCH_FLOOR_SPIN_RANDOM:{p.rotatePlayer(Math.floor(Math.random() * 4));};break;
+        case SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR:{tw.Levels[p.level].Map[trig[2]][trig[3]] = setHexToBinaryPosition(tw.Levels[p.level].Map[trig[2]][trig[3]], 7, '0');};break;  // - OPEN VOID-LOCK DOOR (X/Y) *
+        case SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL:{tw.Levels[p.level].Map[p.Y][p.X+1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X+1], 7, '1');};break;    
+        case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:{tw.Levels[p.level].Map[p.Y][p.X-1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X-1], 7, '1');};break;
+        default: {window.alert("Unhandled Floor Action: " + trig.toString());}
+    }
 
 }
+

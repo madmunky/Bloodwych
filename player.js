@@ -52,7 +52,6 @@ Player.prototype.canMoveToPos = function(pos) {
     return true;
 }
 
-
 Player.prototype.canMoveToPosByWood = function(pos) {
     var hex = this.View[pos];
     //Check the space the player is standing on
@@ -164,7 +163,7 @@ Player.prototype.rotatePlayer = function(d){
         }
         if (debug) {PrintLog("Player Rotated Clockwise");}
     }   
-    this.doEventSquare();
+    //this.doEventSquare();
 };
 
 Player.prototype.move = function(d) {
@@ -218,21 +217,17 @@ Player.prototype.doEventSquare = function() {
     switch (parseInt(this.View[18].substring(3,4),16)) {
         
         case 4: this.doStairs(); break;
-        case 6: if(parseInt(this.View[18].substring(1,2),16) % 4 === 1) {
-            this.doPit();
-        }
-        break;
-        default: break;        
+        case 6: floorActionType(tw.Triggers[parseInt(getHexToBinaryPosition(this.View[18], 0, 5), 16).toString(10)],this);break;
+        default: break;       
         
     }
-
-}
+};
 
 Player.prototype.doPit = function() {
     this.setPlayerLevel(this.level - 1);
     this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset);
     this.Y = this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset);
-}
+};
 
 Player.prototype.doStairs = function() {
     
@@ -297,7 +292,7 @@ Player.prototype.setPlayerLevel = function(level) {
         this.lastLevel = this.level;
         this.level = level;
     }
-}
+};
 
 Player.prototype.recruitChampion = function(id) {
     for(i = 0; i < 4; i++) {
