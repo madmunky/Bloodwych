@@ -223,7 +223,8 @@ function getDirection(n) {
 };
 
 function drawPlayersView(p) {
-    //debugText(p.champion[0].firstName + ' hp:' + p.champion[0].hp + ' Spells:' + p.champion[0].spellBook);
+    //debugText(p.champion[0].firstName + ' hp:' + p.champion[0].hp + ' rec:' + p.champion[0].recruited + ' Spells:' + p.champion[0].spellBook);
+    //debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
     debugText(hex2bin(p.getBinaryView(15, 0, 16)));
     //debugText(p.View[15]);
     //debugText(p.View[15].substring(0,2));

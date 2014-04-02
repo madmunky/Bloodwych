@@ -1,19 +1,22 @@
-var	CHAMP_BLODWYN = 0,
-	CHAMP_ASTROTH = 1,
-	CHAMP_SIR_EDWARD = 2,
-	CHAMP_ULRICH = 3,
-	CHAMP_MURLOCK = 4,
-	CHAMP_ZOTHEN = 5,
-	CHAMP_MEGRIM = 6,
-	CHAMP_ZASTAPH = 7,
-	CHAMP_ELEANOR = 8,
-	CHAMP_BALDRICK = 9,
-	CHAMP_SETHRA = 10,
-	CHAMP_HENGIST = 11,
-	CHAMP_ROSANNE = 12,
-	CHAMP_ELFRIC = 13,
-	CHAMP_MR_FLAY = 14,
-	CHAMP_THAI_CHANG = 15;
+var	CHA_BLODWYN = 0,
+	CHA_ASTROTH = 1,
+	CHA_SIR_EDWARD = 2,
+	CHA_ULRICH = 3,
+	CHA_MURLOCK = 4,
+	CHA_ZOTHEN = 5,
+	CHA_MEGRIM = 6,
+	CHA_ZASTAPH = 7,
+	CHA_ELEANOR = 8,
+	CHA_BALDRICK = 9,
+	CHA_SETHRA = 10,
+	CHA_HENGIST = 11,
+	CHA_ROSANNE = 12,
+	CHA_ELFRIC = 13,
+	CHA_MR_FLAY = 14,
+	CHA_THAI_CHANG = 15;
+
+var MON_SPIDER = 16,
+	MON_CRAB = 17;
 
 var SPELL_CLASS_SERPENT = 0,
 	SPELL_CLASS_MOON = 1,
@@ -86,35 +89,48 @@ function Character(body, str, agi, int, cha, hp, vit, ac, spellBook) {
 	this.spellBook = spellBook;
 }
 
+Monster.prototype = new Character();
+Monster.prototype.constructor = Monster;
+function Monster(id, colourHead, colourBody, colourArms, colourLegs) {
+
+}
+
 Champion.prototype = new Character();
 Champion.prototype.constructor = Champion;
-function Champion(chr) {
+function Champion(id) {
 	var stat = {};
 	var spellBook = new Array();
-	bodyID = chr;
+	this.id = id;
+	this.recruited = false;
 	for(sc = 0; sc < 4; sc++) {
 		spellBook[sc] = new Array();
 		for(sp = 0; sp < 8; sp++) {
 			spellBook[sc][sp] = false;
 		}
 	}
-	switch(chr) {
-		case CHAMP_BLODWYN:
+	switch(id) {
+		case CHA_BLODWYN:
 			this.firstName = 'BLODWYN';
 			this.lastName = 'STONEMAIDEN';
 			stat = { str: 35, agi: 17, int: 13, cha: 13, hp: 35, vit: 31, ac: 5 };
 			spellBook[SPELL_CLASS_SERPENT][SPELL_ARMOUR] = true;
 			break;
-		case CHAMP_ASTROTH:
+		case CHA_ASTROTH:
 			this.firstName = 'ASTROTH';
 			this.lastName = 'SLAEMWORT';
 			stat = { str: 34, agi: 21, int: 15, cha: 15, hp: 37, vit: 26, ac: 7 };
 			spellBook[SPELL_CLASS_CHAOS][SPELL_DEFLECT] = true;
 			break;
+		case CHA_SIR_EDWARD:
+			this.firstName = 'SIR EDWARD';
+			this.lastName = 'LION';
+			stat = { str: 33, agi: 26, int: 14, cha: 13, hp: 32, vit: 28, ac: 8 };
+			spellBook[SPELL_CLASS_DRAGON][SPELL_MISSILE] = true;
+			break;
 		default: break;
 	}
 	if(typeof stat !== 'undefined') {
-		Character.call(this, bodyID, stat.str, stat.agi, stat.int, stat.cha, stat.hp, stat.vit, stat.ac, spellBook);
+		Character.call(this, id, stat.str, stat.agi, stat.int, stat.cha, stat.hp, stat.vit, stat.ac, spellBook);
 	}
 }
 

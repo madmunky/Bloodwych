@@ -1,9 +1,9 @@
 function Player(champID,posX,posY,level,rotation,PortX,PortY) {
     this.champion = new Array();
-    this.champion[0] = champion[champID];
-    for(i = 1; i < 4; i++) {
+    for(i = 0; i < 4; i++) {
         this.champion[i] = new Champion();
     }
+    this.recruitChampion(champID);
     this.X=posX;
     this.Y=posY;
     this.level=level;   
@@ -299,7 +299,18 @@ Player.prototype.setPlayerLevel = function(level) {
     }
 }
 
+Player.prototype.recruitChampion = function(id) {
+    for(i = 0; i < 4; i++) {
+        if(this.champion[i] != null) {
+            champion[id].recruited = true;
+            this.champion[i] = champion[id];
+            return true;
+        }
+    }
+    return false;
+}
+
 function initPlayers() {
-    player[0] = new Player(CHAMP_BLODWYN, 12, 22, 3, 0, 0,   0);       
-    player[1] = new Player(CHAMP_ASTROTH, 14, 22, 3, 0, 410, 0);
+    player[0] = new Player(CHA_BLODWYN, 12, 22, 3, 0, 0,   0);       
+    player[1] = new Player(CHA_ASTROTH, 14, 22, 3, 0, 410, 0);
 }
