@@ -23,54 +23,47 @@ function Player(champID,posX,posY,level,rotation,PortX,PortY) {
     catch(c){};
 }
 
-function initPlayers() {
-    player[0] = new Player(CHAMP_BLODWYN, 12, 22, 3, 0, 0,   0);       
-    player[1] = new Player(CHAMP_ASTROTH, 14, 22, 3, 0, 410, 0);
-}
-
-/*var Direction = {
-        North: 0,
-        East: 1,
-        South: 2,
-        West: 3,
-        properties: {
-            0: {name: "North", value: 0},
-            1: {name: "West", value: 1},
-            2: {name: "South", value: 2},
-            3: {name: "West", value: 3}
-        }
-    };*/
-
-function checkObjectPassable(hex, p) {
-  //Check other player
-  if(getHexToBinaryPosition(hex, 8) == '1') {
+Player.prototype.canMoveToPos = function(pos) {
+    //Check other player
+    var hex = this.View[pos];
+    if(getHexToBinaryPosition(hex, 8) == '1') {
         return false;
-  }
-
-  var objThis = getHexToBinaryPosition(p.View[18], 12, 4);
-  var objNext = getHexToBinaryPosition(hex, 12, 4);
-
-  //Check wooden walls and doors
-  if(objThis == '2' || objNext == '2') {
-    if(!checkWoodenObjectPassable(hex, p)) {
-      return false;
     }
-  }
 
-  //Check other objects
-  switch (objNext) {
-    case '1': return false; //Wall
-    case '3': return false; //Misc
-    case '5': //Doors
-    if (getHexToBinaryPosition(hex, 7, 1) == '1') {
-      return false;
+    var objThis = getHexToBinaryPosition(this.View[18], 12, 4);
+    var objNext = getHexToBinaryPosition(hex, 12, 4);
+
+    //Check wooden walls and doors
+    if(objThis == '2' || objNext == '2') {
+        if(!this.canMoveToPosByWood(pos)) {
+            return false;
+        }
     }
-  }
-  return true;
+
+    //Check other objects
+    switch (objNext) {
+        case '1': return false; //Wall
+        case '3': return false; //Misc
+        case '5': //Doors
+        if (getHexToBinaryPosition(hex, 7, 1) == '1') {
+            return false;
+        }
+    }
+    return true;
 }
 
-Player.prototype.addCharacter = function() {
 
+Player.prototype.canMoveToPosByWood = function(pos) {
+    var hex = this.View[pos];
+    //Check the space the player is standing on
+    if(getHexToBinaryPosition(this.View[18], 12, 4) == '2' && getHexToBinaryPosition(this.View[18], ((7 - ((this.Rotation + this.moving) % 4)) % 4) * 2 + 1, 1) == '1') {
+        return false;
+    }
+    //Check the space the player is moving to
+    if(getHexToBinaryPosition(hex, 12, 4) == '2' && getHexToBinaryPosition(hex, ((5 - ((this.Rotation + this.moving) % 4)) % 4) * 2 + 1, 1) == '1') {
+        return false;
+    }
+    return true;
 }
 
 Player.prototype.changeUpLevel = function() {
@@ -171,239 +164,142 @@ Player.prototype.rotatePlayer = function(d){
         }
         if (debug) {PrintLog("Player Rotated Clockwise");}
     }   
-    checkCurrentSquare(this);
+    this.doEventSquare();
 };
 
 Player.prototype.move = function(d) {
-  this.moving = d;
-  this.updateMap();
-  this.lastX = this.X;
-  this.lastY = this.Y;
-  var viewIndex = [15, 16, 19, 17];
-  if (checkObjectPassable(this.View[viewIndex[d]], this)) { 
-    xy = getOffsetByRotation((this.Rotation + d) % 4);
-    this.X = this.X + xy['x'];
-    this.Y = this.Y + xy['y'];
-    if (debug) {PrintLog("Player Moved " + getDirection(this.Rotation));}
-    playerEvents(this);
-  }
+    this.moving = d;
+    this.updateMap();
+    this.lastX = this.X;
+    this.lastY = this.Y;
+    var viewIndex = [15, 16, 19, 17];
+    if (this.canMoveToPos(viewIndex[d])) { 
+        xy = getOffsetByRotation((this.Rotation + d) % 4);
+        this.X = this.X + xy['x'];
+        this.Y = this.Y + xy['y'];
+        if (debug) {PrintLog("Player Moved " + getDirection(this.Rotation));}
+        this.doEvent();
+    }
 };
 
-Player.prototype.pView = function(m){
-    
+Player.prototype.updateView = function(m){
     //m = Map Data
     //This function takes the map file and stores the 20 positions required 
     //to either draw the players view or objects which the player are likely to interact with
     //like standing on a presure pad or stairs or if there is a door infront of the player etc..
-        
-        this.View = [];    
-        
-        switch (this.Rotation){
-          case 0: xo = 0; yo = -1; break;
-          case 1: xo = 1; yo = 0; break;
-          case 2: xo = 0; yo = 1; break;
-          case 3: xo = -1; yo = 0; break;
-        }
-            
-    var t1 = this.Y + (3 * yo) + (1 * xo);
-    var t2 = this.X + (3 * xo) - (1 * yo);
-    
-        for (x = 0;x < 20;x++){
-            
-            try {
-            switch (x){
-                case 0:{this.View.push(m[this.Y + (4 * yo) + (2 * xo)][this.X + (4 * xo) - (2 * yo)]);};break; //-4 +2
-                case 1:{this.View.push(m[this.Y + (4 * yo) - (2 * xo)][this.X + (4 * xo) + (2 * yo)]);};break; //-4 -2
-                case 2:{this.View.push(m[this.Y + (4 * yo) + (1 * xo)][this.X + (4 * xo) - (1 * yo)]);};break; //-4 +1
-                case 3:{this.View.push(m[this.Y + (4 * yo) - (1 * xo)][this.X + (4 * xo) + (1 * yo)]);};break; //-4 -1
-                case 4:{this.View.push(m[this.Y + (4 * yo) - (0 * xo)][this.X + (4 * xo) + (0 * yo)]);};break; //-4 0
-                case 5:{this.View.push(m[this.Y + (3 * yo) + (2 * xo)][this.X + (3 * xo) - (2 * yo)]);};break; //-3 +2 
-                case 6:{this.View.push(m[this.Y + (3 * yo) - (2 * xo)][this.X + (3 * xo) + (2 * yo)]);};break; //-3 -2
-                case 7:{this.View.push(m[this.Y + (3 * yo) + (1 * xo)][this.X + (3 * xo) - (1 * yo)]);};break; //-3 +1
-                case 8:{this.View.push(m[this.Y + (3 * yo) - (1 * xo)][this.X + (3 * xo) + (1 * yo)]);};break; //-3 -1
-                case 9:{this.View.push(m[this.Y + (3 * yo) - (0 * xo)][this.X + (3 * xo) - (0 * yo)]);};break; //-3 0
-                case 10:{this.View.push(m[this.Y + (2 * yo) + (1 * xo)][this.X + (2 * xo) - (1 * yo)]);};break; //-2 +1                
-                case 11:{this.View.push(m[this.Y + (2 * yo) - (1 * xo)][this.X + (2 * xo) + (1 * yo)]);};break; //-2 -1
-                case 12:{this.View.push(m[this.Y + (2 * yo) - (0 * xo)][this.X + (2 * xo) + (0 * yo)]);};break; //-2 0
-                case 13:{this.View.push(m[this.Y + (1 * yo) + (1 * xo)][this.X + (1 * xo) - (1 * yo)]);};break; //-1 +1
-                case 14:{this.View.push(m[this.Y + (1 * yo) - (1 * xo)][this.X + (1 * xo) + (1 * yo)]);};break; //-1 -1
-                case 15:{this.View.push(m[this.Y + (1 * yo) - (0 * xo)][this.X + (1 * xo) + (0 * yo)]);};break; //-1 0
-                case 16:{this.View.push(m[this.Y + (0 * yo) + (1 * xo)][this.X + (0 * xo) - (1 * yo)]);};break; //0 +1
-                case 17:{this.View.push(m[this.Y + (0 * yo) - (1 * xo)][this.X + (0 * xo) + (1 * yo)]);};break; //0 -1
-                case 18:{this.View.push(m[this.Y][this.X]);};break; //0 0
-                case 19:{this.View.push(m[this.Y - (1 * yo) - (0 * xo)][this.X - (1 * xo) + (0 * yo)]);};break; //-1 0
-                default:{this.View.push("0001");};break;
-            }
-        }catch(e){
-           this.View.push("0001");
-        }        
-        }
-        
-        for (x = 0;x < 20;x++){
-            if (this.View[x] === undefined) {
-                this.View[x] = "0001";
-            }
-                
-        }
-        
-    };
-    
-Player.prototype.drawView = function(p) {
+    this.View = [];
 
-    //To draw the players view it consists of 30 tiles to build up the screen view
-    //we use the players view to work out what each of these 30 images should be based
-    //on the player direction and the map code 
-    
-    for (var i = 0; i < 29; i++) {
-        
-        //getWallDirection(p.Rotation,i);
-        
-        switch (i) {
-            
-            case 0:{myDIx(ctx, getImage(this.View[0],getWallDirection(p.Rotation,28),28,p,0), gfxPos[28], this, scale);};break;
-            case 1:{myDIx(ctx, getImage(this.View[0],getWallDirection(p.Rotation,27),27,p,0), gfxPos[27], this, scale);};break;
-            case 2:{myDIx(ctx, getImage(this.View[1],getWallDirection(p.Rotation,26),26,p,1), gfxPos[26], this, scale);};break;
-            case 3:{myDIx(ctx, getImage(this.View[1],getWallDirection(p.Rotation,25),25,p,1), gfxPos[25], this, scale);};break;
-            case 4:{myDIx(ctx, getImage(this.View[5],getWallDirection(p.Rotation,24),24,p,5), gfxPos[24], this, scale);};break;                
-            case 5:{myDIx(ctx, getImage(this.View[2],getWallDirection(p.Rotation,23),23,p,2), gfxPos[23], this, scale);};break;
-            case 6:{myDIx(ctx, getImage(this.View[2],getWallDirection(p.Rotation,22),22,p,2), gfxPos[22], this, scale);};break;
-            case 7:{myDIx(ctx, getImage(this.View[3],getWallDirection(p.Rotation,21),21,p,3), gfxPos[21], this, scale);};break;
-            case 8:{myDIx(ctx, getImage(this.View[3],getWallDirection(p.Rotation,20),20,p,3), gfxPos[20], this, scale);};break;
-            case 9:{myDIx(ctx, getImage(this.View[6],getWallDirection(p.Rotation,19),19,p,6), gfxPos[19], this, scale);};break;
-            case 10:{myDIx(ctx, getImage(this.View[7],getWallDirection(p.Rotation,18),18,p,7), gfxPos[18], this, scale);};break;
-            case 11:{myDIx(ctx, getImage(this.View[7],getWallDirection(p.Rotation,17),17,p,7), gfxPos[17], this, scale);};break;
-            case 12:{myDIx(ctx, getImage(this.View[4],getWallDirection(p.Rotation,16),16,p,4), gfxPos[16], this, scale);};break;
-            case 13:{myDIx(ctx, getImage(this.View[8],getWallDirection(p.Rotation,15),15,p,8), gfxPos[15], this, scale);};break;
-            case 14:{myDIx(ctx, getImage(this.View[8],getWallDirection(p.Rotation,14),14,p,8), gfxPos[14], this, scale);};break;
-            case 15:{myDIx(ctx, getImage(this.View[10],getWallDirection(p.Rotation,13),13,p,10), gfxPos[13], this, scale);};break;
-            case 16:{myDIx(ctx, getImage(this.View[10],getWallDirection(p.Rotation,12),12,p,10), gfxPos[12], this, scale);};break;
-            case 17:{myDIx(ctx, getImage(this.View[9],getWallDirection(p.Rotation,11),11,p,9), gfxPos[11], this, scale);};break;
-            case 18:{myDIx(ctx, getImage(this.View[11],getWallDirection(p.Rotation,10),10,p,11), gfxPos[10], this, scale);};break;
-            case 19:{myDIx(ctx, getImage(this.View[11],getWallDirection(p.Rotation,9),9,p,11), gfxPos[9], this, scale);};break;
-            case 20:{myDIx(ctx, getImage(this.View[13],getWallDirection(p.Rotation,8),8,p,13), gfxPos[8], this, scale);};break;
-            case 21:{myDIx(ctx, getImage(this.View[13],getWallDirection(p.Rotation,7),7,p,13), gfxPos[7], this, scale);};break;
-            case 22:{myDIx(ctx, getImage(this.View[12],getWallDirection(p.Rotation,6),6,p,12), gfxPos[6], this, scale);};break;
-            case 23:{myDIx(ctx, getImage(this.View[14],getWallDirection(p.Rotation,5),5,p,14), gfxPos[5], this, scale);};break;
-            case 24:{myDIx(ctx, getImage(this.View[14],getWallDirection(p.Rotation,4),4,p,14), gfxPos[4], this, scale);};break;
-            case 25:{myDIx(ctx, getImage(this.View[16],getWallDirection(p.Rotation,3),3,p,16), gfxPos[3], this, scale);};break;
-            case 26:{myDIx(ctx, getImage(this.View[15],getWallDirection(p.Rotation,2),2,p,15), gfxPos[2], this, scale);};break;
-            case 27:{myDIx(ctx, getImage(this.View[17],getWallDirection(p.Rotation,1),1,p,17), gfxPos[1], this, scale);};break;
-            case 28:{myDIx(ctx, getImage(this.View[18],getWallDirection(p.Rotation,0),0,p,18), gfxPos[0], this, scale);};break;
-            
-        }        
-    } 
-    
-    
+    for (pos = 0; pos < 20; pos++) {
+        try {
+            var xy = posToCoordinates(pos, this.X, this.Y, this.Rotation);
+            var newView = m[xy['y']][xy['x']];
+            if(typeof newView === "undefined") {
+                newView = '0001';
+            }
+        } catch(e) {
+           newView = '0001';
+        }
+        this.View.push(newView);
+    }
     
 };
 
-function playerEvents(p) {
-           
-       p.updateMap();
-       p.pView(tw.Levels[p.level].Map);
-       drawPlayersView(p);
-       checkCurrentSquare(p);      
+Player.prototype.doEvent = function() {
+       this.updateMap();
+       this.updateView(tw.Levels[this.level].Map);
+       drawPlayersView(this);
+       this.doEventSquare();
 }
 
-function checkCurrentSquare(p) {    
+Player.prototype.doEventSquare = function() {    
   
-   p.updateMap();
+   this.updateMap();
   
-    switch (parseInt(p.View[18].substring(3,4),16)) {
+    switch (parseInt(this.View[18].substring(3,4),16)) {
         
-        case 4: {playerOnStair(p,true);};break;
-        case 6: {if(parseInt(p.View[18].substring(1,2),16) % 4 === 1){playerOnPit(p);}};break;
+        case 4: this.doStairs(); break;
+        case 6: if(parseInt(this.View[18].substring(1,2),16) % 4 === 1) {
+            this.doPit();
+        }
+        break;
         default: break;        
         
     }
 
 }
 
-function playerOnPit(p) {
-    
-    changePlayerLevel(p,false);
-    p.X = p.X + (tw.Levels[p.level +1].xOffset - tw.Levels[p.level].xOffset);
-    p.Y = p.Y + (tw.Levels[p.level +1].yOffset - tw.Levels[p.level].yOffset);
-    
+Player.prototype.doPit = function() {
+    this.setPlayerLevel(this.level - 1);
+    this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset);
+    this.Y = this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset);
 }
 
-function playerOnStair(p,stairs){
+Player.prototype.doStairs = function() {
     
-     BB = parseInt(p.View[18].substring(1, 2));
-        
-        if (BB % 2 === 0){changePlayerLevel(p,true);} // "Stairs Up";            
-        else if (BB % 2 === 1){changePlayerLevel(p,false);} // "Stairs Down";
-        
-         switch (BB) {
-            case 0:
-            case 1: // "South"
-                if (stairs){p.Rotation = 2;}                
-                if (BB % 2 === 0){
-                    p.X = p.X - (tw.Levels[p.level].xOffset - tw.Levels[p.level -1].xOffset);
-                    p.Y = p.Y - (tw.Levels[p.level].yOffset - tw.Levels[p.level -1].yOffset); if (stairs){p.Y = p.Y +2;} ;
-                }
-                else {
-                    p.X = p.X + (tw.Levels[p.level +1].xOffset - tw.Levels[p.level].xOffset);
-                    p.Y = p.Y + (tw.Levels[p.level +1].yOffset - tw.Levels[p.level].yOffset); if (stairs){p.Y = p.Y +2;}
-                }
-                break;
-            case 2:
-            case 3: // "West";
-                if (stairs){p.Rotation = 3;}
-                if (BB % 2 === 0){  
-                    p.X = p.X - (tw.Levels[p.level].xOffset - tw.Levels[p.level -1].xOffset); if (stairs){p.X = p.X -2;};
-                    p.Y = (p.Y - (tw.Levels[p.level].yOffset - tw.Levels[p.level -1].yOffset)) ;
-                }
-                else {
-                    p.X = p.X + (tw.Levels[p.level +1].xOffset - tw.Levels[p.level].xOffset); if (stairs){p.X = p.X -2;};
-                    p.Y = (p.Y + (tw.Levels[p.level +1].yOffset - tw.Levels[p.level].yOffset)) ;
-                }
-                break;
-            case 4:
-            case 5: // "North";
-                if (stairs){p.Rotation = 0;}
-                if (BB % 2 === 0){
-                    p.X = p.X - (tw.Levels[p.level].xOffset - tw.Levels[p.level -1].xOffset);
-                    p.Y = p.Y - (tw.Levels[p.level].yOffset - tw.Levels[p.level -1].yOffset); if (stairs){p.Y = p.Y -2;} ;
-                }
-                else {
-                    p.X = p.X + (tw.Levels[p.level +1].xOffset - tw.Levels[p.level].xOffset);
-                    p.Y = p.Y + (tw.Levels[p.level +1].yOffset - tw.Levels[p.level].yOffset); if (stairs){p.Y = p.Y -2;}
-                }
-                break;
-            case 6:
-            case 7: // "East";
-                if (stairs){p.Rotation = 1;}
-                if (BB % 2 === 0){  
-                    p.X = p.X - (tw.Levels[p.level].xOffset - tw.Levels[p.level -1].xOffset); if (stairs){p.X = p.X +2;};
-                    p.Y = (p.Y - (tw.Levels[p.level].yOffset - tw.Levels[p.level -1].yOffset)) ;
-                }
-                else {                    
-                    p.X = p.X + (tw.Levels[p.level +1].xOffset - tw.Levels[p.level].xOffset); if (stairs){p.X = p.X +2;};
-                    p.Y = (p.Y + (tw.Levels[p.level +1].yOffset - tw.Levels[p.level].yOffset)) ;
-                }
-                break;
-            default:
-                break;
-        }
-  //  p.updateMap();
-}
+    var ud = parseInt(this.getBinaryView(18, 7), 10);
+    var d = parseInt(this.getBinaryView(18, 5, 2), 10);
 
-function changePlayerLevel(p,l){
-    
-    //Change the Players Level
-    //l = Boolean
-    //True = Move Player Up a Level
-    //False = Move Player Down a Level
-    
-    p.lastLevel = p.level;
-    
-    if (l) {        
-        p.level = p.level +1 ;        
+    this.setPlayerLevel(this.level + 1 - (ud % 2) * 2); //Stairs Up or Down
+
+    switch (d) {
+        case 0: //South
+            this.Rotation = 2;                
+            if (ud === 0){
+                this.X = this.X - (tw.Levels[this.level].xOffset - tw.Levels[this.level -1].xOffset);
+                this.Y = this.Y - (tw.Levels[this.level].yOffset - tw.Levels[this.level -1].yOffset); this.Y = this.Y +2;
+            }
+            else {
+                this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset);
+                this.Y = this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset); this.Y = this.Y +2;
+            }
+            break;
+        case 1: //West
+            this.Rotation = 3;
+            if (ud === 0){  
+                this.X = this.X - (tw.Levels[this.level].xOffset - tw.Levels[this.level -1].xOffset); this.X = this.X -2;
+                this.Y = (this.Y - (tw.Levels[this.level].yOffset - tw.Levels[this.level -1].yOffset)) ;
+            }
+            else {
+                this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset); this.X = this.X -2;
+                this.Y = (this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset));
+            }
+            break;
+        case 2: //North
+            this.Rotation = 0;
+            if (ud === 0){
+                this.X = this.X - (tw.Levels[this.level].xOffset - tw.Levels[this.level -1].xOffset);
+                this.Y = this.Y - (tw.Levels[this.level].yOffset - tw.Levels[this.level -1].yOffset); this.Y = this.Y -2;
+            }
+            else {
+                this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset);
+                this.Y = this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset); this.Y = this.Y -2;
+            }
+            break;
+        case 3: //East
+            this.Rotation = 1;
+            if (ud === 0){  
+                this.X = this.X - (tw.Levels[this.level].xOffset - tw.Levels[this.level -1].xOffset); this.X = this.X +2;
+                this.Y = (this.Y - (tw.Levels[this.level].yOffset - tw.Levels[this.level -1].yOffset));
+            }
+            else {                    
+                this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset); this.X = this.X +2;
+                this.Y = (this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset));
+            }
+            break;
+        default: break;
     }
-    else {
-        p.level = p.level -1 ;
-    }
-    
 }
 
+//Change the Players Level
+//l: 1 = up, -1 = down
+Player.prototype.setPlayerLevel = function(level) {
+    if(level >= 0 && level < tw.Levels.length) {
+        this.lastLevel = this.level;
+        this.level = level;
+    }
+}
+
+function initPlayers() {
+    player[0] = new Player(CHAMP_BLODWYN, 12, 22, 3, 0, 0,   0);       
+    player[1] = new Player(CHAMP_ASTROTH, 14, 22, 3, 0, 410, 0);
+}

@@ -51,18 +51,6 @@ function returnType(t) {
     
 }
 
-function checkWoodenObjectPassable(hex, p) {
-    //Check the space the player is standing on
-    if(getHexToBinaryPosition(p.View[18], 12, 4) == '2' && getHexToBinaryPosition(p.View[18], ((7 - ((p.Rotation + p.moving) % 4)) % 4) * 2 + 1, 1) == '1') {
-        return false;
-    }
-    //Check the space the player is moving to
-    if(getHexToBinaryPosition(hex, 12, 4) == '2' && getHexToBinaryPosition(hex, ((5 - ((p.Rotation + p.moving) % 4)) % 4) * 2 + 1, 1) == '1') {
-        return false;
-    }
-    return true;
-}
-
 function ReturnWoodenObject(hex,p) {
     
         var b = hex2bin(hex.substring(0,2));

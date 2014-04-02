@@ -223,8 +223,8 @@ function getDirection(n) {
 };
 
 function drawPlayersView(p) {
-    debugText(p.champion[0].firstName + ' hp:' + p.champion[0].hp + ' Spells:' + p.champion[0].spellBook);
-    //debugText(hex2bin(p.getBinaryView(15, 0, 16)));
+    //debugText(p.champion[0].firstName + ' hp:' + p.champion[0].hp + ' Spells:' + p.champion[0].spellBook);
+    debugText(hex2bin(p.getBinaryView(15, 0, 16)));
     //debugText(p.View[15]);
     //debugText(p.View[15].substring(0,2));
     //debugText(parseInt(getHexToBinaryPosition(p.View[15], 0, 5), 16).toString(10));
