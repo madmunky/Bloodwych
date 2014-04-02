@@ -149,7 +149,7 @@ Player.prototype.setMovementData = function() {
 
 Player.prototype.rotateTo = function(d){
     this.Rotation = (d + 4) % 4;
-    //this.doEventSquare();
+    this.doEventSquare(false);
 };
 
 Player.prototype.move = function(d) {
@@ -193,7 +193,7 @@ Player.prototype.doEvent = function() {
        this.setMovementData();
        this.updateView(tw.Levels[this.level].Map);
        drawPlayersView(this);
-       this.doEventSquare();
+       this.doEventSquare(true);
 }
 
 //mr = true : player moves
@@ -205,7 +205,7 @@ Player.prototype.doEventSquare = function(mr) {
     switch (parseInt(this.View[18].substring(3,4),16)) {
         
         case 4: this.doStairs(); break;
-        case 6: floorActionType(tw.Triggers[parseInt(getHexToBinaryPosition(this.View[18], 0, 5), 16).toString(10)],this);break;
+        case 6: if(mr) { floorActionType(tw.Triggers[parseInt(getHexToBinaryPosition(this.View[18], 0, 5), 16).toString(10)],this); } break;
         default: break;       
         
     }
