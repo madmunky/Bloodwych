@@ -149,7 +149,7 @@ Player.prototype.setMovementData = function() {
 
 Player.prototype.rotateTo = function(d){
     this.Rotation = (d + 4) % 4;
-    //this.doEventSquare();
+    this.doEventSquare();
 };
 
 Player.prototype.move = function(d) {
