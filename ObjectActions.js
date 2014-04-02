@@ -73,39 +73,64 @@ function floorActionType(trig,p){
         SWITCH_FLOOR_WOOD_DOOR_CLOSER = 12,
         SWITCH_FLOOR_WOOD_DOOR_CLOSER_2 = 14,
         SWITCH_FLOOR_TRADER_DOOR = 16,
-        SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD = 18; //(X/Y OF OPPOSITE PAD)
-    //20 - TOWER ENTRANCE (CENTRAL PAD) 
-    //22 - REMOVE (X/Y) *
-    //24 - CLOSE VOID-LOCK DOOR (X/Y) *
-    //26 - TOGGLE PILLAR (X/Y) *
-    //28 - CREATE SPINNER (OR OTHER) (X/Y) *
-    //30 - OPEN/CREATE WALL WITH SWITCHES? (X/Y) *
-    //32 - CREATE PAD (F/X/Y) 
-    //34 - MOVE PILLAR AT PLAYER X,Y TO PLAYER X-1,Y-1 (SPECIAL CASE) **
-    //36 - CREATE PILLAR (X/Y) *
-    //38 - KEEP ENTRANCE (SIDE PAD) (X/Y OF OPPOSITE PAD)
-    //40 - KEEP ENTRANCE (CENTRAL PAD)
-    //42 - FLASH TELEPORT (F/X/Y)
-    //44 - ROTATE STONE WALL (X/Y) *
-    //46 - TOGGLE WALL (X/Y) *
-    //48 - SPINNER (UNKNOWN DIFFERENCE) (X/Y) *
-    //50 - CLICK TELEPORT (F/X/Y)
-    //52 - TOGGLE GREEN PAD (X/Y) *
-    //54 - ROTATE WOOD WALL COUNTER-CLOCKWISE (X/Y) *
-    //56 - TOGGLE HOLE (X/Y) *
-    //58 - GAME COMPLETION PAD **
-    //60 - REMOVE PILLAR / OTHER EVENT (X/Y) **
+        SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD = 18, //(X/Y OF OPPOSITE PAD)
+        SWITCH_FLOOR_TOWER_ENTRANCE = 20, // (CENTRAL PAD) 
+        SWITCH_FLOOR_REMOVE = 22, // (X/Y) *
+        SWITCH_FLOOR_CLOSE_VOID_LOCK_DOOR = 24, // (X/Y) *
+        SWITCH_FLOOR_TOGGLE_PILLAR = 26, // (X/Y) *
+        SWITCH_FLOOR_CREATE_SPINNER = 28, // (OR OTHER) (X/Y) *
+        SWITCH_FLOOR_OPEN_CREATE_WALL_WITH_SWITCHES = 30, //? (X/Y) *
+        SWITCH_FLOOR_CREATE_PAD = 32, // (F/X/Y) 
+        SWITCH_FLOOR_MOVE_PILLAR_AT_PLAYER = 34, // X,Y TO PLAYER X-1,Y-1 (SPECIAL CASE) **
+        SWITCH_FLOOR_CREATE_PILLAR = 36, // (X/Y) *
+        SWITCH_FLOOR_KEEP_ENTRANCE_SIDEPAD = 38, // (X/Y OF OPPOSITE PAD)
+        SWITCH_FLOOR_KEEP_ENTRANCE_CENTRAL_PAD = 40,
+        SWITCH_FLOOR_FLASH_TELEPORT = 42, // (F/X/Y)
+        SWITCH_FLOOR_ROTATE_STONE_WALL = 44, // (X/Y) *
+        SWITCH_FLOOR_TOGGLE_WALL = 46, // (X/Y) *
+        SWITCH_FLOOR_SPINNER = 48, // (UNKNOWN DIFFERENCE) (X/Y) *
+        SWITCH_FLOOR_CLICK_TELEPORT = 50, // (F/X/Y)
+        SWITCH_FLOOR_TOGGLE_GREEN_PAD = 52, // (X/Y) *
+        SWITCH_FLOOR_ROTATE_WOOD_WALL_COUNTER_CLOCKWISE = 54,// (X/Y) *
+        SWITCH_FLOOR_TOGGLE_HOLE = 56, // (X/Y) *
+        SWITCH_FLOOR_GAME_COMPLETION_PAD = 58, // **
+        SWITCH_FLOOR_REMOVE_PILLAR_OTHER_EVENT = 60; // (X/Y) **
 
-    if(parseInt(p.View[18].substring(1,2),16) % 4 === 1){playerOnPit(p);end;};
+    if(parseInt(p.View[18].substring(1,2),16) % 4 === 1){p.doPit(p);end;};
     
     switch (trig[0]){
     
-        case SWITCH_FLOOR_NONE:{};break;
-        case SWITCH_FLOOR_SPIN_180:{p.rotatePlayer((p.Rotation + 2) % 4);};break;
-        case SWITCH_FLOOR_SPIN_RANDOM:{p.rotatePlayer(Math.floor(Math.random() * 4));};break;
-        case SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR:{tw.Levels[p.level].Map[trig[2]][trig[3]] = setHexToBinaryPosition(tw.Levels[p.level].Map[trig[2]][trig[3]], 7, '0');};break;  // - OPEN VOID-LOCK DOOR (X/Y) *
-        case SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL:{tw.Levels[p.level].Map[p.Y][p.X+1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X+1], 7, '1');};break;    
-        case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:{tw.Levels[p.level].Map[p.Y][p.X-1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X-1], 7, '1');};break;
+        case SWITCH_FLOOR_NONE :{};break;
+        case SWITCH_FLOOR_SPIN_180 :{p.rotatePlayer((p.Rotation + 2) % 4);};break;
+        case SWITCH_FLOOR_SPIN_RANDOM :{p.rotatePlayer(Math.floor(Math.random() * 4));};break;
+        case SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR :{tw.Levels[p.level].Map[trig[2]][trig[3]] = setHexToBinaryPosition(tw.Levels[p.level].Map[trig[2]][trig[3]], 7, '0');};break;  // - OPEN VOID-LOCK DOOR (X/Y) *
+        case SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL :{tw.Levels[p.level].Map[p.Y][p.X+1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X+1], 7, '1');};break;    
+        case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL :{tw.Levels[p.level].Map[p.Y][p.X-1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X-1], 7, '1');};break;
+        case SWITCH_FLOOR_WOOD_DOOR_CLOSER :{};break;
+        case SWITCH_FLOOR_WOOD_DOOR_CLOSER_2 :{};break;
+        case SWITCH_FLOOR_TRADER_DOOR :{};break;
+        case SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD :{};break;
+        case SWITCH_FLOOR_TOWER_ENTRANCE :{};break;
+        case SWITCH_FLOOR_REMOVE :{};break;
+        case SWITCH_FLOOR_CLOSE_VOID_LOCK_DOOR :{};break;
+        case SWITCH_FLOOR_TOGGLE_PILLAR :{};break;
+        case SWITCH_FLOOR_CREATE_SPINNER :{};break;
+        case SWITCH_FLOOR_OPEN_CREATE_WALL_WITH_SWITCHES :{};break;
+        case SWITCH_FLOOR_CREATE_PAD :{};break;
+        case SWITCH_FLOOR_MOVE_PILLAR_AT_PLAYER :{};break;
+        case SWITCH_FLOOR_CREATE_PILLAR :{};break;
+        case SWITCH_FLOOR_KEEP_ENTRANCE_SIDEPAD :{};break;
+        case SWITCH_FLOOR_KEEP_ENTRANCE_CENTRAL_PAD :{};break;
+        case SWITCH_FLOOR_FLASH_TELEPORT :{};break;
+        case SWITCH_FLOOR_ROTATE_STONE_WALL :{};break;
+        case SWITCH_FLOOR_TOGGLE_WALL :{};break;
+        case SWITCH_FLOOR_SPINNER :{};break;
+        case SWITCH_FLOOR_CLICK_TELEPORT :{};break;
+        case SWITCH_FLOOR_TOGGLE_GREEN_PAD :{};break;
+        case SWITCH_FLOOR_ROTATE_WOOD_WALL_COUNTER_CLOCKWISE :{};break;
+        case SWITCH_FLOOR_TOGGLE_HOLE :{};break;
+        case SWITCH_FLOOR_GAME_COMPLETION_PAD :{};break;
+        case SWITCH_FLOOR_REMOVE_PILLAR_OTHER_EVENT :{};break;
         default: {window.alert("Unhandled Floor Action: " + trig.toString());}
     }
 
