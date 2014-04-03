@@ -89,7 +89,7 @@ function floorActionType(trig, p){
 		case SWITCH_FLOOR_NONE:                                 break;
 		case SWITCH_FLOOR_SPIN_180:                             p.Rotation = (p.Rotation + 2) % 4;break;
 		case SWITCH_FLOOR_SPIN_RANDOM:                          p.Rotation = p.Rotation = (Math.floor(Math.random() * 4)); break;
-		case SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR:                  tw.Levels[p.level].Map[trig[2]][trig[3]] = setHexToBinaryPosition(tar, 7, 1, '0'); break;
+		case SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR:                  tw.Levels[p.level].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '0'); break;
 		case SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL:              tw.Levels[p.level].Map[p.Y][p.X+1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X+1], 7, 1, '1'); break;    
 		case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:              tw.Levels[p.level].Map[p.Y][p.X-1] = setHexToBinaryPosition(tw.Levels[p.level].Map[p.Y][p.X-1], 7, 1, '1'); break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:                   break;
