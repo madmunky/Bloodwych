@@ -67,45 +67,51 @@ GetDataView("maps/MOD0.MAP",mapdate);
 //Load images into the Arrays
 $(function() {
     //Background
-    gfxLoadImage("background");
+    gfxLoadImage("images", "background");
 
     //Stone wall and shelf
-    gfxLoadImage("stone", "wall");
-    gfxLoadImage("stone", "shelf");
+    gfxLoadImage("images", "stone", "wall");
+    gfxLoadImage("images", "stone", "shelf");
 
     //Wall decorations, banners, wall buttons and gem slots
-    gfxLoadImage("deco", "serpent-head");
-    gfxLoadImage("deco", "moon-head");
-    gfxLoadImage("deco", "dragon-head");
-    gfxLoadImage("deco", "chaos-head");
-    gfxLoadImage("deco", "switch", 8);
-    gfxLoadImage("deco", "switch-off", 8);
-    gfxLoadImage("deco", "gem", 8);
-    gfxLoadImage("deco", "script", 7);
-    gfxLoadImage("deco", "banner", 7);
+    gfxLoadImage("images", "deco", "serpent-head");
+    gfxLoadImage("images", "deco", "moon-head");
+    gfxLoadImage("images", "deco", "dragon-head");
+    gfxLoadImage("images", "deco", "chaos-head");
+    gfxLoadImage("images", "deco", "switch", 8);
+    gfxLoadImage("images", "deco", "switch-off", 8);
+    gfxLoadImage("images", "deco", "gem", 8);
+    gfxLoadImage("images", "deco", "script", 7);
+    gfxLoadImage("images", "deco", "banner", 7);
 
     //Wooden walls and doors
-    gfxLoadImage("wood", "wall");
-    gfxLoadImage("wood", "door");
-    gfxLoadImage("wood", "door-open");
+    gfxLoadImage("images", "wood", "wall");
+    gfxLoadImage("images", "wood", "door");
+    gfxLoadImage("images", "wood", "door-open");
 
     //Miscellaneous
-    gfxLoadImage("misc", "pillar");
-    gfxLoadImage("misc", "bed");
+    gfxLoadImage("images", "misc", "pillar");
+    gfxLoadImage("images", "misc", "bed");
 
     //Solid doors
-    gfxLoadImage("door", "solid", 8);
-    gfxLoadImage("door", "gate", 8);
-    gfxLoadImage("door", "open", 8);
+    gfxLoadImage("images", "door", "solid", 8);
+    gfxLoadImage("images", "door", "gate", 8);
+    gfxLoadImage("images", "door", "open", 8);
 
     //Stairs
-    gfxLoadImage("stairs", "down");
-    gfxLoadImage("stairs", "up");
+    gfxLoadImage("images", "stairs", "down");
+    gfxLoadImage("images", "stairs", "up");
 
     //Floors
-    gfxLoadImage("floor", "pit-down");
-    gfxLoadImage("floor", "pit-up");
-    gfxLoadImage("floor", "switch");
+    gfxLoadImage("images", "floor", "pit-down");
+    gfxLoadImage("images", "floor", "pit-up");
+    gfxLoadImage("images", "floor", "switch");
+    
+    //Characters
+    gfxLoadImage("images/characters", "heads");
+    gfxLoadImage("images/characters", "maleArms");
+    gfxLoadImage("images/characters", "maleBodies");
+    gfxLoadImage("images/characters", "maleLegs");
 });
 
 document.addEventListener('touchstart', doTouchStart, false);
@@ -167,7 +173,7 @@ function gfxColourSubs(type, item, sub) {
 //type: type of object, e.g. wall, door, wood
 //item: the object itself, e.g. bed, switch, shelf
 //sub: define this to the number of color variations you wish to add for this type of object. Currently maximum of 8
-function gfxLoadImage(type, item, sub) {
+function gfxLoadImage(folder, type, item, sub) {
     if(typeof type === 'string') {
         var id = '';
         if(typeof gfx[type] === 'undefined') {
@@ -182,7 +188,7 @@ function gfxLoadImage(type, item, sub) {
             id = type;
         }
 
-        $('body').append('<img id="' + id + '" src="images/' + id + '.png" class="gfx" />');
+        $('body').append('<img id="' + id + '" src="'+folder+'/' + id + '.png" class="gfx" />');
         if(typeof sub === 'number' && sub != null) {
             gfx[type][item][0] = document.getElementById(id);
             $(gfx[type][item][0]).load(function() {
