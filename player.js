@@ -300,8 +300,43 @@ Player.prototype.testMode = function(id) {
 		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
 		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = toggleObject(hex, '3'); //TOGGLE PILLAR
 		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
-                tw.Levels[this.level].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
+                //tw.Levels[this.level].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
+                for(i = 0; i < 16; i++) {
+		 if (this.View[i].substring(2,3) === "80"){
+                     window.alert("Distance: " + this.distanceFromPlayer(i) + " Code: " + this.View[i]);
+                 }
+                }
 	}
+};
+
+Player.prototype.distanceFromPlayer = function(block) {
+    
+    switch (block) {
+        
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:{return CHAR_DISTANT;}break;
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:{return CHAR_FAR;}break;    
+        case 10:
+        case 11:
+        case 12:
+        case 13:
+        case 14:{return CHAR_MID;}break;    
+        case 15:
+        case 16:
+        case 17:
+        case 18:{return CHAR_CLOSE;}break;
+        
+        default:{return null;}
+        
+    }
+    
 }
 
 function initPlayers() {

@@ -125,8 +125,6 @@ function bin2type(b) {
 			default:{return null;};
 		}            
 	}
-
-
 	
 function getStoneWall(HexCode,d,pos,P,pos18) {
 	//if (getHexToBinaryPosition(HexCode, 8) == '0') { ???????????????
@@ -540,3 +538,4 @@ function recolorImage(img, colour, type){
 
 	return img1;
 }
+

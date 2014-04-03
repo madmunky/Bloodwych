@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
-//Top Row Head 16x12
+//First Three Rows Head 16x12
+//Mid Rows 16x10
+//Last Rows 16x8
 
 var IMAGE_CHA_HEAD = 1,
         IMAGE_CHA_BODY = 2,

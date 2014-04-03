@@ -48,6 +48,11 @@ var DIRECTION_NORTH = 0,
     DIRECTION_EAST = 1,
     DIRECTION_SOUTH = 2,
     DIRECTION_WEST = 3;
+    
+var CHAR_CLOSE = 0,
+        CHAR_MID = 1,
+        CHAR_FAR = 2,
+        CHAR_DISTANT = 3;
 
 var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4","horace_mod0","horace_moon","horace_drag","horace_serp","horace_zendik","horace_chaos"];
 
