@@ -66,8 +66,8 @@ var gfx = [];
 var gfxPos = SpriteSheetArray();
 var b = 0;
 var player = new Array();
-var tw = new Tower();
-
+var tw = new Tower("MOD0");
+tw.onload = Run();
 //Touch Screen Stuff
 var canvas_x;
 var canvas_y;
@@ -124,7 +124,7 @@ $(function() {
     gfxLoadImage("images/characters", "maleLegs");
 });
 
-tower = loadTower("MOD0");
+//tw = loadTower("MOD0");
 
 document.addEventListener('touchstart', doTouchStart, false);
 
@@ -132,7 +132,7 @@ var test;
 
 function updatePlayerViewScreen(){  
     
-    if (typeof gfx !== "undefined") {
+    if (typeof tw.Levels !== "undefined") {
             $('section.debug p').html('');
             clearCanvas();
             configCanvas();

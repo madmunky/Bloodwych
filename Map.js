@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 
-function Tower() {
+function Tower(map) {
     
-    this.Levels = [];
-    this.Switches = [];
-    this.Triggers = [];
+    this.Levels = getFileData('maps/' + map + '.MAP', mapdate, this,"map");    
+    this.Switches = getFileData('maps/' + map + '.switches', readSwitchData, this, "switches", 4);
+    this.Triggers = getFileData('maps/' + map + '.triggers', readSwitchData, this, "triggers", 4);
+    this.MonsterData = getFileData('maps/' + map + '.monsters', readSwitchData, this,"monsters", 6);
+
 }
 
 function Map(Width,Height,xOff,yOff){

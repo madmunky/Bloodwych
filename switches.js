@@ -59,15 +59,15 @@ function switchAction(t,r,p){
 function mod0Actions(r, p){actionType(tw.Switches[r],p);}
 
 function actionType(sw, p){
-	tar = tw.Levels[p.level].Map[sw[2]][sw[3]];
+	tar = tw.Levels[p.level].Map[sw[3]][sw[2]];
 	switch (sw[0]) {
-		case SWITCH_WALL_REMOVE:            tw.Levels[p.level].Map[sw[2]][sw[3]] = setHexToBinaryPosition(tar, 8, 8, '0'); break;
-		case SWITCH_WALL_TOGGLE_STONE_WALL: tw.Levels[p.level].Map[sw[2]][sw[3]] = toggleObject(tar, '1'); break;
-		case SWITCH_WALL_OPEN_VOID_DOOR:    tw.Levels[p.level].Map[sw[2]][sw[3]] = setHexToBinaryPosition(tar, 12, 4, '0'); break;
-		case SWITCH_WALL_ROTATE_STONE_WALL: tw.Levels[p.level].Map[sw[2]][sw[3]] = setHexToBinaryPosition(tar, 10, 2, '' + ((parseInt(getHexToBinaryPosition(tar, 10, 2)) + 1) % 4)); break;
-		case SWITCH_WALL_TOGGLE_PILLAR:     tw.Levels[p.level].Map[sw[2]][sw[3]] = toggleObject(tar, '3'); break;
-		case SWITCH_WALL_PLACE_PILLAR:      tw.Levels[p.level].Map[sw[2]][sw[3]] = setHexToBinaryPosition(tar, 12, 4, '3'); break;
-		case SWITCH_WALL_ROTATE_WOOD_WALLS: tw.Levels[p.level].Map[sw[2]][sw[3]] = hex2bin(hex2bin(tar).substring(2, 8) + hex2bin(tar).substring(0, 2) + hex2bin(tar).substring(8, 16)); break;
+		case SWITCH_WALL_REMOVE:            tw.Levels[p.level].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 8, 8, '0'); break;
+		case SWITCH_WALL_TOGGLE_STONE_WALL: tw.Levels[p.level].Map[sw[3]][sw[2]] = toggleObject(tar, '1'); break;
+		case SWITCH_WALL_OPEN_VOID_DOOR:    tw.Levels[p.level].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 12, 4, '0'); break;
+		case SWITCH_WALL_ROTATE_STONE_WALL: tw.Levels[p.level].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 10, 2, '' + ((parseInt(getHexToBinaryPosition(tar, 10, 2)) + 1) % 4)); break;
+		case SWITCH_WALL_TOGGLE_PILLAR:     tw.Levels[p.level].Map[sw[3]][sw[2]] = toggleObject(tar, '3'); break;
+		case SWITCH_WALL_PLACE_PILLAR:      tw.Levels[p.level].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 12, 4, '3'); break;
+		case SWITCH_WALL_ROTATE_WOOD_WALLS: tw.Levels[p.level].Map[sw[3]][sw[2]] = hex2bin(hex2bin(tar).substring(2, 8) + hex2bin(tar).substring(0, 2) + hex2bin(tar).substring(8, 16)); break;
 		default: window.alert("Unhandled Switch Action: " + sw.toString());
 	 }
 	
@@ -83,7 +83,7 @@ function toggleObject(hex, o) {
 
 function floorActionType(trig, p){
 	if(parseInt(p.View[18].substring(1,2),16) % 4 === 1){p.doPit(p);end;};
-	tar = tw.Levels[p.level].Map[trig[2]][trig[3]];
+	tar = tw.Levels[p.level].Map[trig[3]][trig[2]];
 
 	switch (trig[0]) {
 		case SWITCH_FLOOR_NONE:                                 break;
