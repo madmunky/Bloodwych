@@ -70,7 +70,7 @@ function doKeyDown(e) {
             }
             player[0].X = 0;player[1].X = 0;
             player[0].Y = 0;player[1].Y = 0;
-            GetDataView("maps/"+Maps[CurrentMap]+".MAP",mapdate);                        
+            tower = loadTower(Maps[CurrentMap]);
             break; 
         }
         

@@ -119,8 +119,7 @@ $(function() {
     gfxLoadImage("images/characters", "maleLegs");
 });
 
-    GetDataView("maps/MOD0.MAP",mapdate);
-
+tower = loadTower("MOD0");
 
 document.addEventListener('touchstart', doTouchStart, false);
 
