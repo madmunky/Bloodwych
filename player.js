@@ -300,7 +300,7 @@ Player.prototype.testMode = function(id) {
 		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
 		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = toggleObject(hex, '3'); //TOGGLE PILLAR
 		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
-		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
+                tw.Levels[this.level].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
 	}
 }
 

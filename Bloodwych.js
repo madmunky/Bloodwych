@@ -57,7 +57,7 @@ background[0] = new Array(0, 0, 128, 76, 0, 0);
 background[1] = new Array(128, 0, 128, 76, 0, 0);
 
 //Declare Arrays for the Graphics
-var gfx = {};
+var gfx = [];
 var gfxPos = SpriteSheetArray();
 var b = 0;
 var player = new Array();
@@ -67,7 +67,7 @@ var tw = new Tower();
 var canvas_x;
 var canvas_y;
 
-GetDataView("maps/MOD0.MAP",mapdate);
+
 
 //Load images into the Arrays
 $(function() {
@@ -119,11 +119,16 @@ $(function() {
     gfxLoadImage("images/characters", "maleLegs");
 });
 
+    GetDataView("maps/MOD0.MAP",mapdate);
+
+
 document.addEventListener('touchstart', doTouchStart, false);
+
+var test;
 
 function updatePlayerViewScreen(){  
     
-    if (typeof tw.Triggers !== "undefined") {
+    if (typeof gfx !== "undefined") {
             $('section.debug p').html('');
             clearCanvas();
             configCanvas();
@@ -135,9 +140,7 @@ function updatePlayerViewScreen(){
             ctx.fillText("X:" + player[0].X.toString() + "\n Y:"  + player[0].Y.toString(),0,270);
             ctx.fillText("Current Map: " +Maps[CurrentMap],0,290);
             ctx.fillText("Level: " + player[0].level.toString(),0,310);
-            //ctx.fillText(canvas_x + " - " + canvas_y,0,330);
-            ctx.fillText("FPS: " + fps.getFPS(),0,350);
-            //if (debug){PrintLog("Screen Updated");}
+            ctx.fillText("FPS: " + fps.getFPS(),0,350);            
             player[1].updateView(tw.Levels[player[1].level].Map);
             drawPlayersView(player[1]);
             ctx.fillText("Player 2",410,250);
