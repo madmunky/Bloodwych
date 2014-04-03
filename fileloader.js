@@ -13,6 +13,7 @@ function getFileData(file_name, callback, t,type,lenght) {
                     case "switches": t.Switches = callback(this.response, lenght);break;
                     case "triggers": t.Triggers = callback(this.response, lenght);break;
                     case "monsters": t.MonsterData = callback(this.response, lenght);break;
+                    case "characters": t.CharacterData = callback(this.response, lenght);break;
                         
                     }
 		}

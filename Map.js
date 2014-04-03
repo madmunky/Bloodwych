@@ -10,7 +10,7 @@ function Tower(map) {
     this.Switches = getFileData('maps/' + map + '.switches', readSwitchData, this, "switches", 4);
     this.Triggers = getFileData('maps/' + map + '.triggers', readSwitchData, this, "triggers", 4);
     this.MonsterData = getFileData('maps/' + map + '.monsters', readSwitchData, this,"monsters", 6);
-
+    this.CharacterData = getFileData('maps/' + map + '.charstats', readSwitchData, this,"characters", 16);
 }
 
 function Map(Width,Height,xOff,yOff){
