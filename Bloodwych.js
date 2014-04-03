@@ -3,6 +3,11 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 
+var CLASS_SERP = 0,
+    CLASS_DRAG = 1,
+    CLASS_MOON = 2,
+    CLASS_CHAOS = 3;
+
 var COLOUR_WHITE =          [224, 224, 224],
     COLOUR_GREY_1 =         [160, 160, 160],
     COLOUR_GREY_2 =         [128, 128, 128],

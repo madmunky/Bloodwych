@@ -140,9 +140,9 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
 	
 	function getWallDeco() {
 		var xy = posToCoordinates(pos18, P.X, P.Y, P.Rotation);
-		var RND4 = Math.floor(xy["x"] * 1.27 + xy["y"] * 2.68) % 4; //For random banner faces  + d * 3.31
-		var RND6 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.82) % 6; //For random switches + d * 1.35
-		var RND8 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.42) % 8; //For random banner frames + d * 1.35
+		var RND4 = Math.floor(xy["x"] * 1.27 + xy["y"] * 2.68) % 4; //For random banner faces
+		var RND6 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.82) % 6; //For random switches
+		var RND8 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.42) % 8; //For random banner frames
 		try{
 			if (getHexToBinaryPosition(HexCode, 8) == '1') { //Wall has something on it
 				if (getHexToBinaryPosition(HexCode, 6, 2) == '0') { //Shelf
@@ -152,8 +152,8 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
 						ctx.drawImage(gfx["deco"]["banner"][RND8], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
 						switch(RND4) {
 							case 0: return gfx["deco"]["serpent-head"];
-							case 1: return gfx["deco"]["moon-head"];
-							case 2: return gfx["deco"]["dragon-head"];
+                            case 1: return gfx["deco"]["dragon-head"];
+							case 2: return gfx["deco"]["moon-head"];
 							case 3: return gfx["deco"]["chaos-head"];
 							default: return null;
 						}
@@ -224,7 +224,7 @@ function getDirection(n) {
 
 function drawPlayersView(p) {
 	hex = p.getBinaryView(15, 0, 16);
-	//debugText(p.champion[0].firstName + ' hp:' + p.champion[0].hp + ' rec:' + p.champion[0].recruited + ' Spells:' + p.champion[0].spellBook);
+	debugText(p.champion[0].firstName + ' hp:' + p.champion[0].stat.hp + ' rec:' + p.champion[0].recruited + ' armor-spell-learned:' + p.champion[0].spellBook[SPELL_ARMOUR].learnt);
 	//debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
 	debugText(hex2bin(hex));
 	//debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
