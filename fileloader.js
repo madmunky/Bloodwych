@@ -1,30 +1,29 @@
-//$(document).ready(function() {
-// tower = loadTower("MOD0");
-//});
-
-function getFileData(file_name, callback, t,type,lenght) {
-	var obj = null;
+function getFileData(file_name, callback, t, type, length) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete"){
-                    switch (type) {
-                        
-                    case "map": t.Levels = callback(this.response, lenght);break;
-                    case "switches": t.Switches = callback(this.response, lenght);break;
-                    case "triggers": t.Triggers = callback(this.response, lenght);break;
-                    case "monsters": t.MonsterData = callback(this.response, lenght);break;
-                    case "characters": t.CharacterData = callback(this.response, lenght);break;
-                        
-                    }
+			switch (type) {
+				case "Levels": t.Levels = callback(this.response, length);break;
+				case "Switches": t.Switches = callback(this.response, length);break;
+				case "Triggers": t.Triggers = callback(this.response, length);break;
+				case "MonsterData": t.MonsterData = callback(this.response, length);break;
+				case "CharacterData": t.CharacterData = callback(this.response, length);break;
+				default: break;
+			}
+			if(typeof length === 'number') { //use length
+				obj = callback(this.response, length);
+			} else { //use extra function
+				obj = callback(this.response);
+			}
+			//return obj;
 		}
-	};
+	}
 	xmlhttp.open("GET", file_name, true);
 	xmlhttp.responseType = "arraybuffer";
 	xmlhttp.send();
-	//return obj;
 }
-	
-function mapdate(evt) {
+
+function readMapData(evt) {
 		
 	//Function to read the orginal Bloodwych PC map data and put it into an array of
 	//hex codes so we can convert back to objects ingame.
@@ -62,7 +61,7 @@ function mapdate(evt) {
         
 }
 	
-function readSwitchData(evt,lenght) {
+function readSimpleData(evt,length) {
 		
 	var uInt8Array = new Uint8Array(evt);
 	var Data = [];   
@@ -71,9 +70,9 @@ function readSwitchData(evt,lenght) {
 		
 		//Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
                 var tmp = [];
-                for (i = x; i < x+lenght; i++) {tmp.push(uInt8Array[i]);}                        
+                for (i = x; i < x+length; i++) {tmp.push(uInt8Array[i]);}                        
                 Data.push(tmp);                
-		x=x+lenght-1;
+		x=x+length-1;
 	}
 	return Data;
 }

@@ -5,20 +5,26 @@
  */
 
 function Tower(map) {
-    
-    this.Levels = getFileData('maps/' + map + '.MAP', mapdate, this,"map");    
-    this.Switches = getFileData('maps/' + map + '.switches', readSwitchData, this, "switches", 4);
-    this.Triggers = getFileData('maps/' + map + '.triggers', readSwitchData, this, "triggers", 4);
-    this.MonsterData = getFileData('maps/' + map + '.monsters', readSwitchData, this,"monsters", 6);
-    this.CharacterData = getFileData('maps/' + map + '.charstats', readSwitchData, this,"characters", 16);
+	this.map = map;
+	getFileData('maps/' + map + '.MAP', readMapData, this, "Levels");
+	getFileData('maps/' + map + '.switches', readSimpleData, this, "Switches", 4);
+	getFileData('maps/' + map + '.triggers', readSimpleData, this, "Triggers", 4);
+	getFileData('maps/' + map + '.monsters', readSimpleData, this, "MonsterData", 6);
+	getFileData('maps/' + map + '.charstats', readSimpleData, this, "CharacterData", 16);
+
 }
 
-function Map(Width,Height,xOff,yOff){
-    
-    this.Width = Width;
-    this.Height = Height;
-    this.yOffset = yOff;
-    this.xOffset = xOff;
-    this.Map = [];
-    
+Tower.prototype.readOtherData = function() {
+	this.Switches = getFileData('maps/' + this.map + '.switches', readSimpleData, 4);
+	this.Triggers = getFileData('maps/' + this.map + '.triggers', readSimpleData, 4);
+	this.MonsterData = getFileData('maps/' + this.map + '.monsters', readSimpleData, 6);
+	this.CharacterData = getFileData('maps/' + this.map + '.charstats', readSimpleData, 16);
+}
+
+function Map(Width,Height,xOff,yOff) {
+	this.Width = Width;
+	this.Height = Height;
+	this.yOffset = yOff;
+	this.xOffset = xOff;
+	this.Map = [];
 }
