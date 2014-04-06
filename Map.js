@@ -12,6 +12,8 @@ function Tower(map) {
 	getFileData('maps/' + map + '.monsters', readSimpleData, this, "MonsterData", 6);
 	getFileData('maps/' + map + '.charstats', readSimpleData, this, "CharacterData", 16);
 
+
+
 }
 //
 //Tower.prototype.readOtherData = function() {

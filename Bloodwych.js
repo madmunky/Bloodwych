@@ -67,7 +67,7 @@ var gfxPos = SpriteSheetArray();
 var b = 0;
 var player = new Array();
 var tw = new Tower("MOD0");
-tw.onload = Run();
+
 //Touch Screen Stuff
 var canvas_x;
 var canvas_y;
