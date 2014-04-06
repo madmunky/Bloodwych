@@ -3,7 +3,11 @@ function getFileData(file_name, callback, t, type, length) {
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete"){
 			switch (type) {
+<<<<<<< HEAD
 				case "Levels": t.Levels = callback(this.response, length);t.Levels.onload=Run();;break;
+=======
+				case "Levels": t.Levels = callback(this.response, length);break;
+>>>>>>> 75e638b80f65809a0e62723fe7ccaa5a544298f5
 				case "Switches": t.Switches = callback(this.response, length);break;
 				case "Triggers": t.Triggers = callback(this.response, length);break;
 				case "MonsterData": t.MonsterData = callback(this.response, length);break;
