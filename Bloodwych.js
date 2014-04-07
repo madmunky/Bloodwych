@@ -71,7 +71,7 @@ var tw = new Tower("MOD0");
 //Touch Screen Stuff
 var canvas_x;
 var canvas_y;
-
+var test = 0;
 
 
 //Load images into the Arrays
@@ -128,11 +128,10 @@ $(function() {
 
 document.addEventListener('touchstart', doTouchStart, false);
 
-var test;
+getHeadArray();
 
 function updatePlayerViewScreen(){  
-    
-    //if (typeof tw.Level !== "undefined") {
+    try{                  
             $('section.debug p').html('');
             clearCanvas();
             configCanvas();
@@ -151,7 +150,8 @@ function updatePlayerViewScreen(){
             ctx.fillText("X:" + player[1].X.toString() + "\n Y:"  + player[1].Y.toString(),410,270);
             ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
             ctx.fillText("Level: " + player[1].level.toString(),410,310);
-    //}
+            myDIx(ctx,gfx["heads"],imageCharacterArray[0][0][test][0],player[0],scale);
+        }catch(e){PrintLog("Error: " + e.toString());}
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {

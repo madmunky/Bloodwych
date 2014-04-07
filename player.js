@@ -302,13 +302,13 @@ Player.prototype.testMode = function(id) {
 		//tw.Level[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
                 //tw.Level[this.level].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
         try{        
-        for(i = 0; i < 17; i++) {
-                    var t = this.View[i].substring(1,3);
-		 if (this.View[i].substring(1,3) === "80"){
-                     window.alert("Distance: " + this.distanceFromPlayer(i) + " Code: " + this.View[i]);
-                 }
-                }
-	}catch(e){PrintLog(e.toString())};}
+            for(i = 0; i < 17; i++) {
+                        var t = this.View[i].substring(2,4);
+                     if (this.View[i].substring(2,4) === "80"){
+                         window.alert("Distance: " + this.distanceFromPlayer(i) + " Code: " + this.View[i]);
+                     }
+                    }
+	}catch(e){PrintLog(e.toString());};}
 };
 
 Player.prototype.distanceFromPlayer = function(block) {
@@ -327,15 +327,15 @@ Player.prototype.distanceFromPlayer = function(block) {
         case 9:{return CHAR_FAR;}break;    
         case 10:
         case 11:
-        case 12:
+        case 12:{return CHAR_MID;}break;
         case 13:
-        case 14:{return CHAR_MID;}break;    
+        case 14:    
         case 15:
         case 16:
         case 17:
         case 18:{return CHAR_CLOSE;}break;
         
-        default:{return null;}
+        default:{return 0;}
         
     }
     

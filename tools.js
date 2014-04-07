@@ -11,7 +11,7 @@ String.prototype.replaceAt=function(index, character) {
 //Sets a hex value at a certain index
 function setHexToBinaryPosition(s, index, length, to) {
 	var bin = hex2bin(s);
-	if(typeof to === "undefined" || to == '') {
+	if(typeof to === "undefined" || to === '') {
 		from = bin.substr(index, 1);
 		to = '' + (1 - from);
 	}
@@ -23,7 +23,7 @@ function setHexToBinaryPosition(s, index, length, to) {
 
 //Gets a hex value at a certain index, and a certain length
 function getHexToBinaryPosition(s, index, length) {
-	if(typeof length == 'undefined') {
+	if(typeof length === 'undefined') {
 		length = 1;
 	}
 	var bin = hex2bin(s);
@@ -50,9 +50,9 @@ function convertBase(num) {
 	this.from = function (baseFrom) {
 		this.to = function (baseTo) {
 			return parseInt(num, baseFrom).toString(baseTo);
-		}
+		};
 		return this;
-	}
+	};
 	return this;
 }
 
@@ -77,7 +77,7 @@ function seededRandom(seed) {
 
   17>18<16
 
-	 19
+     19
 */
 //Given a specific position (0 - 19) relative to an x, y and d(irection), return the x and y coordinates
 function posToCoordinates(pos, x, y, d) {
@@ -134,4 +134,8 @@ function decimalToHex(d) {
 		hex = "0" + hex;
 	}
 	return hex;
+}
+
+function PrintLog(myString) {
+    if (debug) {console.log(getTimeStamp() +" Debug: " +myString);}
 }

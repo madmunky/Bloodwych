@@ -85,7 +85,8 @@ function doKeyDown(e) {
         case 69: {player[0].rotateTo(player[0].Rotation + 1);break;}    // E KEY
         case 82: {player[0].toggleFrontObject();break} //R Key
         case 70: {player[0].testMode();break;} // F cheat
-
+        case 187: {test++;}break;
+        case 189: {test--;}break;
         default:{};break;
     }
 
