@@ -18,7 +18,7 @@ function Player(champID,posX,posY,level,rotation,PortX,PortY) {
   
 	try{
 		this.setBinaryView(18, 8, 1, '1');
-		//tw.Levels[this.level].Map[this.Y][this.X] = tw.Levels[this.level].Map[this.Y][this.X].replaceAt(2,"8");
+		//tw.Level[this.level].Map[this.Y][this.X] = tw.Level[this.level].Map[this.Y][this.X].replaceAt(2,"8");
 	}
 	catch(c){};
 }
@@ -126,20 +126,20 @@ Player.prototype.toggleFrontObject = function() {
 //'to' will be a binary string, e.g. '1010'
 Player.prototype.setBinaryView = function(pos18, index, length, to) {
 	var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
-	tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.Levels[this.level].Map[xy["y"]][xy["x"]], index, length, to);
+	tw.Level[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.Level[this.level].Map[xy["y"]][xy["x"]], index, length, to);
 }
 
 Player.prototype.getBinaryView = function(pos18, index, length) {
 	var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
 	try {
-		return getHexToBinaryPosition(tw.Levels[this.level].Map[xy["y"]][xy["x"]], index, length);
+		return getHexToBinaryPosition(tw.Level[this.level].Map[xy["y"]][xy["x"]], index, length);
 	} catch(e) {
 		return '0001';
 	}
 }
 
 Player.prototype.setMovementData = function() {
-	tw.Levels[this.lastLevel].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tw.Levels[this.lastLevel].Map[this.lastY][this.lastX], 8, 1, '0');
+	tw.Level[this.lastLevel].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tw.Level[this.lastLevel].Map[this.lastY][this.lastX], 8, 1, '0');
 	player[0].setBinaryView(18, 8, 1, '1');
 	player[1].setBinaryView(18, 8, 1, '1');
 	this.lastX = this.X;
@@ -191,7 +191,7 @@ Player.prototype.updateView = function(m){
 
 Player.prototype.doEvent = function() {
 	   //this.setMovementData();
-	   this.updateView(tw.Levels[this.level].Map);
+	   this.updateView(tw.Level[this.level].Map);
 	   drawPlayersView(this);
 	   this.doEventSquare(true);
 }
@@ -213,8 +213,8 @@ Player.prototype.doEventSquare = function(mr) {
 
 Player.prototype.doPit = function() {
 	this.setPlayerLevel(this.level - 1);
-	this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset);
-	this.Y = this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset);
+	this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset);
+	this.Y = this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset);
 };
 
 Player.prototype.doStairs = function() {
@@ -228,45 +228,45 @@ Player.prototype.doStairs = function() {
 		case 0: //South
 			this.Rotation = 2;                
 			if (ud === 0){
-				this.X = this.X - (tw.Levels[this.level].xOffset - tw.Levels[this.level -1].xOffset);
-				this.Y = this.Y - (tw.Levels[this.level].yOffset - tw.Levels[this.level -1].yOffset); this.Y = this.Y +2;
+				this.X = this.X - (tw.Level[this.level].xOffset - tw.Level[this.level -1].xOffset);
+				this.Y = this.Y - (tw.Level[this.level].yOffset - tw.Level[this.level -1].yOffset); this.Y = this.Y +2;
 			}
 			else {
-				this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset);
-				this.Y = this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset); this.Y = this.Y +2;
+				this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset);
+				this.Y = this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset); this.Y = this.Y +2;
 			}
 			break;
 		case 1: //West
 			this.Rotation = 3;
 			if (ud === 0){  
-				this.X = this.X - (tw.Levels[this.level].xOffset - tw.Levels[this.level -1].xOffset); this.X = this.X -2;
-				this.Y = (this.Y - (tw.Levels[this.level].yOffset - tw.Levels[this.level -1].yOffset)) ;
+				this.X = this.X - (tw.Level[this.level].xOffset - tw.Level[this.level -1].xOffset); this.X = this.X -2;
+				this.Y = (this.Y - (tw.Level[this.level].yOffset - tw.Level[this.level -1].yOffset)) ;
 			}
 			else {
-				this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset); this.X = this.X -2;
-				this.Y = (this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset));
+				this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset); this.X = this.X -2;
+				this.Y = (this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset));
 			}
 			break;
 		case 2: //North
 			this.Rotation = 0;
 			if (ud === 0){
-				this.X = this.X - (tw.Levels[this.level].xOffset - tw.Levels[this.level -1].xOffset);
-				this.Y = this.Y - (tw.Levels[this.level].yOffset - tw.Levels[this.level -1].yOffset); this.Y = this.Y -2;
+				this.X = this.X - (tw.Level[this.level].xOffset - tw.Level[this.level -1].xOffset);
+				this.Y = this.Y - (tw.Level[this.level].yOffset - tw.Level[this.level -1].yOffset); this.Y = this.Y -2;
 			}
 			else {
-				this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset);
-				this.Y = this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset); this.Y = this.Y -2;
+				this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset);
+				this.Y = this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset); this.Y = this.Y -2;
 			}
 			break;
 		case 3: //East
 			this.Rotation = 1;
 			if (ud === 0){  
-				this.X = this.X - (tw.Levels[this.level].xOffset - tw.Levels[this.level -1].xOffset); this.X = this.X +2;
-				this.Y = (this.Y - (tw.Levels[this.level].yOffset - tw.Levels[this.level -1].yOffset));
+				this.X = this.X - (tw.Level[this.level].xOffset - tw.Level[this.level -1].xOffset); this.X = this.X +2;
+				this.Y = (this.Y - (tw.Level[this.level].yOffset - tw.Level[this.level -1].yOffset));
 			}
 			else {                    
-				this.X = this.X + (tw.Levels[this.level +1].xOffset - tw.Levels[this.level].xOffset); this.X = this.X +2;
-				this.Y = (this.Y + (tw.Levels[this.level +1].yOffset - tw.Levels[this.level].yOffset));
+				this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset); this.X = this.X +2;
+				this.Y = (this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset));
 			}
 			break;
 		default: break;
@@ -276,7 +276,7 @@ Player.prototype.doStairs = function() {
 //Change the Players Level
 //l: 1 = up, -1 = down
 Player.prototype.setPlayerLevel = function(level) {
-	if(level >= 0 && level < tw.Levels.length) {
+	if(level >= 0 && level < tw.Level.length) {
 		this.lastLevel = this.level;
 		this.level = level;
 	}
@@ -295,18 +295,20 @@ Player.prototype.recruitChampion = function(id) {
 
 Player.prototype.testMode = function(id) {
 	if(debug) {
-		var xy = posToCoordinates(15, this.X, this.Y, this.Rotation);
-		var hex = tw.Levels[this.level].Map[xy["y"]][xy["x"]];
-		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
-		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = toggleObject(hex, '3'); //TOGGLE PILLAR
-		//tw.Levels[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
-                //tw.Levels[this.level].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
-                for(i = 0; i < 16; i++) {
-		 if (this.View[i].substring(2,3) === "80"){
+		//var xy = posToCoordinates(15, this.X, this.Y, this.Rotation);
+		//var hex = tw.Level[this.level].Map[xy["y"]][xy["x"]];
+		//tw.Level[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
+		//tw.Level[this.level].Map[xy["y"]][xy["x"]] = toggleObject(hex, '3'); //TOGGLE PILLAR
+		//tw.Level[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
+                //tw.Level[this.level].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
+        try{        
+        for(i = 0; i < 17; i++) {
+                    var t = this.View[i].substring(1,3);
+		 if (this.View[i].substring(1,3) === "80"){
                      window.alert("Distance: " + this.distanceFromPlayer(i) + " Code: " + this.View[i]);
                  }
                 }
-	}
+	}catch(e){PrintLog(e.toString())};}
 };
 
 Player.prototype.distanceFromPlayer = function(block) {

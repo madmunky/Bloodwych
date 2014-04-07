@@ -13,7 +13,7 @@ function doTouchStart(e) {
                 configCanvas();
                 myDIx(ctx, img, background[b], player[0], scale);
                 player[0].move(DIRECTION_NORTH);
-                player[0].updateView(tw.Levels[player[0].level].Map);
+                player[0].updateView(tw.Level[player[0].level].Map);
                 drawPlayersView(player[0]);
                 event.preventDefault();
             }
@@ -22,7 +22,7 @@ function doTouchStart(e) {
                 configCanvas();
                 myDIx(ctx, img, background[b], player[0], scale);
                 player[0].move(DIRECTION_SOUTH);
-                player[0].updateView(tw.Levels[player[0].level].Map);
+                player[0].updateView(tw.Level[player[0].level].Map);
                 drawPlayersView(player[0]);
             }
             else if (canvas_y < 300 & (canvas_x > 270)){
@@ -30,7 +30,7 @@ function doTouchStart(e) {
                 configCanvas();
                 myDIx(ctx, img, background[b], player[0], scale);
                 player[0].rotateTo(player[0].Rotation + 1);
-                player[0].updateView(tw.Levels[player[0].level].Map);
+                player[0].updateView(tw.Level[player[0].level].Map);
                 drawPlayersView(player[0]);                
             }
             else if (canvas_y < 300 & (canvas_x < 120)){
@@ -38,7 +38,7 @@ function doTouchStart(e) {
                 configCanvas();
                 myDIx(ctx, img, background[b], player[0], scale);
                 player[0].rotateTo(player[0].Rotation - 1);
-                player[0].updateView(tw.Levels[player[0].level].Map);
+                player[0].updateView(tw.Level[player[0].level].Map);
                 drawPlayersView(player[0]);                
             }
             

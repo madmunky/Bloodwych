@@ -132,11 +132,11 @@ var test;
 
 function updatePlayerViewScreen(){  
     
-    if (typeof tw.Levels !== "undefined") {
+    //if (typeof tw.Level !== "undefined") {
             $('section.debug p').html('');
             clearCanvas();
             configCanvas();
-            player[0].updateView(tw.Levels[player[0].level].Map);
+            player[0].updateView(tw.Level[player[0].level].Map);
             drawPlayersView(player[0]);
             ctx.font = "normal 11px verdana, sans-serif";
             ctx.fillStyle = "#FFF";
@@ -145,13 +145,13 @@ function updatePlayerViewScreen(){
             ctx.fillText("Current Map: " +Maps[CurrentMap],0,290);
             ctx.fillText("Level: " + player[0].level.toString(),0,310);
             ctx.fillText("FPS: " + fps.getFPS(),0,350);            
-            player[1].updateView(tw.Levels[player[1].level].Map);
+            player[1].updateView(tw.Level[player[1].level].Map);
             drawPlayersView(player[1]);
             ctx.fillText("Player 2",410,250);
             ctx.fillText("X:" + player[1].X.toString() + "\n Y:"  + player[1].Y.toString(),410,270);
             ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
             ctx.fillText("Level: " + player[1].level.toString(),410,310);
-    }
+    //}
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {

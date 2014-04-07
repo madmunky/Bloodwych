@@ -6,17 +6,11 @@
 
 function Tower(map) {
 	this.map = map;
-	getFileData('maps/' + map + '.MAP', readMapData, this, "Levels");
+	getFileData('maps/' + map + '.MAP', readMapData, this, "Level");
 	getFileData('maps/' + map + '.switches', readSimpleData, this, "Switches", 4);
 	getFileData('maps/' + map + '.triggers', readSimpleData, this, "Triggers", 4);
 	getFileData('maps/' + map + '.monsters', readSimpleData, this, "MonsterData", 6);
 	getFileData('maps/' + map + '.charstats', readSimpleData, this, "CharacterData", 16);
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 75e638b80f65809a0e62723fe7ccaa5a544298f5
-
 }
 //
 //Tower.prototype.readOtherData = function() {
@@ -26,16 +20,6 @@ function Tower(map) {
 //	this.CharacterData = getFileData('maps/' + this.map + '.charstats', readSimpleData, 16);
 //}
 
-<<<<<<< HEAD
-=======
-Tower.prototype.readOtherData = function() {
-	this.Switches = getFileData('maps/' + this.map + '.switches', readSimpleData, 4);
-	this.Triggers = getFileData('maps/' + this.map + '.triggers', readSimpleData, 4);
-	this.MonsterData = getFileData('maps/' + this.map + '.monsters', readSimpleData, 6);
-	this.CharacterData = getFileData('maps/' + this.map + '.charstats', readSimpleData, 16);
-}
-
->>>>>>> 75e638b80f65809a0e62723fe7ccaa5a544298f5
 function Map(Width,Height,xOff,yOff) {
 	this.Width = Width;
 	this.Height = Height;
