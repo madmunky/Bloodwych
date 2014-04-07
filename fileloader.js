@@ -12,7 +12,7 @@ function getFileData(file_name, callback, t, type, length) {
 			}			
 		}
 	};
-	xmlhttp.open("GET", file_name, false);
+	xmlhttp.open("GET", file_name, true);
 	xmlhttp.responseType = "arraybuffer";
 	xmlhttp.send();
 }

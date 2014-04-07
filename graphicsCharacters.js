@@ -23,6 +23,7 @@ var imageCharacterArray = [];
 
 function getHeadArray(){
     
+    var heads = [];
     
     
 }
