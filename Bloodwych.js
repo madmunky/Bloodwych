@@ -2,6 +2,7 @@
 var scale = 3;
 var debug = true;
 var debugHigh = false;
+var Running = false;
 
 var CLASS_SERP = 0,
     CLASS_DRAG = 1,

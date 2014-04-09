@@ -20,6 +20,7 @@ Run = function() {
         rdt = 0;
 
         function run() {
+            if (!Running){Running = true;};
             now = new Date().getTime();
             dt  = Math.min(1, (now - last) / 1000);
             gdt = gdt + dt;
