@@ -1,15 +1,15 @@
 function getFileData(file_name, callback, t, type, length) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete"){
+		if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete") {
 			switch (type) {
-				case "Level": t.Level = callback(this.response, length);if (!Running){t.Level.onload=Run()};break;
-				case "Switches": t.Switches = callback(this.response, length);break;
-				case "Triggers": t.Triggers = callback(this.response, length);break;
-				case "MonsterData": t.MonsterData = callback(this.response, length);break;
-				case "CharacterData": t.CharacterData = callback(this.response, length);break;
+				case "Level": t.Level = callback(this.response, length); dataLoaded.level = true; break;
+				case "Switches": t.Switches = callback(this.response, length); dataLoaded.switches = true; break;
+				case "Triggers": t.Triggers = callback(this.response, length); dataLoaded.triggers = true; break;
+				case "MonsterData": t.MonsterData = callback(this.response, length); dataLoaded.monsters = true; break;
+				case "CharacterData": t.CharacterData = callback(this.response, length); dataLoaded.characters = true; break;
 				default: break;
-			}			
+			}
 		}
 	};
 	xmlhttp.open("GET", file_name, true);

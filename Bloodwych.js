@@ -2,7 +2,7 @@
 var scale = 3;
 var debug = true;
 var debugHigh = false;
-var Running = false;
+var game;
 
 var CLASS_SERP = 0,
     CLASS_DRAG = 1,
@@ -124,8 +124,6 @@ $(function() {
     gfxLoadImage("images/characters", "maleBodies");
     gfxLoadImage("images/characters", "maleLegs");
 });
-
-//tw = loadTower("MOD0");
 
 document.addEventListener('touchstart', doTouchStart, false);
 gfx.onload = getHeadArray();

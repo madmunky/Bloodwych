@@ -91,9 +91,9 @@ function doKeyDown(e) {
         case KEY_L: // THE L KEY
             CurrentMap = (CurrentMap + 1) % Maps.length;
             tw = new Tower(Maps[CurrentMap]);
-            player[0].X = 1; player[1].X = 2;
-            player[0].Y = 1; player[1].Y = 1;
-            player[0].setPlayerLevel(0); player[1].setPlayerLevel(0);
+            player[0].X = 3; player[1].X = 3;
+            player[0].Y = 1; player[1].Y = 3;
+            player[0].level = 0; player[1].level = 0;
             break;
         case KEY_T: player[0].changeUpLevel();break;    // T KEY     
         case KEY_SPACEBAR: player[0].action();break;           // SpaceBar        

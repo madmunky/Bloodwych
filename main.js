@@ -1,3 +1,5 @@
+var dataLoaded = {};
+
 Run = function() {
     var animFrame = (function(){
         return window.requestAnimationFrame || 
@@ -11,8 +13,8 @@ Run = function() {
     })();
 
     return function() {
-        var game = new Game(),
-        render = new Renderer(game),
+        game = new Game();
+        var render = new Renderer(game),
         now,
         last = new Date().getTime(),
         dt = 0,
@@ -20,7 +22,6 @@ Run = function() {
         rdt = 0;
 
         function run() {
-            if (!Running){Running = true;};
             now = new Date().getTime();
             dt  = Math.min(1, (now - last) / 1000);
             gdt = gdt + dt;
@@ -37,8 +38,8 @@ Run = function() {
             animFrame(run);
         };
     
-    game.init && game.init();
-    render.init && render.init();
-    run();
+        game.init && game.init();
+        render.init && render.init();
+        run();
     };
 }();
