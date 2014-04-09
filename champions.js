@@ -17,22 +17,7 @@ var	CHA_BLODWYN = 0,
 	CHA_MR_FLAY = 14,
 	CHA_THAI_CHANG = 15;
 
-var MON_SPIDER = 16,
-	MON_CRAB = 17;
-
 var champion = new Array();
-
-function Monster(id, level, type, form, colour, teamId, l, x, y, d) {
-	this.id = id;
-	this.level = level;
-	this.type = type;
-	this.form = form;
-	this.colour = colour;
-	this.teamId = teamId;
-	this.x = x;
-	this.y = y;
-	this.d = d;
-}
 
 function Champion(id) {
 	this.spellBook = new Array();
@@ -74,6 +59,7 @@ Champion.prototype.addSpellToSpellBook = function(spell) {
 }
 
 function initChampions() {
+	champion.length = 0;
 	for(ch = 0; ch < CHA_CHAMPION_MAX; ch++) {
 		champion[ch] = new Champion(ch);
 	}

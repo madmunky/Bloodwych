@@ -53,43 +53,37 @@ function doKeyDown(e) {
     switch (e.keyCode)
     {
         
-        case 104: {player[1].move(DIRECTION_NORTH);break} //8
-        case 101: {player[1].move(DIRECTION_SOUTH);break} //5
-        case 100: {player[1].move(DIRECTION_WEST);break} //4
-        case 102: {player[1].move(DIRECTION_EAST);break} //6
-        case 103: {player[1].rotateTo(player[1].Rotation - 1);break} //7
-        case 105: {player[1].rotateTo(player[1].Rotation + 1);break} //9
-        case  96: {player[1].action();break} //End Key
-        case 107: {player[1].toggleFrontObject();break} //+ Key
-        
-        case 76: {  // THE L KEY
-            tw = new Tower();
-            CurrentMap = CurrentMap + 1;
-            if (CurrentMap > Maps.length -1){
-                CurrentMap = 0;
-            }
-            player[0].X = 0;player[1].X = 0;
-            player[0].Y = 0;player[1].Y = 0;
-            tower = loadTower(Maps[CurrentMap]);
-            break; 
-        }
-        
-        case 84: {player[0].changeUpLevel();break;}    // T KEY     
-        case 32: {player[0].action();break;}           // SpaceBar        
-        case 71: {player[0].changeDownLevel(); break;} // G KEY  
-        case 87: {player[0].move(DIRECTION_NORTH);break;}      // W KEY
-        case 83: {player[0].move(DIRECTION_SOUTH);break;}    // S KEY
-        case 65: {player[0].move(DIRECTION_WEST);break;}         // A KEY
-        case 68: {player[0].move(DIRECTION_EAST);break;}        // D KEY
-        case 81: {player[0].rotateTo(player[0].Rotation - 1);break;}    // Q KEY
-        case 69: {player[0].rotateTo(player[0].Rotation + 1);break;}    // E KEY
-        case 82: {player[0].toggleFrontObject();break} //R Key
-        case 70: {player[0].testMode();break;} // F cheat
-        case 187: {test++;}break;
-        case 189: {test--;}break;
-        case 48: {test2++;}break;
-        case 57: {test2--;}break;
-        default:{};break;
+        case 104: player[1].move(DIRECTION_NORTH);break; //8
+        case 101: player[1].move(DIRECTION_SOUTH);break; //5
+        case 100: player[1].move(DIRECTION_WEST);break; //4
+        case 102: player[1].move(DIRECTION_EAST);break; //6
+        case 103: player[1].rotateTo(player[1].Rotation - 1);break; //7
+        case 105: player[1].rotateTo(player[1].Rotation + 1);break; //9
+        case  96: player[1].action();break; //End Key
+        case 107: player[1].toggleFrontObject();break; //+ Key
+        case 76: // THE L KEY
+            CurrentMap = (CurrentMap + 1) % Maps.length;
+            tw = new Tower(Maps[CurrentMap]);
+            player[0].X = 1; player[1].X = 2;
+            player[0].Y = 1; player[1].Y = 1;
+            player[0].setPlayerLevel(0); player[1].setPlayerLevel(0);
+            break;
+        case 84: player[0].changeUpLevel();break;    // T KEY     
+        case 32: player[0].action();break;           // SpaceBar        
+        case 71: player[0].changeDownLevel(); break; // G KEY  
+        case 87: player[0].move(DIRECTION_NORTH);break;      // W KEY
+        case 83: player[0].move(DIRECTION_SOUTH);break;    // S KEY
+        case 65: player[0].move(DIRECTION_WEST);break;         // A KEY
+        case 68: player[0].move(DIRECTION_EAST);break;        // D KEY
+        case 81: player[0].rotateTo(player[0].Rotation - 1);break;    // Q KEY
+        case 69: player[0].rotateTo(player[0].Rotation + 1);break;    // E KEY
+        case 82: player[0].toggleFrontObject();break; //R Key
+        case 70: player[0].testMode();break; // F cheat
+        case 187: test++; break;
+        case 189: test--; break;
+        case 48: test2++; break;
+        case 57: test2--; break;
+        default: break;
     }
 
 

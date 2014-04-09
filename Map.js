@@ -27,3 +27,7 @@ function Map(Width,Height,xOff,yOff) {
 	this.xOffset = xOff;
 	this.Map = [];
 }
+
+function initTower(map) {
+
+}

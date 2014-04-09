@@ -12,12 +12,12 @@ Run = function() {
 
     return function() {
         var game = new Game(),
-            render = new Renderer(game),
-            now,
-            last = new Date().getTime(),
-            dt = 0,
-            gdt = 0,
-            rdt = 0;
+        render = new Renderer(game),
+        now,
+        last = new Date().getTime(),
+        dt = 0,
+        gdt = 0,
+        rdt = 0;
 
         function run() {
             now = new Date().getTime();
@@ -35,9 +35,9 @@ Run = function() {
             last = now;
             animFrame(run);
         };
-        
-        game.init && game.init();
-        render.init && render.init();
-        run();
+    
+    game.init && game.init();
+    render.init && render.init();
+    run();
     };
 }();
