@@ -37,18 +37,25 @@ function getHeadArray(){
         var close = [];
         var distant = [];
             for (y = 0;y < NUMBER_OF_DISTANCES;y++){
-                if (y < 3){
-                    close.push(new Array(x*16, y*12, 16, 12, 0, 0));        
+                if (y <= 2){
+                    close.push(grabImageAt(gfx["heads"],x*16, y*12, 12, 12, false));        
                 }
-                if (y > 2 && y < 6){
-                    mid.push(new Array(x*16, y*10, 16, 10, 0, 0));
+                if (y === 1){close.push(grabImageAt(gfx["heads"],x*16, y*12, 12, 12, true));}
+                    
+                if (y > 2 && y <= 5){
+                    mid.push(grabImageAt(gfx["heads"],x*16, y*12, 10, 10,false));
+                }  
+                if (y === 4){mid.push(grabImageAt(gfx["heads"],x*16, y*12, 10, 10, true));}
+                
+                if (y > 5 && y <= 8){
+                    far.push(new Array(x*16, y*11, 8, 8, 0, 0));
                 }
-                if (y > 5 && y < 9){
-                    far.push(new Array(x*16, y*8, 16, 8, 0, 0));
+                if (y === 4){far.push(grabImageAt(gfx["heads"],x*16, y*11, 8, 8, true));}
+                
+                if (y > 8 && y <= 11){
+                    distant.push(new Array(x*16, y*10, 7, 7, 0, 0));
                 }
-                if (y > 8 && y < 12){
-                    distant.push(new Array(x*16, y*12, 16, 12, 0, 0));
-                }
+                if (y === 4){distant.push(grabImageAt(gfx["heads"],x*16, y*10, 7, 7, true));}
             }
         heads.push(new Array(close,mid,far,distant));
     }
@@ -58,23 +65,21 @@ function getHeadArray(){
     
 }
 
-function flipImage(image) {
+function grabImageAt(image,startX,startY,width,height,flip) {
+    
 
           var can = document.createElement('canvas');
           can.width = width;
           can.height = height;
           var flipcontext = can.getContext("2d");
-          var flipx = image.x;
-          var flipy = image.y;
-          var flipwidth = image.width;
-          var flipheight = image.height;
           var flipimageObj = new Image();
-          flipimageObj.width = image.width;
-          flipimageObj.height = image.height;
-          
-          flipcontext.translate(flipwidth, 0);
+          flipimageObj.width = width;
+          flipimageObj.height = height;
+          if (flip){
+            flipcontext.translate(width, 0);              
+          }
           flipcontext.scale(-1, 1);
-          flipcontext.drawImage(image, flipx, flipy, flipwidth, flipheight);
+          flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
           flipcontext.save();           
           flipimageObj.src = can.toDataURL();
            

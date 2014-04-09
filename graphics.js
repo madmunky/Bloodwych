@@ -60,11 +60,11 @@ function getImage(Hex,d,pos,p,pos18) {
 	// I may need to pass the Graphics Position to be drawn so I can work out which graphic
 	// to be return for each wall side.
         
-        if (getHexToBinaryPosition(Hex, 12, 4) !== '1'){
-            if (getHexToBinaryPosition(Hex, 8, 4) === '8'){
-                PrintLog("Should be drawing something...");
-            }
-        }
+//        if (getHexToBinaryPosition(Hex, 12, 4) !== '1'){
+//            if (getHexToBinaryPosition(Hex, 8, 4) === '8'){
+//                PrintLog("Should be drawing something...");
+//            }
+//        }
         
         
 	switch (getHexToBinaryPosition(Hex, 12, 4)) {

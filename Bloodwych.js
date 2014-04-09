@@ -71,8 +71,6 @@ var tw = new Tower("MOD0");
 //Touch Screen Stuff
 var canvas_x;
 var canvas_y;
-var test = 0;
-
 
 //Load images into the Arrays
 $(function() {
@@ -119,6 +117,8 @@ $(function() {
     
     //Characters
     gfxLoadImage("images/characters", "heads");
+
+    
     gfxLoadImage("images/characters", "maleArms");
     gfxLoadImage("images/characters", "maleBodies");
     gfxLoadImage("images/characters", "maleLegs");
@@ -127,11 +127,11 @@ $(function() {
 //tw = loadTower("MOD0");
 
 document.addEventListener('touchstart', doTouchStart, false);
+gfx.onload = getHeadArray();
 
-getHeadArray();
 
 function updatePlayerViewScreen(){  
-    try{                  
+   try{                  
             $('section.debug p').html('');
             clearCanvas();
             configCanvas();
@@ -150,8 +150,8 @@ function updatePlayerViewScreen(){
             ctx.fillText("X:" + player[1].X.toString() + "\n Y:"  + player[1].Y.toString(),410,270);
             ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
             ctx.fillText("Level: " + player[1].level.toString(),410,310);
-            myDIx(ctx,gfx["heads"],imageCharacterArray[0][0][test][0],player[0],scale);
-        }catch(e){PrintLog("Error: " + e.toString());}
+            testing();            
+        }catch(e){}//PrintLog("Error: " + e.toString());}
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {
@@ -166,6 +166,7 @@ function configCanvas() {
 	ctx.imageSmoothingEnabled = false;
 	ctx.webkitImageSmoothingEnabled = false;
 	ctx.mozImageSmoothingEnabled = false;
+        ctx.oImageSmoothingEnabled = false;
         ctx.font = "bold 20px Calibri";
 }
 

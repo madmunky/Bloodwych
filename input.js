@@ -87,6 +87,8 @@ function doKeyDown(e) {
         case 70: {player[0].testMode();break;} // F cheat
         case 187: {test++;}break;
         case 189: {test--;}break;
+        case 48: {test2++;}break;
+        case 57: {test2--;}break;
         default:{};break;
     }
 
