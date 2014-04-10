@@ -5,22 +5,22 @@
  */
 
 function Tower(map) {
-	dataLoaded = { level: false, switches: false, triggers: false, monsters: false, characters: false };
 	var t = this;
 	t.map = map;
 	getFileData('maps/' + map + '.MAP', readMapData, t, "Level");
 
-	dataLoaded.watch("level", function(prop, oldval, newval) {
-	    if(typeof game === "undefined") {
-	        Run();
-	    }
-	    getFileData('maps/' + map + '.switches', readSimpleData, t, "Switches", 4);
-	    getFileData('maps/' + map + '.triggers', readSimpleData, t, "Triggers", 4);
-	    getFileData('maps/' + map + '.monsters', readSimpleData, t, "MonsterData", 6);
-	    getFileData('maps/' + map + '.charstats', readSimpleData, t, "CharacterData", 16);
+	towerDataLoaded = { level: false, switches: false, triggers: false, monsters: false, characters: false };
+	towerDataLoaded.watch("level", function(prop, oldval, newval) {
+		getFileData('maps/' + map + '.switches', readSimpleData, t, "Switches", 4);
+		getFileData('maps/' + map + '.triggers', readSimpleData, t, "Triggers", 4);
+		getFileData('maps/' + map + '.monsters', readSimpleData, t, "MonsterData", 6);
+		getFileData('maps/' + map + '.charstats', readSimpleData, t, "CharacterData", 16);
 	});
-	dataLoaded.watch("monsters", function(prop, oldval, newval) {
+	towerDataLoaded.watch("monsters", function(prop, oldval, newval) {
 		initMonsters(t);
+		if(typeof game === "undefined") {
+			Run();
+		}
 	});
 }
 

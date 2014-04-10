@@ -1,6 +1,4 @@
-function Game() {
-    this.running = true;
-};
+function Game() {};
 Game.prototype = {
 
 	init: function() {
