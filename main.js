@@ -1,4 +1,5 @@
 var dataLoaded = {};
+var Loaded = false;
 
 Run = function() {
     var animFrame = (function(){
@@ -23,6 +24,12 @@ Run = function() {
 
         function run() {
             now = new Date().getTime();
+            
+            if (gfx['heads'].width > 0 && !Loaded){
+                gfx['heads'].onload = getHeads();
+                Loaded = true;
+            }
+            
             dt  = Math.min(1, (now - last) / 1000);
             gdt = gdt + dt;
             while (gdt > game.step) {

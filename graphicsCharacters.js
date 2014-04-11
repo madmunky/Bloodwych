@@ -23,11 +23,11 @@ var NUMBER_OF_DISTANCES = 15,
     
 var imageCharacterArray = [];
 
-imageCharacterArray.push(getHeadArray());
+//imageCharacterArray.push(getHeadArray());
 
 
 
-function getHeadArray(){
+function getHeads(){
     
     var heads = [];    
 
@@ -40,34 +40,34 @@ function getHeadArray(){
                 if (y <= 2){
                     close.push(grabImageAt(gfx["heads"],x*16, y*12, 12, 12, false));        
                 }
-                if (y === 1){close.push(grabImageAt(gfx["heads"],x*16, y*12, 12, 12, true));}
-                    
+                if (y === 1){close.push(grabImageAt(gfx["heads"],x*16, y*12, 12, 12, true));}        
+                
                 if (y > 2 && y <= 5){
                     mid.push(grabImageAt(gfx["heads"],x*16, y*12, 10, 10,false));
                 }  
                 if (y === 4){mid.push(grabImageAt(gfx["heads"],x*16, y*12, 10, 10, true));}
                 
                 if (y > 5 && y <= 8){
-                    far.push(new Array(x*16, y*11, 8, 8, 0, 0));
+                    far.push(grabImageAt(gfx["heads"],x*16, y*11, 8, 8, false));
                 }
-                if (y === 4){far.push(grabImageAt(gfx["heads"],x*16, y*11, 8, 8, true));}
+                if (y === 7){far.push(grabImageAt(gfx["heads"],x*16, y*11, 8, 8, true));}
                 
                 if (y > 8 && y <= 11){
-                    distant.push(new Array(x*16, y*10, 7, 7, 0, 0));
+                    distant.push(grabImageAt(gfx["heads"],x*16, y*10, 7, 7, false));
                 }
-                if (y === 4){distant.push(grabImageAt(gfx["heads"],x*16, y*10, 7, 7, true));}
+                if (y === 10){distant.push(grabImageAt(gfx["heads"],x*16, y*10, 7, 7, true));}
             }
         heads.push(new Array(close,mid,far,distant));
     }
     
     
-    return heads;
+    imageCharacterArray.push(heads);
     
 }
 
 function grabImageAt(image,startX,startY,width,height,flip) {
     
-
+try{
           var can = document.createElement('canvas');
           can.width = width;
           can.height = height;
@@ -76,15 +76,16 @@ function grabImageAt(image,startX,startY,width,height,flip) {
           flipimageObj.width = width;
           flipimageObj.height = height;
           if (flip){
-            flipcontext.translate(width, 0);              
-          }
-          flipcontext.scale(-1, 1);
+            flipcontext.translate(width, 0);   
+            flipcontext.scale(-1, 1);
+        } 
           flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
           flipcontext.save();           
           flipimageObj.src = can.toDataURL();
            
         return flipimageObj;
-  
+    }
+    catch(e) {PrintLog("grabImageAt Error: " + e.toString());}
 };
 
 

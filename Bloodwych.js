@@ -3,6 +3,9 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 var game;
+var test = 0,
+        test1 = 0,
+        test2 = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = { monsterHeads: false, monsterLegs: false, monsterArms: false, monsterBodies: false };
@@ -132,7 +135,7 @@ $(function() {
 });
 
 document.addEventListener('touchstart', doTouchStart, false);
-gfx.onload = getHeadArray();
+
 
 
 function updatePlayerViewScreen(){  
@@ -156,7 +159,7 @@ function updatePlayerViewScreen(){
 		ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
 		ctx.fillText("Level: " + player[1].level.toString(),410,310);
 		testing();            
-	}catch(e){}//PrintLog("Error: " + e.toString());}
+	}catch(e){PrintLog("Error: " + e.toString());}
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {
