@@ -110,8 +110,8 @@ function doKeyDown(e) {
         case KEY_F: player[0].testMode();break; // F cheat
         case KEY_PLUS: test++; break;
         case KEY_MINUS: test--; break;
-        case KEY_8: test1++; break;
-        case KEY_7: test1--; break;
+        case KEY_7: test1++; break;
+        case KEY_8: test1--; break;
         case KEY_0: test2++; break;
         case KEY_9: test2--; break;
         default: break;
