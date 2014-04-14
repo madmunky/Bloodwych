@@ -139,3 +139,26 @@ function decimalToHex(d) {
 function PrintLog(myString) {
     if (debug) {console.log(getTimeStamp() +" Debug: " +myString);}
 }
+
+function grabImageAt(image,startX,startY,width,height,flip) {
+    
+try{
+          var can = document.createElement('canvas');
+          can.width = width;
+          can.height = height;
+          var flipcontext = can.getContext("2d");
+          var flipimageObj = new Image();
+          flipimageObj.width = width;
+          flipimageObj.height = height;
+          if (flip){
+            flipcontext.translate(width, 0);   
+            flipcontext.scale(-1, 1);
+        } 
+          flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
+          flipcontext.save();           
+          flipimageObj.src = can.toDataURL();
+           
+        return flipimageObj;
+    }
+    catch(e) {PrintLog("grabImageAt Error: " + e.toString());}
+};

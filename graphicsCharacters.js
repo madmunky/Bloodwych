@@ -45,12 +45,15 @@ function getHeads(){
                 case 0:{close.push(grabImageAt(gfx["heads"],x*16, pos, 12, 12, false));pos=pos+12;};break
                     case 1:{close.push(grabImageAt(gfx["heads"],x*16, pos, 12, 12, false));close.push(grabImageAt(gfx["heads"],x*16, pos, 12, 12, true));pos=pos+12;};break
                     case 2:{close.push(grabImageAt(gfx["heads"],x*16, pos, 12, 12, false));pos=pos+12;};break
+                    
                 case 3:{mid.push(grabImageAt(gfx["heads"],x*16, pos, 10, 10,false));pos=pos+10;};break    
                     case 4:{mid.push(grabImageAt(gfx["heads"],x*16, pos, 10, 10,false));mid.push(grabImageAt(gfx["heads"],x*16, pos, 10, 10,true));pos=pos+10;};break
                     case 5:{mid.push(grabImageAt(gfx["heads"],x*16, pos, 10, 10,false));pos=pos+10;};break
+                    
                 case 6:{far.push(grabImageAt(gfx["heads"],x*16, pos, 8, 8, false));pos=pos+8;};break
                     case 7:{far.push(grabImageAt(gfx["heads"],x*16, pos, 8, 8, false));far.push(grabImageAt(gfx["heads"],x*16, pos, 8, 8, true));pos=pos+8;};break
                     case 8:{far.push(grabImageAt(gfx["heads"],x*16, pos, 8, 8, false));pos=pos+8;};break
+                    
                 case 9:{distant.push(grabImageAt(gfx["heads"],x*16, pos, 5, 6, false));pos=pos+7;};break
                     case 10:{distant.push(grabImageAt(gfx["heads"],x*16, pos, 5, 6, false));distant.push(grabImageAt(gfx["heads"],x*16, pos, 5, 6, true));pos=pos+7;};break
                     case 11:{distant.push(grabImageAt(gfx["heads"],(x*16)+1, pos, 7, 7, false));};break    
@@ -65,28 +68,7 @@ function getHeads(){
     
 }
 
-function grabImageAt(image,startX,startY,width,height,flip) {
-    
-try{
-          var can = document.createElement('canvas');
-          can.width = width;
-          can.height = height;
-          var flipcontext = can.getContext("2d");
-          var flipimageObj = new Image();
-          flipimageObj.width = width;
-          flipimageObj.height = height;
-          if (flip){
-            flipcontext.translate(width, 0);   
-            flipcontext.scale(-1, 1);
-        } 
-          flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
-          flipcontext.save();           
-          flipimageObj.src = can.toDataURL();
-           
-        return flipimageObj;
-    }
-    catch(e) {PrintLog("grabImageAt Error: " + e.toString());}
-};
+
 
 
 
