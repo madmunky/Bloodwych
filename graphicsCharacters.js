@@ -18,8 +18,9 @@ var IMAGE_CHA_DISTANCE_1 = 0,
         IMAGE_CHA_DISTANCE_3 = 2,
         IMAGE_CHA_DISTANCE_4 = 3;
 
-var NUMBER_OF_DISTANCES = 15,
-            NUMBER_OF_HEADS = 19;
+var NUMBER_OF_DISTANCES = 12,
+            NUMBER_OF_HEADS = 19,
+            NUMBER_OF_BODIES = 4;
     
 var imageCharacterArray = [];
 
@@ -52,11 +53,11 @@ function getHeads(){
                     
                 case 6:{far.push(grabImageAt(gfx["heads"],x*16, pos, 8, 8, false));pos=pos+8;};break
                     case 7:{far.push(grabImageAt(gfx["heads"],x*16, pos, 8, 8, false));far.push(grabImageAt(gfx["heads"],x*16, pos, 8, 8, true));pos=pos+8;};break
-                    case 8:{far.push(grabImageAt(gfx["heads"],x*16, pos, 8, 8, false));pos=pos+8;};break
+                    case 8:{far.push(grabImageAt(gfx["heads"],x*16, pos, 8, 8, false));pos=pos+9;};break
                     
-                case 9:{distant.push(grabImageAt(gfx["heads"],x*16, pos, 5, 6, false));pos=pos+7;};break
-                    case 10:{distant.push(grabImageAt(gfx["heads"],x*16, pos, 5, 6, false));distant.push(grabImageAt(gfx["heads"],x*16, pos, 5, 6, true));pos=pos+7;};break
-                    case 11:{distant.push(grabImageAt(gfx["heads"],(x*16)+1, pos, 7, 7, false));};break    
+                case 9:{distant.push(grabImageAt(gfx["heads"],x*16, pos, 7, 7, false));pos=pos+7;};break
+                    case 10:{distant.push(grabImageAt(gfx["heads"],x*16, pos, 7, 7, false));distant.push(grabImageAt(gfx["heads"],x*16, pos, 5, 6, true));pos=pos+7;};break
+                    case 11:{distant.push(grabImageAt(gfx["heads"],(x*16)+1, pos, 7, 7, false));};break  
                 }
                 
             }
@@ -68,7 +69,41 @@ function getHeads(){
     
 }
 
+function getCharacterSprite(NUMBER_OF_ITEMS,graphic,spritSize,colSize) {
+    
+    var heads = [];    
+
+    for (x = 0;x < NUMBER_OF_HEADS;x++){
+        var mid = [];
+        var far = [];
+        var close = [];
+        var distant = [];
+        var pos = 0;
+            
+            for (y = 0;y < NUMBER_OF_DISTANCES;y++){
+                
+                switch (y){
+                    
+                case 0:{close.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize, spritSize, false));pos=pos+spritSize;};break
+                    case 1:{close.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize, spritSize, false));close.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize, spritSize, true));pos=pos+spritSize;};break
+                    case 2:{close.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize, spritSize, false));pos=pos+spritSize;};break
+                    
+                case 3:{mid.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-2, 10,false));pos=pos+spritSize-2;};break    
+                    case 4:{mid.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-2, spritSize-2,false));mid.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-2, spritSize-2,true));pos=pos+spritSize-2;};break
+                    case 5:{mid.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-2, spritSize-2,false));pos=pos+spritSize-2;};break
+                    
+                case 6:{far.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-4, spritSize-4, false));pos=pos+spritSize-4;};break
+                    case 7:{far.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-4, spritSize-4, false));far.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-4, spritSize-4, true));pos=pos+spritSize-4;};break
+                    case spritSize-4:{far.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-4, spritSize-4, false));pos=pos+9;};break
+                    
+                case 9:{distant.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-6, spritSize-6, false));pos=pos+spritSize-6;};break
+                    case 10:{distant.push(grabImageAt(gfx[graphic],x*colSize, pos, spritSize-6, spritSize-6, false));distant.push(grabImageAt(gfx[graphic],x*colSize, pos, 5, 6, true));pos=pos+spritSize-6;};break
+                    case 11:{distant.push(grabImageAt(gfx[graphic],(x*colSize)+1, pos, spritSize-6, spritSize-6, false));};break  
+                }
+                
+            }
+        heads.push(new Array(close,mid,far,distant));
+    }
 
 
-
-
+}
