@@ -13,7 +13,7 @@ function Tower(map) {
 	towerDataLoaded.watch("floor", function(prop, oldval, newval) {
 		getFileData('maps/' + map + '.switches', readSimpleData, t, "switches", 4);
 		getFileData('maps/' + map + '.triggers', readSimpleData, t, "triggers", 4);
-		getFileData('maps/' + map + '.monsters', readSimpleData, t, "monsterData", 6);
+		getFileData('maps/' + map + '.monsters', readSimpleDataHex, t, "monsterData", 6);
 		getFileData('maps/' + map + '.charstats', readSimpleData, t, "characterData", 16);
 	});
 	towerDataLoaded.watch("monsters", function(prop, oldval, newval) {

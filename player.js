@@ -1,11 +1,12 @@
-function Player(champID,posX,posY,floor,rotation,PortX,PortY) {
+function Player(id,champID,posX,posY,floor,rotation,PortX,PortY) {
+	this.id = id;
 	this.champion = new Array();
 	for(i = 0; i < 4; i++) {
 		this.champion[i] = new Champion();
 	}
 	this.recruitChampion(champID);
-	this.X=posX;
-	this.Y=posY;
+	this.x=posX;
+	this.y=posY;
 	this.floor=floor;   
 	this.Rotation= rotation;
 	this.PortalX=PortX;
@@ -18,7 +19,7 @@ function Player(champID,posX,posY,floor,rotation,PortX,PortY) {
   
 	try{
 		this.setBinaryView(18, 8, 1, '1');
-		//tw.floor[this.floor].Map[this.Y][this.X] = tw.floor[this.floor].Map[this.Y][this.X].replaceAt(2,"8");
+		//tw.floor[this.floor].Map[this.y][this.x] = tw.floor[this.floor].Map[this.y][this.x].replaceAt(2,"8");
 	}
 	catch(c){};
 }
@@ -125,12 +126,12 @@ Player.prototype.toggleFrontObject = function() {
 //Sets a binary index on a hexadecimal string to a certain binary flag
 //'to' will be a binary string, e.g. '1010'
 Player.prototype.setBinaryView = function(pos18, index, length, to) {
-	var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
+	var xy = posToCoordinates(pos18, this.x, this.y, this.Rotation);
 	tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.floor[this.floor].Map[xy["y"]][xy["x"]], index, length, to);
 }
 
 Player.prototype.getBinaryView = function(pos18, index, length) {
-	var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
+	var xy = posToCoordinates(pos18, this.x, this.y, this.Rotation);
 	try {
 		return getHexToBinaryPosition(tw.floor[this.floor].Map[xy["y"]][xy["x"]], index, length);
 	} catch(e) {
@@ -142,8 +143,8 @@ Player.prototype.setMovementData = function() {
 	tw.floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tw.floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
 	player[0].setBinaryView(18, 8, 1, '1');
 	player[1].setBinaryView(18, 8, 1, '1');
-	this.lastX = this.X;
-	this.lastY = this.Y;
+	this.lastX = this.x;
+	this.lastY = this.y;
 	this.lastFloor = this.floor;
 };
 
@@ -154,13 +155,13 @@ Player.prototype.rotateTo = function(d){
 
 Player.prototype.move = function(d) {
 	this.moving = d;
-	this.lastX = this.X;
-	this.lastY = this.Y;
+	this.lastX = this.x;
+	this.lastY = this.y;
 	var viewIndex = [15, 16, 19, 17];
 	if (this.canMoveToPos(viewIndex[d])) { 
 		xy = getOffsetByRotation((this.Rotation + d) % 4);
-		this.X = this.X + xy['x'];
-		this.Y = this.Y + xy['y'];
+		this.x = this.x + xy['x'];
+		this.y = this.y + xy['y'];
 		if (debug) {PrintLog("Player Moved " + getDirection(this.Rotation));}
 		this.doEvent();
 		this.setMovementData();
@@ -176,7 +177,7 @@ Player.prototype.updateView = function(m){
 
 	for (pos = 0; pos < 20; pos++) {
 		try {
-			var xy = posToCoordinates(pos, this.X, this.Y, this.Rotation);
+			var xy = posToCoordinates(pos, this.x, this.y, this.Rotation);
 			var newView = m[xy['y']][xy['x']];
 			if(typeof newView === "undefined") {
 				newView = '0001';
@@ -213,8 +214,9 @@ Player.prototype.doEventSquare = function(mr) {
 
 Player.prototype.doPit = function() {
 	this.setPlayerFloor(this.floor - 1);
-	this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset);
-	this.Y = this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset);
+	this.x = this.x + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset);
+	this.y = this.y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset);
+	this.setMovementData();
 };
 
 Player.prototype.doStairs = function() {
@@ -222,55 +224,56 @@ Player.prototype.doStairs = function() {
 	var ud = parseInt(this.getBinaryView(18, 7), 10);
 	var d = parseInt(this.getBinaryView(18, 5, 2), 10);
 
-	this.setPlayerLevel(this.floor + 1 - (ud % 2) * 2); //Stairs Up or Down
+	this.setPlayerFloor(this.floor + 1 - (ud % 2) * 2); //Stairs Up or Down
 
 	switch (d) {
 		case 0: //South
 			this.Rotation = 2;                
 			if (ud === 0){
-				this.X = this.X - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset);
-				this.Y = this.Y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset); this.Y = this.Y +2;
+				this.x = this.x - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset);
+				this.y = this.y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset); this.y = this.y +2;
 			}
 			else {
-				this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset);
-				this.Y = this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset); this.Y = this.Y +2;
+				this.x = this.x + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset);
+				this.y = this.y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset); this.y = this.y +2;
 			}
 			break;
 		case 1: //West
 			this.Rotation = 3;
 			if (ud === 0){  
-				this.X = this.X - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset); this.X = this.X -2;
-				this.Y = (this.Y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset)) ;
+				this.x = this.x - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset); this.x = this.x -2;
+				this.y = (this.y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset)) ;
 			}
 			else {
-				this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset); this.X = this.X -2;
-				this.Y = (this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset));
+				this.x = this.x + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset); this.x = this.x -2;
+				this.y = (this.y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset));
 			}
 			break;
 		case 2: //North
 			this.Rotation = 0;
 			if (ud === 0){
-				this.X = this.X - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset);
-				this.Y = this.Y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset); this.Y = this.Y -2;
+				this.x = this.x - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset);
+				this.y = this.y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset); this.y = this.y -2;
 			}
 			else {
-				this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset);
-				this.Y = this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset); this.Y = this.Y -2;
+				this.x = this.x + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset);
+				this.y = this.y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset); this.y = this.y -2;
 			}
 			break;
 		case 3: //East
 			this.Rotation = 1;
 			if (ud === 0){  
-				this.X = this.X - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset); this.X = this.X +2;
-				this.Y = (this.Y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset));
+				this.x = this.x - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset); this.x = this.x +2;
+				this.y = (this.y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset));
 			}
 			else {                    
-				this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset); this.X = this.X +2;
-				this.Y = (this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset));
+				this.x = this.x + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset); this.x = this.x +2;
+				this.y = (this.y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset));
 			}
 			break;
 		default: break;
 	}
+	this.setMovementData();
 }
 
 //Change the Players Floor
@@ -293,9 +296,27 @@ Player.prototype.recruitChampion = function(id) {
 	return false;
 }
 
+//Returns a list of monsters and their distance pos relative to the player
+Player.prototype.getMonstersInRange = function() {
+	var monstersInRange = {};
+	var i = 0;
+	var pos = -1;
+	for(m = 0; m < monster.length; m++) {
+		pos = coordinatesToPos(monster[m].x, monster[m].y, this.x, this.y, this.Rotation);
+		if(monster[m].floor == this.floor && pos > -1) {
+			monstersInRange[i] = {
+				monster: monster[m],
+				position: pos
+			};
+			i++;
+		}
+	}
+	return monstersInRange;
+}
+
 Player.prototype.testMode = function(id) {
 	if(debug) {
-		//var xy = posToCoordinates(15, this.X, this.Y, this.Rotation);
+		//var xy = posToCoordinates(15, this.x, this.y, this.Rotation);
 		//var hex = tw.floor[this.floor].Map[xy["y"]][xy["x"]];
 		//tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
 		//tw.floor[this.floor].Map[xy["y"]][xy["x"]] = toggleObject(hex, '3'); //TOGGLE PILLAR
@@ -309,7 +330,7 @@ Player.prototype.testMode = function(id) {
                      }
                     }
 	}catch(e){PrintLog(e.toString());};}
-};
+}
 
 Player.prototype.distanceFromPlayer = function(block) {
     
@@ -319,21 +340,21 @@ Player.prototype.distanceFromPlayer = function(block) {
         case 1:
         case 2:
         case 3:
-        case 4:{return CHAR_DISTANT;}break;
+        case 4:{return CHAR_DISTANCE_DISTANT;}break;
         case 5:
         case 6:
         case 7:
         case 8:
-        case 9:{return CHAR_FAR;}break;    
+        case 9:{return CHAR_DISTANCE_FAR;}break;    
         case 10:
         case 11:
-        case 12:{return CHAR_MID;}break;
+        case 12:{return CHAR_DISTANCE_MID;}break;
         case 13:
         case 14:    
         case 15:
         case 16:
         case 17:
-        case 18:{return CHAR_CLOSE;}break;
+        case 18:{return CHAR_DISTANCE_CLOSE;}break;
         
         default:{return 0;}
         
@@ -342,6 +363,6 @@ Player.prototype.distanceFromPlayer = function(block) {
 }
 
 function initPlayers() {
-	player[0] = new Player(CHA_BLODWYN, 12, 22, 3, 0, 0,   0);       
-	player[1] = new Player(CHA_ASTROTH, 14, 22, 3, 0, 410, 0);
+	player[0] = new Player(0, CHA_BLODWYN, 12, 22, 3, 0, 0,   0);       
+	player[1] = new Player(1, CHA_ASTROTH, 14, 22, 3, 0, 410, 0);
 }

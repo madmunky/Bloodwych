@@ -21,7 +21,7 @@ section.info {
 section.debug {
         float: left;
         height: 110px;
-        width: 375px;
+        width: 400px;
         overflow-y: auto;
 }
 canvas {

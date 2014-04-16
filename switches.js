@@ -92,11 +92,11 @@ function floorActionType(trig, p){
 		case SWITCH_FLOOR_SPIN_180:                             p.Rotation = (p.Rotation + 2) % 4;break;
 		case SWITCH_FLOOR_SPIN_RANDOM:                          p.Rotation = p.Rotation = (Math.floor(Math.random() * 4)); break;
 		case SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR:                  tw.floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '0'); break;
-		case SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL:              tw.floor[p.floor].Map[p.Y][p.X+1] = setHexToBinaryPosition(tw.floor[p.floor].Map[p.Y][p.X+1], 7, 1, '1'); break;    
-		case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:              tw.floor[p.floor].Map[p.Y][p.X-1] = setHexToBinaryPosition(tw.floor[p.floor].Map[p.Y][p.X-1], 7, 1, '1'); break;
+		case SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL:              tw.floor[p.floor].Map[p.y][p.x+1] = setHexToBinaryPosition(tw.floor[p.floor].Map[p.y][p.x+1], 7, 1, '1'); break;    
+		case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:              tw.floor[p.floor].Map[p.y][p.x-1] = setHexToBinaryPosition(tw.floor[p.floor].Map[p.y][p.x-1], 7, 1, '1'); break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:                   break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_2:                   break;
-		case SWITCH_FLOOR_TRADER_DOOR:                          tw.floor[p.floor].Map[p.Y][p.X-1] = setHexToBinaryPosition(tw.floor[p.floor].Map[p.Y][p.X-1], 7, 1, '1'); break;
+		case SWITCH_FLOOR_TRADER_DOOR:                          tw.floor[p.floor].Map[p.y][p.x-1] = setHexToBinaryPosition(tw.floor[p.floor].Map[p.y][p.x-1], 7, 1, '1'); break;
 		case SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD:              break;
 		case SWITCH_FLOOR_TOWER_ENTRANCE:                       break; //switchTower(getHexToBinaryPosition(trig[1], 3, 2)); //trig[1]: 0=SERP, 1=DRAG, 2=MOON, 3=CHAOS, 4=ZENDIK
 		case SWITCH_FLOOR_REMOVE:                               tw.floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');break;
@@ -105,7 +105,7 @@ function floorActionType(trig, p){
 		case SWITCH_FLOOR_CREATE_SPINNER:                       tw.floor[p.floor].Map[trig[3]][trig[2]] = '0103';break;
 		case SWITCH_FLOOR_OPEN_CREATE_WALL_WITH_SWITCHES:       tw.floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1'); break;
 		case SWITCH_FLOOR_CREATE_PAD:                           tw.floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1'); break;
-		case SWITCH_FLOOR_MOVE_PILLAR_AT_PLAYER:                tw.floor[p.floor].Map[p.Y-1][p.X-1] = setHexToBinaryPosition(tw.floor[p.floor].Map[p.Y-1][p.X-1], 7, 1, '0'); break; //Not sure this is right
+		case SWITCH_FLOOR_MOVE_PILLAR_AT_PLAYER:                tw.floor[p.floor].Map[p.y-1][p.x-1] = setHexToBinaryPosition(tw.floor[p.floor].Map[p.y-1][p.x-1], 7, 1, '0'); break; //Not sure this is right
 		case SWITCH_FLOOR_CREATE_PILLAR:                        tw.floor[p.floor].Map[trig[3]][trig[2]] = '1306';break;
 		case SWITCH_FLOOR_KEEP_ENTRANCE_SIDEPAD:                break;
 		case SWITCH_FLOOR_KEEP_ENTRANCE_CENTRAL_PAD:            break;

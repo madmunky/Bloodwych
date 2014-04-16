@@ -58,10 +58,10 @@ var DIRECTION_NORTH = 0,
 	DIRECTION_SOUTH = 2,
 	DIRECTION_WEST = 3;
 	
-var CHAR_CLOSE = 0,
-	CHAR_MID = 1,
-	CHAR_FAR = 2,
-	CHAR_DISTANT = 3;
+var CHAR_DISTANCE_CLOSE = 0,
+	CHAR_DISTANCE_MID = 1,
+	CHAR_DISTANCE_FAR = 2,
+	CHAR_DISTANCE_DISTANT = 3;
 
 var Maps = ["MOD0","MOON","CHAOS","DRAGON","ZENDIK","SERP","BWEXTTW1","BWEXTTW2","BWEXTTW3","BWEXTTW4","horace_mod0","horace_moon","horace_drag","horace_serp","horace_zendik","horace_chaos"];
 
@@ -148,14 +148,14 @@ function updatePlayerViewScreen(){
 		ctx.font = "normal 11px verdana, sans-serif";
 		ctx.fillStyle = "#FFF";
 		ctx.fillText("Player 1",0,250);
-		ctx.fillText("X:" + player[0].X.toString() + "\n Y:"  + player[0].Y.toString(),0,270);
+		ctx.fillText("X:" + player[0].x.toString() + "\n Y:"  + player[0].y.toString(),0,270);
 		ctx.fillText("Current Map: " +Maps[CurrentMap],0,290);
 		ctx.fillText("Floor: " + player[0].floor.toString(),0,310);
 		ctx.fillText("FPS: " + fps.getFPS(),0,350);            
 		player[1].updateView(tw.floor[player[1].floor].Map);
 		drawPlayersView(player[1]);
 		ctx.fillText("Player 2",410,250);
-		ctx.fillText("X:" + player[1].X.toString() + "\n Y:"  + player[1].Y.toString(),410,270);
+		ctx.fillText("X:" + player[1].x.toString() + "\n Y:"  + player[1].y.toString(),410,270);
 		ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
 		ctx.fillText("Floor: " + player[1].floor.toString(),410,310);
 		testing();            
@@ -223,8 +223,26 @@ function gfxLoadImage(folder, type, item, sub) {
 	}
 }
 
-function debugText(txt) {
+//Print debug info for player
+function debugTextPrint(p) {
 	if(debug) {
-		$('section.debug p').append(txt + '<br/>');
+		hex = p.getBinaryView(15, 0, 16);
+		var mon = p.getMonstersInRange();
+		for (i in mon) {
+			debugText(p, 'MonsterID:' + mon[i].monster.id + ' - MonsterXY: ' + mon[i].monster.x + ',' + mon[i].monster.y + ' - MonsterPos:' + mon[i].position);
+		}
+		//debugText(p.champion[0].firstName + ' hp:' + p.champion[0].stat.hp + ' rec:' + p.champion[0].recruited + ' armor-spell-learned:' + p.champion[0].spellBook[SPELL_ARMOUR].learnt);
+		//debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
+		//debugText(hex2bin(hex));
+		//debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
+		//debugText(hex2bin(setHexToBinaryPosition(bin2hex('0000'), 1, 2, '1')));
+		//debugText(p.View[15]);
+		//debugText(p.View[15].substring(0,2));
+		//debugText(parseInt(getHexToBinaryPosition(p.View[15], 0, 5), 16).toString(10));
+		//debugText(parseInt(p.View[15].substring(0,2), 16).toString(10));
 	}
+}
+
+function debugText(p, txt) {
+	$('section.debug.player' + p.id + ' p').append('P' + (p.id + 1) + ': ' + txt + '<br/>');
 }

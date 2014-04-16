@@ -140,7 +140,7 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
 	return gfx["stone"]["wall"];
 	
 	function getWallDeco() {
-		var xy = posToCoordinates(pos18, P.X, P.Y, P.Rotation);
+		var xy = posToCoordinates(pos18, P.x, P.y, P.Rotation);
 		var RND4 = Math.floor(xy["x"] * 1.27 + xy["y"] * 2.68) % 4; //For random banner faces
 		var RND6 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.82) % 6; //For random switches
 		var RND8 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.42) % 8; //For random banner frames
@@ -223,28 +223,17 @@ function getDirection(n) {
 	}
 };
 
+// p = Player
+// What we do now is take the 18 Blocks which make up the players view
+// We can then make a virtual cube of 4 sides which could possibly be
+// drawn for each block, if the block is a Wall or Wooden object which
+// has 4 sides we draw each of the sides, if it is not a Wooden object
+// or Wall we just draw a single image.
 function drawPlayersView(p) {
-	hex = p.getBinaryView(15, 0, 16);
-	debugText(p.champion[0].firstName + ' hp:' + p.champion[0].stat.hp + ' rec:' + p.champion[0].recruited + ' armor-spell-learned:' + p.champion[0].spellBook[SPELL_ARMOUR].learnt);
-	//debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
-	debugText(hex2bin(hex));
-	//debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
-	//debugText(hex2bin(setHexToBinaryPosition(bin2hex('0000'), 1, 2, '1')));
-	//debugText(p.View[15]);
-	//debugText(p.View[15].substring(0,2));
-	//debugText(parseInt(getHexToBinaryPosition(p.View[15], 0, 5), 16).toString(10));
-	//debugText(parseInt(p.View[15].substring(0,2), 16).toString(10));
-	// p = Player
+	debugTextPrint(p); //see bloodwych.js
 	
-	// What we do now is take the 18 Blocks which make up the players view
-	// We can then make a virtual cube of 4 sides which could possibly be
-	// drawn for each block, if the block is a Wall or Wooden object which
-	// has 4 sides we draw each of the sides, if it is not a Wooden object
-	// or Wall we just draw a single image.
-	
-	myDIx(ctx, gfx["background"], background[(p.X + p.Y + p.Rotation) % 2], p, scale);
+	myDIx(ctx, gfx["background"], background[(p.x + p.y + p.Rotation) % 2], p, scale);
 
-//        try {
 	for (x = 0;x < 19;x++){
 	  
 		var BlockType = getHexToBinaryPosition(p.View[x], 12, 4);
@@ -370,8 +359,7 @@ function drawPlayersView(p) {
 			else {
 				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,30),30,p), gfxPos[30], p, scale);                               
 			}
-		}
-		else { if (BB >= 4 & BB <= 7 || BB >= 12 & BB <= 15) { //"East/West"
+		} else if (BB >= 4 & BB <= 7 || BB >= 12 & BB <= 15) { //"East/West"
 			if (p.Rotation === 1 || p.Rotation === 3) {
 				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,29),29,p), gfxPos[29], p, scale);
 				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,31),31,p), gfxPos[31], p, scale);                   
@@ -379,9 +367,8 @@ function drawPlayersView(p) {
 			else {
 				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,30),30,p), gfxPos[30], p, scale);
 			}
-		}; 
+		}
 	}
-}
 
 function drawWoodenObject(p,x) {
 	// p = Player

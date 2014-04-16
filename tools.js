@@ -46,6 +46,11 @@ function bin2hex(num, l) {
 	return zeros + ret;
 }
 
+function hex2dec(num) {
+	var ret = parseInt(num, 16).toString(10).toUpperCase();
+	return ret;
+}
+
 function convertBase(num) {
 	this.from = function (baseFrom) {
 		this.to = function (baseTo) {
@@ -82,13 +87,13 @@ function seededRandom(seed) {
 //Given a specific position (0 - 19) relative to an x, y and d(irection), return the x and y coordinates
 function posToCoordinates(pos, x, y, d) {
 	newCoord = {};
-	switch (d){
+	switch(d) {
 		case 0: xo = 0; yo = -1; break;
 		case 1: xo = 1; yo = 0; break;
 		case 2: xo = 0; yo = 1; break;
 		case 3: xo = -1; yo = 0; break;
 	}
-	switch (pos) {
+	switch(pos) {
 		case 0: newCoord["y"] = y + (4 * yo) + (2 * xo); newCoord["x"] = x + (4 * xo) - (2 * yo); break; //-4 +2
 		case 1: newCoord["y"] = y + (4 * yo) - (2 * xo); newCoord["x"] = x + (4 * xo) + (2 * yo); break; //-4 -2
 		case 2: newCoord["y"] = y + (4 * yo) + (1 * xo); newCoord["x"] = x + (4 * xo) - (1 * yo); break; //-4 +1
@@ -112,6 +117,39 @@ function posToCoordinates(pos, x, y, d) {
 		default: break;
 	}
 	return newCoord;
+}
+
+//Given a specific x and y, relative to another x, y and d(irection), return the position
+//Returns -1 when not in range of 0-19
+function coordinatesToPos(xt, yt, x, y, d) {
+	var pos = -1;
+	switch(d) {
+		case 0: xo = 0; yo = -1; break;
+		case 1: xo = 1; yo = 0; break;
+		case 2: xo = 0; yo = 1; break;
+		case 3: xo = -1; yo = 0; break;
+	}
+	if(yt == y + (4 * yo) + (2 * xo) && xt == x + (4 * xo) - (2 * yo)) return 0; //-4 +2
+	if(yt == y + (4 * yo) - (2 * xo) && xt == x + (4 * xo) + (2 * yo)) return 1; //-4 -2
+	if(yt == y + (4 * yo) + (1 * xo) && xt == x + (4 * xo) - (1 * yo)) return 2; //-4 +1
+	if(yt == y + (4 * yo) - (1 * xo) && xt == x + (4 * xo) + (1 * yo)) return 3; //-4 -1
+	if(yt == y + (4 * yo) - (0 * xo) && xt == x + (4 * xo) + (0 * yo)) return 4; //-4 0
+	if(yt == y + (3 * yo) + (2 * xo) && xt == x + (3 * xo) - (2 * yo)) return 5; //-3 +2 
+	if(yt == y + (3 * yo) - (2 * xo) && xt == x + (3 * xo) + (2 * yo)) return 6; //-3 -2
+	if(yt == y + (3 * yo) + (1 * xo) && xt == x + (3 * xo) - (1 * yo)) return 7; //-3 +1
+	if(yt == y + (3 * yo) - (1 * xo) && xt == x + (3 * xo) + (1 * yo)) return 8; //-3 -1
+	if(yt == y + (3 * yo) - (0 * xo) && xt == x + (3 * xo) - (0 * yo)) return 9; //-3 0
+	if(yt == y + (2 * yo) + (1 * xo) && xt == x + (2 * xo) - (1 * yo)) return 10; //-2 +1                
+	if(yt == y + (2 * yo) - (1 * xo) && xt == x + (2 * xo) + (1 * yo)) return 11; //-2 -1
+	if(yt == y + (2 * yo) - (0 * xo) && xt == x + (2 * xo) + (0 * yo)) return 12; //-2 0
+	if(yt == y + (1 * yo) + (1 * xo) && xt == x + (1 * xo) - (1 * yo)) return 13; //-1 +1
+	if(yt == y + (1 * yo) - (1 * xo) && xt == x + (1 * xo) + (1 * yo)) return 14; //-1 -1
+	if(yt == y + (1 * yo) - (0 * xo) && xt == x + (1 * xo) + (0 * yo)) return 15; //-1 0
+	if(yt == y + (0 * yo) + (1 * xo) && xt == x + (0 * xo) - (1 * yo)) return 16; //0 +1
+	if(yt == y + (0 * yo) - (1 * xo) && xt == x + (0 * xo) + (1 * yo)) return 17; //0 -1
+	if(yt == y && xt == x) return 18; //0 0
+	if(yt == y - (1 * yo) - (0 * xo) && xt == x - (1 * xo) + (0 * yo)) return 19; //-1 0
+	return -1;
 }
 
 function getOffsetByRotation(r) {

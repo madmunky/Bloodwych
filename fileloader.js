@@ -70,3 +70,18 @@ function readSimpleData(evt, length) {
 	return Data;
 }
 	
+	
+function readSimpleDataHex(evt, length) {
+	var uInt8Array = new Uint8Array(evt);
+	var Data = [];   
+	
+	for (x = 0; x < uInt8Array.length / length; x++) {
+		//Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
+		var tmp = '';
+		for (y = 0; y < length; y++) {
+			tmp = tmp + decimalToHex(uInt8Array[x * length + y]);
+		}
+		Data.push(tmp);
+	}
+	return Data;
+}

@@ -93,8 +93,8 @@ function doKeyDown(e) {
         case KEY_L: // THE L KEY
             CurrentMap = (CurrentMap + 1) % Maps.length;
             tw = new Tower(Maps[CurrentMap]);
-            player[0].X = 3; player[1].X = 3;
-            player[0].Y = 1; player[1].Y = 3;
+            player[0].x = 3; player[1].x = 3;
+            player[0].y = 1; player[1].y = 3;
             player[0].floor = 0; player[1].floor = 0;
             break;
         case KEY_T: player[0].changeUpFloor();break;    // T KEY     
