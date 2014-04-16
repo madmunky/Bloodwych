@@ -13,7 +13,7 @@ function doTouchStart(e) {
                 configCanvas();
                 myDIx(ctx, img, background[b], player[0], scale);
                 player[0].move(DIRECTION_NORTH);
-                player[0].updateView(tw.Level[player[0].level].Map);
+                player[0].updateView(tw.floor[player[0].floor].Map);
                 drawPlayersView(player[0]);
                 event.preventDefault();
             }
@@ -22,7 +22,7 @@ function doTouchStart(e) {
                 configCanvas();
                 myDIx(ctx, img, background[b], player[0], scale);
                 player[0].move(DIRECTION_SOUTH);
-                player[0].updateView(tw.Level[player[0].level].Map);
+                player[0].updateView(tw.floor[player[0].floor].Map);
                 drawPlayersView(player[0]);
             }
             else if (canvas_y < 300 & (canvas_x > 270)){
@@ -30,7 +30,7 @@ function doTouchStart(e) {
                 configCanvas();
                 myDIx(ctx, img, background[b], player[0], scale);
                 player[0].rotateTo(player[0].Rotation + 1);
-                player[0].updateView(tw.Level[player[0].level].Map);
+                player[0].updateView(tw.floor[player[0].floor].Map);
                 drawPlayersView(player[0]);                
             }
             else if (canvas_y < 300 & (canvas_x < 120)){
@@ -38,7 +38,7 @@ function doTouchStart(e) {
                 configCanvas();
                 myDIx(ctx, img, background[b], player[0], scale);
                 player[0].rotateTo(player[0].Rotation - 1);
-                player[0].updateView(tw.Level[player[0].level].Map);
+                player[0].updateView(tw.floor[player[0].floor].Map);
                 drawPlayersView(player[0]);                
             }
             
@@ -95,11 +95,11 @@ function doKeyDown(e) {
             tw = new Tower(Maps[CurrentMap]);
             player[0].X = 3; player[1].X = 3;
             player[0].Y = 1; player[1].Y = 3;
-            player[0].level = 0; player[1].level = 0;
+            player[0].floor = 0; player[1].floor = 0;
             break;
-        case KEY_T: player[0].changeUpLevel();break;    // T KEY     
+        case KEY_T: player[0].changeUpFloor();break;    // T KEY     
         case KEY_SPACEBAR: player[0].action();break;           // SpaceBar        
-        case KEY_G: player[0].changeDownLevel(); break; // G KEY  
+        case KEY_G: player[0].changeDownFloor(); break; // G KEY  
         case KEY_W: player[0].move(DIRECTION_NORTH);break;      // W KEY
         case KEY_S: player[0].move(DIRECTION_SOUTH);break;    // S KEY
         case KEY_A: player[0].move(DIRECTION_WEST);break;         // A KEY

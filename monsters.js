@@ -17,8 +17,8 @@ function Monster(id, level, type, form, colour, teamId, l, x, y, d) {
 
 function initMonsters(tower) {
 	monster.length = 0;
-	for(i = 0; i < tower.MonsterData.length; i++) {
-		console.log('Loaded monster ['+i.toString()+']: ' + tower.MonsterData[i]);
+	for(i = 0; i < tower.monsterData.length; i++) {
+
 		//monster[mn] = new Monster(mn);
 	}
 }

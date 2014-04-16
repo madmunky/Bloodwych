@@ -3,11 +3,11 @@ function getFileData(file_name, callback, t, type, length) {
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete") {
 			switch (type) {
-				case "Level": t.Level = callback(this.response, length); towerDataLoaded.level = true; break;
-				case "Switches": t.Switches = callback(this.response, length); towerDataLoaded.switches = true; break;
-				case "Triggers": t.Triggers = callback(this.response, length); towerDataLoaded.triggers = true; break;
-				case "MonsterData": t.MonsterData = callback(this.response, length); towerDataLoaded.monsters = true; break;
-				case "CharacterData": t.CharacterData = callback(this.response, length); towerDataLoaded.characters = true; break;
+				case "floor": t.floor = callback(this.response, length); towerDataLoaded.floor = true; break;
+				case "switches": t.switches = callback(this.response, length); towerDataLoaded.switches = true; break;
+				case "triggers": t.triggers = callback(this.response, length); towerDataLoaded.triggers = true; break;
+				case "monsterData": t.monsterData = callback(this.response, length); towerDataLoaded.monsters = true; break;
+				case "characterData": t.characterData = callback(this.response, length); towerDataLoaded.characters = true; break;
 				default: break;
 			}
 		}
@@ -24,21 +24,21 @@ function readMapData(evt) {
 	
 	var uInt8Array = new Uint8Array(evt);
 
-	//The first part of the map files contains to the data about how many levels are stored
-	//in the tower file and the Width,Height,OffsetX,OffsetY so the levels can line up correctly
+	//The first part of the map files contains to the data about how many floors are stored
+	//in the tower file and the Width,Height,OffsetX,OffsetY so the floors can line up correctly
 	//for falling though pits or walking down stairs.
-        var Levels = [];
+		var floors = [];
 		   
 	for (x = 0; x < 8; x++) {
-		myLevel = new Map(uInt8Array[x+8], uInt8Array[x], uInt8Array[x + 32], uInt8Array[x + 40]);
-		Levels.push(myLevel);
+		myFloor = new Map(uInt8Array[x+8], uInt8Array[x], uInt8Array[x + 32], uInt8Array[x + 40]);
+		floors.push(myFloor);
 	}
 
 	var x = 56;
 
-	for (var i = 0; i < Levels.length; i++) {
-		t1 = Levels[i].Width;
-		t2 = Levels[i].Height;
+	for (var i = 0; i < floors.length; i++) {
+		t1 = floors[i].Width;
+		t2 = floors[i].Height;
 		var mdata = [];
 
 		for (myY = 0; myY < t1; myY++) {
@@ -47,25 +47,25 @@ function readMapData(evt) {
 				r.push(decimalToHex(uInt8Array[x]) + decimalToHex(uInt8Array[x + 1]));
 				x = x + 2;
 			}mdata.push(r);}
-		Levels[i].Map = mdata;
+		floors[i].Map = mdata;
 	}
-        
-        return Levels;
-        
+		
+		return floors;
+		
 }
 	
-function readSimpleData(evt,length) {
-		
+function readSimpleData(evt, length) {
 	var uInt8Array = new Uint8Array(evt);
 	var Data = [];   
 	
-	for (x = 0; x < uInt8Array.length; x++) {
-		
+	for (x = 0; x < uInt8Array.length / length; x++) {
 		//Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
-                var tmp = [];
-                for (i = x; i < x+length; i++) {tmp.push(uInt8Array[i]);}                        
-                Data.push(tmp);                
-		x=x+length-1;
+		var tmp = [];
+		for (y = 0; y < length; y++) {
+			tmp.push(uInt8Array[x * length + y]);
+		}
+		Data.push(tmp);
+		//x = x + length - 1;
 	}
 	return Data;
 }

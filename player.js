@@ -1,4 +1,4 @@
-function Player(champID,posX,posY,level,rotation,PortX,PortY) {
+function Player(champID,posX,posY,floor,rotation,PortX,PortY) {
 	this.champion = new Array();
 	for(i = 0; i < 4; i++) {
 		this.champion[i] = new Champion();
@@ -6,19 +6,19 @@ function Player(champID,posX,posY,level,rotation,PortX,PortY) {
 	this.recruitChampion(champID);
 	this.X=posX;
 	this.Y=posY;
-	this.level=level;   
+	this.floor=floor;   
 	this.Rotation= rotation;
 	this.PortalX=PortX;
 	this.PortalY=PortY;
 	this.View = [];
 	this.lastX = posX;
 	this.lastY = posY;
-	this.lastLevel = level;
+	this.lastFloor = floor;
 	this.moving = 0; //0 = Forward,1 = Right, 2 = Backwards, 3 = Left
   
 	try{
 		this.setBinaryView(18, 8, 1, '1');
-		//tw.Level[this.level].Map[this.Y][this.X] = tw.Level[this.level].Map[this.Y][this.X].replaceAt(2,"8");
+		//tw.floor[this.floor].Map[this.Y][this.X] = tw.floor[this.floor].Map[this.Y][this.X].replaceAt(2,"8");
 	}
 	catch(c){};
 }
@@ -65,14 +65,14 @@ Player.prototype.canMoveToPosByWood = function(pos) {
 	return true;
 }
 
-Player.prototype.changeUpLevel = function() {
+Player.prototype.changeUpFloor = function() {
 	
-	//In bloodwych when the player moves levels they also moved 2 places forward
-	//This function changes the players level and moves the player forward 2x spaces
+	//In bloodwych when the player moves floors they also moved 2 places forward
+	//This function changes the players floor and moves the player forward 2x spaces
 	
-	this.level++;
-	if (this.level > tw.length){
-		this.level = 0;
+	this.floor++;
+	if (this.floor > tw.length){
+		this.floor = 0;
 	}
 	else {
 		this.move(DIRECTION_NORTH);
@@ -81,14 +81,14 @@ Player.prototype.changeUpLevel = function() {
 	
 };
 
-Player.prototype.changeDownLevel = function() {
+Player.prototype.changeDownFloor = function() {
 	
-	//In bloodwych when the player moves levels they also moved 2 places forward
-	//This function changes the players level and moves the player forward 2x spaces
+	//In bloodwych when the player moves floors they also moved 2 places forward
+	//This function changes the players floor and moves the player forward 2x spaces
 	
-	this.level--;
-	if (this.level < tw.length){
-		this.level = tw.length;
+	this.floor--;
+	if (this.floor < tw.length){
+		this.floor = tw.length;
 	}
 	else{
 		this.move(DIRECTION_NORTH);
@@ -126,25 +126,25 @@ Player.prototype.toggleFrontObject = function() {
 //'to' will be a binary string, e.g. '1010'
 Player.prototype.setBinaryView = function(pos18, index, length, to) {
 	var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
-	tw.Level[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.Level[this.level].Map[xy["y"]][xy["x"]], index, length, to);
+	tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.floor[this.floor].Map[xy["y"]][xy["x"]], index, length, to);
 }
 
 Player.prototype.getBinaryView = function(pos18, index, length) {
 	var xy = posToCoordinates(pos18, this.X, this.Y, this.Rotation);
 	try {
-		return getHexToBinaryPosition(tw.Level[this.level].Map[xy["y"]][xy["x"]], index, length);
+		return getHexToBinaryPosition(tw.floor[this.floor].Map[xy["y"]][xy["x"]], index, length);
 	} catch(e) {
 		return '0001';
 	}
 }
 
 Player.prototype.setMovementData = function() {
-	tw.Level[this.lastLevel].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tw.Level[this.lastLevel].Map[this.lastY][this.lastX], 8, 1, '0');
+	tw.floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tw.floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
 	player[0].setBinaryView(18, 8, 1, '1');
 	player[1].setBinaryView(18, 8, 1, '1');
 	this.lastX = this.X;
 	this.lastY = this.Y;
-	this.lastLevel = this.level;
+	this.lastFloor = this.floor;
 };
 
 Player.prototype.rotateTo = function(d){
@@ -191,7 +191,7 @@ Player.prototype.updateView = function(m){
 
 Player.prototype.doEvent = function() {
 	   //this.setMovementData();
-	   this.updateView(tw.Level[this.level].Map);
+	   this.updateView(tw.floor[this.floor].Map);
 	   drawPlayersView(this);
 	   this.doEventSquare(true);
 }
@@ -205,16 +205,16 @@ Player.prototype.doEventSquare = function(mr) {
 	switch (parseInt(this.View[18].substring(3,4),16)) {
 		
 		case 4: this.doStairs(); break;
-		case 6: if(mr) floorActionType(tw.Triggers[parseInt(getHexToBinaryPosition(this.View[18], 0, 5), 16).toString(10)], this); break;
+		case 6: if(mr) floorActionType(tw.triggers[parseInt(getHexToBinaryPosition(this.View[18], 0, 5), 16).toString(10)], this); break;
 		default: break;       
 		
 	}
 };
 
 Player.prototype.doPit = function() {
-	this.setPlayerLevel(this.level - 1);
-	this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset);
-	this.Y = this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset);
+	this.setPlayerFloor(this.floor - 1);
+	this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset);
+	this.Y = this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset);
 };
 
 Player.prototype.doStairs = function() {
@@ -222,63 +222,63 @@ Player.prototype.doStairs = function() {
 	var ud = parseInt(this.getBinaryView(18, 7), 10);
 	var d = parseInt(this.getBinaryView(18, 5, 2), 10);
 
-	this.setPlayerLevel(this.level + 1 - (ud % 2) * 2); //Stairs Up or Down
+	this.setPlayerLevel(this.floor + 1 - (ud % 2) * 2); //Stairs Up or Down
 
 	switch (d) {
 		case 0: //South
 			this.Rotation = 2;                
 			if (ud === 0){
-				this.X = this.X - (tw.Level[this.level].xOffset - tw.Level[this.level -1].xOffset);
-				this.Y = this.Y - (tw.Level[this.level].yOffset - tw.Level[this.level -1].yOffset); this.Y = this.Y +2;
+				this.X = this.X - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset);
+				this.Y = this.Y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset); this.Y = this.Y +2;
 			}
 			else {
-				this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset);
-				this.Y = this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset); this.Y = this.Y +2;
+				this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset);
+				this.Y = this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset); this.Y = this.Y +2;
 			}
 			break;
 		case 1: //West
 			this.Rotation = 3;
 			if (ud === 0){  
-				this.X = this.X - (tw.Level[this.level].xOffset - tw.Level[this.level -1].xOffset); this.X = this.X -2;
-				this.Y = (this.Y - (tw.Level[this.level].yOffset - tw.Level[this.level -1].yOffset)) ;
+				this.X = this.X - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset); this.X = this.X -2;
+				this.Y = (this.Y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset)) ;
 			}
 			else {
-				this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset); this.X = this.X -2;
-				this.Y = (this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset));
+				this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset); this.X = this.X -2;
+				this.Y = (this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset));
 			}
 			break;
 		case 2: //North
 			this.Rotation = 0;
 			if (ud === 0){
-				this.X = this.X - (tw.Level[this.level].xOffset - tw.Level[this.level -1].xOffset);
-				this.Y = this.Y - (tw.Level[this.level].yOffset - tw.Level[this.level -1].yOffset); this.Y = this.Y -2;
+				this.X = this.X - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset);
+				this.Y = this.Y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset); this.Y = this.Y -2;
 			}
 			else {
-				this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset);
-				this.Y = this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset); this.Y = this.Y -2;
+				this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset);
+				this.Y = this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset); this.Y = this.Y -2;
 			}
 			break;
 		case 3: //East
 			this.Rotation = 1;
 			if (ud === 0){  
-				this.X = this.X - (tw.Level[this.level].xOffset - tw.Level[this.level -1].xOffset); this.X = this.X +2;
-				this.Y = (this.Y - (tw.Level[this.level].yOffset - tw.Level[this.level -1].yOffset));
+				this.X = this.X - (tw.floor[this.floor].xOffset - tw.floor[this.floor -1].xOffset); this.X = this.X +2;
+				this.Y = (this.Y - (tw.floor[this.floor].yOffset - tw.floor[this.floor -1].yOffset));
 			}
 			else {                    
-				this.X = this.X + (tw.Level[this.level +1].xOffset - tw.Level[this.level].xOffset); this.X = this.X +2;
-				this.Y = (this.Y + (tw.Level[this.level +1].yOffset - tw.Level[this.level].yOffset));
+				this.X = this.X + (tw.floor[this.floor +1].xOffset - tw.floor[this.floor].xOffset); this.X = this.X +2;
+				this.Y = (this.Y + (tw.floor[this.floor +1].yOffset - tw.floor[this.floor].yOffset));
 			}
 			break;
 		default: break;
 	}
 }
 
-//Change the Players Level
+//Change the Players Floor
 //l: 1 = up, -1 = down
-Player.prototype.setPlayerLevel = function(level) {
-	if(level >= 0 && level < tw.Level.length) {
-		this.lastLevel = this.level;
-		this.level = level;
+Player.prototype.setPlayerFloor = function(floor) {
+	if(floor >= 0 && floor < tw.floor.length) {
+		this.lastFloor = this.floor;
+		this.floor = floor;
 	}
 };
 
@@ -296,11 +296,11 @@ Player.prototype.recruitChampion = function(id) {
 Player.prototype.testMode = function(id) {
 	if(debug) {
 		//var xy = posToCoordinates(15, this.X, this.Y, this.Rotation);
-		//var hex = tw.Level[this.level].Map[xy["y"]][xy["x"]];
-		//tw.Level[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
-		//tw.Level[this.level].Map[xy["y"]][xy["x"]] = toggleObject(hex, '3'); //TOGGLE PILLAR
-		//tw.Level[this.level].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
-                //tw.Level[this.level].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
+		//var hex = tw.floor[this.floor].Map[xy["y"]][xy["x"]];
+		//tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
+		//tw.floor[this.floor].Map[xy["y"]][xy["x"]] = toggleObject(hex, '3'); //TOGGLE PILLAR
+		//tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
+                //tw.floor[this.floor].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
         try{        
             for(i = 0; i < 17; i++) {
                         var t = this.View[i].substring(2,4);

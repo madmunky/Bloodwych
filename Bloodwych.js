@@ -9,7 +9,7 @@ var test = 0,
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = { monsterHeads: false, monsterLegs: false, monsterArms: false, monsterBodies: false };
-var towerDataLoaded = { level: false, switches: false, triggers: false, monsters: false, characters: false };
+var towerDataLoaded = { floor: false, switches: false, triggers: false, monsters: false, characters: false };
 
 //Constants
 var CLASS_SERP = 0,
@@ -143,21 +143,21 @@ function updatePlayerViewScreen(){
 		$('section.debug p').html('');
 		clearCanvas();
 		configCanvas();
-		player[0].updateView(tw.Level[player[0].level].Map);
+		player[0].updateView(tw.floor[player[0].floor].Map);
 		drawPlayersView(player[0]);
 		ctx.font = "normal 11px verdana, sans-serif";
 		ctx.fillStyle = "#FFF";
 		ctx.fillText("Player 1",0,250);
 		ctx.fillText("X:" + player[0].X.toString() + "\n Y:"  + player[0].Y.toString(),0,270);
 		ctx.fillText("Current Map: " +Maps[CurrentMap],0,290);
-		ctx.fillText("Level: " + player[0].level.toString(),0,310);
+		ctx.fillText("Floor: " + player[0].floor.toString(),0,310);
 		ctx.fillText("FPS: " + fps.getFPS(),0,350);            
-		player[1].updateView(tw.Level[player[1].level].Map);
+		player[1].updateView(tw.floor[player[1].floor].Map);
 		drawPlayersView(player[1]);
 		ctx.fillText("Player 2",410,250);
 		ctx.fillText("X:" + player[1].X.toString() + "\n Y:"  + player[1].Y.toString(),410,270);
 		ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
-		ctx.fillText("Level: " + player[1].level.toString(),410,310);
+		ctx.fillText("Floor: " + player[1].floor.toString(),410,310);
 		testing();            
 	}catch(e){PrintLog("Error: " + e.toString());}
 }
