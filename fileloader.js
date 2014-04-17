@@ -7,7 +7,7 @@ function getFileData(file_name, callback, t, type, length) {
 				case "switches": t.switches = callback(this.response, length); towerDataLoaded.switches = true; break;
 				case "triggers": t.triggers = callback(this.response, length); towerDataLoaded.triggers = true; break;
 				case "monsterData": t.monsterData = callback(this.response, length); towerDataLoaded.monsters = true; break;
-				case "characterData": t.characterData = callback(this.response, length); towerDataLoaded.characters = true; break;
+				case "championData": championData = callback(this.response, length); towerDataLoaded.champions = true; break;
 				default: break;
 			}
 		}

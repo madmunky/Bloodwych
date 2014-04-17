@@ -1,10 +1,9 @@
-function Player(id,champID,posX,posY,floor,rotation,PortX,PortY) {
+function Player(id,posX,posY,floor,rotation,PortX,PortY) {
 	this.id = id;
 	this.champion = new Array();
 	for(i = 0; i < 4; i++) {
-		this.champion[i] = new Champion();
+		this.champion[i] = -1;
 	}
-	this.recruitChampion(champID);
 	this.x=posX;
 	this.y=posY;
 	this.floor=floor;   
@@ -287,13 +286,21 @@ Player.prototype.setPlayerFloor = function(floor) {
 
 Player.prototype.recruitChampion = function(id) {
 	for(i = 0; i < 4; i++) {
-		if(this.champion[i] != null) {
+		if(this.champion[i] == -1) {
+			this.champion[i] = id;
 			champion[id].recruited = true;
-			this.champion[i] = champion[id];
 			return true;
 		}
 	}
 	return false;
+}
+
+//loc = location number (0-3)
+Player.prototype.getChampion = function(loc) {
+	if(this.champion[loc] > -1) {
+		return champion[this.champion[loc]];
+	}
+	return null;
 }
 
 //Returns a list of monsters and their distance pos relative to the player
@@ -363,6 +370,13 @@ Player.prototype.distanceFromPlayer = function(block) {
 }
 
 function initPlayers() {
-	player[0] = new Player(0, CHA_BLODWYN, 12, 22, 3, 0, 0,   0);       
-	player[1] = new Player(1, CHA_ASTROTH, 14, 22, 3, 0, 410, 0);
+	player[0] = new Player(0, 12, 22, 3, 0, 0,   0);       
+	player[1] = new Player(1, 14, 22, 3, 0, 410, 0);
+}
+
+function initPlayersQuickStart() {
+	for(i = 0; i < 4; i++) {
+		player[0].recruitChampion(i);
+		player[1].recruitChampion(i + 4);
+	}
 }

@@ -9,30 +9,28 @@ function Tower(map) {
 	t.map = map;
 	getFileData('maps/' + map + '.MAP', readMapData, t, "floor");
 
-	towerDataLoaded = { floor: false, switches: false, triggers: false, monsters: false, characters: false };
+	towerDataLoaded = { floor: false, switches: false, triggers: false, monsters: false, champions: false };
 	towerDataLoaded.watch("floor", function(prop, oldval, newval) {
 		getFileData('maps/' + map + '.switches', readSimpleData, t, "switches", 4);
 		getFileData('maps/' + map + '.triggers', readSimpleData, t, "triggers", 4);
 		getFileData('maps/' + map + '.monsters', readSimpleDataHex, t, "monsterData", 6);
-		getFileData('maps/' + map + '.charstats', readSimpleData, t, "characterData", 16);
 	});
 	towerDataLoaded.watch("monsters", function(prop, oldval, newval) {
+		getFileData('maps/' + map + '.charstats', readSimpleDataHex, t, "championData", 32);
 		initMonsters(t);
 		if(typeof game === "undefined") {
 			Run();
 		}
 	});
+	towerDataLoaded.watch("champions", function(prop, oldval, newval) {
+		if(typeof champion === "undefined" || champion.length === 0) {
+			initChampions();
+			initPlayersQuickStart();
+		}
+	});
 }
 
-//
-//Tower.prototype.readOtherData = function() {
-//	this.switches = getFileData('maps/' + this.map + '.switches', readSimpleData, 4);
-//	this.triggers = getFileData('maps/' + this.map + '.triggers', readSimpleData, 4);
-//	this.monsterData = getFileData('maps/' + this.map + '.monsters', readSimpleData, 6);
-//	this.characterData = getFileData('maps/' + this.map + '.charstats', readSimpleData, 16);
-//}
-
-function Map(Width,Height,xOff,yOff) {
+function Map(Width, Height, xOff, yOff) {
 	this.Width = Width;
 	this.Height = Height;
 	this.yOffset = yOff;

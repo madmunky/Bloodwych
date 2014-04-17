@@ -7,7 +7,6 @@ Game.prototype = {
 		this.reset();
 		this.eventQueue = [];
 		initSpells();
-		initChampions();
 		initPlayers();
 	},
 	

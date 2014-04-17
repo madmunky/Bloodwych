@@ -1,0 +1,81 @@
+Horrace: Fancy updating the Champion Data
+
+Hacking : Bloodwych Champion Data Structure
+
+Each Character is 32 Bytes below is an example for Blodwyn (data is shown in Decimal)
+
+A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,AA,BB,CC,DD,EE,FF
+
+1,35,17,13,13,35,35,31,31,6,9,5,128,0,0,0
+199,255,0,0,0,0,7,9,2,0,3,0,0,0,0,0
+
+Data in HEX
+
+01 23 11 0d 0d 23 23 1f 1f 06 09 05 80 00 00 00
+c7 ff 00 00 00 00 07 09 02 00 03 00 00 00 00 00
+
+A = 1 (LEVEL)
+B = 35 (STRENGH)
+C= 17 (AGILITY)
+D = 13 (INTELLIGENCE)
+E = 13 (CHARISMA)
+F = 35 (HIT POINTS)
+G = 35 (HIT POINTS)
+
+-----------------------------------
+
+A = 1 (LEVEL)
+B = 35 (STRENGTH)
+C= 17 (AGILITY)
+D = 13 (INTELLIGENCE)
+
+E = 13 (CHARISMA)
+F = 35 (HIT POINTS)
+G = 35 (MAX HIT POINTS)
+H = 35 (VITALITY)
+
+I = 35 (MAX VITALITY)
+J = 06 (CURRENT SPELL POINTS - INGAME….  DIFFERENT PRE-GAME?)
+K= 09 (MAX SPELL POINTS - INGAME….  DIFFERENT PRE-GAME?)
+L = 05 ('NATURAL' ARMOUR LEVEL)
+
+M,N,O,P = (SPELL BOOK CONTENTS …. H= PAGE 1, I = PAGE 2 … ETC)
+ USE BINARY … %1000 = TOP SPELL ONLY, %1111 = ALL SPELLS ON PAGE
+
+Q = FOOD LEVEL (0-$C7)
+R = $FF  ? 
+S = 00  - CURRENTLY WORN GLOVES (OBJECT VALUE)
+T = 00  ?
+U = 00  ?
+V = 00  ?
+W = 07 - START X-COORD
+X = 09 - START Y-COORD
+Y = 02 - START DIRECTION (0-3)
+Z = 00 - START TOWER (DO NOT CHANGE!!)
+AA = 03 - START FLOOR
+BB = 00 ?
+CC = 00  ?
+DD = 00 ? 
+EE = 00  ?
+FF = 00  ?
+
+----------------------------------------
+
+R = When you have a protect spell this is the amount of time it last 05 = 5 Second FF = 255 Seconds
+Z = Timer Between hits (Gets Set to EE, as you level this will decrease so you attack faster. When set to 00 you will kill almost anything instantly as you do so many hits so quickly)
+BB = Hit Cooldown
+CC = XP till next Level (Change this to FF and you will gain a level when you sleep)
+DD = XP Countdown Goes up to FF when if you do a hit of 20 it will reduce down by 20 then wrap round again when at 0
+EE = Spells waiting to buy from the fairy
+
+----------------------------------------
+
+Z = As soon as the game starts the value gets cleared and set to EE so if I set it to 10 it will just get cleared, the same thing happens for all characters, when you move off the level it seem to only effect your party characters. (Level 01 = E9, Level 02 = D9, Level 04 = C9, Level 06 = A9, Level 08 = 99,  Level 10 = 89)
+
+BB = When you attack this will then increases to 07 and counts back down to 00 before you can attack again (this gets overridden though when you change Z) (7 seconds it seems between attack maybe this changes as you lvl)
+
+CC = Correct this counts downwards FF when you lvl as soon as you sleep and it says you leveled and then go to some like 30 you will then have to decrease this value back to FF and you will level again and the next time the value will be something like 35 and repeats. (Ill see if I can work out the pattern) (Pattern is 11,24,40,50,53,60)
+
+DD = Starts at 255 then if you do 30 Damage to a monster this will reduce to 225 (You need to get it down to 0) I guess this is linked to CC
+
+EE = Correct so if you put this value to 09 you will be able to buy 9 spells from the fairy

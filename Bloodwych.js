@@ -9,7 +9,7 @@ var test = 0,
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = { monsterHeads: false, monsterLegs: false, monsterArms: false, monsterBodies: false };
-var towerDataLoaded = { floor: false, switches: false, triggers: false, monsters: false, characters: false };
+var towerDataLoaded = { floor: false, switches: false, triggers: false, monsters: false, champions: false };
 
 //Constants
 var CLASS_SERP = 0,
@@ -139,7 +139,7 @@ document.addEventListener('touchstart', doTouchStart, false);
 
 
 function updatePlayerViewScreen(){  
-   try {                  
+   //try {                  
 		$('section.debug p').html('');
 		clearCanvas();
 		configCanvas();
@@ -159,7 +159,9 @@ function updatePlayerViewScreen(){
 		ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
 		ctx.fillText("Floor: " + player[1].floor.toString(),410,310);
 		testing();            
-	}catch(e){PrintLog("Error: " + e.toString());}
+	//}catch(e){
+		//PrintLog("Error: " + e.toString());
+	//}
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {
@@ -229,9 +231,9 @@ function debugTextPrint(p) {
 		hex = p.getBinaryView(15, 0, 16);
 		var mon = p.getMonstersInRange();
 		for (i in mon) {
-			debugText(p, 'MonsterID:' + mon[i].monster.id + ' - MonsterXY: ' + mon[i].monster.x + ',' + mon[i].monster.y + ' - MonsterPos:' + mon[i].position);
+			debugText(p, 'Monster:' + mon[i].monster + ' - MonsterPos:' + mon[i].position);
 		}
-		//debugText(p.champion[0].firstName + ' hp:' + p.champion[0].stat.hp + ' rec:' + p.champion[0].recruited + ' armor-spell-learned:' + p.champion[0].spellBook[SPELL_ARMOUR].learnt);
+		debugText(p, 'Champ: ' + p.getChampion(0));
 		//debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
 		//debugText(hex2bin(hex));
 		//debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));

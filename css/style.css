@@ -20,7 +20,7 @@ section.info {
 }
 section.debug {
         float: left;
-        height: 110px;
+        height: 300px;
         width: 400px;
         overflow-y: auto;
 }
