@@ -126,9 +126,7 @@ $(function() {
 	gfxLoadImage("images", "floor", "switch");
 	
 	//Characters
-	gfxLoadImage("images/characters", "heads");
-
-	
+	gfxLoadImage("images/characters", "heads");	
 	gfxLoadImage("images/characters", "maleArms");
 	gfxLoadImage("images/characters", "maleBodies");
 	gfxLoadImage("images/characters", "maleLegs");
@@ -139,7 +137,7 @@ document.addEventListener('touchstart', doTouchStart, false);
 
 
 function updatePlayerViewScreen(){  
-   //try {                  
+   try {                  
 		$('section.debug p').html('');
 		clearCanvas();
 		configCanvas();
@@ -159,9 +157,9 @@ function updatePlayerViewScreen(){
 		ctx.fillText("Current Map: " +Maps[CurrentMap],410,290);
 		ctx.fillText("Floor: " + player[1].floor.toString(),410,310);
 		testing();            
-	//}catch(e){
-		//PrintLog("Error: " + e.toString());
-	//}
+	}catch(e){
+		PrintLog("Error: " + e.toString());
+	}
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {
