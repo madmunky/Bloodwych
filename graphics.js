@@ -466,7 +466,7 @@ function recolorImage(img, colour, folder, type){
 				case COLOUR_DECO_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,       COLOUR_BLACK];      break;
 				default: break;
 			}
-			for (var i = 0; i < imageData.data.length; i += 4) {
+			/*for (var i = 0; i < imageData.data.length; i += 4) {
 				if(imageData.data[i]===palletMoon[0][0] && imageData.data[i+1]===palletMoon[0][1] && imageData.data[i+2]===palletMoon[0][2]){
 					// change to your new rgb
 					imageData.data[i]=pallet[0][0];
@@ -483,29 +483,29 @@ function recolorImage(img, colour, folder, type){
 					imageData.data[i+1]=pallet[2][1];
 					imageData.data[i+2]=pallet[2][2];
 				}
-			}
+			}*/
 		} else if (type === "door") {
 			var palletMoon = COLOUR_BLUE;
 			switch (colour) {
 				case COLOUR_DOOR_NORMAL: pallet =       COLOUR_GREY_4;  break;
-				case COLOUR_DOOR_MOON: pallet =         palletMoon;     break;
-				case COLOUR_DOOR_DRAGON: pallet =       COLOUR_RED;     break;
-				case COLOUR_DOOR_SERPENT: pallet =      COLOUR_GREEN;   break;
-				case COLOUR_DOOR_CHAOS: pallet =        COLOUR_YELLOW;  break;
 				case COLOUR_DOOR_BRONZE: pallet =       COLOUR_RED_DARK;break;
 				case COLOUR_DOOR_IRON: pallet =         COLOUR_GREY_1;  break;
+				case COLOUR_DOOR_SERPENT: pallet =      COLOUR_GREEN;   break;
+				case COLOUR_DOOR_CHAOS: pallet =        COLOUR_YELLOW;  break;
+				case COLOUR_DOOR_DRAGON: pallet =       COLOUR_RED;     break;
+				case COLOUR_DOOR_MOON: pallet =         palletMoon;     break;
 				case COLOUR_DOOR_CHROMATIC: pallet =    COLOUR_WHITE;   break;
 				case COLOUR_DOOR_VOID: pallet =         COLOUR_BLACK;   break;
 				default: break;
 			}
-			for (var i = 0; i < imageData.data.length; i += 4) {
+			/*for (var i = 0; i < imageData.data.length; i += 4) {
 				if(imageData.data[i]===palletMoon[0] && imageData.data[i+1]===palletMoon[1] && imageData.data[i+2]===palletMoon[2]){
 					// change to your new rgb
 					imageData.data[i]=pallet[0];
 					imageData.data[i+1]=pallet[1];
 					imageData.data[i+2]=pallet[2];
 				}
-			}
+			}*/
 		}
 	} else if (folder === "character") {
 		var palletMoon =                            [COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];
@@ -521,24 +521,32 @@ function recolorImage(img, colour, folder, type){
 			case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLACK];      break;
 			default: break;
 		}
-		for (var i = 0; i < imageData.data.length; i += 4) {
-			if(imageData.data[i]===palletMoon[0][0] && imageData.data[i+1]===palletMoon[0][1] && imageData.data[i+2]===palletMoon[0][2]){
-				// change to your new rgb
-				imageData.data[i]=pallet[0][0];
-				imageData.data[i+1]=pallet[0][1];
-				imageData.data[i+2]=pallet[0][2];
-			} else if(imageData.data[i]===palletMoon[1][0] && imageData.data[i+1]===palletMoon[1][1] && imageData.data[i+2]===palletMoon[1][2]){
-				// change to your new rgb
-				imageData.data[i]=pallet[1][0];
-				imageData.data[i+1]=pallet[1][1];
-				imageData.data[i+2]=pallet[1][2];
-			} else if(imageData.data[i]===palletMoon[2][0] && imageData.data[i+1]===palletMoon[2][1] && imageData.data[i+2]===palletMoon[2][2]){
-				// change to your new rgb
-				imageData.data[i]=pallet[2][0];
-				imageData.data[i+1]=pallet[2][1];
-				imageData.data[i+2]=pallet[2][2];
+	}
+	for (i = 0; i < imageData.data.length; i += 4) {
+		if(typeof pallet[0][0] !== "undefined") {
+			for (j = 0; j < 3; j++) {
+				if(imageData.data[i]===palletMoon[j][0] && imageData.data[i+1]===palletMoon[j][1] && imageData.data[i+2]===palletMoon[j][2]) {
+					imageData.data[i]=pallet[j][0];
+					imageData.data[i+1]=pallet[j][1];
+					imageData.data[i+2]=pallet[j][2];
+				}
 			}
+		} else if(imageData.data[i]===palletMoon[0] && imageData.data[i+1]===palletMoon[1] && imageData.data[i+2]===palletMoon[2]) {
+			imageData.data[i]=pallet[0];
+			imageData.data[i+1]=pallet[1];
+			imageData.data[i+2]=pallet[2];
 		}
+		/* else if(imageData.data[i]===palletMoon[1][0] && imageData.data[i+1]===palletMoon[1][1] && imageData.data[i+2]===palletMoon[1][2]){
+			// change to your new rgb
+			imageData.data[i]=pallet[1][0];
+			imageData.data[i+1]=pallet[1][1];
+			imageData.data[i+2]=pallet[1][2];
+		} else if(imageData.data[i]===palletMoon[2][0] && imageData.data[i+1]===palletMoon[2][1] && imageData.data[i+2]===palletMoon[2][2]){
+			// change to your new rgb
+			imageData.data[i]=pallet[2][0];
+			imageData.data[i+1]=pallet[2][1];
+			imageData.data[i+2]=pallet[2][2];
+		}*/
 	}
 	// put the altered data back on the canvas  
 	ctx1.putImageData(imageData,0,0);
