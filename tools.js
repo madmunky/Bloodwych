@@ -200,3 +200,24 @@ try{
     }
     catch(e) {PrintLog("grabImageAt Error: " + e.toString());}
 };
+
+function flipImage(image) {    
+
+          var can = document.createElement('canvas');
+          can.width = image.width;
+          can.height = image.height;
+          var flipcontext = can.getContext("2d");
+          var flipimageObj = new Image();
+          flipimageObj.width = image.width;
+          flipimageObj.height = image.height;
+          
+            flipcontext.translate(image.width, 0);   
+            flipcontext.scale(-1, 1);
+        
+          flipcontext.drawImage(image, 0, 0, image.width, image.height);
+          flipcontext.save();           
+          flipimageObj.src = can.toDataURL();
+           
+        return flipimageObj;
+    
+};

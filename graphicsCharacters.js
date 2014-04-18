@@ -8,10 +8,10 @@
 //Mid Rows 16x10
 //Last Rows 16x8
 
-var IMAGE_CHA_HEAD = 1,
-        IMAGE_CHA_BODY = 2,
+var IMAGE_CHA_HEAD = 0,
+        IMAGE_CHA_BODY = 1,
         IMAGE_CHA_ARM = 3,
-        IMAGE_CHA_LEG = 4;
+        IMAGE_CHA_LEG = 2;
 
 var IMAGE_CHA_DISTANCE_1 = 0,
         IMAGE_CHA_DISTANCE_2 = 1,
@@ -24,10 +24,10 @@ var NUMBER_OF_DISTANCES = 12,
             NUMBER_OF_LEGS = 4,
             NUMBER_OF_ARMS = 1;
     
-    
+//imageCharacterArray[BodyPart][Type][Distance][Direction]   
 var imageCharacterArray = [];
 
-//imageCharacterArray.push(getHeadArray());
+
 
 
 
