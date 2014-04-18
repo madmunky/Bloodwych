@@ -24,7 +24,7 @@ var NUMBER_OF_DISTANCES = 12,
             NUMBER_OF_LEGS = 4,
             NUMBER_OF_ARMS = 1;
     
-//imageCharacterArray[BodyPart][Type][Distance][Direction][Colour]
+//characterGfx[BodyPart][Type][Distance][Direction][Colour]
 var characterGfx = [];
 
 
@@ -75,7 +75,7 @@ function getHeads(){
 function getCharacterSprite(num,graphic,spritWidth,spriteHeight,colSize) {
     
     var temp2 = [];    
-    col = COLOUR_CHAR_BLUE;
+    col = COLOUR_CHAR_GREEN;
     var temp = [];
     for (x = 0; x < num; x++){
         var mid = [];

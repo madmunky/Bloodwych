@@ -511,11 +511,12 @@ function recolorImage(img, colour, folder, type){
 		var palletMoon =                            [COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];
 		switch (colour) {
 			case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_GREEN,      COLOUR_GREEN_DARK,  COLOUR_GREY_4]; 	break;
-			case COLOUR_CHAR_BLUE: pallet =         [COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_BLUE];  		break;
-			case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED_DARK,    COLOUR_GREY_4];   	break;
 			case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_BROWN];     	break;
+			case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED_DARK,    COLOUR_GREY_4];   	break;
+			case COLOUR_CHAR_BLUE: pallet =         [COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_BLUE];  		break;
 			case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_RED_DARK];   break;
 			case COLOUR_CHAR_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_3];     break;
+			case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_BLACK];     	break;
 			case COLOUR_CHAR_WHITE: pallet =        [COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_GREY_2];   	break;
 			case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLACK];      break;
 			default: break;
