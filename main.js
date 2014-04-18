@@ -25,11 +25,11 @@ Run = function() {
         function run() {
             now = new Date().getTime();
             
-            if (gfx['character']['maleLegs'][0].width > 0 && !Loaded){
-                gfx['character']['heads'][0].onload = getCharacterSprite(NUMBER_OF_HEADS,"heads",12,12,16);
-                gfx['character']['maleBodies'][0].onload = getCharacterSprite(NUMBER_OF_BODIES,"maleBodies",15,14,16);
-                gfx['character']['maleLegs'][0].onload = getCharacterSprite(NUMBER_OF_LEGS,"maleLegs",16,26,16);
-                gfx['character']['maleArms'][0].onload = getCharacterSprite(NUMBER_OF_ARMS,"maleArms",5,18,16);
+            if (gfx['maleLegs'].width > 0 && !Loaded){
+                gfx['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS,"heads",12,12,16);
+                gfx['maleBodies'].onload = getCharacterSprite(NUMBER_OF_BODIES,"maleBodies",15,14,16);
+                gfx['maleLegs'].onload = getCharacterSprite(NUMBER_OF_LEGS,"maleLegs",15,26,16);
+                gfx['maleArms'].onload = getCharacterSprite(NUMBER_OF_ARMS,"maleArms",9,18,16);
                 Loaded = true;
             }
             

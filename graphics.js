@@ -74,9 +74,9 @@ function getImage(Hex,d,pos,p,pos18) {
 		case '3': return getMiscObject(Hex); break;
 		case '4':
 			if (getHexToBinaryPosition(Hex, 7) == '0') {
-				return gfx["dungeon"]["stairs"]["up"];
+				return gfx["stairs"]["up"];
 			} else {
-				return gfx["dungeon"]["stairs"]["down"];
+				return gfx["stairs"]["down"];
 			}
 			break;
 		case '5':
@@ -86,21 +86,21 @@ function getImage(Hex,d,pos,p,pos18) {
 				var colourDoor = getHexToBinaryPosition(Hex, 1, 3);
 			}
 			if(getHexToBinaryPosition(Hex, 7) == '0') {
-				return gfx["dungeon"]["door"]["open"][colourDoor];
+				return gfx["door"]["open"][colourDoor];
 			} else if (getHexToBinaryPosition(Hex, 6) == '0') {
-				return gfx["dungeon"]["door"]["solid"][colourDoor];
+				return gfx["door"]["solid"][colourDoor];
 			} else {
-				return gfx["dungeon"]["door"]["gate"][colourDoor];
+				return gfx["door"]["gate"][colourDoor];
 			}
 			break;
 		case '6':
 			//Roof Pit. Can be visible for any floor location
 			if (getHexToBinaryPosition(Hex, 5) == '1') {
-				ctx.drawImage(gfx["dungeon"]["floor"]["pit-up"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ p.PortalX, (gfxPos[pos][5] * scale) + p.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+				ctx.drawImage(gfx["floor"]["pit-up"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ p.PortalX, (gfxPos[pos][5] * scale) + p.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
 			}
 			switch(getHexToBinaryPosition(Hex, 6, 2)) {
-				case '1': return gfx["dungeon"]["floor"]["pit-down"];
-				case '2': return gfx["dungeon"]["floor"]["switch"];
+				case '1': return gfx["floor"]["pit-down"];
+				case '2': return gfx["floor"]["switch"];
 				default: return null;
 			}
 			break;
@@ -112,9 +112,9 @@ function getImage(Hex,d,pos,p,pos18) {
 function getMiscObject(hex){
 	var m = getHexToBinaryPosition(hex, 0, 8)
 	if(m == 1) {
-		return gfx["dungeon"]["misc"]["pillar"];
+		return gfx["misc"]["pillar"];
 	}
-	return gfx["dungeon"]["misc"]["bed"];
+	return gfx["misc"]["bed"];
 }
 	
 function bin2type(b) {
@@ -122,22 +122,22 @@ function bin2type(b) {
 		switch (b) {
 			
 			case "00":{return null; break;};
-			case "01":{return gfx["dungeon"]["wood"]["wall"]; break;};
-			case "10":{return gfx["dungeon"]["wood"]["door-open"]; break;};
-			case "11":{return gfx["dungeon"]["wood"]["door"]; break;};
+			case "01":{return gfx["wood"]["wall"]; break;};
+			case "10":{return gfx["wood"]["door-open"]; break;};
+			case "11":{return gfx["wood"]["door"]; break;};
 			default:{return null;};
 		}            
 	}
 	
 function getStoneWall(HexCode,d,pos,P,pos18) {
 	//if (getHexToBinaryPosition(HexCode, 8) == '0') { ???????????????
-	//    return gfx["dungeon"]["stone"]["wall"];
+	//    return gfx["stone"]["wall"];
 	//}
-	ctx.drawImage(gfx["dungeon"]["stone"]["wall"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+	ctx.drawImage(gfx["stone"]["wall"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
 	if(d == getHexToBinaryPosition(HexCode, 10, 2)) {
 		return getWallDeco();
 	}
-	return gfx["dungeon"]["stone"]["wall"];
+	return gfx["stone"]["wall"];
 	
 	function getWallDeco() {
 		var xy = posToCoordinates(pos18, P.x, P.y, P.Rotation);
@@ -147,49 +147,49 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
 		try{
 			if (getHexToBinaryPosition(HexCode, 8) == '1') { //Wall has something on it
 				if (getHexToBinaryPosition(HexCode, 6, 2) == '0') { //Shelf
-					return gfx["dungeon"]["stone"]["shelf"];
+					return gfx["stone"]["shelf"];
 				} else if (getHexToBinaryPosition(HexCode, 6, 2) == '1') { //Sign
 					if (getHexToBinaryPosition(HexCode, 0, 6) == '0') { //Random Color
-						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][RND8], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						ctx.drawImage(gfx["deco"]["banner"][RND8], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
 						switch(RND4) {
-							case 0: return gfx["dungeon"]["deco"]["serpent-head"];
-                            case 1: return gfx["dungeon"]["deco"]["dragon-head"];
-							case 2: return gfx["dungeon"]["deco"]["moon-head"];
-							case 3: return gfx["dungeon"]["deco"]["chaos-head"];
+							case 0: return gfx["deco"]["serpent-head"];
+                            case 1: return gfx["deco"]["dragon-head"];
+							case 2: return gfx["deco"]["moon-head"];
+							case 3: return gfx["deco"]["chaos-head"];
 							default: return null;
 						}
 					} else if (getHexToBinaryPosition(HexCode, 0, 6) == '1') { //Serpent Flag
-						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_SERPENT], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-						return gfx["dungeon"]["deco"]["serpent-head"];                       
+						ctx.drawImage(gfx["deco"]["banner"][COLOUR_DECO_SERPENT], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						return gfx["deco"]["serpent-head"];                       
 					} else if (getHexToBinaryPosition(HexCode, 0, 6) == '2') { //Dragon Flag
-						 ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_DRAGON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-						return gfx["dungeon"]["deco"]["dragon-head"];  
+						 ctx.drawImage(gfx["deco"]["banner"][COLOUR_DECO_DRAGON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						return gfx["deco"]["dragon-head"];  
 					} else if (getHexToBinaryPosition(HexCode, 0, 6) == '3') { //Moon Flag
-						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_MOON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-						return gfx["dungeon"]["deco"]["moon-head"];                     
+						ctx.drawImage(gfx["deco"]["banner"][COLOUR_DECO_MOON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						return gfx["deco"]["moon-head"];                     
 					} else if (getHexToBinaryPosition(HexCode, 0, 6) == '4') { //Choas Flag
-						 ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_CHAOS], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-						return gfx["dungeon"]["deco"]["chaos-head"];
+						 ctx.drawImage(gfx["deco"]["banner"][COLOUR_DECO_CHAOS], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						return gfx["deco"]["chaos-head"];
 					} else {
-					   return gfx["dungeon"]["deco"]["script"][RND8];
+					   return gfx["deco"]["script"][RND8];
 					}
 				} else if (getHexToBinaryPosition(HexCode, 6, 2) == '2') { //Switch
 					if(getHexToBinaryPosition(HexCode, 0, 4) == '0') {
-						return gfx["dungeon"]["deco"]["switch-off"][COLOUR_DECO_BLACK]; // Black switch
+						return gfx["deco"]["switch-off"][COLOUR_DECO_BLACK]; // Black switch
 					} else if(getHexToBinaryPosition(HexCode, 5) == '1') {
-						return gfx["dungeon"]["deco"]["switch-off"][RND6]; // Off switch
+						return gfx["deco"]["switch-off"][RND6]; // Off switch
 					} else {
-						return gfx["dungeon"]["deco"]["switch"][RND6]; // On switch
+						return gfx["deco"]["switch"][RND6]; // On switch
 					}
 				} else if (getHexToBinaryPosition(HexCode, 6, 2) == '3') { //Crystal Gem
-					return gfx["dungeon"]["deco"]["gem"][RND8];
+					return gfx["deco"]["gem"][RND8];
 				} else {
-					return gfx["dungeon"]["stone"]["wall"];
+					return gfx["stone"]["wall"];
 				}
 			}
 		}catch(e){}  
 		 
-		return gfx["dungeon"]["stone"]["wall"];
+		return gfx["stone"]["wall"];
 	}
 }
 
@@ -232,7 +232,7 @@ function getDirection(n) {
 function drawPlayersView(p) {
 	debugTextPrint(p); //see bloodwych.js
 	
-	myDIx(ctx, gfx["dungeon"]["background"], background[(p.x + p.y + p.Rotation) % 2], p, scale);
+	myDIx(ctx, gfx["background"], background[(p.x + p.y + p.Rotation) % 2], p, scale);
 
 	for (x = 0;x < 19;x++){
 	  
@@ -433,7 +433,7 @@ function drawWoodenObject(p,x) {
 			}
 }
 
-function recolorImage(img, colour, folder, type){
+function recolorImage(img, colour, type){
 	var c = document.createElement('canvas');
 	var ctx1=c.getContext("2d");
 	var w = img.width;
@@ -451,74 +451,19 @@ function recolorImage(img, colour, folder, type){
 
 	// examine every pixel, 
 	// change any old rgb to the new-rgb
-	if (folder === "dungeon") {
-		if (type === "deco") {
-			var palletMoon =                            [COLOUR_GREY_1,     COLOUR_BLUE,        COLOUR_BLUE_DARK];
-			switch (colour) {
-				case COLOUR_DECO_SERPENT: pallet =      [COLOUR_YELLOW,     COLOUR_GREEN,       COLOUR_GREEN_DARK]; break;
-				case COLOUR_DECO_MOON: pallet =         palletMoon;                                                 break;
-				case COLOUR_DECO_DRAGON: pallet =       [COLOUR_ORANGE,     COLOUR_RED,         COLOUR_RED_DARK];   break;
-				case COLOUR_DECO_CHAOS: pallet =        [COLOUR_WHITE,      COLOUR_YELLOW,      COLOUR_ORANGE];     break;
-				case COLOUR_DECO_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_RED_DARK];   break;
-				case COLOUR_DECO_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_3];     break;
-				case COLOUR_DECO_BROWN: pallet =        [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_BROWN];      break;
-				case COLOUR_DECO_TAN: pallet =          [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_RED_DARK];   break;
-				case COLOUR_DECO_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,       COLOUR_BLACK];      break;
-				default: break;
-			}
-			for (var i = 0; i < imageData.data.length; i += 4) {
-				if(imageData.data[i]===palletMoon[0][0] && imageData.data[i+1]===palletMoon[0][1] && imageData.data[i+2]===palletMoon[0][2]){
-					// change to your new rgb
-					imageData.data[i]=pallet[0][0];
-					imageData.data[i+1]=pallet[0][1];
-					imageData.data[i+2]=pallet[0][2];
-				} else if(imageData.data[i]===palletMoon[1][0] && imageData.data[i+1]===palletMoon[1][1] && imageData.data[i+2]===palletMoon[1][2]){
-					// change to your new rgb
-					imageData.data[i]=pallet[1][0];
-					imageData.data[i+1]=pallet[1][1];
-					imageData.data[i+2]=pallet[1][2];
-				} else if(imageData.data[i]===palletMoon[2][0] && imageData.data[i+1]===palletMoon[2][1] && imageData.data[i+2]===palletMoon[2][2]){
-					// change to your new rgb
-					imageData.data[i]=pallet[2][0];
-					imageData.data[i+1]=pallet[2][1];
-					imageData.data[i+2]=pallet[2][2];
-				}
-			}
-		} else if (type === "door") {
-			var palletMoon = COLOUR_BLUE;
-			switch (colour) {
-				case COLOUR_DOOR_NORMAL: pallet =       COLOUR_GREY_4;  break;
-				case COLOUR_DOOR_MOON: pallet =         palletMoon;     break;
-				case COLOUR_DOOR_DRAGON: pallet =       COLOUR_RED;     break;
-				case COLOUR_DOOR_SERPENT: pallet =      COLOUR_GREEN;   break;
-				case COLOUR_DOOR_CHAOS: pallet =        COLOUR_YELLOW;  break;
-				case COLOUR_DOOR_BRONZE: pallet =       COLOUR_RED_DARK;break;
-				case COLOUR_DOOR_IRON: pallet =         COLOUR_GREY_1;  break;
-				case COLOUR_DOOR_CHROMATIC: pallet =    COLOUR_WHITE;   break;
-				case COLOUR_DOOR_VOID: pallet =         COLOUR_BLACK;   break;
-				default: break;
-			}
-			for (var i = 0; i < imageData.data.length; i += 4) {
-				if(imageData.data[i]===palletMoon[0] && imageData.data[i+1]===palletMoon[1] && imageData.data[i+2]===palletMoon[2]){
-					// change to your new rgb
-					imageData.data[i]=pallet[0];
-					imageData.data[i+1]=pallet[1];
-					imageData.data[i+2]=pallet[2];
-				}
-			}
-		}
-	} else if (folder === "character") {
-		var palletMoon =                            [COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];
+	if (type === "deco") {
+		var palletMoon =                            [COLOUR_GREY_1,     COLOUR_BLUE,        COLOUR_BLUE_DARK];
 		switch (colour) {
-			case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_GREEN,      COLOUR_GREEN_DARK,  COLOUR_GREY_4]; 	break;
-			case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_BROWN];     	break;
-			case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED_DARK,    COLOUR_GREY_4];   	break;
-			case COLOUR_CHAR_BLUE: pallet =         [COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_BLUE];  		break;
-			case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_RED_DARK];   break;
-			case COLOUR_CHAR_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_3];     break;
-			case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_BLACK];     	break;
-			case COLOUR_CHAR_WHITE: pallet =        [COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_GREY_2];   	break;
-			case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLACK];      break;
+			case COLOUR_DECO_SERPENT: pallet =      [COLOUR_YELLOW,     COLOUR_GREEN,       COLOUR_GREEN_DARK]; break;
+			case COLOUR_DECO_MOON: pallet =         palletMoon;                                                 break;
+			case COLOUR_DECO_DRAGON: pallet =       [COLOUR_ORANGE,     COLOUR_RED,         COLOUR_RED_DARK];   break;
+			case COLOUR_DECO_CHAOS: pallet =        [COLOUR_WHITE,      COLOUR_YELLOW,      COLOUR_ORANGE];     break;
+			case COLOUR_DECO_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_RED_DARK];   break;
+			case COLOUR_DECO_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_3];     break;
+			case COLOUR_DECO_BROWN: pallet =        [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_BROWN];      break;
+			case COLOUR_DECO_TAN: pallet =          [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_RED_DARK];   break;
+			case COLOUR_DECO_BROWN: pallet =        [COLOUR_GREEN,      COLOUR_GREEN_DARK,  COLOUR_BLUE_DARK];  break;
+			case COLOUR_DECO_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,       COLOUR_BLACK];      break;
 			default: break;
 		}
 		for (var i = 0; i < imageData.data.length; i += 4) {
@@ -534,9 +479,27 @@ function recolorImage(img, colour, folder, type){
 				imageData.data[i+2]=pallet[1][2];
 			} else if(imageData.data[i]===palletMoon[2][0] && imageData.data[i+1]===palletMoon[2][1] && imageData.data[i+2]===palletMoon[2][2]){
 				// change to your new rgb
-				imageData.data[i]=pallet[2][0];
-				imageData.data[i+1]=pallet[2][1];
-				imageData.data[i+2]=pallet[2][2];
+				imageData.data[i]=pallet[2][0];imageData.data[i+1]=pallet[2][1];imageData.data[i+2]=pallet[2][2];
+			}
+		}
+	} else if (type === "door") {
+		var palletMoon = COLOUR_BLUE;
+		switch (colour) {
+			case COLOUR_DOOR_NORMAL: pallet =       COLOUR_GREY_4;  break;
+			case COLOUR_DOOR_MOON: pallet =         palletMoon;     break;
+			case COLOUR_DOOR_DRAGON: pallet =       COLOUR_RED;     break;
+			case COLOUR_DOOR_SERPENT: pallet =      COLOUR_GREEN;   break;
+			case COLOUR_DOOR_CHAOS: pallet =        COLOUR_YELLOW;  break;
+			case COLOUR_DOOR_BRONZE: pallet =       COLOUR_RED_DARK;break;
+			case COLOUR_DOOR_IRON: pallet =         COLOUR_GREY_1;  break;
+			case COLOUR_DOOR_CHROMATIC: pallet =    COLOUR_WHITE;   break;
+			case COLOUR_DOOR_VOID: pallet =         COLOUR_BLACK;   break;
+			default: break;
+		}
+		for (var i = 0; i < imageData.data.length; i += 4) {
+			if(imageData.data[i]===palletMoon[0] && imageData.data[i+1]===palletMoon[1] && imageData.data[i+2]===palletMoon[2]){
+				// change to your new rgb
+				imageData.data[i]=pallet[0];imageData.data[i+1]=pallet[1];imageData.data[i+2]=pallet[2];
 			}
 		}
 	}
