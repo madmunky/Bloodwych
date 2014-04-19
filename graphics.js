@@ -453,10 +453,10 @@ function recolorImage(img, colour, folder, type){
 	// change any old rgb to the new-rgb
 	if (folder === "dungeon") {
 		if (type === "deco") {
-			var palletMoon =                            [COLOUR_GREY_1,     COLOUR_BLUE,        COLOUR_BLUE_DARK];
+			var palletDefault =                            [COLOUR_GREY_1,     COLOUR_BLUE,        COLOUR_BLUE_DARK];
 			switch (colour) {
 				case COLOUR_DECO_SERPENT: pallet =      [COLOUR_YELLOW,     COLOUR_GREEN,       COLOUR_GREEN_DARK]; break;
-				case COLOUR_DECO_MOON: pallet =         palletMoon;                                                 break;
+				case COLOUR_DECO_MOON: pallet =         palletDefault;                                                 break;
 				case COLOUR_DECO_DRAGON: pallet =       [COLOUR_ORANGE,     COLOUR_RED,         COLOUR_RED_DARK];   break;
 				case COLOUR_DECO_CHAOS: pallet =        [COLOUR_WHITE,      COLOUR_YELLOW,      COLOUR_ORANGE];     break;
 				case COLOUR_DECO_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_RED_DARK];   break;
@@ -467,17 +467,17 @@ function recolorImage(img, colour, folder, type){
 				default: break;
 			}
 			/*for (var i = 0; i < imageData.data.length; i += 4) {
-				if(imageData.data[i]===palletMoon[0][0] && imageData.data[i+1]===palletMoon[0][1] && imageData.data[i+2]===palletMoon[0][2]){
+				if(imageData.data[i]===palletDefault[0][0] && imageData.data[i+1]===palletDefault[0][1] && imageData.data[i+2]===palletDefault[0][2]){
 					// change to your new rgb
 					imageData.data[i]=pallet[0][0];
 					imageData.data[i+1]=pallet[0][1];
 					imageData.data[i+2]=pallet[0][2];
-				} else if(imageData.data[i]===palletMoon[1][0] && imageData.data[i+1]===palletMoon[1][1] && imageData.data[i+2]===palletMoon[1][2]){
+				} else if(imageData.data[i]===palletDefault[1][0] && imageData.data[i+1]===palletDefault[1][1] && imageData.data[i+2]===palletDefault[1][2]){
 					// change to your new rgb
 					imageData.data[i]=pallet[1][0];
 					imageData.data[i+1]=pallet[1][1];
 					imageData.data[i+2]=pallet[1][2];
-				} else if(imageData.data[i]===palletMoon[2][0] && imageData.data[i+1]===palletMoon[2][1] && imageData.data[i+2]===palletMoon[2][2]){
+				} else if(imageData.data[i]===palletDefault[2][0] && imageData.data[i+1]===palletDefault[2][1] && imageData.data[i+2]===palletDefault[2][2]){
 					// change to your new rgb
 					imageData.data[i]=pallet[2][0];
 					imageData.data[i+1]=pallet[2][1];
@@ -485,7 +485,7 @@ function recolorImage(img, colour, folder, type){
 				}
 			}*/
 		} else if (type === "door") {
-			var palletMoon = COLOUR_BLUE;
+			var palletDefault = COLOUR_BLUE;
 			switch (colour) {
 				case COLOUR_DOOR_NORMAL: pallet =       COLOUR_GREY_4;  break;
 				case COLOUR_DOOR_BRONZE: pallet =       COLOUR_RED_DARK;break;
@@ -493,13 +493,13 @@ function recolorImage(img, colour, folder, type){
 				case COLOUR_DOOR_SERPENT: pallet =      COLOUR_GREEN;   break;
 				case COLOUR_DOOR_CHAOS: pallet =        COLOUR_YELLOW;  break;
 				case COLOUR_DOOR_DRAGON: pallet =       COLOUR_RED;     break;
-				case COLOUR_DOOR_MOON: pallet =         palletMoon;     break;
+				case COLOUR_DOOR_MOON: pallet =         palletDefault;     break;
 				case COLOUR_DOOR_CHROMATIC: pallet =    COLOUR_WHITE;   break;
 				case COLOUR_DOOR_VOID: pallet =         COLOUR_BLACK;   break;
 				default: break;
 			}
 			/*for (var i = 0; i < imageData.data.length; i += 4) {
-				if(imageData.data[i]===palletMoon[0] && imageData.data[i+1]===palletMoon[1] && imageData.data[i+2]===palletMoon[2]){
+				if(imageData.data[i]===palletDefault[0] && imageData.data[i+1]===palletDefault[1] && imageData.data[i+2]===palletDefault[2]){
 					// change to your new rgb
 					imageData.data[i]=pallet[0];
 					imageData.data[i+1]=pallet[1];
@@ -508,40 +508,56 @@ function recolorImage(img, colour, folder, type){
 			}*/
 		}
 	} else if (folder === "character") {
-		var palletMoon =                            [COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];
-		switch (colour) {
-			case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_GREEN,      COLOUR_GREEN_DARK,  COLOUR_GREY_4]; 	break;
-			case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_BROWN];     	break;
-			case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED_DARK,    COLOUR_GREY_4];   	break;
-			case COLOUR_CHAR_BLUE: pallet =         [COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_BLUE];  		break;
-			case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_RED_DARK];   break;
-			case COLOUR_CHAR_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_3];     break;
-			case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_BLACK];     	break;
-			case COLOUR_CHAR_WHITE: pallet =        [COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_GREY_2];   	break;
-			case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLACK];      break;
-			default: break;
+		if (type === "maleBodies") {
+			var palletDefault =                            [COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];
+			switch (colour) {
+				case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_GREEN,      COLOUR_GREEN_DARK,  COLOUR_GREY_4]; 	break;
+				case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_BROWN];     	break;
+				case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED_DARK,    COLOUR_GREY_4];   	break;
+				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_BLUE];  		break;
+				case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_RED_DARK];   break;
+				case COLOUR_CHAR_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_3];     break;
+				case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_BLACK];     	break;
+				case COLOUR_CHAR_WHITE: pallet =        [COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_GREY_2];   	break;
+				case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLACK];      break;
+				default: break;
+			}
+		} else {
+			var palletDefault =                         [COLOUR_RED,     	COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];
+			switch (colour) {
+				case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_GREEN,      COLOUR_GREEN,      	COLOUR_GREEN_DARK,  COLOUR_GREEN_DARK]; 	break;
+				case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW,     COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_ORANGE];     	break;
+				case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED,     	COLOUR_RED_DARK,    COLOUR_RED_DARK];   	break;
+				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_BLUE,     	COLOUR_BLUE,     	COLOUR_BLUE_DARK,      COLOUR_BLUE_DARK];  		break;
+				case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_BROWN];   break;
+				case COLOUR_CHAR_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_2];     break;
+				case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_GREY_4];     	break;
+				case COLOUR_CHAR_WHITE: pallet =        [COLOUR_WHITE,     	COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_GREY_1];   	break;
+				case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLUE_DARK];      break;
+				default: break;
+			}
 		}
 	}
-	for (i = 0; i < imageData.data.length; i += 4) {
+	for (var i = 0; i < imageData.data.length; i += 4) {
 		if(typeof pallet[0][0] !== "undefined") {
-			for (j = 0; j < 3; j++) {
-				if(imageData.data[i]===palletMoon[j][0] && imageData.data[i+1]===palletMoon[j][1] && imageData.data[i+2]===palletMoon[j][2]) {
+			for (j = 0; j < pallet.length; j++) {
+				if(imageData.data[i]===palletDefault[j][0] && imageData.data[i+1]===palletDefault[j][1] && imageData.data[i+2]===palletDefault[j][2]) {
 					imageData.data[i]=pallet[j][0];
 					imageData.data[i+1]=pallet[j][1];
 					imageData.data[i+2]=pallet[j][2];
 				}
 			}
-		} else if(imageData.data[i]===palletMoon[0] && imageData.data[i+1]===palletMoon[1] && imageData.data[i+2]===palletMoon[2]) {
+		} else if(imageData.data[i]===palletDefault[0] && imageData.data[i+1]===palletDefault[1] && imageData.data[i+2]===palletDefault[2]) {
 			imageData.data[i]=pallet[0];
 			imageData.data[i+1]=pallet[1];
 			imageData.data[i+2]=pallet[2];
 		}
-		/* else if(imageData.data[i]===palletMoon[1][0] && imageData.data[i+1]===palletMoon[1][1] && imageData.data[i+2]===palletMoon[1][2]){
+		/* else if(imageData.data[i]===palletDefault[1][0] && imageData.data[i+1]===palletDefault[1][1] && imageData.data[i+2]===palletDefault[1][2]){
 			// change to your new rgb
 			imageData.data[i]=pallet[1][0];
 			imageData.data[i+1]=pallet[1][1];
 			imageData.data[i+2]=pallet[1][2];
-		} else if(imageData.data[i]===palletMoon[2][0] && imageData.data[i+1]===palletMoon[2][1] && imageData.data[i+2]===palletMoon[2][2]){
+		} else if(imageData.data[i]===palletDefault[2][0] && imageData.data[i+1]===palletDefault[2][1] && imageData.data[i+2]===palletDefault[2][2]){
 			// change to your new rgb
 			imageData.data[i]=pallet[2][0];
 			imageData.data[i+1]=pallet[2][1];
