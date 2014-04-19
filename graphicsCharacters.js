@@ -33,7 +33,7 @@ function getCharacterSprite(NUMBER_OF_ITEMS,graphicsFolder,graphic,spritWidth,sp
     
     var graphicArray = [];    
 
-    for (x = 0;x < NUMBER_OF_ITEMS;x++){
+    for (x = 0;x <= NUMBER_OF_ITEMS;x++){
         var mid = [];
         var far = [];
         var close = [];

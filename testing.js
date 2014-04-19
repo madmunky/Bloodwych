@@ -16,19 +16,17 @@ function testing(){
         test = 3;
     }
     
-    //test = 3;
-    
     var CHAR_PARTY_FRONT_RIGHTX = 65,
             CHAR_PARTY_FRONT_RIGHTY = 0,
             CHAR_PARTY_FRONT_LEFTX = -CHAR_PARTY_FRONT_RIGHTX,
             CHAR_PARTY_FRONT_LEFTY = -CHAR_PARTY_FRONT_RIGHTY,
             CHAR_SOLO_X = 0,
             CHAR_SOLO_Y = 0;
-            
-   var DISTANCE = 0;  
     
     //test1 = 1;
    //test = 3;
+    
+    var DISTANCE = test1;  
     
     var CHAR_OFFSETX = CHAR_PARTY_FRONT_LEFTX,
             CHAR_OFFSETY = CHAR_PARTY_FRONT_LEFTY;
@@ -97,11 +95,11 @@ function characterSpriteLocation(){
                 if (x === 1) {
                     myArray.push(new Array(
                             //Front View
-                            new Array(185,112),
+                            new Array(184,110),
                             new Array(187,74),
                             new Array(193,53),
-                            new Array(215,82),
-                            new Array(175,82),
+                            new Array(217,80),
+                            new Array(175,80),
                             //Left View
                             new Array(182,116),
                             new Array(175,74),
