@@ -3,9 +3,10 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 var game;
-var test = 0,
-        test1 = 0,
-        test2 = 0;
+var DIRECTION = 0,
+        DISTANCE = 0,
+        TYPE = 0,
+        COLOR = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = { monsterHeads: false, monsterLegs: false, monsterArms: false, monsterBodies: false };

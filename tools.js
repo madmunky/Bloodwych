@@ -178,7 +178,9 @@ function PrintLog(myString) {
     if (debug) {console.log(getTimeStamp() +" Debug: " +myString);}
 }
 
-function grabImageAt(image,startX,startY,width,height,flip) {
+function grabImageAt(image,startX,startY,width,height,flip,scale) {
+    
+    if (typeof scale === "undefined"){scale = 1;};
     
 try{
           var can = document.createElement('canvas');
@@ -187,11 +189,13 @@ try{
           var flipcontext = can.getContext("2d");
           var flipimageObj = new Image();
           flipimageObj.width = width;
-          flipimageObj.height = height;
+          flipimageObj.height = height;          
           if (flip){
-            flipcontext.translate(width, 0);   
-            flipcontext.scale(-1, 1);
-        } 
+              flipcontext.translate(width, 0);
+              flipcontext.scale(-scale, scale);
+          }
+          else{flipcontext.scale(scale, scale);}
+          
           flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
           flipcontext.save();           
           flipimageObj.src = can.toDataURL();

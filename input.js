@@ -69,6 +69,8 @@ var KEYPAD_8 = 104,
         KEY_E = 69,
         KEY_R = 82,
         KEY_F = 70,
+        KEY_5 = 53,
+        KEY_6 = 54,
         KEY_7 = 55,
         KEY_8 = 56,
         KEY_9 = 57,
@@ -108,12 +110,14 @@ function doKeyDown(e) {
         case KEY_E: player[0].rotateTo(player[0].Rotation + 1);break;    // E KEY
         case KEY_R: player[0].toggleFrontObject();break; //R Key
         case KEY_F: player[0].testMode();break; // F cheat
-        case KEY_PLUS: test++; break;
-        case KEY_MINUS: test--; break;
-        case KEY_7: test1++; break;
-        case KEY_8: test1--; break;
-        case KEY_0: test2++; break;
-        case KEY_9: test2--; break;
+        case KEY_PLUS: DIRECTION++; break;
+        case KEY_MINUS: DIRECTION--; break;
+        case KEY_5: COLOR++; break;
+        case KEY_6: COLOR--; break;
+        case KEY_7: DISTANCE++; break;
+        case KEY_8: DISTANCE--; break;
+        case KEY_0: TYPE++; break;
+        case KEY_9: TYPE--; break;
         default: break;
     }
 

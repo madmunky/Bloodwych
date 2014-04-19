@@ -22,7 +22,8 @@ var NUMBER_OF_DISTANCES = 12,
             NUMBER_OF_HEADS = 19,
             NUMBER_OF_BODIES = 4,
             NUMBER_OF_LEGS = 4,
-            NUMBER_OF_ARMS = 1;
+            NUMBER_OF_ARMS = 1,
+            NUMBER_OF_COLORS = 1;
     
 //imageCharacterArray[BodyPart][Type][Distance][Direction]   
 var characterGfx = [];
@@ -31,40 +32,48 @@ var characterGfx = [];
 
 function getCharacterSprite(NUMBER_OF_ITEMS,graphicsFolder,graphic,spritWidth,spriteHeight,colSize) {
     
-    var graphicArray = [];    
-
-    for (x = 0;x <= NUMBER_OF_ITEMS;x++){
-        var mid = [];
-        var far = [];
-        var close = [];
-        var distant = [];
-        var pos = 0;
-            
-            for (y = 0;y < NUMBER_OF_DISTANCES;y++){
-                
+    var graphicArray = [];  
+    var MYCOLOR = 0,
+            COLORS=[];
+    
+   // for (MYCOLOR = 0;MYCOLOR <= NUMBER_OF_COLORS;MYCOLOR++){        
+         for (x = 0;x <= NUMBER_OF_ITEMS;x++){
+        
+            var MID = [],
+                        FAR = [],
+                        CLOSE = [],
+                        DISTANT = [],
+                        POSITION = 0;
+                        
+               
+            for (y = 0;y < NUMBER_OF_DISTANCES;y++){              
+                               
                 switch (y){
                     
-                case 0:{close.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth, spriteHeight, false));pos=pos+spriteHeight;};break
-                    case 1:{close.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth, spriteHeight, false));close.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth, spriteHeight, true));pos=pos+spriteHeight;};break
-                    case 2:{close.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth, spriteHeight, false));pos=pos+spriteHeight;};break
+                case 0:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth, spriteHeight, false));POSITION=POSITION+spriteHeight;};break
+                    case 1:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth, spriteHeight, false));CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth, spriteHeight, true));POSITION=POSITION+spriteHeight;};break
+                    case 2:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth, spriteHeight, false));POSITION=POSITION+spriteHeight;};break
+                
+                case 3:{MID.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-2, spriteHeight-2,false));POSITION=POSITION+spriteHeight-2;};break    
+                    case 4:{MID.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-2, spriteHeight-2,false));MID.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-2, spriteHeight-2,true));POSITION=POSITION+spriteHeight-2;};break
+                    case 5:{MID.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-2, spriteHeight-2,false));POSITION=POSITION+spriteHeight-2;};break
                     
-                case 3:{mid.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-2, spriteHeight-2,false));pos=pos+spriteHeight-2;};break    
-                    case 4:{mid.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-2, spriteHeight-2,false));mid.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-2, spriteHeight-2,true));pos=pos+spriteHeight-2;};break
-                    case 5:{mid.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-2, spriteHeight-2,false));pos=pos+spriteHeight-2;};break
+                case 6:{FAR.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-4, spriteHeight-4, false));POSITION=POSITION+spriteHeight-4;};break
+                    case 7:{FAR.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-4, spriteHeight-4, false));FAR.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-4, spriteHeight-4, true));POSITION=POSITION+spriteHeight-4;};break
+                    case 8:{FAR.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-4, spriteHeight-4, false));POSITION=POSITION+spriteHeight-4;};break
                     
-                case 6:{far.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-4, spriteHeight-4, false));pos=pos+spriteHeight-4;};break
-                    case 7:{far.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-4, spriteHeight-4, false));far.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-4, spriteHeight-4, true));pos=pos+spriteHeight-4;};break
-                    case 8:{far.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-4, spriteHeight-4, false));pos=pos+spriteHeight-9;};break
-                    
-                case 9:{distant.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-6, spriteHeight-6, false));pos=pos+spriteHeight-6;};break
-                    case 10:{distant.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, spritWidth-6, spriteHeight-6, false));distant.push(grabImageAt(gfx[graphicsFolder][graphic][0],x*colSize, pos, 5, 6, true));pos=pos+spriteHeight-6;};break
-                    case 11:{distant.push(grabImageAt(gfx[graphicsFolder][graphic][0],(x*colSize)+1, pos, spritWidth-6, spriteHeight-6, false));};break  
+                case 9:{DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-6, spriteHeight-6, false));POSITION=POSITION+spriteHeight-4;};break
+                    case 10:{DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, spritWidth-6, spriteHeight-6, false));DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],x*colSize, POSITION, 5, 6, true));POSITION=POSITION+spriteHeight-4;};break
+                    case 11:{DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR],(x*colSize)+1, POSITION, spritWidth-6, spriteHeight-6, false));};break  
                 }
                 
             }
-        graphicArray.push(new Array(close,mid,far,distant));
-    }
-
-    characterGfx.push(graphicArray);
+            graphicArray.push(new Array(CLOSE,MID,FAR,DISTANT));  
+              
+            }
+            
+      //COLORS.push(graphicArray);}   
+     
+     characterGfx.push(graphicArray);
 
 }

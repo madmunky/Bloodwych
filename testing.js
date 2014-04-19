@@ -7,13 +7,11 @@ var characterSpriteLocations = characterSpriteLocation();
 
 function testing(){
     
-
-    
-    if (test > 3){
-        test = 0;
+    if (DIRECTION > 3){
+        DIRECTION = 0;
     };
-    if (test < 0){
-        test = 3;
+    if (DIRECTION < 0){
+        DIRECTION = 3;
     }
     
     var CHAR_PARTY_FRONT_RIGHTX = 65,
@@ -23,41 +21,44 @@ function testing(){
             CHAR_SOLO_X = 0,
             CHAR_SOLO_Y = 0;
     
-    //test1 = 1;
-   //test = 3;
+//test1 = 3;
+ //test = 3;
     
-    var DISTANCE = test1;  
+
     
-    var CHAR_OFFSETX = CHAR_PARTY_FRONT_LEFTX,
-            CHAR_OFFSETY = CHAR_PARTY_FRONT_LEFTY;
+    var CHAR_OFFSETX = CHAR_SOLO_X,
+            CHAR_OFFSETY = CHAR_SOLO_Y;
+    
+    //var COLOR = 0;
     
     try {
         
-        switch (test) {
+        switch (DIRECTION) {
             
-            case 0:{ctx.drawImage(characterGfx[IMAGE_CHA_LEG][test2][test1][test],characterSpriteLocations[DISTANCE][0][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][0][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_LEG][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_LEG][test2][test1][test].height * scale); 
-                    ctx.drawImage(characterGfx[IMAGE_CHA_BODY][test2][test1][test],characterSpriteLocations[DISTANCE][1][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][1][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_BODY][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_BODY][test2][test1][test].height * scale); 
-                    ctx.drawImage(characterGfx[IMAGE_CHA_HEAD][test2][test1][test],characterSpriteLocations[DISTANCE][2][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][2][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_HEAD][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_HEAD][test2][test1][test].height * scale); 
-                    ctx.drawImage(flipImage(characterGfx[IMAGE_CHA_ARM][0][test1][test]),characterSpriteLocations[DISTANCE][3][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][3][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][test1][test].width * scale, characterGfx[IMAGE_CHA_ARM][0][test1][test].height * scale);
-                    ctx.drawImage(characterGfx[IMAGE_CHA_ARM][0][test1][test],characterSpriteLocations[DISTANCE][4][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][4][1]+CHAR_OFFSETY-DISTANCE,characterGfx[IMAGE_CHA_ARM][0][test1][test].width * scale, characterGfx[IMAGE_CHA_ARM][0][test1][test].height * scale);}break;
-            case 1:{ctx.drawImage(characterGfx[IMAGE_CHA_LEG][test2][test1][test],characterSpriteLocations[DISTANCE][5][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][5][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_LEG][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_LEG][test2][test1][test].height * scale); 
-                    ctx.drawImage(characterGfx[IMAGE_CHA_BODY][test2][test1][test],characterSpriteLocations[DISTANCE][6][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][6][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_BODY][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_BODY][test2][test1][test].height * scale); 
-                    ctx.drawImage(characterGfx[IMAGE_CHA_HEAD][test2][test1][test],characterSpriteLocations[DISTANCE][7][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][7][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_HEAD][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_HEAD][test2][test1][test].height * scale);                    
-                    ctx.drawImage(flipImage(characterGfx[IMAGE_CHA_ARM][0][0][1]),characterSpriteLocations[DISTANCE][8][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][8][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][0][1].width * scale, characterGfx[IMAGE_CHA_ARM][0][0][1].height * scale);}break;
-            case 2:{ctx.drawImage(characterGfx[IMAGE_CHA_LEG][test2][test1][test],characterSpriteLocations[DISTANCE][9][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][9][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_LEG][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_LEG][test2][test1][test].height * scale); 
-                    ctx.drawImage(characterGfx[IMAGE_CHA_BODY][test2][test1][test],characterSpriteLocations[DISTANCE][10][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][10][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_BODY][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_BODY][test2][test1][test].height * scale); 
-                    ctx.drawImage(characterGfx[IMAGE_CHA_HEAD][test2][test1][test],characterSpriteLocations[DISTANCE][11][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][11][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_HEAD][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_HEAD][test2][test1][test].height * scale);
-                    ctx.drawImage(characterGfx[IMAGE_CHA_ARM][0][0][1],characterSpriteLocations[DISTANCE][12][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][12][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][0][1].width * scale, characterGfx[IMAGE_CHA_ARM][0][0][1].height * scale);}break;
-            case 3:{ctx.drawImage(characterGfx[IMAGE_CHA_LEG][test2][test1][test],characterSpriteLocations[DISTANCE][13][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][13][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_LEG][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_LEG][test2][test1][test].height * scale); 
-                    ctx.drawImage(characterGfx[IMAGE_CHA_BODY][test2][test1][test],characterSpriteLocations[DISTANCE][14][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][14][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_BODY][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_BODY][test2][test1][test].height * scale); 
-                    ctx.drawImage(characterGfx[IMAGE_CHA_HEAD][test2][test1][test],characterSpriteLocations[DISTANCE][15][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][15][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_HEAD][test2][test1][test].width * scale, characterGfx[IMAGE_CHA_HEAD][test2][test1][test].height * scale); 
-                    ctx.drawImage(characterGfx[IMAGE_CHA_ARM][0][0][0],characterSpriteLocations[DISTANCE][16][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][16][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][0][0].width * scale, characterGfx[IMAGE_CHA_ARM][0][0][0].height * scale);
-                    ctx.drawImage(flipImage(characterGfx[IMAGE_CHA_ARM][0][0][0]),characterSpriteLocations[DISTANCE][17][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][17][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][0][0].width * scale, characterGfx[IMAGE_CHA_ARM][0][0][0].height * scale);
+            case 0:{ctx.drawImage(characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][0][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][0][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][1][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][1][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][2][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][2][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(flipImage(characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION]),characterSpriteLocations[DISTANCE][3][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][3][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION].height * scale);
+                    ctx.drawImage(characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][4][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][4][1]+CHAR_OFFSETY-DISTANCE,characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION].height * scale);}break;
+            case 1:{ctx.drawImage(characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][5][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][5][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][6][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][6][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][7][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][7][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION].height * scale);                    
+                    ctx.drawImage(flipImage(characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION]),characterSpriteLocations[DISTANCE][8][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][8][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION].height * scale);}break;
+            case 2:{ctx.drawImage(characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][9][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][9][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][10][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][10][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][11][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][11][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION].height * scale);
+                    ctx.drawImage(flipImage(characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION]),characterSpriteLocations[DISTANCE][12][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][12][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_ARM][0][DISTANCE][DIRECTION].height * scale);}break;
+            case 3:{ctx.drawImage(characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][13][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][13][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_LEG][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][14][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][14][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_BODY][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION],characterSpriteLocations[DISTANCE][15][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][15][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION].width * scale, characterGfx[IMAGE_CHA_HEAD][TYPE][DISTANCE][DIRECTION].height * scale); 
+                    ctx.drawImage(flipImage(characterGfx[IMAGE_CHA_ARM][0][DISTANCE][0]),characterSpriteLocations[DISTANCE][17][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][17][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][DISTANCE][0].width * scale, characterGfx[IMAGE_CHA_ARM][0][DISTANCE][0].height * scale);
+                    ctx.drawImage(characterGfx[IMAGE_CHA_ARM][0][DISTANCE][0],characterSpriteLocations[DISTANCE][16][0]+CHAR_OFFSETX,characterSpriteLocations[DISTANCE][16][1]+CHAR_OFFSETY,characterGfx[IMAGE_CHA_ARM][0][DISTANCE][0].width * scale, characterGfx[IMAGE_CHA_ARM][0][DISTANCE][0].height * scale);
+                    
                     }break;
         }
         
         
-    }catch(e){};
+    }catch(e){PrintLog("Error Drawing Character/Monster: " + e.toString());};
     
 }
 
@@ -77,47 +78,96 @@ function characterSpriteLocation(){
                             new Array(155,82),
                             //Left View
                             new Array(182,116),
-                            new Array(175,74),
-                            new Array(175,53),
+                            new Array(174,74),
+                            new Array(174,53),
                             new Array(185,82),
                             //Right View
-                            new Array(160,116),                            
-                            new Array(168,74),
-                            new Array(176,53),
-                            new Array(176,82),
+                            new Array(154,116),                            
+                            new Array(164,74),
+                            new Array(174,53),
+                            new Array(172,82),
                             //Rear View
                             new Array(170,116),//Leg
                             new Array(170,74),//Body                            
-                            new Array(175,53),//Head
+                            new Array(176,53),//Head
                             new Array(155,82),//Left Arm
                             new Array(201,82)));//Right Arm
                 }
-                if (x === 1) {
+             if (x === 1) {
                     myArray.push(new Array(
                             //Front View
-                            new Array(184,110),
-                            new Array(187,74),
-                            new Array(193,53),
-                            new Array(217,80),
-                            new Array(175,80),
-                            //Left View
-                            new Array(182,116),
+                            new Array(172,110),
                             new Array(175,74),
-                            new Array(175,53),
-                            new Array(185,82),
+                            new Array(181,53),
+                            new Array(205,80),
+                            new Array(163,80),
+                            //Left View
+                            new Array(182,110),
+                            new Array(180,74),
+                            new Array(183,53),
+                            new Array(192,75),
                             //Right View
-                            new Array(160,116),                            
-                            new Array(168,74),
-                            new Array(176,53),
-                            new Array(176,82),
+                            new Array(156,110),
+                            new Array(162,74),
+                            new Array(170,53),
+                            new Array(168,75),
                             //Rear View
-                            new Array(170,116),//Leg
-                            new Array(170,74),//Body                            
-                            new Array(175,53),//Head
-                            new Array(165,82),//Left Arm
-                            new Array(201,82)));//Right Arm
+                            new Array(172,110),//Leg
+                            new Array(175,74),//Body                            
+                            new Array(181,53),//Head
+                            new Array(163,80),//Left Arm
+                            new Array(205,80)));//Right Arm
                 }            
-             
+             if (x === 2) {
+                    myArray.push(new Array(
+                            //Front View
+                            new Array(177,110),
+                            new Array(180,80),
+                            new Array(183,61),
+                            new Array(204,86),
+                            new Array(168,88),
+                            //Left View
+                            new Array(184,110),
+                            new Array(181,80),
+                            new Array(185,62),
+                            new Array(194,87),
+                            //Right View
+                            new Array(162,110),
+                            new Array(168,80),
+                            new Array(172,62),
+                            new Array(173,87),
+                            //Rear View
+                            new Array(177,110),
+                            new Array(180,80),
+                            new Array(183,61),
+                            new Array(168,86),
+                            new Array(204,86)));//Right Arm
+                }   
+             if (x === 3) {
+                    myArray.push(new Array(
+                            //Front View
+                            new Array(176,104),
+                            new Array(179,86),
+                            new Array(185,68),
+                            new Array(203,75),
+                            new Array(173,78),
+                            //Left View
+                            new Array(194,110),
+                            new Array(192,74),
+                            new Array(195,53),
+                            new Array(204,75),
+                            //Right View
+                            new Array(168,110),
+                            new Array(174,74),
+                            new Array(182,53),
+                            new Array(180,75),
+                            //Rear View
+                            new Array(176,104),
+                            new Array(181,86),
+                            new Array(182,74),
+                            new Array(172,72),
+                            new Array(199,72)));//Right Arm
+                }    
                         }
     
     return myArray;
