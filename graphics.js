@@ -542,7 +542,7 @@ function recolorImage(img, colour, folder, type){
 				case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_RED,      COLOUR_GREEN_DARK,      	COLOUR_GREEN,  COLOUR_GREEN_DARK]; 	break;
 				case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW,     COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_ORANGE];     	break;
 				case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED,     	COLOUR_RED,    COLOUR_RED_DARK];   	break;
-				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_BLACK,     	COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];  		break;
+				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_BLUE_DARK,     	COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];  		break;
 				case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_BLUE_DARK,     COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_BROWN];   break;
 				case COLOUR_CHAR_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_2];     break;
 				case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_GREY_4];     	break;
@@ -556,7 +556,7 @@ function recolorImage(img, colour, folder, type){
 				case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_RED,      COLOUR_GREEN,   COLOUR_GREEN_DARK,  COLOUR_GREY_4]; 	break;
 				case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW,     COLOUR_WHITE,     COLOUR_YELLOW,      COLOUR_ORANGE];     	break;
 				case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_ORANGE,     	COLOUR_RED,    COLOUR_RED_DARK];   	break;
-				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_GREEN,     	COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_WHITE];  		break;
+				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_GREEN,     	COLOUR_GREY_1,     	COLOUR_BLUE,      COLOUR_BLUE_DARK];  		break;
 				case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_BROWN];   break;
 				case COLOUR_CHAR_IRON: pallet =         [COLOUR_GREEN,     COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_3];     break;
 				case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_WHITE,     COLOUR_GREY_1,      COLOUR_GREY_2];     	break;
