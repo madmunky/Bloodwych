@@ -6,7 +6,7 @@ var game;
 var DIRECTION = 0,
         DISTANCE = 0,
         TYPE = 0,
-        COLOR = 0;
+        COLOUR = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = { monsterHeads: false, monsterLegs: false, monsterArms: false, monsterBodies: false };
@@ -30,7 +30,7 @@ var COLOUR_WHITE =          [224, 224, 224],
 	COLOUR_YELLOW =         [224, 192, 0],
 	COLOUR_ORANGE =         [224, 128, 96],
 	COLOUR_BROWN =          [160, 64, 32],
-	COLOUR_RED =            [224, 0, 0],
+	COLOUR_RED =            [208, 0, 0],
 	COLOUR_RED_DARK =       [128, 32, 0],
 	COLOUR_BLACK =          [0, 0, 0];
 

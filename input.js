@@ -112,8 +112,8 @@ function doKeyDown(e) {
         case KEY_F: player[0].testMode();break; // F cheat
         case KEY_PLUS: DIRECTION++; break;
         case KEY_MINUS: DIRECTION--; break;
-        case KEY_5: COLOR++; break;
-        case KEY_6: COLOR--; break;
+        case KEY_6: COLOUR++; break;
+        case KEY_5: COLOUR--; break;
         case KEY_7: DISTANCE++; break;
         case KEY_8: DISTANCE--; break;
         case KEY_0: TYPE++; break;

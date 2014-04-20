@@ -23,7 +23,7 @@ var NUMBER_OF_DISTANCES = 12,
             NUMBER_OF_BODIES = 4,
             NUMBER_OF_LEGS = 4,
             NUMBER_OF_ARMS = 1,
-            NUMBER_OF_COLORS = 1;
+            NUMBER_OF_COLORS = 7;
     
 //imageCharacterArray[BodyPart][Type][Distance][Direction]   
 var characterGfx = [];
@@ -32,13 +32,15 @@ var characterGfx = [];
 
 function getCharacterSprite(NUMBER_OF_ITEMS,graphicsFolder,graphic,spritWidth,spriteHeight,colSize) {
     
-    var graphicArray = [];  
-    var MYCOLOR = 0,
+    
+    var MYCOLOR = 7,
             COLORS=[];
     
-   // for (MYCOLOR = 0;MYCOLOR <= NUMBER_OF_COLORS;MYCOLOR++){        
-         for (x = 0;x <= NUMBER_OF_ITEMS;x++){
+   for (MYCOLOR = 0;MYCOLOR <= NUMBER_OF_COLORS;MYCOLOR++){        
+        var graphicArray = [];  
         
+        for (x = 0;x <= NUMBER_OF_ITEMS;x++){
+             
             var MID = [],
                         FAR = [],
                         CLOSE = [],
@@ -72,8 +74,8 @@ function getCharacterSprite(NUMBER_OF_ITEMS,graphicsFolder,graphic,spritWidth,sp
               
             }
             
-      //COLORS.push(graphicArray);}   
+      COLORS.push(graphicArray);}   
      
-     characterGfx.push(graphicArray);
+     characterGfx.push(COLORS);
 
 }
