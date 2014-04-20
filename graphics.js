@@ -541,7 +541,7 @@ function recolorImage(img, colour, folder, type){
 			switch (colour) {
 				case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_RED,      COLOUR_GREEN_DARK,      	COLOUR_GREEN,  COLOUR_GREEN_DARK]; 	break;
 				case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW,     COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_ORANGE];     	break;
-				case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED,     	COLOUR_RED,    COLOUR_RED_DARK];   	break;
+				case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED,     	COLOUR_RED_DARK,    COLOUR_BLACK];   	break;
 				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_BLUE_DARK,     	COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];  		break;
 				case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_BLUE_DARK,     COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_BROWN];   break;
 				case COLOUR_CHAR_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_2];     break;
