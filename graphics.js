@@ -482,8 +482,8 @@ function recolorImage(img, colour, folder, type){
 	} else if (folder === "character") {		
 			var palletDefault =                       [COLOUR_RED, COLOUR_BLUE,   COLOUR_GREY_1,      COLOUR_BLACK];
 			switch (colour) {
-                                    case PALETTE_1: pallet =      [COLOUR_GREEN,COLOUR_BLACK,  COLOUR_GREEN,   COLOUR_BLACK];break; 
-                                    case PALETTE_2: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_YLW1_GRN1_GRN2_GRY4: pallet =      [COLOUR_YELLOW,COLOUR_GREEN,  COLOUR_GREEN_DARK,       COLOUR_GREY_4];break; 
+                                    case PALETTE_GRN1_GRN2_GRN1_GRN1: pallet =              [COLOUR_GREEN,COLOUR_GREEN_DARK,  COLOUR_GREEN,   COLOUR_GREEN];break; 
                                     case PALETTE_3: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
                                     case PALETTE_4: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
                                     case PALETTE_5: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 

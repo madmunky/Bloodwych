@@ -21,10 +21,10 @@ function testing(){
             //drawCharacter(characterGfx[IMAGE_CHA_HEAD][3][9][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_BODY][4][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][4][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][3][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //ULRICH
             //drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][11][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_BODY][2][1][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][2][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][2][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //THAI
 //            drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][17][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_BODY][2][1][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][1][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][9][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //MURLOCK
-            drawCharacter(characterGfx[IMAGE_CHA_HEAD][0][8][DISTANCE][DIRECTION],
-                          characterGfx[IMAGE_CHA_BODY][0][0][DISTANCE][DIRECTION],
-                          characterGfx[IMAGE_CHA_ARM][0][0][DISTANCE][DIRECTION],
-                          characterGfx[IMAGE_CHA_LEG][0][4][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //Zothen
+            drawCharacter(characterGfx[IMAGE_CHA_HEAD][1][8][DISTANCE][DIRECTION],
+                          characterGfx[IMAGE_CHA_BODY][1][0][DISTANCE][DIRECTION],
+                          characterGfx[IMAGE_CHA_ARM][1][0][DISTANCE][DIRECTION],
+                          characterGfx[IMAGE_CHA_LEG][1][4][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //Zothen
     }catch(e){PrintLog("Error Drawing Character/Monster: " + e.toString());};
     
 }
