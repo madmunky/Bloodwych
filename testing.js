@@ -16,17 +16,15 @@ function testing(){
     
     try {
         
-            drawCharacter(characterGfx[IMAGE_CHA_HEAD][COLOUR][TYPE][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_BODY][COLOUR][TYPE][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][COLOUR][TYPE][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][COLOUR][TYPE][DISTANCE][DIRECTION],CHAR_FRONT_LEFT,DIRECTION)    
+            drawCharacter(characterGfx[IMAGE_CHA_HEAD][COLOUR][8][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_BODY][COLOUR][TYPE][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][COLOUR][TYPE][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][COLOUR][4][DISTANCE][DIRECTION],CHAR_FRONT_LEFT,DIRECTION)    
+            //drawCharacter(characterGfx[IMAGE_CHA_HEAD][0][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_BODY][0][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][0][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][0][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //ASTROTH
             //drawCharacter(characterGfx[IMAGE_CHA_HEAD][3][9][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_BODY][4][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][4][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][3][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //ULRICH
             //drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][11][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_BODY][2][1][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][2][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][2][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //THAI
-//            drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][17][DISTANCE][DIRECTION],
-//                          characterGfx[IMAGE_CHA_BODY][2][1][DISTANCE][DIRECTION],
-//                          characterGfx[IMAGE_CHA_ARM][1][0][DISTANCE][DIRECTION],
-//                          characterGfx[IMAGE_CHA_LEG][9][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //MURLOCK
-            drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][14][DISTANCE][DIRECTION],
-                          characterGfx[IMAGE_CHA_BODY][COLOUR][1][DISTANCE][DIRECTION],
+//            drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][17][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_BODY][2][1][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][1][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][9][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //MURLOCK
+            drawCharacter(characterGfx[IMAGE_CHA_HEAD][0][8][DISTANCE][DIRECTION],
+                          characterGfx[IMAGE_CHA_BODY][0][0][DISTANCE][DIRECTION],
                           characterGfx[IMAGE_CHA_ARM][0][0][DISTANCE][DIRECTION],
-                          characterGfx[IMAGE_CHA_LEG][2][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //Zothen
+                          characterGfx[IMAGE_CHA_LEG][0][4][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //Zothen
     }catch(e){PrintLog("Error Drawing Character/Monster: " + e.toString());};
     
 }
