@@ -65,6 +65,7 @@ var COLOUR_CHAR_GREEN = 0,
 	COLOUR_CHAR_GREY = 6,
 	COLOUR_CHAR_WHITE = 7,
 	COLOUR_CHAR_BLACK = 8;
+        COLOUR_CHAR_GREEN_LIGHT = 9;
 
 var DIRECTION_NORTH = 0,
 	DIRECTION_EAST = 1,
@@ -143,10 +144,10 @@ $(function() {
 	gfxLoadImage("dungeon", "floor", "switch");
 	
 	//Characters
-	gfxLoadImage("character", "heads", "", 8);	
-	gfxLoadImage("character", "maleArms", "", 8);
-	gfxLoadImage("character", "maleBodies", "", 8);
-	gfxLoadImage("character", "maleLegs", "", 8);
+	gfxLoadImage("character", "heads", "", 9);	
+	gfxLoadImage("character", "maleArms", "", 9);
+	gfxLoadImage("character", "maleBodies", "", 9);
+	gfxLoadImage("character", "maleLegs", "", 9);
 });
 
 document.addEventListener('touchstart', doTouchStart, false);

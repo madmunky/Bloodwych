@@ -520,6 +520,7 @@ function recolorImage(img, colour, folder, type){
 				case COLOUR_CHAR_GREY: pallet =         [COLOUR_ORANGE,COLOUR_GREY_1, COLOUR_GREY_2,      COLOUR_ORANGE];     	break;
 				case COLOUR_CHAR_WHITE: pallet =        [COLOUR_ORANGE,COLOUR_WHITE,  COLOUR_GREY_1,      COLOUR_ORANGE];   	break;
 				case COLOUR_CHAR_BLACK: pallet =        [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];      break;
+                                case COLOUR_CHAR_GREEN_LIGHT: pallet =  [COLOUR_WHITE,COLOUR_GREEN_DARK,  COLOUR_GREEN,   COLOUR_BLACK];      break;
 				default: break;
 			}
 		} else if (type.contains("Arms")) {
@@ -534,7 +535,8 @@ function recolorImage(img, colour, folder, type){
 				case COLOUR_CHAR_GREY: pallet =         [COLOUR_WHITE, COLOUR_GREY_2,      COLOUR_GREY_1,      COLOUR_ORANGE];break;
 				case COLOUR_CHAR_WHITE: pallet =        [COLOUR_WHITE,  COLOUR_WHITE,       COLOUR_GREY_1,      COLOUR_GREY_1];break;
 				case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,  COLOUR_BLACK,       COLOUR_BLUE_DARK,   COLOUR_BLUE_DARK];break;
-				default: break;
+                                case COLOUR_CHAR_GREEN_LIGHT: pallet =  [COLOUR_WHITE,COLOUR_GREEN_DARK,  COLOUR_GREEN,   COLOUR_BLACK];      break;
+                default: break;
 			}
 		} else if (type.contains("heads")) {
 			var palletDefault =                         [COLOUR_RED,     	COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];
@@ -548,6 +550,7 @@ function recolorImage(img, colour, folder, type){
 				case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_GREY_4];     	break;
 				case COLOUR_CHAR_WHITE: pallet =        [COLOUR_WHITE,     	COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_GREY_1];   	break;
 				case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLUE_DARK];      break;
+                                case COLOUR_CHAR_GREEN_LIGHT: pallet =  [COLOUR_WHITE,COLOUR_GREEN_DARK,  COLOUR_GREEN,   COLOUR_BLACK];      break;
 				default: break;
 			}
 		} else if (type.contains("Legs")) {
@@ -562,6 +565,7 @@ function recolorImage(img, colour, folder, type){
 				case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_WHITE,     COLOUR_GREY_1,      COLOUR_GREY_2];     	break;
 				case COLOUR_CHAR_WHITE: pallet =        [COLOUR_GREEN,     	COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_GREEN_DARK];   	break;
 				case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLUE_DARK];      break;
+                                case COLOUR_CHAR_GREEN_LIGHT: pallet =  [COLOUR_WHITE,  COLOUR_WHITE,  COLOUR_GREEN,   COLOUR_GREEN_DARK];      break;
 				default: break;
 			}
 		} else  {
@@ -576,6 +580,7 @@ function recolorImage(img, colour, folder, type){
 				case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_GREY_4];     	break;
 				case COLOUR_CHAR_WHITE: pallet =        [COLOUR_WHITE,     	COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_GREY_1];   	break;
 				case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLUE_DARK];      break;
+                                case COLOUR_CHAR_GREEN_LIGHT: pallet =  [COLOUR_WHITE,COLOUR_GREEN_DARK,  COLOUR_GREEN,   COLOUR_BLACK];      break;
 				default: break;
 			}
 		}

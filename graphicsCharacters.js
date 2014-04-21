@@ -23,7 +23,7 @@ var NUMBER_OF_DISTANCES = 12,
             NUMBER_OF_BODIES = 4,
             NUMBER_OF_LEGS = 4,
             NUMBER_OF_ARMS = 1,
-            NUMBER_OF_COLORS = 7;
+            NUMBER_OF_COLORS = 9;
     
 //imageCharacterArray[BodyPart][Type][Distance][Direction]   
 var characterGfx = [];

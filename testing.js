@@ -22,7 +22,7 @@ function testing(){
             drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][17][DISTANCE][DIRECTION],
                           characterGfx[IMAGE_CHA_BODY][2][1][DISTANCE][DIRECTION],
                           characterGfx[IMAGE_CHA_ARM][1][0][DISTANCE][DIRECTION],
-                          characterGfx[IMAGE_CHA_LEG][0][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //THAI
+                          characterGfx[IMAGE_CHA_LEG][9][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //MURLOCK
     }catch(e){PrintLog("Error Drawing Character/Monster: " + e.toString());};
     
 }
