@@ -1,0 +1,68 @@
+Hacking : Monster Data Structure
+
+
+In the game binary, information about the monsters is stored in batch by tower. 
+
+There are 6 digits in BW which mark the number of monsters per tower at [$171F4]
+
+
+As raw data these can be found as:
+
+                00 48 00 4D 00 53 00 43 00 4F 00 4D
+
+
+This is followed by 300 byte blocks, each containing the detailed information about the monsters, at the following locations;
+
+                [$17200] The Keep
+                [$17500] The Serpent Tower
+                [$17800] The Moon Tower
+                [$17B00] The Dragon Tower
+                [$17E00] The Chaos Tower
+                [$18100] Zendik's Tower
+
+
+At these locations, you find the monster data stored in 6 byte blocks. 
+
+As an example. the following shows you the data for the first 8 monsters in The Keep.
+
+                04 0B 0F 00 15 FF
+                04 16 1A 00 16 FF
+                05 02 00 04 15 FF
+                04 0F 0F 00 2F FF
+                14 03 09 00 11 FF
+                04 06 00 01 14 FF
+                04 06 01 00 14 FF
+                04 06 03 01 14 FF
+
+
+By breaking this down by byte we can begin to understand what this data represents;
+
+                AB CD EF GH IJ KL
+
+
+A = Type of Monster
+    
+     This can be one of three values; 
+     0 - Normal Fighting Monster
+     1 - Spell-casting Monster
+     3 - Arc Bolt Machine
+
+B - The number of the tower floor on which the monster starts.
+
+CD - The X-coordinate postiioning of the tower floor on which the monster starts. 
+
+However, if between two and four monsters are to start in the same location (teamed) this number is left void and given a value of FF on the second to fourth team-members.
+
+EF - The Y-coordinate positioning of the tower floor on which the monster starts. 
+
+GH - The level of the monster. This determines the monsters strength, speed, available spells, and for non-humanoid monsters also the colour of the monster.
+
+In the Extended Levels Vol.1 this also acts as a seed number to help generate the monster's name 
+
+IJ - This is the form / look of the monster. This number represents those given in the monster lookup table.
+
+KL - This is the rather unusual "team-data" number. In the majority of cases this is left blank with the value of FF.
+However, when two monsters are to begin the game "teamed" with the same starting postion, this value simple increases from 00 and beyond, for every teamed-monster.
+
+For example, two monsters both placed at X04 Y06 would have the team-data values of 00 and 01 respectively, and this would continue with the next two teamed monsters in the list having the values of 02 and 03.
+
