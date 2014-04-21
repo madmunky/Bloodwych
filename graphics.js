@@ -480,20 +480,37 @@ function recolorImage(img, colour, folder, type){
 			}
 		}
 	} else if (folder === "character") {		
-			var palletDefault =                             [COLOUR_RED, COLOUR_BLUE,   COLOUR_GREY_1,      COLOUR_BLACK];
+			var palletDefault =                       [COLOUR_RED, COLOUR_BLUE,   COLOUR_GREY_1,      COLOUR_BLACK];
 			switch (colour) {
-				case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_YELLOW,COLOUR_GREEN,  COLOUR_GREEN_DARK,  COLOUR_GREEN_DARK]; 	break;
-                                case COLOUR_CHAR_GREEN_1: pallet =      [COLOUR_WHITE,COLOUR_GREEN_DARK,  COLOUR_GREEN,   COLOUR_BLACK];      break;
-                                case COLOUR_CHAR_GREEN_2: pallet =      [COLOUR_WHITE,COLOUR_GREEN_DARK,  COLOUR_GREEN,   COLOUR_BLACK];      break;
-                                case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_WHITE,COLOUR_YELLOW, COLOUR_ORANGE,      COLOUR_BROWN];     	break;
-				case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,COLOUR_ORANGE,    COLOUR_RED,    COLOUR_RED_DARK];   	break;
-				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_GREY_2,COLOUR_BLUE,  COLOUR_GREY_1,      COLOUR_WHITE];  		break;
-				case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_WHITE,COLOUR_ORANGE, COLOUR_BROWN,       COLOUR_RED_DARK];   break;
-				case COLOUR_CHAR_IRON: pallet =         [COLOUR_ORANGE,COLOUR_GREY_1, COLOUR_GREY_2,      COLOUR_GREY_3];     break;
-				case COLOUR_CHAR_GREY: pallet =         [COLOUR_ORANGE,COLOUR_GREY_1, COLOUR_GREY_2,      COLOUR_ORANGE];     	break;
-				case COLOUR_CHAR_WHITE: pallet =        [COLOUR_ORANGE,COLOUR_WHITE,  COLOUR_GREY_1,      COLOUR_ORANGE];   	break;
-				case COLOUR_CHAR_BLACK: pallet =        [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];      break;
-                                
+                                    case PALETTE_1: pallet =      [COLOUR_GREEN,COLOUR_BLACK,  COLOUR_GREEN,   COLOUR_BLACK];break; 
+                                    case PALETTE_2: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_3: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_4: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_5: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_6: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_7: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_8: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_9: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_10: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_11: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_12: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_13: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_14: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_15: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_16: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_17: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_18: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_19: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_20: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_21: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_22: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_23: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_24: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_25: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_26: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_27: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_28: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
+                                    case PALETTE_29: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break;                         
 				default: break;
 			}
 		} else  {
