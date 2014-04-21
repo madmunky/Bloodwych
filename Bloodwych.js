@@ -145,9 +145,9 @@ $(function() {
 	
 	//Characters
 	gfxLoadImage("character", "heads", "", 9);	
-	gfxLoadImage("character", "maleArms", "", 9);
-	gfxLoadImage("character", "maleBodies", "", 9);
-	gfxLoadImage("character", "maleLegs", "", 9);
+	gfxLoadImage("character", "arms", "", 9);
+	gfxLoadImage("character", "bodies", "", 9);
+	gfxLoadImage("character", "legs", "", 9);
 });
 
 document.addEventListener('touchstart', doTouchStart, false);
