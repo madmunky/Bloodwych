@@ -513,7 +513,7 @@ function recolorImage(img, colour, folder, type){
 			switch (colour) {
 				case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_WHITE,COLOUR_GREEN,  COLOUR_GREEN_DARK,  COLOUR_GREY_4]; 	break;
 				case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_WHITE,COLOUR_YELLOW, COLOUR_ORANGE,      COLOUR_BROWN];     	break;
-				case COLOUR_CHAR_RED: pallet =       	[COLOUR_ORANGE,COLOUR_ORANGE,    COLOUR_RED,    COLOUR_RED_DARK];   	break;
+				case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,COLOUR_ORANGE,    COLOUR_RED,    COLOUR_RED_DARK];   	break;
 				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_GREY_2,COLOUR_BLUE,  COLOUR_GREY_1,      COLOUR_WHITE];  		break;
 				case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_WHITE,COLOUR_ORANGE, COLOUR_BROWN,       COLOUR_RED_DARK];   break;
 				case COLOUR_CHAR_IRON: pallet =         [COLOUR_ORANGE,COLOUR_GREY_1, COLOUR_GREY_2,      COLOUR_GREY_3];     break;
@@ -526,7 +526,7 @@ function recolorImage(img, colour, folder, type){
 			var palletDefault =                             [COLOUR_RED,    COLOUR_BLUE,        COLOUR_GREY_1,      COLOUR_BLACK];
 			switch (colour) {
 				case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_GREEN,  COLOUR_GREEN,       COLOUR_GREEN_DARK,  COLOUR_GREEN];break;
-				case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW, COLOUR_YELLOW,      COLOUR_ORANGE,      COLOUR_ORANGE];break;
+				case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_WHITE, COLOUR_ORANGE,      COLOUR_YELLOW,      COLOUR_ORANGE];break;
 				case COLOUR_CHAR_RED: pallet =       	[COLOUR_ORANGE,    COLOUR_RED,      COLOUR_RED_DARK,    COLOUR_ORANGE];break 
 				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_WHITE,   COLOUR_GREY_1,    COLOUR_BLUE,   COLOUR_GREY_1];break;
 				case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_ORANGE, COLOUR_ORANGE,      COLOUR_BROWN,       COLOUR_ORANGE];break;
@@ -583,11 +583,12 @@ function recolorImage(img, colour, folder, type){
 	for (var i = 0; i < imageData.data.length; i += 4) {
 		if(typeof pallet[0][0] !== "undefined") {
 			for (j = 0; j < pallet.length; j++) {
-				if(imageData.data[i]===palletDefault[j][0] && imageData.data[i+1]===palletDefault[j][1] && imageData.data[i+2]===palletDefault[j][2]) {
+				if(imageData.data[i]===palletDefault[j][0] && imageData.data[i+1]===palletDefault[j][1] && imageData.data[i+2]===palletDefault[j][2] && imageData.data[i+3]===palletDefault[j][3]) {
 					imageData.data[i]=pallet[j][0];
 					imageData.data[i+1]=pallet[j][1];
 					imageData.data[i+2]=pallet[j][2];
-                                        j = j + 3;
+                                        imageData.data[i+3]=pallet[j][3];
+                                        j = j + 4;
 				}
 			}
 		} else if(imageData.data[i]===palletDefault[0] && imageData.data[i+1]===palletDefault[1] && imageData.data[i+2]===palletDefault[2]) {
