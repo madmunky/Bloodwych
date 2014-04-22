@@ -110,14 +110,14 @@ function doKeyDown(e) {
         case KEY_E: player[0].rotateTo(player[0].Rotation + 1);break;    // E KEY
         case KEY_R: player[0].toggleFrontObject();break; //R Key
         case KEY_F: player[0].testMode();break; // F cheat
-        case KEY_PLUS: DIRECTION++; break;
-        case KEY_MINUS: DIRECTION--; break;
-        case KEY_6: COLOUR++; break;
-        case KEY_5: COLOUR--; break;
-        case KEY_7: DISTANCE++; break;
-        case KEY_8: DISTANCE--; break;
-        case KEY_0: TYPE++; break;
-        case KEY_9: TYPE--; break;
+        case KEY_PLUS: testDirection = (testDirection + 1) % 4; break;
+        case KEY_MINUS: testDirection = (testDirection + 3) % 4; break;
+        case KEY_6: break;
+        case KEY_5: break;
+        case KEY_7: testDistance = (testDistance + 1) % 4; break;
+        case KEY_8: testDistance = (testDistance + 3) % 4; break;
+        case KEY_0: testMon1 = (testMon1 + 1) % 256; break;
+        case KEY_9: testMon1 = (testMon1 + 255) % 256; break;
         default: break;
     }
 }

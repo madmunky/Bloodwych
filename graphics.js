@@ -289,12 +289,11 @@ function drawPlayersView(p) {
 	myDIx(ctx, gfx["dungeon"]["background"], background[(p.x + p.y + p.Rotation) % 2], p, scale);
 
 	for (x = 0; x < 19; x++) {
-
 		var BlockType = getHexToBinaryPosition(p.View[x], 12, 4);
-
 		if (BlockType === '2') {
 			drawWoodenObject(p, x);
 		} else {
+			drawMonsterOnPos(p, x);
 			switch (x) {
 				case 0:
 					{
@@ -437,6 +436,15 @@ function drawPlayersView(p) {
 	}
 }
 
+function drawMonsterOnPos(p, pos) {
+	if(pos === 15) { //remove when other positions work
+		var monPos = p.getMonstersInRange(pos);
+		for (i in monPos) {
+			drawPerson(monPos[i].monster.form, CHAR_FRONT_LEFT, maleCharacterSpriteLocations);
+		}
+	}
+}
+
 function drawDoorFrame(p) {
 
 	var HexCode = p.View[18];
@@ -507,6 +515,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][3]], p, scale);
 				}
+				drawMonsterOnPos(p, x);
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -523,6 +532,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][3]], p, scale);
 				}
+				drawMonsterOnPos(p, x);
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -539,6 +549,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][3]], p, scale);
 				}
+				drawMonsterOnPos(p, x);
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -555,6 +566,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][3]], p, scale);
 				}
+				drawMonsterOnPos(p, x);
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -563,8 +575,8 @@ function drawWoodenObject(p, x) {
 	}
 }
 
-function recolourSprite(img,paletteFrom,paletteTo){
-    var c = document.createElement('canvas');
+function recolourSprite(img, paletteFrom, paletteTo) {
+	var c = document.createElement('canvas');
 	var ctx1 = c.getContext("2d");
 	var w = img.width;
 	var h = img.height;
@@ -577,22 +589,22 @@ function recolourSprite(img,paletteFrom,paletteTo){
 
 	// pull the entire image into an array of pixel data
 	var imageData = ctx1.getImageData(0, 0, w, h);
-	
-        
-        for (var i = 0; i < imageData.data.length; i += 4) {
-		
-			for (j = 0; j < paletteTo.length; j++) {
-				if (imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
-					imageData.data[i] = paletteTo[j][0];
-					imageData.data[i + 1] = paletteTo[j][1];
-					imageData.data[i + 2] = paletteTo[j][2];
-					imageData.data[i + 3] = paletteTo[j][3];
-					j = j + 4;
-				}
+
+
+	for (var i = 0; i < imageData.data.length; i += 4) {
+
+		for (j = 0; j < paletteTo.length; j++) {
+			if (imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
+				imageData.data[i] = paletteTo[j][0];
+				imageData.data[i + 1] = paletteTo[j][1];
+				imageData.data[i + 2] = paletteTo[j][2];
+				imageData.data[i + 3] = paletteTo[j][3];
+				j = j + 4;
 			}
-		
-		}	
-        
+		}
+
+	}
+
 	// put the altered data back on the canvas  
 	ctx1.putImageData(imageData, 0, 0);
 	// put the re-colored image back on the image
@@ -691,7 +703,8 @@ function recolorImage(img, colour, folder, type) {
 					break;
 			}
 		}
-	} else if (folder === "character") {
+	}
+	/*else if (folder === "character") {
 		var palletDefault = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, COLOUR_BLACK];
 		switch (colour) {
 			case PALETTE_YEL1_GRN1_GRN2_GRY4:
@@ -820,7 +833,7 @@ function recolorImage(img, colour, folder, type) {
 			default:
 				break;
 		}
-	}
+	}*/
 	for (var i = 0; i < imageData.data.length; i += 4) {
 		if (typeof pallet[0][0] !== "undefined") {
 			for (j = 0; j < pallet.length; j++) {

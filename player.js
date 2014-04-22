@@ -304,13 +304,13 @@ Player.prototype.getChampion = function(loc) {
 }
 
 //Returns a list of monsters and their distance pos relative to the player
-Player.prototype.getMonstersInRange = function() {
+Player.prototype.getMonstersInRange = function(pos2) {
 	var monstersInRange = {};
 	var i = 0;
 	var pos = -1;
 	for(m = 0; m < monster.length; m++) {
 		pos = coordinatesToPos(monster[m].x, monster[m].y, this.x, this.y, this.Rotation);
-		if(monster[m].floor == this.floor && pos > -1) {
+		if(monster[m].floor == this.floor && pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 			monstersInRange[i] = {
 				monster: monster[m],
 				position: pos

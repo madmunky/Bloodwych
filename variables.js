@@ -3,10 +3,6 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 var game;
-var DIRECTION = 0,
-    DISTANCE = 0,
-    TYPE = 0,
-    COLOUR = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = {
@@ -37,7 +33,7 @@ var COLOUR_WHITE = [224, 224, 224, 255],
     COLOUR_GREEN = [0, 192, 0, 255],
     COLOUR_GREEN_DARK = [0, 128, 0, 255],
     COLOUR_BLUE = [64, 128, 224, 255],
-    COLOUR_BLUE_DARK = [0, 0, 224, 255],
+    COLOUR_BLUE_DARK = [32, 32, 224, 255],
     COLOUR_YELLOW = [224, 192, 0, 255],
     COLOUR_PINK = [224, 128, 96, 255],
     COLOUR_BROWN = [160, 64, 32, 255],
@@ -225,7 +221,7 @@ monsterPalette[CHA_MURLOCK] = {
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
 	leg: CHA_LEG_MALE,
-	headPalette: [COLOUR_RED, COLOUR_RED, COLOUR_RED_DARK, COLOUR_BLACK],
+	headPalette: [COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK, COLOUR_BLACK],
 	torsoPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK],
 	armPalette: [COLOUR_WHITE, COLOUR_PINK, COLOUR_YELLOW, COLOUR_PINK],
 	legPalette: [COLOUR_WHITE, COLOUR_WHITE, COLOUR_GREEN, COLOUR_GREEN_DARK]
@@ -275,7 +271,7 @@ monsterPalette[CHA_BALDRICK] = {
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
 	leg: CHA_LEG_MALE,
-	headPalette: [COLOUR_GREEN_DARK, COLOUR_BLUE, COLOUR_BLUE, COLOUR_BLUE_DARK],
+	headPalette: [COLOUR_GREEN_DARK, COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK],
 	torsoPalette: [COLOUR_PINK, COLOUR_YELLOW, COLOUR_GREY_LIGHT, COLOUR_BLUE],
 	armPalette: [COLOUR_YELLOW, COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_PINK],
 	legPalette: [COLOUR_RED, COLOUR_YELLOW, COLOUR_GREY_LIGHT, COLOUR_BLUE]
