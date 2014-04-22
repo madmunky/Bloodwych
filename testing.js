@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var characterSpriteLocations = characterSpriteLocation();
+var maleCharacterSpriteLocations = characterSpriteLocation();
 
 function testing() {
 
@@ -14,32 +14,21 @@ function testing() {
         DIRECTION = 3;
     }
 
-    var mon1 = CHA_ELFRIC;
+    var mon1 = CHA_MURLOCK;
     var mon2 = CHA_BALDRICK;
 
-    //try {
+ drawPerson(mon1,CHAR_FRONT_LEFT,maleCharacterSpriteLocations);
+ drawPerson(mon2,CHAR_FRONT_RIGHT,maleCharacterSpriteLocations);
+ 
+}
 
-       // drawCharacter(characterGfx[IMAGE_CHA_HEAD][8][DISTANCE][DIRECTION], characterGfx[IMAGE_CHA_TORSO][COLOUR][TYPE][DISTANCE][DIRECTION], characterGfx[IMAGE_CHA_ARM][COLOUR][TYPE][DISTANCE][DIRECTION], characterGfx[IMAGE_CHA_LEG][COLOUR][4][DISTANCE][DIRECTION], CHAR_FRONT_LEFT, DIRECTION)
-        //drawCharacter(characterGfx[IMAGE_CHA_HEAD][0][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_TORSO][0][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][0][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][0][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //ASTROTH
-        //drawCharacter(characterGfx[IMAGE_CHA_HEAD][3][9][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_TORSO][4][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][4][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][3][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //ULRICH
-        //drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][11][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_TORSO][2][1][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][2][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][2][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //THAI
-        //            drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][17][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_TORSO][2][1][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][1][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][9][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //MURLOCK
-        
-        //recolourSprite(monsterPalette[mon2].head,MON_PALETTE_DEFAULT,monsterPalette[mon2].headPalette)
-        
-        drawCharacter(recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[mon1].head][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon1].headPalette),
-            recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[mon1].torso][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon1].torsoPalette),
-            recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[mon1].arm][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon1].armPalette),
-            recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[mon1].leg][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon1].legPalette),CHAR_FRONT_LEFT, DIRECTION)
-
-        drawCharacter(recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[mon2].head][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon2].headPalette),
-            recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[mon2].torso][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon2].torsoPalette),
-            recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[mon2].arm][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon2].armPalette),
-            recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[mon2].leg][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon2].legPalette),CHAR_FRONT_RIGHT, DIRECTION)
-    //}catch (e) {
-    //    PrintLog("Error Drawing Character/Monster: " + e.toString());
-    //};
-
+function drawPerson(cID,POSITION,spriteLocations){
+    
+    drawCharacter(recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[cID].head][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[cID].headPalette),
+            recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[cID].torso][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[cID].torsoPalette),
+            recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[cID].arm][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[cID].armPalette),
+            recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[cID].leg][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[cID].legPalette),POSITION, DIRECTION,spriteLocations);
+      
 }
 
 function characterSpriteLocation() {
@@ -154,7 +143,7 @@ function characterSpriteLocation() {
 
 }
 
-function drawCharacter(HEAD, TORSO, ARM, LEG, POSITION, DIRECTION) {
+function drawCharacter(HEAD, TORSO, ARM, LEG, POSITION, DIRECTION,SPRITELOCATIONS) {
 
     var CHAR_OFFSETX = 0,
         CHAR_OFFSETY = 0;
@@ -179,46 +168,49 @@ function drawCharacter(HEAD, TORSO, ARM, LEG, POSITION, DIRECTION) {
 
     }
     try {
+        
+        
         switch (DIRECTION) {
 
             case 0:
                 {
-                    ctx.drawImage(LEG, characterSpriteLocations[DISTANCE][0][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][0][1] + CHAR_OFFSETY, LEG.width * scale, LEG.height * scale);
-                    ctx.drawImage(TORSO, characterSpriteLocations[DISTANCE][1][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][1][1] + CHAR_OFFSETY, TORSO.width * scale, TORSO.height * scale);
-                    ctx.drawImage(HEAD, characterSpriteLocations[DISTANCE][2][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][2][1] + CHAR_OFFSETY, HEAD.width * scale, HEAD.height * scale);
-                    ctx.drawImage(flipImage(ARM), characterSpriteLocations[DISTANCE][3][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][3][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
-                    ctx.drawImage(ARM, characterSpriteLocations[DISTANCE][4][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][4][1] + CHAR_OFFSETY - DISTANCE, ARM.width * scale, ARM.height * scale);
+                    ctx.drawImage(LEG, SPRITELOCATIONS[DISTANCE][0][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][0][1] + CHAR_OFFSETY, LEG.width * scale, LEG.height * scale);
+                    ctx.drawImage(TORSO, SPRITELOCATIONS[DISTANCE][1][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][1][1] + CHAR_OFFSETY, TORSO.width * scale, TORSO.height * scale);
+                    ctx.drawImage(HEAD, SPRITELOCATIONS[DISTANCE][2][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][2][1] + CHAR_OFFSETY, HEAD.width * scale, HEAD.height * scale);
+                    ctx.drawImage(flipImage(ARM), SPRITELOCATIONS[DISTANCE][3][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][3][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
+                    ctx.drawImage(ARM, SPRITELOCATIONS[DISTANCE][4][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][4][1] + CHAR_OFFSETY - DISTANCE, ARM.width * scale, ARM.height * scale);
                 }
                 break;
             case 1:
                 {
-                    ctx.drawImage(LEG, characterSpriteLocations[DISTANCE][5][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][5][1] + CHAR_OFFSETY, LEG.width * scale, LEG.height * scale);
-                    ctx.drawImage(TORSO, characterSpriteLocations[DISTANCE][6][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][6][1] + CHAR_OFFSETY, TORSO.width * scale, TORSO.height * scale);
-                    ctx.drawImage(HEAD, characterSpriteLocations[DISTANCE][7][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][7][1] + CHAR_OFFSETY, HEAD.width * scale, HEAD.height * scale);
-                    ctx.drawImage(flipImage(ARM), characterSpriteLocations[DISTANCE][8][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][8][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
+                    ctx.drawImage(LEG, SPRITELOCATIONS[DISTANCE][5][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][5][1] + CHAR_OFFSETY, LEG.width * scale, LEG.height * scale);
+                    ctx.drawImage(TORSO, SPRITELOCATIONS[DISTANCE][6][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][6][1] + CHAR_OFFSETY, TORSO.width * scale, TORSO.height * scale);
+                    ctx.drawImage(HEAD, SPRITELOCATIONS[DISTANCE][7][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][7][1] + CHAR_OFFSETY, HEAD.width * scale, HEAD.height * scale);
+                    ctx.drawImage(flipImage(ARM), SPRITELOCATIONS[DISTANCE][8][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][8][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
                 }
                 break;
             case 2:
                 {
-                    ctx.drawImage(LEG, characterSpriteLocations[DISTANCE][9][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][9][1] + CHAR_OFFSETY, LEG.width * scale, LEG.height * scale);
-                    ctx.drawImage(TORSO, characterSpriteLocations[DISTANCE][10][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][10][1] + CHAR_OFFSETY, TORSO.width * scale, TORSO.height * scale);
-                    ctx.drawImage(HEAD, characterSpriteLocations[DISTANCE][11][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][11][1] + CHAR_OFFSETY, HEAD.width * scale, HEAD.height * scale);
-                    ctx.drawImage(flipImage(ARM), characterSpriteLocations[DISTANCE][12][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][12][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
+                    ctx.drawImage(LEG, SPRITELOCATIONS[DISTANCE][9][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][9][1] + CHAR_OFFSETY, LEG.width * scale, LEG.height * scale);
+                    ctx.drawImage(TORSO, SPRITELOCATIONS[DISTANCE][10][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][10][1] + CHAR_OFFSETY, TORSO.width * scale, TORSO.height * scale);
+                    ctx.drawImage(HEAD, SPRITELOCATIONS[DISTANCE][11][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][11][1] + CHAR_OFFSETY, HEAD.width * scale, HEAD.height * scale);
+                    ctx.drawImage(flipImage(ARM), SPRITELOCATIONS[DISTANCE][12][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][12][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
                 }
                 break;
             case 3:
                 {
-                    ctx.drawImage(LEG, characterSpriteLocations[DISTANCE][13][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][13][1] + CHAR_OFFSETY, LEG.width * scale, LEG.height * scale);
-                    ctx.drawImage(TORSO, characterSpriteLocations[DISTANCE][14][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][14][1] + CHAR_OFFSETY, TORSO.width * scale, TORSO.height * scale);
-                    ctx.drawImage(HEAD, characterSpriteLocations[DISTANCE][15][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][15][1] + CHAR_OFFSETY, HEAD.width * scale, HEAD.height * scale);
-                    ctx.drawImage(flipImage(ARM), characterSpriteLocations[DISTANCE][17][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][17][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
-                    ctx.drawImage(ARM, characterSpriteLocations[DISTANCE][16][0] + CHAR_OFFSETX, characterSpriteLocations[DISTANCE][16][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
+                    ctx.drawImage(LEG, SPRITELOCATIONS[DISTANCE][13][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][13][1] + CHAR_OFFSETY, LEG.width * scale, LEG.height * scale);
+                    ctx.drawImage(TORSO, SPRITELOCATIONS[DISTANCE][14][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][14][1] + CHAR_OFFSETY, TORSO.width * scale, TORSO.height * scale);
+                    ctx.drawImage(HEAD, SPRITELOCATIONS[DISTANCE][15][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][15][1] + CHAR_OFFSETY, HEAD.width * scale, HEAD.height * scale);
+                    ctx.drawImage(flipImage(ARM), SPRITELOCATIONS[DISTANCE][17][0] + CHAR_OFFSETX, SPRITELOCATIONS[DISTANCE][17][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
+                    ctx.drawImage(ARM, SPRITELOCATIONS[DISTANCE][16][0] + CHAR_OFFSETX, maleCharacterSpriteLocations[DISTANCE][16][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
                 }
                 break;
-
         }
+        
     } catch (e) {
         PrintLog("Error drawCharacter:" + e.toString());
     };
+
 
 }
