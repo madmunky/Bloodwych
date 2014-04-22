@@ -12,12 +12,12 @@
 var characterGfx = [];
 
 
-function getCharacterSprite(NUMBER_OF_ITEMS, graphicsFolder, graphic, spritWidth, spriteHeight, colSize) {
+function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteHeight, colSize) {
 
 
 		var graphicArray = [];
 
-		for (x = 0; x <= NUMBER_OF_ITEMS; x++) {
+		for (x = 0; x < length; x++) {
 
 			var MID = [],
 				FAR = [],
@@ -26,7 +26,7 @@ function getCharacterSprite(NUMBER_OF_ITEMS, graphicsFolder, graphic, spritWidth
 				POSITION = 0;
 
 
-			for (y = 0; y < NUMBER_OF_DISTANCES; y++) {
+			for (y = 0; y < length; y++) {
 
 				switch (y) {
 

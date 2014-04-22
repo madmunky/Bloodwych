@@ -634,22 +634,22 @@ function recolorImage(img, colour, folder, type) {
 					pallet = palletDefault;
 					break;
 				case COLOUR_DECO_DRAGON:
-					pallet = [COLOUR_ORANGE, COLOUR_RED, COLOUR_RED_DARK];
+					pallet = [COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK];
 					break;
 				case COLOUR_DECO_CHAOS:
-					pallet = [COLOUR_WHITE, COLOUR_YELLOW, COLOUR_ORANGE];
+					pallet = [COLOUR_WHITE, COLOUR_YELLOW, COLOUR_PINK];
 					break;
 				case COLOUR_DECO_BRONZE:
-					pallet = [COLOUR_ORANGE, COLOUR_BROWN, COLOUR_RED_DARK];
+					pallet = [COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK];
 					break;
 				case COLOUR_DECO_IRON:
 					pallet = [COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK];
 					break;
 				case COLOUR_DECO_BROWN:
-					pallet = [COLOUR_YELLOW, COLOUR_ORANGE, COLOUR_BROWN];
+					pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN];
 					break;
 				case COLOUR_DECO_TAN:
-					pallet = [COLOUR_YELLOW, COLOUR_ORANGE, COLOUR_RED_DARK];
+					pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_RED_DARK];
 					break;
 				case COLOUR_DECO_BLACK:
 					pallet = [COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK];
@@ -791,7 +791,7 @@ function recolorImage(img, colour, folder, type) {
 				pallet = [COLOUR_RED, COLOUR_GREEN_DARK, COLOUR_GREEN, COLOUR_GREEN_DARK];
 				break;
 			case COLOUR_CHAR_YELLOW:
-				pallet = [COLOUR_YELLOW, COLOUR_YELLOW, COLOUR_ORANGE, COLOUR_ORANGE];
+				pallet = [COLOUR_YELLOW, COLOUR_YELLOW, COLOUR_PINK, COLOUR_PINK];
 				break;
 			case COLOUR_CHAR_RED:
 				pallet = [COLOUR_RED, COLOUR_RED, COLOUR_RED_DARK, COLOUR_RED_DARK];
@@ -800,7 +800,7 @@ function recolorImage(img, colour, folder, type) {
 				pallet = [COLOUR_BLUE, COLOUR_BLUE, COLOUR_BLUE_DARK, COLOUR_BLUE_DARK];
 				break;
 			case COLOUR_CHAR_BRONZE:
-				pallet = [COLOUR_ORANGE, COLOUR_ORANGE, COLOUR_BROWN, COLOUR_BROWN];
+				pallet = [COLOUR_PINK, COLOUR_PINK, COLOUR_BROWN, COLOUR_BROWN];
 				break;
 			case COLOUR_CHAR_IRON:
 				pallet = [COLOUR_GREY_LIGHT, COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_MEDIUM];

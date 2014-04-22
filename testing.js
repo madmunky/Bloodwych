@@ -14,7 +14,10 @@ function testing() {
         DIRECTION = 3;
     }
 
-    try {
+    var mon1 = CHA_ELFRIC;
+    var mon2 = CHA_BALDRICK;
+
+    //try {
 
        // drawCharacter(characterGfx[IMAGE_CHA_HEAD][8][DISTANCE][DIRECTION], characterGfx[IMAGE_CHA_TORSO][COLOUR][TYPE][DISTANCE][DIRECTION], characterGfx[IMAGE_CHA_ARM][COLOUR][TYPE][DISTANCE][DIRECTION], characterGfx[IMAGE_CHA_LEG][COLOUR][4][DISTANCE][DIRECTION], CHAR_FRONT_LEFT, DIRECTION)
         //drawCharacter(characterGfx[IMAGE_CHA_HEAD][0][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_TORSO][0][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][0][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][0][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //ASTROTH
@@ -22,15 +25,20 @@ function testing() {
         //drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][11][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_TORSO][2][1][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][2][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][2][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //THAI
         //            drawCharacter(characterGfx[IMAGE_CHA_HEAD][2][17][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_TORSO][2][1][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_ARM][1][0][DISTANCE][DIRECTION],characterGfx[IMAGE_CHA_LEG][9][0][DISTANCE][DIRECTION],CHAR_FRONT_RIGHT,DIRECTION)    //MURLOCK
         
-        //recolourSprite(monsterPalette[CHA_BLODWYN].head,MON_PALETTE_DEFAULT,monsterPalette[CHA_BLODWYN].headPalette)
+        //recolourSprite(monsterPalette[mon2].head,MON_PALETTE_DEFAULT,monsterPalette[mon2].headPalette)
         
-        drawCharacter(recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[CHA_BLODWYN].head][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[CHA_BLODWYN].headPalette),
-            recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[CHA_BLODWYN].torso][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[CHA_BLODWYN].torsoPalette),
-            recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[CHA_BLODWYN].arm][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[CHA_BLODWYN].armPalette),
-            recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[CHA_BLODWYN].leg][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[CHA_BLODWYN].legPalette),CHAR_FRONT_RIGHT, DIRECTION) //Zothen
-    }catch (e) {
-        PrintLog("Error Drawing Character/Monster: " + e.toString());
-    };
+        drawCharacter(recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[mon1].head][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon1].headPalette),
+            recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[mon1].torso][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon1].torsoPalette),
+            recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[mon1].arm][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon1].armPalette),
+            recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[mon1].leg][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon1].legPalette),CHAR_FRONT_LEFT, DIRECTION)
+
+        drawCharacter(recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[mon2].head][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon2].headPalette),
+            recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[mon2].torso][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon2].torsoPalette),
+            recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[mon2].arm][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon2].armPalette),
+            recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[mon2].leg][DISTANCE][DIRECTION],MON_PALETTE_DEFAULT,monsterPalette[mon2].legPalette),CHAR_FRONT_RIGHT, DIRECTION)
+    //}catch (e) {
+    //    PrintLog("Error Drawing Character/Monster: " + e.toString());
+    //};
 
 }
 
@@ -45,9 +53,9 @@ function characterSpriteLocation() {
                 //Front View
                 new Array(170, 116),
                 new Array(169, 74),
-                new Array(175, 56),
-                new Array(201, 82),
-                new Array(155, 82),
+                new Array(175, 53),
+                new Array(202, 80),
+                new Array(154, 80),
                 //Left View
                 new Array(182, 116),
                 new Array(174, 74),
