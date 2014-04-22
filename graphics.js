@@ -563,6 +563,48 @@ function drawWoodenObject(p, x) {
 	}
 }
 
+function recolourSprite(img,paletteFrom,paletteTo){
+    var c = document.createElement('canvas');
+	var ctx1 = c.getContext("2d");
+	var w = img.width;
+	var h = img.height;
+
+	c.width = w;
+	c.height = h;
+
+	// draw the image on the temporary canvas
+	ctx1.drawImage(img, 0, 0, w, h);
+
+	// pull the entire image into an array of pixel data
+	var imageData = ctx1.getImageData(0, 0, w, h);
+	
+        
+        for (var i = 0; i < imageData.data.length; i += 4) {
+		
+			for (j = 0; j < paletteTo.length; j++) {
+				if (imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
+					imageData.data[i] = paletteTo[j][0];
+					imageData.data[i + 1] = paletteTo[j][1];
+					imageData.data[i + 2] = paletteTo[j][2];
+					imageData.data[i + 3] = paletteTo[j][3];
+					j = j + 4;
+				}
+			}
+		
+		}	
+        
+	// put the altered data back on the canvas  
+	ctx1.putImageData(imageData, 0, 0);
+	// put the re-colored image back on the image
+
+	var img1 = new Image();
+	img1.width = imageData.width;
+	img1.height = imageData.height;
+	img1.src = c.toDataURL();
+
+	return img1;
+}
+
 function recolorImage(img, colour, folder, type) {
 	var c = document.createElement('canvas');
 	var ctx1 = c.getContext("2d");

@@ -12,14 +12,9 @@
 var characterGfx = [];
 
 
-
 function getCharacterSprite(NUMBER_OF_ITEMS, graphicsFolder, graphic, spritWidth, spriteHeight, colSize) {
 
 
-	var MYCOLOR = 7,
-		COLORS = [];
-
-	for (MYCOLOR = 0; MYCOLOR <= NUMBER_OF_COLORS; MYCOLOR++) {
 		var graphicArray = [];
 
 		for (x = 0; x <= NUMBER_OF_ITEMS; x++) {
@@ -37,92 +32,90 @@ function getCharacterSprite(NUMBER_OF_ITEMS, graphicsFolder, graphic, spritWidth
 
 					case 0:
 						{
-							CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth, spriteHeight, false));
+							CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
 							POSITION = POSITION + spriteHeight;
 						};
 						break
 					case 1:
 						{
-							CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth, spriteHeight, false));
-							CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth, spriteHeight, true));
+							CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
+							CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, true));
 							POSITION = POSITION + spriteHeight;
 						};
 						break
 					case 2:
 						{
-							CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth, spriteHeight, false));
+							CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
 							POSITION = POSITION + spriteHeight;
 						};
 						break
 
 					case 3:
 						{
-							MID.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
+							MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
 							POSITION = POSITION + spriteHeight - 2;
 						};
 						break
 					case 4:
 						{
-							MID.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
-							MID.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, true));
+							MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
+							MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, true));
 							POSITION = POSITION + spriteHeight - 2;
 						};
 						break
 					case 5:
 						{
-							MID.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
+							MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
 							POSITION = POSITION + spriteHeight - 2;
 						};
 						break
 
 					case 6:
 						{
-							FAR.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 4, spriteHeight - 4, false));
+							FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 4, spriteHeight - 4, false));
 							POSITION = POSITION + spriteHeight - 4;
 						};
 						break
 					case 7:
 						{
-							FAR.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 4, spriteHeight - 4, false));
-							FAR.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 4, spriteHeight - 4, true));
+							FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 4, spriteHeight - 4, false));
+							FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 4, spriteHeight - 4, true));
 							POSITION = POSITION + spriteHeight - 4;
 						};
 						break
 					case 8:
 						{
-							FAR.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 4, spriteHeight - 4, false));
+							FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 4, spriteHeight - 4, false));
 							POSITION = POSITION + spriteHeight - 4;
 						};
 						break
 
 					case 9:
 						{
-							DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 6, spriteHeight - 6, false));
+							DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 6, spriteHeight - 6, false));
 							POSITION = POSITION + spriteHeight - 4;
 						};
 						break
 					case 10:
 						{
-							DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, spritWidth - 6, spriteHeight - 6, false));
-							DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], x * colSize, POSITION, 5, 6, true));
+							DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 6, spriteHeight - 6, false));
+							DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, 5, 6, true));
 							POSITION = POSITION + spriteHeight - 4;
 						};
 						break
 					case 11:
 						{
-							DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic][MYCOLOR], (x * colSize) + 1, POSITION, spritWidth - 6, spriteHeight - 6, false));
+							DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], (x * colSize) + 1, POSITION, spritWidth - 6, spriteHeight - 6, false));
 						};
 						break
 				}
-
+                            
 			}
-			graphicArray.push(new Array(CLOSE, MID, FAR, DISTANT));
-
+			
+                    graphicArray.push(new Array(CLOSE, MID, FAR, DISTANT));
+        
 		}
 
-		COLORS.push(graphicArray);
-	}
-
-	characterGfx.push(COLORS);
+	characterGfx.push(graphicArray);
 
 }

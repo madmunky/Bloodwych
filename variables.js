@@ -210,6 +210,8 @@ var MON_SPIDER = 16,
 	MON_CRAB = 17;
 
 //[COLOUR_RED, COLOUR_BLUE,   COLOUR_GREY_LIGHT,      COLOUR_BLACK]
+var MON_PALETTE_DEFAULT = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, COLOUR_BLACK];
+
 var monsterPalette = new Array();
 monsterPalette[CHA_BLODWYN] = {
 	head: CHA_HEAD_BLODWYN,
@@ -224,3 +226,4 @@ monsterPalette[CHA_BLODWYN] = {
 
 var monsterMax = 0;
 var monster = new Array();
+

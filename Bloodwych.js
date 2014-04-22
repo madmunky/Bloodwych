@@ -42,10 +42,10 @@ $(function() {
     gfxLoadImage("dungeon", "floor", "switch");
 
     //Characters
-    gfxLoadImage("character", "heads", "", 9);
-    gfxLoadImage("character", "arms", "", 9);
-    gfxLoadImage("character", "torsos", "", 9);
-    gfxLoadImage("character", "legs", "", 9);
+    gfxLoadImage("character", "heads", "");
+    gfxLoadImage("character", "arms", "");
+    gfxLoadImage("character", "torsos", "");
+    gfxLoadImage("character", "legs", "");
 });
 
 document.addEventListener('touchstart', doTouchStart, false);
