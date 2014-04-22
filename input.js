@@ -120,12 +120,4 @@ function doKeyDown(e) {
         case KEY_9: TYPE--; break;
         default: break;
     }
-
-
-    if (b === 0) {
-        b = 1;
-    }
-    else {
-        b = 0;
-    }
 }

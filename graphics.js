@@ -1,9 +1,15 @@
-function SpriteSheetArray(){
+//Declare Arrays for the Graphics
+var gfx = [];
+var gfxPos = SpriteSheetArray();
+var player = new Array();
+var tw = new Tower("MOD0");
 
-  //Convert the graphics sprite sheets into individual images and put them in an array
-  //The Array consists of StartX,StartY,WidthX,HeightY,ScreenX,ScreenY
-  
-  var ImageArray = new Array();
+function SpriteSheetArray() {
+
+	//Convert the graphics sprite sheets into individual images and put them in an array
+	//The Array consists of StartX,StartY,WidthX,HeightY,ScreenX,ScreenY
+
+	var ImageArray = new Array();
 
 	ImageArray[0] = new Array(15, 0, 98, 76, 15, 0);
 	ImageArray[1] = new Array(0, 0, 16, 76, 0, 0);
@@ -37,19 +43,18 @@ function SpriteSheetArray(){
 	ImageArray[29] = new Array(146, 111, 16, 76, 0, 0);
 	ImageArray[30] = new Array(162, 111, 96, 76, 16, 0);
 	ImageArray[31] = new Array(258, 111, 16, 76, 112, 0);
-  
-  return ImageArray;
-  
+
+	return ImageArray;
+
 }
 
 function getTimeStamp() {
-   var now = new Date();
-   return ((now.getMonth() + 1) + '/' + (now.getDate()) + '/' + now.getFullYear() + " " + now.getHours() + ':'
-				 + ((now.getMinutes() < 10) ? ("0" + now.getMinutes()) : (now.getMinutes())) + ':' + ((now.getSeconds() < 10) ? ("0" + now
-				 .getSeconds()) : (now.getSeconds())));
+	var now = new Date();
+	return ((now.getMonth() + 1) + '/' + (now.getDate()) + '/' + now.getFullYear() + " " + now.getHours() + ':' + ((now.getMinutes() < 10) ? ("0" + now.getMinutes()) : (now.getMinutes())) + ':' + ((now.getSeconds() < 10) ? ("0" + now
+		.getSeconds()) : (now.getSeconds())));
 }
 
-function getImage(Hex,d,pos,p,pos18) {
+function getImage(Hex, d, pos, p, pos18) {
 	// Hex = Bloodwych Hex Code
 	// d = direction of required wall (North,East,South,West)
 	// pos = Position on the screen we are drawing
@@ -57,19 +62,27 @@ function getImage(Hex,d,pos,p,pos18) {
 	// This function will return the correct graphic to be draw for the Hex Code passed
 	// I may need to pass the Graphics Position to be drawn so I can work out which graphic
 	// to be return for each wall side.
-        
-//        if (getHexToBinaryPosition(Hex, 12, 4) !== '1'){
-//            if (getHexToBinaryPosition(Hex, 8, 4) === '8'){
-//                PrintLog("Should be drawing something...");
-//            }
-//        }
-        
-        
+
+	//        if (getHexToBinaryPosition(Hex, 12, 4) !== '1'){
+	//            if (getHexToBinaryPosition(Hex, 8, 4) === '8'){
+	//                PrintLog("Should be drawing something...");
+	//            }
+	//        }
+
+
 	switch (getHexToBinaryPosition(Hex, 12, 4)) {
-		case '0': return null; break;
-		case '1': return getStoneWall(Hex,d,pos,p,pos18); break;
-		case '2': return getWoodenObject(Hex,d,pos,p); break;
-		case '3': return getMiscObject(Hex); break;
+		case '0':
+			return null;
+			break;
+		case '1':
+			return getStoneWall(Hex, d, pos, p, pos18);
+			break;
+		case '2':
+			return getWoodenObject(Hex, d, pos, p);
+			break;
+		case '3':
+			return getMiscObject(Hex);
+			break;
 		case '4':
 			if (getHexToBinaryPosition(Hex, 7) == '0') {
 				return gfx["dungeon"]["stairs"]["up"];
@@ -78,12 +91,12 @@ function getImage(Hex,d,pos,p,pos18) {
 			}
 			break;
 		case '5':
-			if(getHexToBinaryPosition(Hex, 4) == '1') {
+			if (getHexToBinaryPosition(Hex, 4) == '1') {
 				var colourDoor = COLOUR_DOOR_VOID;
 			} else {
 				var colourDoor = getHexToBinaryPosition(Hex, 1, 3);
 			}
-			if(getHexToBinaryPosition(Hex, 7) == '0') {
+			if (getHexToBinaryPosition(Hex, 7) == '0') {
 				return gfx["dungeon"]["door"]["open"][colourDoor];
 			} else if (getHexToBinaryPosition(Hex, 6) == '0') {
 				return gfx["dungeon"]["door"]["solid"][colourDoor];
@@ -94,87 +107,115 @@ function getImage(Hex,d,pos,p,pos18) {
 		case '6':
 			//Roof Pit. Can be visible for any floor location
 			if (getHexToBinaryPosition(Hex, 5) == '1') {
-				ctx.drawImage(gfx["dungeon"]["floor"]["pit-up"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ p.PortalX, (gfxPos[pos][5] * scale) + p.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+				ctx.drawImage(gfx["dungeon"]["floor"]["pit-up"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale) + p.PortalX, (gfxPos[pos][5] * scale) + p.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
 			}
-			switch(getHexToBinaryPosition(Hex, 6, 2)) {
-				case '1': return gfx["dungeon"]["floor"]["pit-down"];
-				case '2': return gfx["dungeon"]["floor"]["switch"];
-				default: return null;
+			switch (getHexToBinaryPosition(Hex, 6, 2)) {
+				case '1':
+					return gfx["dungeon"]["floor"]["pit-down"];
+				case '2':
+					return gfx["dungeon"]["floor"]["switch"];
+				default:
+					return null;
 			}
 			break;
-		case '7': return null;
+		case '7':
+			return null;
 		default: //PrintLog("Get Image Failed - " + Hex);
 	}
 }
 
-function getMiscObject(hex){
+function getMiscObject(hex) {
 	var m = getHexToBinaryPosition(hex, 0, 8)
-	if(m == 1) {
+	if (m == 1) {
 		return gfx["dungeon"]["misc"]["pillar"];
 	}
 	return gfx["dungeon"]["misc"]["bed"];
 }
-	
+
 function bin2type(b) {
-		
-		switch (b) {
-			
-			case "00":{return null; break;};
-			case "01":{return gfx["dungeon"]["wood"]["wall"]; break;};
-			case "10":{return gfx["dungeon"]["wood"]["door-open"]; break;};
-			case "11":{return gfx["dungeon"]["wood"]["door"]; break;};
-			default:{return null;};
-		}            
+
+	switch (b) {
+
+		case "00":
+			{
+				return null;
+				break;
+			};
+		case "01":
+			{
+				return gfx["dungeon"]["wood"]["wall"];
+				break;
+			};
+		case "10":
+			{
+				return gfx["dungeon"]["wood"]["door-open"];
+				break;
+			};
+		case "11":
+			{
+				return gfx["dungeon"]["wood"]["door"];
+				break;
+			};
+		default:
+			{
+				return null;
+			};
 	}
-	
-function getStoneWall(HexCode,d,pos,P,pos18) {
+}
+
+function getStoneWall(HexCode, d, pos, P, pos18) {
 	//if (getHexToBinaryPosition(HexCode, 8) == '0') { ???????????????
 	//    return gfx["dungeon"]["stone"]["wall"];
 	//}
-	ctx.drawImage(gfx["dungeon"]["stone"]["wall"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-	if(d == getHexToBinaryPosition(HexCode, 10, 2)) {
+	ctx.drawImage(gfx["dungeon"]["stone"]["wall"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale) + P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+	if (d == getHexToBinaryPosition(HexCode, 10, 2)) {
 		return getWallDeco();
 	}
 	return gfx["dungeon"]["stone"]["wall"];
-	
+
 	function getWallDeco() {
 		var xy = posToCoordinates(pos18, P.x, P.y, P.Rotation);
 		var RND4 = Math.floor(xy["x"] * 1.27 + xy["y"] * 2.68) % 4; //For random banner faces
 		var RND6 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.82) % 6; //For random switches
 		var RND8 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.42) % 8; //For random banner frames
-		try{
+		try {
 			if (getHexToBinaryPosition(HexCode, 8) == '1') { //Wall has something on it
 				if (getHexToBinaryPosition(HexCode, 6, 2) == '0') { //Shelf
 					return gfx["dungeon"]["stone"]["shelf"];
 				} else if (getHexToBinaryPosition(HexCode, 6, 2) == '1') { //Sign
 					if (getHexToBinaryPosition(HexCode, 0, 6) == '0') { //Random Color
-						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][RND8], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-						switch(RND4) {
-							case 0: return gfx["dungeon"]["deco"]["serpent-head"];
-                            case 1: return gfx["dungeon"]["deco"]["dragon-head"];
-							case 2: return gfx["dungeon"]["deco"]["moon-head"];
-							case 3: return gfx["dungeon"]["deco"]["chaos-head"];
-							default: return null;
+						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][RND8], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale) + P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						switch (RND4) {
+							case 0:
+								return gfx["dungeon"]["deco"]["serpent-head"];
+							case 1:
+								return gfx["dungeon"]["deco"]["dragon-head"];
+							case 2:
+								return gfx["dungeon"]["deco"]["moon-head"];
+							case 3:
+								return gfx["dungeon"]["deco"]["chaos-head"];
+							default:
+								return null;
 						}
 					} else if (getHexToBinaryPosition(HexCode, 0, 6) == '1') { //Serpent Flag
-						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_SERPENT], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-						return gfx["dungeon"]["deco"]["serpent-head"];                       
+						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_SERPENT], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale) + P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						return gfx["dungeon"]["deco"]["serpent-head"];
 					} else if (getHexToBinaryPosition(HexCode, 0, 6) == '2') { //Dragon Flag
-						 ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_DRAGON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-						return gfx["dungeon"]["deco"]["dragon-head"];  
+						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_DRAGON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale) + P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						return gfx["dungeon"]["deco"]["dragon-head"];
 					} else if (getHexToBinaryPosition(HexCode, 0, 6) == '3') { //Moon Flag
-						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_MOON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-						return gfx["dungeon"]["deco"]["moon-head"];                     
+						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_MOON], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale) + P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						return gfx["dungeon"]["deco"]["moon-head"];
 					} else if (getHexToBinaryPosition(HexCode, 0, 6) == '4') { //Choas Flag
-						 ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_CHAOS], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] *scale)+ P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+						ctx.drawImage(gfx["dungeon"]["deco"]["banner"][COLOUR_DECO_CHAOS], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale) + P.PortalX, (gfxPos[pos][5] * scale) + P.PortalY, gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
 						return gfx["dungeon"]["deco"]["chaos-head"];
 					} else {
-					   return gfx["dungeon"]["deco"]["script"][RND8];
+						return gfx["dungeon"]["deco"]["script"][RND8];
 					}
 				} else if (getHexToBinaryPosition(HexCode, 6, 2) == '2') { //Switch
-					if(getHexToBinaryPosition(HexCode, 0, 4) == '0') {
+					if (getHexToBinaryPosition(HexCode, 0, 4) == '0') {
 						return gfx["dungeon"]["deco"]["switch-off"][COLOUR_DECO_BLACK]; // Black switch
-					} else if(getHexToBinaryPosition(HexCode, 5) == '1') {
+					} else if (getHexToBinaryPosition(HexCode, 5) == '1') {
 						return gfx["dungeon"]["deco"]["switch-off"][RND6]; // Off switch
 					} else {
 						return gfx["dungeon"]["deco"]["switch"][RND6]; // On switch
@@ -185,39 +226,53 @@ function getStoneWall(HexCode,d,pos,P,pos18) {
 					return gfx["dungeon"]["stone"]["wall"];
 				}
 			}
-		}catch(e){}  
-		 
+		} catch (e) {}
+
 		return gfx["dungeon"]["stone"]["wall"];
 	}
 }
 
 function getWallDirection(d, s) {
-	
+
 	// d = player direction
 	// s = screen gfx position
-	
+
 	//I should be able to use the below in an array to work out all directions
 	//current plus direction = wall face i.e.
 	//If a wall is currently North which is a 0 + player direction. Say Player is facing East = 1
 	// 0 + 1 = 1 (North Wall becomes East)
-	
-	var Wall = [0, 1, 2, 3, 2, 1, 2, 3, 2, 2, 1, 2, 3, 2, 2, 1, 2, 3, 2, 1, 2, 1, 3, 2, 3, 2, 1, 3, 2, 3, 0, 1];        
+
+	var Wall = [0, 1, 2, 3, 2, 1, 2, 3, 2, 2, 1, 2, 3, 2, 2, 1, 2, 3, 2, 1, 2, 1, 3, 2, 3, 2, 1, 3, 2, 3, 0, 1];
 	Wall[s] = (Wall[s] + d) % 4;
 
-	if (debugHigh) {console.log (s + " = " + getDirection(Wall[s]));}
-		
+	if (debugHigh) {
+		console.log(s + " = " + getDirection(Wall[s]));
+	}
+
 	return Wall[s];
 };
 
 function getDirection(n) {
- 
+
 	switch (n) {
-		
-		case 0:{return "North";};
-		case 1:{return "East";};
-		case 2:{return "South";};
-		case 3:{return "West";};
-	
+
+		case 0:
+			{
+				return "North";
+			};
+		case 1:
+			{
+				return "East";
+			};
+		case 2:
+			{
+				return "South";
+			};
+		case 3:
+			{
+				return "West";
+			};
+
 	}
 };
 
@@ -227,219 +282,296 @@ function getDirection(n) {
 // drawn for each block, if the block is a Wall or Wooden object which
 // has 4 sides we draw each of the sides, if it is not a Wooden object
 // or Wall we just draw a single image.
+
 function drawPlayersView(p) {
 	debugTextPrint(p); //see bloodwych.js
-	
+
 	myDIx(ctx, gfx["dungeon"]["background"], background[(p.x + p.y + p.Rotation) % 2], p, scale);
 
-	for (x = 0;x < 19;x++){
-	  
+	for (x = 0; x < 19; x++) {
+
 		var BlockType = getHexToBinaryPosition(p.View[x], 12, 4);
-	  
+
 		if (BlockType === '2') {
-			drawWoodenObject(p,x);
+			drawWoodenObject(p, x);
 		} else {
-			switch (x){
-				case 0:{
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,28),28,p, x), gfxPos[28], p, scale);
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,27),27,p, x), gfxPos[27], p, scale);
-				};break;
-				case 1:{
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,26),26,p, x), gfxPos[26], p, scale);
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,25),25,p, x), gfxPos[25], p, scale);
-				};break;
-				case 2:{
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,27),27,p, x), gfxPos[27], p, scale);
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,23),23,p, x), gfxPos[23], p, scale);
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,22),22,p, x), gfxPos[22], p, scale);
-				};break;
-				case 3:{
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,26),26,p, x), gfxPos[26], p, scale);
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,21),21,p, x), gfxPos[21], p, scale);
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,20),20,p, x), gfxPos[20], p, scale);                
-				};break;
-				case 4:{
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,22),22,p, x), gfxPos[22], p, scale);
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,21),21,p, x), gfxPos[21], p, scale);
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,16),16,p, x), gfxPos[16], p, scale);                
-				};break;
-				case 5:{                   
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,24),24,p, x), gfxPos[24], p, scale);
-				};break;
-				case 6:{                  
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,19),19,p, x), gfxPos[19], p, scale);
-				};break;    
-				case 7:{
-					if (BlockType === '1') {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,17),17,p, x), gfxPos[17], p, scale);
-					}
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,18),18,p, x), gfxPos[18], p, scale);                
-				};break;
-				case 8:{
-					if (BlockType === '1') {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,15),15,p, x), gfxPos[15], p, scale);
-					}
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,14),14,p, x), gfxPos[14], p, scale);              
-				};break;
-				case 9:{
-					if (BlockType === '1') {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,15),15,p, x), gfxPos[15], p, scale);
-					}
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,11),11,p, x), gfxPos[11], p, scale);                               
-				};break;
-				case 10:{
-					if (BlockType === '1' || BlockType === '4') {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,12),12,p, x), gfxPos[12], p, scale);
-					}
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,13),13,p, x), gfxPos[13], p, scale);                
-				};break;
-				case 11:{
-					if (BlockType === '1' || BlockType === '4') {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,10),10,p, x), gfxPos[10], p, scale);
-					}
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,9),9,p, x), gfxPos[9], p, scale);
-				};break;
-				case 12:{
-					if (BlockType === '1') {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,10),10,p, x), gfxPos[10], p, scale);                
-					}
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,6),6,p, x), gfxPos[6], p, scale);     
-				};break;
-				case 13:{
-					if (BlockType === '1' || BlockType === '4') {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,7),7,p, x), gfxPos[7], p, scale);
-					}
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,8),8,p, x), gfxPos[8], p, scale);               
-				};break;
-				case 14:{
-					if (BlockType === '1' || BlockType === '4') {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,5),5,p, x), gfxPos[5], p, scale);
-					}
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,4),4,p, x), gfxPos[4], p, scale);               
-				};break;
-				case 15:{
-					if (BlockType === '1') {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,5),5,p, x), gfxPos[5], p, scale);
-					}
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,2),2,p, x), gfxPos[2], p, scale);
-				};break;
-				case 16:{
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,3),3,p, x), gfxPos[3], p, scale);
-				};break;
-				case 17:{
-					myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,1),1,p, x), gfxPos[1], p, scale);
-				};break;
-				case 18:{  
-					if (BlockType === '5') {
-						drawDoorFrame(p);
-					} else {
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,31),31,p, x), gfxPos[31], p, scale);
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,29),29,p, x), gfxPos[29], p, scale);
-						myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,30),30,p, x), gfxPos[30], p, scale);
-				   };                          
-				};break;
-			 }
+			switch (x) {
+				case 0:
+					{
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 28), 28, p, x), gfxPos[28], p, scale);
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 27), 27, p, x), gfxPos[27], p, scale);
+					};
+					break;
+				case 1:
+					{
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 26), 26, p, x), gfxPos[26], p, scale);
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 25), 25, p, x), gfxPos[25], p, scale);
+					};
+					break;
+				case 2:
+					{
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 27), 27, p, x), gfxPos[27], p, scale);
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 23), 23, p, x), gfxPos[23], p, scale);
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 22), 22, p, x), gfxPos[22], p, scale);
+					};
+					break;
+				case 3:
+					{
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 26), 26, p, x), gfxPos[26], p, scale);
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 21), 21, p, x), gfxPos[21], p, scale);
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 20), 20, p, x), gfxPos[20], p, scale);
+					};
+					break;
+				case 4:
+					{
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 22), 22, p, x), gfxPos[22], p, scale);
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 21), 21, p, x), gfxPos[21], p, scale);
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 16), 16, p, x), gfxPos[16], p, scale);
+					};
+					break;
+				case 5:
+					{
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 24), 24, p, x), gfxPos[24], p, scale);
+					};
+					break;
+				case 6:
+					{
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 19), 19, p, x), gfxPos[19], p, scale);
+					};
+					break;
+				case 7:
+					{
+						if (BlockType === '1') {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 17), 17, p, x), gfxPos[17], p, scale);
+						}
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 18), 18, p, x), gfxPos[18], p, scale);
+					};
+					break;
+				case 8:
+					{
+						if (BlockType === '1') {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 15), 15, p, x), gfxPos[15], p, scale);
+						}
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 14), 14, p, x), gfxPos[14], p, scale);
+					};
+					break;
+				case 9:
+					{
+						if (BlockType === '1') {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 15), 15, p, x), gfxPos[15], p, scale);
+						}
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 11), 11, p, x), gfxPos[11], p, scale);
+					};
+					break;
+				case 10:
+					{
+						if (BlockType === '1' || BlockType === '4') {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 12), 12, p, x), gfxPos[12], p, scale);
+						}
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 13), 13, p, x), gfxPos[13], p, scale);
+					};
+					break;
+				case 11:
+					{
+						if (BlockType === '1' || BlockType === '4') {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 10), 10, p, x), gfxPos[10], p, scale);
+						}
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 9), 9, p, x), gfxPos[9], p, scale);
+					};
+					break;
+				case 12:
+					{
+						if (BlockType === '1') {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 10), 10, p, x), gfxPos[10], p, scale);
+						}
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 6), 6, p, x), gfxPos[6], p, scale);
+					};
+					break;
+				case 13:
+					{
+						if (BlockType === '1' || BlockType === '4') {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 7), 7, p, x), gfxPos[7], p, scale);
+						}
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 8), 8, p, x), gfxPos[8], p, scale);
+					};
+					break;
+				case 14:
+					{
+						if (BlockType === '1' || BlockType === '4') {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 5), 5, p, x), gfxPos[5], p, scale);
+						}
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 4), 4, p, x), gfxPos[4], p, scale);
+					};
+					break;
+				case 15:
+					{
+						if (BlockType === '1') {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 5), 5, p, x), gfxPos[5], p, scale);
+						}
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 2), 2, p, x), gfxPos[2], p, scale);
+					};
+					break;
+				case 16:
+					{
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 3), 3, p, x), gfxPos[3], p, scale);
+					};
+					break;
+				case 17:
+					{
+						myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 1), 1, p, x), gfxPos[1], p, scale);
+					};
+					break;
+				case 18:
+					{
+						if (BlockType === '5') {
+							drawDoorFrame(p);
+						} else {
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 31), 31, p, x), gfxPos[31], p, scale);
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 29), 29, p, x), gfxPos[29], p, scale);
+							myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 30), 30, p, x), gfxPos[30], p, scale);
+						};
+					};
+					break;
+			}
 		}
 	}
-} 
+}
 
-function drawDoorFrame(p){
-		
-		var HexCode = p.View[18];
-	  
-		var BB = parseInt(HexCode.substring(1, 2),16);
-		
-		if (BB >= 0 & BB <= 3 || BB >= 8 & BB <= 11) { //"North/South"
-			if (p.Rotation === 0 || p.Rotation === 2) {
-				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,29),29,p), gfxPos[29], p, scale);
-				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,31),31,p), gfxPos[31], p, scale);
-			}
-			else {
-				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,30),30,p), gfxPos[30], p, scale);                               
-			}
-		} else if (BB >= 4 & BB <= 7 || BB >= 12 & BB <= 15) { //"East/West"
-			if (p.Rotation === 1 || p.Rotation === 3) {
-				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,29),29,p), gfxPos[29], p, scale);
-				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,31),31,p), gfxPos[31], p, scale);                   
-			}
-			else {
-				myDIx(ctx, getImage(p.View[x],getWallDirection(p.Rotation,30),30,p), gfxPos[30], p, scale);
-			}
+function drawDoorFrame(p) {
+
+	var HexCode = p.View[18];
+
+	var BB = parseInt(HexCode.substring(1, 2), 16);
+
+	if (BB >= 0 & BB <= 3 || BB >= 8 & BB <= 11) { //"North/South"
+		if (p.Rotation === 0 || p.Rotation === 2) {
+			myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 29), 29, p), gfxPos[29], p, scale);
+			myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 31), 31, p), gfxPos[31], p, scale);
+		} else {
+			myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 30), 30, p), gfxPos[30], p, scale);
+		}
+	} else if (BB >= 4 & BB <= 7 || BB >= 12 & BB <= 15) { //"East/West"
+		if (p.Rotation === 1 || p.Rotation === 3) {
+			myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 29), 29, p), gfxPos[29], p, scale);
+			myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 31), 31, p), gfxPos[31], p, scale);
+		} else {
+			myDIx(ctx, getImage(p.View[x], getWallDirection(p.Rotation, 30), 30, p), gfxPos[30], p, scale);
 		}
 	}
+}
 
-function drawWoodenObject(p,x) {
+function drawWoodenObject(p, x) {
 	// p = Player
 	// x = Current Block being drawn
-	
+
 	//We create an array of all the sides for each 18 blocks
 	//because wooden walls have 4 sides me need to loop though them all
 	//and return the correct wall depending on the players rotation
 	var BlockSides = [];
-	BlockSides[0] = [-1,-1,28,27];
-	BlockSides[1] = [-1,26,25,-1];
-	BlockSides[2] = [-1,27,23,22];
-	BlockSides[3] = [-1,21,20,26];
-	BlockSides[4] = [-1,22,16,21];
-	BlockSides[5] = [28,-1,-1,24];
-	BlockSides[6] = [25,19,-1,-1];
-	BlockSides[7] = [23,24,18,17];
-	BlockSides[8] = [20,15,14,19];
-	BlockSides[9] = [16,17,11,15];
-	BlockSides[10] = [18,-1,13,12];
-	BlockSides[11] = [14,10,9,-1];
-	BlockSides[12] = [11,12,6,10];
-	BlockSides[13] = [13,-1,8,7];
-	BlockSides[14] = [9,5,4,-1];
-	BlockSides[15] = [6,7,2,5];
-	BlockSides[16] = [8,-1,-1,3];
-	BlockSides[17] = [4,1,-1,-1];
-	BlockSides[18] = [2,3,-1,1];
-	
-	var b = hex2bin(p.View[x].substring(0,2));
+	BlockSides[0] = [-1, -1, 28, 27];
+	BlockSides[1] = [-1, 26, 25, -1];
+	BlockSides[2] = [-1, 27, 23, 22];
+	BlockSides[3] = [-1, 21, 20, 26];
+	BlockSides[4] = [-1, 22, 16, 21];
+	BlockSides[5] = [28, -1, -1, 24];
+	BlockSides[6] = [25, 19, -1, -1];
+	BlockSides[7] = [23, 24, 18, 17];
+	BlockSides[8] = [20, 15, 14, 19];
+	BlockSides[9] = [16, 17, 11, 15];
+	BlockSides[10] = [18, -1, 13, 12];
+	BlockSides[11] = [14, 10, 9, -1];
+	BlockSides[12] = [11, 12, 6, 10];
+	BlockSides[13] = [13, -1, 8, 7];
+	BlockSides[14] = [9, 5, 4, -1];
+	BlockSides[15] = [6, 7, 2, 5];
+	BlockSides[16] = [8, -1, -1, 3];
+	BlockSides[17] = [4, 1, -1, -1];
+	BlockSides[18] = [2, 3, -1, 1];
+
+	var b = hex2bin(p.View[x].substring(0, 2));
 	var s = [];
-	s[0] = b.substring(6,8); //North Face
-	s[1] = b.substring(4,6); //East Face
-	s[2] = b.substring(2,4); //South Face
-	s[3] = b.substring(0,2); //West Face
-	
-	switch (p.Rotation){
-			case 0:{                        
-					if (BlockSides[x][0] > -1){myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][0]], p, scale);}
-					if (BlockSides[x][1] > -1){myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][1]], p, scale);}                        
-					if (BlockSides[x][3] > -1){myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][3]], p, scale);}
-					if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][2]], p, scale);}
-					};break;
-			case 1:{                        
-					if (BlockSides[x][0] > -1){myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][0]], p, scale);}
-					if (BlockSides[x][1] > -1){myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][1]], p, scale);}                        
-					if (BlockSides[x][3] > -1){myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][3]], p, scale);}
-					if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][2]], p, scale);}
-					};break;
-			case 2:{                        
-					if (BlockSides[x][0] > -1){myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][0]], p, scale);}
-					if (BlockSides[x][1] > -1){myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][1]], p, scale);}
-					if (BlockSides[x][3] > -1){myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][3]], p, scale);}
-					if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][2]], p, scale);}
-					};break;
-			case 3:{                        
-					if (BlockSides[x][0] > -1){myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][0]], p, scale);}
-					if (BlockSides[x][1] > -1){myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][1]], p, scale);}
-					if (BlockSides[x][3] > -1){myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][3]], p, scale);}
-					if (BlockSides[x][2] > -1){myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][2]], p, scale);}
-					};break;
-			}
+	s[0] = b.substring(6, 8); //North Face
+	s[1] = b.substring(4, 6); //East Face
+	s[2] = b.substring(2, 4); //South Face
+	s[3] = b.substring(0, 2); //West Face
+
+	switch (p.Rotation) {
+		case 0:
+			{
+				if (BlockSides[x][0] > -1) {
+					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][0]], p, scale);
+				}
+				if (BlockSides[x][1] > -1) {
+					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][1]], p, scale);
+				}
+				if (BlockSides[x][3] > -1) {
+					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][3]], p, scale);
+				}
+				if (BlockSides[x][2] > -1) {
+					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][2]], p, scale);
+				}
+			};
+			break;
+		case 1:
+			{
+				if (BlockSides[x][0] > -1) {
+					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][0]], p, scale);
+				}
+				if (BlockSides[x][1] > -1) {
+					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][1]], p, scale);
+				}
+				if (BlockSides[x][3] > -1) {
+					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][3]], p, scale);
+				}
+				if (BlockSides[x][2] > -1) {
+					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][2]], p, scale);
+				}
+			};
+			break;
+		case 2:
+			{
+				if (BlockSides[x][0] > -1) {
+					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][0]], p, scale);
+				}
+				if (BlockSides[x][1] > -1) {
+					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][1]], p, scale);
+				}
+				if (BlockSides[x][3] > -1) {
+					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][3]], p, scale);
+				}
+				if (BlockSides[x][2] > -1) {
+					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][2]], p, scale);
+				}
+			};
+			break;
+		case 3:
+			{
+				if (BlockSides[x][0] > -1) {
+					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][0]], p, scale);
+				}
+				if (BlockSides[x][1] > -1) {
+					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][1]], p, scale);
+				}
+				if (BlockSides[x][3] > -1) {
+					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][3]], p, scale);
+				}
+				if (BlockSides[x][2] > -1) {
+					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][2]], p, scale);
+				}
+			};
+			break;
+	}
 }
 
-function recolorImage(img, colour, folder, type){
+function recolorImage(img, colour, folder, type) {
 	var c = document.createElement('canvas');
-	var ctx1=c.getContext("2d");
+	var ctx1 = c.getContext("2d");
 	var w = img.width;
 	var h = img.height;
 
 	c.width = w;
 	c.height = h;
-	
+
 	// draw the image on the temporary canvas
 	ctx1.drawImage(img, 0, 0, w, h);
 
@@ -451,99 +583,217 @@ function recolorImage(img, colour, folder, type){
 	// change any old rgb to the new-rgb
 	if (folder === "dungeon") {
 		if (type === "deco") {
-			var palletDefault =                            [COLOUR_GREY_1,     COLOUR_BLUE,        COLOUR_BLUE_DARK];
+			var palletDefault = [COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK];
 			switch (colour) {
-				case COLOUR_DECO_SERPENT: pallet =      [COLOUR_YELLOW,     COLOUR_GREEN,       COLOUR_GREEN_DARK]; break;
-				case COLOUR_DECO_MOON: pallet =         palletDefault;                                                 break;
-				case COLOUR_DECO_DRAGON: pallet =       [COLOUR_ORANGE,     COLOUR_RED,         COLOUR_RED_DARK];   break;
-				case COLOUR_DECO_CHAOS: pallet =        [COLOUR_WHITE,      COLOUR_YELLOW,      COLOUR_ORANGE];     break;
-				case COLOUR_DECO_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_RED_DARK];   break;
-				case COLOUR_DECO_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_3];     break;
-				case COLOUR_DECO_BROWN: pallet =        [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_BROWN];      break;
-				case COLOUR_DECO_TAN: pallet =          [COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_RED_DARK];   break;
-				case COLOUR_DECO_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,       COLOUR_BLACK];      break;
-				default: break;
+				case COLOUR_DECO_SERPENT:
+					pallet = [COLOUR_YELLOW, COLOUR_GREEN, COLOUR_GREEN_DARK];
+					break;
+				case COLOUR_DECO_MOON:
+					pallet = palletDefault;
+					break;
+				case COLOUR_DECO_DRAGON:
+					pallet = [COLOUR_ORANGE, COLOUR_RED, COLOUR_RED_DARK];
+					break;
+				case COLOUR_DECO_CHAOS:
+					pallet = [COLOUR_WHITE, COLOUR_YELLOW, COLOUR_ORANGE];
+					break;
+				case COLOUR_DECO_BRONZE:
+					pallet = [COLOUR_ORANGE, COLOUR_BROWN, COLOUR_RED_DARK];
+					break;
+				case COLOUR_DECO_IRON:
+					pallet = [COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK];
+					break;
+				case COLOUR_DECO_BROWN:
+					pallet = [COLOUR_YELLOW, COLOUR_ORANGE, COLOUR_BROWN];
+					break;
+				case COLOUR_DECO_TAN:
+					pallet = [COLOUR_YELLOW, COLOUR_ORANGE, COLOUR_RED_DARK];
+					break;
+				case COLOUR_DECO_BLACK:
+					pallet = [COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK];
+					break;
+				default:
+					break;
 			}
 		} else if (type === "door") {
 			var palletDefault = COLOUR_BLUE;
 			switch (colour) {
-				case COLOUR_DOOR_NORMAL: pallet =       COLOUR_GREY_4;  break;
-				case COLOUR_DOOR_BRONZE: pallet =       COLOUR_RED_DARK;break;
-				case COLOUR_DOOR_IRON: pallet =         COLOUR_GREY_1;  break;
-				case COLOUR_DOOR_SERPENT: pallet =      COLOUR_GREEN;   break;
-				case COLOUR_DOOR_CHAOS: pallet =        COLOUR_YELLOW;  break;
-				case COLOUR_DOOR_DRAGON: pallet =       COLOUR_RED;     break;
-				case COLOUR_DOOR_MOON: pallet =         palletDefault;     break;
-				case COLOUR_DOOR_CHROMATIC: pallet =    COLOUR_WHITE;   break;
-				case COLOUR_DOOR_VOID: pallet =         COLOUR_BLACK;   break;
-				default: break;
+				case COLOUR_DOOR_NORMAL:
+					pallet = COLOUR_GREY_DARKEST;
+					break;
+				case COLOUR_DOOR_BRONZE:
+					pallet = COLOUR_RED_DARK;
+					break;
+				case COLOUR_DOOR_IRON:
+					pallet = COLOUR_GREY_LIGHT;
+					break;
+				case COLOUR_DOOR_SERPENT:
+					pallet = COLOUR_GREEN;
+					break;
+				case COLOUR_DOOR_CHAOS:
+					pallet = COLOUR_YELLOW;
+					break;
+				case COLOUR_DOOR_DRAGON:
+					pallet = COLOUR_RED;
+					break;
+				case COLOUR_DOOR_MOON:
+					pallet = palletDefault;
+					break;
+				case COLOUR_DOOR_CHROMATIC:
+					pallet = COLOUR_WHITE;
+					break;
+				case COLOUR_DOOR_VOID:
+					pallet = COLOUR_BLACK;
+					break;
+				default:
+					break;
 			}
 		}
-	} else if (folder === "character") {		
-			var palletDefault =                       [COLOUR_RED, COLOUR_BLUE,   COLOUR_GREY_1,      COLOUR_BLACK];
-			switch (colour) {
-                                    case PALETTE_YLW1_GRN1_GRN2_GRY4: pallet =      [COLOUR_YELLOW,COLOUR_GREEN,  COLOUR_GREEN_DARK,       COLOUR_GREY_4];break; 
-                                    case PALETTE_GRN1_GRN2_GRN1_GRN1: pallet =              [COLOUR_GREEN,COLOUR_GREEN_DARK,  COLOUR_GREEN,   COLOUR_GREEN];break; 
-                                    case PALETTE_3: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_4: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_5: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_6: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_7: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_8: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_9: pallet =      [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_10: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_11: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_12: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_13: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_14: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_15: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_16: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_17: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_18: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_19: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_20: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_21: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_22: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_23: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_24: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_25: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_26: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_27: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_28: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break; 
-                                    case PALETTE_29: pallet =     [COLOUR_WHITE,COLOUR_BLACK,  COLOUR_BLUE_DARK,   COLOUR_BLACK];break;                         
-				default: break;
-			}
-		} else  {
-			var palletDefault =                         [COLOUR_RED,     	COLOUR_BLUE,     	COLOUR_GREY_1,      COLOUR_BLACK];
-			switch (colour) {
-				case COLOUR_CHAR_GREEN: pallet =      	[COLOUR_RED,      COLOUR_GREEN_DARK,      	COLOUR_GREEN,  COLOUR_GREEN_DARK]; 	break;
-				case COLOUR_CHAR_YELLOW: pallet =       [COLOUR_YELLOW,     COLOUR_YELLOW,     COLOUR_ORANGE,      COLOUR_ORANGE];     	break;
-				case COLOUR_CHAR_RED: pallet =       	[COLOUR_RED,     	COLOUR_RED,     	COLOUR_RED_DARK,    COLOUR_RED_DARK];   	break;
-				case COLOUR_CHAR_BLUE: pallet =         [COLOUR_BLUE,     	COLOUR_BLUE,     	COLOUR_BLUE_DARK,      COLOUR_BLUE_DARK];  		break;
-				case COLOUR_CHAR_BRONZE: pallet =       [COLOUR_ORANGE,     COLOUR_ORANGE,     COLOUR_BROWN,       COLOUR_BROWN];   break;
-				case COLOUR_CHAR_IRON: pallet =         [COLOUR_GREY_1,     COLOUR_GREY_1,     COLOUR_GREY_2,      COLOUR_GREY_2];     break;
-				case COLOUR_CHAR_GREY: pallet =         [COLOUR_GREY_3,     COLOUR_GREY_3,     COLOUR_GREY_4,      COLOUR_GREY_4];     	break;
-				case COLOUR_CHAR_WHITE: pallet =        [COLOUR_WHITE,     	COLOUR_WHITE,     	COLOUR_GREY_1,      COLOUR_GREY_1];   	break;
-				case COLOUR_CHAR_BLACK: pallet =        [COLOUR_BLACK,      COLOUR_BLACK,      COLOUR_BLUE_DARK,   COLOUR_BLUE_DARK];      break;
-                                case COLOUR_CHAR_GREEN_LIGHT: pallet =  [COLOUR_WHITE,COLOUR_GREEN_DARK,  COLOUR_GREEN,   COLOUR_BLACK];      break;
-				default: break;
-			}
-		}	
+	} else if (folder === "character") {
+		var palletDefault = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, COLOUR_BLACK];
+		switch (colour) {
+			case PALETTE_YEL1_GRN1_GRN2_GRY4:
+				pallet = [COLOUR_YELLOW, COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_GREY_DARKEST];
+				break;
+			case PALETTE_GRN1_GRN2_GRN1_GRN1:
+				pallet = [COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_GREEN, COLOUR_GREEN];
+				break;
+			case PALETTE_3:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_4:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_5:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_6:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_7:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_8:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_9:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_10:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_11:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_12:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_13:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_14:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_15:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_16:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_17:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_18:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_19:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_20:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_21:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_22:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_23:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_24:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_25:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_26:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_27:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_28:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			case PALETTE_29:
+				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
+				break;
+			default:
+				break;
+		}
+	} else {
+		var palletDefault = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, COLOUR_BLACK];
+		switch (colour) {
+			case COLOUR_CHAR_GREEN:
+				pallet = [COLOUR_RED, COLOUR_GREEN_DARK, COLOUR_GREEN, COLOUR_GREEN_DARK];
+				break;
+			case COLOUR_CHAR_YELLOW:
+				pallet = [COLOUR_YELLOW, COLOUR_YELLOW, COLOUR_ORANGE, COLOUR_ORANGE];
+				break;
+			case COLOUR_CHAR_RED:
+				pallet = [COLOUR_RED, COLOUR_RED, COLOUR_RED_DARK, COLOUR_RED_DARK];
+				break;
+			case COLOUR_CHAR_BLUE:
+				pallet = [COLOUR_BLUE, COLOUR_BLUE, COLOUR_BLUE_DARK, COLOUR_BLUE_DARK];
+				break;
+			case COLOUR_CHAR_BRONZE:
+				pallet = [COLOUR_ORANGE, COLOUR_ORANGE, COLOUR_BROWN, COLOUR_BROWN];
+				break;
+			case COLOUR_CHAR_IRON:
+				pallet = [COLOUR_GREY_LIGHT, COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_MEDIUM];
+				break;
+			case COLOUR_CHAR_GREY:
+				pallet = [COLOUR_GREY_DARK, COLOUR_GREY_DARK, COLOUR_GREY_DARKEST, COLOUR_GREY_DARKEST];
+				break;
+			case COLOUR_CHAR_WHITE:
+				pallet = [COLOUR_WHITE, COLOUR_WHITE, COLOUR_GREY_LIGHT, COLOUR_GREY_LIGHT];
+				break;
+			case COLOUR_CHAR_BLACK:
+				pallet = [COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLUE_DARK];
+				break;
+			case COLOUR_CHAR_GREEN_LIGHT:
+				pallet = [COLOUR_WHITE, COLOUR_GREEN_DARK, COLOUR_GREEN, COLOUR_BLACK];
+				break;
+			default:
+				break;
+		}
+	}
 	for (var i = 0; i < imageData.data.length; i += 4) {
-		if(typeof pallet[0][0] !== "undefined") {
+		if (typeof pallet[0][0] !== "undefined") {
 			for (j = 0; j < pallet.length; j++) {
-				if(imageData.data[i]===palletDefault[j][0] && imageData.data[i+1]===palletDefault[j][1] && imageData.data[i+2]===palletDefault[j][2] && imageData.data[i+3]===palletDefault[j][3]) {
-					imageData.data[i]=pallet[j][0];
-					imageData.data[i+1]=pallet[j][1];
-					imageData.data[i+2]=pallet[j][2];
-                                        imageData.data[i+3]=pallet[j][3];
-                                        j = j + 4;
+				if (imageData.data[i] === palletDefault[j][0] && imageData.data[i + 1] === palletDefault[j][1] && imageData.data[i + 2] === palletDefault[j][2] && imageData.data[i + 3] === palletDefault[j][3]) {
+					imageData.data[i] = pallet[j][0];
+					imageData.data[i + 1] = pallet[j][1];
+					imageData.data[i + 2] = pallet[j][2];
+					imageData.data[i + 3] = pallet[j][3];
+					j = j + 4;
 				}
 			}
-		} else if(imageData.data[i]===palletDefault[0] && imageData.data[i+1]===palletDefault[1] && imageData.data[i+2]===palletDefault[2]) {
-			imageData.data[i]=pallet[0];
-			imageData.data[i+1]=pallet[1];
-			imageData.data[i+2]=pallet[2];
+		} else if (imageData.data[i] === palletDefault[0] && imageData.data[i + 1] === palletDefault[1] && imageData.data[i + 2] === palletDefault[2]) {
+			imageData.data[i] = pallet[0];
+			imageData.data[i + 1] = pallet[1];
+			imageData.data[i + 2] = pallet[2];
 		}
 		/* else if(imageData.data[i]===palletDefault[1][0] && imageData.data[i+1]===palletDefault[1][1] && imageData.data[i+2]===palletDefault[1][2]){
 			// change to your new rgb
@@ -558,9 +808,9 @@ function recolorImage(img, colour, folder, type){
 		}*/
 	}
 	// put the altered data back on the canvas  
-	ctx1.putImageData(imageData,0,0);
+	ctx1.putImageData(imageData, 0, 0);
 	// put the re-colored image back on the image
-	
+
 	var img1 = new Image();
 	img1.width = imageData.width;
 	img1.height = imageData.height;
@@ -568,4 +818,3 @@ function recolorImage(img, colour, folder, type){
 
 	return img1;
 }
-
