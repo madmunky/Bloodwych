@@ -440,7 +440,7 @@ function drawMonsterOnPos(p, pos) {
 	if(pos === 15) { //remove when other positions work
 		var monPos = p.getMonstersInRange(pos);
 		for (i in monPos) {
-			drawPerson(monPos[i].monster.form, CHAR_FRONT_LEFT, maleCharacterSpriteLocations);
+			p.drawMonster(monPos[i].monster, monPos[i].distance, monPos[i].gfxCoord);
 		}
 	}
 }

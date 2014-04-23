@@ -12,7 +12,7 @@ var testDirection = 0,
 
 function testing() {
 
-    drawPerson(testMon1, CHAR_SOLO, maleCharacterSpriteLocations);
+    drawPerson(testMon1, CHAR_FRONT_LEFT, maleCharacterSpriteLocations);
     //drawPerson(testMon2,CHAR_FRONT_RIGHT,maleCharacterSpriteLocations);
 
 }
@@ -63,7 +63,7 @@ function characterSpriteLocation() {
 
 
     var myArray = [];
-    for (x = 0; x < 4; x++) {
+    for (var x = 0; x < 4; x++) {
 
         if (x === 0) {
             myArray.push(new Array(
