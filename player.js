@@ -489,7 +489,7 @@ Player.prototype.getMonsterGfxOffset = function(pos, sub) {
 			};
 		case 15:
 			return {
-				x: 65, //testing
+				x: 0, //testing
 				y: 0
 			};
 		case 16:
