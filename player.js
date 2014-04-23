@@ -305,6 +305,7 @@ Player.prototype.getChampion = function(loc) {
 
 //Returns a list of monsters and their distance pos relative to the player
 Player.prototype.getMonstersInRange = function(pos2) {
+	var p = this;
 	var monstersInRange = {};
 	var i = 0;
 	var pos = -1;
@@ -313,7 +314,8 @@ Player.prototype.getMonstersInRange = function(pos2) {
 		if(monster[m].floor == this.floor && pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 			monstersInRange[i] = {
 				monster: monster[m],
-				position: pos
+				position: pos,
+				distance: p.getDistanceFromPlayer(pos)
 			};
 			i++;
 		}
@@ -333,13 +335,13 @@ Player.prototype.testMode = function(id) {
             for(i = 0; i < 17; i++) {
                         var t = this.View[i].substring(2,4);
                      if (this.View[i].substring(2,4) === "80"){
-                         window.alert("Distance: " + this.distanceFromPlayer(i) + " Code: " + this.View[i]);
+                         window.alert("Distance: " + this.getDistanceFromPlayer(i) + " Code: " + this.View[i]);
                      }
                     }
 	}catch(e){PrintLog(e.toString());};}
 }
 
-Player.prototype.distanceFromPlayer = function(block) {
+Player.prototype.getDistanceFromPlayer = function(block) {
     
     switch (block) {
         
