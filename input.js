@@ -114,8 +114,8 @@ function doKeyDown(e) {
         case KEY_MINUS: testDirection = (testDirection + 3) % 4; break;
         case KEY_6: break;
         case KEY_5: break;
-        case KEY_7: testDistance = (Distance + 1) % 4; break;
-        case KEY_8: testDistance = (Distance + 3) % 4; break;
+        case KEY_7: testDistance = (testDistance + 1) % 4;PrintLog("Distance: " + testDistance); break;
+        case KEY_8: testDistance = (testDistance + 3) % 4;PrintLog("Distance: " + testDistance); break;
         case KEY_0: testMon1 = (testMon1 + 1) % 256; break;
         case KEY_9: testMon1 = (testMon1 + 255) % 256; break;
         default: break;

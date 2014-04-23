@@ -26,7 +26,7 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 				POSITION = 0;
 
 
-			for (y = 0; y < length; y++) {
+			for (y = 0; y < NUMBER_OF_DISTANCES*4; y++) {
 
 				switch (y) {
 

@@ -18,7 +18,8 @@ function testing() {
 }
 
 function drawPerson(cID, POSITION, spriteLocations) {
-    if (typeof monsterPalette[cID] !== "undefined") {
+    try{
+    if (typeof monsterPalette[cID] !== "undefined" && characterGfx.length > 0) {
         switch (testDirection) {
 
             case 0:
@@ -55,7 +56,7 @@ function drawPerson(cID, POSITION, spriteLocations) {
                 break;
 
         }
-    }
+    }}catch(e){};
 
 }
 

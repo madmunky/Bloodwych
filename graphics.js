@@ -293,7 +293,7 @@ function drawPlayersView(p) {
 		if (BlockType === '2') {
 			drawWoodenObject(p, x);
 		} else {
-			drawMonsterOnPos(p, x);
+			//drawMonsterOnPos(p, x);
 			switch (x) {
 				case 0:
 					{
@@ -515,7 +515,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				drawMonsterOnPos(p, x);
+				//drawMonsterOnPos(p, x);
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -532,7 +532,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				drawMonsterOnPos(p, x);
+				//drawMonsterOnPos(p, x);
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -549,7 +549,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				drawMonsterOnPos(p, x);
+				//drawMonsterOnPos(p, x);
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -566,7 +566,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				drawMonsterOnPos(p, x);
+				//drawMonsterOnPos(p, x);
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][2]], p, scale);
 				}
