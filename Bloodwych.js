@@ -67,7 +67,7 @@ function updatePlayerViewScreen() {
     ctx.fillText("Floor: " + player[0].floor.toString(), 0, 310);
     ctx.fillText("FPS: " + fps.getFPS(), 0, 350);
     player[1].updateView(tw.floor[player[1].floor].Map);
-    drawPlayersView(player[1]);
+    //drawPlayersView(player[1]);
     ctx.fillText("Player 2", 410, 250);
     ctx.fillText("X:" + player[1].x.toString() + "\n Y:" + player[1].y.toString(), 410, 270);
     ctx.fillText("Current Map: " + Maps[CurrentMap], 410, 290);
