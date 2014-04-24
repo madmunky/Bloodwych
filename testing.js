@@ -7,7 +7,7 @@ var maleCharacterSpriteLocations = characterSpriteLocation();
 var testMon1 = CHA_THAI_CHANG;
 var testMon2 = CHA_MURLOCK;
 var testDirection = 0,
-    testDistance = 3;
+    testDistance = 0;
 
 
 function testing() {
@@ -71,23 +71,23 @@ function characterSpriteLocation() {
                 //Front View
                 new Array(57 * scale, 39 * scale),
                 new Array(57 * scale, 25 * scale),
-                new Array(59 * scale, 19 * scale),
+                new Array(59 * scale, 18 * scale),
                 new Array(68 * scale, 27 * scale),
                 new Array(52 * scale, 27 * scale),
                 //Left View
                 new Array(60 * scale, 39 * scale),
                 new Array(58 * scale, 25 * scale),
-                new Array(57 * scale, 19 * scale),
+                new Array(58 * scale, 17 * scale),
                 new Array(61 * scale, 27 * scale),
                 //Right View
                 new Array(55 * scale, 39 * scale),
                 new Array(58 * scale, 25 * scale),
-                new Array(62 * scale, 19 * scale),
+                new Array(62 * scale, 17 * scale),
                 new Array(61 * scale, 27 * scale),
                 //Rear View
                 new Array(57 * scale, 39 * scale),
                 new Array(57 * scale, 25 * scale),
-                new Array(59 * scale, 19 * scale),
+                new Array(59 * scale, 17 * scale),
                 new Array(68 * scale, 27 * scale),
                 new Array(52 * scale, 27 * scale)));
         }
@@ -98,7 +98,7 @@ function characterSpriteLocation() {
                 new Array(58 * scale, 24 * scale),
                 new Array(60 * scale, 18 * scale),
                 new Array(68 * scale, 25 * scale),
-                new Array(54 * scale, 26 * scale),
+                new Array(54 * scale, 25 * scale),
                 //Left View
                 new Array(61 * scale, 36 * scale),
                 new Array(60 * scale, 24 * scale),
@@ -123,7 +123,7 @@ function characterSpriteLocation() {
                 new Array(60 * scale, 26 * scale),
                 new Array(61 * scale, 21 * scale),
                 new Array(68 * scale, 27 * scale),
-                new Array(56 * scale, 29 * scale),
+                new Array(56 * scale, 27 * scale),
                 //Left View
                 new Array(62 * scale, 36 * scale),
                 new Array(61 * scale, 26 * scale),
@@ -148,7 +148,7 @@ function characterSpriteLocation() {
                 new Array(60 * scale, 28 * scale),
                 new Array(62 * scale, 25 * scale),
                 new Array(68 * scale, 24 * scale),
-                new Array(58 * scale, 27 * scale),
+                new Array(58 * scale, 24 * scale),
                 //Left View
                 new Array(60 * scale, 34 * scale),
                 new Array(58 * scale, 28 * scale),
@@ -160,11 +160,11 @@ function characterSpriteLocation() {
                 new Array(62 * scale, 24 * scale),
                 new Array(61 * scale, 24 * scale),
                 //Rear View
-                new Array(60 * scale, 35 * scale),
-                new Array(62 * scale, 29 * scale),
-                new Array(62 * scale, 26 * scale),
+                new Array(59 * scale, 35 * scale),
+                new Array(61 * scale, 29 * scale),
+                new Array(61 * scale, 26 * scale),
                 new Array(68 * scale, 24 * scale),
-                new Array(58 * scale, 24 * scale)));
+                new Array(58 * scale, 25 * scale)));
         }
     }
 
@@ -207,7 +207,7 @@ function drawCharacter(HEAD, TORSO, ARM, LEG, POSITION, testDirection, SPRITELOC
                     ctx.drawImage(TORSO, SPRITELOCATIONS[testDistance][1][0] + CHAR_OFFSETX, SPRITELOCATIONS[testDistance][1][1] + CHAR_OFFSETY, TORSO.width * scale, TORSO.height * scale);
                     ctx.drawImage(HEAD, SPRITELOCATIONS[testDistance][2][0] + CHAR_OFFSETX, SPRITELOCATIONS[testDistance][2][1] + CHAR_OFFSETY, HEAD.width * scale, HEAD.height * scale);
                     ctx.drawImage(flipImage(ARM), SPRITELOCATIONS[testDistance][3][0] + CHAR_OFFSETX, SPRITELOCATIONS[testDistance][3][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
-                    ctx.drawImage(ARM, SPRITELOCATIONS[testDistance][4][0] + CHAR_OFFSETX, SPRITELOCATIONS[testDistance][4][1] + CHAR_OFFSETY - testDistance, ARM.width * scale, ARM.height * scale);
+                    ctx.drawImage(ARM, SPRITELOCATIONS[testDistance][4][0] + CHAR_OFFSETX, SPRITELOCATIONS[testDistance][4][1] + CHAR_OFFSETY, ARM.width * scale, ARM.height * scale);
                 }
                 break;
             case 1:

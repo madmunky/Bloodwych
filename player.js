@@ -517,7 +517,7 @@ Player.prototype.getMonsterGfxOffset = function(pos, sub) {
 }
 
 function initPlayers() {
-	player[0] = new Player(0, 12, 23, 3, 1, 0, 0);
+	player[0] = new Player(0, 12, 23, 3, 2, 0, 0);
 	player[1] = new Player(1, 14, 22, 3, 0, 410, 0);
 }
 

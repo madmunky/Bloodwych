@@ -1,5 +1,5 @@
 //Setup some global Varibles for needed
-var scale = 1;
+var scale = 4;
 var debug = true;
 var debugHigh = false;
 var game;
