@@ -105,7 +105,9 @@ var CHAR_DISTANCE_CLOSE = 0,
 
 var CHAR_SOLO = 0,
     CHAR_FRONT_LEFT = 1,
-    CHAR_FRONT_RIGHT = 2;
+    CHAR_FRONT_RIGHT = 2,
+    CHAR_BACK_LEFT = 3,
+    CHAR_BACK_RIGHT = 4;
 
 var Maps = ["MOD0", "MOON", "CHAOS", "DRAGON", "ZENDIK", "SERP", "BWEXTTW1", "BWEXTTW2", "BWEXTTW3", "BWEXTTW4", "horace_mod0", "horace_moon", "horace_drag", "horace_serp", "horace_zendik", "horace_chaos"];
 

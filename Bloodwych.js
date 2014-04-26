@@ -53,7 +53,7 @@ document.addEventListener('touchstart', doTouchStart, false);
 
 
 function updatePlayerViewScreen() {
-    //try {                  
+            
     $('section.debug p').html('');
     clearCanvas();
     configCanvas();
@@ -72,10 +72,9 @@ function updatePlayerViewScreen() {
     ctx.fillText("X:" + player[1].x.toString() + "\n Y:" + player[1].y.toString(), 410, 270);
     ctx.fillText("Current Map: " + Maps[CurrentMap], 410, 290);
     ctx.fillText("Floor: " + player[1].floor.toString(), 410, 310);
-    testing();
-    //}catch(e){
-    //	PrintLog("Error: " + e.toString());
-    //}
+   // drawParty(player[1],0,1,8,11);
+   // drawParty(player[0],4,5,6,7);
+    
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {

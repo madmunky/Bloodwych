@@ -338,19 +338,24 @@ Player.prototype.getMonstersInRange = function(pos2) {
 Player.prototype.drawMonster = function(m, distance, offset) {
 	var form = m.form;
 	var loc = characterSpriteLocation();
+        var p = this;
+                
     if (typeof monsterPalette[form] !== "undefined") {
-		var leg = recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[form].leg][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].legPalette);
-		ctx.drawImage(leg, loc[distance][0][0] + offset.x, loc[distance][0][1] + offset.y, leg.width * scale, leg.height * scale);
-
-		var torso = recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[form].torso][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].torsoPalette);
-		ctx.drawImage(torso, loc[distance][1][0] + offset.x, loc[distance][1][1] + offset.y, torso.width * scale, torso.height * scale);
-		
-		var head = recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[form].head][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].headPalette);
-		ctx.drawImage(head, loc[distance][2][0] + offset.x, loc[distance][2][1] + offset.y, head.width * scale, head.height * scale);
-		
-		var arm = recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[form].arm][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].armPalette);
-		ctx.drawImage(flipImage(arm), loc[distance][3][0] + offset.x, loc[distance][3][1] + offset.y, arm.width * scale, arm.height * scale);
-		ctx.drawImage(arm, loc[distance][4][0] + offset.x, loc[distance][4][1] + offset.y - distance, arm.width * scale, arm.height * scale);
+            drawPerson(p, form, CHAR_SOLO, maleCharacterSpriteLocations,DIRECTION_NORTH,distance);
+        
+        
+//		var leg = recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[form].leg][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].legPalette);
+//		ctx.drawImage(leg, loc[distance][0][0] + offset.x, loc[distance][0][1] + offset.y, leg.width * scale, leg.height * scale);
+//
+//		var torso = recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[form].torso][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].torsoPalette);
+//		ctx.drawImage(torso, loc[distance][1][0] + offset.x, loc[distance][1][1] + offset.y, torso.width * scale, torso.height * scale);
+//		
+//		var head = recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[form].head][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].headPalette);
+//		ctx.drawImage(head, loc[distance][2][0] + offset.x, loc[distance][2][1] + offset.y, head.width * scale, head.height * scale);
+//		
+//		var arm = recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[form].arm][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].armPalette);
+//		ctx.drawImage(flipImage(arm), loc[distance][3][0] + offset.x, loc[distance][3][1] + offset.y, arm.width * scale, arm.height * scale);
+//		ctx.drawImage(arm, loc[distance][4][0] + offset.x, loc[distance][4][1] + offset.y - distance, arm.width * scale, arm.height * scale);
     }
 }
 
