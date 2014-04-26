@@ -28,7 +28,7 @@ Run = function() {
             if (gfx['character']['legs'].width > 0 && !Loaded){
                 gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS,'character','heads',12,12,16);
                 gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS,'character','torsos',15,14,16);
-                gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS,'character','legs',16,26,16);
+                gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS,'character','legs',15,26,16);
                 gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS,'character','arms',9,18,16);
                 Loaded = true;
             }

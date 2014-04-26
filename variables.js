@@ -1,5 +1,5 @@
 //Setup some global Varibles for needed
-var scale = 4;
+var scale = 3;
 var debug = true;
 var debugHigh = false;
 var game;
@@ -155,7 +155,7 @@ var IMAGE_CHA_DISTANCE_1 = 0,
 
 var NUMBER_OF_DISTANCES = 4,
 	NUMBER_OF_HEADS = 18,
-	NUMBER_OF_TORSOS = 5,
+	NUMBER_OF_TORSOS = 6,
 	NUMBER_OF_LEGS = 9,
 	NUMBER_OF_ARMS = 3;
 
