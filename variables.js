@@ -3,7 +3,7 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 var game;
-var drawMonsters = false;
+var drawMonsters = true;
 var testDistance = 0;
 var testDirection = 0;
 
@@ -106,11 +106,11 @@ var CHAR_DISTANCE_CLOSE = 0,
 	CHAR_DISTANCE_FAR = 2,
 	CHAR_DISTANCE_DISTANT = 3;
 
-var CHAR_FRONT_SOLO = 0,
-	CHAR_FRONT_LEFT = 1,
-	CHAR_FRONT_RIGHT = 2,
-	CHAR_BACK_LEFT = 3,
-	CHAR_BACK_RIGHT = 4;
+var CHAR_FRONT_SOLO = -1,
+	CHAR_FRONT_LEFT = 0,
+	CHAR_FRONT_RIGHT = 3,
+	CHAR_BACK_RIGHT = 2,
+	CHAR_BACK_LEFT = 1;
 
 var Maps = ["MOD0", "MOON", "CHAOS", "DRAGON", "ZENDIK", "SERP", "BWEXTTW1", "BWEXTTW2", "BWEXTTW3", "BWEXTTW4", "horace_mod0", "horace_moon", "horace_drag", "horace_serp", "horace_zendik", "horace_chaos"];
 
@@ -488,6 +488,39 @@ monsterPalette[24] = {
 	torsoPalette: [COLOUR_RED, COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_GREY_DARKEST],
 	armPalette: [COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_GREEN, COLOUR_GREEN],
 	legPalette: [COLOUR_RED, COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_GREY_DARKEST]
+};
+monsterPalette[25] = {
+	gender: CHA_GENDER_MALE,
+	head: CHA_HEAD_DEMON,
+	torso: CHA_TORSO_MALE_NAKED,
+	arm: CHA_ARM_MALE,
+	leg: CHA_LEG_DEMON,
+	headPalette: [COLOUR_GREEN, COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN],
+	torsoPalette: [COLOUR_RED, COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN],
+	armPalette: [COLOUR_YELLOW, COLOUR_PINK, COLOUR_YELLOW, COLOUR_YELLOW],
+	legPalette: [COLOUR_RED, COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN]
+};
+monsterPalette[26] = {
+	gender: CHA_GENDER_MALE,
+	head: CHA_HEAD_DEMON,
+	torso: CHA_TORSO_MALE_NAKED,
+	arm: CHA_ARM_MALE,
+	leg: CHA_LEG_DEMON,
+	headPalette: [COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK],
+	torsoPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK],
+	armPalette: [COLOUR_PINK, COLOUR_BROWN, COLOUR_PINK, COLOUR_PINK],
+	legPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK]
+};
+monsterPalette[27] = {
+	gender: CHA_GENDER_MALE,
+	head: CHA_HEAD_DEMON,
+	torso: CHA_TORSO_MALE_NAKED,
+	arm: CHA_ARM_MALE,
+	leg: CHA_LEG_DEMON,
+	headPalette: [COLOUR_YELLOW, COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK],
+	torsoPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK],
+	armPalette: [COLOUR_PINK, COLOUR_RED, COLOUR_PINK, COLOUR_PINK],
+	legPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK]
 };
 
 /*monsterPalette[999] = {

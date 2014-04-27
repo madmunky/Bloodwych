@@ -326,9 +326,8 @@ Player.prototype.getMonstersInRange = function(pos2) {
 			monstersInRange[i] = {
 				monster: monster[m],
 				position: pos,
-				subsquare: 0,
-				distance: p.getDistanceByPos(pos),
-				gfxCoord: p.getMonsterGfxOffset(pos, (monster[m].subsquare + p.Rotation) % 4)
+				distance: getMonsterDistanceByPos(pos),
+				gfxCoord: getMonsterGfxOffset(pos, (monster[m].square + p.Rotation) % 4)
 			};
 			i++;
 		}
@@ -338,25 +337,26 @@ Player.prototype.getMonstersInRange = function(pos2) {
 Player.prototype.drawMonster = function(m, distance, offset) {
 	var form = m.form;
 	var loc = characterSpriteLocation();
-        var p = this;
-                
-    if (typeof monsterPalette[form] !== "undefined") {
-            drawPerson(p, form, CHAR_SOLO, maleCharacterSpriteLocations,DIRECTION_NORTH,distance);
-        
-        
-//		var leg = recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[form].leg][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].legPalette);
-//		ctx.drawImage(leg, loc[distance][0][0] + offset.x, loc[distance][0][1] + offset.y, leg.width * scale, leg.height * scale);
-//
-//		var torso = recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[form].torso][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].torsoPalette);
-//		ctx.drawImage(torso, loc[distance][1][0] + offset.x, loc[distance][1][1] + offset.y, torso.width * scale, torso.height * scale);
-//		
-//		var head = recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[form].head][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].headPalette);
-//		ctx.drawImage(head, loc[distance][2][0] + offset.x, loc[distance][2][1] + offset.y, head.width * scale, head.height * scale);
-//		
-//		var arm = recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[form].arm][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].armPalette);
-//		ctx.drawImage(flipImage(arm), loc[distance][3][0] + offset.x, loc[distance][3][1] + offset.y, arm.width * scale, arm.height * scale);
-//		ctx.drawImage(arm, loc[distance][4][0] + offset.x, loc[distance][4][1] + offset.y - distance, arm.width * scale, arm.height * scale);
-    }
+	var p = this;
+
+	if (typeof monsterPalette[form] !== "undefined") {
+		//    drawPerson(p, form, CHAR_SOLO, maleCharacterSpriteLocations,DIRECTION_NORTH,distance);
+		drawCharacter(m.id, (m.d + p.Rotation) % 4, distance, this, offset);
+
+
+		//		var leg = recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[form].leg][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].legPalette);
+		//		ctx.drawImage(leg, loc[distance][0][0] + offset.x, loc[distance][0][1] + offset.y, leg.width * scale, leg.height * scale);
+		//
+		//		var torso = recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[form].torso][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].torsoPalette);
+		//		ctx.drawImage(torso, loc[distance][1][0] + offset.x, loc[distance][1][1] + offset.y, torso.width * scale, torso.height * scale);
+		//		
+		//		var head = recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[form].head][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].headPalette);
+		//		ctx.drawImage(head, loc[distance][2][0] + offset.x, loc[distance][2][1] + offset.y, head.width * scale, head.height * scale);
+		//		
+		//		var arm = recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[form].arm][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].armPalette);
+		//		ctx.drawImage(flipImage(arm), loc[distance][3][0] + offset.x, loc[distance][3][1] + offset.y, arm.width * scale, arm.height * scale);
+		//		ctx.drawImage(arm, loc[distance][4][0] + offset.x, loc[distance][4][1] + offset.y - distance, arm.width * scale, arm.height * scale);
+	}
 }
 
 Player.prototype.testMode = function(id) {
@@ -371,153 +371,12 @@ Player.prototype.testMode = function(id) {
 			for (i = 0; i < 17; i++) {
 				var t = this.View[i].substring(2, 4);
 				if (this.View[i].substring(2, 4) === "80") {
-					window.alert("Distance: " + this.getDistanceByPos(i) + " Code: " + this.View[i]);
+					window.alert("Distance: " + getMonsterDistanceByPos(i) + " Code: " + this.View[i]);
 				}
 			}
 		} catch (e) {
 			PrintLog(e.toString());
 		};
-	}
-}
-
-Player.prototype.getDistanceByPos = function(pos) {
-
-	switch (pos) {
-
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-			return CHAR_DISTANCE_DISTANT;
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-		case 9:
-			return CHAR_DISTANCE_DISTANT;
-		case 10:
-		case 11:
-		case 12:
-			return CHAR_DISTANCE_FAR;
-		case 13:
-		case 14:
-		case 15:
-		case 16:
-		case 17:
-		case 18:
-			//return CHAR_DISTANCE_MID;
-			return CHAR_DISTANCE_CLOSE;
-
-		default:
-			return 0;
-
-	}
-
-}
-Player.prototype.getMonsterGfxOffset = function(pos, sub) {
-	switch (pos) {
-		case 0:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 1:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 2:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 3:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 4:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 5:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 6:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 7:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 8:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 9:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 10:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 11:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 12:
-			return {
-				x: 0,
-				y: 5
-			};
-		case 13:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 14:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 15:
-			return {
-				x: 0, //testing
-				y: 0
-			};
-		case 16:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 17:
-			return {
-				x: 0,
-				y: 0
-			};
-		case 18:
-			return {
-				x: 0,
-				y: 0
-			};
-
-		default:
-			return {
-				x: 0,
-				y: 0
-			};
 	}
 }
 

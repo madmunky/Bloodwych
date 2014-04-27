@@ -437,12 +437,12 @@ function drawPlayersView(p) {
 }
 
 function drawMonsterOnPos(p, pos) {
-	//if(pos === 15) { //remove when other positions work
+	if(pos > -1 && pos <= 15) { //remove when other positions work
 		var monPos = p.getMonstersInRange(pos);
 		for (i in monPos) {
 			p.drawMonster(monPos[i].monster, monPos[i].distance, monPos[i].gfxCoord);
 		}
-	//}
+	}
 }
 
 function drawDoorFrame(p) {
