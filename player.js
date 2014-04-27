@@ -322,12 +322,16 @@ Player.prototype.getMonstersInRange = function(pos2) {
 	var pos = -1;
 	for (m = 0; m < monster.length; m++) {
 		pos = coordinatesToPos(monster[m].x, monster[m].y, this.x, this.y, this.Rotation);
+		var sq = CHAR_FRONT_SOLO;
+		if(monster[m].square > -1) {
+			var sq = (monster[m].square + p.Rotation) % 4;
+		}
 		if (monster[m].floor == this.floor && pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 			monstersInRange[i] = {
 				monster: monster[m],
 				position: pos,
 				distance: getMonsterDistanceByPos(pos),
-				gfxCoord: getMonsterGfxOffset(pos, (monster[m].square + p.Rotation) % 4)
+				gfxCoord: getMonsterGfxOffset(pos, sq)
 			};
 			i++;
 		}

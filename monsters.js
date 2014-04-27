@@ -22,7 +22,7 @@ Monster.prototype.toString = function() {
 	if (this.champId !== -1) {
 		cha = ', champion:' + getChampionName(this.champId) + '(' + this.champId + ')';
 	}
-	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', teamId:' + this.teamId + cha + ']';
+	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', teamId:' + this.teamId + cha + ']';
 }
 
 Monster.prototype.getGfx = function() {
@@ -70,7 +70,7 @@ function initMonsters(t) {
 	}
 
 	//TESTING!!! REMOVE AFTER
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, -1); monsterMax++;
+	monster[monsterMax] = new Monster(monsterMax, 0, 0, 27, 3, 13, 23, 3, -1); monsterMax++;
 }
 
 function getMonsterGfxOffset(pos, sub) {
