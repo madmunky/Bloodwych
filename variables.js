@@ -5,6 +5,7 @@ var debugHigh = false;
 var game;
 var drawMonsters = false;
 var testDistance = 0;
+var testDirection = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = {
@@ -105,7 +106,7 @@ var CHAR_DISTANCE_CLOSE = 0,
 	CHAR_DISTANCE_FAR = 2,
 	CHAR_DISTANCE_DISTANT = 3;
 
-var CHAR_SOLO = 0,
+var CHAR_FRONT_SOLO = 0,
 	CHAR_FRONT_LEFT = 1,
 	CHAR_FRONT_RIGHT = 2,
 	CHAR_BACK_LEFT = 3,

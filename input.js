@@ -112,8 +112,8 @@ function doKeyDown(e) {
         case KEY_F: player[0].testMode();break; // F cheat
         case KEY_PLUS: testDirection = (testDirection + 1) % 4; break;
         case KEY_MINUS: testDirection = (testDirection + 3) % 4; break;
-        case KEY_6: testMon2 = (testMon2 + 3) % 4; break;
-        case KEY_5: testMon2 = (testMon2 + 1) % 4; break;
+        case KEY_6: testDirection = (testDirection + 3) % 4; break;
+        case KEY_5: testDirection = (testDirection + 1) % 4; break;
         case KEY_7: testDistance = (testDistance + 1) % 4;PrintLog("Distance: " + testDistance); break;
         case KEY_8: testDistance = (testDistance + 3) % 4;PrintLog("Distance: " + testDistance); break;
         case KEY_0: testMon1 = (testMon1 + 1) % 256; break;

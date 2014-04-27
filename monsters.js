@@ -33,7 +33,7 @@ Monster.prototype.getGfx = function() {
 		dirArray.push(gfx);
 		gfx = [];
 	}
-	this.gfx.push(dirArray);
+	this.gfx = dirArray;
 }
 
 function initMonsters(t) {
