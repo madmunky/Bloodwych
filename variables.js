@@ -3,6 +3,8 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 var game;
+var drawMonsters = false;
+var testDistance = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = {

@@ -31,21 +31,24 @@ Run = function() {
                 gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS,'character','legs',15,26,16);
                 gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS,'character','arms',9,18,16);
                 Loaded = true;
-            }
+                createCharacterImages();
+                charLoaded = true;
+            }            
             
-            dt  = Math.min(1, (now - last) / 1000);
-            gdt = gdt + dt;
-            while (gdt > game.step) {
-                gdt = gdt - game.step;
-                game.update();
-            }
-            rdt = rdt + dt;
-            if (rdt > render.step) {
-                rdt = rdt - render.step;
-                render.update();
-            }
-            last = now;
-            animFrame(run);
+                dt  = Math.min(1, (now - last) / 1000);
+                gdt = gdt + dt;
+                while (gdt > game.step) {
+                    gdt = gdt - game.step;
+                    game.update();
+                }
+                rdt = rdt + dt;
+                if (rdt > render.step) {
+                    rdt = rdt - render.step;
+                    render.update();
+                }
+                last = now;
+                animFrame(run);
+         
         };
     
         game.init && game.init();

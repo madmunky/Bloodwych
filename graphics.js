@@ -293,7 +293,7 @@ function drawPlayersView(p) {
 		if (BlockType === '2') {
 			drawWoodenObject(p, x);
 		} else {
-			drawMonsterOnPos(p, x);
+			if (drawMonsters) {drawMonsterOnPos(p, x);};
 			switch (x) {
 				case 0:
 					{
@@ -515,7 +515,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				drawMonsterOnPos(p, x);
+				if (drawMonsters) {drawMonsterOnPos(p, x);};
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -532,7 +532,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				drawMonsterOnPos(p, x);
+				if (drawMonsters) {drawMonsterOnPos(p, x);};
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[3]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -549,7 +549,8 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				drawMonsterOnPos(p, x);
+                                
+				if (drawMonsters) {drawMonsterOnPos(p, x);};
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[0]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -566,7 +567,7 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(ctx, bin2type(s[2]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				drawMonsterOnPos(p, x);
+				if (drawMonsters) {drawMonsterOnPos(p, x);};
 				if (BlockSides[x][2] > -1) {
 					myDIx(ctx, bin2type(s[1]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -613,8 +614,9 @@ function recolourSprite(img, paletteFrom, paletteTo) {
 	img1.width = imageData.width;
 	img1.height = imageData.height;
 	img1.src = c.toDataURL();
-
+        c = null;
 	return img1;
+        img1 = null;
 }
 
 function recolorImage(img, colour, folder, type) {

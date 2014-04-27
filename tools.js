@@ -199,8 +199,9 @@ try{
           flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
           flipcontext.save();           
           flipimageObj.src = can.toDataURL();
-           
+          can = null;
         return flipimageObj;
+        flipimageObj = null;
     }
     catch(e) {PrintLog("grabImageAt Error: " + e.toString());}
 };
@@ -221,9 +222,10 @@ function flipImage(image) {
           flipcontext.drawImage(image, 0, 0, image.width, image.height);
           flipcontext.save();           
           flipimageObj.src = can.toDataURL();
-           
+        
+        can = null;
         return flipimageObj;
-    
+        
 };
 
 String.prototype.contains = function(it) { return this.indexOf(it) !== -1; };
