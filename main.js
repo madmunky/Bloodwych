@@ -31,9 +31,6 @@ Run = function() {
                 gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 15, 26, 16);
                 gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 9, 18, 16);
                 Loaded = true;
-                for (var m = 0; m < monster.length; m++) {
-                    monster[m].getGfx();
-                }
                 charLoaded = true;
             }
 
