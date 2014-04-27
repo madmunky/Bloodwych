@@ -205,6 +205,9 @@ var CHA_LEG_MALE = 0,
 	CHA_LEG_FEMALE_CHAIN = 7,
 	CHA_LEG_FEMALE_LEATHER = 8;
 
+var CHA_GENDER_MALE = 0,
+	CHA_GENDER_FEMALE = 1;
+
 var MON_SPIDER = 16,
 	MON_CRAB = 17;
 
@@ -212,6 +215,7 @@ var MON_PALETTE_DEFAULT = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, COLOUR_BL
 
 var monsterPalette = new Array();
 monsterPalette[CHA_BLODWYN] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_BLODWYN,
 	torso: CHA_TORSO_FEMALE_NAKED,
 	arm: CHA_ARM_MALE,
@@ -222,6 +226,7 @@ monsterPalette[CHA_BLODWYN] = {
 	legPalette: [COLOUR_GREY_MEDIUM, COLOUR_BLUE, COLOUR_GREY_LIGHT, COLOUR_WHITE]
 };
 monsterPalette[CHA_MURLOCK] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_MURLOCK,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -232,6 +237,7 @@ monsterPalette[CHA_MURLOCK] = {
 	legPalette: [COLOUR_WHITE, COLOUR_WHITE, COLOUR_GREEN, COLOUR_GREEN_DARK]
 };
 monsterPalette[CHA_ELEANOR] = {
+	gender: CHA_GENDER_FEMALE,
 	head: CHA_HEAD_ELEANOR,
 	torso: CHA_TORSO_FEMALE,
 	arm: CHA_ARM_FEMALE,
@@ -242,6 +248,7 @@ monsterPalette[CHA_ELEANOR] = {
 	legPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK]
 };
 monsterPalette[CHA_ROSANNE] = {
+	gender: CHA_GENDER_FEMALE,
 	head: CHA_HEAD_ROSANNE,
 	torso: CHA_TORSO_FEMALE,
 	arm: CHA_ARM_FEMALE,
@@ -252,6 +259,7 @@ monsterPalette[CHA_ROSANNE] = {
 	legPalette: [COLOUR_RED, COLOUR_WHITE, COLOUR_GREY_LIGHT, COLOUR_BLUE]
 };
 monsterPalette[CHA_ASTROTH] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_ASTROTH,
 	torso: CHA_TORSO_MALE_NAKED,
 	arm: CHA_ARM_MALE,
@@ -262,6 +270,7 @@ monsterPalette[CHA_ASTROTH] = {
 	legPalette: [COLOUR_GREEN, COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_GREY_DARKEST]
 };
 monsterPalette[CHA_ZOTHEN] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_ZOTHEN,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -272,6 +281,7 @@ monsterPalette[CHA_ZOTHEN] = {
 	legPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK]
 };
 monsterPalette[CHA_BALDRICK] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_BALDRICK,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -282,6 +292,7 @@ monsterPalette[CHA_BALDRICK] = {
 	legPalette: [COLOUR_RED, COLOUR_YELLOW, COLOUR_GREY_LIGHT, COLOUR_BLUE]
 };
 monsterPalette[CHA_ELFRIC] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_ELFRIC,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -292,6 +303,7 @@ monsterPalette[CHA_ELFRIC] = {
 	legPalette: [COLOUR_RED, COLOUR_WHITE, COLOUR_GREEN, COLOUR_GREEN_DARK]
 };
 monsterPalette[CHA_SIR_EDWARD] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_SIR_EDWARD,
 	torso: CHA_TORSO_MALE_NAKED,
 	arm: CHA_ARM_MALE,
@@ -302,6 +314,7 @@ monsterPalette[CHA_SIR_EDWARD] = {
 	legPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK]
 };
 monsterPalette[CHA_MEGRIM] = {
+	gender: CHA_GENDER_FEMALE,
 	head: CHA_HEAD_MEGRIM,
 	torso: CHA_TORSO_FEMALE,
 	arm: CHA_ARM_FEMALE,
@@ -312,6 +325,7 @@ monsterPalette[CHA_MEGRIM] = {
 	legPalette: [COLOUR_RED, COLOUR_WHITE, COLOUR_GREEN, COLOUR_GREEN_DARK]
 };
 monsterPalette[CHA_SETHRA] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_SETHRA,
 	torso: CHA_TORSO_MALE_NAKED,
 	arm: CHA_ARM_MALE,
@@ -322,6 +336,7 @@ monsterPalette[CHA_SETHRA] = {
 	legPalette: [COLOUR_RED, COLOUR_WHITE, COLOUR_YELLOW, COLOUR_PINK]
 };
 monsterPalette[CHA_MR_FLAY] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_MR_FLAY,
 	torso: CHA_TORSO_SKELETON,
 	arm: CHA_ARM_SKELETON,
@@ -332,6 +347,7 @@ monsterPalette[CHA_MR_FLAY] = {
 	legPalette: [COLOUR_YELLOW, COLOUR_WHITE, COLOUR_BLUE, COLOUR_PINK]
 };
 monsterPalette[CHA_ULRICH] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_ULRICH,
 	torso: CHA_TORSO_MALE_NAKED,
 	arm: CHA_ARM_MALE,
@@ -342,6 +358,7 @@ monsterPalette[CHA_ULRICH] = {
 	legPalette: [COLOUR_RED, COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK]
 };
 monsterPalette[CHA_ZASTAPH] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_ZASTAPH,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -352,6 +369,7 @@ monsterPalette[CHA_ZASTAPH] = {
 	legPalette: [COLOUR_RED, COLOUR_WHITE, COLOUR_YELLOW, COLOUR_PINK]
 };
 monsterPalette[CHA_HENGIST] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_HENGIST,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -362,6 +380,7 @@ monsterPalette[CHA_HENGIST] = {
 	legPalette: [COLOUR_RED, COLOUR_YELLOW, COLOUR_BLUE, COLOUR_BLUE_DARK]
 };
 monsterPalette[CHA_THAI_CHANG] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_THAI_CHANG,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -372,6 +391,7 @@ monsterPalette[CHA_THAI_CHANG] = {
 	legPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK]
 };
 monsterPalette[16] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_THAI_CHANG,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -382,6 +402,7 @@ monsterPalette[16] = {
 	legPalette: [COLOUR_GREY_LIGHT, COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK]
 };
 monsterPalette[17] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_MR_FLAY,
 	torso: CHA_TORSO_SKELETON,
 	arm: CHA_ARM_SKELETON,
@@ -392,6 +413,7 @@ monsterPalette[17] = {
 	legPalette: [COLOUR_BLUE, COLOUR_WHITE, COLOUR_YELLOW, COLOUR_BLUE_DARK]
 };
 monsterPalette[18] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_ELFRIC,
 	torso: CHA_TORSO_MALE_CHAIN,
 	arm: CHA_ARM_MALE,
@@ -402,6 +424,7 @@ monsterPalette[18] = {
 	legPalette: [COLOUR_RED, COLOUR_WHITE, COLOUR_GREEN, COLOUR_GREEN_DARK]
 };
 monsterPalette[19] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_SETHRA,
 	torso: CHA_TORSO_MALE_NAKED,
 	arm: CHA_ARM_MALE,
@@ -412,6 +435,7 @@ monsterPalette[19] = {
 	legPalette: [COLOUR_RED, COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK]
 };
 monsterPalette[20] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_MURLOCK,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -422,6 +446,7 @@ monsterPalette[20] = {
 	legPalette: [COLOUR_RED, COLOUR_TRANSPARENT, COLOUR_TRANSPARENT, COLOUR_BLUE_DARK]
 };
 monsterPalette[21] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_BALDRICK,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -432,6 +457,7 @@ monsterPalette[21] = {
 	legPalette: [COLOUR_RED, COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK]
 };
 monsterPalette[22] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_SETHRA,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE,
@@ -442,6 +468,7 @@ monsterPalette[22] = {
 	legPalette: [COLOUR_RED, COLOUR_YELLOW, COLOUR_RED, COLOUR_RED_DARK]
 };
 monsterPalette[23] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_DEMON,
 	torso: CHA_TORSO_MALE_NAKED,
 	arm: CHA_ARM_MALE,
@@ -452,6 +479,7 @@ monsterPalette[23] = {
 	legPalette: [COLOUR_RED, COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK]
 };
 monsterPalette[24] = {
+	gender: CHA_GENDER_MALE,
 	head: CHA_HEAD_DEMON,
 	torso: CHA_TORSO_MALE_NAKED,
 	arm: CHA_ARM_MALE,

@@ -254,10 +254,10 @@ function testing(p) {
     
     try {
         if (charLoaded) {
-            drawCharacter(testMon1+4,testDirection,testDistance+1,p,CHAR_BACK_RIGHT);
-            drawCharacter(testMon1+3,testDirection,testDistance+1,p,CHAR_BACK_LEFT);
-            drawCharacter(testMon1,testDirection,testDistance,p,CHAR_FRONT_LEFT);
-            drawCharacter(testMon1+1,testDirection,testDistance,p,CHAR_FRONT_RIGHT);
+            drawCharacter(76,testDirection,testDistance+1,p,CHAR_BACK_RIGHT); //rosanne
+            drawCharacter(75,testDirection,testDistance+1,p,CHAR_BACK_LEFT); //eleanor
+            drawCharacter(73,testDirection,testDistance,p,CHAR_FRONT_LEFT); //blodwyn
+            drawCharacter(74,testDirection,testDistance,p,CHAR_FRONT_RIGHT); //murlock
         }
     } catch (e) {}
 
