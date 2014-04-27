@@ -8,108 +8,108 @@ var testDistance = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = {
-    monsterHeads: false,
-    monsterLegs: false,
-    monsterArms: false,
-    monsterTorsos: false
+	monsterHeads: false,
+	monsterLegs: false,
+	monsterArms: false,
+	monsterTorsos: false
 };
 var towerDataLoaded = {
-    floor: false,
-    switches: false,
-    triggers: false,
-    monsters: false,
-    champions: false
+	floor: false,
+	switches: false,
+	triggers: false,
+	monsters: false,
+	champions: false
 };
 
 //COLOURS AND PALETTES
 var CLASS_SERP = 0,
-    CLASS_DRAG = 1,
-    CLASS_MOON = 2,
-    CLASS_CHAOS = 3;
+	CLASS_DRAG = 1,
+	CLASS_MOON = 2,
+	CLASS_CHAOS = 3;
 
 var COLOUR_WHITE = [224, 224, 224, 255],
-    COLOUR_GREY_LIGHT = [160, 160, 160, 255],
-    COLOUR_GREY_MEDIUM = [128, 128, 128, 255],
-    COLOUR_GREY_DARK = [96, 96, 96, 255],
-    COLOUR_GREY_DARKEST = [64, 64, 64, 255],
-    COLOUR_GREEN = [0, 192, 0, 255],
-    COLOUR_GREEN_DARK = [0, 128, 0, 255],
-    COLOUR_BLUE = [64, 128, 224, 255],
-    COLOUR_BLUE_DARK = [32, 32, 224, 255],
-    COLOUR_YELLOW = [224, 192, 0, 255],
-    COLOUR_PINK = [224, 128, 96, 255],
-    COLOUR_BROWN = [160, 64, 32, 255],
-    COLOUR_RED = [208, 0, 0, 255],
-    COLOUR_RED_DARK = [128, 32, 0, 255],
-    COLOUR_BLACK = [0, 0, 0, 255],
-    COLOUR_TRANSPARENT = [0, 0, 0, 0];
+	COLOUR_GREY_LIGHT = [160, 160, 160, 255],
+	COLOUR_GREY_MEDIUM = [128, 128, 128, 255],
+	COLOUR_GREY_DARK = [96, 96, 96, 255],
+	COLOUR_GREY_DARKEST = [64, 64, 64, 255],
+	COLOUR_GREEN = [0, 192, 0, 255],
+	COLOUR_GREEN_DARK = [0, 128, 0, 255],
+	COLOUR_BLUE = [64, 128, 224, 255],
+	COLOUR_BLUE_DARK = [32, 32, 224, 255],
+	COLOUR_YELLOW = [224, 192, 0, 255],
+	COLOUR_PINK = [224, 128, 96, 255],
+	COLOUR_BROWN = [160, 64, 32, 255],
+	COLOUR_RED = [208, 0, 0, 255],
+	COLOUR_RED_DARK = [128, 32, 0, 255],
+	COLOUR_BLACK = [0, 0, 0, 255],
+	COLOUR_TRANSPARENT = [0, 0, 0, 0];
 
 var COLOUR_DOOR_NORMAL = 0,
-    COLOUR_DOOR_BRONZE = 1,
-    COLOUR_DOOR_IRON = 2,
-    COLOUR_DOOR_SERPENT = 3,
-    COLOUR_DOOR_CHAOS = 4,
-    COLOUR_DOOR_DRAGON = 5,
-    COLOUR_DOOR_MOON = 6,
-    COLOUR_DOOR_CHROMATIC = 7,
-    COLOUR_DOOR_VOID = 8;
+	COLOUR_DOOR_BRONZE = 1,
+	COLOUR_DOOR_IRON = 2,
+	COLOUR_DOOR_SERPENT = 3,
+	COLOUR_DOOR_CHAOS = 4,
+	COLOUR_DOOR_DRAGON = 5,
+	COLOUR_DOOR_MOON = 6,
+	COLOUR_DOOR_CHROMATIC = 7,
+	COLOUR_DOOR_VOID = 8;
 
 var COLOUR_DECO_SERPENT = 0,
-    COLOUR_DECO_CHAOS = 1,
-    COLOUR_DECO_DRAGON = 2,
-    COLOUR_DECO_MOON = 3,
-    COLOUR_DECO_BRONZE = 4,
-    COLOUR_DECO_IRON = 5,
-    COLOUR_DECO_BROWN = 6,
-    COLOUR_DECO_TAN = 7,
-    COLOUR_DECO_BLACK = 8;
+	COLOUR_DECO_CHAOS = 1,
+	COLOUR_DECO_DRAGON = 2,
+	COLOUR_DECO_MOON = 3,
+	COLOUR_DECO_BRONZE = 4,
+	COLOUR_DECO_IRON = 5,
+	COLOUR_DECO_BROWN = 6,
+	COLOUR_DECO_TAN = 7,
+	COLOUR_DECO_BLACK = 8;
 
 //REMOVE LATER:
 var PALETTE_YEL1_GRN1_GRN2_GRY4 = 0,
-    PALETTE_GRN1_GRN2_GRN1_GRN1 = 1,
-    PALETTE_3 = 2,
-    PALETTE_4 = 3,
-    PALETTE_5 = 4,
-    PALETTE_6 = 5,
-    PALETTE_7 = 6,
-    PALETTE_8 = 7,
-    PALETTE_9 = 8,
-    PALETTE_10 = 9,
-    PALETTE_11 = 10,
-    PALETTE_12 = 11,
-    PALETTE_13 = 12,
-    PALETTE_14 = 13,
-    PALETTE_15 = 14,
-    PALETTE_16 = 15,
-    PALETTE_17 = 16,
-    PALETTE_18 = 17,
-    PALETTE_19 = 18,
-    PALETTE_20 = 19,
-    PALETTE_21 = 20,
-    PALETTE_22 = 21,
-    PALETTE_23 = 22,
-    PALETTE_24 = 23,
-    PALETTE_25 = 24,
-    PALETTE_26 = 25,
-    PALETTE_27 = 26,
-    PALETTE_28 = 27,
-    PALETTE_29 = 28;
+	PALETTE_GRN1_GRN2_GRN1_GRN1 = 1,
+	PALETTE_3 = 2,
+	PALETTE_4 = 3,
+	PALETTE_5 = 4,
+	PALETTE_6 = 5,
+	PALETTE_7 = 6,
+	PALETTE_8 = 7,
+	PALETTE_9 = 8,
+	PALETTE_10 = 9,
+	PALETTE_11 = 10,
+	PALETTE_12 = 11,
+	PALETTE_13 = 12,
+	PALETTE_14 = 13,
+	PALETTE_15 = 14,
+	PALETTE_16 = 15,
+	PALETTE_17 = 16,
+	PALETTE_18 = 17,
+	PALETTE_19 = 18,
+	PALETTE_20 = 19,
+	PALETTE_21 = 20,
+	PALETTE_22 = 21,
+	PALETTE_23 = 22,
+	PALETTE_24 = 23,
+	PALETTE_25 = 24,
+	PALETTE_26 = 25,
+	PALETTE_27 = 26,
+	PALETTE_28 = 27,
+	PALETTE_29 = 28;
 
 var DIRECTION_NORTH = 0,
-    DIRECTION_EAST = 1,
-    DIRECTION_SOUTH = 2,
-    DIRECTION_WEST = 3;
+	DIRECTION_EAST = 1,
+	DIRECTION_SOUTH = 2,
+	DIRECTION_WEST = 3;
 
 var CHAR_DISTANCE_CLOSE = 0,
-    CHAR_DISTANCE_MID = 1,
-    CHAR_DISTANCE_FAR = 2,
-    CHAR_DISTANCE_DISTANT = 3;
+	CHAR_DISTANCE_MID = 1,
+	CHAR_DISTANCE_FAR = 2,
+	CHAR_DISTANCE_DISTANT = 3;
 
 var CHAR_SOLO = 0,
-    CHAR_FRONT_LEFT = 1,
-    CHAR_FRONT_RIGHT = 2,
-    CHAR_BACK_LEFT = 3,
-    CHAR_BACK_RIGHT = 4;
+	CHAR_FRONT_LEFT = 1,
+	CHAR_FRONT_RIGHT = 2,
+	CHAR_BACK_LEFT = 3,
+	CHAR_BACK_RIGHT = 4;
 
 var Maps = ["MOD0", "MOON", "CHAOS", "DRAGON", "ZENDIK", "SERP", "BWEXTTW1", "BWEXTTW2", "BWEXTTW3", "BWEXTTW4", "horace_mod0", "horace_moon", "horace_drag", "horace_serp", "horace_zendik", "horace_chaos"];
 
@@ -474,4 +474,3 @@ monsterPalette[24] = {
 
 var monsterMax = 0;
 var monster = new Array();
-

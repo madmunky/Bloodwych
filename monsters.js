@@ -12,6 +12,7 @@ function Monster(id, level, type, form, floor, x, y, d, teamId, champId) {
 	if (typeof champId !== "undefined") {
 		this.champId = champId; //optional Champion ID
 	}
+	this.gfx = [];
 }
 
 Monster.prototype.toString = function() {
@@ -20,6 +21,19 @@ Monster.prototype.toString = function() {
 		cha = ', champion:' + getChampionName(this.champId) + '(' + this.champId + ')';
 	}
 	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', teamId:' + this.teamId + cha + ']';
+}
+
+Monster.prototype.getGfx = function() {
+	var gfx = [];
+	var dirArray = [];
+	for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+		for (dir = 0; dir < 4; dir++) {
+			gfx.push(grabCharacter(this.form, dir, dis));
+		}
+		dirArray.push(gfx);
+		gfx = [];
+	}
+	this.gfx.push(dirArray);
 }
 
 function initMonsters(t) {
