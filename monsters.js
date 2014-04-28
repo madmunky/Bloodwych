@@ -48,7 +48,7 @@ Monster.prototype.getGfx = function() {
 Monster.prototype.canMove = function() {
 	var sq = this.getSquareByDir();
 
-	if (this.teamId === -1 || sq === 0 || sq === 3) {
+	if (this.teamId === -1 || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
 		var hexThis = this.getBinaryView(18, 0, 16);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		var objThis = getHexToBinaryPosition(hexThis, 12, 4);
@@ -108,8 +108,8 @@ Monster.prototype.move = function() {
 			var sq = this.getSquareByDir();
 			this.square = this.getSquareByDirNext();
 			switch (sq) {
-				case 0:
-				case 3:
+				case CHAR_FRONT_LEFT:
+				case CHAR_FRONT_RIGHT:
 					this.x += xo;
 					this.y += yo;
 					break;
@@ -123,63 +123,12 @@ Monster.prototype.move = function() {
 }
 
 //	CHAR_FRONT_LEFT = 0,
-//	CHAR_BACK_LEFT = 1,
+//	CHAR_FRONT_RIGHT = 1,
 //	CHAR_BACK_RIGHT = 2,
-//	CHAR_FRONT_RIGHT = 3;
+//	CHAR_BACK_LEFT = 3,
 //returns the sub square relative to the direction of the monster
 Monster.prototype.getSquareByDir = function() {
-	
-	switch (this.square) {
-		case 0:
-			switch (this.d) {
-				case 0:
-					return 0;
-				case 1:
-					return 3;
-				case 2:
-					return 2;
-				case 3:
-					return 1;
-			}
-			break;
-		case 1:
-			switch (this.d) {
-				case 0:
-					return 1;
-				case 1:
-					return 0;
-				case 2:
-					return 3;
-				case 3:
-					return 2;
-			}
-			break;
-		case 2:
-			switch (this.d) {
-				case 0:
-					return 2;
-				case 1:
-					return 1;
-				case 2:
-					return 0;
-				case 3:
-					return 3;
-			}
-			break;
-		case 3:
-			switch (this.d) {
-				case 0:
-					return 3;
-				case 1:
-					return 2;
-				case 2:
-					return 1;
-				case 3:
-					return 0;
-			}
-			break;
-	}
-	//return (8 - this.square - this.d) % 4;
+	return (this.square + this.d) % 4;
 }
 
 //returns the sub square relative to the direction of the monster, if the (small) monster would move 1 step forwards
@@ -189,40 +138,40 @@ Monster.prototype.getSquareByDirNext = function() {
 			switch (this.d) {
 				case 0:
 				case 2:
-					return 1;
+					return 3;
 				case 1:
 				case 3:
-					return 3;
+					return 1;
 			}
 			break;
 		case 1:
 			switch (this.d) {
 				case 0:
 				case 2:
-					return 0;
+					return 2;
 				case 1:
 				case 3:
-					return 2;
+					return 0;
 			}
 			break;
 		case 2:
 			switch (this.d) {
 				case 0:
 				case 2:
-					return 3;
+					return 1;
 				case 1:
 				case 3:
-					return 1;
+					return 3;
 			}
 			break;
 		case 3:
 			switch (this.d) {
 				case 0:
 				case 2:
-					return 2;
+					return 0;
 				case 1:
 				case 3:
-					return 0;
+					return 2;
 			}
 			break;
 	}
@@ -276,14 +225,14 @@ function initMonsters(t) {
 	}
 
 	//TESTING!!! REMOVE AFTER
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 0, 4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 0, CHAR_FRONT_LEFT, 4);
 	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 3, 4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 0, CHAR_FRONT_RIGHT, 4);
 	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 2, 4);
-	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 1, 4);
-	monsterMax++;
+	//monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 2, 4);
+	//monsterMax++;
+	//monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 1, 4);
+	//monsterMax++;
 }
 
 function getMonsterGfxOffset(pos, sub) {

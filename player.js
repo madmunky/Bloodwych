@@ -342,8 +342,8 @@ Player.prototype.getMonstersInRange = function(pos2) {
 			var sq = CHAR_FRONT_SOLO;
 			var sq2 = 0;
 			if(monster[m].square > -1) {
-				sq = (monster[m].square + p.Rotation) % 4;
-				sq2 = (sq === 1 || sq === 2) ? 1 : 0; //extra check for really close-by monsters
+				sq = (6 + monster[m].square - p.Rotation) % 4;
+				sq2 = (sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) ? 0 : 1; //extra check for really close-by monsters
 			}
 			if (monster[m].floor == this.floor && pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 				if(sq2 == 1) {
@@ -375,22 +375,12 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 	var p = this;
 
 	if (typeof monsterPalette[form] !== "undefined") {
-		//    drawPerson(p, form, CHAR_SOLO, maleCharacterSpriteLocations,DIRECTION_NORTH,distance);
-		drawCharacter(m.id, (m.d + p.Rotation) % 4, distance, this, offset);
-
-
-		//		var leg = recolourSprite(characterGfx[IMAGE_CHA_LEG][monsterPalette[form].leg][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].legPalette);
-		//		ctx.drawImage(leg, loc[distance][0][0] + offset.x, loc[distance][0][1] + offset.y, leg.width * scale, leg.height * scale);
-		//
-		//		var torso = recolourSprite(characterGfx[IMAGE_CHA_TORSO][monsterPalette[form].torso][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].torsoPalette);
-		//		ctx.drawImage(torso, loc[distance][1][0] + offset.x, loc[distance][1][1] + offset.y, torso.width * scale, torso.height * scale);
-		//		
-		//		var head = recolourSprite(characterGfx[IMAGE_CHA_HEAD][monsterPalette[form].head][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].headPalette);
-		//		ctx.drawImage(head, loc[distance][2][0] + offset.x, loc[distance][2][1] + offset.y, head.width * scale, head.height * scale);
-		//		
-		//		var arm = recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[form].arm][distance][0], MON_PALETTE_DEFAULT, monsterPalette[form].armPalette);
-		//		ctx.drawImage(flipImage(arm), loc[distance][3][0] + offset.x, loc[distance][3][1] + offset.y, arm.width * scale, arm.height * scale);
-		//		ctx.drawImage(arm, loc[distance][4][0] + offset.x, loc[distance][4][1] + offset.y - distance, arm.width * scale, arm.height * scale);
+		//6 + 0 - 0 == 2 == face
+		//6 + 1 - 0 == 3 == left
+		//6 + 0 - 1 == 1 == right
+		//6 + 0 - 3 == 3 == left
+		//6 + 1 - 2 == 1 == right
+		drawCharacter(m.id, (6 + p.Rotation - m.d) % 4, distance, this, offset);
 	}
 }
 
