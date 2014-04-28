@@ -10,24 +10,7 @@ var testMon1 = CHA_MURLOCK;
 var charLoaded = false;
 var characterImages = [];
 
-/*
-function createCharacterImages() {
 
-    var myCharacter = [];
-
-    for (m = 0; m < monsterPalette.length; m++) {
-        var dirArray = [];
-        for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-            for (dir = 0; dir < 4; dir++) {
-                myCharacter.push(grabCharacter(m, dir, dis));
-            }
-            dirArray.push(myCharacter);
-            myCharacter = [];
-        }
-        characterImages.push(dirArray);
-
-    }
-}*/
 
 function grabCharacter(cID, characterDirection, characterDistance) {
     if (typeof monsterPalette[cID] !== "undefined") {
@@ -139,107 +122,109 @@ function characterSpriteLocation() {
     var myArray = [];
     for (var x = 0; x < 4; x++) {
 
-        if (x === 0) {
+        if (x === 0) { //This is the DISTANCE
             myArray.push(new Array(
                 //Front View
-                new Array(5, 39 - 18),
-                new Array(5, 25 - 18),
-                new Array(7, 18 - 18),
-                new Array(20, 27 - 18),
-                new Array(0, 27 - 18),
+                new Array(5, 21), //LEGS
+                new Array(5, 7), //BODY
+                new Array(7, 0), //HEAD
+                new Array(20, 9), //RIGHT ARM
+                new Array(0, 9), //LEFT ARM
                 //Left View
-                new Array(60 - 58, 39 - 17),
-                new Array(58 - 58, 25 - 17),
-                new Array(58 - 58, 17 - 17),
-                new Array(63 - 58, 27 - 17),
+                new Array(2, 22), //LEGS
+                new Array(0, 8), //BODY
+                new Array(0, 0), //HEAD
+                new Array(5, 10), //ARM
                 //Right View
-                new Array(60 - 56, 39 - 17),
-                new Array(58 - 56, 25 - 17),
-                new Array(58 - 56, 17 - 17),
-                new Array(56 - 56, 27 - 17),
+                new Array(4, 22),
+                new Array(2, 8),
+                new Array(2, 0),
+                new Array(0, 10),
                 //Rear View
-                new Array(57 - 52, 39 - 17),
-                new Array(57 - 52, 25 - 17),
-                new Array(59 - 52, 17 - 17),
-                new Array(72 - 52, 27 - 17),
-                new Array(52 - 52, 27 - 17)));
+                new Array(5, 22),
+                new Array(5, 8),
+                new Array(7, 0),
+                new Array(20, 10),
+                new Array(0, 10)));
         }
         if (x === 1) {
             myArray.push(new Array(
                 //Front View
-                new Array(57 - 54, 36 - 20),
-                new Array(58 - 54, 24 - 20),
-                new Array(60 - 54, 20 - 20),
-                new Array(71 - 54, 27 - 20),
-                new Array(54 - 54, 27 - 20),
+                new Array(3, 16),
+                new Array(4,4),
+                new Array(6, 0),
+                new Array(17, 7),
+                new Array(0, 7),
                 //Left View
-                new Array(60 - 59, 36 - 19),
-                new Array(60 - 59, 24 - 19),
-                new Array(59 - 59, 19 - 19),
-                new Array(62 - 59, 26 - 19),
+                new Array(1, 17),
+                new Array(1, 5),
+                new Array(0, 0),
+                new Array(3, 7),
                 //Right View
-                new Array(60 - 59, 36 - 19),
-                new Array(60 - 59, 24 - 19),
-                new Array(60 - 59, 19 - 19),
-                new Array(59 - 59, 26 - 19),
+                new Array(1, 17),
+                new Array(1, 5),
+                new Array(1, 0),
+                new Array(0, 7),
                 //Rear View
-                new Array(56 - 53, 36 - 19),
-                new Array(57 - 53, 24 - 19),
-                new Array(59 - 53, 19 - 19),
-                new Array(70 - 53, 27 - 19),
-                new Array(53 - 53, 27 - 19)));
+                new Array(3, 17),
+                new Array(4, 5),
+                new Array(6, 0),
+                new Array(17, 8),
+                new Array(0, 8)));
         }
         if (x === 2) {
             myArray.push(new Array(
                 //Front View
-                new Array(58 - 55, 36 - 21),
-                new Array(59 - 55, 26 - 21),
-                new Array(60 - 55, 21 - 21),
-                new Array(68 - 55, 27 - 21),
-                new Array(55 - 55, 27 - 21),
+                new Array(3, 15),
+                new Array(4, 5),
+                new Array(5, 0),
+                new Array(13, 6),
+                new Array(0, 6),
                 //Left View
-                new Array(61 - 61, 36 - 21),
-                new Array(61 - 61, 26 - 21),
-                new Array(61 - 61, 21 - 21),
-                new Array(63 - 61, 28 - 21),
+                new Array(0, 15),
+                new Array(0, 5),
+                new Array(0, 0),
+                new Array(2, 7),
                 //Right View
-                new Array(61 - 59, 36 - 21),
-                new Array(61 - 59, 26 - 21),
-                new Array(61 - 59, 21 - 21),
-                new Array(59 - 59, 28 - 21),
+                new Array(2, 15),
+                new Array(2, 5),
+                new Array(2, 0),
+                new Array(0, 7),
                 //Rear View
-                new Array(58 - 55, 36 - 21),
-                new Array(59 - 55, 26 - 21),
-                new Array(60 - 55, 21 - 21),
-                new Array(68 - 55, 27 - 21),
-                new Array(55 - 55, 27 - 21)));
+                new Array(3, 15),
+                new Array(4, 5),
+                new Array(5, 0),
+                new Array(13, 6),
+                new Array(0, 6)));
         }
         if (x === 3) {
             myArray.push(new Array(
                 //Front View
-                new Array(60 - 57, 34 - 21),
-                new Array(61 - 57, 25 - 21),
-                new Array(62 - 57, 21 - 21),
-                new Array(68 - 57, 26 - 21),
-                new Array(57 - 57, 26 - 21),
+                new Array(3, 13),
+                new Array(4, 4),
+                new Array(5, 0),
+                new Array(11, 5),
+                new Array(0, 5),
                 //Left View
-                new Array(62 - 62, 34 - 21),
-                new Array(62 - 62, 25 - 21),
-                new Array(63 - 62, 21 - 21),
-                new Array(63 - 62, 27 - 21),
+                new Array(0, 13),
+                new Array(0, 4),
+                new Array(1, 0),
+                new Array(1, 6),
                 //Right View
-                new Array(62 - 60, 34 - 21),
-                new Array(61 - 60, 25 - 21),
-                new Array(62 - 60, 21 - 21),
-                new Array(60 - 60, 27 - 21),
+                new Array(2,13),
+                new Array(1,4),
+                new Array(2,0),
+                new Array(0,6),
                 //Rear View
-                new Array(60 - 57, 34 - 21),
-                new Array(61 - 57, 25 - 21),
-                new Array(61 - 57, 21 - 21),
-                new Array(68 - 57, 26 - 21),
-                new Array(57 - 57, 26 - 21)));
+                new Array(3,13),
+                new Array(4,4),
+                new Array(4,0),
+                new Array(11,5),
+                new Array(0,5)));
         }
     }
+
+    
 
     return myArray;
 
@@ -247,19 +232,14 @@ function characterSpriteLocation() {
 
 function testing(p) {
 
-    // drawPerson(p, testMon3, CHAR_BACK_LEFT, maleCharacterSpriteLocations,DIRECTION_EAST,CHAR_DISTANCE_FAR);
-    // drawPerson(p, testMon3, CHAR_BACK_RIGHT, maleCharacterSpriteLocations,DIRECTION_SOUTH,CHAR_DISTANCE_FAR);
-
-
-
-    try {
-        if (charLoaded) {
-            /*drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //rosanne
-            drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //eleanor
-            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //blodwyn
-            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //murlock*/
-        }
-    } catch (e) {}
+//    try {
+//        if (charLoaded) {
+//            /*drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //rosanne
+//            drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //eleanor
+//            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //blodwyn
+//            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //murlock*/
+//        }
+//    } catch (e) {}
 
 }
 
