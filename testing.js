@@ -124,29 +124,29 @@ function grabWholeCharacter(cID, dir, dist) {
             
                 var BODY = null;
                 var BODYIDTMP = 0;
-                var DIRtmp = dist %2;
+                var DIRtmp = dist -4;
                 
 		if (typeof monsterPalette[cID] !== "undefined") {
 			switch (dir) {
 
 				case 0:
 					{
-						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist%6][0], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
+						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist-4][0], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
 					}
 					break;
 				case 3:
 					{
-						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist%6][1], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
+						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist-4][1], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
 					}
 					break;
 				case 1:
 					{
-						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist%6][2], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
+						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist-4][2], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
 					}
 					break;
 				case 2:
 					{
-						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist%6][3], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
+						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist-4][3], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
 					}
 					break;
 
