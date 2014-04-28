@@ -47,22 +47,53 @@ Monster.prototype.getGfx = function() {
 	this.gfx = dirArray;
 }
 
+Monster.prototype.canAttack = function() {
+	//Check other player to attack
+	var hexNext = this.getBinaryView(15, 0, 16);
+	if (getHexToBinaryPosition(hexNext, 8) === '1') {
+		switch (this.d) {
+			case 0:
+				xo = 0;
+				yo = -1;
+				break;
+			case 1:
+				xo = 1;
+				yo = 0;
+				break;
+			case 2:
+				xo = 0;
+				yo = 1;
+				break;
+			case 3:
+				xo = -1;
+				yo = 0;
+				break;
+		}
+		if(this.floor === player[0].floor && this.x + xo === player[0].x && this.y + yo === player[0].y) {
+			return 0;
+		} else if(this.floor === player[1].floor && this.x + xo === player[1].x && this.y + yo === player[1].y) {
+			return 1;
+		}
+	}
+	return -1;
+}
+
 Monster.prototype.canMove = function() {
 	var sq = this.getSquareByDir();
 
-	if (this.teamId > 0 || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
+	if (this.teamId > 0 || sq === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
 		var hexThis = this.getBinaryView(18, 0, 16);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		var objThis = getHexToBinaryPosition(hexThis, 12, 4);
 		var objNext = getHexToBinaryPosition(hexNext, 12, 4);
 
 		//Check other player
-		if (getHexToBinaryPosition(hexNext, 8) == '1') {
+		if (getHexToBinaryPosition(hexNext, 8) === '1') {
 			return false;
 		}
 
 		//Check wooden walls and doors
-		if (objThis == '2' || objNext == '2') {
+		if (objThis === '2' || objNext === '2') {
 			if (!this.canMoveByWood()) {
 				return false;
 			}
@@ -75,9 +106,36 @@ Monster.prototype.canMove = function() {
 			case '3':
 				return false; //Misc
 			case '5': //Doors
-				if (getHexToBinaryPosition(hexNext, 7, 1) == '1') {
+				if (getHexToBinaryPosition(hexNext, 7, 1) === '1') {
 					return false;
 				}
+		}
+
+		//Check other monsters
+		for (var m = 0; m < monster.length; m++) {
+			if (this.id !== monster[m].id && this.floor === monster[m].floor) {
+				switch (this.d) {
+					case 0:
+						xo = 0;
+						yo = -1;
+						break;
+					case 1:
+						xo = 1;
+						yo = 0;
+						break;
+					case 2:
+						xo = 0;
+						yo = 1;
+						break;
+					case 3:
+						xo = -1;
+						yo = 0;
+						break;
+				}
+				if (this.x + xo === monster[m].x && this.y + yo === monster[m].y) {
+					return false;
+				}
+			}
 		}
 	}
 	return true;
@@ -98,8 +156,13 @@ Monster.prototype.canMoveByWood = function() {
 }
 
 Monster.prototype.move = function() {
-	if(this.teamId >= 0) {
-		if (this.canMove()) {
+	if (this.teamId >= 0) {
+		var attP = this.canAttack();
+		if(attP > -1) {
+			PrintLog('PLAYER ' + (attP + 1) + ' GETS HIT!!!');
+		} else if (this.canMove()) {
+			if (this.rotateToPlayer()) return;
+
 			switch (this.d) {
 				case 0:
 					xo = 0;
@@ -118,9 +181,10 @@ Monster.prototype.move = function() {
 					yo = 0;
 					break;
 			}
-			if(this.teamId > 0) {
+
+			if (this.teamId > 0) {
 				team = this.id;
-				while(typeof monster[team] !== "undefined" && this.teamId === Math.abs(monster[team].teamId)) {
+				while (typeof monster[team] !== "undefined" && this.teamId === Math.abs(monster[team].teamId)) {
 					monster[team].x += xo;
 					monster[team].y += yo;
 					team++;
@@ -142,18 +206,75 @@ Monster.prototype.move = function() {
 				this.square = this.getSquareByDirNext();
 			}
 		} else {
-			var d = Math.floor(Math.random() * 2) * 2 - 1;
-			if(this.teamId > 0) {
-				team = this.id;
-				while(typeof monster[team] !== "undefined" && this.teamId === Math.abs(monster[team].teamId)) {
-					monster[team].d = (monster[team].d + d + 4) % 4;
-					monster[team].square = (monster[team].square + d + 4) % 4;
-					team++;
-				}
+			if (this.rotateToPlayer()) {
+				return;
 			} else {
-				this.d = (this.d + d + 4) % 4;
+				var turn = Math.floor(Math.random() * 2) * 2 - 1;
+				this.rotateTo((this.d + turn + 4) % 4);
 			}
 		}
+	}
+}
+
+Monster.prototype.rotateToPlayer = function() {
+	//Move to player
+	if (this.champId === -1) {
+		var rnd = Math.floor(Math.random() * 2);
+		if (Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y)) {
+			//player 1 is closer
+			if (rnd === 0) {
+				if (player[0].x > this.x && (this.d === 0 || this.d === 2)) {
+					this.rotateTo(1);
+					return true;
+				} else if (player[0].x < this.x && (this.d === 0 || this.d === 2)) {
+					this.rotateTo(3);
+					return true;
+				}
+			} else if (rnd === 1) {
+				if (player[0].y > this.y && (this.d === 1 || this.d === 3)) {
+					this.rotateTo(2);
+					return true;
+				} else if (player[0].y < this.y && (this.d === 1 || this.d === 3)) {
+					this.rotateTo(0);
+					return true;
+				}
+			}
+		} else {
+			//player 2 is closer
+			if (rnd === 0) {
+				if (player[1].x > this.x && (this.d === 0 || this.d === 2)) {
+					this.rotateTo(1);
+					return true;
+				} else if (player[1].x < this.x && (this.d === 0 || this.d === 2)) {
+					this.rotateTo(3);
+					return true;
+				}
+			} else if (rnd === 1) {
+				if (player[1].y > this.y && (this.d === 1 || this.d === 3)) {
+					this.rotateTo(2);
+					return true;
+				} else if (player[1].y < this.y && (this.d === 1 || this.d === 3)) {
+					this.rotateTo(0);
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+Monster.prototype.rotateTo = function(d) {
+	if (this.teamId > 0) {
+		var team = this.id;
+		while (typeof monster[team] !== "undefined" && this.teamId === Math.abs(monster[team].teamId)) {
+			monster[team].d = d;
+			if (monster[team].square > -1) {
+				monster[team].square = (monster[team].square + d) % 4;
+			}
+			team++;
+		}
+	} else {
+		this.d = d;
 	}
 }
 
@@ -163,7 +284,11 @@ Monster.prototype.move = function() {
 //	CHAR_BACK_LEFT = 3,
 //returns the sub square relative to the direction of the monster
 Monster.prototype.getSquareByDir = function() {
-	return (4 + this.square - this.d) % 4;
+	if (this.square > -1) {
+		return (4 + this.square - this.d) % 4;
+	} else {
+		return -1;
+	}
 }
 
 //returns the sub square relative to the direction of the monster, if the (small) monster would move 1 step forwards
