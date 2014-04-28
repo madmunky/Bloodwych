@@ -100,15 +100,15 @@ function initChampions() {
 			ac: ac
 		};
 		var spellBin = hex2bin(md.substr(24, 2));
-		var x = hex2dec(md.substr(44, 2));
-		var y = hex2dec(md.substr(46, 2));
-		var d = hex2dec(md.substr(48, 2));
-		var floor = hex2dec(md.substr(52, 2));
+		var x = parseInt(hex2dec(md.substr(44, 2)));
+		var y = parseInt(hex2dec(md.substr(46, 2)));
+		var d = parseInt(hex2dec(md.substr(48, 2)));
+		var floor = parseInt(hex2dec(md.substr(52, 2)));
 		spellBin = spellBin + hex2bin(md.substr(26, 2));
 		spellBin = spellBin + hex2bin(md.substr(28, 2));
 		spellBin = spellBin + hex2bin(md.substr(30, 2));
 		champion[ch] = new Champion(ch, getChampionName(ch), "tester", level, stat, spellBin);
-		monster[monsterMax + ch] = new Monster(monsterMax + ch, level, 3, ch, floor, x, y, d, -1, ch);
+		monster[monsterMax + ch] = new Monster(monsterMax + ch, level, 3, ch, floor, x, y, d, d, ch);
 		PrintLog('Loaded champion: ' + monster[monsterMax + ch].toString());
 	}
 }

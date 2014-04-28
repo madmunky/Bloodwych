@@ -1,4 +1,4 @@
-function Monster(id, level, type, form, floor, x, y, d, teamId, champId) {
+function Monster(id, level, type, form, floor, x, y, d, square, teamId, champId) {
 	this.id = id;
 	this.level = level;
 	this.type = type;
@@ -8,8 +8,7 @@ function Monster(id, level, type, form, floor, x, y, d, teamId, champId) {
 	this.x = x;
 	this.y = y;
 	this.d = d;
-	if (level > 0) this.square = d;
-	else this.square = CHAR_FRONT_SOLO;
+	this.square = (square + d) % 4;
 	this.champId = -1;
 	if (typeof champId !== "undefined") {
 		this.champId = champId; //optional Champion ID
@@ -43,6 +42,7 @@ function initMonsters(t) {
 	var teamIdLast = -1;
 	var teamDo = false;
 	var xLast = 0;
+	var square = 0;
 	for (i = 0; i < t.monsterData.length; i++) {
 		var md = t.monsterData[i];
 		var level = parseInt(hex2dec(getHexToBinaryPosition(md, 24, 8)));
@@ -59,18 +59,26 @@ function initMonsters(t) {
 				teamIdLast++;
 			} else {
 				x = xLast;
+				square++;
 			}
 			teamId = teamIdLast;
+		} else if(level === 0) {
+			square = -1;
+		} else {
+			square = 0;
 		}
 		if (level != 0 || type != 0 || form != 0 || floor != -1 || x != 0 || y != 0) {
-			monster[i] = new Monster(i, level, type, form, floor, x, y, 0, teamId);
+			monster[i] = new Monster(i, level, type, form, floor, x, y, 0, square, teamId);
 			PrintLog('Loaded monster: ' + monster[i].toString());
 			monsterMax++;
 		}
 	}
 
 	//TESTING!!! REMOVE AFTER
-	monster[monsterMax] = new Monster(monsterMax, 0, 0, 27, 3, 13, 23, 3, -1); monsterMax++;
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 0, 4); monsterMax++;
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 3, 4); monsterMax++;
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 2, 4); monsterMax++;
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 1, 4); monsterMax++;
 }
 
 function getMonsterGfxOffset(pos, sub) {
