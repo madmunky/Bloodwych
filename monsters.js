@@ -49,8 +49,7 @@ Monster.prototype.getGfx = function() {
 
 Monster.prototype.canAttack = function() {
 	//Check other player to attack
-	var hexNext = this.getBinaryView(15, 0, 16);
-	if (getHexToBinaryPosition(hexNext, 8) === '1') {
+	if (this.champId === -1) {
 		switch (this.d) {
 			case 0:
 				xo = 0;
@@ -69,10 +68,21 @@ Monster.prototype.canAttack = function() {
 				yo = 0;
 				break;
 		}
-		if(this.floor === player[0].floor && this.x + xo === player[0].x && this.y + yo === player[0].y) {
-			return 0;
-		} else if(this.floor === player[1].floor && this.x + xo === player[1].x && this.y + yo === player[1].y) {
-			return 1;
+		var hexNext = this.getBinaryView(15, 0, 16);
+		if (getHexToBinaryPosition(hexNext, 8) === '1') {
+			if(this.floor === player[0].floor && this.x + xo === player[0].x && this.y + yo === player[0].y) {
+				PrintLog('PLAYER 1 GETS HIT BY MONSTER #' + this.id + ' !!!');
+				return 0;
+			} else if(this.floor === player[1].floor && this.x + xo === player[1].x && this.y + yo === player[1].y) {
+				PrintLog('PLAYER 2 GETS HIT BY MONSTER #' + this.id + '!!!');
+				return 1;
+			}
+		}
+		for (var m = 0; m < monster.length; m++) {
+			if (monster[m].champId > -1 && this.id !== monster[m].id && this.floor === monster[m].floor && this.x + xo === monster[m].x && this.y + yo === monster[m].y) {
+				PrintLog('CHAMPION ' + getChampionName(monster[m].champId) + ' GETS HIT BY MONSTER #' + this.id + '!!!');
+				return 2;
+			}
 		}
 	}
 	return -1;
@@ -157,10 +167,7 @@ Monster.prototype.canMoveByWood = function() {
 
 Monster.prototype.move = function() {
 	if (this.teamId >= 0) {
-		var attP = this.canAttack();
-		if(attP > -1) {
-			PrintLog('PLAYER ' + (attP + 1) + ' GETS HIT!!!');
-		} else if (this.canMove()) {
+		if (this.canMove()) {
 			if (this.rotateToPlayer()) return;
 
 			switch (this.d) {
@@ -205,6 +212,8 @@ Monster.prototype.move = function() {
 				}
 				this.square = this.getSquareByDirNext();
 			}
+		} else if(this.canAttack() > -1) {
+
 		} else {
 			if (this.rotateToPlayer()) {
 				return;
