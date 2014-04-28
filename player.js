@@ -176,7 +176,7 @@ Player.prototype.move = function(d) {
 		this.x = this.x + xy['x'];
 		this.y = this.y + xy['y'];
 		if (debug) {
-			PrintLog("Player Moved " + getDirection(this.Rotation));
+			//PrintLog("Player Moved " + getDirection(this.Rotation));
 		}
 		this.doEvent();
 		this.setMovementData();

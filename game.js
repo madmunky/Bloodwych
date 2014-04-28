@@ -8,26 +8,25 @@ Game.prototype = {
 		this.eventQueue = [];
 		initSpells();
 		initPlayers();
-                
+
 	},
-	
+
 	// Reset the game
 	reset: function() {
 		this.example = 0;
 	},
-	
+
 	// Update the game model
 	update: function() {
-		//PrintLog("Game Updated");
-		for (i = 0; i < this.eventQueue.length; i += 1) {
-			
-		}
 	},
 
 	subscribe: function(e, callback, target) {
 		this.subs = this.subs || {};
 		this.subs[e] = this.subs[e] || [];
-		this.subs[e].push({ callback: callback, target: target });
+		this.subs[e].push({
+			callback: callback,
+			target: target
+		});
 	},
 
 	publish: function(e) {
