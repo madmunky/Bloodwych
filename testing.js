@@ -13,6 +13,8 @@ var characterImages = [];
 
 
 function grabCharacter(cID, characterDirection, characterDistance) {
+    try {
+    
     if (typeof monsterPalette[cID] !== "undefined") {
         var LEG;
         var ARM;
@@ -114,6 +116,8 @@ function grabCharacter(cID, characterDirection, characterDistance) {
         delete HEAD;
         return charImageObj;
     }
+    } catch(e){ PrintLog("GrabCharacter ERROR: " + e.toString());}
+       
 }
 
 function characterSpriteLocation() {
@@ -373,6 +377,6 @@ function drawCharacter(mForm, characterDirection, characterDistance, player, off
             offx += offset.x;
             offy += offset.y;
         }
-        ctx.drawImage(monster[mForm].gfx[characterDistance][characterDirection], (player.PortalX + offx) * scale, (player.PortalY + offy) * scale, monster[mForm].gfx[characterDistance][characterDirection].width * scale, monster[mForm].gfx[characterDistance][characterDirection].height * scale);
+        player.Portal.drawImage(monster[mForm].gfx[characterDistance][characterDirection], (player.PortalX + offx) * scale, (player.PortalY + offy) * scale, monster[mForm].gfx[characterDistance][characterDirection].width * scale, monster[mForm].gfx[characterDistance][characterDirection].height * scale);
     }
 }

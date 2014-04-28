@@ -80,7 +80,7 @@ function updatePlayerViewScreen() {
 function myDIx(canvas, img, PosAry, P, scale) {
 
     if (typeof img === "undefined" || img === null) {} else {
-        canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] * scale) + P.PortalX, (PosAry[5] * scale) + P.PortalY, PosAry[2] * scale, PosAry[3] * scale);
+        canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] * scale), (PosAry[5] * scale), PosAry[2] * scale, PosAry[3] * scale);
     }
 }
 

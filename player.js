@@ -10,6 +10,7 @@ function Player(id, posX, posY, floor, rotation, PortX, PortY) {
 	this.Rotation = rotation;
 	this.PortalX = PortX;
 	this.PortalY = PortY;
+        this.Portal = null;
 	this.View = [];
 	this.lastX = posX;
 	this.lastY = posY;
@@ -21,6 +22,20 @@ function Player(id, posX, posY, floor, rotation, PortX, PortY) {
 		//tw.floor[this.floor].Map[this.y][this.x] = tw.floor[this.floor].Map[this.y][this.x].replaceAt(2,"8");
 	} catch (c) {};
 }
+
+Player.prototype.getViewPortal = function() {
+	
+          var Portal = document.createElement('canvas');
+          Portal.width = 128 * scale;
+          Portal.height = 74 * scale;
+          Portal.getContext("2d").imageSmoothingEnabled = false;
+          Portal.getContext("2d").webkitImageSmoothingEnabled = false;
+          Portal.getContext("2d").mozImageSmoothingEnabled = false;
+          Portal.getContext("2d").oImageSmoothingEnabled = false;
+          Portal.getContext("2d").font = "bold 20px Calibri";
+          this.Portal = Portal.getContext("2d");
+          
+};
 
 Player.prototype.canMoveToPos = function(pos) {
 	//Check other player
