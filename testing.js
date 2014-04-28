@@ -135,15 +135,15 @@ function characterSpriteLocation() {
                 new Array(20, 9), //RIGHT ARM
                 new Array(0, 9), //LEFT ARM
                 //Left View
-                new Array(2, 22), //LEGS
-                new Array(0, 8), //BODY
-                new Array(0, 0), //HEAD
-                new Array(5, 10), //ARM
+                new Array(11, 22), //LEGS
+                new Array(9, 8), //BODY
+                new Array(9, 0), //HEAD
+                new Array(14, 10), //ARM
                 //Right View
-                new Array(4, 22),
-                new Array(2, 8),
-                new Array(2, 0),
-                new Array(0, 10),
+                new Array(7, 22),
+                new Array(5, 8),
+                new Array(5, 0),
+                new Array(3, 10),
                 //Rear View
                 new Array(5, 22),
                 new Array(5, 8),
@@ -160,15 +160,15 @@ function characterSpriteLocation() {
                 new Array(17, 7),
                 new Array(0, 7),
                 //Left View
-                new Array(1, 17),
-                new Array(1, 5),
-                new Array(0, 0),
-                new Array(3, 7),
+                new Array(7, 17),
+                new Array(7, 5),
+                new Array(6, 0),
+                new Array(9, 7),
                 //Right View
-                new Array(1, 17),
-                new Array(1, 5),
-                new Array(1, 0),
-                new Array(0, 7),
+                new Array(4, 17),
+                new Array(4, 5),
+                new Array(4, 0),
+                new Array(3, 7),
                 //Rear View
                 new Array(3, 17),
                 new Array(4, 5),
@@ -185,15 +185,15 @@ function characterSpriteLocation() {
                 new Array(13, 6),
                 new Array(0, 6),
                 //Left View
-                new Array(0, 15),
-                new Array(0, 5),
-                new Array(0, 0),
-                new Array(2, 7),
+                new Array(7, 15),
+                new Array(7, 5),
+                new Array(7, 0),
+                new Array(9, 7),
                 //Right View
-                new Array(2, 15),
-                new Array(2, 5),
-                new Array(2, 0),
-                new Array(0, 7),
+                new Array(7, 15),
+                new Array(7, 5),
+                new Array(7, 0),
+                new Array(5, 7),
                 //Rear View
                 new Array(3, 15),
                 new Array(4, 5),
@@ -210,15 +210,15 @@ function characterSpriteLocation() {
                 new Array(11, 5),
                 new Array(0, 5),
                 //Left View
-                new Array(0, 13),
-                new Array(0, 4),
-                new Array(1, 0),
-                new Array(1, 6),
+                new Array(6, 13),
+                new Array(6, 4),
+                new Array(7, 0),
+                new Array(7, 6),
                 //Right View
-                new Array(2,13),
-                new Array(1,4),
-                new Array(2,0),
-                new Array(0,6),
+                new Array(8,13),
+                new Array(7,4),
+                new Array(8,0),
+                new Array(6,6),
                 //Rear View
                 new Array(3,13),
                 new Array(4,4),

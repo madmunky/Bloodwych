@@ -62,7 +62,7 @@ function initMonsters(t) {
 				square++;
 			}
 			teamId = teamIdLast;
-		} else if(level === 0) {
+		} else if(form === 21 || form === 22) {
 			square = -1;
 		} else {
 			square = 0;
@@ -99,11 +99,11 @@ function getMonsterGfxOffset(pos, sub) {
 			offy = 0;
 			break;
 		case CHAR_BACK_LEFT:
-			offx = -36;
+			offx = -35;
 			offy = 0;
 			break;
 		case CHAR_BACK_RIGHT:
-			offx = 36;
+			offx = 35;
 			offy = 0;
 			break;
 	}
