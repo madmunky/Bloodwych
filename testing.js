@@ -306,10 +306,10 @@ function testing(p) {
 
 function drawParty(p, character1, character2, character3, character4) {
 
-	drawPerson(p, character1, CHAR_BACK_RIGHT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_MID);
-	drawPerson(p, character2, CHAR_BACK_LEFT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_MID);
-	drawPerson(p, character3, CHAR_FRONT_RIGHT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_CLOSE);
-	drawPerson(p, character4, CHAR_FRONT_LEFT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_CLOSE);
+	drawPerson(p, character1, CHAR_BACK_RIGHT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_CLOSE);
+	drawPerson(p, character2, CHAR_BACK_LEFT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_CLOSE);
+	drawPerson(p, character3, CHAR_FRONT_RIGHT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_VERY_CLOSE);
+	drawPerson(p, character4, CHAR_FRONT_LEFT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_VERY_CLOSE);
 
 }
 
@@ -323,7 +323,7 @@ function drawCharacter(mForm, dir, dist, player, offset) {
 			offy += offset.y;
 		}
 		var blur = 0;
-		if (dist <= CHAR_DISTANCE_FAR) {
+		if (dist <= CHAR_DISTANCE_MID) {
 			var br = Math.floor(Math.random() * 20);
 			if (br === 0) {
 				blur = -1;

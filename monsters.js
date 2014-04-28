@@ -275,16 +275,16 @@ function getMonsterGfxOffset(pos, sub) {
 
 function getMonsterDistanceByPos(pos, sq) {
 	if (pos <= 4) {
-		return CHAR_DISTANCE_DISTANT;
-	} else if (pos <= 9) {
-		return CHAR_DISTANCE_DISTANT;
-	} else if (pos <= 12) {
 		return CHAR_DISTANCE_FAR;
+	} else if (pos <= 9) {
+		return CHAR_DISTANCE_FAR;
+	} else if (pos <= 12) {
+		return CHAR_DISTANCE_MID;
 	} else if (pos <= 15) {
 		if (sq === 1) {
-			return CHAR_DISTANCE_MID;
-		} else {
 			return CHAR_DISTANCE_CLOSE;
+		} else {
+			return CHAR_DISTANCE_VERY_CLOSE;
 		}
 	} else {
 		return -1;
