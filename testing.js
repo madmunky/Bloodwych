@@ -154,52 +154,52 @@ function characterSpriteLocation() {
         if (x === 1) {
             myArray.push(new Array(
                 //Front View
-                new Array(3, 16),
-                new Array(4,4),
-                new Array(6, 0),
-                new Array(17, 7),
-                new Array(0, 7),
+                new Array(3, 19),
+                new Array(4, 7),
+                new Array(6, 3),
+                new Array(17, 10),
+                new Array(0, 10),
                 //Left View
-                new Array(7, 17),
-                new Array(7, 5),
-                new Array(6, 0),
-                new Array(9, 7),
+                new Array(7, 20),
+                new Array(7, 8),
+                new Array(6, 3),
+                new Array(9, 10),
                 //Right View
-                new Array(4, 17),
-                new Array(4, 5),
-                new Array(4, 0),
-                new Array(3, 7),
+                new Array(4, 20),
+                new Array(4, 8),
+                new Array(4, 3),
+                new Array(3, 10),
                 //Rear View
-                new Array(3, 17),
-                new Array(4, 5),
-                new Array(6, 0),
-                new Array(17, 8),
-                new Array(0, 8)));
+                new Array(3, 20),
+                new Array(4, 8),
+                new Array(6, 3),
+                new Array(17, 11),
+                new Array(0, 11)));
         }
         if (x === 2) {
             myArray.push(new Array(
                 //Front View
-                new Array(3, 15),
-                new Array(4, 5),
-                new Array(5, 0),
-                new Array(13, 6),
-                new Array(0, 6),
+                new Array(3, 16),
+                new Array(4, 6),
+                new Array(5, 1),
+                new Array(13, 7),
+                new Array(0, 7),
                 //Left View
-                new Array(7, 15),
-                new Array(7, 5),
-                new Array(7, 0),
-                new Array(9, 7),
+                new Array(7, 16),
+                new Array(7, 6),
+                new Array(7, 1),
+                new Array(9, 8),
                 //Right View
-                new Array(7, 15),
-                new Array(7, 5),
-                new Array(7, 0),
-                new Array(5, 7),
+                new Array(7, 16),
+                new Array(7, 6),
+                new Array(7, 1),
+                new Array(5, 8),
                 //Rear View
-                new Array(3, 15),
-                new Array(4, 5),
-                new Array(5, 0),
-                new Array(13, 6),
-                new Array(0, 6)));
+                new Array(3, 16),
+                new Array(4, 6),
+                new Array(5, 1),
+                new Array(13, 7),
+                new Array(0, 7)));
         }
         if (x === 3) {
             myArray.push(new Array(
@@ -253,118 +253,6 @@ function drawParty(p, character1, character2, character3, character4) {
     drawPerson(p, character2, CHAR_BACK_LEFT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_MID);
     drawPerson(p, character3, CHAR_FRONT_RIGHT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_CLOSE);
     drawPerson(p, character4, CHAR_FRONT_LEFT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_CLOSE);
-
-}
-
-function characterSpriteLocationOLD() {
-
-
-    var myArray = [];
-    for (var x = 0; x < 4; x++) {
-
-        if (x === 0) {
-            myArray.push(new Array(
-                //Front View
-                new Array(57 * scale, 39 * scale),
-                new Array(57 * scale, 25 * scale),
-                new Array(59 * scale, 18 * scale),
-                new Array(72 * scale, 27 * scale),
-                new Array(52 * scale, 27 * scale),
-                //Left View
-                new Array(60 * scale, 39 * scale),
-                new Array(58 * scale, 25 * scale),
-                new Array(58 * scale, 17 * scale),
-                new Array(63 * scale, 27 * scale),
-                //Right View
-                new Array(60 * scale, 39 * scale),
-                new Array(58 * scale, 25 * scale),
-                new Array(58 * scale, 17 * scale),
-                new Array(56 * scale, 27 * scale),
-                //Rear View
-                new Array(57 * scale, 39 * scale),
-                new Array(57 * scale, 25 * scale),
-                new Array(59 * scale, 17 * scale),
-                new Array(72 * scale, 27 * scale),
-                new Array(52 * scale, 27 * scale)));
-        }
-        if (x === 1) {
-            myArray.push(new Array(
-                //Front View
-                new Array(57 * scale, 36 * scale),
-                new Array(58 * scale, 24 * scale),
-                new Array(60 * scale, 20 * scale),
-                new Array(71 * scale, 27 * scale),
-                new Array(54 * scale, 27 * scale),
-                //Left View
-                new Array(60 * scale, 36 * scale),
-                new Array(60 * scale, 24 * scale),
-                new Array(59 * scale, 19 * scale),
-                new Array(62 * scale, 26 * scale),
-                //Right View
-                new Array(60 * scale, 36 * scale),
-                new Array(60 * scale, 24 * scale),
-                new Array(60 * scale, 19 * scale),
-                new Array(59 * scale, 26 * scale),
-                //Rear View
-                new Array(56 * scale, 36 * scale),
-                new Array(57 * scale, 24 * scale),
-                new Array(59 * scale, 19 * scale),
-                new Array(70 * scale, 27 * scale),
-                new Array(53 * scale, 27 * scale)));
-        }
-        if (x === 2) {
-            myArray.push(new Array(
-                //Front View
-                new Array(58 * scale, 36 * scale),
-                new Array(59 * scale, 26 * scale),
-                new Array(60 * scale, 21 * scale),
-                new Array(68 * scale, 27 * scale),
-                new Array(55 * scale, 27 * scale),
-                //Left View
-                new Array(61 * scale, 36 * scale),
-                new Array(61 * scale, 26 * scale),
-                new Array(61 * scale, 21 * scale),
-                new Array(63 * scale, 28 * scale),
-                //Right View
-                new Array(61 * scale, 36 * scale),
-                new Array(61 * scale, 26 * scale),
-                new Array(61 * scale, 21 * scale),
-                new Array(59 * scale, 28 * scale),
-                //Rear View
-                new Array(58 * scale, 36 * scale),
-                new Array(59 * scale, 26 * scale),
-                new Array(60 * scale, 21 * scale),
-                new Array(68 * scale, 27 * scale),
-                new Array(55 * scale, 27 * scale)));
-        }
-        if (x === 3) {
-            myArray.push(new Array(
-                //Front View
-                new Array(60 * scale, 34 * scale),
-                new Array(61 * scale, 25 * scale),
-                new Array(62 * scale, 21 * scale),
-                new Array(68 * scale, 26 * scale),
-                new Array(57 * scale, 26 * scale),
-                //Left View
-                new Array(62 * scale, 34 * scale),
-                new Array(62 * scale, 25 * scale),
-                new Array(63 * scale, 21 * scale),
-                new Array(63 * scale, 27 * scale),
-                //Right View
-                new Array(62 * scale, 34 * scale),
-                new Array(61 * scale, 25 * scale),
-                new Array(62 * scale, 21 * scale),
-                new Array(60 * scale, 27 * scale),
-                //Rear View
-                new Array(60 * scale, 34 * scale),
-                new Array(61 * scale, 25 * scale),
-                new Array(61 * scale, 21 * scale),
-                new Array(68 * scale, 26 * scale),
-                new Array(57 * scale, 26 * scale)));
-        }
-    }
-
-    return myArray;
 
 }
 

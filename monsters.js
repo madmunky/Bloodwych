@@ -88,11 +88,11 @@ function getMonsterGfxOffset(pos, sub) {
 	switch (sub) {
 		case CHAR_FRONT_LEFT:
 			offx = -43;
-			offy = 4;
+			offy = 3;
 			break;
 		case CHAR_FRONT_RIGHT:
 			offx = 43;
-			offy = 4;
+			offy = 3;
 			break;
 		case CHAR_FRONT_SOLO:
 			offx = 0;
@@ -100,11 +100,11 @@ function getMonsterGfxOffset(pos, sub) {
 			break;
 		case CHAR_BACK_LEFT:
 			offx = -35;
-			offy = 0;
+			offy = -2;
 			break;
 		case CHAR_BACK_RIGHT:
 			offx = 35;
-			offy = 0;
+			offy = -2;
 			break;
 	}
 	offx = Math.floor(offx / (xy["y"] - 1));
