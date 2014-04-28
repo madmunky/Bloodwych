@@ -27,21 +27,22 @@ Monster.prototype.toString = function() {
 Monster.prototype.getGfx = function() {
 	var gfx = [];
 	var dirArray = [];
-	for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-            if (dis < 4){
-                for (dir = 0; dir < 4; dir++) {
-			gfx.push(grabCharacter(this.form, dir, dis));
-		}
-		dirArray.push(gfx);
-		gfx = [];
-            }else {
-                for (dir = 0; dir < 2; dir++) {
-			gfx.push(grabWholeCharacter(this.form, dir, dis));
-		}
-		dirArray.push(gfx);
-		gfx = [];
-            }
-	}
+        if (characterGfx.length > 0) {
+            for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+                if (dis < 4){
+                    for (dir = 0; dir < 4; dir++) {
+                            gfx.push(grabCharacter(this.form, dir, dis));
+                    }
+                    dirArray.push(gfx);
+                    gfx = [];
+                }else {
+                    for (dir = 0; dir < 2; dir++) {                    
+                            gfx.push(grabWholeCharacter(this.form, dir, dis));                    
+                    }
+                    dirArray.push(gfx);
+                    gfx = [];
+                }
+	}}
 	this.gfx = dirArray;
 }
 
