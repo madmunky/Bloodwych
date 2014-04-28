@@ -385,7 +385,7 @@ function characterSpriteLocationOLD() {
 }
 
 function drawCharacter(mForm, characterDirection, characterDistance, player, offset) {
-    if (typeof monster[mForm].gfx[characterDistance] !== "undefined" && typeof monster[mForm].gfx[characterDistance][characterDirection] !== "undefined") {
+    if (characterDistance > -1 && typeof monster[mForm].gfx[characterDistance] !== "undefined" && typeof monster[mForm].gfx[characterDistance][characterDirection] !== "undefined") {
         var offx = 64 - Math.floor(monster[mForm].gfx[characterDistance][characterDirection].width / 2),
             offy = 41 - Math.floor(monster[mForm].gfx[characterDistance][characterDirection].height / 2);
 
@@ -393,40 +393,6 @@ function drawCharacter(mForm, characterDirection, characterDistance, player, off
             offx += offset.x;
             offy += offset.y;
         }
-/*
-        switch (position) {
-
-            case CHAR_FRONT_LEFT:
-                {
-                    offx += -30;
-                    offy += 6;
-                };
-                break
-            case CHAR_FRONT_RIGHT:
-                {
-                    offx += 30;
-                    offy += 6;
-                };
-                break
-            case CHAR_FRONT_SOLO:
-                {
-                    offx += 0;
-                    offy += 0;
-                };
-                break
-            case CHAR_BACK_LEFT:
-                {
-                    offx = 37;
-                    offy = 20;
-                };
-                break
-            case CHAR_BACK_RIGHT:
-                {
-                    offx = 70;
-                    offy = 20;
-                };
-                break
-        }*/
         ctx.drawImage(monster[mForm].gfx[characterDistance][characterDirection], (player.PortalX + offx) * scale, (player.PortalY + offy) * scale, monster[mForm].gfx[characterDistance][characterDirection].width * scale, monster[mForm].gfx[characterDistance][characterDirection].height * scale);
     }
 }

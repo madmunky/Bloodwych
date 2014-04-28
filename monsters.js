@@ -92,11 +92,11 @@ function getMonsterGfxOffset(pos, sub) {
 			break;
 		case CHAR_BACK_LEFT:
 			offx = -36;
-			offy = -2;
+			offy = 0;
 			break;
 		case CHAR_BACK_RIGHT:
 			offx = 36;
-			offy = -2;
+			offy = 0;
 			break;
 	}
 	offx = Math.floor(offx / (xy["y"] - 1));
@@ -110,34 +110,20 @@ function getMonsterGfxOffset(pos, sub) {
 	}
 }
 
-function getMonsterDistanceByPos(pos) {
-	switch (pos) {
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-			return CHAR_DISTANCE_DISTANT;
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-		case 9:
-			return CHAR_DISTANCE_DISTANT;
-		case 10:
-		case 11:
-		case 12:
-			return CHAR_DISTANCE_FAR;
-		case 13:
-		case 14:
-		case 15:
-		case 16:
-		case 17:
-		case 18:
+function getMonsterDistanceByPos(pos, sq) {
+	if(pos <= 4) {
+		return CHAR_DISTANCE_DISTANT;
+	} else if(pos <= 9) {
+		return CHAR_DISTANCE_DISTANT;
+	} else if(pos <= 12) {
+		return CHAR_DISTANCE_FAR;
+	} else if(pos <= 15) {
+		if(sq === 1) {
+			return CHAR_DISTANCE_MID;
+		} else {
 			return CHAR_DISTANCE_CLOSE;
-			//return CHAR_DISTANCE_MID;
-
-		default:
-			return 0;
+		}
+	} else {
+		return -1;
 	}
 }
