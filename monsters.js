@@ -50,7 +50,7 @@ Monster.prototype.getGfx = function() {
 Monster.prototype.canMove = function() {
 	var sq = this.getSquareByDir();
 
-	if (this.teamId >= 0 || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
+	if (this.teamId > 0 || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
 		var hexThis = this.getBinaryView(18, 0, 16);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		var objThis = getHexToBinaryPosition(hexThis, 12, 4);
@@ -263,14 +263,14 @@ function initMonsters(t) {
 	}
 
 	//TESTING!!! REMOVE AFTER
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 23, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
 	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, CHAR_FRONT_RIGHT, -4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 24, 3, 13, 23, 3, CHAR_FRONT_RIGHT, -4);
 	monsterMax++;
-	//monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 2, 4);
-	//monsterMax++;
-	//monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 1, 4);
-	//monsterMax++;
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 25, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
+	monsterMax++;
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
+	monsterMax++;
 }
 
 function getMonsterGfxOffset(pos, sub) {
