@@ -27,29 +27,30 @@ Monster.prototype.toString = function() {
 Monster.prototype.getGfx = function() {
 	var gfx = [];
 	var dirArray = [];
-        if (characterGfx.length > 0) {
-            for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-                if (dis < 4){
-                    for (dir = 0; dir < 4; dir++) {
-                            gfx.push(grabCharacter(this.form, dir, dis));
-                    }
-                    dirArray.push(gfx);
-                    gfx = [];
-                }else {
-                    for (dir = 0; dir < 2; dir++) {                    
-                            gfx.push(grabWholeCharacter(this.form, dir, dis));                    
-                    }
-                    dirArray.push(gfx);
-                    gfx = [];
-                }
-	}}
+	if (characterGfx.length > 0) {
+		for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+			if (dis < 4) {
+				for (dir = 0; dir < 4; dir++) {
+					gfx.push(grabCharacter(this.form, dir, dis));
+				}
+				dirArray.push(gfx);
+				gfx = [];
+			} else {
+				for (dir = 0; dir < 2; dir++) {
+					gfx.push(grabWholeCharacter(this.form, dir, dis));
+				}
+				dirArray.push(gfx);
+				gfx = [];
+			}
+		}
+	}
 	this.gfx = dirArray;
 }
 
 Monster.prototype.canMove = function() {
 	var sq = this.getSquareByDir();
 
-	if (this.teamId === -1 || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
+	if (this.teamId >= 0 || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
 		var hexThis = this.getBinaryView(18, 0, 16);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		var objThis = getHexToBinaryPosition(hexThis, 12, 4);
@@ -62,9 +63,9 @@ Monster.prototype.canMove = function() {
 
 		//Check wooden walls and doors
 		if (objThis == '2' || objNext == '2') {
-			//if (!this.canMoveToPosByWood(pos)) {
-			//	return false;
-			//}
+			if (!this.canMoveByWood()) {
+				return false;
+			}
 		}
 
 		//Check other objects
@@ -74,7 +75,7 @@ Monster.prototype.canMove = function() {
 			case '3':
 				return false; //Misc
 			case '5': //Doors
-				if (getHexToBinaryPosition(hex, 7, 1) == '1') {
+				if (getHexToBinaryPosition(hexNext, 7, 1) == '1') {
 					return false;
 				}
 		}
@@ -82,44 +83,77 @@ Monster.prototype.canMove = function() {
 	return true;
 }
 
+Monster.prototype.canMoveByWood = function() {
+	var hexThis = this.getBinaryView(18, 0, 16);
+	var hexNext = this.getBinaryView(15, 0, 16);
+	//Check the space the player is standing on
+	if (getHexToBinaryPosition(hexThis, 12, 4) == '2' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2 + 1, 1) == '1') {
+		return false;
+	}
+	//Check the space the player is moving to
+	if (getHexToBinaryPosition(hexNext, 12, 4) == '2' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2 + 1, 1) == '1') {
+		return false;
+	}
+	return true;
+}
+
 Monster.prototype.move = function() {
-	if (this.canMove()) {
-		switch (this.d) {
-			case 0:
-				xo = 0;
-				yo = -1;
-				break;
-			case 1:
-				xo = 1;
-				yo = 0;
-				break;
-			case 2:
-				xo = 0;
-				yo = 1;
-				break;
-			case 3:
-				xo = -1;
-				yo = 0;
-				break;
-		}
-		if (this.teamId === -1) {
-			this.x += xo;
-			this.y += yo;
-		} else {
-			var sq = this.getSquareByDir();
-			this.square = this.getSquareByDirNext();
-			switch (sq) {
-				case CHAR_FRONT_LEFT:
-				case CHAR_FRONT_RIGHT:
-					this.x += xo;
-					this.y += yo;
+	if(this.teamId >= 0) {
+		if (this.canMove()) {
+			switch (this.d) {
+				case 0:
+					xo = 0;
+					yo = -1;
 					break;
-				default:
+				case 1:
+					xo = 1;
+					yo = 0;
+					break;
+				case 2:
+					xo = 0;
+					yo = 1;
+					break;
+				case 3:
+					xo = -1;
+					yo = 0;
 					break;
 			}
+			if(this.teamId > 0) {
+				team = this.id;
+				while(typeof monster[team] !== "undefined" && this.teamId === Math.abs(monster[team].teamId)) {
+					monster[team].x += xo;
+					monster[team].y += yo;
+					team++;
+				}
+			} else if (this.square === -1) {
+				this.x += xo;
+				this.y += yo;
+			} else {
+				var sq = this.getSquareByDir();
+				switch (sq) {
+					case CHAR_FRONT_LEFT:
+					case CHAR_FRONT_RIGHT:
+						this.x += xo;
+						this.y += yo;
+						break;
+					default:
+						break;
+				}
+				this.square = this.getSquareByDirNext();
+			}
+		} else {
+			var d = Math.floor(Math.random() * 2) * 2 - 1;
+			if(this.teamId > 0) {
+				team = this.id;
+				while(typeof monster[team] !== "undefined" && this.teamId === Math.abs(monster[team].teamId)) {
+					monster[team].d = (monster[team].d + d + 4) % 4;
+					monster[team].square = (monster[team].square + d + 4) % 4;
+					team++;
+				}
+			} else {
+				this.d = (this.d + d + 4) % 4;
+			}
 		}
-	} else {
-		this.d = (this.d + Math.floor(Math.random() * 2) * 2 + 3) % 4;
 	}
 }
 
@@ -129,7 +163,7 @@ Monster.prototype.move = function() {
 //	CHAR_BACK_LEFT = 3,
 //returns the sub square relative to the direction of the monster
 Monster.prototype.getSquareByDir = function() {
-	return (this.square + this.d) % 4;
+	return (4 + this.square - this.d) % 4;
 }
 
 //returns the sub square relative to the direction of the monster, if the (small) monster would move 1 step forwards
@@ -178,6 +212,9 @@ Monster.prototype.getSquareByDirNext = function() {
 	}
 }
 
+Monster.prototype.assembleTeam = function() {
+
+}
 
 Monster.prototype.getBinaryView = function(pos18, index, length) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
@@ -190,8 +227,7 @@ Monster.prototype.getBinaryView = function(pos18, index, length) {
 
 function initMonsters(t) {
 	monster.length = 0;
-	var teamIdLast = -1;
-	var teamDo = false;
+	var teamIdLast = 0;
 	var xLast = 0;
 	var square = 0;
 	for (i = 0; i < t.monsterData.length; i++) {
@@ -203,16 +239,17 @@ function initMonsters(t) {
 		var x = parseInt(hex2dec(getHexToBinaryPosition(md, 8, 8)));
 		var y = parseInt(hex2dec(getHexToBinaryPosition(md, 16, 8)));
 		var tid = parseInt(hex2dec(getHexToBinaryPosition(md, 40, 8)));
-		var teamId = -1;
+		var teamId = 0;
 		if (tid != 255) {
 			if (x != 255) {
 				xLast = x;
 				teamIdLast++;
+				teamId = teamIdLast;
 			} else {
 				x = xLast;
 				square++;
+				teamId = -teamIdLast;
 			}
-			teamId = teamIdLast;
 		} else if (form === 21 || form === 22) {
 			square = -1;
 		} else {
@@ -220,15 +257,15 @@ function initMonsters(t) {
 		}
 		if (level != 0 || type != 0 || form != 0 || floor != -1 || x != 0 || y != 0) {
 			monster[i] = new Monster(i, level, type, form, floor, x, y, 0, square, teamId);
-			PrintLog('Loaded monster: ' + monster[i].toString());
+			PrintLog('Loaded monster: ' + monster[i]);
 			monsterMax++;
 		}
 	}
 
 	//TESTING!!! REMOVE AFTER
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 0, CHAR_FRONT_LEFT, 4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
 	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 0, CHAR_FRONT_RIGHT, 4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, CHAR_FRONT_RIGHT, -4);
 	monsterMax++;
 	//monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, 2, 4);
 	//monsterMax++;

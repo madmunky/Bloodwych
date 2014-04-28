@@ -375,11 +375,6 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 	var p = this;
 
 	if (typeof monsterPalette[form] !== "undefined") {
-		//6 + 0 - 0 == 2 == face
-		//6 + 1 - 0 == 3 == left
-		//6 + 0 - 1 == 1 == right
-		//6 + 0 - 3 == 3 == left
-		//6 + 1 - 2 == 1 == right
 		drawCharacter(m.id, (6 + p.Rotation - m.d) % 4, distance, this, offset);
 	}
 }
