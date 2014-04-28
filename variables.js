@@ -3,6 +3,7 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 var game;
+var characterGfx = [];
 var drawMonsters = true;
 var testDistance = 0;
 var testDirection = 0;
@@ -160,7 +161,7 @@ var IMAGE_CHA_DISTANCE_1 = 0,
 	IMAGE_CHA_DISTANCE_3 = 2,
 	IMAGE_CHA_DISTANCE_4 = 3;
 
-var NUMBER_OF_DISTANCES = 4,
+var NUMBER_OF_DISTANCES = 6,
 	NUMBER_OF_HEADS = 18,
 	NUMBER_OF_TORSOS = 6,
 	NUMBER_OF_LEGS = 9,

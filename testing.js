@@ -6,11 +6,8 @@
 var maleCharacterSpriteLocations = characterSpriteLocation();
 var testMon1 = CHA_MURLOCK;
 
-
 var charLoaded = false;
 var characterImages = [];
-
-
 
 function grabCharacter(cID, dir, dist) {
 	try {
@@ -118,6 +115,63 @@ function grabCharacter(cID, dir, dist) {
 		}
 	} catch (e) {
 		PrintLog("GrabCharacter ERROR: " + e.toString());
+	}
+
+}
+
+function grabWholeCharacter(cID, dir, dist) {
+	try {
+            
+                var BODY = null;
+                var BODYIDTMP = 0;
+                var DIRtmp = dist %2;
+                
+		if (typeof monsterPalette[cID] !== "undefined") {
+			switch (dir) {
+
+				case 0:
+					{
+						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist%6][0], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
+					}
+					break;
+				case 3:
+					{
+						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist%6][1], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
+					}
+					break;
+				case 1:
+					{
+						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist%6][2], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
+					}
+					break;
+				case 2:
+					{
+						BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist%6][3], MON_PALETTE_DEFAULT, monsterPalette[cID].torsoPalette);
+					}
+					break;
+
+			}
+
+			var height = BODY.height,
+				width = BODY.width;
+
+			var can = document.createElement('canvas');
+			can.width = width;
+			can.height = height;
+			var charContext = can.getContext("2d");
+			var charImageObj = new Image();
+			charImageObj.width = width;
+			charImageObj.height = height;
+                        
+                        charContext.drawImage(BODY, 0, 0, BODY.width, BODY.height);
+
+			charContext.save();
+			charImageObj.src = can.toDataURL();
+			delete BODY;
+			return charImageObj;
+		}
+	} catch (e) {
+		PrintLog("GrabWholeCharacter ERROR: " + e.toString());
 	}
 
 }
@@ -238,14 +292,15 @@ function characterSpriteLocation() {
 
 function testing(p) {
 
-	//    try {
-	//        if (charLoaded) {
-	//            /*drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //rosanne
-	//            drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //eleanor
-	//            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //blodwyn
-	//            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //murlock*/
-	//        }
-	//    } catch (e) {}
+	    //try {
+	        if (charLoaded) {
+                    //ctx.drawImage(characterGfx[4][0][testDistance][testDirection],0,0,characterGfx[4][0][testDistance][testDirection].width * scale,characterGfx[4][0][testDistance][testDirection].height * scale)
+	            /*drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //rosanne
+	            drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //eleanor
+	            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //blodwyn
+	            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //murlock*/
+	        }
+	    //} catch (e) {PrintLog("Error: " + e.toString())}
 
 }
 

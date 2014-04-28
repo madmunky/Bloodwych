@@ -4,14 +4,6 @@
  * and open the template in the editor.
  */
 
-//First Three Rows Head 16x12
-//Mid Rows 16x10
-//Last Rows 16x8
-
-//imageCharacterArray[BodyPart][Type][Distance][Direction]   
-var characterGfx = [];
-
-
 function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteHeight, colSize) {
 
 
@@ -24,9 +16,30 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 				CLOSE = [],
 				DISTANT = [],
 				POSITION = 0;
-
-
-			for (y = 0; y < NUMBER_OF_DISTANCES*4; y++) {
+                        
+                        if (graphic === "people") {
+                            
+                            for (var u=0;u<6;u++){
+                                
+                                 switch (u) {
+                                        case 0:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
+                                                POSITION = POSITION + spriteHeight;};break
+                                        case 1:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-8, spriteHeight, false));
+                                                CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-8, spriteHeight, true));
+                                                POSITION = POSITION + spriteHeight;};break
+                                        case 2:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
+                                                POSITION = POSITION + spriteHeight ;};break                                            
+                                        case 3:{MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -4, spriteHeight -5, false));
+                                                POSITION = POSITION + spriteHeight -5;};break
+                                        case 4:{MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -10, spriteHeight -5, false));
+                                                MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -10, spriteHeight -5, true));
+                                                POSITION = POSITION + spriteHeight -5;};break
+                                        case 5:{MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth- 4, spriteHeight -4, false));
+                                                POSITION = POSITION + spriteHeight -4;}
+                                    }
+                            }
+                            
+                        }else for (y = 0; y < NUMBER_OF_DISTANCES*4; y++) {
                                
                                switch (graphic) {
                                    
@@ -160,31 +173,7 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
                                }
 			}
                         
-                        if (graphic === "people") {
-                            
-                            for (u=0;u<6;u++){
-                                
-                                 switch (u) {
-                                        case 0:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
-                                                POSITION = POSITION + spriteHeight;};break
-                                        case 1:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-7, spriteHeight, false));
-                                                CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-7, spriteHeight, true));
-                                                POSITION = POSITION + spriteHeight;};break
-                                        case 2:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
-                                                POSITION = POSITION + spriteHeight ;};break                                            
-                                        case 3:{MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth , spriteHeight -4, false));
-                                                POSITION = POSITION + spriteHeight -4;};break
-                                        case 4:{MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -7, spriteHeight -4, false));
-                                                MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -7, spriteHeight -4, true));
-                                                POSITION = POSITION + spriteHeight -4;};break
-                                        case 5:{MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight -4, false));
-                                                POSITION = POSITION + spriteHeight -4;};break
-                                    };break;
-                                
-                                
-                            }
-                            
-                        }
+                        
 			
                     graphicArray.push(new Array(CLOSE, MID, FAR, DISTANT));
         
