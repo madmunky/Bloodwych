@@ -2,7 +2,7 @@ function Game() {};
 Game.prototype = {
 
 	init: function() {
-		this.fps = 60;
+		this.fps = 10;
 		this.step = 1 / this.fps;
 		this.reset();
 		this.eventQueue = [];
@@ -18,6 +18,8 @@ Game.prototype = {
 
 	// Update the game model
 	update: function() {
+		timerMaster++;
+		monsterMove();
 	},
 
 	subscribe: function(e, callback, target) {
@@ -34,5 +36,14 @@ Game.prototype = {
 			var args = [].slice.call(arguments, 1);
 			sub.callback.apply(sub.target, args)
 		});
+	}
+}
+
+function monsterMove() {
+	if(timerMaster - timerMonsterMove >= 20) {
+		timerMonsterMove = timerMaster;
+		for(m = 0; m < monster.length; m++) {
+			//monster[m].move();
+		}
 	}
 }

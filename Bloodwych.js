@@ -166,6 +166,7 @@ function debugTextPrint(p) {
         for (i in mon) {
             debugText(p, 'Monster:' + mon[i].monster + ' - MonsterPos:' + mon[i].position + ' - MonsterOffset:' + getMonsterGfxOffset(15, 0).x + ', ' + getMonsterGfxOffset(12, 0).x + ', ' + getMonsterGfxOffset(9, 0).x);
         }
+        debugText(p, 'Master timer:' + timerMaster)
         //debugText(p, 'Champ: ' + p.getChampion(0));
         //debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
         //debugText(hex2bin(hex));
