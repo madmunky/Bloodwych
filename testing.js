@@ -265,6 +265,6 @@ function drawCharacter(mForm, characterDirection, characterDistance, player, off
             offx += offset.x;
             offy += offset.y;
         }
-        player.Portal.drawImage(monster[mForm].gfx[characterDistance][characterDirection], (player.PortalX + offx) * scale, (player.PortalY + offy) * scale, monster[mForm].gfx[characterDistance][characterDirection].width * scale, monster[mForm].gfx[characterDistance][characterDirection].height * scale);
+        player.Portal.drawImage(monster[mForm].gfx[characterDistance][characterDirection], (offx) * scale, (offy) * scale, monster[mForm].gfx[characterDistance][characterDirection].width * scale, monster[mForm].gfx[characterDistance][characterDirection].height * scale);
     }
 }

@@ -156,10 +156,35 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
                                                  DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-10, spriteHeight-11, true));
                                                  POSITION = POSITION + spriteHeight -11;};break
                                         case 11:{DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], (x * colSize)+1, POSITION, spritWidth -6, spriteHeight -11, false));};break
-                                    };}break;
-                                   
+                                    };}break;                                                                      
                                }
 			}
+                        
+                        if (graphic === "people") {
+                            
+                            for (u=0;u<6;u++){
+                                
+                                 switch (u) {
+                                        case 0:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
+                                                POSITION = POSITION + spriteHeight;};break
+                                        case 1:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-7, spriteHeight, false));
+                                                CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-7, spriteHeight, true));
+                                                POSITION = POSITION + spriteHeight;};break
+                                        case 2:{CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
+                                                POSITION = POSITION + spriteHeight ;};break                                            
+                                        case 3:{MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth , spriteHeight -4, false));
+                                                POSITION = POSITION + spriteHeight -4;};break
+                                        case 4:{MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -7, spriteHeight -4, false));
+                                                MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -7, spriteHeight -4, true));
+                                                POSITION = POSITION + spriteHeight -4;};break
+                                        case 5:{MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight -4, false));
+                                                POSITION = POSITION + spriteHeight -4;};break
+                                    };break;
+                                
+                                
+                            }
+                            
+                        }
 			
                     graphicArray.push(new Array(CLOSE, MID, FAR, DISTANT));
         

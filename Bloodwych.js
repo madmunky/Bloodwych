@@ -46,6 +46,7 @@ $(function() {
     gfxLoadImage("character", "arms", "");
     gfxLoadImage("character", "torsos", "");
     gfxLoadImage("character", "legs", "");
+    gfxLoadImage("character", "people", "");
 });
 
 document.addEventListener('touchstart', doTouchStart, false);
