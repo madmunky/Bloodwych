@@ -23,6 +23,15 @@ function Tower(map) {
 	});
 	towerDataLoaded.watch("monsters", function(prop, oldval, newval) {
 		getFileData('maps/' + map + '.charstats', readSimpleDataHex, t, "championData", 32);
+		if (gfx['character']['heads'].width > 0 && !gameGfxLoaded.monsterTorsos) {
+			gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 12, 12, 16);
+			gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 15, 26, 16);
+			gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 9, 18, 16);
+			gfx['character']['people'].onload = getCharacterSprite(NUMBER_OF_WHOLEPEOPLE, 'character', 'people', 13, 22, 14);
+			gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 15, 14, 16);
+		}
+	});
+	gameGfxLoaded.watch("monsterTorsos", function(prop, oldval, newval) {
 		initMonsters(t);
 		if (typeof game === "undefined") {
 			Run();

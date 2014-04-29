@@ -1,5 +1,5 @@
 var dataLoaded = {};
-var Loaded = false;
+//var Loaded = false;
 
 Run = function() {
 	var animFrame = (function() {
@@ -25,16 +25,6 @@ Run = function() {
 		function run() {
 			now = new Date().getTime();
 
-			if (gfx['character']['legs'].width > 0 && !Loaded) {
-				gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 12, 12, 16);
-				gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 15, 14, 16);
-				gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 15, 26, 16);
-				gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 9, 18, 16);
-				gfx['character']['people'].onload = getCharacterSprite(NUMBER_OF_WHOLEPEOPLE, 'character', 'people', 13, 22, 14);
-				Loaded = true;
-				charLoaded = true;
-			}
-
 			dt = Math.min(1, (now - last) / 1000);
 			gdt = gdt + dt;
 			while (gdt > game.step) {
@@ -49,10 +39,10 @@ Run = function() {
 			last = now;
 			animFrame(run);
 
-		};
+		}
 
 		game.init && game.init();
 		render.init && render.init();
 		run();
-	};
+	}
 }();

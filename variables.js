@@ -15,7 +15,8 @@ var gameGfxLoaded = {
 	monsterHeads: false,
 	monsterLegs: false,
 	monsterArms: false,
-	monsterTorsos: false
+	monsterTorsos: false,
+	monsterPeople: false
 };
 var towerDataLoaded = {
 	floor: false,

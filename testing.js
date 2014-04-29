@@ -6,11 +6,11 @@
 var maleCharacterSpriteLocations = characterSpriteLocation();
 var testMon1 = CHA_MURLOCK;
 
-var charLoaded = false;
+//var charLoaded = false;
 var characterImages = [];
 
 function grabCharacter(cID, dir, dist) {
-	try {
+//	try {
 
 		if (typeof monsterPalette[cID] !== "undefined") {
 			var LEG;
@@ -113,9 +113,9 @@ function grabCharacter(cID, dir, dist) {
 			delete HEAD;
 			return charImageObj;
 		}
-	} catch (e) {
-		PrintLog("GrabCharacter ERROR: " + e.toString());
-	}
+//	} catch (e) {
+//		PrintLog("GrabCharacter ERROR: " + e.toString());
+//	}
 
 }
 
@@ -293,13 +293,13 @@ function characterSpriteLocation() {
 function testing(p) {
 
 	    //try {
-	        if (charLoaded) {
+//	        if (charLoaded) {
                     //ctx.drawImage(characterGfx[4][0][testDistance][testDirection],0,0,characterGfx[4][0][testDistance][testDirection].width * scale,characterGfx[4][0][testDistance][testDirection].height * scale)
 	            /*drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //rosanne
 	            drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //eleanor
 	            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //blodwyn
 	            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //murlock*/
-	        }
+//	        }
 	    //} catch (e) {PrintLog("Error: " + e.toString())}
 
 }
