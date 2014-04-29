@@ -8,7 +8,9 @@ function Monster(id, level, type, form, floor, x, y, d, square, teamId, champId)
 	this.x = x;
 	this.y = y;
 	this.d = d;
-	this.square = (square + d) % 4;
+	if(square > -1) {
+		this.square = (square + d) % 4;
+	}
 	this.champId = -1;
 	if (typeof champId !== "undefined") {
 		this.champId = champId; //optional Champion ID
@@ -410,14 +412,14 @@ function initMonsters(t) {
 	}
 
 	//TESTING!!! REMOVE AFTER
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 23, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 46, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
 	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 24, 3, 13, 23, 3, CHAR_FRONT_RIGHT, -4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, 45, 3, 13, 23, 3, CHAR_FRONT_RIGHT, -4);
 	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 25, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
+	/*monster[monsterMax] = new Monster(monsterMax, 1, 0, 25, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
 	monsterMax++;
 	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
-	monsterMax++;
+	monsterMax++;*/
 }
 
 function getMonsterGfxOffset(pos, sub) {
