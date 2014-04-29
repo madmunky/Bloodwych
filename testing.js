@@ -188,7 +188,7 @@ function characterSpriteLocation() {
 				new Array(5, 21), //LEGS
 				new Array(5, 7), //BODY
 				new Array(7, 0), //HEAD
-				new Array(20, 9), //RIGHT ARM
+				new Array(16, 9), //RIGHT ARM
 				new Array(0, 9), //LEFT ARM
 				//Left View
 				new Array(11, 22), //LEGS
@@ -204,7 +204,7 @@ function characterSpriteLocation() {
 				new Array(5, 22),
 				new Array(5, 8),
 				new Array(7, 0),
-				new Array(20, 10),
+				new Array(16, 10),
 				new Array(0, 10)));
 		}
 		if (x === 1) {
@@ -213,7 +213,7 @@ function characterSpriteLocation() {
 				new Array(3, 19),
 				new Array(4, 7),
 				new Array(6, 3),
-				new Array(17, 10),
+				new Array(12, 10),
 				new Array(0, 10),
 				//Left View
 				new Array(7, 20),
@@ -229,7 +229,7 @@ function characterSpriteLocation() {
 				new Array(3, 20),
 				new Array(4, 8),
 				new Array(6, 3),
-				new Array(17, 11),
+				new Array(12, 11),
 				new Array(0, 11)));
 		}
 		if (x === 2) {
@@ -238,7 +238,7 @@ function characterSpriteLocation() {
 				new Array(3, 16),
 				new Array(4, 6),
 				new Array(5, 1),
-				new Array(13, 7),
+				new Array(8, 7),
 				new Array(0, 7),
 				//Left View
 				new Array(7, 16),
@@ -254,7 +254,7 @@ function characterSpriteLocation() {
 				new Array(3, 16),
 				new Array(4, 6),
 				new Array(5, 1),
-				new Array(13, 7),
+				new Array(8, 7),
 				new Array(0, 7)));
 		}
 		if (x === 3) {
@@ -263,7 +263,7 @@ function characterSpriteLocation() {
 				new Array(3, 13),
 				new Array(4, 4),
 				new Array(5, 0),
-				new Array(11, 5),
+				new Array(6, 5),
 				new Array(0, 5),
 				//Left View
 				new Array(6, 13),
@@ -279,7 +279,7 @@ function characterSpriteLocation() {
 				new Array(3, 13),
 				new Array(4, 4),
 				new Array(4, 0),
-				new Array(11, 5),
+				new Array(6, 5),
 				new Array(0, 5)));
 		}
 	}
