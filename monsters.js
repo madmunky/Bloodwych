@@ -43,7 +43,7 @@ Monster.prototype.getGfx = function() {
 				gfx = [];
 			}
 		}
-	}
+	}else{}
 	this.gfx = dirArray;
 }
 

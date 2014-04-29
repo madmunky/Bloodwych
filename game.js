@@ -6,8 +6,8 @@ Game.prototype = {
 		this.step = 1 / this.fps;
 		this.reset();
 		this.eventQueue = [];
-		initSpells();
-		initPlayers();
+		//initSpells();
+		//initPlayers();
 
 	},
 

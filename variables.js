@@ -3,7 +3,7 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 var game;
-var characterGfx = [];
+var characterGfx = [null,null,null,null,null];
 var drawMonsters = true;
 var testDistance = 0;
 var testDirection = 0;
@@ -157,7 +157,8 @@ var champion = new Array();
 var IMAGE_CHA_HEAD = 0,
 	IMAGE_CHA_TORSO = 1,
 	IMAGE_CHA_ARM = 3,
-	IMAGE_CHA_LEG = 2;
+	IMAGE_CHA_LEG = 2,
+        IMAGE_CHA_PEOPLE = 4;
 
 var IMAGE_CHA_DISTANCE_1 = 0,
 	IMAGE_CHA_DISTANCE_2 = 1,

@@ -10,7 +10,7 @@ var testMon1 = CHA_MURLOCK;
 var characterImages = [];
 
 function grabCharacter(cID, dir, dist) {
-//	try {
+	try {
 
 		if (typeof monsterPalette[cID] !== "undefined") {
 			var LEG;
@@ -113,9 +113,9 @@ function grabCharacter(cID, dir, dist) {
 			delete HEAD;
 			return charImageObj;
 		}
-//	} catch (e) {
-//		PrintLog("GrabCharacter ERROR: " + e.toString());
-//	}
+	} catch (e) {
+		PrintLog("GrabCharacter ERROR Monster ID "+cID.toString()+ ", DIR: " +dir.toString()+" , DIST: "+dist+" : " + e.toString());
+	}
 
 }
 

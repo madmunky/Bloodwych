@@ -212,13 +212,13 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 		graphicArray.push(new Array(CLOSE, MID, FAR, DISTANT));
 
 	}
-	characterGfx.push(graphicArray);
+	//characterGfx.push(graphicArray);
 
 	switch(graphic) {
-		case 'people': gameGfxLoaded.monsterPeople = true; break;
-		case 'heads': gameGfxLoaded.monsterHeads = true; break;
-		case 'torsos': gameGfxLoaded.monsterTorsos = true; break;
-		case 'arms': gameGfxLoaded.monsterArms = true; break;
-		case 'legs': gameGfxLoaded.monsterLegs = true; break;
+		case 'people': gameGfxLoaded.monsterPeople = true; characterGfx[4] = graphicArray; break;
+		case 'heads': gameGfxLoaded.monsterHeads = true; characterGfx[0] = graphicArray; break;
+		case 'torsos': gameGfxLoaded.monsterTorsos = true; characterGfx[1] = graphicArray; break;
+		case 'arms': gameGfxLoaded.monsterArms = true; characterGfx[3] = graphicArray; break;
+		case 'legs': gameGfxLoaded.monsterLegs = true; characterGfx[2] = graphicArray; break;
 	}
 }
