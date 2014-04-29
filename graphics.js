@@ -436,6 +436,8 @@ function drawPlayersView(p) {
 		}
 	}
         
+        testing(p);//REMOVE TESTING ONLY!!!
+        
         p.Portal.save();        
         ctx.drawImage(p.Portal.canvas,p.PortalX,p.PortalY);
         

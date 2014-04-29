@@ -300,6 +300,8 @@ function characterSpriteLocation() {
 
 function testing(p) {
 
+ctx.drawImage(characterGfx[4][4][testDistance][testDirection],0,0,characterGfx[4][0][testDistance][testDirection].width * scale,characterGfx[4][0][testDistance][testDirection].height * scale)
+
 	    //try {
 //	        if (charLoaded) {
                     //ctx.drawImage(characterGfx[4][0][testDistance][testDirection],0,0,characterGfx[4][0][testDistance][testDirection].width * scale,characterGfx[4][0][testDistance][testDirection].height * scale)
