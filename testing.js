@@ -183,104 +183,112 @@ function characterSpriteLocation() {
 	for (var x = 0; x < 4; x++) {
 
 		if (x === 0) { //This is the DISTANCE
+			offx = 4;
+			offy = 0;
 			myArray.push(new Array(
 				//Front View
-				new Array(5, 21), //LEGS
-				new Array(5, 7), //BODY
-				new Array(7, 0), //HEAD
-				new Array(16, 9), //RIGHT ARM
-				new Array(0, 9), //LEFT ARM
+				new Array(5 + offx, 21 + offy), //LEGS
+				new Array(5 + offx, 7 + offy), //BODY
+				new Array(7 + offx, 0 + offy), //HEAD
+				new Array(16 + offx, 9 + offy), //RIGHT ARM
+				new Array(0 + offx, 9 + offy), //LEFT ARM
 				//Left View
-				new Array(11, 22), //LEGS
-				new Array(9, 8), //BODY
-				new Array(9, 0), //HEAD
-				new Array(14, 10), //ARM
+				new Array(11 + offx, 22 + offy), //LEGS
+				new Array(9 + offx, 8 + offy), //BODY
+				new Array(9 + offx, 0 + offy), //HEAD
+				new Array(14 + offx, 10 + offy), //ARM
 				//Right View
-				new Array(7, 22),
-				new Array(5, 8),
-				new Array(5, 0),
-				new Array(3, 10),
+				new Array(7 + offx, 22 + offy),
+				new Array(5 + offx, 8 + offy),
+				new Array(5 + offx, 0 + offy),
+				new Array(3 + offx, 10 + offy),
 				//Rear View
-				new Array(5, 22),
-				new Array(5, 8),
-				new Array(7, 0),
-				new Array(16, 10),
-				new Array(0, 10)));
+				new Array(5 + offx, 22 + offy),
+				new Array(5 + offx, 8 + offy),
+				new Array(7 + offx, 0 + offy),
+				new Array(16 + offx, 10 + offy),
+				new Array(0 + offx, 10 + offy)));
 		}
 		if (x === 1) {
+			offx = 4;
+			offy = 0;
 			myArray.push(new Array(
 				//Front View
-				new Array(3, 19),
-				new Array(4, 7),
-				new Array(6, 3),
-				new Array(12, 10),
-				new Array(0, 10),
+				new Array(3 + offx, 19 + offy),
+				new Array(4 + offx, 7 + offy),
+				new Array(6 + offx, 3 + offy),
+				new Array(12 + offx, 10 + offy),
+				new Array(0 + offx, 10 + offy),
 				//Left View
-				new Array(7, 20),
-				new Array(7, 8),
-				new Array(6, 3),
-				new Array(9, 10),
+				new Array(7 + offx, 20 + offy),
+				new Array(7 + offx, 8 + offy),
+				new Array(6 + offx, 3 + offy),
+				new Array(9 + offx, 10 + offy),
 				//Right View
-				new Array(4, 20),
-				new Array(4, 8),
-				new Array(4, 3),
-				new Array(3, 10),
+				new Array(4 + offx, 20 + offy),
+				new Array(4 + offx, 8 + offy),
+				new Array(4 + offx, 3 + offy),
+				new Array(3 + offx, 10 + offy),
 				//Rear View
-				new Array(3, 20),
-				new Array(4, 8),
-				new Array(6, 3),
-				new Array(12, 11),
-				new Array(0, 11)));
+				new Array(3 + offx, 20 + offy),
+				new Array(4 + offx, 8 + offy),
+				new Array(6 + offx, 3 + offy),
+				new Array(12 + offx, 11 + offy),
+				new Array(0 + offx, 11 + offy)));
 		}
 		if (x === 2) {
+			offx = 4;
+			offy = 0;
 			myArray.push(new Array(
 				//Front View
-				new Array(3, 16),
-				new Array(4, 6),
-				new Array(5, 1),
-				new Array(8, 7),
-				new Array(0, 7),
+				new Array(3 + offx, 16 + offy),
+				new Array(4 + offx, 6 + offy),
+				new Array(5 + offx, 1 + offy),
+				new Array(8 + offx, 7 + offy),
+				new Array(0 + offx, 7 + offy),
 				//Left View
-				new Array(7, 16),
-				new Array(7, 6),
-				new Array(7, 1),
-				new Array(9, 8),
+				new Array(7 + offx, 16 + offy),
+				new Array(7 + offx, 6 + offy),
+				new Array(7 + offx, 1 + offy),
+				new Array(9 + offx, 8 + offy),
 				//Right View
-				new Array(7, 16),
-				new Array(7, 6),
-				new Array(7, 1),
-				new Array(5, 8),
+				new Array(7 + offx, 16 + offy),
+				new Array(7 + offx, 6 + offy),
+				new Array(7 + offx, 1 + offy),
+				new Array(5 + offx, 8 + offy),
 				//Rear View
-				new Array(3, 16),
-				new Array(4, 6),
-				new Array(5, 1),
-				new Array(8, 7),
-				new Array(0, 7)));
+				new Array(3 + offx, 16 + offy),
+				new Array(4 + offx, 6 + offy),
+				new Array(5 + offx, 1 + offy),
+				new Array(8 + offx, 7 + offy),
+				new Array(0 + offx, 7 + offy)));
 		}
 		if (x === 3) {
+			offx = 4;
+			offy = 0;
 			myArray.push(new Array(
 				//Front View
-				new Array(3, 13),
-				new Array(4, 4),
-				new Array(5, 0),
-				new Array(6, 5),
-				new Array(0, 5),
+				new Array(3 + offx, 13 + offy),
+				new Array(4 + offx, 4 + offy),
+				new Array(5 + offx, 0 + offy),
+				new Array(6 + offx, 5 + offy),
+				new Array(0 + offx, 5 + offy),
 				//Left View
-				new Array(6, 13),
-				new Array(6, 4),
-				new Array(7, 0),
-				new Array(7, 6),
+				new Array(6 + offx, 13 + offy),
+				new Array(6 + offx, 4 + offy),
+				new Array(7 + offx, 0 + offy),
+				new Array(7 + offx, 6 + offy),
 				//Right View
-				new Array(8, 13),
-				new Array(7, 4),
-				new Array(8, 0),
-				new Array(6, 6),
+				new Array(8 + offx, 13 + offy),
+				new Array(7 + offx, 4 + offy),
+				new Array(8 + offx, 0 + offy),
+				new Array(6 + offx, 6 + offy),
 				//Rear View
-				new Array(3, 13),
-				new Array(4, 4),
-				new Array(4, 0),
-				new Array(6, 5),
-				new Array(0, 5)));
+				new Array(3 + offx, 13 + offy),
+				new Array(4 + offx, 4 + offy),
+				new Array(4 + offx, 0 + offy),
+				new Array(6 + offx, 5 + offy),
+				new Array(0 + offx, 5 + offy)));
 		}
 	}
 

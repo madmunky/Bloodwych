@@ -43,7 +43,7 @@ Monster.prototype.getGfx = function() {
 				gfx = [];
 			}
 		}
-	}else{}
+	} else {}
 	this.gfx = dirArray;
 }
 
@@ -70,11 +70,11 @@ Monster.prototype.canAttack = function() {
 		}
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
-			if(this.floor === player[0].floor && this.x + xo === player[0].x && this.y + yo === player[0].y) {
-				PrintLog('PLAYER 1 GETS HIT BY MONSTER #' + this.id + ' !!!');
+			if (this.floor === player[0].floor && this.x + xo === player[0].x && this.y + yo === player[0].y) {
+				PrintLog('PLAYER 1 GETS HIT BY MONSTER #' + this.id + '!');
 				return 0;
-			} else if(this.floor === player[1].floor && this.x + xo === player[1].x && this.y + yo === player[1].y) {
-				PrintLog('PLAYER 2 GETS HIT BY MONSTER #' + this.id + '!!!');
+			} else if (this.floor === player[1].floor && this.x + xo === player[1].x && this.y + yo === player[1].y) {
+				PrintLog('PLAYER 2 GETS HIT BY MONSTER #' + this.id + '!');
 				return 1;
 			}
 		}
@@ -97,28 +97,29 @@ Monster.prototype.canMove = function() {
 		var objThis = getHexToBinaryPosition(hexThis, 12, 4);
 		var objNext = getHexToBinaryPosition(hexNext, 12, 4);
 
-		//Check other player
-		if (getHexToBinaryPosition(hexNext, 8) === '1') {
-			return false;
-		}
 
 		//Check wooden walls and doors
 		if (objThis === '2' || objNext === '2') {
 			if (!this.canMoveByWood()) {
-				return false;
+				return 0;
 			}
 		}
 
 		//Check other objects
 		switch (objNext) {
 			case '1':
-				return false; //Wall
+				return 0; //Wall
 			case '3':
-				return false; //Misc
+				return 0; //Misc
 			case '5': //Doors
 				if (getHexToBinaryPosition(hexNext, 7, 1) === '1') {
-					return false;
+					return 0;
 				}
+		}
+
+		//Check other player
+		if (getHexToBinaryPosition(hexNext, 8) === '1') {
+			return 2;
 		}
 
 		//Check other monsters
@@ -143,12 +144,12 @@ Monster.prototype.canMove = function() {
 						break;
 				}
 				if (this.x + xo === monster[m].x && this.y + yo === monster[m].y) {
-					return false;
+					return 2;
 				}
 			}
 		}
 	}
-	return true;
+	return 1;
 }
 
 Monster.prototype.canMoveByWood = function() {
@@ -167,9 +168,10 @@ Monster.prototype.canMoveByWood = function() {
 
 Monster.prototype.move = function() {
 	if (this.teamId >= 0) {
-		if (this.canMove()) {
+		var canMove = this.canMove();
+		if (canMove === 2 && this.canAttack() > -1) return;
+		if (canMove === 1) {
 			if (this.rotateToPlayer()) return;
-
 			switch (this.d) {
 				case 0:
 					xo = 0;
@@ -212,8 +214,6 @@ Monster.prototype.move = function() {
 				}
 				this.square = this.getSquareByDirNext();
 			}
-		} else if(this.canAttack() > -1) {
-
 		} else {
 			if (this.rotateToPlayer()) {
 				return;
@@ -238,6 +238,9 @@ Monster.prototype.rotateToPlayer = function() {
 				} else if (player[0].x < this.x && (this.d === 0 || this.d === 2)) {
 					this.rotateTo(3);
 					return true;
+				} else if ((player[0].x < this.x && this.d === 1) || (player[0].x > this.x && this.d === 3)) {
+					this.rotateTo(Math.floor(Math.random() * 2) * 2);
+					return true;
 				}
 			} else if (rnd === 1) {
 				if (player[0].y > this.y && (this.d === 1 || this.d === 3)) {
@@ -245,6 +248,9 @@ Monster.prototype.rotateToPlayer = function() {
 					return true;
 				} else if (player[0].y < this.y && (this.d === 1 || this.d === 3)) {
 					this.rotateTo(0);
+					return true;
+				} else if ((player[0].y < this.y && this.d === 2) || (player[0].y > this.y && this.d === 0)) {
+					this.rotateTo(Math.floor(Math.random() * 2) * 2 + 1);
 					return true;
 				}
 			}
@@ -257,6 +263,9 @@ Monster.prototype.rotateToPlayer = function() {
 				} else if (player[1].x < this.x && (this.d === 0 || this.d === 2)) {
 					this.rotateTo(3);
 					return true;
+				} else if ((player[1].x < this.x && this.d === 1) || (player[1].x > this.x && this.d === 3)) {
+					this.rotateTo(Math.floor(Math.random() * 2) * 2);
+					return true;
 				}
 			} else if (rnd === 1) {
 				if (player[1].y > this.y && (this.d === 1 || this.d === 3)) {
@@ -264,6 +273,9 @@ Monster.prototype.rotateToPlayer = function() {
 					return true;
 				} else if (player[1].y < this.y && (this.d === 1 || this.d === 3)) {
 					this.rotateTo(0);
+					return true;
+				} else if ((player[1].y < this.y && this.d === 2) || (player[1].y > this.y && this.d === 0)) {
+					this.rotateTo(Math.floor(Math.random() * 2) * 2 + 1);
 					return true;
 				}
 			}
@@ -276,9 +288,10 @@ Monster.prototype.rotateTo = function(d) {
 	if (this.teamId > 0) {
 		var team = this.id;
 		while (typeof monster[team] !== "undefined" && this.teamId === Math.abs(monster[team].teamId)) {
+			sqr = d - monster[team].d;
 			monster[team].d = d;
 			if (monster[team].square > -1) {
-				monster[team].square = (monster[team].square + d) % 4;
+				monster[team].square = (4 + monster[team].square + sqr) % 4;
 			}
 			team++;
 		}
@@ -446,11 +459,15 @@ function getMonsterGfxOffset(pos, sub) {
 
 function getMonsterDistanceByPos(pos, sq) {
 	if (pos <= 4) {
-		return CHAR_DISTANCE_FAR;
+		return CHAR_DISTANCE_VERY_DISTANT;
 	} else if (pos <= 9) {
-		return CHAR_DISTANCE_FAR;
+		return CHAR_DISTANCE_DISTANT;
 	} else if (pos <= 12) {
-		return CHAR_DISTANCE_MID;
+		if (sq === 1) {
+			return CHAR_DISTANCE_FAR;
+		} else {
+			return CHAR_DISTANCE_MID;
+		}
 	} else if (pos <= 15) {
 		if (sq === 1) {
 			return CHAR_DISTANCE_CLOSE;

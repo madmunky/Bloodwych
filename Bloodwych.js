@@ -51,7 +51,7 @@ $(function() {
     gfxLoadImage("character", "people", "");
 });
 
-document.addEventListener('touchstart', doTouchStart, false);
+//document.addEventListener('touchstart', doTouchStart, false);
 
 var imageChecker = setInterval(function(){init()},100);
 
