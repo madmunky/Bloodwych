@@ -1,4 +1,6 @@
 //Load images into the Arrays
+var imagesLoaded = false;
+
 $(function() {
     //Background
     gfxLoadImage("dungeon", "background");
@@ -51,6 +53,7 @@ $(function() {
 
 document.addEventListener('touchstart', doTouchStart, false);
 
+var imageChecker = setInterval(function(){init()},100);
 
 
 function updatePlayerViewScreen() {

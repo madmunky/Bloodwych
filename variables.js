@@ -10,6 +10,7 @@ var testDirection = 0;
 var timerMaster = 0;
 var timerMonsterMove = 0;
 
+
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = {
 	monsterHeads: false,
