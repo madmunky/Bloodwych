@@ -10,7 +10,7 @@ var testMon1 = CHA_MURLOCK;
 var characterImages = [];
 
 function grabCharacter(cID, dir, dist) {
-	try {
+	//try {
 
 		if (typeof monsterPalette[cID] !== "undefined") {
 			var LEG;
@@ -66,41 +66,46 @@ function grabCharacter(cID, dir, dist) {
 			charImageObj.width = width;
 			charImageObj.height = height;
 			var SPRITELOCATIONS = maleCharacterSpriteLocations;
+			var legCoord = { x: Math.floor((width - LEG.width) / 2), y: height - LEG.height };
+			var torsoCoord = { x: Math.floor((width - TORSO.width) / 2), y: height - LEG.height - TORSO.height };
+			var headCoord = { x: Math.floor((width - HEAD.width) / 2), y: height - LEG.height - TORSO.height - HEAD.height };
+			var armLeftCoord = { x: Math.floor((width - TORSO.width) / 2) - ARM.width, y: height - LEG.height - TORSO.height };
+			var armRightCoord = { x: Math.floor((width + TORSO.width) / 2), y: height - LEG.height - TORSO.height };
 
 			switch (dir) {
 
 				case 0:
 					{
-						charContext.drawImage(LEG, SPRITELOCATIONS[dist][0][0], SPRITELOCATIONS[dist][0][1], LEG.width, LEG.height);
-						charContext.drawImage(TORSO, SPRITELOCATIONS[dist][1][0], SPRITELOCATIONS[dist][1][1], TORSO.width, TORSO.height);
-						charContext.drawImage(HEAD, SPRITELOCATIONS[dist][2][0], SPRITELOCATIONS[dist][2][1], HEAD.width, HEAD.height);
-						charContext.drawImage(flipImage(ARM), SPRITELOCATIONS[dist][3][0], SPRITELOCATIONS[dist][3][1], ARM.width, ARM.height);
-						charContext.drawImage(ARM, SPRITELOCATIONS[dist][4][0], SPRITELOCATIONS[dist][4][1], ARM.width, ARM.height);
+						charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
+						charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
+						charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
+						charContext.drawImage(flipImage(ARM), armRightCoord.x, armRightCoord.y, ARM.width, ARM.height);
+						charContext.drawImage(ARM, armLeftCoord.x, armLeftCoord.y, ARM.width, ARM.height);
 					}
 					break;
 				case 3:
 					{
-						charContext.drawImage(LEG, SPRITELOCATIONS[dist][5][0], SPRITELOCATIONS[dist][5][1], LEG.width, LEG.height);
-						charContext.drawImage(TORSO, SPRITELOCATIONS[dist][6][0], SPRITELOCATIONS[dist][6][1], TORSO.width, TORSO.height);
-						charContext.drawImage(flipImage(ARM), SPRITELOCATIONS[dist][8][0], SPRITELOCATIONS[dist][8][1], ARM.width, ARM.height);
-						charContext.drawImage(HEAD, SPRITELOCATIONS[dist][7][0], SPRITELOCATIONS[dist][7][1], HEAD.width, HEAD.height);
+						charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
+						charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
+						charContext.drawImage(flipImage(ARM), armRightCoord.x, armRightCoord.y, ARM.width, ARM.height);
+						charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
 					}
 					break;
 				case 1:
 					{
-						charContext.drawImage(LEG, SPRITELOCATIONS[dist][9][0], SPRITELOCATIONS[dist][9][1], LEG.width, LEG.height);
-						charContext.drawImage(TORSO, SPRITELOCATIONS[dist][10][0], SPRITELOCATIONS[dist][10][1], TORSO.width, TORSO.height);
-						charContext.drawImage(flipImage(ARM), SPRITELOCATIONS[dist][12][0], SPRITELOCATIONS[dist][12][1], ARM.width, ARM.height);
-						charContext.drawImage(HEAD, SPRITELOCATIONS[dist][11][0], SPRITELOCATIONS[dist][11][1], HEAD.width, HEAD.height);
+						charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
+						charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
+						charContext.drawImage(flipImage(ARM), armLeftCoord.x, armLeftCoord.y, ARM.width, ARM.height);
+						charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
 					}
 					break;
 				case 2:
 					{
-						charContext.drawImage(LEG, SPRITELOCATIONS[dist][13][0], SPRITELOCATIONS[dist][13][1], LEG.width, LEG.height);
-						charContext.drawImage(ARM, SPRITELOCATIONS[dist][17][0], maleCharacterSpriteLocations[dist][17][1], ARM.width, ARM.height);
-						charContext.drawImage(flipImage(ARM), SPRITELOCATIONS[dist][16][0], SPRITELOCATIONS[dist][16][1], ARM.width, ARM.height);
-						charContext.drawImage(TORSO, SPRITELOCATIONS[dist][14][0], SPRITELOCATIONS[dist][14][1], TORSO.width, TORSO.height);
-						charContext.drawImage(HEAD, SPRITELOCATIONS[dist][15][0], SPRITELOCATIONS[dist][15][1], HEAD.width, HEAD.height);
+						charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
+						charContext.drawImage(ARM, armLeftCoord.x, armLeftCoord.y, ARM.width, ARM.height);
+						charContext.drawImage(flipImage(ARM), armRightCoord.x, armRightCoord.y, ARM.width, ARM.height);
+						charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
+						charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
 					}
 					break;
 			}
@@ -113,9 +118,9 @@ function grabCharacter(cID, dir, dist) {
 			delete HEAD;
 			return charImageObj;
 		}
-	} catch (e) {
-		PrintLog("GrabCharacter ERROR Monster ID "+cID.toString()+ ", DIR: " +dir.toString()+" , DIST: "+dist+" : " + e.toString());
-	}
+	//} catch (e) {
+	//	PrintLog("GrabCharacter ERROR Monster ID "+cID.toString()+ ", DIR: " +dir.toString()+" , DIST: "+dist+" : " + e.toString());
+	//}
 
 }
 
