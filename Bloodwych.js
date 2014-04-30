@@ -105,14 +105,14 @@ function clearCanvas() {
 function gfxColourSubs(folder, type, item, sub) {
     if (item != "") {
         for (i = 1; i <= sub; i++) {
-            gfx[folder][type][item][i] = recolorImage(gfx[folder][type][item][0], i, folder, type);
+            gfx[folder][type][item][i] = recolorImage(gfx[folder][type][item][0], i, folder, type, item);
         }
-        gfx[folder][type][item][0] = recolorImage(gfx[folder][type][item][0], 0, folder, type);
+        gfx[folder][type][item][0] = recolorImage(gfx[folder][type][item][0], 0, folder, type, item);
     } else {
         for (i = 1; i <= sub; i++) {
-            gfx[folder][type][i] = recolorImage(gfx[folder][type][0], i, folder, type);
+            gfx[folder][type][i] = recolorImage(gfx[folder][type][0], i, folder, type, item);
         }
-        gfx[folder][type][0] = recolorImage(gfx[folder][type][0], 0, folder, type);
+        gfx[folder][type][0] = recolorImage(gfx[folder][type][0], 0, folder, type, item);
     }
 }
 

@@ -626,7 +626,7 @@ function recolourSprite(img, paletteFrom, paletteTo) {
         img1 = null;
 }
 
-function recolorImage(img, colour, folder, type) {
+function recolorImage(img, colour, folder, type, item) {
 	var c = document.createElement('canvas');
 	var ctx1 = c.getContext("2d");
 	var w = img.width;
@@ -646,34 +646,40 @@ function recolorImage(img, colour, folder, type) {
 	// change any old rgb to the new-rgb
 	if (folder === "dungeon") {
 		if (type === "deco") {
-			var palletDefault = [COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK];
+			if(item === "switch") {
+				var palletDefault = [null, COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, null];
+			} else if(item === "switch-off") {
+				var palletDefault = [COLOUR_GREY_LIGHT, COLOUR_RED, COLOUR_RED, null, COLOUR_BLUE];
+			} else {
+				var palletDefault = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, null, null];
+			}
 			switch (colour) {
 				case COLOUR_DECO_SERPENT:
-					pallet = [COLOUR_YELLOW, COLOUR_GREEN, COLOUR_GREEN_DARK];
+					pallet = [COLOUR_YELLOW, COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_WHITE, COLOUR_BLACK];
 					break;
 				case COLOUR_DECO_MOON:
-					pallet = palletDefault;
+					pallet = [COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK, COLOUR_WHITE, COLOUR_BLACK];
 					break;
 				case COLOUR_DECO_DRAGON:
-					pallet = [COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK];
+					pallet = [COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
 					break;
 				case COLOUR_DECO_CHAOS:
-					pallet = [COLOUR_WHITE, COLOUR_YELLOW, COLOUR_PINK];
+					pallet = [COLOUR_WHITE, COLOUR_YELLOW, COLOUR_PINK, COLOUR_WHITE, COLOUR_BLACK];
 					break;
 				case COLOUR_DECO_BRONZE:
-					pallet = [COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK];
+					pallet = [COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
 					break;
 				case COLOUR_DECO_IRON:
-					pallet = [COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK];
+					pallet = [COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK, COLOUR_WHITE, COLOUR_BLACK];
 					break;
 				case COLOUR_DECO_BROWN:
-					pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN];
+					pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN, COLOUR_WHITE, COLOUR_BLACK];
 					break;
 				case COLOUR_DECO_TAN:
-					pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_RED_DARK];
+					pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
 					break;
 				case COLOUR_DECO_BLACK:
-					pallet = [COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK];
+					pallet = [COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK];
 					break;
 				default:
 					break;
@@ -713,163 +719,26 @@ function recolorImage(img, colour, folder, type) {
 			}
 		}
 	}
-	/*else if (folder === "character") {
-		var palletDefault = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, COLOUR_BLACK];
-		switch (colour) {
-			case PALETTE_YEL1_GRN1_GRN2_GRY4:
-				pallet = [COLOUR_YELLOW, COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_GREY_DARKEST];
-				break;
-			case PALETTE_GRN1_GRN2_GRN1_GRN1:
-				pallet = [COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_GREEN, COLOUR_GREEN];
-				break;
-			case PALETTE_3:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_4:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_5:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_6:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_7:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_8:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_9:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_10:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_11:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_12:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_13:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_14:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_15:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_16:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_17:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_18:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_19:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_20:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_21:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_22:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_23:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_24:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_25:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_26:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_27:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_28:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			case PALETTE_29:
-				pallet = [COLOUR_WHITE, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLACK];
-				break;
-			default:
-				break;
-		}
-	} else {
-		var palletDefault = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, COLOUR_BLACK];
-		switch (colour) {
-			case COLOUR_CHAR_GREEN:
-				pallet = [COLOUR_RED, COLOUR_GREEN_DARK, COLOUR_GREEN, COLOUR_GREEN_DARK];
-				break;
-			case COLOUR_CHAR_YELLOW:
-				pallet = [COLOUR_YELLOW, COLOUR_YELLOW, COLOUR_PINK, COLOUR_PINK];
-				break;
-			case COLOUR_CHAR_RED:
-				pallet = [COLOUR_RED, COLOUR_RED, COLOUR_RED_DARK, COLOUR_RED_DARK];
-				break;
-			case COLOUR_CHAR_BLUE:
-				pallet = [COLOUR_BLUE, COLOUR_BLUE, COLOUR_BLUE_DARK, COLOUR_BLUE_DARK];
-				break;
-			case COLOUR_CHAR_BRONZE:
-				pallet = [COLOUR_PINK, COLOUR_PINK, COLOUR_BROWN, COLOUR_BROWN];
-				break;
-			case COLOUR_CHAR_IRON:
-				pallet = [COLOUR_GREY_LIGHT, COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_MEDIUM];
-				break;
-			case COLOUR_CHAR_GREY:
-				pallet = [COLOUR_GREY_DARK, COLOUR_GREY_DARK, COLOUR_GREY_DARKEST, COLOUR_GREY_DARKEST];
-				break;
-			case COLOUR_CHAR_WHITE:
-				pallet = [COLOUR_WHITE, COLOUR_WHITE, COLOUR_GREY_LIGHT, COLOUR_GREY_LIGHT];
-				break;
-			case COLOUR_CHAR_BLACK:
-				pallet = [COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLUE_DARK, COLOUR_BLUE_DARK];
-				break;
-			case COLOUR_CHAR_GREEN_LIGHT:
-				pallet = [COLOUR_WHITE, COLOUR_GREEN_DARK, COLOUR_GREEN, COLOUR_BLACK];
-				break;
-			default:
-				break;
-		}
-	}*/
 	for (var i = 0; i < imageData.data.length; i += 4) {
 		if (typeof pallet[0][0] !== "undefined") {
 			for (j = 0; j < pallet.length; j++) {
-				if (imageData.data[i] === palletDefault[j][0] && imageData.data[i + 1] === palletDefault[j][1] && imageData.data[i + 2] === palletDefault[j][2] && imageData.data[i + 3] === palletDefault[j][3]) {
-					imageData.data[i] = pallet[j][0];
-					imageData.data[i + 1] = pallet[j][1];
-					imageData.data[i + 2] = pallet[j][2];
-					imageData.data[i + 3] = pallet[j][3];
-					j = j + 4;
+				if(palletDefault[j] !== null) {
+					if (imageData.data[i] === palletDefault[j][0] && imageData.data[i + 1] === palletDefault[j][1] && imageData.data[i + 2] === palletDefault[j][2] && imageData.data[i + 3] === palletDefault[j][3]) {
+						imageData.data[i] = pallet[j][0];
+						imageData.data[i + 1] = pallet[j][1];
+						imageData.data[i + 2] = pallet[j][2];
+						imageData.data[i + 3] = pallet[j][3];
+						j = j + 4;
+					}
 				}
 			}
 		} else if (imageData.data[i] === palletDefault[0] && imageData.data[i + 1] === palletDefault[1] && imageData.data[i + 2] === palletDefault[2]) {
-			imageData.data[i] = pallet[0];
-			imageData.data[i + 1] = pallet[1];
-			imageData.data[i + 2] = pallet[2];
+			if(palletDefault !== null) {
+				imageData.data[i] = pallet[0];
+				imageData.data[i + 1] = pallet[1];
+				imageData.data[i + 2] = pallet[2];
+			}
 		}
-		/* else if(imageData.data[i]===palletDefault[1][0] && imageData.data[i+1]===palletDefault[1][1] && imageData.data[i+2]===palletDefault[1][2]){
-			// change to your new rgb
-			imageData.data[i]=pallet[1][0];
-			imageData.data[i+1]=pallet[1][1];
-			imageData.data[i+2]=pallet[1][2];
-		} else if(imageData.data[i]===palletDefault[2][0] && imageData.data[i+1]===palletDefault[2][1] && imageData.data[i+2]===palletDefault[2][2]){
-			// change to your new rgb
-			imageData.data[i]=pallet[2][0];
-			imageData.data[i+1]=pallet[2][1];
-			imageData.data[i+2]=pallet[2][2];
-		}*/
 	}
 	// put the altered data back on the canvas  
 	ctx1.putImageData(imageData, 0, 0);
