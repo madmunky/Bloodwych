@@ -653,37 +653,37 @@ function recolorImage(img, colour, folder, type, item) {
 		if (type === "deco") {
 			if(item === "switch" || item === "switch-off" || item === "gem" || item === "gem-off") {
 				if(item === "switch" || item === "gem") {
-					var palletDefault = [null, COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, null];
+					var palletDefault = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, null];
 				} else {
-					var palletDefault = [null, COLOUR_GREY_LIGHT, COLOUR_RED, null, COLOUR_BLUE];
+					var palletDefault = [COLOUR_GREY_LIGHT, COLOUR_RED, null, COLOUR_BLUE];
 				}
 				switch (colour) {
 					case COLOUR_SWITCH_SERPENT:
-						pallet = [COLOUR_YELLOW, COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_WHITE, COLOUR_BLACK];
+						pallet = [COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_WHITE, COLOUR_BLACK];
 						break;
 					case COLOUR_SWITCH_MOON:
-						pallet = [COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK, COLOUR_WHITE, COLOUR_BLACK];
+						pallet = [COLOUR_BLUE, COLOUR_BLUE_DARK, COLOUR_WHITE, COLOUR_BLACK];
 						break;
 					case COLOUR_SWITCH_DRAGON:
-						pallet = [COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
+						pallet = [COLOUR_RED, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
 						break;
 					case COLOUR_SWITCH_CHAOS:
-						pallet = [COLOUR_WHITE, COLOUR_YELLOW, COLOUR_PINK, COLOUR_WHITE, COLOUR_BLACK];
+						pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_WHITE, COLOUR_BLACK];
 						break;
 					case COLOUR_SWITCH_BLUEISH:
-						pallet = [COLOUR_WHITE, COLOUR_BLUE, COLOUR_GREEN, COLOUR_WHITE, COLOUR_BLACK];
+						pallet = [COLOUR_BLUE, COLOUR_GREEN, COLOUR_WHITE, COLOUR_BLACK];
 						break;
 					case COLOUR_SWITCH_BROWN:
-						pallet = [COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
+						pallet = [COLOUR_BROWN, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
 						break;
 					case COLOUR_SWITCH_GREY:
-						pallet = [COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK, COLOUR_WHITE, COLOUR_BLACK];
+						pallet = [COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK, COLOUR_WHITE, COLOUR_BLACK];
 						break;
 					case COLOUR_SWITCH_TAN:
-						pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN, COLOUR_WHITE, COLOUR_BLACK];
+						pallet = [COLOUR_PINK, COLOUR_BROWN, COLOUR_WHITE, COLOUR_BLACK];
 						break;
 					case COLOUR_SWITCH_BLACK:
-						pallet = [COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK];
+						pallet = [COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK];
 						break;
 					default:
 						break;
