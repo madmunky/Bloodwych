@@ -68,7 +68,7 @@ function grabCharacter(cID, dir, dist) {
 		};
 		var headCoord = {
 			x: Math.round((width - HEAD.width) / 2),
-			y: height - LEG.height - TORSO.height - (HEAD.height * 0.6)
+			y: height - LEG.height - TORSO.height - (HEAD.height * 0.65)
 		};
 		var armLeftCoord = {
 			x: Math.round((width - TORSO.width) / 2) - ARM.width,
