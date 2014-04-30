@@ -16,7 +16,8 @@ $(function() {
     gfxLoadImage("dungeon", "deco", "chaos-head");
     gfxLoadImage("dungeon", "deco", "switch", 8);
     gfxLoadImage("dungeon", "deco", "switch-off", 8);
-    gfxLoadImage("dungeon", "deco", "gem", 8);
+    gfxLoadImage("dungeon", "deco", "gem", 7);
+    gfxLoadImage("dungeon", "deco", "gem-off", 7);
     gfxLoadImage("dungeon", "deco", "script", 7);
     gfxLoadImage("dungeon", "deco", "banner", 7);
 
