@@ -27,7 +27,7 @@ Player.prototype.getViewPortal = function() {
 	
           var Portal = document.createElement('canvas');
           Portal.width = 128 * scale;
-          Portal.height = 74 * scale;
+          Portal.height = 76 * scale;
           Portal.getContext("2d").imageSmoothingEnabled = false;
           Portal.getContext("2d").webkitImageSmoothingEnabled = false;
           Portal.getContext("2d").mozImageSmoothingEnabled = false;
