@@ -171,10 +171,10 @@ function doKeyDown(e) {
 			PrintLog("Distance: " + testDistance);
 			break;
 		case KEY_0:
-			testMon1 = (testMon1 + 1) % 256;
+			testMon1 = (testMon1 + 1) %7;
 			break;
 		case KEY_9:
-			testMon1 = (testMon1 + 255) % 256;
+			testMon1 = (testMon1 - 6) %7;
 			break;
 		default:
 			break;

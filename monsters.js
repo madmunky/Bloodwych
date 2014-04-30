@@ -38,7 +38,7 @@ Monster.prototype.getGfx = function() {
 				dirArray.push(gfx);
 				gfx = [];
 			} else {
-				for (dir = 0; dir < 2; dir++) {
+				for (dir = 0; dir < 4; dir++) {
 					gfx.push(grabWholeCharacter(this.form, dir, dis));
 				}
 				dirArray.push(gfx);

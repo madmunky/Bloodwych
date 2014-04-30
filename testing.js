@@ -300,17 +300,7 @@ function characterSpriteLocation() {
 
 function testing(p) {
 
-ctx.drawImage(characterGfx[4][4][testDistance][testDirection],0,0,characterGfx[4][0][testDistance][testDirection].width * scale,characterGfx[4][0][testDistance][testDirection].height * scale)
-
-	    //try {
-//	        if (charLoaded) {
-                    //ctx.drawImage(characterGfx[4][0][testDistance][testDirection],0,0,characterGfx[4][0][testDistance][testDirection].width * scale,characterGfx[4][0][testDistance][testDirection].height * scale)
-	            /*drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //rosanne
-	            drawCharacter(monsterMax - 1, testDirection, testDistance + 1, p); //eleanor
-	            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //blodwyn
-	            drawCharacter(monsterMax - 1, testDirection, testDistance, p); //murlock*/
-//	        }
-	    //} catch (e) {PrintLog("Error: " + e.toString())}
+//ctx.drawImage(characterGfx[4][testMon1][testDistance][testDirection],0,0,characterGfx[4][0][testDistance][testDirection].width * scale,characterGfx[4][0][testDistance][testDirection].height * scale)
 
 }
 
