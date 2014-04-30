@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var maleCharacterSpriteLocations = characterSpriteLocation();
+//var maleCharacterSpriteLocations = characterSpriteLocation();
 var testMon1 = CHA_MURLOCK;
 
 //var charLoaded = false;
@@ -57,7 +57,7 @@ function grabCharacter(cID, dir, dist) {
 		var charImageObj = new Image();
 		charImageObj.width = width;
 		charImageObj.height = height;
-		var SPRITELOCATIONS = maleCharacterSpriteLocations;
+		//var SPRITELOCATIONS = maleCharacterSpriteLocations;
 		var legCoord = {
 			x: Math.round((width - LEG.width) / 2),
 			y: height - LEG.height
@@ -124,52 +124,52 @@ function grabCharacter(cID, dir, dist) {
 }
 
 function grabWholeCharacter(cID, dir, dist) {
-	try {
+	//	try {
 
+	if (typeof monsterPalette[cID] !== "undefined") {
 		var BODY = null;
 		var BODYIDTMP = 0;
 		var DIRtmp = dist - 4;
 		var tmpPalette = monsterPalette[cID].legPalette;
 
-		if (typeof monsterPalette[cID] !== "undefined") {
-			switch (dir) {
+		switch (dir) {
 
-				case 0:
-					BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][0], MON_PALETTE_DEFAULT, tmpPalette);
-					break;
-				case 3:
-					BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][1], MON_PALETTE_DEFAULT, tmpPalette);
-					break;
-				case 1:
-					BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][2], MON_PALETTE_DEFAULT, tmpPalette);
-					break;
-				case 2:
-					BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][3], MON_PALETTE_DEFAULT, tmpPalette);
-					break;
+			case 0:
+				BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][0], MON_PALETTE_DEFAULT, tmpPalette);
+				break;
+			case 3:
+				BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][1], MON_PALETTE_DEFAULT, tmpPalette);
+				break;
+			case 1:
+				BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][2], MON_PALETTE_DEFAULT, tmpPalette);
+				break;
+			case 2:
+				BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][3], MON_PALETTE_DEFAULT, tmpPalette);
+				break;
 
-			}
-
-			var height = BODY.height,
-				width = BODY.width;
-
-			var can = document.createElement('canvas');
-			can.width = width;
-			can.height = height;
-			var charContext = can.getContext("2d");
-			var charImageObj = new Image();
-			charImageObj.width = width;
-			charImageObj.height = height;
-
-			charContext.drawImage(BODY, 0, 0, BODY.width, BODY.height);
-
-			charContext.save();
-			charImageObj.src = can.toDataURL();
-			delete BODY;
-			return charImageObj;
 		}
-	} catch (e) {
-		PrintLog("GrabWholeCharacter ERROR: " + e.toString());
+
+		var height = BODY.height,
+			width = BODY.width;
+
+		var can = document.createElement('canvas');
+		can.width = width;
+		can.height = height;
+		var charContext = can.getContext("2d");
+		var charImageObj = new Image();
+		charImageObj.width = width;
+		charImageObj.height = height;
+
+		charContext.drawImage(BODY, 0, 0, BODY.width, BODY.height);
+
+		charContext.save();
+		charImageObj.src = can.toDataURL();
+		delete BODY;
+		return charImageObj;
 	}
+	//	} catch (e) {
+	//		PrintLog("GrabWholeCharacter ERROR: " + e.toString());
+	//	}
 
 }
 
@@ -302,22 +302,22 @@ function testing(p) {
 }
 
 function drawParty(p, character1, character2, character3, character4) {
-
+	/*
 	drawPerson(p, character1, CHAR_BACK_RIGHT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_CLOSE);
 	drawPerson(p, character2, CHAR_BACK_LEFT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_CLOSE);
 	drawPerson(p, character3, CHAR_FRONT_RIGHT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_VERY_CLOSE);
 	drawPerson(p, character4, CHAR_FRONT_LEFT, maleCharacterSpriteLocations, DIRECTION_NORTH, CHAR_DISTANCE_VERY_CLOSE);
-
+*/
 }
 
 function drawCharacter(mForm, dir, dist, player, offset) {
 	if (dist > -1 && typeof monster[mForm].gfx[dist] !== "undefined" && typeof monster[mForm].gfx[dist][dir] !== "undefined") {
 		var offx = 64 - Math.floor(monster[mForm].gfx[dist][dir].width / 2),
-			offy = 41 - Math.floor(monster[mForm].gfx[dist][dir].height / 2);
+			offy = 76;
 
 		if (typeof offset !== "undefined") {
-			offx += offset.x;
-			offy += offset.y;
+			offx = offx + offset.x;
+			offy = offy - offset.y - Math.floor(monster[mForm].gfx[dist][dir].height);
 		}
 		var blur = 0;
 		if (dist <= CHAR_DISTANCE_MID) {

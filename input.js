@@ -187,7 +187,7 @@ function checkClickEvents() {
 		var y = e.pageY - canvas.offsetTop;
 		var xy;
 		for(p = 0; p < 2; p++) {
-			xy = { x: Math.floor((x - player[p].PortalX) / scale / 42.67), y: Math.floor((y - player[p].PortalY) / scale / 37) };
+			xy = { x: Math.floor((x - player[p].PortalX) / scale / 42.67), y: Math.floor((y - player[p].PortalY) / scale / 38) };
 			if(xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
 				if(xy.x === 0 && xy.y === 0) { //rotate left
 					player[p].rotateTo(player[p].Rotation - 1);

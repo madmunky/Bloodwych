@@ -424,34 +424,27 @@ function initMonsters(t) {
 
 function getMonsterGfxOffset(pos, sub) {
 	var xy = posToCoordinates(pos, 0, 0, 0);
-	var offx = 0;
-	var offy = 0;
-	switch (sub) {
-		case CHAR_FRONT_LEFT:
-			offx = -43;
-			offy = 3;
-			break;
-		case CHAR_FRONT_RIGHT:
-			offx = 43;
-			offy = 3;
-			break;
-		case CHAR_FRONT_SOLO:
-			offx = 0;
-			offy = 0;
-			break;
-		case CHAR_BACK_LEFT:
-			offx = -35;
-			offy = -2;
-			break;
-		case CHAR_BACK_RIGHT:
-			offx = 35;
-			offy = -2;
-			break;
+	if(sub === CHAR_FRONT_SOLO) {
+		subx = 0;
+		suby = -1;
+	} else if(sub === CHAR_FRONT_LEFT) {
+		subx = 1;
+		suby = -1;
+	} else if(sub === CHAR_FRONT_RIGHT) {
+		subx = -1;
+		suby = -1;
+	} else if(sub === CHAR_BACK_LEFT) {
+		subx = 1;
+		suby = 1;
+	} else {
+		subx = -1;
+		suby = 1;
 	}
-	offx = Math.floor(offx / (xy["y"] - 1));
+	var offx = xy["x"] * 4 + subx;
+	var offy = -xy["y"] * 4 + suby;
 
-	var x = -Math.floor(xy["x"] / (xy["y"] - 1) * 180.0) + offx;
-	var y = (xy["y"] + 1) * 3 + Math.floor(offy / (-xy["y"]));
+	var x = Math.round(offx * (190.0 / (offy + 6)));
+	var y = Math.round(35 - 120.0 / (offy + 2));
 
 	return {
 		x: x,
