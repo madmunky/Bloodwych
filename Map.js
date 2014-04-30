@@ -7,26 +7,32 @@
 function Tower(map) {
 	var t = this;
 	t.map = map;
-	getFileData('maps/' + map + '.MAP', readMapData, t, "floor");
 
 	towerDataLoaded = {
+		monsterPalette: false,
 		floor: false,
 		switches: false,
 		triggers: false,
 		monsters: false,
 		champions: false
 	};
+	towerDataLoaded.watch("monsterPalette", function(prop, oldval, newval) {
+		getFileData('maps/' + map + '.MAP', readMapData, t, "floor");
+	});
+
 	towerDataLoaded.watch("floor", function(prop, oldval, newval) {
 		getFileData('maps/' + map + '.switches', readSimpleData, t, "switches", 4);
 		getFileData('maps/' + map + '.triggers', readSimpleData, t, "triggers", 4);
+	});
+	towerDataLoaded.watch("triggers", function(prop, oldval, newval) {
 		getFileData('maps/' + map + '.monsters', readSimpleDataHex, t, "monsterData", 6);
 	});
-        
+
 	towerDataLoaded.watch("monsters", function(prop, oldval, newval) {
 		getFileData('maps/' + map + '.charstats', readSimpleDataHex, t, "championData", 32);
 	});
-        
-	
+
+
 }
 
 function Map(Width, Height, xOff, yOff) {
@@ -38,28 +44,28 @@ function Map(Width, Height, xOff, yOff) {
 }
 
 function init() {
-    
-    if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['people'].width > 0 && championData.length > 0) {
-                        clearInterval(imageChecker);
-			gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 12, 12, 16);
-			gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 15, 26, 16);
-			gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 9, 18, 16);
-			gfx['character']['people'].onload = getCharacterSprite(NUMBER_OF_WHOLEPEOPLE, 'character', 'people', 13, 22, 16);
-			gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 15, 14, 16);
-                                           
-                            initMonsters(tw);
-                            initChampions();                     
-                            initSpells();
-                            initPlayers();
-                            initPlayersQuickStart();
-                            
-                            for (var m = 0; m < monster.length; m++) {
-                                    monster[m].getGfx();
-                            }
-                   
-                    if (typeof game === "undefined") {
-			Run();
-                    }
+
+	if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['people'].width > 0 && championData.length > 0) {
+		clearInterval(imageChecker);
+		gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 12, 12, 16);
+		gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 15, 26, 16);
+		gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 9, 18, 16);
+		gfx['character']['people'].onload = getCharacterSprite(NUMBER_OF_WHOLEPEOPLE, 'character', 'people', 13, 22, 16);
+		gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 15, 14, 16);
+
+		initMonsters(tw);
+		initChampions();
+		initSpells();
+		initPlayers();
+		initPlayersQuickStart();
+
+		for (var m = 0; m < monster.length; m++) {
+			monster[m].getGfx();
 		}
-    
+
+		if (typeof game === "undefined") {
+			Run();
+		}
+	}
+
 }

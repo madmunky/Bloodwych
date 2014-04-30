@@ -405,8 +405,8 @@ function initMonsters(t) {
 			square = 0;
 		}
 		if (level != 0 || type != 0 || form != 0 || floor != -1 || x != 0 || y != 0) {
-			monster[i] = new Monster(i, level, type, form, floor, x, y, 0, square, teamId);
-			PrintLog('Loaded monster: ' + monster[i]);
+			monster[i + 16] = new Monster(i + 16, level, type, form, floor, x, y, 0, square, teamId);
+			PrintLog('Loaded monster: ' + monster[i + 16]);
 			monsterMax++;
 		}
 	}
@@ -420,6 +420,20 @@ function initMonsters(t) {
 	monsterMax++;
 	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
 	monsterMax++;*/
+
+	for(i = 0; i < monsterPaletteData.length; i++) {
+		monsterPalette[i] = {
+			gender: CHA_GENDER_MALE,
+			head: CHA_HEAD_BLODWYN,
+			leg: CHA_LEG_FEMALE_NAKED,
+			torso: CHA_TORSO_FEMALE_NAKED,
+			arm: CHA_ARM_MALE,
+			headPalette: [COLOUR[monsterPaletteData[i][0]], COLOUR[monsterPaletteData[i][1]], COLOUR[monsterPaletteData[i][2]], COLOUR[monsterPaletteData[i][3]]],
+			legPalette: [COLOUR[monsterPaletteData[i][4]], COLOUR[monsterPaletteData[i][5]], COLOUR[monsterPaletteData[i][6]], COLOUR[monsterPaletteData[i][7]]],
+			torsoPalette: [COLOUR[monsterPaletteData[i][8]], COLOUR[monsterPaletteData[i][9]], COLOUR[monsterPaletteData[i][10]], COLOUR[monsterPaletteData[i][11]]],
+			armPalette: [COLOUR[monsterPaletteData[i][12]], COLOUR[monsterPaletteData[i][13]], COLOUR[monsterPaletteData[i][14]], COLOUR[monsterPaletteData[i][15]]],
+		};
+	}
 }
 
 function getMonsterGfxOffset(pos, sub) {

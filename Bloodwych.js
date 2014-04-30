@@ -52,7 +52,7 @@ $(function() {
     gfxLoadImage("character", "people", "");
 });
 
-//document.addEventListener('touchstart', doTouchStart, false);
+getFileData('maps/palette.monsters', readSimpleData, null, "monsterPalette", 20);
 
 var imageChecker = setInterval(function(){init()},100);
 

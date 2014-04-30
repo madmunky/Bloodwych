@@ -3,6 +3,7 @@ function getFileData(file_name, callback, t, type, length) {
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete") {
 			switch (type) {
+				case "monsterPalette": monsterPaletteData = callback(this.response, length); towerDataLoaded.monsterPalette = true; break;
 				case "floor": t.floor = callback(this.response, length); towerDataLoaded.floor = true; break;
 				case "switches": t.switches = callback(this.response, length); towerDataLoaded.switches = true; break;
 				case "triggers": t.triggers = callback(this.response, length); towerDataLoaded.triggers = true; break;
