@@ -3,7 +3,7 @@ var scale = 3;
 var debug = true;
 var debugHigh = false;
 var game;
-var characterGfx = [null,null,null,null,null];
+var characterGfx = [null, null, null, null, null];
 var drawMonsters = true;
 var testDistance = 0;
 var testDirection = 0;
@@ -79,37 +79,6 @@ var COLOUR_SWITCH_SERPENT = 0,
 	COLOUR_SWITCH_TAN = 7,
 	COLOUR_SWITCH_BLACK = 8;
 
-//REMOVE LATER:
-var PALETTE_YEL1_GRN1_GRN2_GRY4 = 0,
-	PALETTE_GRN1_GRN2_GRN1_GRN1 = 1,
-	PALETTE_3 = 2,
-	PALETTE_4 = 3,
-	PALETTE_5 = 4,
-	PALETTE_6 = 5,
-	PALETTE_7 = 6,
-	PALETTE_8 = 7,
-	PALETTE_9 = 8,
-	PALETTE_10 = 9,
-	PALETTE_11 = 10,
-	PALETTE_12 = 11,
-	PALETTE_13 = 12,
-	PALETTE_14 = 13,
-	PALETTE_15 = 14,
-	PALETTE_16 = 15,
-	PALETTE_17 = 16,
-	PALETTE_18 = 17,
-	PALETTE_19 = 18,
-	PALETTE_20 = 19,
-	PALETTE_21 = 20,
-	PALETTE_22 = 21,
-	PALETTE_23 = 22,
-	PALETTE_24 = 23,
-	PALETTE_25 = 24,
-	PALETTE_26 = 25,
-	PALETTE_27 = 26,
-	PALETTE_28 = 27,
-	PALETTE_29 = 28;
-
 var DIRECTION_NORTH = 0,
 	DIRECTION_EAST = 1,
 	DIRECTION_SOUTH = 2,
@@ -119,14 +88,51 @@ var CHAR_DISTANCE_VERY_CLOSE = 0,
 	CHAR_DISTANCE_CLOSE = 1,
 	CHAR_DISTANCE_MID = 2,
 	CHAR_DISTANCE_FAR = 3,
-    CHAR_DISTANCE_DISTANT = 4,
-    CHAR_DISTANCE_VERY_DISTANT = 5;
+	CHAR_DISTANCE_DISTANT = 4,
+	CHAR_DISTANCE_VERY_DISTANT = 5;
 
 var CHAR_FRONT_SOLO = -1,
 	CHAR_FRONT_LEFT = 0,
 	CHAR_FRONT_RIGHT = 1,
 	CHAR_BACK_RIGHT = 2,
 	CHAR_BACK_LEFT = 3;
+
+var objectPalette = {};
+	objectPalette["switch"] = new Array();
+	objectPalette["switch"]["default"] = 				[COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, null];
+	objectPalette["switch"]["default-off"] = 			[COLOUR_GREY_LIGHT, COLOUR_RED, null, COLOUR_BLUE];
+	objectPalette["switch"][COLOUR_SWITCH_SERPENT] = 	[COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_WHITE, COLOUR_BLACK];
+	objectPalette["switch"][COLOUR_SWITCH_MOON] = 		[COLOUR_BLUE, COLOUR_BLUE_DARK, COLOUR_WHITE, COLOUR_BLACK];
+	objectPalette["switch"][COLOUR_SWITCH_DRAGON] = 	[COLOUR_RED, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
+	objectPalette["switch"][COLOUR_SWITCH_CHAOS] = 		[COLOUR_YELLOW, COLOUR_PINK, COLOUR_WHITE, COLOUR_BLACK];
+	objectPalette["switch"][COLOUR_SWITCH_BLUEISH] = 	[COLOUR_BLUE, COLOUR_GREEN, COLOUR_WHITE, COLOUR_BLACK];
+	objectPalette["switch"][COLOUR_SWITCH_BROWN] = 		[COLOUR_BROWN, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
+	objectPalette["switch"][COLOUR_SWITCH_GREY] = 		[COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK, COLOUR_WHITE, COLOUR_BLACK];
+	objectPalette["switch"][COLOUR_SWITCH_TAN] = 		[COLOUR_PINK, COLOUR_BROWN, COLOUR_WHITE, COLOUR_BLACK];
+	objectPalette["switch"][COLOUR_SWITCH_BLACK] = 		[COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK];
+	objectPalette["deco"] = new Array();
+	objectPalette["deco"]["default"] = 					[COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT];
+	objectPalette["deco"][COLOUR_DECO_BRONZE] = 		[COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK];
+	objectPalette["deco"][COLOUR_DECO_SERPENT] = 		[COLOUR_YELLOW, COLOUR_GREEN, COLOUR_GREEN_DARK];
+	objectPalette["deco"][COLOUR_DECO_DRAGON] = 		[COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK];
+	objectPalette["deco"][COLOUR_DECO_MOON] = 			[COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK];
+	objectPalette["deco"][COLOUR_DECO_CHAOS] = 			[COLOUR_WHITE, COLOUR_YELLOW, COLOUR_PINK];
+	objectPalette["deco"][COLOUR_DECO_IRON] = 			[COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK];
+	objectPalette["deco"][COLOUR_DECO_BROWN] = 			[COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN];
+	objectPalette["deco"][COLOUR_DECO_TAN] = 			[COLOUR_YELLOW, COLOUR_PINK, COLOUR_RED_DARK];
+	objectPalette["door"] = new Array();
+	objectPalette["door"]["default"] = 					COLOUR_BLUE;
+	objectPalette["door"][COLOUR_DOOR_NORMAL] = 		COLOUR_GREY_DARKEST;
+	objectPalette["door"][COLOUR_DOOR_BRONZE] = 		COLOUR_RED_DARK;
+	objectPalette["door"][COLOUR_DOOR_IRON] = 			COLOUR_GREY_LIGHT;
+	objectPalette["door"][COLOUR_DOOR_SERPENT] = 		COLOUR_GREEN;
+	objectPalette["door"][COLOUR_DOOR_CHAOS] = 			COLOUR_YELLOW;
+	objectPalette["door"][COLOUR_DOOR_DRAGON] = 		COLOUR_RED;
+	objectPalette["door"][COLOUR_DOOR_MOON] = 			COLOUR_BLUE;
+	objectPalette["door"][COLOUR_DOOR_CHROMATIC] = 		COLOUR_WHITE;
+	objectPalette["door"][COLOUR_DOOR_VOID] = 			COLOUR_BLACK;
+
+
 
 var Maps = ["MOD0", "MOON", "CHAOS", "DRAGON", "ZENDIK", "SERP", "BWEXTTW1", "BWEXTTW2", "BWEXTTW3", "BWEXTTW4", "horace_mod0", "horace_moon", "horace_drag", "horace_serp", "horace_zendik", "horace_chaos"];
 
@@ -168,7 +174,7 @@ var IMAGE_CHA_HEAD = 0,
 	IMAGE_CHA_TORSO = 1,
 	IMAGE_CHA_ARM = 3,
 	IMAGE_CHA_LEG = 2,
-        IMAGE_CHA_PEOPLE = 4;
+	IMAGE_CHA_PEOPLE = 4;
 
 var IMAGE_CHA_DISTANCE_1 = 0,
 	IMAGE_CHA_DISTANCE_2 = 1,
@@ -180,7 +186,7 @@ var NUMBER_OF_DISTANCES = 6,
 	NUMBER_OF_TORSOS = 6,
 	NUMBER_OF_LEGS = 9,
 	NUMBER_OF_ARMS = 3,
-        NUMBER_OF_WHOLEPEOPLE = 8;
+	NUMBER_OF_WHOLEPEOPLE = 8;
 
 //Character body part types
 var CHA_HEAD_ASTROTH = 0,
@@ -224,13 +230,13 @@ var CHA_LEG_MALE = 0,
 	CHA_LEG_FEMALE_LEATHER = 8;
 
 var CHA_BODY_MALE = 0,
-        CHA_BODY_MALE_AMOUR = 1,
-        CHA_BODY_MR_FLAY = 2,
-        CHA_BODY_BLOODWYN = 3,
-        CHA_BODY_GOAT = 4,
-        CHA_BODY_FEMALE_DRESS = 5,
-        CHA_BODY_FEMALE_AMOUR = 6,
-        CHA_BODY_LEGGY = 7;
+	CHA_BODY_MALE_AMOUR = 1,
+	CHA_BODY_MR_FLAY = 2,
+	CHA_BODY_BLOODWYN = 3,
+	CHA_BODY_GOAT = 4,
+	CHA_BODY_FEMALE_DRESS = 5,
+	CHA_BODY_FEMALE_AMOUR = 6,
+	CHA_BODY_LEGGY = 7;
 
 var CHA_GENDER_MALE = 0,
 	CHA_GENDER_FEMALE = 1;

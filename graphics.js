@@ -645,6 +645,7 @@ function recolorImage(img, colour, folder, type, item) {
 
 	// pull the entire image into an array of pixel data
 	var imageData = ctx1.getImageData(0, 0, w, h);
+	var palletDefault;
 	var pallet;
 
 	// examine every pixel, 
@@ -652,106 +653,19 @@ function recolorImage(img, colour, folder, type, item) {
 	if (folder === "dungeon") {
 		if (type === "deco") {
 			if(item === "switch" || item === "switch-off" || item === "gem" || item === "gem-off") {
-				if(item === "switch" || item === "gem") {
-					var palletDefault = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT, null];
+				if(item === "switch" || item === "gem") { //Switches
+					palletDefault = objectPalette["switch"]["default"];
 				} else {
-					var palletDefault = [COLOUR_GREY_LIGHT, COLOUR_RED, null, COLOUR_BLUE];
+					palletDefault = objectPalette["switch"]["default-off"];
 				}
-				switch (colour) {
-					case COLOUR_SWITCH_SERPENT:
-						pallet = [COLOUR_GREEN, COLOUR_GREEN_DARK, COLOUR_WHITE, COLOUR_BLACK];
-						break;
-					case COLOUR_SWITCH_MOON:
-						pallet = [COLOUR_BLUE, COLOUR_BLUE_DARK, COLOUR_WHITE, COLOUR_BLACK];
-						break;
-					case COLOUR_SWITCH_DRAGON:
-						pallet = [COLOUR_RED, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
-						break;
-					case COLOUR_SWITCH_CHAOS:
-						pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_WHITE, COLOUR_BLACK];
-						break;
-					case COLOUR_SWITCH_BLUEISH:
-						pallet = [COLOUR_BLUE, COLOUR_GREEN, COLOUR_WHITE, COLOUR_BLACK];
-						break;
-					case COLOUR_SWITCH_BROWN:
-						pallet = [COLOUR_BROWN, COLOUR_RED_DARK, COLOUR_WHITE, COLOUR_BLACK];
-						break;
-					case COLOUR_SWITCH_GREY:
-						pallet = [COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK, COLOUR_WHITE, COLOUR_BLACK];
-						break;
-					case COLOUR_SWITCH_TAN:
-						pallet = [COLOUR_PINK, COLOUR_BROWN, COLOUR_WHITE, COLOUR_BLACK];
-						break;
-					case COLOUR_SWITCH_BLACK:
-						pallet = [COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK, COLOUR_BLACK];
-						break;
-					default:
-						break;
-				}
+				pallet = objectPalette["switch"][colour];
 			} else { //Banners
-				var palletDefault = [COLOUR_RED, COLOUR_BLUE, COLOUR_GREY_LIGHT];
-				switch (colour) {
-					case COLOUR_DECO_BRONZE:
-						pallet = [COLOUR_PINK, COLOUR_BROWN, COLOUR_RED_DARK];
-						break;
-					case COLOUR_DECO_SERPENT:
-						pallet = [COLOUR_YELLOW, COLOUR_GREEN, COLOUR_GREEN_DARK];
-						break;
-					case COLOUR_DECO_DRAGON:
-						pallet = [COLOUR_PINK, COLOUR_RED, COLOUR_RED_DARK];
-						break;
-					case COLOUR_DECO_MOON:
-						pallet = [COLOUR_GREY_LIGHT, COLOUR_BLUE, COLOUR_BLUE_DARK];
-						break;
-					case COLOUR_DECO_CHAOS:
-						pallet = [COLOUR_WHITE, COLOUR_YELLOW, COLOUR_PINK];
-						break;
-					case COLOUR_DECO_IRON:
-						pallet = [COLOUR_GREY_LIGHT, COLOUR_GREY_MEDIUM, COLOUR_GREY_DARK];
-						break;
-					case COLOUR_DECO_BROWN:
-						pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_BROWN];
-						break;
-					case COLOUR_DECO_TAN:
-						pallet = [COLOUR_YELLOW, COLOUR_PINK, COLOUR_RED_DARK];
-						break;
-					default:
-						break;
-				}
+				palletDefault = objectPalette["deco"]["default"];
+				pallet = objectPalette["deco"][colour];
 			}
-		} else if (type === "door") {
-			var palletDefault = COLOUR_BLUE;
-			switch (colour) {
-				case COLOUR_DOOR_NORMAL:
-					pallet = COLOUR_GREY_DARKEST;
-					break;
-				case COLOUR_DOOR_BRONZE:
-					pallet = COLOUR_RED_DARK;
-					break;
-				case COLOUR_DOOR_IRON:
-					pallet = COLOUR_GREY_LIGHT;
-					break;
-				case COLOUR_DOOR_SERPENT:
-					pallet = COLOUR_GREEN;
-					break;
-				case COLOUR_DOOR_CHAOS:
-					pallet = COLOUR_YELLOW;
-					break;
-				case COLOUR_DOOR_DRAGON:
-					pallet = COLOUR_RED;
-					break;
-				case COLOUR_DOOR_MOON:
-					pallet = palletDefault;
-					break;
-				case COLOUR_DOOR_CHROMATIC:
-					pallet = COLOUR_WHITE;
-					break;
-				case COLOUR_DOOR_VOID:
-					pallet = COLOUR_BLACK;
-					break;
-				default:
-					break;
-			}
+		} else if (type === "door") { //Doors
+			palletDefault = objectPalette["door"]["default"];
+			pallet = objectPalette["door"][colour];
 		}
 	}
 	for (var i = 0; i < imageData.data.length; i += 4) {
