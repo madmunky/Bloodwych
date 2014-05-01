@@ -422,12 +422,13 @@ function initMonsters(t) {
 	monsterMax++;*/
 
 	for(i = 0; i < monsterPaletteData.length; i++) {
+		var body = CHA_BODY[monsterBodiesData[i][0]];
 		monsterPalette[i] = {
 			gender: CHA_GENDER_MALE,
-			head: CHA_HEAD_BLODWYN,
-			leg: CHA_LEG_FEMALE_NAKED,
-			torso: CHA_TORSO_FEMALE_NAKED,
-			arm: CHA_ARM_MALE,
+			head: monsterHeadsData[i][0],
+			leg: body.leg,
+			torso: body.torso,
+			arm: body.arm,
 			headPalette: [COLOUR[monsterPaletteData[i][0]], COLOUR[monsterPaletteData[i][1]], COLOUR[monsterPaletteData[i][2]], COLOUR[monsterPaletteData[i][3]]],
 			legPalette: [COLOUR[monsterPaletteData[i][4]], COLOUR[monsterPaletteData[i][5]], COLOUR[monsterPaletteData[i][6]], COLOUR[monsterPaletteData[i][7]]],
 			torsoPalette: [COLOUR[monsterPaletteData[i][8]], COLOUR[monsterPaletteData[i][9]], COLOUR[monsterPaletteData[i][10]], COLOUR[monsterPaletteData[i][11]]],

@@ -1,15 +1,42 @@
 function getFileData(file_name, callback, t, type, length) {
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState===200 ||xmlhttp.readyState===4 || xmlhttp.readyState==="complete") {
+		if (xmlhttp.readyState === 200 || xmlhttp.readyState === 4 || xmlhttp.readyState === "complete") {
 			switch (type) {
-				case "monsterPalette": monsterPaletteData = callback(this.response, length); towerDataLoaded.monsterPalette = true; break;
-				case "floor": t.floor = callback(this.response, length); towerDataLoaded.floor = true; break;
-				case "switches": t.switches = callback(this.response, length); towerDataLoaded.switches = true; break;
-				case "triggers": t.triggers = callback(this.response, length); towerDataLoaded.triggers = true; break;
-				case "monsterData": t.monsterData = callback(this.response, length); towerDataLoaded.monsters = true; break;
-				case "championData": championData = callback(this.response, length); towerDataLoaded.champions = true; break;
-				default: break;
+				case "monsterPalette":
+					monsterPaletteData = callback(this.response, length);
+					monsterDataLoaded.monsterPalette = true;
+					break;
+				case "monsterHeads":
+					monsterHeadsData = callback(this.response, length);
+					monsterDataLoaded.monsterHeads = true;
+					break;
+				case "monsterBodies":
+					monsterBodiesData = callback(this.response, length);
+					monsterDataLoaded.monsterBodies = true;
+					break;
+				case "floor":
+					t.floor = callback(this.response, length);
+					towerDataLoaded.floor = true;
+					break;
+				case "switches":
+					t.switches = callback(this.response, length);
+					towerDataLoaded.switches = true;
+					break;
+				case "triggers":
+					t.triggers = callback(this.response, length);
+					towerDataLoaded.triggers = true;
+					break;
+				case "monsterData":
+					t.monsterData = callback(this.response, length);
+					towerDataLoaded.monsters = true;
+					break;
+				case "championData":
+					championData = callback(this.response, length);
+					towerDataLoaded.champions = true;
+					break;
+				default:
+					break;
 			}
 		}
 	};
@@ -19,19 +46,19 @@ function getFileData(file_name, callback, t, type, length) {
 }
 
 function readMapData(evt) {
-		
+
 	//Function to read the orginal Bloodwych PC map data and put it into an array of
 	//hex codes so we can convert back to objects ingame.
-	
+
 	var uInt8Array = new Uint8Array(evt);
 
 	//The first part of the map files contains to the data about how many floors are stored
 	//in the tower file and the Width,Height,OffsetX,OffsetY so the floors can line up correctly
 	//for falling though pits or walking down stairs.
-		var floors = [];
-		   
+	var floors = [];
+
 	for (x = 0; x < 8; x++) {
-		myFloor = new Map(uInt8Array[x+8], uInt8Array[x], uInt8Array[x + 32], uInt8Array[x + 40]);
+		myFloor = new Map(uInt8Array[x + 8], uInt8Array[x], uInt8Array[x + 32], uInt8Array[x + 40]);
 		floors.push(myFloor);
 	}
 
@@ -47,18 +74,20 @@ function readMapData(evt) {
 			for (myX = 0; myX < t2; myX++) {
 				r.push(decimalToHex(uInt8Array[x]) + decimalToHex(uInt8Array[x + 1]));
 				x = x + 2;
-			}mdata.push(r);}
+			}
+			mdata.push(r);
+		}
 		floors[i].Map = mdata;
 	}
-		
-		return floors;
-		
+
+	return floors;
+
 }
-	
+
 function readSimpleData(evt, length) {
 	var uInt8Array = new Uint8Array(evt);
-	var Data = [];   
-	
+	var Data = [];
+
 	for (x = 0; x < uInt8Array.length / length; x++) {
 		//Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
 		var tmp = [];
@@ -70,12 +99,12 @@ function readSimpleData(evt, length) {
 	}
 	return Data;
 }
-	
-	
+
+
 function readSimpleDataHex(evt, length) {
 	var uInt8Array = new Uint8Array(evt);
-	var Data = [];   
-	
+	var Data = [];
+
 	for (x = 0; x < uInt8Array.length / length; x++) {
 		//Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
 		var tmp = '';

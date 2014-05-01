@@ -9,14 +9,13 @@ function Tower(map) {
 	t.map = map;
 
 	towerDataLoaded = {
-		monsterPalette: false,
 		floor: false,
 		switches: false,
 		triggers: false,
 		monsters: false,
 		champions: false
 	};
-	towerDataLoaded.watch("monsterPalette", function(prop, oldval, newval) {
+	monsterDataLoaded.watch("monsterPalette", function(prop, oldval, newval) {
 		getFileData('maps/' + map + '.MAP', readMapData, t, "floor");
 	});
 
