@@ -14,9 +14,9 @@ var testMon1 = 5,
 
 function testing(p) {
 
-var testImg = IMAGE_CHA_TORSO;
-
-    ctx.drawImage(characterGfx[testImg][testMon1][testDistance][testDirection],0,0,characterGfx[testImg][testMon1][testDistance][testDirection].width * scale,characterGfx[testImg][testMon1][testDistance][testDirection].height * scale)
+//var testImg = IMAGE_CHA_TORSO;
+//
+//    ctx.drawImage(characterGfx[testImg][testMon1][testDistance][testDirection],0,0,characterGfx[testImg][testMon1][testDistance][testDirection].width * scale,characterGfx[testImg][testMon1][testDistance][testDirection].height * scale)
 
 }
 
