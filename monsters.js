@@ -425,7 +425,7 @@ function initMonsters(t) {
 	//TESTING!!! REMOVE AFTER
 	monster[monsterMax] = new Monster(monsterMax, 1, 0, CHA_BLODWYN, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
 	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 45, 3, 13, 23, 3, CHAR_FRONT_RIGHT, -4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, CHA_ELEANOR, 3, 13, 23, 3, CHAR_FRONT_RIGHT, -4);
 	monsterMax++;
 	/*monster[monsterMax] = new Monster(monsterMax, 1, 0, 25, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
 	monsterMax++;
