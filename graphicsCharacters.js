@@ -17,7 +17,7 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 			DISTANT = [],
 			POSITION = 0;
 
-		if (graphic === "people") {
+		if (graphic === 'minis') {
 			CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
 			POSITION = POSITION + spriteHeight;
 
@@ -215,7 +215,7 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 	//characterGfx.push(graphicArray);
 
 	switch(graphic) {
-		case 'people': gameGfxLoaded.monsterPeople = true; characterGfx[4] = graphicArray; break;
+		case 'minis': gameGfxLoaded.monsterMinis = true; characterGfx[4] = graphicArray; break;
 		case 'heads': gameGfxLoaded.monsterHeads = true; characterGfx[0] = graphicArray; break;
 		case 'torsos': gameGfxLoaded.monsterTorsos = true; characterGfx[1] = graphicArray; break;
 		case 'arms': gameGfxLoaded.monsterArms = true; characterGfx[3] = graphicArray; break;

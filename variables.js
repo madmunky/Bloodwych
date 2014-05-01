@@ -17,7 +17,7 @@ var gameGfxLoaded = {
 	monsterLegs: false,
 	monsterArms: false,
 	monsterTorsos: false,
-	monsterPeople: false
+	monsterMini: false
 };
 var towerDataLoaded = {
 	monsterPalette: false,
@@ -199,7 +199,7 @@ var IMAGE_CHA_HEAD = 0,
 	IMAGE_CHA_TORSO = 1,
 	IMAGE_CHA_LEG = 2,
 	IMAGE_CHA_ARM = 3,
-	IMAGE_CHA_PEOPLE = 4;
+	IMAGE_CHA_MINI = 4;
 
 var IMAGE_CHA_DISTANCE_1 = 0,
 	IMAGE_CHA_DISTANCE_2 = 1,
@@ -211,7 +211,7 @@ var NUMBER_OF_DISTANCES = 6,
 	NUMBER_OF_TORSOS = 6,
 	NUMBER_OF_LEGS = 9,
 	NUMBER_OF_ARMS = 3,
-	NUMBER_OF_WHOLEPEOPLE = 8;
+	NUMBER_OF_MINIS = 8;
 
 //Character body part types
 var CHA_HEAD_ASTROTH = 1,
@@ -255,12 +255,12 @@ var CHA_LEG_MALE = 0,
 	CHA_LEG_FEMALE_LEATHER = 8;
 
 var CHA_MINI_MALE = 0,
-	CHA_MINI_MALE_PLATE = 1,
+	CHA_MINI_MALE_MAIL = 1,
 	CHA_MINI_SKELETON = 2,
 	CHA_MINI_FEMALE_NAKED = 3,
 	CHA_MINI_DEMON = 4,
 	CHA_MINI_FEMALE = 5,
-	CHA_MINI_FEMALE_PLATE = 6,
+	CHA_MINI_FEMALE_MAIL = 6,
 	CHA_MINI_FEMALE_LEATHER = 7;
 
 var CHA_BODY = new Array();
@@ -293,8 +293,7 @@ var monsterPalette = new Array();
 CHA_BODY[0] = {
 	leg: CHA_LEG_FEMALE_NAKED,
 	torso: CHA_TORSO_FEMALE_NAKED,
-	arm: CHA_ARM_MALE,
-	mini: CHA_ARM_MALE
+	arm: CHA_ARM_MALE
 };
 CHA_BODY[1] = {
 	leg: CHA_LEG_SKELETON,

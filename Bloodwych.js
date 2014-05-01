@@ -49,7 +49,7 @@ $(function() {
     gfxLoadImage("character", "arms", "");
     gfxLoadImage("character", "torsos", "");
     gfxLoadImage("character", "legs", "");
-    gfxLoadImage("character", "people", "");
+    gfxLoadImage("character", "minis", "");
 });
 
 getFileData('maps/heads.monsters', readSimpleData, null, "monsterHeads", 1);

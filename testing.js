@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 //var maleCharacterSpriteLocations = characterSpriteLocation();
-var testMon1 = 0;
-    testDirection = 0,
-            testDistance = 3;
+var testMon1 = CHA_MURLOCK;
 
 //var charLoaded = false;
 var characterImages = [];
@@ -125,34 +123,33 @@ function grabCharacter(cID, dir, dist) {
 
 }
 
-function grabWholeCharacter(cID, dir, dist) {
+function grabMiniCharacter(cID, dir, dist) {
 	//	try {
 
 	if (typeof monsterPalette[cID] !== "undefined") {
-		var BODY = null;
-		var BODYIDTMP = 0;
-		var DIRtmp = dist - 4;
-		var tmpPalette = monsterPalette[cID].bodyPalette;
+		var mini = null;
+		var miniId = 0;
+		var tmpPalette = monsterPalette[cID].miniPalette;
 
 		switch (dir) {
 
 			case 0:
-				BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][0], MON_PALETTE_DEFAULT, tmpPalette);
+				mini = recolourSprite(characterGfx[4][miniId][dist - 4][0], MON_PALETTE_DEFAULT, tmpPalette);
 				break;
 			case 3:
-				BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][1], MON_PALETTE_DEFAULT, tmpPalette);
+				mini = recolourSprite(characterGfx[4][miniId][dist - 4][1], MON_PALETTE_DEFAULT, tmpPalette);
 				break;
 			case 1:
-				BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][2], MON_PALETTE_DEFAULT, tmpPalette);
+				mini = recolourSprite(characterGfx[4][miniId][dist - 4][2], MON_PALETTE_DEFAULT, tmpPalette);
 				break;
 			case 2:
-				BODY = recolourSprite(characterGfx[4][BODYIDTMP][dist - 4][3], MON_PALETTE_DEFAULT, tmpPalette);
+				mini = recolourSprite(characterGfx[4][miniId][dist - 4][3], MON_PALETTE_DEFAULT, tmpPalette);
 				break;
 
 		}
 
-		var height = BODY.height,
-			width = BODY.width;
+		var height = mini.height,
+			width = mini.width;
 
 		var can = document.createElement('canvas');
 		can.width = width;
@@ -162,15 +159,15 @@ function grabWholeCharacter(cID, dir, dist) {
 		charImageObj.width = width;
 		charImageObj.height = height;
 
-		charContext.drawImage(BODY, 0, 0, BODY.width, BODY.height);
+		charContext.drawImage(mini, 0, 0, mini.width, mini.height);
 
 		charContext.save();
 		charImageObj.src = can.toDataURL();
-		delete BODY;
+		delete mini;
 		return charImageObj;
 	}
 	//	} catch (e) {
-	//		PrintLog("GrabWholeCharacter ERROR: " + e.toString());
+	//		PrintLog("GrabMiniCharacter ERROR: " + e.toString());
 	//	}
 
 }
@@ -187,13 +184,13 @@ function characterSpriteLocation() {
 			myArray.push(new Array(
 				//Front View
 				new Array(5 + offx, 21 + offy), //LEGS
-				new Array(5 + offx, 7 + offy), //BODY
+				new Array(5 + offx, 7 + offy), //TORSO
 				new Array(7 + offx, 0 + offy), //HEAD
 				new Array(16 + offx, 9 + offy), //RIGHT ARM
 				new Array(0 + offx, 9 + offy), //LEFT ARM
 				//Left View
 				new Array(11 + offx, 22 + offy), //LEGS
-				new Array(9 + offx, 8 + offy), //BODY
+				new Array(9 + offx, 8 + offy), //TORSO
 				new Array(9 + offx, 0 + offy), //HEAD
 				new Array(14 + offx, 10 + offy), //ARM
 				//Right View
@@ -299,10 +296,9 @@ function characterSpriteLocation() {
 
 function testing(p) {
 
-//var testImg = IMAGE_CHA_ARM;
+var testImg = IMAGE_CHA_ARM;
 
-
-    //ctx.drawImage(characterGfx[testImg][testMon1][testDistance][testDirection],0,0,characterGfx[testImg][0][testDistance][testDirection].width * scale,characterGfx[testImg][0][testDistance][testDirection].height * scale)
+    ctx.drawImage(characterGfx[testImg][testMon1][testDistance][testDirection],0,0,characterGfx[testImg][0][testDistance][testDirection].width * scale,characterGfx[testImg][0][testDistance][testDirection].height * scale)
 
 }
 
