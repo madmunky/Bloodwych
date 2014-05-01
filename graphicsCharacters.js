@@ -133,14 +133,14 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+1, POSITION, spritWidth-1, spriteHeight - 4, false));
 					POSITION = POSITION + spriteHeight + 2;
 
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -5, spriteHeight - 5, false));
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth -5, spriteHeight - 4, false));
 					POSITION = POSITION + spriteHeight - 1;
 
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -2, spriteHeight -4, false));
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -2, spriteHeight -4, true));
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth -2, spriteHeight -3, false));
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth -2, spriteHeight -3, true));
 					POSITION = POSITION + spriteHeight ;
 
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -2, spriteHeight - 7, false));
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth -2, spriteHeight - 6, false));
 					POSITION = POSITION + spriteHeight - 7;
 
 					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -5 , spriteHeight - 6, false));
@@ -286,11 +286,19 @@ function grabCharacter(cID, dir, dist) {
 		};
 		var armLeftCoord = {
 			x: Math.round((width - TORSO.width) / 2) - ARM.width,
-			y: height - (LEG.height + TORSO.height) * 0.95
+			y: height - LEG.height - TORSO.height + 2
 		};
 		var armRightCoord = {
 			x: Math.round((width + TORSO.width) / 2),
-			y: height - (LEG.height + TORSO.height) * 0.95
+			y: height - LEG.height - TORSO.height + 2
+		};
+		var armSideLeftCoord = {
+			x: Math.round((width - TORSO.width) / 2),
+			y: height - LEG.height - TORSO.height + 2
+		};
+		var armSideRightCoord = {
+			x: Math.round((width + TORSO.width) / 2) - ARM.width,
+			y: height - LEG.height - TORSO.height + 2
 		};
 
 		switch (dir) {
@@ -305,13 +313,13 @@ function grabCharacter(cID, dir, dist) {
 			case 3:
 				charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
 				charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
-				charContext.drawImage(flipImage(ARM), armRightCoord.x, armRightCoord.y, ARM.width, ARM.height);
+				charContext.drawImage(flipImage(ARM), armSideRightCoord.x, armSideRightCoord.y, ARM.width, ARM.height);
 				charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
 				break;
 			case 1:
 				charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
 				charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
-				charContext.drawImage(flipImage(ARM), armLeftCoord.x, armLeftCoord.y, ARM.width, ARM.height);
+				charContext.drawImage(flipImage(ARM), armSideLeftCoord.x, armSideLeftCoord.y, ARM.width, ARM.height);
 				charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
 				break;
 			case 2:
