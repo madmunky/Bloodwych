@@ -163,18 +163,18 @@ function doKeyDown(e) {
 			testDirection = (testDirection + 1) % 4;
 			break;
 		case KEY_7:
-			testDistance = (testDistance + 1) % 2;
+			testDistance = (testDistance + 1) % 3;
 			PrintLog("Distance: " + testDistance);
 			break;
 		case KEY_8:
-			testDistance = (testDistance + 2) % 2;
+			testDistance = (testDistance + 3) % 3;
 			PrintLog("Distance: " + testDistance);
 			break;
 		case KEY_0:
-			testMon1 = (testMon1 + 1) %7;
+			testMon1 = (testMon1 + 1) ;
 			break;
 		case KEY_9:
-			testMon1 = (testMon1 - 6) %7;
+			testMon1 = (testMon1 - 1) ;
 			break;
 		default:
 			break;
