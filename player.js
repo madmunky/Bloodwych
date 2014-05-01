@@ -21,6 +21,8 @@ function Player(id, posX, posY, floor, rotation, PortX, PortY) {
 		this.setBinaryView(18, 8, 1, '1');
 		//tw.floor[this.floor].Map[this.y][this.x] = tw.floor[this.floor].Map[this.y][this.x].replaceAt(2,"8");
 	} catch (c) {};
+        
+        players++;
 }
 
 Player.prototype.getViewPortal = function() {

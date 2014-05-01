@@ -97,8 +97,8 @@ function floorActionType(trig, p){
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:                   break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_2:                   break;
 		case SWITCH_FLOOR_TRADER_DOOR:                          tw.floor[p.floor].Map[p.y][p.x-1] = setHexToBinaryPosition(tw.floor[p.floor].Map[p.y][p.x-1], 7, 1, '1'); break;
-		case SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD:              break;
-		case SWITCH_FLOOR_TOWER_ENTRANCE:                       break; //switchTower(getHexToBinaryPosition(trig[1], 3, 2)); //trig[1]: 0=SERP, 1=DRAG, 2=MOON, 3=CHAOS, 4=ZENDIK
+		case SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD:              switchTower(getHexToBinaryPosition(trig[1], 3, 2));break; //trig[1]: 0=SERP, 1=DRAG, 2=MOON, 3=CHAOS, 4=ZENDIK
+		case SWITCH_FLOOR_TOWER_ENTRANCE:                       break; 
 		case SWITCH_FLOOR_REMOVE:                               tw.floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');break;
 		case SWITCH_FLOOR_CLOSE_VOID_LOCK_DOOR:                 tw.floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1'); break;
 		case SWITCH_FLOOR_TOGGLE_PILLAR:                        tw.floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');break;
@@ -122,5 +122,30 @@ function floorActionType(trig, p){
 		default:                                                window.alert("Unhandled Floor Action: " + trig.toString());
 	}
 
+}
+
+function switchTower(nextTower){ //trig[1]: 0=SERP, 1=DRAG, 2=MOON, 3=CHAOS, 4=ZENDIK
+        //Check how many players, if we have two player check the other player
+        //is on the opersit switch if condition is true change tower
+        //
+        
+        var TOWER_SERPENT = 0,
+                TOWER_DRAGON = 1,
+                TOWER_MOON = 2,
+                TOWER_CHAOS = 3,
+                TOWER_ZENDIK = 4,
+                TOWER_MOD0 = 5;
+    
+    //if (players < 2){        
+        
+        switch (nextTower) {            
+            case TOWER_SERPENT: {tw = new Tower(Maps["SERPENT"]); };break
+            case TOWER_DRAGON: {tw = new Tower(Maps["DRAGON"]); };break
+            case TOWER_MOON: {tw = new Tower(Maps["MOON"]); };break
+            case TOWER_CHAOS: {tw = new Tower(Maps["CHAOS"]); };break
+            case TOWER_ZENDIK: {tw = new Tower(Maps["ZENDIK"]); };break
+            case TOWER_MOD0: {tw = new Tower(Maps["MOD0"]); };break
+        }
+    //}
 }
 
