@@ -297,7 +297,9 @@ function characterSpriteLocation() {
 
 function testing(p) {
 
-	//ctx.drawImage(characterGfx[4][testMon1][testDistance][testDirection],0,0,characterGfx[4][0][testDistance][testDirection].width * scale,characterGfx[4][0][testDistance][testDirection].height * scale)
+var testImg = IMAGE_CHA_ARM;
+
+    ctx.drawImage(characterGfx[testImg][testMon1][testDistance][testDirection],0,0,characterGfx[testImg][0][testDistance][testDirection].width * scale,characterGfx[testImg][0][testDistance][testDirection].height * scale)
 
 }
 

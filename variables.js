@@ -293,7 +293,7 @@ var monsterPalette = new Array();
 CHA_BODY[0] = {
 	leg: CHA_LEG_FEMALE_NAKED,
 	torso: CHA_TORSO_FEMALE_NAKED,
-	arm: CHA_ARM_MALE
+	arm: CHA_ARM_MALE,
 	mini: CHA_ARM_MALE
 };
 CHA_BODY[1] = {
