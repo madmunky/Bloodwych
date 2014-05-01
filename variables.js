@@ -295,86 +295,67 @@ CHA_BODY[0] = {
 	torso: CHA_TORSO_FEMALE_NAKED,
 	arm: CHA_ARM_MALE
 };
-
 CHA_BODY[1] = {
 	leg: CHA_LEG_SKELETON,
 	torso: CHA_TORSO_SKELETON,
 	arm: CHA_ARM_SKELETON
 };
-
 CHA_BODY[2] = {
 	leg: CHA_LEG_MALE,
 	torso: CHA_TORSO_MALE_NAKED,
 	arm: CHA_ARM_MALE
 };
-
 CHA_BODY[3] = {
-	leg: CHA_LEG_MALE,
-	torso: CHA_TORSO_MALE_NAKED,
-	arm: CHA_ARM_MALE
-};
-
-CHA_BODY[4] = {
 	leg: CHA_LEG_MALE,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE
 };
-
-CHA_BODY[5] = {
+CHA_BODY[4] = {
 	leg: CHA_LEG_FEMALE,
 	torso: CHA_TORSO_FEMALE,
 	arm: CHA_ARM_FEMALE
 };
-
-CHA_BODY[6] = {
+CHA_BODY[5] = {
 	leg: CHA_LEG_MALE,
 	torso: CHA_TORSO_MALE,
 	arm: CHA_ARM_MALE
 };
-
-CHA_BODY[7] = {
+CHA_BODY[6] = {
 	leg: CHA_LEG_FEMALE_PLATE,
 	torso: CHA_TORSO_FEMALE,
 	arm: CHA_ARM_FEMALE
 };
-
-CHA_BODY[8] = {
+CHA_BODY[7] = {
 	leg: CHA_LEG_MALE_CHAIN,
 	torso: CHA_TORSO_MALE_CHAIN,
 	arm: CHA_ARM_MALE
 };
-
-CHA_BODY[9] = {
+CHA_BODY[8] = {
 	leg: CHA_LEG_FEMALE_CHAIN,
 	torso: CHA_TORSO_FEMALE,
 	arm: CHA_ARM_FEMALE
 };
-
-CHA_BODY[10] = {
+CHA_BODY[9] = {
 	leg: CHA_LEG_MALE_CHAIN,
 	torso: CHA_TORSO_MALE_CHAIN,
 	arm: CHA_ARM_MALE
 };
-
-CHA_BODY[11] = {
+CHA_BODY[10] = {
 	leg: CHA_LEG_FEMALE_PLATE,
 	torso: CHA_TORSO_FEMALE,
 	arm: CHA_ARM_FEMALE
 };
-
-CHA_BODY[12] = {
+CHA_BODY[11] = {
 	leg: CHA_LEG_MALE,
 	torso: CHA_TORSO_MALE_CHAIN,
 	arm: CHA_ARM_MALE
 };
-
-CHA_BODY[13] = {
+CHA_BODY[12] = {
 	leg: CHA_LEG_DEMON,
 	torso: CHA_TORSO_MALE_NAKED,
 	arm: CHA_ARM_MALE
 };
-
-CHA_BODY[14] = {
+CHA_BODY[13] = {
 	leg: CHA_LEG_DEMON,
 	torso: CHA_TORSO_MALE_CHAIN,
 	arm: CHA_ARM_MALE

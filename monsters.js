@@ -20,10 +20,21 @@ function Monster(id, level, type, form, floor, x, y, d, square, teamId, champId)
 
 Monster.prototype.toString = function() {
 	var cha = "";
+	var torso = "null";
+	var bodyId = "null";
 	if (this.champId !== -1) {
 		cha = ', champion:' + getChampionName(this.champId) + '(' + this.champId + ')';
 	}
-	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', teamId:' + this.teamId + cha + ']';
+	if(typeof monsterPalette[this.id] !== "undefined") {
+		if(typeof monsterPalette[this.id].bodyId !== "undefined") {
+			bodyId = monsterPalette[this.id].bodyId;
+		}
+		if(typeof monsterPalette[this.id].torso !== "undefined") {
+			torso = monsterPalette[this.id].torso;
+		}
+	}
+	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', teamId:' + this.teamId + cha + 
+	', formBodyId:' + bodyId + ', formBodyTorso:' + torso + ']';
 }
 
 Monster.prototype.getGfx = function() {
@@ -433,7 +444,8 @@ function initMonsters(t) {
 			legPalette: [COLOUR[monsterPaletteData[i][4]], COLOUR[monsterPaletteData[i][5]], COLOUR[monsterPaletteData[i][6]], COLOUR[monsterPaletteData[i][7]]],
 			torsoPalette: [COLOUR[monsterPaletteData[i][8]], COLOUR[monsterPaletteData[i][9]], COLOUR[monsterPaletteData[i][10]], COLOUR[monsterPaletteData[i][11]]],
 			armPalette: [COLOUR[monsterPaletteData[i][12]], COLOUR[monsterPaletteData[i][13]], COLOUR[monsterPaletteData[i][14]], COLOUR[monsterPaletteData[i][15]]],
-			bodyPalette: [COLOUR[monsterPaletteData[i][16]], COLOUR[monsterPaletteData[i][17]], COLOUR[monsterPaletteData[i][18]], COLOUR[monsterPaletteData[i][19]]]
+			bodyPalette: [COLOUR[monsterPaletteData[i][16]], COLOUR[monsterPaletteData[i][17]], COLOUR[monsterPaletteData[i][18]], COLOUR[monsterPaletteData[i][19]]],
+			bodyId: monsterBodiesData[i][0]
 		};
 	}
 }
