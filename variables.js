@@ -4,6 +4,7 @@ var debug = true;
 var debugHigh = false;
 var game;
 var characterGfx = [null, null, null, null, null];
+var characterImages = [];
 var drawMonsters = true;
 var testDistance = 0;
 var testDirection = 0;
