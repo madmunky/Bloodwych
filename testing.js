@@ -130,7 +130,7 @@ function grabWholeCharacter(cID, dir, dist) {
 		var BODY = null;
 		var BODYIDTMP = 0;
 		var DIRtmp = dist - 4;
-		var tmpPalette = monsterPalette[cID].legPalette;
+		var tmpPalette = monsterPalette[cID].bodyPalette;
 
 		switch (dir) {
 

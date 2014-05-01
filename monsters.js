@@ -412,7 +412,7 @@ function initMonsters(t) {
 	}
 
 	//TESTING!!! REMOVE AFTER
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 46, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, CHA_BLODWYN, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
 	monsterMax++;
 	monster[monsterMax] = new Monster(monsterMax, 1, 0, 45, 3, 13, 23, 3, CHAR_FRONT_RIGHT, -4);
 	monsterMax++;
@@ -432,6 +432,7 @@ function initMonsters(t) {
 			legPalette: [COLOUR[monsterPaletteData[i][4]], COLOUR[monsterPaletteData[i][5]], COLOUR[monsterPaletteData[i][6]], COLOUR[monsterPaletteData[i][7]]],
 			torsoPalette: [COLOUR[monsterPaletteData[i][8]], COLOUR[monsterPaletteData[i][9]], COLOUR[monsterPaletteData[i][10]], COLOUR[monsterPaletteData[i][11]]],
 			armPalette: [COLOUR[monsterPaletteData[i][12]], COLOUR[monsterPaletteData[i][13]], COLOUR[monsterPaletteData[i][14]], COLOUR[monsterPaletteData[i][15]]],
+			bodyPalette: [COLOUR[monsterPaletteData[i][16]], COLOUR[monsterPaletteData[i][17]], COLOUR[monsterPaletteData[i][18]], COLOUR[monsterPaletteData[i][19]]]
 		};
 	}
 }
