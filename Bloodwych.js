@@ -50,6 +50,9 @@ $(function() {
     gfxLoadImage("character", "torsos", "");
     gfxLoadImage("character", "legs", "");
     gfxLoadImage("character", "minis", "");
+    
+    //Misc
+    gfxLoadImage("misc", "font", "");
 });
 
 getFileData('maps/heads.monsters', readSimpleData, null, "monsterHeads", 1);
@@ -81,7 +84,9 @@ function updatePlayerViewScreen() {
     ctx.fillText("Floor: " + player[1].floor.toString(), 410, 310);
     //drawParty(player[1],0,1,8,11);
     //drawParty(player[0],4,5,6,7);
-    testing(player[0]);
+    testing(player[0]);    
+    writeFontImage("BLOODWYCH FOR THOSE WHO DARE",0,320,COLOUR[COLOUR_GREEN]);
+    
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {
