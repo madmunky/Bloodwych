@@ -472,7 +472,7 @@ function getMonsterGfxOffset(pos, sub) {
 	var offy = -xy["y"] * 4 + suby;
 
 	var x = Math.round(offx * (190.0 / (offy + 6)));
-	var y = Math.round(35 - 120.0 / (offy + 2));
+	var y = Math.round(49 - 340.0 / (offy + 6));
 
 	return {
 		x: x,

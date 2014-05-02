@@ -41,14 +41,14 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 		} else {
 			switch (graphic) {
 				case 'heads':
-                                        
-                                        var largeHeads = 1;
-                                        
-                                        if (x === 3 || x === 17){
-                                            largeHeads = 0;
-                                        }
-                                        
-					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth, spriteHeight, false));
+
+					var largeHeads = 0;
+
+					if (x === 3 || x === 17) {
+						largeHeads = 0;
+					}
+
+					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth, spriteHeight, false)); //11, 13
 					POSITION = POSITION + spriteHeight;
 
 					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth, spriteHeight, false));
@@ -56,163 +56,169 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 					POSITION = POSITION + spriteHeight;
 
 					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth, spriteHeight, false));
-					POSITION = POSITION + spriteHeight + 2;
+					POSITION = POSITION + spriteHeight;
 
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 3, spriteHeight - 3, false));
-					POSITION = POSITION + spriteHeight - 2;
 
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 3, spriteHeight - 3, false));
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 3, spriteHeight - 3, true));
-					POSITION = POSITION + spriteHeight - 2;
 
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 3, spriteHeight - 3, false));
-					POSITION = POSITION + spriteHeight - 2;
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 2, spriteHeight - 3, false)); //9, 10
+					POSITION = POSITION + spriteHeight - 3;
 
-					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 5, spriteHeight - 4, false));
-					POSITION = POSITION + spriteHeight - 4;
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 2, spriteHeight - 3, false));
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 2, spriteHeight - 3, true));
+					POSITION = POSITION + spriteHeight - 3;
 
-					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 5, spriteHeight - 4, false));
-					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 5, spriteHeight - 4, true));
-					POSITION = POSITION + spriteHeight - 4;
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 2, spriteHeight - 3, false));
+					POSITION = POSITION + spriteHeight - 3;
 
-					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 5, spriteHeight - 4, false));
-					POSITION = POSITION + spriteHeight - 4;
 
-					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 7, spriteHeight - 6, false));
+
+					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 4, spriteHeight - 5, false)); //7, 8
 					POSITION = POSITION + spriteHeight - 5;
 
-					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 8, spriteHeight - 6, false));
-					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 8, spriteHeight - 6, true));
+					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 4, spriteHeight - 5, false));
+					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 4, spriteHeight - 5, true));
 					POSITION = POSITION + spriteHeight - 5;
 
-					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], (x * colSize), POSITION + largeHeads, spritWidth - 5, spriteHeight - 6, false));
+					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 4, spriteHeight - 5, false));
+					POSITION = POSITION + spriteHeight - 5;
+
+
+
+					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 6, spriteHeight - 6, false)); //5, 7
+					POSITION = POSITION + spriteHeight - 6;
+
+					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 6, spriteHeight - 6, false));
+					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION + largeHeads, spritWidth - 6, spriteHeight - 6, true));
+					POSITION = POSITION + spriteHeight - 6;
+
+					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], (x * colSize), POSITION + largeHeads, spritWidth - 6, spriteHeight - 6, false));
 
 					break;
 				case 'torsos':
-                                    
-                                        if (x === 5){                                           
-                                    
-                                            CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+2, POSITION+2, spritWidth-4, spriteHeight-2, false));
-                                            POSITION = POSITION + spriteHeight +2;
 
-                                            CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+2, POSITION, spritWidth - 7, spriteHeight -1 , false));
-                                            CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+2, POSITION, spritWidth - 7, spriteHeight -1 , true));
-                                            POSITION = POSITION + spriteHeight -1;
+					if (x === 5) {
 
-                                            CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+2, POSITION+1, spritWidth-4, spriteHeight-2, false));
-                                            POSITION = POSITION + spriteHeight+1;
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION + 2, spritWidth - 4, spriteHeight - 2, false));
+						POSITION = POSITION + spriteHeight + 2;
 
-                                            MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+2, POSITION, spritWidth - 6, spriteHeight - 5, false));
-                                            POSITION = POSITION + spriteHeight - 2;
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 7, spriteHeight - 1, false));
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 7, spriteHeight - 1, true));
+						POSITION = POSITION + spriteHeight - 1;
 
-                                            MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 8, spriteHeight - 6, false));
-                                            MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 8, spriteHeight - 6, true));
-                                            POSITION = POSITION + spriteHeight - 2;
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION + 1, spritWidth - 4, spriteHeight - 2, false));
+						POSITION = POSITION + spriteHeight + 1;
 
-                                            MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+2, POSITION, spritWidth - 6, spriteHeight - 5, false));
-                                            POSITION = POSITION + spriteHeight -3;
+						MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 6, spriteHeight - 5, false));
+						POSITION = POSITION + spriteHeight - 2;
 
-                                            FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+2, POSITION, spritWidth - 8, spriteHeight - 8, false));
-                                            POSITION = POSITION + spriteHeight - 4;
+						MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 8, spriteHeight - 6, false));
+						MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 8, spriteHeight - 6, true));
+						POSITION = POSITION + spriteHeight - 2;
 
-                                            FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 9, spriteHeight - 6, false));
-                                            FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 9, spriteHeight - 6, true));
-                                            POSITION = POSITION + spriteHeight - 2;
+						MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 6, spriteHeight - 5, false));
+						POSITION = POSITION + spriteHeight - 3;
 
-                                            FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+1, POSITION, spritWidth - 8, spriteHeight - 8, false));
-                                            POSITION = POSITION + spriteHeight - 4;
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 8, spriteHeight - 8, false));
+						POSITION = POSITION + spriteHeight - 4;
 
-                                            DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 5, false));
-                                            POSITION = POSITION + spriteHeight - 5;
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 9, spriteHeight - 6, false));
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 2, POSITION, spritWidth - 9, spriteHeight - 6, true));
+						POSITION = POSITION + spriteHeight - 2;
 
-                                            DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 9, spriteHeight - 5, false));
-                                            DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 9, spriteHeight - 5, true));
-                                            POSITION = POSITION + spriteHeight - 5;
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 8, false));
+						POSITION = POSITION + spriteHeight - 4;
 
-                                            DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 5, false));
-                                            
-                                        }else{                                            
-                                    
-                                            CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
-                                            POSITION = POSITION + spriteHeight;
+						DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 5, false));
+						POSITION = POSITION + spriteHeight - 5;
 
-                                            CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 3, spriteHeight, false));
-                                            CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 3, spriteHeight, true));
-                                            POSITION = POSITION + spriteHeight;
+						DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 9, spriteHeight - 5, false));
+						DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 9, spriteHeight - 5, true));
+						POSITION = POSITION + spriteHeight - 5;
 
-                                            CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
-                                            POSITION = POSITION + spriteHeight;
+						DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 5, false));
 
-                                            MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
-                                            POSITION = POSITION + spriteHeight - 2;
+					} else {
 
-                                            MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 7, spriteHeight - 2, false));
-                                            MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 7, spriteHeight - 2, true));
-                                            POSITION = POSITION + spriteHeight - 2;
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
+						POSITION = POSITION + spriteHeight;
 
-                                            MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
-                                            POSITION = POSITION + spriteHeight - 2;
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 3, spriteHeight, false));
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 3, spriteHeight, true));
+						POSITION = POSITION + spriteHeight;
 
-                                            FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 6, spriteHeight - 4, false));
-                                            POSITION = POSITION + spriteHeight - 4;
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth, spriteHeight, false));
+						POSITION = POSITION + spriteHeight;
 
-                                            FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 4, false));
-                                            FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 4, true));
-                                            POSITION = POSITION + spriteHeight - 4;
+						MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
+						POSITION = POSITION + spriteHeight - 2;
 
-                                            FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 6, spriteHeight - 4, false));
-                                            POSITION = POSITION + spriteHeight - 4;
+						MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 7, spriteHeight - 2, false));
+						MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 7, spriteHeight - 2, true));
+						POSITION = POSITION + spriteHeight - 2;
 
-                                            DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 5, false));
-                                            POSITION = POSITION + spriteHeight - 5;
+						MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 2, spriteHeight - 2, false));
+						POSITION = POSITION + spriteHeight - 2;
 
-                                            DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 9, spriteHeight - 5, false));
-                                            DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 9, spriteHeight - 5, true));
-                                            POSITION = POSITION + spriteHeight - 5;
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 6, spriteHeight - 4, false));
+						POSITION = POSITION + spriteHeight - 4;
 
-                                            DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 5, false));
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 4, false));
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 4, true));
+						POSITION = POSITION + spriteHeight - 4;
 
-                                        }
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 6, spriteHeight - 4, false));
+						POSITION = POSITION + spriteHeight - 4;
+
+						DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 5, false));
+						POSITION = POSITION + spriteHeight - 5;
+
+						DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 9, spriteHeight - 5, false));
+						DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 9, spriteHeight - 5, true));
+						POSITION = POSITION + spriteHeight - 5;
+
+						DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 8, spriteHeight - 5, false));
+
+					}
 					break;
 				case 'arms':
-					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -4, spriteHeight, false));
+					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 4, spriteHeight, false));
 					POSITION = POSITION + spriteHeight;
 
-					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize , POSITION, spritWidth-1, spriteHeight, false));
-					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize , POSITION, spritWidth-1, spriteHeight, true));
+					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 1, spriteHeight, false));
+					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 1, spriteHeight, true));
 					POSITION = POSITION + spriteHeight;
 
-					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize+1, POSITION, spritWidth-1, spriteHeight - 4, false));
+					CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spritWidth - 1, spriteHeight - 4, false));
 					POSITION = POSITION + spriteHeight + 2;
 
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth -5, spriteHeight - 4, false));
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth - 5, spriteHeight - 4, false));
 					POSITION = POSITION + spriteHeight - 1;
 
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth -2, spriteHeight -3, false));
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth -2, spriteHeight -3, true));
-					POSITION = POSITION + spriteHeight ;
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth - 2, spriteHeight - 3, false));
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth - 2, spriteHeight - 3, true));
+					POSITION = POSITION + spriteHeight;
 
-					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth -2, spriteHeight - 6, false));
+					MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION - 1, spritWidth - 2, spriteHeight - 6, false));
 					POSITION = POSITION + spriteHeight - 7;
 
-					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth -5 , spriteHeight - 6, false));
+					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 5, spriteHeight - 6, false));
 					POSITION = POSITION + spriteHeight - 4;
 
-					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize , POSITION, spritWidth-3 , spriteHeight - 6, false));
-					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize , POSITION, spritWidth-3 , spriteHeight - 6, true));
+					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 3, spriteHeight - 6, false));
+					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 3, spriteHeight - 6, true));
 					POSITION = POSITION + spriteHeight - 4;
 
-					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-3 , spriteHeight - 9, false));
+					FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 3, spriteHeight - 9, false));
 					POSITION = POSITION + spriteHeight + 1;
 
-					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-5 , spriteHeight - 8, false));
+					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 5, spriteHeight - 8, false));
 					POSITION = POSITION + spriteHeight - 8;
 
-					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-4 , spriteHeight - 8, false));
-					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth-4 , spriteHeight - 8, true));
+					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 4, spriteHeight - 8, false));
+					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spritWidth - 4, spriteHeight - 8, true));
 					POSITION = POSITION + spriteHeight - 8;
 
-					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], (x * colSize), POSITION, spritWidth-4 , spriteHeight, false));
+					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], (x * colSize), POSITION, spritWidth - 4, spriteHeight, false));
 
 					break;
 				case 'legs':
@@ -254,7 +260,7 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 					POSITION = POSITION + spriteHeight - 11;
 
 					DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], (x * colSize) + 1, POSITION, spritWidth - 6, spriteHeight - 11, false));
-					
+
 					break;
 				default:
 					break;
@@ -266,12 +272,27 @@ function getCharacterSprite(length, graphicsFolder, graphic, spritWidth, spriteH
 	}
 	//characterGfx.push(graphicArray);
 
-	switch(graphic) {
-		case 'minis': gameGfxLoaded.monsterMinis = true; characterGfx[4] = graphicArray; break;
-		case 'heads': gameGfxLoaded.monsterHeads = true; characterGfx[0] = graphicArray; break;
-		case 'torsos': gameGfxLoaded.monsterTorsos = true; characterGfx[1] = graphicArray; break;
-		case 'arms': gameGfxLoaded.monsterArms = true; characterGfx[3] = graphicArray; break;
-		case 'legs': gameGfxLoaded.monsterLegs = true; characterGfx[2] = graphicArray; break;
+	switch (graphic) {
+		case 'minis':
+			gameGfxLoaded.monsterMinis = true;
+			characterGfx[4] = graphicArray;
+			break;
+		case 'heads':
+			gameGfxLoaded.monsterHeads = true;
+			characterGfx[0] = graphicArray;
+			break;
+		case 'torsos':
+			gameGfxLoaded.monsterTorsos = true;
+			characterGfx[1] = graphicArray;
+			break;
+		case 'arms':
+			gameGfxLoaded.monsterArms = true;
+			characterGfx[3] = graphicArray;
+			break;
+		case 'legs':
+			gameGfxLoaded.monsterLegs = true;
+			characterGfx[2] = graphicArray;
+			break;
 	}
 }
 
@@ -334,7 +355,7 @@ function grabCharacter(cID, dir, dist) {
 		};
 		var headCoord = {
 			x: Math.round((width - HEAD.width) / 2),
-			y: height - LEG.height - TORSO.height - HEAD.height + 4
+			y: height - LEG.height - TORSO.height - Math.round(HEAD.height * 0.57)
 		};
 		var armLeftCoord = {
 			x: Math.round((width - TORSO.width) / 2) - ARM.width,
