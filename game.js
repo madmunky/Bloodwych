@@ -43,7 +43,7 @@ function monsterMove() {
 	if(timerMaster - timerMonsterMove >= 20) {
 		timerMonsterMove = timerMaster;
 		for(m = 0; m < monster.length; m++) {
-			monster[m].move();
+			//monster[m].move();
 		}
 	}
 }
