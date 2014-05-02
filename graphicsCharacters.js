@@ -333,9 +333,7 @@ function grabCharacter(cID, dir, dist) {
 				break;
 
 		}
-                
 
-                
 		var height = HEAD.height + TORSO.height + LEG.height,
 			width = ARM.width + TORSO.width + ARM.width;
 
@@ -375,13 +373,6 @@ function grabCharacter(cID, dir, dist) {
 			x: Math.round((width + TORSO.width) / 2) - ARM.width,
 			y: height - LEG.height - TORSO.height + 2
 		};
-
-
-                if (cID === CHA_ROSANNE && dist === 2 && dir === 2){
-                    PrintLog(torsoCoord.toString());
-                    PrintLog(height.toString());
-                    
-                }
 
 		switch (dir) {
 
