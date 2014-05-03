@@ -63,36 +63,19 @@ Monster.prototype.getGfx = function() {
 Monster.prototype.canAttack = function() {
 	//Check other player to attack
 	if (this.champId === -1) {
-		switch (this.d) {
-			case 0:
-				xo = 0;
-				yo = -1;
-				break;
-			case 1:
-				xo = 1;
-				yo = 0;
-				break;
-			case 2:
-				xo = 0;
-				yo = 1;
-				break;
-			case 3:
-				xo = -1;
-				yo = 0;
-				break;
-		}
+		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
-			if (this.floor === player[0].floor && this.x + xo === player[0].x && this.y + yo === player[0].y) {
+			if (this.floor === player[0].floor && this.x + xy.x === player[0].x && this.y + xy.y === player[0].y) {
 				PrintLog('PLAYER 1 GETS HIT BY MONSTER #' + this.id + '!');
 				return 0;
-			} else if (this.floor === player[1].floor && this.x + xo === player[1].x && this.y + yo === player[1].y) {
+			} else if (this.floor === player[1].floor && this.x + xy.x === player[1].x && this.y + xy.y === player[1].y) {
 				PrintLog('PLAYER 2 GETS HIT BY MONSTER #' + this.id + '!');
 				return 1;
 			}
 		}
 		for (var m = 0; m < monster.length; m++) {
-			if (monster[m].champId > -1 && this.id !== monster[m].id && this.floor === monster[m].floor && this.x + xo === monster[m].x && this.y + yo === monster[m].y) {
+			if (monster[m].champId > -1 && this.id !== monster[m].id && this.floor === monster[m].floor && this.x + xy.x === monster[m].x && this.y + xy.y === monster[m].y) {
 				PrintLog('CHAMPION ' + getChampionName(monster[m].champId) + ' GETS HIT BY MONSTER #' + this.id + '!!!');
 				return 2;
 			}
@@ -139,25 +122,8 @@ Monster.prototype.canMove = function() {
 		//Check other monsters
 		for (var m = 0; m < monster.length; m++) {
 			if (this.id !== monster[m].id && this.floor === monster[m].floor) {
-				switch (this.d) {
-					case 0:
-						xo = 0;
-						yo = -1;
-						break;
-					case 1:
-						xo = 1;
-						yo = 0;
-						break;
-					case 2:
-						xo = 0;
-						yo = 1;
-						break;
-					case 3:
-						xo = -1;
-						yo = 0;
-						break;
-				}
-				if (this.x + xo === monster[m].x && this.y + yo === monster[m].y) {
+				xy = getOffsetByRotation(this.d);
+				if (this.x + xy.x === monster[m].x && this.y + xy.y === monster[m].y) {
 					return 2;
 				}
 			}
@@ -196,42 +162,24 @@ Monster.prototype.move = function() {
 		if (canMove === 2 && this.canAttack() > -1) return;
 		if (canMove === 1) {
 			if (this.rotateToPlayer()) return;
-			switch (this.d) {
-				case 0:
-					xo = 0;
-					yo = -1;
-					break;
-				case 1:
-					xo = 1;
-					yo = 0;
-					break;
-				case 2:
-					xo = 0;
-					yo = 1;
-					break;
-				case 3:
-					xo = -1;
-					yo = 0;
-					break;
-			}
-
+			xy = getOffsetByRotation(this.d);
 			if (this.teamId > 0) {
 				team = this.id;
 				while (typeof monster[team] !== "undefined" && this.teamId === Math.abs(monster[team].teamId)) {
-					monster[team].x += xo;
-					monster[team].y += yo;
+					monster[team].x += xy.x;
+					monster[team].y += xy.y;
 					team++;
 				}
 			} else if (this.square === -1) {
-				this.x += xo;
-				this.y += yo;
+				this.x += xy.x;
+				this.y += xy.y;
 			} else {
 				var sq = this.getSquareByDir();
 				switch (sq) {
 					case CHAR_FRONT_LEFT:
 					case CHAR_FRONT_RIGHT:
-						this.x += xo;
-						this.y += yo;
+						this.x += xy.x;
+						this.y += xy.y;
 						break;
 					default:
 						break;
@@ -390,12 +338,12 @@ Monster.prototype.assembleTeam = function() {
 
 Monster.prototype.setBinaryView = function(pos18, index, length, to) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
-	tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.floor[this.floor].Map[xy["y"]][xy["x"]], index, length, to);
+	tw.floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tw.floor[this.floor].Map[xy.y][xy.x], index, length, to);
 }
 Monster.prototype.getBinaryView = function(pos18, index, length) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
 	try {
-		return getHexToBinaryPosition(tw.floor[this.floor].Map[xy["y"]][xy["x"]], index, length);
+		return getHexToBinaryPosition(tw.floor[this.floor].Map[xy.y][xy.x], index, length);
 	} catch (e) {
 		return '0001';
 	}
@@ -485,8 +433,8 @@ function getMonsterGfxOffset(pos, sub) {
 		subx = -1;
 		suby = 1;
 	}
-	var offx = xy["x"] * 4 + subx;
-	var offy = -xy["y"] * 4 + suby;
+	var offx = xy.x * 4 + subx;
+	var offy = -xy.y * 4 + suby;
 
 	var x = Math.round(offx * (190.0 / (offy + 6)));
 	var y = Math.round(49 - 340.0 / (offy + 6));

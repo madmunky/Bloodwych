@@ -142,13 +142,13 @@ Player.prototype.toggleFrontObject = function() {
 //'to' will be a binary string, e.g. '1010'
 Player.prototype.setBinaryView = function(pos18, index, length, to) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.Rotation);
-	tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.floor[this.floor].Map[xy["y"]][xy["x"]], index, length, to);
+	tw.floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tw.floor[this.floor].Map[xy.y][xy.x], index, length, to);
 }
 
 Player.prototype.getBinaryView = function(pos18, index, length) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.Rotation);
 	try {
-		return getHexToBinaryPosition(tw.floor[this.floor].Map[xy["y"]][xy["x"]], index, length);
+		return getHexToBinaryPosition(tw.floor[this.floor].Map[xy.y][xy.x], index, length);
 	} catch (e) {
 		return '0001';
 	}
@@ -175,8 +175,8 @@ Player.prototype.move = function(d) {
 	var viewIndex = [15, 16, 19, 17];
 	if (this.canMoveToPos(viewIndex[d])) {
 		xy = getOffsetByRotation((this.Rotation + d) % 4);
-		this.x = this.x + xy['x'];
-		this.y = this.y + xy['y'];
+		this.x = this.x + xy.x;
+		this.y = this.y + xy.y;
 		if (debug) {
 			//PrintLog("Player Moved " + getDirection(this.Rotation));
 		}
@@ -195,7 +195,7 @@ Player.prototype.updateView = function(m) {
 	for (pos = 0; pos < 20; pos++) {
 		try {
 			var xy = posToCoordinates(pos, this.x, this.y, this.Rotation);
-			var newView = m[xy['y']][xy['x']];
+			var newView = m[xy.y][xy.x];
 			if (typeof newView === "undefined") {
 				newView = '0001';
 			}
@@ -384,11 +384,11 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 Player.prototype.testMode = function(id) {
 	if (debug) {
 		//var xy = posToCoordinates(15, this.x, this.y, this.Rotation);
-		//var hex = tw.floor[this.floor].Map[xy["y"]][xy["x"]];
-		//tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
-		//tw.floor[this.floor].Map[xy["y"]][xy["x"]] = toggleObject(hex, '3'); //TOGGLE PILLAR
-		//tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
-		//tw.floor[this.floor].Map[xy["y"]][xy["x"]] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
+		//var hex = tw.floor[this.floor].Map[xy.y][xy.x];
+		//tw.floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
+		//tw.floor[this.floor].Map[xy.y][xy.x] = toggleObject(hex, '3'); //TOGGLE PILLAR
+		//tw.floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
+		//tw.floor[this.floor].Map[xy.y][xy.x] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
 		try {
 			for (i = 0; i < 17; i++) {
 				var t = this.View[i].substring(2, 4);

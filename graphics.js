@@ -175,9 +175,9 @@ function getStoneWall(HexCode, d, pos, P, pos18) {
 
 	function getWallDeco() {
 		var xy = posToCoordinates(pos18, P.x, P.y, P.Rotation);
-		var RND4 = Math.floor(xy["x"] * 1.27 + xy["y"] * 2.68) % 4; //For random banner faces
-		var RND6 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.82) % 6; //For random switches
-		var RND8 = Math.floor(xy["x"] * 5.76 + xy["y"] * 4.42) % 8; //For random banner frames
+		var RND4 = Math.floor(xy.x * 1.27 + xy.y * 2.68) % 4; //For random banner faces
+		var RND6 = Math.floor(xy.x * 5.76 + xy.y * 4.82) % 6; //For random switches
+		var RND8 = Math.floor(xy.x * 5.76 + xy.y * 4.42) % 8; //For random banner frames
 		//try {
 			if (getHexToBinaryPosition(HexCode, 8) === '1') { //Wall has something on it
 				if (getHexToBinaryPosition(HexCode, 6, 2) === '0') { //Shelf

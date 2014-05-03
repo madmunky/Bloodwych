@@ -89,155 +89,120 @@ function seededRandom(seed) {
 //Given a specific position (0 - 19) relative to an x, y and d(irection), return the x and y coordinates
 
 function posToCoordinates(pos, x, y, d) {
-	newCoord = {};
-	switch (d) {
-		case 0:
-			xo = 0;
-			yo = -1;
-			break;
-		case 1:
-			xo = 1;
-			yo = 0;
-			break;
-		case 2:
-			xo = 0;
-			yo = 1;
-			break;
-		case 3:
-			xo = -1;
-			yo = 0;
-			break;
-	}
+	var newx, newy;
+	xy = getOffsetByRotation(d);
 	switch (pos) {
 		case 0:
-			newCoord["y"] = y + (4 * yo) + (2 * xo);
-			newCoord["x"] = x + (4 * xo) - (2 * yo);
+			newy = y + (4 * xy.y) + (2 * xy.x);
+			newx = x + (4 * xy.x) - (2 * xy.y);
 			break; //-4 +2
 		case 1:
-			newCoord["y"] = y + (4 * yo) - (2 * xo);
-			newCoord["x"] = x + (4 * xo) + (2 * yo);
+			newy = y + (4 * xy.y) - (2 * xy.x);
+			newx = x + (4 * xy.x) + (2 * xy.y);
 			break; //-4 -2
 		case 2:
-			newCoord["y"] = y + (4 * yo) + (1 * xo);
-			newCoord["x"] = x + (4 * xo) - (1 * yo);
+			newy = y + (4 * xy.y) + (1 * xy.x);
+			newx = x + (4 * xy.x) - (1 * xy.y);
 			break; //-4 +1
 		case 3:
-			newCoord["y"] = y + (4 * yo) - (1 * xo);
-			newCoord["x"] = x + (4 * xo) + (1 * yo);
+			newy = y + (4 * xy.y) - (1 * xy.x);
+			newx = x + (4 * xy.x) + (1 * xy.y);
 			break; //-4 -1
 		case 4:
-			newCoord["y"] = y + (4 * yo) - (0 * xo);
-			newCoord["x"] = x + (4 * xo) + (0 * yo);
+			newy = y + (4 * xy.y) - (0 * xy.x);
+			newx = x + (4 * xy.x) + (0 * xy.y);
 			break; //-4 0
 		case 5:
-			newCoord["y"] = y + (3 * yo) + (2 * xo);
-			newCoord["x"] = x + (3 * xo) - (2 * yo);
+			newy = y + (3 * xy.y) + (2 * xy.x);
+			newx = x + (3 * xy.x) - (2 * xy.y);
 			break; //-3 +2 
 		case 6:
-			newCoord["y"] = y + (3 * yo) - (2 * xo);
-			newCoord["x"] = x + (3 * xo) + (2 * yo);
+			newy = y + (3 * xy.y) - (2 * xy.x);
+			newx = x + (3 * xy.x) + (2 * xy.y);
 			break; //-3 -2
 		case 7:
-			newCoord["y"] = y + (3 * yo) + (1 * xo);
-			newCoord["x"] = x + (3 * xo) - (1 * yo);
+			newy = y + (3 * xy.y) + (1 * xy.x);
+			newx = x + (3 * xy.x) - (1 * xy.y);
 			break; //-3 +1
 		case 8:
-			newCoord["y"] = y + (3 * yo) - (1 * xo);
-			newCoord["x"] = x + (3 * xo) + (1 * yo);
+			newy = y + (3 * xy.y) - (1 * xy.x);
+			newx = x + (3 * xy.x) + (1 * xy.y);
 			break; //-3 -1
 		case 9:
-			newCoord["y"] = y + (3 * yo) - (0 * xo);
-			newCoord["x"] = x + (3 * xo) - (0 * yo);
+			newy = y + (3 * xy.y) - (0 * xy.x);
+			newx = x + (3 * xy.x) - (0 * xy.y);
 			break; //-3 0
 		case 10:
-			newCoord["y"] = y + (2 * yo) + (1 * xo);
-			newCoord["x"] = x + (2 * xo) - (1 * yo);
+			newy = y + (2 * xy.y) + (1 * xy.x);
+			newx = x + (2 * xy.x) - (1 * xy.y);
 			break; //-2 +1                
 		case 11:
-			newCoord["y"] = y + (2 * yo) - (1 * xo);
-			newCoord["x"] = x + (2 * xo) + (1 * yo);
+			newy = y + (2 * xy.y) - (1 * xy.x);
+			newx = x + (2 * xy.x) + (1 * xy.y);
 			break; //-2 -1
 		case 12:
-			newCoord["y"] = y + (2 * yo) - (0 * xo);
-			newCoord["x"] = x + (2 * xo) + (0 * yo);
+			newy = y + (2 * xy.y) - (0 * xy.x);
+			newx = x + (2 * xy.x) + (0 * xy.y);
 			break; //-2 0
 		case 13:
-			newCoord["y"] = y + (1 * yo) + (1 * xo);
-			newCoord["x"] = x + (1 * xo) - (1 * yo);
+			newy = y + (1 * xy.y) + (1 * xy.x);
+			newx = x + (1 * xy.x) - (1 * xy.y);
 			break; //-1 +1
 		case 14:
-			newCoord["y"] = y + (1 * yo) - (1 * xo);
-			newCoord["x"] = x + (1 * xo) + (1 * yo);
+			newy = y + (1 * xy.y) - (1 * xy.x);
+			newx = x + (1 * xy.x) + (1 * xy.y);
 			break; //-1 -1
 		case 15:
-			newCoord["y"] = y + (1 * yo) - (0 * xo);
-			newCoord["x"] = x + (1 * xo) + (0 * yo);
+			newy = y + (1 * xy.y) - (0 * xy.x);
+			newx = x + (1 * xy.x) + (0 * xy.y);
 			break; //-1 0
 		case 16:
-			newCoord["y"] = y + (0 * yo) + (1 * xo);
-			newCoord["x"] = x + (0 * xo) - (1 * yo);
+			newy = y + (0 * xy.y) + (1 * xy.x);
+			newx = x + (0 * xy.x) - (1 * xy.y);
 			break; //0 +1
 		case 17:
-			newCoord["y"] = y + (0 * yo) - (1 * xo);
-			newCoord["x"] = x + (0 * xo) + (1 * yo);
+			newy = y + (0 * xy.y) - (1 * xy.x);
+			newx = x + (0 * xy.x) + (1 * xy.y);
 			break; //0 -1
 		case 18:
-			newCoord["y"] = y;
-			newCoord["x"] = x;
+			newy = y;
+			newx = x;
 			break; //0 0
 		case 19:
-			newCoord["y"] = y - (1 * yo) - (0 * xo);
-			newCoord["x"] = x - (1 * xo) + (0 * yo);
+			newy = y - (1 * xy.y) - (0 * xy.x);
+			newx = x - (1 * xy.x) + (0 * xy.y);
 			break; //-1 0
 		default:
 			break;
 	}
-	return newCoord;
+	return { x: newx, y: newy };
 }
 
 //Given a specific x and y, relative to another x, y and d(irection), return the position
 //Returns -1 when not in range of 0-19
-
 function coordinatesToPos(xt, yt, x, y, d) {
 	var pos = -1;
-	switch (d) {
-		case 0:
-			xo = 0;
-			yo = -1;
-			break;
-		case 1:
-			xo = 1;
-			yo = 0;
-			break;
-		case 2:
-			xo = 0;
-			yo = 1;
-			break;
-		case 3:
-			xo = -1;
-			yo = 0;
-			break;
-	}
-	if (yt == y + (4 * yo) + (2 * xo) && xt == x + (4 * xo) - (2 * yo)) return 0; //-4 +2
-	if (yt == y + (4 * yo) - (2 * xo) && xt == x + (4 * xo) + (2 * yo)) return 1; //-4 -2
-	if (yt == y + (4 * yo) + (1 * xo) && xt == x + (4 * xo) - (1 * yo)) return 2; //-4 +1
-	if (yt == y + (4 * yo) - (1 * xo) && xt == x + (4 * xo) + (1 * yo)) return 3; //-4 -1
-	if (yt == y + (4 * yo) - (0 * xo) && xt == x + (4 * xo) + (0 * yo)) return 4; //-4 0
-	if (yt == y + (3 * yo) + (2 * xo) && xt == x + (3 * xo) - (2 * yo)) return 5; //-3 +2 
-	if (yt == y + (3 * yo) - (2 * xo) && xt == x + (3 * xo) + (2 * yo)) return 6; //-3 -2
-	if (yt == y + (3 * yo) + (1 * xo) && xt == x + (3 * xo) - (1 * yo)) return 7; //-3 +1
-	if (yt == y + (3 * yo) - (1 * xo) && xt == x + (3 * xo) + (1 * yo)) return 8; //-3 -1
-	if (yt == y + (3 * yo) - (0 * xo) && xt == x + (3 * xo) - (0 * yo)) return 9; //-3 0
-	if (yt == y + (2 * yo) + (1 * xo) && xt == x + (2 * xo) - (1 * yo)) return 10; //-2 +1                
-	if (yt == y + (2 * yo) - (1 * xo) && xt == x + (2 * xo) + (1 * yo)) return 11; //-2 -1
-	if (yt == y + (2 * yo) - (0 * xo) && xt == x + (2 * xo) + (0 * yo)) return 12; //-2 0
-	if (yt == y + (1 * yo) + (1 * xo) && xt == x + (1 * xo) - (1 * yo)) return 13; //-1 +1
-	if (yt == y + (1 * yo) - (1 * xo) && xt == x + (1 * xo) + (1 * yo)) return 14; //-1 -1
-	if (yt == y + (1 * yo) - (0 * xo) && xt == x + (1 * xo) + (0 * yo)) return 15; //-1 0
-	if (yt == y + (0 * yo) + (1 * xo) && xt == x + (0 * xo) - (1 * yo)) return 16; //0 +1
-	if (yt == y + (0 * yo) - (1 * xo) && xt == x + (0 * xo) + (1 * yo)) return 17; //0 -1
+	xy = getOffsetByRotation(d);
+	if (yt == y + (4 * xy.y) + (2 * xy.x) && xt == x + (4 * xy.x) - (2 * xy.y)) return 0; //-4 +2
+	if (yt == y + (4 * xy.y) - (2 * xy.x) && xt == x + (4 * xy.x) + (2 * xy.y)) return 1; //-4 -2
+	if (yt == y + (4 * xy.y) + (1 * xy.x) && xt == x + (4 * xy.x) - (1 * xy.y)) return 2; //-4 +1
+	if (yt == y + (4 * xy.y) - (1 * xy.x) && xt == x + (4 * xy.x) + (1 * xy.y)) return 3; //-4 -1
+	if (yt == y + (4 * xy.y) - (0 * xy.x) && xt == x + (4 * xy.x) + (0 * xy.y)) return 4; //-4 0
+	if (yt == y + (3 * xy.y) + (2 * xy.x) && xt == x + (3 * xy.x) - (2 * xy.y)) return 5; //-3 +2 
+	if (yt == y + (3 * xy.y) - (2 * xy.x) && xt == x + (3 * xy.x) + (2 * xy.y)) return 6; //-3 -2
+	if (yt == y + (3 * xy.y) + (1 * xy.x) && xt == x + (3 * xy.x) - (1 * xy.y)) return 7; //-3 +1
+	if (yt == y + (3 * xy.y) - (1 * xy.x) && xt == x + (3 * xy.x) + (1 * xy.y)) return 8; //-3 -1
+	if (yt == y + (3 * xy.y) - (0 * xy.x) && xt == x + (3 * xy.x) - (0 * xy.y)) return 9; //-3 0
+	if (yt == y + (2 * xy.y) + (1 * xy.x) && xt == x + (2 * xy.x) - (1 * xy.y)) return 10; //-2 +1                
+	if (yt == y + (2 * xy.y) - (1 * xy.x) && xt == x + (2 * xy.x) + (1 * xy.y)) return 11; //-2 -1
+	if (yt == y + (2 * xy.y) - (0 * xy.x) && xt == x + (2 * xy.x) + (0 * xy.y)) return 12; //-2 0
+	if (yt == y + (1 * xy.y) + (1 * xy.x) && xt == x + (1 * xy.x) - (1 * xy.y)) return 13; //-1 +1
+	if (yt == y + (1 * xy.y) - (1 * xy.x) && xt == x + (1 * xy.x) + (1 * xy.y)) return 14; //-1 -1
+	if (yt == y + (1 * xy.y) - (0 * xy.x) && xt == x + (1 * xy.x) + (0 * xy.y)) return 15; //-1 0
+	if (yt == y + (0 * xy.y) + (1 * xy.x) && xt == x + (0 * xy.x) - (1 * xy.y)) return 16; //0 +1
+	if (yt == y + (0 * xy.y) - (1 * xy.x) && xt == x + (0 * xy.x) + (1 * xy.y)) return 17; //0 -1
 	if (yt == y && xt == x) return 18; //0 0
-	if (yt == y - (1 * yo) - (0 * xo) && xt == x - (1 * xo) + (0 * yo)) return 19; //-1 0
+	if (yt == y - (1 * xy.y) - (0 * xy.x) && xt == x - (1 * xy.x) + (0 * xy.y)) return 19; //-1 0
 	return -1;
 }
 
@@ -264,8 +229,8 @@ function getOffsetByRotation(r) {
 			break;
 	}
 	return {
-		'x': xo,
-		'y': yo
+		x: xo,
+		y: yo
 	};
 }
 
