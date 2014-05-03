@@ -59,9 +59,8 @@ getFileData('maps/heads.monsters', readSimpleData, null, "monsterHeads", 1);
 getFileData('maps/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
 getFileData('maps/palette.monsters', readSimpleData, null, "monsterPalette", 20);
 
-var imageChecker = setInterval(function() {
-	init()
-}, 100);
+//var imageChecker = setInterval(function() {
+//}, 100);
 
 
 function updatePlayerViewScreen() {

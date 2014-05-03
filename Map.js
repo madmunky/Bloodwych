@@ -1,9 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 function Tower(map) {
 	var t = this;
 	t.map = map;
@@ -15,9 +9,8 @@ function Tower(map) {
 		monsters: false,
 		champions: false
 	};
-	monsterDataLoaded.watch("monsterPalette", function(prop, oldval, newval) {
-		getFileData('maps/' + map + '.MAP', readMapData, t, "floor");
-	});
+
+	getFileData('maps/' + map + '.MAP', readMapData, t, "floor");
 
 	towerDataLoaded.watch("floor", function(prop, oldval, newval) {
 		getFileData('maps/' + map + '.switches', readSimpleData, t, "switches", 4);
@@ -28,8 +21,23 @@ function Tower(map) {
 	});
 
 	towerDataLoaded.watch("monsters", function(prop, oldval, newval) {
-		getFileData('maps/' + map + '.charstats', readSimpleDataHex, t, "championData", 32);
+		getFileData('maps/MOD0.charstats', readSimpleDataHex, t, "championData", 32);
 	});
+
+	towerDataLoaded.watch("champions", function(prop, oldval, newval) {
+		init();
+        grabFont();
+		initMonsters(tw);
+		initChampions();
+		initSpells();
+		initPlayers();
+		initPlayersQuickStart();
+
+		for (var m = 0; m < monster.length; m++) {
+			monster[m].getGfx();
+		}
+	});
+
 
 
 }
@@ -45,23 +53,14 @@ function Map(Width, Height, xOff, yOff) {
 function init() {
 
 	if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['minis'].width > 0 && championData.length > 0 && gfx['misc']['font'].width > 0) {
-		clearInterval(imageChecker);
+		//clearInterval(imageChecker);
 		gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
 		gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 26, 17);
 		gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 18, 13);
 		gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
 		gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
                 
-                grabFont();
-		initMonsters(tw);
-		initChampions();
-		initSpells();
-		initPlayers();
-		initPlayersQuickStart();
 
-		for (var m = 0; m < monster.length; m++) {
-			monster[m].getGfx();
-		}
 
 		if (typeof game === "undefined") {
 			Run();

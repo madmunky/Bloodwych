@@ -143,8 +143,8 @@ Monster.prototype.assembleTeamWith = function(m) {
 	if(m.square != CHAR_FRONT_SOLO) {
 		if(m.teamId === 0) { //create a new team
 			monsterTeamIdMax++;
-			this.teamId = monsterTeamIdMax;
-			m.teamId = -monsterTeamIdMax;
+			m.teamId = monsterTeamIdMax;
+			this.teamId = -monsterTeamIdMax;
 		} else {
 			if (getMonsterTeam(m.teamId).length === 4) { //full team
 				return -1;
@@ -364,6 +364,7 @@ Monster.prototype.getBinaryView = function(pos18, index, length) {
 
 function initMonsters(t) {
 	monster.length = 0;
+	monsterMax = 0;
 	monsterTeamIdMax = 0;
 	var xLast = 0;
 	var square = 0;
