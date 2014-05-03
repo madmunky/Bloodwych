@@ -299,7 +299,7 @@ function drawPlayersView(p) {
 		if (BlockType === '2') {
 			drawWoodenObject(p, x);
 		} else {
-			if (drawMonsters) {drawMonsterOnPos(p, x);};
+			
 			switch (x) {
 				case 0:
 					{
@@ -438,6 +438,7 @@ function drawPlayersView(p) {
 					};
 					break;
 			}
+                        if (drawMonsters) {drawMonsterOnPos(p, x);};
 		}
 	}
         
