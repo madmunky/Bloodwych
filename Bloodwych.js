@@ -2,6 +2,9 @@
 var imagesLoaded = false;
 
 $(function() {
+        var Loading = document.getElementById("loading");
+        ctx.drawImage(Loading,0,0);
+    
 	//Background
 	gfxLoadImage("dungeon", "background");
 
@@ -85,9 +88,8 @@ function updatePlayerViewScreen() {
 	ctx.fillText("Floor: " + player[1].floor.toString(), 410, 310);
 	//drawParty(player[1],0,1,8,11);
 	//drawParty(player[0],4,5,6,7);
-	testing(player[0]);
-	writeFontImage("Bloodwych HTML Created By MadMunky And Wishbone ", 0, 320, COLOUR[COLOUR_GREEN_DARK]);
-
+	testing(player[0]);;
+        writeFontImage("abcdefghijklmnopqrstuvwxyz 0123456789", 0, 320, COLOUR[COLOUR_GREEN_DARK]);
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {
