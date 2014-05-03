@@ -113,8 +113,9 @@ Monster.prototype.canMove = function() {
 
 		//Check wooden walls and doors
 		if (objThis === '2' || objNext === '2') {
-			if (!this.canMoveByWood()) {
-				return 0;
+			var moveByWood = this.canMoveByWood();
+			if (moveByWood !== 1) {
+				return moveByWood;
 			}
 		}
 
@@ -166,17 +167,27 @@ Monster.prototype.canMove = function() {
 }
 
 Monster.prototype.canMoveByWood = function() {
-	var hexThis = this.getBinaryView(18, 0, 16);
+	var hexThis = this.getBinaryView(18, 0, 16); 
 	var hexNext = this.getBinaryView(15, 0, 16);
 	//Check the space the player is standing on
 	if (getHexToBinaryPosition(hexThis, 12, 4) == '2' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2 + 1, 1) == '1') {
-		return false;
+		if (this.champId === -1 && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
+			//a door that can be opened
+			this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1, '0');
+			return 3;
+		}
+		return 0;
 	}
 	//Check the space the player is moving to
 	if (getHexToBinaryPosition(hexNext, 12, 4) == '2' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2 + 1, 1) == '1') {
-		return false;
+		if(this.champId === -1 && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
+			//a door that can be opened
+			this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1, '0');
+			return 3;
+		}
+		return 0;
 	}
-	return true;
+	return 1;
 }
 
 Monster.prototype.move = function() {
@@ -227,7 +238,7 @@ Monster.prototype.move = function() {
 				}
 				this.square = this.getSquareByDirNext();
 			}
-		} else {
+		} else if (canMove != 3) {
 			if (this.rotateToPlayer()) {
 				return;
 			} else {
@@ -376,6 +387,11 @@ Monster.prototype.assembleTeam = function() {
 
 }
 
+
+Monster.prototype.setBinaryView = function(pos18, index, length, to) {
+	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
+	tw.floor[this.floor].Map[xy["y"]][xy["x"]] = setHexToBinaryPosition(tw.floor[this.floor].Map[xy["y"]][xy["x"]], index, length, to);
+}
 Monster.prototype.getBinaryView = function(pos18, index, length) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
 	try {
@@ -423,9 +439,9 @@ function initMonsters(t) {
 	}
 
 	//TESTING!!! REMOVE AFTER
-	//monster[monsterMax] = new Monster(monsterMax, 1, 0, CHA_BLODWYN, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
-	//monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, CHA_ELEANOR, 3, 13, 23, 3, CHAR_FRONT_RIGHT, 0);
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, CHA_BLODWYN, 3, 13, 23, 3, CHAR_FRONT_LEFT, 4);
+	monsterMax++;
+	monster[monsterMax] = new Monster(monsterMax, 1, 0, CHA_ROSANNE, 3, 13, 23, 3, CHAR_FRONT_RIGHT, -4);
 	monsterMax++;
 	/*monster[monsterMax] = new Monster(monsterMax, 1, 0, 25, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
 	monsterMax++;
@@ -440,6 +456,7 @@ function initMonsters(t) {
 			leg: body.leg,
 			torso: body.torso,
 			arm: body.arm,
+			mini: body.mini,
 			headPalette: [COLOUR[monsterPaletteData[i][0]], COLOUR[monsterPaletteData[i][1]], COLOUR[monsterPaletteData[i][2]], COLOUR[monsterPaletteData[i][3]]],
 			legPalette: [COLOUR[monsterPaletteData[i][4]], COLOUR[monsterPaletteData[i][5]], COLOUR[monsterPaletteData[i][6]], COLOUR[monsterPaletteData[i][7]]],
 			torsoPalette: [COLOUR[monsterPaletteData[i][8]], COLOUR[monsterPaletteData[i][9]], COLOUR[monsterPaletteData[i][10]], COLOUR[monsterPaletteData[i][11]]],

@@ -447,7 +447,7 @@ function grabMiniCharacter(cID, dir, dist) {
 
 	if (typeof monsterPalette[cID] !== "undefined") {
 		var mini = null;
-		var miniId = 0;
+		var miniId = monsterPalette[cID].mini;
 		var tmpPalette = monsterPalette[cID].miniPalette;
 
 		switch (dir) {

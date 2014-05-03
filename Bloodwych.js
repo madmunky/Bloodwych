@@ -182,7 +182,7 @@ function debugTextPrint(p) {
         //debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
         //debugText(hex2bin(hex));
         //debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
-        //debugText(hex2bin(setHexToBinaryPosition(bin2hex('0000'), 1, 2, '1')));
+        debugText(p, hex2bin(getHexToBinaryPosition(p.View[15], 0, 16)));
         //debugText(p.View[15]);
         //debugText(p.View[15].substring(0,2));
         //debugText(parseInt(getHexToBinaryPosition(p.View[15], 0, 5), 16).toString(10));
