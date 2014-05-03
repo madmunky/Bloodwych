@@ -343,7 +343,7 @@ Player.prototype.getMonstersInRange = function(pos2) {
 			pos = coordinatesToPos(monster[m].x, monster[m].y, this.x, this.y, this.Rotation);
 			var sq = CHAR_FRONT_SOLO;
 			var sq2 = 0;
-			if(monster[m].square > -1) {
+			if(monster[m].square > CHAR_FRONT_SOLO) {
 				sq = (6 + monster[m].square - p.Rotation) % 4;
 				sq2 = (sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) ? 0 : 1; //extra check for really close-by monsters
 			}

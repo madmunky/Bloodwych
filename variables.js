@@ -378,4 +378,5 @@ CHA_BODY[13] = {
 };
 
 var monsterMax = 0;
+var monsterTeamIdMax = 0;
 var monster = new Array();
