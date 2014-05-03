@@ -26,7 +26,7 @@ function grabFont() {
     
     var myFont = [];
     
-    for (x = 0;x < 26;x++){
+    for (x = 0;x < 92;x++){
      
         myFont.push(grabImageAt(fontImage,x * 16,0,12,12,false,1));
         
@@ -37,6 +37,8 @@ function grabFont() {
 }
 
 function writeFontImage(fontString,locationX,locationY,paletteTo){
+    
+    fontString = fontString.toUpperCase();
     
     var chars = fontString.split('');
     
@@ -52,28 +54,27 @@ function writeFontImage(fontString,locationX,locationY,paletteTo){
            }
         }
         
-//        var paletteFrom = [255,255,255,255];	
-//        fontContent.save();
-//	// pull the entire image into an array of pixel data
-//	var imageData = fontContent.getImageData(0, 0, can.width, can.height);
-//
-//	for (var i = 0; i < imageData.data.length; i += 4) {
-//               if (i > 10060){
-//                   PrintLog("Test")
-//               }
-//		for (j = 0; j < paletteTo.length; j++) {
-//			if (imageData.data[i] === paletteFrom[j][0]) {
-//				imageData.data[i] = paletteTo[j][0];
-//				imageData.data[i + 1] = paletteTo[j][1];
-//				imageData.data[i + 2] = paletteTo[j][2];
-//                                imageData.data[i + 3] = paletteTo[j][3];
-//				j = j + 4;
-//			}
-//		}
-//	}
+        var paletteFrom = [255,255,255];	
+        fontContent.save();
+	// pull the entire image into an array of pixel data
+	var imageData = fontContent.getImageData(0, 0, can.width, can.height);
+
+        for (var i=0;i<imageData.data.length;i+=4)
+              {
+                  // is this pixel the old rgb?
+                  if(imageData.data[i]==255 &&
+                     imageData.data[i+1]==255 &&
+                     imageData.data[i+2]==255
+                  ){
+                      // change to your new rgb
+                      imageData.data[i]=paletteTo[0];
+                      imageData.data[i+1]=paletteTo[1];
+                      imageData.data[i+2]=paletteTo[2];
+                  }
+              }
 
 	// put the altered data back on the canvas  
-	//fontContent.putImageData(imageData, 0, 0);
+	fontContent.putImageData(imageData, 0, 0);
 	// put the re-colored image back on the image
         
 	fontContent.save();
@@ -84,8 +85,27 @@ function writeFontImage(fontString,locationX,locationY,paletteTo){
 
 function fontCharacterToIndex(c){
     
-    var tmp = c.charCodeAt(0) -65;
-    return c.charCodeAt(0) - 65;
+    var letterCode = c.charCodeAt(0);
+    
+    //52  - 49 - 57
+    
+    if (letterCode >= 48 && letterCode <= 57){
+        return letterCode +4;
+    }
+    if (letterCode === 48) {
+        return letterCode+14;
+    }
+    
+    if (letterCode >= 65 && letterCode <=90){
+        return letterCode - 65;
+    }
+    
+    else {
+        
+        return -1      
+        
+    }
+    
     
 }
 

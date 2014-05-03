@@ -85,7 +85,7 @@ function updatePlayerViewScreen() {
     //drawParty(player[1],0,1,8,11);
     //drawParty(player[0],4,5,6,7);
     testing(player[0]);    
-    writeFontImage("BLOODWYCH FOR THOSE WHO DARE",0,320,COLOUR[COLOUR_GREEN]);
+    writeFontImage("Bloodwych HTML Created By MadMunky And Wishbone ",0,320,COLOUR[COLOUR_GREEN_DARK]);
     
 }
 
