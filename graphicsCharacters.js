@@ -614,13 +614,13 @@ function characterSpriteLocation() {
 }
 
 function drawCharacter(mForm, dir, dist, player, offset) {
-	if (dist > -1 && typeof monster[mForm].gfx[dist] !== "undefined" && typeof monster[mForm].gfx[dist][dir] !== "undefined") {
-		var offx = 64 - Math.floor(monster[mForm].gfx[dist][dir].width / 2),
+	if (dist > -1 && typeof monster[towerThis][mForm].gfx[dist] !== "undefined" && typeof monster[towerThis][mForm].gfx[dist][dir] !== "undefined") {
+		var offx = 64 - Math.floor(monster[towerThis][mForm].gfx[dist][dir].width / 2),
 			offy = 76;
 
 		if (typeof offset !== "undefined") {
 			offx = offx + offset.x;
-			offy = offy - offset.y - Math.floor(monster[mForm].gfx[dist][dir].height);
+			offy = offy - offset.y - Math.floor(monster[towerThis][mForm].gfx[dist][dir].height);
 		}
 		var blur = 0;
 		if (dist <= CHAR_DISTANCE_MID) {
@@ -631,6 +631,6 @@ function drawCharacter(mForm, dir, dist, player, offset) {
 				blur = 1;
 			}
 		}
-		player.Portal.drawImage(monster[mForm].gfx[dist][dir], (offx + blur) * scale, offy * scale, monster[mForm].gfx[dist][dir].width * scale, monster[mForm].gfx[dist][dir].height * scale);
+		player.Portal.drawImage(monster[towerThis][mForm].gfx[dist][dir], (offx + blur) * scale, offy * scale, monster[towerThis][mForm].gfx[dist][dir].width * scale, monster[towerThis][mForm].gfx[dist][dir].height * scale);
 	}
 }

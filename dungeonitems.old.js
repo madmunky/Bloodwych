@@ -66,7 +66,7 @@ function ReturnWoodenObject(hex,p) {
         
         if (CurrentBlock){
             
-            switch (p.Rotation) {
+            switch (p.d) {
             
         case 0:{
                 switch (p.moving) {                    
@@ -106,7 +106,7 @@ function ReturnWoodenObject(hex,p) {
         }
         else {
         
-        switch (p.Rotation) {
+        switch (p.d) {
             
         case 0:{
                 switch (p.moving) {                    

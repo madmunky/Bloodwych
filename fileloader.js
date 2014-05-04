@@ -17,23 +17,27 @@ function getFileData(file_name, callback, t, type, length) {
 					break;
 				case "floor":
 					t.floor = callback(this.response, length);
-					towerDataLoaded.floor = true;
+					towerDataLoaded[t.id].floor = true;
 					break;
 				case "switches":
 					t.switches = callback(this.response, length);
-					towerDataLoaded.switches = true;
+					towerDataLoaded[t.id].switches = true;
 					break;
 				case "triggers":
 					t.triggers = callback(this.response, length);
-					towerDataLoaded.triggers = true;
+					towerDataLoaded[t.id].triggers = true;
 					break;
 				case "monsterData":
 					t.monsterData = callback(this.response, length);
-					towerDataLoaded.monsters = true;
+					towerDataLoaded[t.id].monsters = true;
 					break;
 				case "championData":
 					championData = callback(this.response, length);
-					towerDataLoaded.champions = true;
+					towerDataLoaded[t.id].champions = true;
+					break;
+				case "towerSwitchesData":
+					towerSwitchesData = callback(this.response, length);
+					gameDataLoaded.towerSwitches = true;
 					break;
 				default:
 					break;

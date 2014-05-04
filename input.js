@@ -46,10 +46,10 @@ function doKeyDown(e) {
 			player[1].move(DIRECTION_EAST);
 			break; //6
 		case KEYPAD_7:
-			player[1].rotateTo(player[1].Rotation - 1);
+			player[1].rotateTo(player[1].d - 1);
 			break; //7
 		case KEYPAD_9:
-			player[1].rotateTo(player[1].Rotation + 1);
+			player[1].rotateTo(player[1].d + 1);
 			break; //9
 		case KEY_END:
 			player[1].action();
@@ -58,14 +58,7 @@ function doKeyDown(e) {
 			player[1].toggleFrontObject();
 			break; //+ Key
 		case KEY_L: // THE L KEY
-			CurrentMap = (CurrentMap + 1) % Maps.length;
-			tw = new Tower(Maps[CurrentMap]);
-			player[0].x = 3;
-			player[1].x = 3;
-			player[0].y = 1;
-			player[1].y = 3;
-			player[0].floor = 0;
-			player[1].floor = 0;
+			switchTower((towerThis + 1) % TOWER_NAME.length);
 			break;
 		case KEY_T:
 			player[0].changeUpFloor();
@@ -89,10 +82,10 @@ function doKeyDown(e) {
 			player[0].move(DIRECTION_EAST);
 			break; // D KEY
 		case KEY_Q:
-			player[0].rotateTo(player[0].Rotation - 1);
+			player[0].rotateTo(player[0].d - 1);
 			break; // Q KEY
 		case KEY_E:
-			player[0].rotateTo(player[0].Rotation + 1);
+			player[0].rotateTo(player[0].d + 1);
 			break; // E KEY
 		case KEY_R:
 			player[0].toggleFrontObject();
@@ -121,10 +114,10 @@ function doKeyDown(e) {
 			PrintLog("Distance: " + testDistance);
 			break;
 		case KEY_0:
-			testMon1 = (testMon1 + 1) ;
+			testMon1 = (testMon1 + 1);
 			break;
 		case KEY_9:
-			testMon1 = (testMon1 - 1) ;
+			testMon1 = (testMon1 - 1);
 			break;
 		default:
 			break;
@@ -136,22 +129,25 @@ function checkClickEvents() {
 		var x = e.pageX - canvas.offsetLeft;
 		var y = e.pageY - canvas.offsetTop;
 		var xy;
-		for(p = 0; p < 2; p++) {
-			xy = { x: Math.floor((x - player[p].PortalX) / scale / 42.67), y: Math.floor((y - player[p].PortalY) / scale / 38) };
-			if(xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
-				if(xy.x === 0 && xy.y === 0) { //rotate left
-					player[p].rotateTo(player[p].Rotation - 1);
-				} else if(xy.x === 2 && xy.y === 0) { //rotate right
-					player[p].rotateTo(player[p].Rotation + 1);
-				} else if(xy.x === 1 && xy.y === 0) { //move forward
+		for (p = 0; p < 2; p++) {
+			xy = {
+				x: Math.floor((x - player[p].PortalX) / scale / 42.67),
+				y: Math.floor((y - player[p].PortalY) / scale / 38)
+			};
+			if (xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
+				if (xy.x === 0 && xy.y === 0) { //rotate left
+					player[p].rotateTo(player[p].d - 1);
+				} else if (xy.x === 2 && xy.y === 0) { //rotate right
+					player[p].rotateTo(player[p].d + 1);
+				} else if (xy.x === 1 && xy.y === 0) { //move forward
 					player[p].move(DIRECTION_NORTH);
-				} else if(xy.x === 0 && xy.y === 1) { //move left
+				} else if (xy.x === 0 && xy.y === 1) { //move left
 					player[p].move(DIRECTION_WEST);
-				} else if(xy.x === 2 && xy.y === 1) { //move right
+				} else if (xy.x === 2 && xy.y === 1) { //move right
 					player[p].move(DIRECTION_EAST);
-				} else if(xy.x === 1 && xy.y === 1) { //move backward
+				} else if (xy.x === 1 && xy.y === 1) { //move backward
 					player[p].move(DIRECTION_SOUTH);
-				} else if(xy.y === 2) { //action
+				} else if (xy.y === 2) { //action
 					player[p].action();
 				}
 			}

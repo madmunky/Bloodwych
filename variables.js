@@ -11,7 +11,7 @@ var testDirection = 0;
 var timerMaster = 0;
 var timerMonsterMove = 0;
 var players = 0;
-
+var towerSwitchesData = new Array();
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = {
@@ -21,14 +21,20 @@ var gameGfxLoaded = {
 	monsterTorsos: false,
 	monsterMini: false
 };
-var towerDataLoaded = {
-	monsterPalette: false,
-	floor: false,
-	switches: false,
-	triggers: false,
-	monsters: false,
-	champions: false
+var gameDataLoaded = {
+	towerSwitches: false
 };
+var towerDataLoaded = new Array();
+for(t = 0; t < 6; t++) {
+	towerDataLoaded[t] = {
+		monsterPalette: false,
+		floor: false,
+		switches: false,
+		triggers: false,
+		monsters: false,
+		champions: false
+	};
+}
 var monsterDataLoaded = {
 	monsterPalette: false,
 	monsterHeads: false,
@@ -159,12 +165,17 @@ objectPalette["door"][COLOUR_DOOR_MOON] = COLOUR[COLOUR_BLUE];
 objectPalette["door"][COLOUR_DOOR_CHROMATIC] = COLOUR[COLOUR_WHITE];
 objectPalette["door"][COLOUR_DOOR_VOID] = COLOUR[COLOUR_BLACK];
 
-
-
-var Maps = ["MOD0", "MOON", "CHAOS", "DRAGON", "ZENDIK", "SERP", "BWEXTTW1", "BWEXTTW2", "BWEXTTW3", "BWEXTTW4", "horace_mod0", "horace_moon", "horace_drag", "horace_serp", "horace_zendik", "horace_chaos"];
+//Towers
+var TOWER_NAME = ["MOD0", "SERP", "MOON", "DRAGON", "CHAOS", "ZENDIK"];
+var TOWER_MOD0 = 0,
+	TOWER_SERPENT = 1,
+	TOWER_MOON = 2,
+	TOWER_DRAGON = 3,
+	TOWER_CHAOS = 4,
+	TOWER_ZENDIK = 5;
+var towerThis = TOWER_MOD0;
 
 //Background gfx
-var CurrentMap = 0;
 var background = new Array();
 background[0] = new Array(0, 0, 128, 76, 0, 0);
 background[1] = new Array(128, 0, 128, 76, 0, 0);
@@ -266,24 +277,9 @@ var CHA_MINI_MALE = 0,
 	CHA_MINI_FEMALE_CHAIN = 7;
 
 var CHA_BODY = new Array();
-CHA_BODY[0] = {
-	head: CHA_HEAD_BLODWYN,
-	leg: CHA_LEG_FEMALE_NAKED,
-	torso: CHA_TORSO_FEMALE_NAKED,
-	arm: CHA_ARM_MALE
-}
-CHA_BODY[1] = {
-	head: CHA_HEAD_MR_FLAY,
-	leg: CHA_LEG_SKELETON,
-	torso: CHA_TORSO_SKELETON,
-	arm: CHA_ARM_SKELETON
-}
 
 var CHA_GENDER_MALE = 0,
 	CHA_GENDER_FEMALE = 1;
-
-var MON_SPIDER = 16,
-	MON_CRAB = 17;
 
 var MON_PALETTE_DEFAULT = [COLOUR[COLOUR_BLACK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_RED]];
 
@@ -377,6 +373,48 @@ CHA_BODY[13] = {
 	mini: CHA_MINI_DEMON
 };
 
-var monsterMax = 0;
+var monsterMax = new Array();
 var monsterTeamIdMax = 0;
 var monster = new Array();
+
+//Switches
+var SWITCH_WALL_NONE = 0,
+	SWITCH_WALL_REMOVE = 2,
+	SWITCH_WALL_TOGGLE_STONE_WALL = 4,
+	SWITCH_WALL_OPEN_VOID_DOOR = 6,
+	SWITCH_WALL_ROTATE_STONE_WALL = 8,
+	SWITCH_WALL_TOGGLE_PILLAR = 10,
+	SWITCH_WALL_PLACE_PILLAR = 12,
+	SWITCH_WALL_ROTATE_WOOD_WALLS = 14;
+
+var SWITCH_FLOOR_NONE = 0,
+	SWITCH_FLOOR_SPIN_180 = 2,
+	SWITCH_FLOOR_SPIN_RANDOM = 4,
+	SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR = 6,
+	SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL = 8,
+	SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL = 10,
+	SWITCH_FLOOR_WOOD_DOOR_CLOSER_1 = 12,
+	SWITCH_FLOOR_WOOD_DOOR_CLOSER_2 = 14,
+	SWITCH_FLOOR_TRADER_DOOR = 16,
+	SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD = 18, //(X/Y OF OPPOSITE PAD)
+	SWITCH_FLOOR_TOWER_ENTRANCE = 20, // (CENTRAL PAD) 
+	SWITCH_FLOOR_REMOVE = 22, // (X/Y) *
+	SWITCH_FLOOR_CLOSE_VOID_LOCK_DOOR = 24, // (X/Y) *
+	SWITCH_FLOOR_TOGGLE_PILLAR = 26, // (X/Y) *
+	SWITCH_FLOOR_CREATE_SPINNER = 28, // (OR OTHER) (X/Y) *
+	SWITCH_FLOOR_OPEN_CREATE_WALL_WITH_SWITCHES = 30, //? (X/Y) *
+	SWITCH_FLOOR_CREATE_PAD = 32, // (F/X/Y) 
+	SWITCH_FLOOR_MOVE_PILLAR_AT_PLAYER = 34, // X,Y TO PLAYER X-1,Y-1 (SPECIAL CASE) **
+	SWITCH_FLOOR_CREATE_PILLAR = 36, // (X/Y) *
+	SWITCH_FLOOR_KEEP_ENTRANCE_SIDEPAD = 38, // (X/Y OF OPPOSITE PAD)
+	SWITCH_FLOOR_KEEP_ENTRANCE_CENTRAL_PAD = 40,
+	SWITCH_FLOOR_FLASH_TELEPORT = 42, // (F/X/Y)
+	SWITCH_FLOOR_ROTATE_STONE_WALL = 44, // (X/Y) *
+	SWITCH_FLOOR_TOGGLE_WALL = 46, // (X/Y) *
+	SWITCH_FLOOR_SPINNER = 48, // (UNKNOWN DIFFERENCE) (X/Y) *
+	SWITCH_FLOOR_CLICK_TELEPORT = 50, // (F/X/Y)
+	SWITCH_FLOOR_TOGGLE_GREEN_PAD = 52, // (X/Y) *
+	SWITCH_FLOOR_ROTATE_WOOD_WALL_COUNTER_CLOCKWISE = 54, // (X/Y) *
+	SWITCH_FLOOR_TOGGLE_HOLE = 56, // (X/Y) *
+	SWITCH_FLOOR_GAME_COMPLETION_PAD = 58, // **
+	SWITCH_FLOOR_REMOVE_PILLAR_OTHER_EVENT = 60; // (X/Y) **

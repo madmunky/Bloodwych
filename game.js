@@ -6,8 +6,6 @@ Game.prototype = {
 		this.step = 1 / this.fps;
 		this.reset();
 		this.eventQueue = [];
-		//initSpells();
-		//initPlayers();
 
 	},
 
@@ -42,8 +40,8 @@ Game.prototype = {
 function monsterMove() {
 	if(timerMaster - timerMonsterMove >= 20) {
 		timerMonsterMove = timerMaster;
-		for(m = 0; m < monster.length; m++) {
-			monster[m].move();
+		for(m = 0; m < monster[towerThis].length; m++) {
+			monster[towerThis][m].move();
 		}
 	}
 }

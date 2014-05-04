@@ -61,6 +61,7 @@ $(function() {
 getFileData('maps/heads.monsters', readSimpleData, null, "monsterHeads", 1);
 getFileData('maps/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
 getFileData('maps/palette.monsters', readSimpleData, null, "monsterPalette", 20);
+getFileData('maps/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
 
 //var imageChecker = setInterval(function() {
 //}, 100);
@@ -71,25 +72,24 @@ function updatePlayerViewScreen() {
 	$('section.debug p').html('');
 	clearCanvas();
 	configCanvas();
-	player[0].updateView(tw.floor[player[0].floor].Map);
-	drawPlayersView(player[0]);
 	ctx.font = "normal 11px verdana, sans-serif";
 	ctx.fillStyle = "#FFF";
-	ctx.fillText("Player 1", 0, 250);
-	ctx.fillText("X:" + player[0].x.toString() + "\n Y:" + player[0].y.toString(), 0, 270);
-	ctx.fillText("Current Map: " + Maps[CurrentMap], 0, 290);
-	ctx.fillText("Floor: " + player[0].floor.toString(), 0, 310);
-	ctx.fillText("FPS: " + fps.getFPS(), 0, 350);
-	player[1].updateView(tw.floor[player[1].floor].Map);
+	for(p = 0; p < 2; p++) {
+		player[p].updateView(tower[towerThis].floor[player[p].floor].Map);
+		drawPlayersView(player[p]);
+		ctx.fillText("Player " + (p + 1), p * 410, 250);
+		ctx.fillText("T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d, p * 410, 270);
+	}
+	ctx.fillText("FPS: " + fps.getFPS(), 0, 310);
+	/*player[1].updateView(tower[towerThis].floor[player[1].floor].Map);
 	drawPlayersView(player[1]);
 	ctx.fillText("Player 2", 410, 250);
-	ctx.fillText("X:" + player[1].x.toString() + "\n Y:" + player[1].y.toString(), 410, 270);
-	ctx.fillText("Current Map: " + Maps[CurrentMap], 410, 290);
-	ctx.fillText("Floor: " + player[1].floor.toString(), 410, 310);
+	ctx.fillText("X:" + player[1].x.toString() + "  Y:" + player[1].y.toString(), 410, 270);
+	ctx.fillText("Current Map: " + TOWER_NAME[towerThis], 410, 290);
+	ctx.fillText("Floor: " + player[1].floor.toString(), 410, 310);*/
 	//drawParty(player[1],0,1,8,11);
 	//drawParty(player[0],4,5,6,7);
-	testing(player[0]);;
-        writeFontImage("abcdefghijklmnopqrstuvwxyz 0123456789", 0, 320, COLOUR[COLOUR_GREEN_DARK]);
+	writeFontImage("abcdefghijklmnopqrstuvwxyz 0123456789", 0, 320, COLOUR[COLOUR_GREEN_DARK]);
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {
@@ -176,20 +176,21 @@ function gfxLoadImage(folder, type, item, sub) {
 function debugTextPrint(p) {
 	if (debug) {
 		hex = p.getBinaryView(15, 0, 16);
-		var mon = p.getMonstersInRange();
-		for (i in mon) {
-			debugText(p, 'Monster:' + mon[i].monster + ' - MonsterPos:' + mon[i].position + ' - MonsterOffset:' + getMonsterGfxOffset(15, 0).x + ', ' + getMonsterGfxOffset(12, 0).x + ', ' + getMonsterGfxOffset(9, 0).x);
-		}
 		//debugText(p, 'Master timer:' + timerMaster)
 		//debugText(p, 'Champ: ' + p.getChampion(0));
 		//debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
 		//debugText(hex2bin(hex));
 		//debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
-		//debugText(p, hex2bin(getHexToBinaryPosition(p.View[15], 0, 16)));
+		debugText(p, hex2bin(getHexToBinaryPosition(p.View[15], 0, 16)));
+		debugText(p, hex2dec(getHexToBinaryPosition(p.View[15], 0, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.View[15], 4, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.View[15], 8, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.View[15], 12, 4)));
 		//debugText(p.View[15]);
 		//debugText(p.View[15].substring(0,2));
 		//debugText(parseInt(getHexToBinaryPosition(p.View[15], 0, 5), 16).toString(10));
 		//debugText(parseInt(p.View[15].substring(0,2), 16).toString(10));
+		var mon = p.getMonstersInRange();
+		for (i in mon) {
+			debugText(p, 'Monster:' + mon[i].monster + ' - MonsterPos:' + mon[i].position + ' - MonsterOffset:' + getMonsterGfxOffset(15, 0).x + ', ' + getMonsterGfxOffset(12, 0).x + ', ' + getMonsterGfxOffset(9, 0).x);
+		}
 	}
 }
 

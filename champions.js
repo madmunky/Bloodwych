@@ -108,7 +108,7 @@ function initChampions() {
 		spellBin = spellBin + hex2bin(md.substr(28, 2));
 		spellBin = spellBin + hex2bin(md.substr(30, 2));
 		champion[ch] = new Champion(ch, getChampionName(ch), "tester", level, stat, spellBin);
-		monster[ch] = new Monster(ch, level, 3, ch, floor, x, y, d, 0, 0, ch);
-		PrintLog('Loaded champion: ' + monster[ch]);
+		monster[TOWER_MOD0][ch + monsterMax[TOWER_MOD0]] = new Monster(ch + monsterMax[TOWER_MOD0], level, 3, ch, floor, x, y, d, 0, 0, ch);
+		PrintLog('Loaded champion: ' + monster[TOWER_MOD0][ch + monsterMax[TOWER_MOD0]]);
 	}
 }

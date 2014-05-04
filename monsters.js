@@ -71,15 +71,15 @@ Monster.prototype.canInteract = function() {
 				return ply;
 			}
 		}
-		for (var m = 0; m < monster.length; m++) {
-			if(this.id !== monster[m].id && this.floor === monster[m].floor && this.x + xy.x === monster[m].x && this.y + xy.y === monster[m].y) {
-				if (monster[m].champId > -1) {
+		for (var m = 0; m < monster[towerThis].length; m++) {
+			if(this.id !== monster[towerThis][m].id && this.floor === monster[towerThis][m].floor && this.x + xy.x === monster[towerThis][m].x && this.y + xy.y === monster[towerThis][m].y) {
+				if (monster[towerThis][m].champId > -1) {
 					//attack champion
-					PrintLog('CHAMPION ' + getChampionName(monster[m].champId) + ' GETS HIT BY MONSTER #' + this.id + '!!!');
+					PrintLog('CHAMPION ' + getChampionName(monster[towerThis][m].champId) + ' GETS HIT BY MONSTER #' + this.id + '!!!');
 					return 2;
 				} else if(this.teamId === 0 && this.square > CHAR_FRONT_SOLO) {
 					//interact with other monster, only monsters without a team can team up
-					return this.assembleTeamWith(monster[m]);
+					return this.assembleTeamWith(monster[towerThis][m]);
 				}
 			}
 		}
@@ -127,10 +127,10 @@ Monster.prototype.canMove = function() {
 		}
 
 		//Check other monsters
-		for (var m = 0; m < monster.length; m++) {
-			if (this.id !== monster[m].id && this.floor === monster[m].floor) {
+		for (var m = 0; m < monster[towerThis].length; m++) {
+			if (this.id !== monster[towerThis][m].id && this.floor === monster[towerThis][m].floor) {
 				xy = getOffsetByRotation(this.d);
-				if (this.x + xy.x === monster[m].x && this.y + xy.y === monster[m].y) {
+				if (this.x + xy.x === monster[towerThis][m].x && this.y + xy.y === monster[towerThis][m].y) {
 					return 2;
 				}
 			}
@@ -351,21 +351,20 @@ Monster.prototype.isAgressive = function() {
 
 Monster.prototype.setBinaryView = function(pos18, index, length, to) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
-	tw.floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tw.floor[this.floor].Map[xy.y][xy.x], index, length, to);
+	tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length, to);
 }
 Monster.prototype.getBinaryView = function(pos18, index, length) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
 	try {
-		return getHexToBinaryPosition(tw.floor[this.floor].Map[xy.y][xy.x], index, length);
+		return getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length);
 	} catch (e) {
 		return '0001';
 	}
 }
 
 function initMonsters(t) {
-	monster.length = 0;
-	monsterMax = 0;
-	monsterTeamIdMax = 0;
+	monster[t.id] = new Array();
+	monsterMax[t.id] = 0;
 	var xLast = 0;
 	var square = 0;
 	for (i = 0; i < t.monsterData.length; i++) {
@@ -394,23 +393,25 @@ function initMonsters(t) {
 			} else {
 				square = 0;
 			}
-			monster[i + 16] = new Monster(i + 16, level, type, form, floor, x, y, 0, square, teamId);
-			PrintLog('Loaded monster: ' + monster[i + 16]);
-			monsterMax++;
+			monster[t.id][i] = new Monster(i, level, type, form, floor, x, y, 0, square, teamId);
+			PrintLog('Loaded monster: ' + monster[t.id][i]);
+			monsterMax[t.id]++;
 		}
 	}
 
 	//TESTING!!! REMOVE AFTER
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 55, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
-	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 56, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
-	monsterMax++;
-	//monster[monsterMax] = new Monster(monsterMax, 1, 0, CHA_ROSANNE, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);
-	//monsterMax++;
-	/*monster[monsterMax] = new Monster(monsterMax, 1, 0, 25, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
-	monsterMax++;
-	monster[monsterMax] = new Monster(monsterMax, 1, 0, 27, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
-	monsterMax++;*/
+	if(t.id === TOWER_MOD0) {
+		monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, 55, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
+		monsterMax[t.id]++;
+		monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, 56, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
+		monsterMax[t.id]++;
+		//monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, CHA_ROSANNE, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);
+		//monsterMax[t.id]++;
+		/*monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, 25, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
+		monsterMax[t.id]++;
+		monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, 27, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
+		monsterMax[t.id]++;*/
+	}
 
 	for(i = 0; i < monsterPaletteData.length; i++) {
 		var body = CHA_BODY[monsterBodiesData[i][0]];
@@ -487,12 +488,12 @@ function getMonsterDistanceByPos(pos, sq) {
 function getMonsterTeam(id) {
 	var team = new Array();
 	if(id != 0) {
-		for (var m = 0; m < monster.length; m++) {
-			if(typeof monster[m] !== "undefined") {
-				if(monster[m].teamId === Math.abs(id)) {
-					team.unshift(monster[m]);
-				} else if(monster[m].teamId === -Math.abs(id)) {
-					team.push(monster[m]);
+		for (var m = 0; m < monster[towerThis].length; m++) {
+			if(typeof monster[towerThis][m] !== "undefined") {
+				if(monster[towerThis][m].teamId === Math.abs(id)) {
+					team.unshift(monster[towerThis][m]);
+				} else if(monster[towerThis][m].teamId === -Math.abs(id)) {
+					team.push(monster[towerThis][m]);
 				}
 			}
 		}

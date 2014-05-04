@@ -8,18 +8,6 @@ var testMon1 = 5,
         testDistance = 0,
         testDirection = 3;
 
-
-//var charLoaded = false;
-
-
-function testing(p) {
-
-//var testImg = IMAGE_CHA_TORSO;
-//
-//    ctx.drawImage(characterGfx[testImg][testMon1][testDistance][testDirection],0,0,characterGfx[testImg][testMon1][testDistance][testDirection].width * scale,characterGfx[testImg][testMon1][testDistance][testDirection].height * scale)
-
-}
-
 function grabFont() {
     //Grab the font characters from an image and store it in an array.
     fontImage = gfx['misc']['font'];
