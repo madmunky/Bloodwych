@@ -29,14 +29,14 @@ function Tower(id, start) {
 
 	towerDataLoaded[id].watch("champions", function(prop, oldval, newval) {
 		if (typeof start === "boolean" && start) {
-			init();
-			grabFont();
-			initChampions();
-			initSpells();
-			player[0] = new Player(0, 0, 0);
-			player[1] = new Player(1, 410, 0);
-			initTowerSwitches();
-			switchTower(id);
+//			init();
+//			grabFont();
+//			initChampions();
+//			initSpells();
+//			player[0] = new Player(0, 0, 0);
+//			player[1] = new Player(1, 410, 0);
+//			initTowerSwitches();
+//			switchTower(id);
 		}
 	});
 }
@@ -52,13 +52,21 @@ function Map(Width, Height, xOff, yOff) {
 function init() {
 
 	if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['minis'].width > 0 && championData.length > 0 && gfx['misc']['font'].width > 0) {
-		//clearInterval(imageChecker);
+		clearInterval(imageChecker);
 		gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
 		gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 26, 17);
 		gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 18, 13);
 		gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
 		gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
-
+                
+                grabFont();
+		initChampions();
+		initSpells();
+		player[0] = new Player(0, 0, 0);
+		player[1] = new Player(1, 410, 0);
+		initTowerSwitches();
+		switchTower(0);
+                
 		if (typeof game === "undefined") {
 			Run();
 		}
@@ -90,8 +98,8 @@ function switchTower(id, po) {
 		}
 	}
 	if (towerLast === TOWER_MOD0 && towerThis === TOWER_MOD0) {  //from tower to tower (start of game)
-		player[po].setPlayerPosition(4, 12, 8, 3); //(3, 12, 23, 0);
-		player[1 - po].setPlayerPosition(4, 12, 7, 3);
+		player[po].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
+		player[1 - po].setPlayerPosition(3, 14, 23, 0);
 	} else if(towerThis !== TOWER_MOD0) { //from keep to tower
 		for(p = 0; p < 2; p++) {
 			var pt = Math.abs(p - po);

@@ -63,8 +63,7 @@ getFileData('maps/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
 getFileData('maps/palette.monsters', readSimpleData, null, "monsterPalette", 20);
 getFileData('maps/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
 
-//var imageChecker = setInterval(function() {
-//}, 100);
+var imageChecker = setInterval(function() {init()}, 100);
 
 
 function updatePlayerViewScreen() {
@@ -87,9 +86,8 @@ function updatePlayerViewScreen() {
 	ctx.fillText("X:" + player[1].x.toString() + "  Y:" + player[1].y.toString(), 410, 270);
 	ctx.fillText("Current Map: " + TOWER_NAME[towerThis], 410, 290);
 	ctx.fillText("Floor: " + player[1].floor.toString(), 410, 310);*/
-	//drawParty(player[1],0,1,8,11);
-	//drawParty(player[0],4,5,6,7);
-	writeFontImage("there is nobody here", 0, 320, COLOUR[COLOUR_GREEN]);
+
+	//writeFontImage("Testing 123", 0, 320, COLOUR[COLOUR_GREEN]);
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {

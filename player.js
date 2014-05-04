@@ -212,7 +212,7 @@ Player.prototype.updateView = function(m) {
 Player.prototype.doEvent = function() {
 	//this.setMovementData();
 	this.updateView(tower[towerThis].floor[this.floor].Map);
-	drawPlayersView(this);
+	//drawPlayersView(this);
 	this.doEventSquare(true);
 }
 
