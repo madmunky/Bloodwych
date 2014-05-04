@@ -1,12 +1,4 @@
-//Declare Arrays for the Graphics
-var gfx = [];
 var gfxPos = SpriteSheetArray();
-var player = new Array();
-var tower = new Array();
-tower[towerThis] = new Tower(towerThis, true);
-for(t = 1; t < 6; t++) {
-	tower[t] = new Tower(t);
-}
 
 function SpriteSheetArray() {
 

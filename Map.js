@@ -2,43 +2,7 @@ function Tower(id, start) {
 	var t = this;
 	t.id = id;
 
-	towerDataLoaded[id] = {
-		floor: false,
-		switches: false,
-		triggers: false,
-		monsters: false,
-		champions: false
-	};
-
-	getFileData('maps/' + TOWER_NAME[id] + '.MAP', readMapData, t, "floor");
-
-	towerDataLoaded[id].watch("floor", function(prop, oldval, newval) {
-		getFileData('maps/' + TOWER_NAME[id] + '.switches', readSimpleData, t, "switches", 4);
-		getFileData('maps/' + TOWER_NAME[id] + '.triggers', readSimpleData, t, "triggers", 4);
-	});
-	towerDataLoaded[id].watch("triggers", function(prop, oldval, newval) {
-		getFileData('maps/' + TOWER_NAME[id] + '.monsters', readSimpleDataHex, t, "monsterData", 6);
-	});
-
-	towerDataLoaded[id].watch("monsters", function(prop, oldval, newval) {
-		if (typeof start === "boolean" && start) {
-			getFileData('maps/MOD0.charstats', readSimpleDataHex, t, "championData", 32);
-		}
-		initMonsters(t);
-	});
-
-	towerDataLoaded[id].watch("champions", function(prop, oldval, newval) {
-		if (typeof start === "boolean" && start) {
-//			init();
-//			grabFont();
-//			initChampions();
-//			initSpells();
-//			player[0] = new Player(0, 0, 0);
-//			player[1] = new Player(1, 410, 0);
-//			initTowerSwitches();
-//			switchTower(id);
-		}
-	});
+	loadTowerData(t, start);
 }
 
 function Map(Width, Height, xOff, yOff) {
@@ -47,31 +11,6 @@ function Map(Width, Height, xOff, yOff) {
 	this.yOffset = yOff;
 	this.xOffset = xOff;
 	this.Map = [];
-}
-
-function init() {
-
-	if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['minis'].width > 0 && championData.length > 0 && gfx['misc']['font'].width > 0) {
-		clearInterval(imageChecker);
-		gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
-		gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 26, 17);
-		gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 18, 13);
-		gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
-		gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
-                
-                grabFont();
-		initChampions();
-		initSpells();
-		player[0] = new Player(0, 0, 0);
-		player[1] = new Player(1, 410, 0);
-		initTowerSwitches();
-		switchTower(0);
-                
-		if (typeof game === "undefined") {
-			Run();
-		}
-	}
-
 }
 
 function checkSwitchTower(p, trig) {

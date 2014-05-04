@@ -1,52 +1,52 @@
 function getFileData(file_name, callback, t, type, length) {
+	dataLoaded.count++;
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState === 200 || xmlhttp.readyState === 4 || xmlhttp.readyState === "complete") {
 			switch (type) {
 				case "monsterPalette":
 					monsterPaletteData = callback(this.response, length);
-					monsterDataLoaded.monsterPalette = true;
 					break;
 				case "monsterHeads":
 					monsterHeadsData = callback(this.response, length);
-					monsterDataLoaded.monsterHeads = true;
 					break;
 				case "monsterBodies":
 					monsterBodiesData = callback(this.response, length);
-					monsterDataLoaded.monsterBodies = true;
 					break;
 				case "floor":
 					t.floor = callback(this.response, length);
-					towerDataLoaded[t.id].floor = true;
 					break;
 				case "switches":
 					t.switches = callback(this.response, length);
-					towerDataLoaded[t.id].switches = true;
 					break;
 				case "triggers":
 					t.triggers = callback(this.response, length);
-					towerDataLoaded[t.id].triggers = true;
 					break;
 				case "monsterData":
 					t.monsterData = callback(this.response, length);
-					towerDataLoaded[t.id].monsters = true;
 					break;
 				case "championData":
 					championData = callback(this.response, length);
-					towerDataLoaded[t.id].champions = true;
 					break;
 				case "towerSwitchesData":
 					towerSwitchesData = callback(this.response, length);
-					gameDataLoaded.towerSwitches = true;
 					break;
 				default:
 					break;
 			}
+			checkAllDataLoaded();
 		}
 	};
 	xmlhttp.open("GET", file_name, true);
 	xmlhttp.responseType = "arraybuffer";
 	xmlhttp.send();
+}
+
+function checkAllDataLoaded() {
+	dataLoaded.max++;
+	if(dataLoaded.count === dataLoaded.max) {
+		dataLoaded.done++;
+	}
 }
 
 function readMapData(evt) {

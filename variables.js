@@ -1,3 +1,8 @@
+//Declare Arrays for the Graphics
+var gfx = [];
+var player = new Array();
+var tower = new Array();
+
 //Setup some global Varibles for needed
 var scale = 3;
 var debug = true;
@@ -35,12 +40,22 @@ for(t = 0; t < 6; t++) {
 		champions: false
 	};
 }
-var monsterDataLoaded = {
+/*var monsterDataLoaded = {
 	monsterPalette: false,
 	monsterHeads: false,
-	monsterBodies: false
+	monsterBodies: false,
+	monsterImages: false
+};*/
+var dataLoaded = {
+	count: 0,
+	max: 0,
+	done: 0
 };
-
+var gfxLoaded = {
+	count: 0,
+	max: 0,
+	done: 0
+};
 
 //COLOURS AND PALETTES
 var CLASS_SERP = 0,

@@ -2,68 +2,10 @@
 var imagesLoaded = false;
 
 $(function() {
-        var Loading = document.getElementById("loading");
-        ctx.drawImage(Loading,0,0);
-    
-	//Background
-	gfxLoadImage("dungeon", "background");
-
-	//Stone wall and shelf
-	gfxLoadImage("dungeon", "stone", "wall");
-	gfxLoadImage("dungeon", "stone", "shelf");
-
-	//Wall decorations, banners, wall buttons and gem slots
-	gfxLoadImage("dungeon", "deco", "serpent-head");
-	gfxLoadImage("dungeon", "deco", "moon-head");
-	gfxLoadImage("dungeon", "deco", "dragon-head");
-	gfxLoadImage("dungeon", "deco", "chaos-head");
-	gfxLoadImage("dungeon", "deco", "switch", 8);
-	gfxLoadImage("dungeon", "deco", "switch-off", 8);
-	gfxLoadImage("dungeon", "deco", "gem", 7);
-	gfxLoadImage("dungeon", "deco", "gem-off", 7);
-	gfxLoadImage("dungeon", "deco", "script", 7);
-	gfxLoadImage("dungeon", "deco", "banner", 7);
-
-	//Wooden walls and doors
-	gfxLoadImage("dungeon", "wood", "wall");
-	gfxLoadImage("dungeon", "wood", "door");
-	gfxLoadImage("dungeon", "wood", "door-open");
-
-	//Miscellaneous
-	gfxLoadImage("dungeon", "misc", "pillar");
-	gfxLoadImage("dungeon", "misc", "bed");
-
-	//Solid doors
-	gfxLoadImage("dungeon", "door", "solid", 8);
-	gfxLoadImage("dungeon", "door", "gate", 8);
-	gfxLoadImage("dungeon", "door", "open", 8);
-
-	//Stairs
-	gfxLoadImage("dungeon", "stairs", "down");
-	gfxLoadImage("dungeon", "stairs", "up");
-
-	//Floors
-	gfxLoadImage("dungeon", "floor", "pit-down");
-	gfxLoadImage("dungeon", "floor", "pit-up");
-	gfxLoadImage("dungeon", "floor", "switch");
-
-	//Characters
-	gfxLoadImage("character", "heads", "");
-	gfxLoadImage("character", "arms", "");
-	gfxLoadImage("character", "torsos", "");
-	gfxLoadImage("character", "legs", "");
-	gfxLoadImage("character", "minis", "");
-
-	//Misc
-	gfxLoadImage("misc", "font", "");
+	initGame();
 });
 
-getFileData('maps/heads.monsters', readSimpleData, null, "monsterHeads", 1);
-getFileData('maps/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
-getFileData('maps/palette.monsters', readSimpleData, null, "monsterPalette", 20);
-getFileData('maps/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
-
-var imageChecker = setInterval(function() {init()}, 100);
+//var imageChecker = setInterval(function() {init()}, 100);
 
 
 function updatePlayerViewScreen() {
@@ -133,6 +75,7 @@ function gfxColourSubs(folder, type, item, sub) {
 
 function gfxLoadImage(folder, type, item, sub) {
 	if (typeof type === 'string') {
+		gfxLoaded.count++;
 		var id = '';
 		if (typeof gfx[folder] === 'undefined') {
 			gfx[folder] = {};
@@ -155,23 +98,37 @@ function gfxLoadImage(folder, type, item, sub) {
 				gfx[folder][type][item][0] = document.getElementById(id);
 				$(gfx[folder][type][item][0]).load(function() {
 					gfxColourSubs(folder, type, item, sub);
+					checkAllGfxLoaded();
 				});
 			} else {
 				gfx[folder][type][0] = document.getElementById(id);
 				$(gfx[folder][type][0]).load(function() {
 					gfxColourSubs(folder, type, '', sub);
+					checkAllGfxLoaded();
 				});
 			}
 		} else if (typeof item === 'string' && item != '') {
 			gfx[folder][type][item] = document.getElementById(id);
+			$(gfx[folder][type][item]).load(function() {
+				checkAllGfxLoaded();
+			});
 		} else {
 			gfx[folder][type] = document.getElementById(id);
+			$(gfx[folder][type]).load(function() {
+				checkAllGfxLoaded();
+			});
 		}
 	}
 }
 
-//Print debug info for player
+function checkAllGfxLoaded() {
+	gfxLoaded.max++;
+	if(gfxLoaded.count === gfxLoaded.max) {
+		gfxLoaded.done = true;
+	}
+}
 
+//Print debug info for player
 function debugTextPrint(p) {
 	if (debug) {
 		hex = p.getBinaryView(15, 0, 16);

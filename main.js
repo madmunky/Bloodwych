@@ -1,6 +1,3 @@
-var dataLoaded = {};
-//var Loaded = false;
-
 Run = function() {
 	var animFrame = (function() {
 		return window.requestAnimationFrame ||
