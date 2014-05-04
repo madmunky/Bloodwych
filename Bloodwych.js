@@ -89,7 +89,7 @@ function updatePlayerViewScreen() {
 	ctx.fillText("Floor: " + player[1].floor.toString(), 410, 310);*/
 	//drawParty(player[1],0,1,8,11);
 	//drawParty(player[0],4,5,6,7);
-	writeFontImage("abcdefghijklmnopqrstuvwxyz 0123456789", 0, 320, COLOUR[COLOUR_GREEN_DARK]);
+	writeFontImage("there is nobody here", 0, 320, COLOUR[COLOUR_GREEN]);
 }
 
 function myDIx(canvas, img, PosAry, P, scale) {
