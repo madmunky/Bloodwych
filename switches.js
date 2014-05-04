@@ -44,8 +44,8 @@ function toggleObject(hex, o) {
 function floorActionType(trig, p) {
 	if (parseInt(p.View[18].substring(1, 2), 16) % 4 === 1) {
 		p.doPit(p);
-		end;
-	};
+		return;
+	}
 	tar = tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]];
 
 	switch (trig[0]) {
