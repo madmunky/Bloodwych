@@ -40,13 +40,9 @@ Game.prototype = {
 function monsterMove() {
 	if(timerMaster - timerMonsterMove >= 20) {
 		timerMonsterMove = timerMaster;
-		for(m = 0; m < monster[towerThis].length; m++) {
-			monster[towerThis][m].move();
-		}
-		for(m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
-			if(monster[TOWER_CHAMPIONS][m].tower === towerThis) {
-				monster[TOWER_CHAMPIONS][m].move();
-			}
+		mon = getMonstersInTower(towerThis);
+		for(m in mon) {
+			mon[m].move();
 		}
 	}
 }

@@ -531,3 +531,14 @@ function updateMonsterTeam(id) {
 		}
 	}
 }
+
+//returns a list of monsters on this tower. Includes champions on this tower
+function getMonstersInTower(id) {
+	var mon = monster[id].slice();
+	for(m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
+		if(monster[TOWER_CHAMPIONS][m].tower === id) {
+			mon.push(monster[TOWER_CHAMPIONS][m]);
+		}
+	}
+	return mon;
+}
