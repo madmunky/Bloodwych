@@ -1,4 +1,4 @@
-function Champion(id, firstName, lastName, level, stat, spellBin) {
+function Champion(id, firstName, lastName, level, stat, spellBin, monster) {
 	this.spellBook = new Array();
 	this.id = id;
 	this.recruited = false;
@@ -6,6 +6,7 @@ function Champion(id, firstName, lastName, level, stat, spellBin) {
 	this.lastName = lastName;
 	this.level = level;
 	this.stat = stat;
+	this.monster = monster;
 	for (i = 0; i < SPELL_MAX; i++) {
 		this.spellBook[i] = new Array();
 		this.spellBook[i].castSuccessful = 0;
@@ -30,7 +31,6 @@ Champion.prototype.toString = function() {
 	}
 	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', level:' + this.level + ', stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + '], spellBook:[' + sb + ']]';
 }
-
 
 function getChampionName(id) {
 	switch (id) {
@@ -72,6 +72,7 @@ function getChampionName(id) {
 
 function initChampions() {
 	champion.length = 0;
+	monster[TOWER_CHAMPIONS] = new Array();
 	for (ch = 0; ch < CHAMPION_MAX; ch++) {
 		var md = championData[ch];
 		var level = hex2dec(md.substr(0, 2));
@@ -107,8 +108,8 @@ function initChampions() {
 		spellBin = spellBin + hex2bin(md.substr(26, 2));
 		spellBin = spellBin + hex2bin(md.substr(28, 2));
 		spellBin = spellBin + hex2bin(md.substr(30, 2));
-		champion[ch] = new Champion(ch, getChampionName(ch), "tester", level, stat, spellBin);
-		monster[TOWER_MOD0][ch + monsterMax[TOWER_MOD0]] = new Monster(ch + monsterMax[TOWER_MOD0], level, 3, ch, floor, x, y, d, 0, 0, ch);
-		PrintLog('Loaded champion: ' + monster[TOWER_MOD0][ch + monsterMax[TOWER_MOD0]]);
+		monster[TOWER_CHAMPIONS][ch] = new Monster(ch + monster[TOWER_MOD0].length, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
+		champion[ch] = new Champion(ch, getChampionName(ch), "tester", level, stat, spellBin, monster[TOWER_CHAMPIONS][ch]);
+		PrintLog('Loaded champion: ' + monster[TOWER_CHAMPIONS][ch]);
 	}
 }

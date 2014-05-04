@@ -1,9 +1,10 @@
-function Monster(id, level, type, form, floor, x, y, d, square, teamId, champId) {
+function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, champId) {
 	this.id = id;
 	this.level = level;
 	this.type = type;
 	this.form = form;
 	this.teamId = teamId;
+	this.tower = tower;
 	this.floor = floor;
 	this.x = x;
 	this.y = y;
@@ -27,7 +28,7 @@ Monster.prototype.toString = function() {
 	if (this.champId !== -1) {
 		cha = ', champion:' + getChampionName(this.champId) + '(' + this.champId + ')';
 	}
-	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', teamId:' + this.teamId + ', teamSize:' + getMonsterTeam(this.teamId).length + cha + ']';
+	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', teamId:' + this.teamId + ', teamSize:' + getMonsterTeam(this.teamId).length + cha + ']';
 }
 
 Monster.prototype.getGfx = function() {
@@ -182,7 +183,7 @@ Monster.prototype.canMoveByWood = function() {
 }
 
 Monster.prototype.move = function() {
-	if (this.teamId >= 0) {
+	if (this.teamId >= 0 && !this.isRecruited()) {
 		var canMove = this.canMove();
 		if (canMove === 2 && this.canInteract() > -1) return;
 		if (canMove === 1) {
@@ -342,6 +343,19 @@ Monster.prototype.getSquareByDirNext = function() {
 	}
 }
 
+Monster.prototype.getChampion = function() {
+	if(this.champId > -1) {
+		return champion[this.champId];
+	}
+	return null;
+}
+Monster.prototype.isRecruited = function() {
+	if(this.champId > -1) {
+		return champion[this.champId].recruited;
+	}
+	return false;
+}
+
 Monster.prototype.isAgressive = function() {
 	if(this.champId > -1 || this.form === 21 || this.form === 22) {
 		return false;
@@ -364,7 +378,6 @@ Monster.prototype.getBinaryView = function(pos18, index, length) {
 
 function initMonsters(t) {
 	monster[t.id] = new Array();
-	monsterMax[t.id] = 0;
 	var xLast = 0;
 	var square = 0;
 	for (i = 0; i < t.monsterData.length; i++) {
@@ -393,24 +406,24 @@ function initMonsters(t) {
 			} else {
 				square = 0;
 			}
-			monster[t.id][i] = new Monster(i, level, type, form, floor, x, y, 0, square, teamId);
+			monster[t.id][i] = new Monster(i, level, type, form, t.id, floor, x, y, 0, square, teamId);
 			PrintLog('Loaded monster: ' + monster[t.id][i]);
-			monsterMax[t.id]++;
 		}
 	}
 
 	//TESTING!!! REMOVE AFTER
 	if(t.id === TOWER_MOD0) {
-		monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, 55, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
-		monsterMax[t.id]++;
-		monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, 56, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
-		monsterMax[t.id]++;
-		//monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, CHA_ROSANNE, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);
-		//monsterMax[t.id]++;
-		/*monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, 25, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
-		monsterMax[t.id]++;
-		monster[t.id][monsterMax[t.id]] = new Monster(monsterMax[t.id], 1, 0, 27, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
-		monsterMax[t.id]++;*/
+		var max = monster[t.id].length;
+		monster[t.id][max] = new Monster(max, 1, 0, 55, t.id, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
+		max++;
+		monster[t.id][max] = new Monster(max, 1, 0, 56, t.id, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
+		max++;
+		/*monster[t.id][max] = new Monster(max, 1, 0, CHA_ROSANNE, t.id, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);
+		max++;
+		monster[t.id][max] = new Monster(max, 1, 0, 25, t.id, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
+		max++;
+		monster[t.id][max] = new Monster(max, 1, 0, 27, t.id, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
+		max++;*/
 	}
 
 	for(i = 0; i < monsterPaletteData.length; i++) {

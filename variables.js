@@ -187,7 +187,8 @@ var TOWER_MOD0 = 0,
 	TOWER_MOON = 2,
 	TOWER_DRAGON = 3,
 	TOWER_CHAOS = 4,
-	TOWER_ZENDIK = 5;
+	TOWER_ZENDIK = 5,
+	TOWER_CHAMPIONS = 6; //dummy tower to store champions
 var towerThis = TOWER_MOD0;
 
 //Background gfx

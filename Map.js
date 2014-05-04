@@ -32,8 +32,13 @@ function switchTower(id, po) {
 		var po = 0;
 	}
 	if (monster[id][0].gfx.length === 0) {
-		for (var m = 0; m < monster[towerThis].length; m++) {
+		for (var m = 0; m < monster[id].length; m++) {
 			monster[id][m].getGfx();
+		}
+	}
+	if (monster[TOWER_CHAMPIONS][0].gfx.length === 0) {
+		for (var m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
+			monster[TOWER_CHAMPIONS][m].getGfx();
 		}
 	}
 	if (towerLast === TOWER_MOD0 && towerThis === TOWER_MOD0) {  //from tower to tower (start of game)

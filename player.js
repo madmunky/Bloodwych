@@ -4,13 +4,13 @@ function Player(id, PortX, PortY) {
 	for (i = 0; i < 4; i++) {
 		this.champion[i] = -1;
 	}
-	this.x = 0;//posX;
-	this.y = 0;//posY;
-	this.floor = 0;//floor;
-	this.d = 0;//d;
+	this.x = 0; //posX;
+	this.y = 0; //posY;
+	this.floor = 0; //floor;
+	this.d = 0; //d;
 	this.PortalX = PortX;
 	this.PortalY = PortY;
-    this.Portal = null;
+	this.Portal = null;
 	this.View = [];
 	this.lastX = 0;
 	this.lastY = 0;
@@ -22,22 +22,22 @@ function Player(id, PortX, PortY) {
 	try {
 		this.setBinaryView(18, 8, 1, '1');
 	} catch (c) {};
-        
-        players++;
+
+	players++;
 }
 
 Player.prototype.getViewPortal = function() {
-	
-          var Portal = document.createElement('canvas');
-          Portal.width = 128 * scale;
-          Portal.height = 76 * scale;
-          Portal.getContext("2d").imageSmoothingEnabled = false;
-          Portal.getContext("2d").webkitImageSmoothingEnabled = false;
-          Portal.getContext("2d").mozImageSmoothingEnabled = false;
-          Portal.getContext("2d").oImageSmoothingEnabled = false;
-          Portal.getContext("2d").font = "bold 20px Calibri";
-          this.Portal = Portal.getContext("2d");
-          
+
+	var Portal = document.createElement('canvas');
+	Portal.width = 128 * scale;
+	Portal.height = 76 * scale;
+	Portal.getContext("2d").imageSmoothingEnabled = false;
+	Portal.getContext("2d").webkitImageSmoothingEnabled = false;
+	Portal.getContext("2d").mozImageSmoothingEnabled = false;
+	Portal.getContext("2d").oImageSmoothingEnabled = false;
+	Portal.getContext("2d").font = "bold 20px Calibri";
+	this.Portal = Portal.getContext("2d");
+
 };
 
 Player.prototype.canMoveToPos = function(pos) {
@@ -182,6 +182,7 @@ Player.prototype.move = function(d) {
 		if (debug) {
 			//PrintLog("Player Moved " + getDirection(this.d));
 		}
+		this.updateChampions();
 		this.doEvent();
 		this.setMovementData();
 	}
@@ -303,7 +304,7 @@ Player.prototype.doStairs = function() {
 		default:
 			break;
 	}
-	
+
 	this.setPlayerPosition(floor, x, y); //Stairs Up or Down
 }
 
@@ -318,10 +319,16 @@ Player.prototype.doStairs = function() {
 
 Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 	this.floor = floor;
-	if(typeof x !== "undefined") this.x = x;
-	if(typeof y !== "undefined") this.y = y;
-	if(typeof d !== "undefined") this.d = d;
+	if (typeof x !== "undefined") this.x = x;
+	if (typeof y !== "undefined") this.y = y;
+	if (typeof d !== "undefined") this.d = d;
 	this.setMovementData();
+}
+
+Player.prototype.updateChampions = function() {
+	for (c = 0; c < 4; c++) {
+
+	}
 }
 
 Player.prototype.recruitChampion = function(id) {
@@ -348,48 +355,58 @@ Player.prototype.getChampion = function(loc) {
 Player.prototype.getMonstersInRange = function(pos2) {
 	var p = this;
 	var monstersInRange = [];
-	var i = 0;
 	var pos = -1;
 	for (m = 0; m < monster[towerThis].length; m++) {
-		if(p.floor === monster[towerThis][m].floor) {
-			pos = coordinatesToPos(monster[towerThis][m].x, monster[towerThis][m].y, this.x, this.y, this.d);
+		monstersInRange = getMonsterInRange(p, m, towerThis, monstersInRange);
+	}
+	for (m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
+		if(monster[TOWER_CHAMPIONS][m].tower === towerThis) {
+			monstersInRange = getMonsterInRange(p, m, TOWER_CHAMPIONS, monstersInRange);
+		}
+	}
+	return monstersInRange;
+
+	function getMonsterInRange(p, m, t, mir) {
+		if (p.floor === monster[t][m].floor) {
+			pos = coordinatesToPos(monster[t][m].x, monster[t][m].y, p.x, p.y, p.d);
 			var sq = CHAR_FRONT_SOLO;
 			var sq2 = 0;
-			if(monster[towerThis][m].square > CHAR_FRONT_SOLO) {
-				sq = (6 + monster[towerThis][m].square - p.d) % 4;
+			if (monster[t][m].square > CHAR_FRONT_SOLO) {
+				sq = (6 + monster[t][m].square - p.d) % 4;
 				sq2 = (sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) ? 0 : 1; //extra check for really close-by monsters
 			}
-			if (monster[towerThis][m].floor == this.floor && pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
-				if(sq2 == 1) {
-					monstersInRange.unshift({
-						monster: monster[towerThis][m],
+			if (monster[t][m].floor == p.floor && pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
+				if (sq2 == 1) {
+					mir.unshift({
+						monster: monster[t][m],
 						position: pos,
 						distance: getMonsterDistanceByPos(pos, sq2),
 						gfxCoord: getMonsterGfxOffset(pos, sq),
 						square: sq2
 					});
 				} else {
-					monstersInRange.push({
-						monster: monster[towerThis][m],
+					mir.push({
+						monster: monster[t][m],
 						position: pos,
 						distance: getMonsterDistanceByPos(pos, sq2),
 						gfxCoord: getMonsterGfxOffset(pos, sq),
 						square: sq2
 					});
 				}
-				i++;
 			}
 		}
+		return mir;
 	}
-	return monstersInRange;
 }
+
+
 Player.prototype.drawMonster = function(m, distance, offset) {
 	var form = m.form;
 	//var loc = characterSpriteLocation();
 	var p = this;
 
 	if (typeof monsterPalette[form] !== "undefined") {
-		drawCharacter(m.id, (6 + p.d - m.d) % 4, distance, this, offset);
+		drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
 	}
 }
 

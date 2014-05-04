@@ -97,11 +97,6 @@ function loadTowerData(t, start) {
 		getFileData('maps/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
 		getFileData('maps/palette.monsters', readSimpleData, null, "monsterPalette", 20);
 		getFileData('maps/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
-
-		getFileData('maps/heads.monsters', readSimpleData, null, "monsterHeads", 1);
-		getFileData('maps/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
-		getFileData('maps/palette.monsters', readSimpleData, null, "monsterPalette", 20);
-		getFileData('maps/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
 	}
 
 	getFileData('maps/' + TOWER_NAME[id] + '.MAP', readMapData, t, "floor");
@@ -112,7 +107,6 @@ function loadTowerData(t, start) {
 
 
 function initData() {
-
 	if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['minis'].width > 0 && championData.length > 0 && gfx['misc']['font'].width > 0) {
 		gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
 		gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 26, 17);
@@ -125,6 +119,7 @@ function initData() {
 		initSpells();
 		player[0] = new Player(0, 0, 0);
 		player[1] = new Player(1, 410, 0);
+		initPlayersQuickStart();
 		initTowerSwitches();
 		switchTower(0);
 	}
