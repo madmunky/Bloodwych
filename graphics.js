@@ -520,6 +520,10 @@ function drawWoodenObject(p, x) {
 	s[2] = b.substring(2, 4); //South Face
 	s[3] = b.substring(0, 2); //West Face
 
+        if (drawMonsters) {
+		drawMonsterOnPos(p, x);
+	};
+
 	switch (p.d) {
 		case 0:
 			{
@@ -532,9 +536,9 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(p.Portal, bin2type(s[3]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				if (drawMonsters) {
-					drawMonsterOnPos(p, x);
-				};
+//				if (drawMonsters) {
+//					drawMonsterOnPos(p, x);
+//				};
 				if (BlockSides[x][2] > -1) {
 					myDIx(p.Portal, bin2type(s[2]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -551,9 +555,9 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(p.Portal, bin2type(s[0]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				if (drawMonsters) {
-					drawMonsterOnPos(p, x);
-				};
+//				if (drawMonsters) {
+//					drawMonsterOnPos(p, x);
+//				};
 				if (BlockSides[x][2] > -1) {
 					myDIx(p.Portal, bin2type(s[3]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -571,9 +575,9 @@ function drawWoodenObject(p, x) {
 					myDIx(p.Portal, bin2type(s[1]), gfxPos[BlockSides[x][3]], p, scale);
 				}
 
-				if (drawMonsters) {
-					drawMonsterOnPos(p, x);
-				};
+//				if (drawMonsters) {
+//					drawMonsterOnPos(p, x);
+//				};
 				if (BlockSides[x][2] > -1) {
 					myDIx(p.Portal, bin2type(s[0]), gfxPos[BlockSides[x][2]], p, scale);
 				}
@@ -590,9 +594,9 @@ function drawWoodenObject(p, x) {
 				if (BlockSides[x][3] > -1) {
 					myDIx(p.Portal, bin2type(s[2]), gfxPos[BlockSides[x][3]], p, scale);
 				}
-				if (drawMonsters) {
-					drawMonsterOnPos(p, x);
-				};
+//				if (drawMonsters) {
+//					drawMonsterOnPos(p, x);
+//				};
 				if (BlockSides[x][2] > -1) {
 					myDIx(p.Portal, bin2type(s[1]), gfxPos[BlockSides[x][2]], p, scale);
 				}

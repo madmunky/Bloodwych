@@ -74,20 +74,21 @@ function fontCharacterToIndex(c){
     
     var letterCode = c.charCodeAt(0);
     
-    if (letterCode >= 48 && letterCode <= 57){
-        return letterCode -22;
-    }
-    
-    
-    if (letterCode >= 65 && letterCode <=90){
-        return letterCode - 65;
-    }
-    
-    else {
+    switch (letterCode) {
         
-        return -1      
+        case 41:return 45; // )
+        case 33:return 37; // !
+        case 64:return 30; // @
+        case 44:return 48; // ,
+        case 58:return 36; // :
         
     }
+    
+    if (letterCode >= 48 && letterCode <= 57){return letterCode -22;}
+        
+    if (letterCode >= 65 && letterCode <=90){return letterCode - 65;}
+        
+    else {return -1}
     
     
 }
