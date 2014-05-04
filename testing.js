@@ -80,7 +80,35 @@ function fontCharacterToIndex(c){
         case 33:return 37; // !
         case 64:return 30; // @
         case 44:return 48; // ,
-        case 58:return 36; // :
+        case 34:return 38; // "
+        case 58:return 34; // :
+        case 35:return 39; // #
+        case 58:return 40; // $
+        case 37:return 41; // %
+        case 94:return 55; // ^
+        case 38:return 42; // &
+        case 42:return 46; // *
+        case 40:return 44; // (
+        case 39:return 42; // '
+        case 45:return 49; // -
+        case 46:return 50; // .
+        case 47:return 51; // /
+        case 61:return 38; // =
+        case 91:return 52; // [    
+        case 92:return 53; // \    
+        case 93:return 54; // ]    
+        case 96:return 57; // `    
+        case 95:return 56; // _    
+        case 43:return 47; // +    
+        case 124:return 36; // |    
+        case 123:return 36; // {    
+        case 125:return 36; // }    
+        case 59:return 36; // ;    
+        case 60:return 36; // <    
+        case 62:return 36; // >    
+        case 63:return 36; // ?    
+        case 126:return 36; // ~
+        
         
     }
     
