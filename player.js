@@ -237,10 +237,10 @@ Player.prototype.doEventSquare = function(mr) {
 };
 
 Player.prototype.doPit = function() {
-	this.setPlayerPosition(this.floor - 1);
-	this.x = this.x + (tower[towerThis].floor[this.floor + 1].xOffset - tower[towerThis].floor[this.floor].xOffset);
-	this.y = this.y + (tower[towerThis].floor[this.floor + 1].yOffset - tower[towerThis].floor[this.floor].yOffset);
-	this.setMovementData();
+	floor = this.floor - 1;
+	x = this.x + (tower[towerThis].floor[this.floor].xOffset - tower[towerThis].floor[floor].xOffset);
+	y = this.y + (tower[towerThis].floor[this.floor].yOffset - tower[towerThis].floor[floor].yOffset);
+	this.setPlayerPosition(floor, x, y);
 };
 
 Player.prototype.doStairs = function() {
@@ -321,7 +321,6 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 	if(typeof x !== "undefined") this.x = x;
 	if(typeof y !== "undefined") this.y = y;
 	if(typeof d !== "undefined") this.d = d;
-	//this.doEvent();
 	this.setMovementData();
 }
 
