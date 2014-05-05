@@ -10,9 +10,7 @@ var testMon1 = 5,
 
 function grabFont() {
     //Grab the font characters from an image and store it in an array.
-    //fontImage = gfx['misc']['font'];
-    fontImage = document.getElementById('font');
-    
+    fontImage = gfx['misc']['font'];
     
     var myFont = [];
     
@@ -26,7 +24,7 @@ function grabFont() {
     
 }
 
-function writeFontImage(fontString,locationX,locationY,paletteTo,center){
+function writeFontImage(fontString,locationX,locationY,paletteTo){
     
     fontString = fontString.toUpperCase();
     
@@ -67,15 +65,7 @@ function writeFontImage(fontString,locationX,locationY,paletteTo,center){
 	// put the re-colored image back on the image
         
 	fontContent.save();
-        
-        if (center){
-            var findX = ctx.canvas.width / 2;
-            findX = findX - (can.width);
-            ctx.drawImage(can,findX,locationY,can.width * scale,can.height * scale);
-        }else {
-            ctx.drawImage(can,locationX,locationY,can.width * scale,can.height * scale);
-        }       
-	
+	ctx.drawImage(can,locationX,locationY,can.width * scale,can.height * scale);
 	can = null;   
     
 }
@@ -91,7 +81,7 @@ function fontCharacterToIndex(c){
         case 64:return 30; // @
         case 44:return 48; // ,
         case 34:return 38; // "
-        case 58:return 36; // :
+        case 58:return 34; // :
         case 35:return 39; // #
         case 58:return 40; // $
         case 37:return 41; // %

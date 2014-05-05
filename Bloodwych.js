@@ -29,7 +29,7 @@ function updatePlayerViewScreen() {
 	ctx.fillText("Current Map: " + TOWER_NAME[towerThis], 410, 290);
 	ctx.fillText("Floor: " + player[1].floor.toString(), 410, 310);*/
 
-	writeFontImage("Testing: ,!) 123", 0, 320, COLOUR[COLOUR_GREEN],false);
+	writeFontImage("Testing: ,!) 123", 0, 320, COLOUR[COLOUR_GREEN]);
         
 }
 
