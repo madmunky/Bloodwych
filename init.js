@@ -1,4 +1,5 @@
 function initGame() {
+        grabFont();
 	updateLoadingScreen("Loading Graphics", 0);
 
 	loadGfxData();
@@ -28,10 +29,12 @@ function initGame() {
 }
 
 function updateLoadingScreen(msg, percent) {
+        configCanvas();
 	ctx.drawImage(document.getElementById("loading"), 0, 0);
-	ctx.font = "normal 11px verdana, sans-serif";
-	ctx.fillStyle = "#FFF";
-	ctx.fillText(percent + "% - " + msg + "...", 0, 15);
+	//ctx.font = "normal 11px verdana, sans-serif";
+	//ctx.fillStyle = "#FFF";
+        writeFontImage(percent + "% - " + msg, 100, 380, COLOUR[COLOUR_GREEN],true);
+	//ctx.fillText(percent + "% - " + msg + "...", 0, 15);
 }
 
 function loadGfxData() {
@@ -114,7 +117,7 @@ function initData() {
 		gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
 		gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
 
-		grabFont();
+		
 		initChampions();
 		initSpells();
 		player[0] = new Player(0, 0, 0);
