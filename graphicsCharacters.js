@@ -320,9 +320,9 @@ function getCharacterSprite(length, graphicsFolder, graphic, spriteWidth, sprite
 	}
 }
 
-function grabCharacter(cID, dir, dist) {
+function grabCharacter(cID, dir, dist,attack) {
 	//try {
-
+        
 	if (typeof monsterPalette[cID] !== "undefined") {
 		var LEG;
 		var ARM;
@@ -357,6 +357,10 @@ function grabCharacter(cID, dir, dist) {
 				break;
 
 		}
+                
+                if (attack) {
+                    ARM = recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[cID].arm][dist][3], MON_PALETTE_DEFAULT, monsterPalette[cID].armPalette);
+                }
 
 		var height = Math.round(HEAD.height * 0.58) + TORSO.height + LEG.height,
 			width = ARM.width + TORSO.width + ARM.width;
@@ -613,8 +617,43 @@ function characterSpriteLocation() {
 
 }
 
-function drawCharacter(m, dir, dist, player, offset) {
+function drawCharacter(m, dir, dist, player, offset,attack) {
+    
+    var attack;
+    
+    if(typeof attack !== "undefined") {
+        attack = 0;
+    }
+    
+    if (attack){
+        attack = 1;
+    }
+    else {
+        attack = 0;
+    }
+    
+    if (dist < 4) {
 	if (dist > -1 && typeof m.gfx[dist] !== "undefined" && typeof m.gfx[dist][dir] !== "undefined") {
+		var offx = 64 - Math.floor(m.gfx[dist][dir][attack].width / 2),
+			offy = 76;
+
+		if (typeof offset !== "undefined") {
+			offx = offx + offset.x;
+			offy = offy - offset.y - Math.floor(m.gfx[dist][dir][attack].height);
+		}
+		var blur = 0;
+		if (dist <= CHAR_DISTANCE_MID) {
+			var br = Math.floor(Math.random() * 20);
+			if (br === 0) {
+				blur = -1;
+			} else if (br === 1) {
+				blur = 1;
+			}
+		}
+		player.Portal.drawImage(m.gfx[dist][dir][attack], (offx + blur) * scale, offy * scale, m.gfx[dist][dir][attack].width * scale, m.gfx[dist][dir][attack].height * scale);
+	}
+    }else {
+        if (dist > -1 && typeof m.gfx[dist] !== "undefined" && typeof m.gfx[dist][dir] !== "undefined") {
 		var offx = 64 - Math.floor(m.gfx[dist][dir].width / 2),
 			offy = 76;
 
@@ -633,4 +672,5 @@ function drawCharacter(m, dir, dist, player, offset) {
 		}
 		player.Portal.drawImage(m.gfx[dist][dir], (offx + blur) * scale, offy * scale, m.gfx[dist][dir].width * scale, m.gfx[dist][dir].height * scale);
 	}
+    }
 }
