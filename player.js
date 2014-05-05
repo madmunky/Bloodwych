@@ -175,7 +175,7 @@ Player.prototype.setMovementData = function() {
 
 Player.prototype.rotateTo = function(d) {
 	this.d = (d + 4) % 4;
-	this.doEventSquare(false);
+	this.doEvent(false);
 };
 
 Player.prototype.move = function(d) {
@@ -191,7 +191,9 @@ Player.prototype.move = function(d) {
 			//PrintLog("Player Moved " + getDirection(this.d));
 		}
 		this.setMovementData();
-		this.doEvent();
+		this.doEvent(true);
+	} else if(d === 2) { //check current square when moving backward
+		this.doEvent(false);
 	}
 };
 
@@ -215,15 +217,9 @@ Player.prototype.getView = function() {
 	return view;
 }
 
-Player.prototype.doEvent = function() {
-	//this.setMovementData();
-	//drawPlayersView(this);
-	this.doEventSquare(true);
-}
-
 //mr = true : player moves
 //mr = false: player rotates
-Player.prototype.doEventSquare = function(mr) {
+Player.prototype.doEvent = function(mr) {
 	//this.setMovementData();
 	var view = this.getView();
 	switch (parseInt(view[18].substring(3, 4), 16)) {
@@ -243,73 +239,21 @@ Player.prototype.doEventSquare = function(mr) {
 
 Player.prototype.doPit = function() {
 	floor = this.floor - 1;
-	x = this.x + (tower[towerThis].floor[this.floor].xOffset - tower[towerThis].floor[floor].xOffset);
-	y = this.y + (tower[towerThis].floor[this.floor].yOffset - tower[towerThis].floor[floor].yOffset);
+	fOff = getTowerFloorOffset(this.floor, floor);
+	x = this.x + fOff.x;
+	y = this.y + fOff.y;
 	this.setPlayerPosition(floor, x, y);
-};
+}
 
 Player.prototype.doStairs = function() {
-
 	var ud = parseInt(this.getBinaryView(18, 7), 10);
-	var d = parseInt(this.getBinaryView(18, 5, 2), 10);
-	var x = this.x;
-	var y = this.y;
+	var d = (parseInt(this.getBinaryView(18, 5, 2), 10) + 2) % 4;
 	var floor = this.floor + 1 - (ud % 2) * 2;
-
-	switch (d) {
-		case 0: //South
-			this.d = 2;
-			if (ud === 0) {
-				x = x - (tower[towerThis].floor[floor].xOffset - tower[towerThis].floor[floor - 1].xOffset);
-				y = y - (tower[towerThis].floor[floor].yOffset - tower[towerThis].floor[floor - 1].yOffset);
-				y = y + 2;
-			} else {
-				x = x + (tower[towerThis].floor[floor + 1].xOffset - tower[towerThis].floor[floor].xOffset);
-				y = y + (tower[towerThis].floor[floor + 1].yOffset - tower[towerThis].floor[floor].yOffset);
-				y = y + 2;
-			}
-			break;
-		case 1: //West
-			this.d = 3;
-			if (ud === 0) {
-				x = x - (tower[towerThis].floor[floor].xOffset - tower[towerThis].floor[floor - 1].xOffset);
-				x = x - 2;
-				y = (y - (tower[towerThis].floor[floor].yOffset - tower[towerThis].floor[floor - 1].yOffset));
-			} else {
-				x = x + (tower[towerThis].floor[floor + 1].xOffset - tower[towerThis].floor[floor].xOffset);
-				x = x - 2;
-				y = (y + (tower[towerThis].floor[floor + 1].yOffset - tower[towerThis].floor[floor].yOffset));
-			}
-			break;
-		case 2: //North
-			this.d = 0;
-			if (ud === 0) {
-				x = x - (tower[towerThis].floor[floor].xOffset - tower[towerThis].floor[floor - 1].xOffset);
-				y = y - (tower[towerThis].floor[floor].yOffset - tower[towerThis].floor[floor - 1].yOffset);
-				y = y - 2;
-			} else {
-				x = x + (tower[towerThis].floor[floor + 1].xOffset - tower[towerThis].floor[floor].xOffset);
-				y = y + (tower[towerThis].floor[floor + 1].yOffset - tower[towerThis].floor[floor].yOffset);
-				y = y - 2;
-			}
-			break;
-		case 3: //East
-			this.d = 1;
-			if (ud === 0) {
-				x = x - (tower[towerThis].floor[floor].xOffset - tower[towerThis].floor[floor - 1].xOffset);
-				x = x + 2;
-				y = (y - (tower[towerThis].floor[floor].yOffset - tower[towerThis].floor[floor - 1].yOffset));
-			} else {
-				x = x + (tower[towerThis].floor[floor + 1].xOffset - tower[towerThis].floor[floor].xOffset);
-				x = x + 2;
-				y = (y + (tower[towerThis].floor[floor + 1].yOffset - tower[towerThis].floor[floor].yOffset));
-			}
-			break;
-		default:
-			break;
-	}
-
-	this.setPlayerPosition(floor, x, y); //Stairs Up or Down
+	var fOff = getTowerFloorOffset(this.floor, floor);
+	var off = getOffsetByRotation(d);
+	var x = this.x + fOff.x + off.x * 2;
+	var y = this.y + fOff.y + off.y * 2;
+	this.setPlayerPosition(floor, x, y, d);
 }
 
 Player.prototype.setPlayerPosition = function(floor, x, y, d) {

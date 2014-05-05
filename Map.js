@@ -23,6 +23,15 @@ function checkSwitchTower(p, trig) {
 	}
 }
 
+//floor1: floor we are on
+//floor2: floor we go to
+function getTowerFloorOffset(floor1, floor2) {
+	return {
+		x: tower[towerThis].floor[floor1].xOffset - tower[towerThis].floor[floor2].xOffset,
+		y: tower[towerThis].floor[floor1].yOffset - tower[towerThis].floor[floor2].yOffset
+	}
+}
+
 //po = 0: normal player positions, po = 1: exchange player positions
 function switchTower(id, po) {
 	ctx.clearRect(0, 0, 795, 400);

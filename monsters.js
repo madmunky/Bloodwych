@@ -155,6 +155,7 @@ Monster.prototype.assembleTeamWith = function(m) {
 				this.teamId = -Math.abs(m.teamId);
 			}
 		}
+		updateMonsterTeam(this.teamId);
 		return 3;
 	}
 	return -1;

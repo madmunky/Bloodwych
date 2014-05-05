@@ -435,9 +435,7 @@ function drawPlayersView(p) {
 					};
 					break;
 			}
-			if (drawMonsters) {
-				drawMonsterOnPos(p, x);
-			};
+			drawMonsterOnPos(p, x);
 		}
 	}
 
@@ -505,6 +503,8 @@ function drawWoodenObject(p, x) {
 	BlockSides[17] = [4, 1, -1, -1];
 	BlockSides[18] = [2, 3, -1, 1];
 
+	inFront = (x === 4 || x === 9 || x === 12 || x === 15);
+
 	var b = hex2bin(p.getView()[x].substring(0, 2));
 	var s = [];
 	s[0] = b.substring(6, 8); //North Face
@@ -512,88 +512,20 @@ function drawWoodenObject(p, x) {
 	s[2] = b.substring(2, 4); //South Face
 	s[3] = b.substring(0, 2); //West Face
 
-        if (drawMonsters) {
-		drawMonsterOnPos(p, x);
-	};
 
-	switch (p.d) {
-		case 0:
-			{
-				if (BlockSides[x][0] > -1) {
-					myDIx(p.Portal, bin2type(s[0]), gfxPos[BlockSides[x][0]], p, scale);
-				}
-				if (BlockSides[x][1] > -1) {
-					myDIx(p.Portal, bin2type(s[1]), gfxPos[BlockSides[x][1]], p, scale);
-				}
-				if (BlockSides[x][3] > -1) {
-					myDIx(p.Portal, bin2type(s[3]), gfxPos[BlockSides[x][3]], p, scale);
-				}
-//				if (drawMonsters) {
-//					drawMonsterOnPos(p, x);
-//				};
-				if (BlockSides[x][2] > -1) {
-					myDIx(p.Portal, bin2type(s[2]), gfxPos[BlockSides[x][2]], p, scale);
-				}
-			};
-			break;
-		case 1:
-			{
-				if (BlockSides[x][0] > -1) {
-					myDIx(p.Portal, bin2type(s[1]), gfxPos[BlockSides[x][0]], p, scale);
-				}
-				if (BlockSides[x][1] > -1) {
-					myDIx(p.Portal, bin2type(s[2]), gfxPos[BlockSides[x][1]], p, scale);
-				}
-				if (BlockSides[x][3] > -1) {
-					myDIx(p.Portal, bin2type(s[0]), gfxPos[BlockSides[x][3]], p, scale);
-				}
-//				if (drawMonsters) {
-//					drawMonsterOnPos(p, x);
-//				};
-				if (BlockSides[x][2] > -1) {
-					myDIx(p.Portal, bin2type(s[3]), gfxPos[BlockSides[x][2]], p, scale);
-				}
-			};
-			break;
-		case 2:
-			{
-				if (BlockSides[x][0] > -1) {
-					myDIx(p.Portal, bin2type(s[2]), gfxPos[BlockSides[x][0]], p, scale);
-				}
-				if (BlockSides[x][1] > -1) {
-					myDIx(p.Portal, bin2type(s[3]), gfxPos[BlockSides[x][1]], p, scale);
-				}
-				if (BlockSides[x][3] > -1) {
-					myDIx(p.Portal, bin2type(s[1]), gfxPos[BlockSides[x][3]], p, scale);
-				}
-
-//				if (drawMonsters) {
-//					drawMonsterOnPos(p, x);
-//				};
-				if (BlockSides[x][2] > -1) {
-					myDIx(p.Portal, bin2type(s[0]), gfxPos[BlockSides[x][2]], p, scale);
-				}
-			};
-			break;
-		case 3:
-			{
-				if (BlockSides[x][0] > -1) {
-					myDIx(p.Portal, bin2type(s[3]), gfxPos[BlockSides[x][0]], p, scale);
-				}
-				if (BlockSides[x][1] > -1) {
-					myDIx(p.Portal, bin2type(s[0]), gfxPos[BlockSides[x][1]], p, scale);
-				}
-				if (BlockSides[x][3] > -1) {
-					myDIx(p.Portal, bin2type(s[2]), gfxPos[BlockSides[x][3]], p, scale);
-				}
-//				if (drawMonsters) {
-//					drawMonsterOnPos(p, x);
-//				};
-				if (BlockSides[x][2] > -1) {
-					myDIx(p.Portal, bin2type(s[1]), gfxPos[BlockSides[x][2]], p, scale);
-				}
-			};
-			break;
+	if (BlockSides[x][0] > -1) {
+		myDIx(p.Portal, bin2type(s[p.d]), gfxPos[BlockSides[x][0]], p, scale);
+	}
+	if(!inFront) drawMonsterOnPos(p, x);
+	if (BlockSides[x][1] > -1) {
+		myDIx(p.Portal, bin2type(s[(p.d + 1) % 4]), gfxPos[BlockSides[x][1]], p, scale);
+	}
+	if (BlockSides[x][3] > -1) {
+		myDIx(p.Portal, bin2type(s[(p.d + 3) % 4]), gfxPos[BlockSides[x][3]], p, scale);
+	}
+	if(inFront) drawMonsterOnPos(p, x);
+	if (BlockSides[x][2] > -1) {
+		myDIx(p.Portal, bin2type(s[(p.d + 2) % 4]), gfxPos[BlockSides[x][2]], p, scale);
 	}
 }
 
