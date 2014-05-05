@@ -185,7 +185,6 @@ Player.prototype.move = function(d) {
 		if (debug) {
 			//PrintLog("Player Moved " + getDirection(this.d));
 		}
-		this.updateChampions();
 		this.setMovementData();
 		this.doEvent();
 	}
@@ -233,6 +232,7 @@ Player.prototype.doEventSquare = function(mr) {
 		default:
 			break;
 	}
+	this.updateChampions();
 	//this.updateView();
 };
 
@@ -326,8 +326,14 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 }
 
 Player.prototype.updateChampions = function() {
+	d = this.d;
 	for (c = 0; c < 4; c++) {
-
+		champion[this.champion[c]].monster.tower = towerThis;
+		champion[this.champion[c]].monster.floor = this.floor;
+		champion[this.champion[c]].monster.x = this.x;
+		champion[this.champion[c]].monster.y = this.y;
+		champion[this.champion[c]].monster.d = this.d;
+		champion[this.champion[c]].monster.square = (d + c) % 4;
 	}
 }
 

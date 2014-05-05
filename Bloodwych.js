@@ -1,12 +1,7 @@
-//Load images into the Arrays
-var imagesLoaded = false;
-
+//Init the game
 $(function() {
 	initGame();
 });
-
-//var imageChecker = setInterval(function() {init()}, 100);
-
 
 function updatePlayerViewScreen() {
 

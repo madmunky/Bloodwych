@@ -1,34 +1,43 @@
+var loadingIntervalTimer = 0;
+
 function initGame() {
-	updateLoadingScreen("Loading Graphics", 0);
 
 	loadGfxData();
 	watch(gfxLoaded, "done", function(prop, action, newvalue, oldvalue) {
-		updateLoadingScreen("Loading File Data", 30);
 		tower[towerThis] = new Tower(towerThis, true);
+		updateLoadingScreen("Loading File Data", 30);
 	});
 
 	watch(dataLoaded, "done", function(prop, action, newvalue, oldvalue) {
-		if(newvalue === 1) {
-			updateLoadingScreen("Loading Tower Data", 30);
+		if (newvalue === 1) {
 			for (var i = 1; i < 6; i++) {
 				tower[i] = new Tower(i);
 			}
-		} else if(newvalue === 2) {
-			updateLoadingScreen("Initialising Game Information", 95);
+			updateLoadingScreen("Loading Tower Data", 50);
+		} else if (newvalue === 2) {
 			for (var i = 0; i < 6; i++) {
 				initMonsters(tower[i]);
 			}
 			initData();
 			if (typeof game === "undefined") {
-				updateLoadingScreen("Starting Game", 100);
 				Run();
 			}
+			updateLoadingScreen("Starting Game", 100);
 		}
 	});
+	updateLoadingScreen("Loading Graphics", 0);
 }
 
 function updateLoadingScreen(msg, percent) {
-	ctx.drawImage(document.getElementById("loading"), 0, 0);
+	refreshLoadingScreen(msg, percent);
+	clearInterval(loadingIntervalTimer);
+	loadingIntervalTimer = setTimeout(function() {
+		refreshLoadingScreen(msg, percent);
+	}, 10);
+}
+
+function refreshLoadingScreen(msg, percent) {
+	ctx.clearRect(0, 0, 795, 20);
 	ctx.font = "normal 11px verdana, sans-serif";
 	ctx.fillStyle = "#FFF";
 	ctx.fillText(percent + "% - " + msg + "...", 0, 15);
@@ -108,19 +117,19 @@ function loadTowerData(t, start) {
 
 function initData() {
 	//if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['minis'].width > 0 && championData.length > 0 && gfx['misc']['font'].width > 0) {
-		gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
-		gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 26, 17);
-		gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 18, 13);
-		gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
-		gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
+	gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
+	gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 26, 17);
+	gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 18, 13);
+	gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
+	gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
 
-		grabFont();
-		initChampions();
-		initSpells();
-		player[0] = new Player(0, 0, 0);
-		player[1] = new Player(1, 410, 0);
-		initPlayersQuickStart();
-		initTowerSwitches();
-		switchTower(0);
+	grabFont();
+	initChampions();
+	initSpells();
+	player[0] = new Player(0, 0, 0);
+	player[1] = new Player(1, 410, 0);
+	initPlayersQuickStart();
+	initTowerSwitches();
+	switchTower(0);
 	//}
 }

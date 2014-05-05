@@ -72,15 +72,16 @@ Monster.prototype.canInteract = function() {
 				return ply;
 			}
 		}
-		for (var m = 0; m < monster[towerThis].length; m++) {
-			if(this.id !== monster[towerThis][m].id && this.floor === monster[towerThis][m].floor && this.x + xy.x === monster[towerThis][m].x && this.y + xy.y === monster[towerThis][m].y) {
-				if (monster[towerThis][m].champId > -1) {
+		mon = getMonstersInTower(towerThis);
+		for(m in mon) {
+			if(this.id !== mon[m].id && this.floor === mon[m].floor && this.x + xy.x === mon[m].x && this.y + xy.y === mon[m].y) {
+				if (mon[m].champId > -1) {
 					//attack champion
-					PrintLog('CHAMPION ' + getChampionName(monster[towerThis][m].champId) + ' GETS HIT BY MONSTER #' + this.id + '!!!');
+					PrintLog('CHAMPION ' + getChampionName(mon[m].champId) + ' GETS HIT BY MONSTER #' + this.id + '!!!');
 					return 2;
 				} else if(this.teamId === 0 && this.square > CHAR_FRONT_SOLO) {
 					//interact with other monster, only monsters without a team can team up
-					return this.assembleTeamWith(monster[towerThis][m]);
+					return this.assembleTeamWith(mon[m]);
 				}
 			}
 		}
@@ -128,10 +129,11 @@ Monster.prototype.canMove = function() {
 		}
 
 		//Check other monsters
-		for (var m = 0; m < monster[towerThis].length; m++) {
-			if (this.id !== monster[towerThis][m].id && this.floor === monster[towerThis][m].floor) {
+		mon = getMonstersInTower(towerThis);
+		for(m in mon) {
+			if (this.id !== mon[m].id && this.floor === mon[m].floor) {
 				xy = getOffsetByRotation(this.d);
-				if (this.x + xy.x === monster[towerThis][m].x && this.y + xy.y === monster[towerThis][m].y) {
+				if (this.x + xy.x === mon[m].x && this.y + xy.y === mon[m].y) {
 					return 2;
 				}
 			}

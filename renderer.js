@@ -6,7 +6,7 @@ Renderer.prototype = {
 	init: function() {
 		this.fps = 10;
 		this.step = 1 / this.fps;
-		this.ctx = document.getElementById("game-port").getContext("2d");
+		//this.ctx = document.getElementById("game-port").getContext("2d");
 
 	},
 
@@ -36,6 +36,5 @@ var fps = {
 			this.frameNumber = 0;
 		}
 		return result;
-
 	}
 };

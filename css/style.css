@@ -28,9 +28,14 @@ section.debug {
 	overflow-y: auto;
 }
 canvas {
+	background: url(../images/loading.png) top left no-repeat;
 	border: 2px solid #444;
 	clear: both;
 	float: left;
 	padding: 2px;
 	text-align: center;
+}
+canvas.active {
+	background-color: #000;
+	background-image: none;
 }

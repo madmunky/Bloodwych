@@ -1,7 +1,6 @@
 function Tower(id, start) {
 	var t = this;
 	t.id = id;
-
 	loadTowerData(t, start);
 }
 
@@ -26,6 +25,8 @@ function checkSwitchTower(p, trig) {
 
 //po = 0: normal player positions, po = 1: exchange player positions
 function switchTower(id, po) {
+	ctx.clearRect(0, 0, 795, 400);
+	$('canvas').removeClass('active');
 	towerLast = towerThis;
 	towerThis = id;
 	if(typeof po === "undefined") {
@@ -61,4 +62,7 @@ function switchTower(id, po) {
 			player[pt].setPlayerPosition(floor, x, y);
 		}
 	}
+	player[0].updateChampions();
+	player[1].updateChampions();
+	$('canvas').addClass('active');
 }

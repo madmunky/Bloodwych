@@ -17,6 +17,7 @@ var timerMaster = 0;
 var timerMonsterMove = 0;
 var players = 0;
 var towerSwitchesData = new Array();
+var loadingInterval = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 var gameGfxLoaded = {
