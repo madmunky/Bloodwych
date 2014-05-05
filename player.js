@@ -1,9 +1,9 @@
 function Player(id, PortX, PortY) {
 	this.id = id;
 	this.champion = new Array();
-	for (i = 0; i < 4; i++) {
-		this.champion[i] = -1;
-	}
+	//for (i = 0; i < 4; i++) {
+	//	this.champion[i] = -1;
+	//}
 	this.x = 0; //posX;
 	this.y = 0; //posY;
 	this.floor = 0; //floor;
@@ -307,15 +307,6 @@ Player.prototype.doStairs = function() {
 	this.setPlayerPosition(floor, x, y); //Stairs Up or Down
 }
 
-//Change the Players Floor
-//l: 1 = up, -1 = down
-/*Player.prototype.setPlayerFloor = function(floor) {
-	if (floor >= 0 && floor < tower[towerThis].floor.length) {
-		this.lastFloor = this.floor;
-		this.floor = floor;
-	}
-}*/
-
 Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 	this.floor = floor;
 	if (typeof x !== "undefined") this.x = x;
@@ -326,24 +317,25 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 }
 
 Player.prototype.updateChampions = function() {
-	d = this.d;
-	for (c = 0; c < 4; c++) {
+	for (c = 0; c < this.champion.length; c++) {
 		champion[this.champion[c]].monster.tower = towerThis;
 		champion[this.champion[c]].monster.floor = this.floor;
 		champion[this.champion[c]].monster.x = this.x;
 		champion[this.champion[c]].monster.y = this.y;
 		champion[this.champion[c]].monster.d = this.d;
-		champion[this.champion[c]].monster.square = (d + c) % 4;
+		if(this.champion.length === 1) {
+			champion[this.champion[c]].monster.square = -1
+		} else {
+			champion[this.champion[c]].monster.square = (this.d + c) % 4;
+		}
 	}
 }
 
 Player.prototype.recruitChampion = function(id) {
-	for (i = 0; i < 4; i++) {
-		if (this.champion[i] == -1) {
-			this.champion[i] = id;
-			champion[id].recruited = true;
-			return true;
-		}
+	if(this.champion.length < 4) {
+		this.champion[this.champion.length] = id;
+		champion[id].recruited = true;
+		return true;
 	}
 	return false;
 }
@@ -393,15 +385,6 @@ Player.prototype.getMonstersInRange = function(pos2) {
 			}
 		}
 	}
-/*
-	for (m = 0; m < monster[towerThis].length; m++) {
-		monstersInRange = getMonsterInRange(p, m, towerThis, monstersInRange);
-	}
-	for (m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
-		if(monster[TOWER_CHAMPIONS][m].tower === towerThis) {
-			monstersInRange = getMonsterInRange(p, m, TOWER_CHAMPIONS, monstersInRange);
-		}
-	}*/
 	return monstersInRange;
 }
 
