@@ -38,10 +38,7 @@ Monster.prototype.getGfx = function() {
 		for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
 			if (dis < 4) {
 				for (dir = 0; dir < 4; dir++) {
-                                        var attack = [];
-                                        attack.push(grabCharacter(this.form, dir, dis,false));
-                                        attack.push(grabCharacter(this.form, dir, dis,true));
-                                        gfx.push(attack);
+					gfx.push(grabCharacter(this.form, dir, dis));
 				}
 				dirArray.push(gfx);
 				gfx = [];

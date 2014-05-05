@@ -148,8 +148,8 @@ function getCharacterSprite(length, graphicsFolder, graphic, spriteWidth, sprite
 						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth, spriteHeight, false));
 						POSITION = POSITION + spriteHeight;
 
-						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spriteWidth - 3, spriteHeight, false));
-						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spriteWidth - 3, spriteHeight, true));
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spriteWidth - 2, spriteHeight, false));
+						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize + 1, POSITION, spriteWidth - 2, spriteHeight, true));
 						POSITION = POSITION + spriteHeight;
 
 						CLOSE.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth, spriteHeight, false));
@@ -172,8 +172,8 @@ function getCharacterSprite(length, graphicsFolder, graphic, spriteWidth, sprite
 						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 4, false));
 						POSITION = POSITION + spriteHeight - 4;
 
-						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 5, spriteHeight - 4, false));
-						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 5, spriteHeight - 4, true));
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 4, false));
+						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 4, true));
 						POSITION = POSITION + spriteHeight - 4;
 
 						FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 4, false));
@@ -320,9 +320,9 @@ function getCharacterSprite(length, graphicsFolder, graphic, spriteWidth, sprite
 	}
 }
 
-function grabCharacter(cID, dir, dist,attack) {
+function grabCharacter(cID, dir, dist) {
 	//try {
-        
+
 	if (typeof monsterPalette[cID] !== "undefined") {
 		var LEG;
 		var ARM;
@@ -357,11 +357,6 @@ function grabCharacter(cID, dir, dist,attack) {
 				break;
 
 		}
-                
-                if (attack) {
-                                       
-                    ARM = recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[cID].arm][dist][3], MON_PALETTE_DEFAULT, monsterPalette[cID].armPalette);
-                }
 
 		var height = Math.round(HEAD.height * 0.58) + TORSO.height + LEG.height,
 			width = ARM.width + TORSO.width + ARM.width;
@@ -373,7 +368,7 @@ function grabCharacter(cID, dir, dist,attack) {
 		var charImageObj = new Image();
 		charImageObj.width = width;
 		charImageObj.height = height;
-                
+		//var SPRITELOCATIONS = maleCharacterSpriteLocations;
 		var legCoord = {
 			x: Math.round((width - LEG.width) * 0.5),
 			y: height - LEG.height
@@ -409,23 +404,19 @@ function grabCharacter(cID, dir, dist,attack) {
 				charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
 				charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
 				charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
-                                charContext.drawImage(flipImage(ARM), armRightCoord.x, armRightCoord.y, ARM.width, ARM.height);
+				charContext.drawImage(flipImage(ARM), armRightCoord.x, armRightCoord.y, ARM.width, ARM.height);
 				charContext.drawImage(ARM, armLeftCoord.x, armLeftCoord.y, ARM.width, ARM.height);
 				break;
 			case 3:
 				charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
 				charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
-                                if (attack){
-                                    charContext.drawImage(ARM, armSideRightCoord.x, armSideRightCoord.y, ARM.width, ARM.height);
-                                }else{
-                                    charContext.drawImage(flipImage(ARM), armSideRightCoord.x, armSideRightCoord.y, ARM.width, ARM.height);
-                                }				
+				charContext.drawImage(flipImage(ARM), armSideRightCoord.x, armSideRightCoord.y, ARM.width, ARM.height);
 				charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
 				break;
 			case 1:
 				charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
 				charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
-                                charContext.drawImage(flipImage(ARM), armSideLeftCoord.x, armSideLeftCoord.y, ARM.width, ARM.height);                 				
+				charContext.drawImage(flipImage(ARM), armSideLeftCoord.x, armSideLeftCoord.y, ARM.width, ARM.height);
 				charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
 				break;
 			case 2:
@@ -622,43 +613,8 @@ function characterSpriteLocation() {
 
 }
 
-function drawCharacter(m, dir, dist, player, offset,attack) {
-  
-    if(typeof attack !== "undefined") {
-        attack = false;
-    }
-    
-    var attackArms;
-    
-    if (attack){
-        attackArms = 1;
-    }
-    else {
-        attackArms = 0;
-    }
-        
-    if (dist < 4) {
+function drawCharacter(m, dir, dist, player, offset) {
 	if (dist > -1 && typeof m.gfx[dist] !== "undefined" && typeof m.gfx[dist][dir] !== "undefined") {
-		var offx = 64 - Math.floor(m.gfx[dist][dir][attackArms].width / 2),
-			offy = 76;
-
-		if (typeof offset !== "undefined") {
-			offx = offx + offset.x;
-			offy = offy - offset.y - Math.floor(m.gfx[dist][dir][attackArms].height);
-		}
-		var blur = 0;
-		if (dist <= CHAR_DISTANCE_MID) {
-			var br = Math.floor(Math.random() * 20);
-			if (br === 0) {
-				blur = -1;
-			} else if (br === 1) {
-				blur = 1;
-			}
-		}
-		player.Portal.drawImage(m.gfx[dist][dir][attackArms], (offx + blur) * scale, offy * scale, m.gfx[dist][dir][attackArms].width * scale, m.gfx[dist][dir][attackArms].height * scale);
-	}
-    }else {
-        if (dist > -1 && typeof m.gfx[dist] !== "undefined" && typeof m.gfx[dist][dir] !== "undefined") {
 		var offx = 64 - Math.floor(m.gfx[dist][dir].width / 2),
 			offy = 76;
 
@@ -677,5 +633,4 @@ function drawCharacter(m, dir, dist, player, offset,attack) {
 		}
 		player.Portal.drawImage(m.gfx[dist][dir], (offx + blur) * scale, offy * scale, m.gfx[dist][dir].width * scale, m.gfx[dist][dir].height * scale);
 	}
-    }
 }
