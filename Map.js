@@ -14,11 +14,11 @@ function Map(Width, Height, xOff, yOff) {
 }
 
 function checkSwitchTower(p, trig) {
-	if((trig[0] == 18 || trig[0] == 38) && parseInt(player[0].View[18].substring(3, 4), 16) === 6 && parseInt(player[1].View[18].substring(3, 4), 16) === 6) {
+	if((trig[0] == 18 || trig[0] == 38) && parseInt(player[0].getView()[18].substring(3, 4), 16) === 6 && parseInt(player[1].getView()[18].substring(3, 4), 16) === 6) {
 		if(player[1 - p].floor === player[p].floor && player[1 - p].x === trig[2] && player[1 - p].y === trig[3]) {
 			var tw = Math.floor(trig[1] * 0.5);
 			//sw = getHexToBinaryPosition(tower[towerThis].floor[player[p].floor].Map[trig[3]][trig[2]], 1, 1);
-			//sw = getHexToBinaryPosition(player[0].View[18], 1, 1);
+			//sw = getHexToBinaryPosition(player[0].getView()[18], 1, 1);
 			switchTower(tw, 0);
 		}
 	}

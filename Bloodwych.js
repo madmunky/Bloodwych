@@ -16,7 +16,6 @@ function updatePlayerViewScreen() {
 	ctx.font = "normal 11px verdana, sans-serif";
 	ctx.fillStyle = "#FFF";
 	for(p = 0; p < 2; p++) {
-		player[p].updateView(tower[towerThis].floor[player[p].floor].Map);
 		drawPlayersView(player[p]);
 		ctx.fillText("Player " + (p + 1), p * 410, 250);
 		ctx.fillText("T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d, p * 410, 270);
@@ -137,12 +136,12 @@ function debugTextPrint(p) {
 		//debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
 		//debugText(hex2bin(hex));
 		//debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
-		debugText(p, hex2bin(getHexToBinaryPosition(p.View[15], 0, 16)));
-		debugText(p, hex2dec(getHexToBinaryPosition(p.View[15], 0, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.View[15], 4, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.View[15], 8, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.View[15], 12, 4)));
-		//debugText(p.View[15]);
-		//debugText(p.View[15].substring(0,2));
-		//debugText(parseInt(getHexToBinaryPosition(p.View[15], 0, 5), 16).toString(10));
-		//debugText(parseInt(p.View[15].substring(0,2), 16).toString(10));
+		debugText(p, hex2bin(getHexToBinaryPosition(p.getView()[15], 0, 16)));
+		debugText(p, hex2dec(getHexToBinaryPosition(p.getView()[15], 0, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 4, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 8, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 12, 4)));
+		//debugText(p.getView()[15]);
+		//debugText(p.getView()[15].substring(0,2));
+		//debugText(parseInt(getHexToBinaryPosition(p.getView()[15], 0, 5), 16).toString(10));
+		//debugText(parseInt(p.getView()[15].substring(0,2), 16).toString(10));
 		var mon = p.getMonstersInRange();
 		for (i in mon) {
 			debugText(p, 'Monster:' + mon[i].monster + ' - MonsterPos:' + mon[i].position + ' - MonsterOffset:' + getMonsterGfxOffset(15, 0).x + ', ' + getMonsterGfxOffset(12, 0).x + ', ' + getMonsterGfxOffset(9, 0).x);

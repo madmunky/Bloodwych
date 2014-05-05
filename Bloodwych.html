@@ -9,10 +9,10 @@
 </head>
 
 <body>
-       
+
 	<div class="content">
 		<div class="logo">
-			<img src="images/logo.png" alt="">                        
+			<img src="images/logo.png" alt="">
 		</div>
 		<section class="info">
 			<p>
@@ -27,7 +27,7 @@
 			<p>Change Tower: L</p>
 		</section>
 
-                 <img id="loading" src="images/Bloodwych_Loading.png" style="display:none;" >
+		<img id="loading" src="images/Bloodwych_Loading.png" style="display:none;">
 		<canvas id="game-port" width="795" height="400" tabindex="1"></canvas>
 		<section class="debug player0">
 			<p></p>
@@ -35,7 +35,7 @@
 		<section class="debug player1">
 			<p></p>
 		</section>
-                <div class="behemoth">
+		<div class="behemoth">
 			<img src="images/behemoth.png" alt="">
 		</div>
 	</div>
@@ -61,14 +61,6 @@
 	<script type="text/javascript">
 	var canvas = document.getElementById("game-port");
 	var ctx = canvas.getContext("2d");
-        
-	$(function() {
-                
-		canvas.addEventListener('keydown', doKeyDown, true);
-		checkClickEvents();
-		//canvas.addEventListener('touchstart', doTouchStart, false);
-		canvas.focus();
-	});
 	</script>
 </body>
 

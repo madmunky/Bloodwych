@@ -42,7 +42,7 @@ function toggleObject(hex, o) {
 }
 
 function floorActionType(trig, p) {
-	if (parseInt(p.View[18].substring(1, 2), 16) % 4 === 1) {
+	if (parseInt(p.getView()[18].substring(1, 2), 16) % 4 === 1) {
 		p.doPit(p);
 		return;
 	}

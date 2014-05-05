@@ -9,7 +9,7 @@ function initGame() {
 
 	watch(dataLoaded, "done", function(prop, action, newvalue, oldvalue) {
 		if(newvalue === 1) {
-			updateLoadingScreen("Loading Tower Data", 70);
+			updateLoadingScreen("Loading Tower Data", 30);
 			for (var i = 1; i < 6; i++) {
 				tower[i] = new Tower(i);
 			}
@@ -107,7 +107,7 @@ function loadTowerData(t, start) {
 
 
 function initData() {
-	if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['minis'].width > 0 && championData.length > 0 && gfx['misc']['font'].width > 0) {
+	//if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['minis'].width > 0 && championData.length > 0 && gfx['misc']['font'].width > 0) {
 		gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
 		gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 26, 17);
 		gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 18, 13);
@@ -122,6 +122,5 @@ function initData() {
 		initPlayersQuickStart();
 		initTowerSwitches();
 		switchTower(0);
-	}
-
+	//}
 }

@@ -126,29 +126,31 @@ function doKeyDown(e) {
 
 function checkClickEvents() {
 	$('body').on('click', 'canvas#game-port', function(e) {
-		var x = e.pageX - canvas.offsetLeft;
-		var y = e.pageY - canvas.offsetTop;
-		var xy;
-		for (p = 0; p < 2; p++) {
-			xy = {
-				x: Math.floor((x - player[p].PortalX) / scale / 42.67),
-				y: Math.floor((y - player[p].PortalY) / scale / 38)
-			};
-			if (xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
-				if (xy.x === 0 && xy.y === 0) { //rotate left
-					player[p].rotateTo(player[p].d - 1);
-				} else if (xy.x === 2 && xy.y === 0) { //rotate right
-					player[p].rotateTo(player[p].d + 1);
-				} else if (xy.x === 1 && xy.y === 0) { //move forward
-					player[p].move(DIRECTION_NORTH);
-				} else if (xy.x === 0 && xy.y === 1) { //move left
-					player[p].move(DIRECTION_WEST);
-				} else if (xy.x === 2 && xy.y === 1) { //move right
-					player[p].move(DIRECTION_EAST);
-				} else if (xy.x === 1 && xy.y === 1) { //move backward
-					player[p].move(DIRECTION_SOUTH);
-				} else if (xy.y === 2) { //action
-					player[p].action();
+		if (typeof player !== "undefined") {
+			var x = e.pageX - canvas.offsetLeft;
+			var y = e.pageY - canvas.offsetTop;
+			var xy;
+			for (p = 0; p < 2; p++) {
+				xy = {
+					x: Math.floor((x - player[p].PortalX) / scale / 42.67),
+					y: Math.floor((y - player[p].PortalY) / scale / 38)
+				};
+				if (xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
+					if (xy.x === 0 && xy.y === 0) { //rotate left
+						player[p].rotateTo(player[p].d - 1);
+					} else if (xy.x === 2 && xy.y === 0) { //rotate right
+						player[p].rotateTo(player[p].d + 1);
+					} else if (xy.x === 1 && xy.y === 0) { //move forward
+						player[p].move(DIRECTION_NORTH);
+					} else if (xy.x === 0 && xy.y === 1) { //move left
+						player[p].move(DIRECTION_WEST);
+					} else if (xy.x === 2 && xy.y === 1) { //move right
+						player[p].move(DIRECTION_EAST);
+					} else if (xy.x === 1 && xy.y === 1) { //move backward
+						player[p].move(DIRECTION_SOUTH);
+					} else if (xy.y === 2) { //action
+						player[p].action();
+					}
 				}
 			}
 		}

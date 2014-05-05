@@ -11,7 +11,7 @@ function Player(id, PortX, PortY) {
 	this.PortalX = PortX;
 	this.PortalY = PortY;
 	this.Portal = null;
-	this.View = [];
+	//this.View = [];
 	this.lastX = 0;
 	this.lastY = 0;
 	this.lastFloor = 0;
@@ -19,9 +19,7 @@ function Player(id, PortX, PortY) {
 	this.moving = 0; //0 = Forward,1 = Right, 2 = Backwards, 3 = Left
 	this.towerSwitches = new Array();
 
-	try {
-		this.setBinaryView(18, 8, 1, '1');
-	} catch (c) {};
+	this.setBinaryView(18, 8, 1, '1');
 
 	players++;
 }
@@ -42,12 +40,13 @@ Player.prototype.getViewPortal = function() {
 
 Player.prototype.canMoveToPos = function(pos) {
 	//Check other player
-	var hex = this.View[pos];
+	var view = this.getView();
+	var hex = view[pos];
 	if (getHexToBinaryPosition(hex, 8) == '1') {
 		return false;
 	}
 
-	var objThis = getHexToBinaryPosition(this.View[18], 12, 4);
+	var objThis = getHexToBinaryPosition(view[18], 12, 4);
 	var objNext = getHexToBinaryPosition(hex, 12, 4);
 
 	//Check wooden walls and doors
@@ -72,9 +71,10 @@ Player.prototype.canMoveToPos = function(pos) {
 }
 
 Player.prototype.canMoveToPosByWood = function(pos) {
-	var hex = this.View[pos];
+	var view = this.getView();
+	var hex = this.getView()[pos];
 	//Check the space the player is standing on
-	if (getHexToBinaryPosition(this.View[18], 12, 4) == '2' && getHexToBinaryPosition(this.View[18], ((7 - ((this.d + this.moving) % 4)) % 4) * 2 + 1, 1) == '1') {
+	if (getHexToBinaryPosition(view[18], 12, 4) == '2' && getHexToBinaryPosition(view[18], ((7 - ((this.d + this.moving) % 4)) % 4) * 2 + 1, 1) == '1') {
 		return false;
 	}
 	//Check the space the player is moving to
@@ -123,7 +123,7 @@ Player.prototype.action = function() {
 	//Wall switches
 	if (this.getBinaryView(15, 0, 4) != '0' && this.getBinaryView(15, 8) == '1' && this.getBinaryView(15, 6, 2) == '2') {
 		this.setBinaryView(15, 5, 1);
-		switchAction(parseInt(getHexToBinaryPosition(this.View[15], 0, 5), 16).toString(10), this);
+		switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
 	}
 	//Wooden doors (in front of player)
 	if (this.getBinaryView(15, 12, 4) == '2' && this.getBinaryView(15, ((5 - this.d) % 4) * 2) == '1') {
@@ -136,7 +136,9 @@ Player.prototype.action = function() {
 };
 
 Player.prototype.toggleFrontObject = function() {
-	if (debug) this.setBinaryView(15, 12, 1);
+	if (debug) {
+		this.setBinaryView(15, 12, 1);
+	}
 }
 
 //Sets a binary index on a hexadecimal string to a certain binary flag
@@ -144,6 +146,7 @@ Player.prototype.toggleFrontObject = function() {
 Player.prototype.setBinaryView = function(pos18, index, length, to) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
 	tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length, to);
+	//this.updateView();
 }
 
 Player.prototype.getBinaryView = function(pos18, index, length) {
@@ -183,36 +186,33 @@ Player.prototype.move = function(d) {
 			//PrintLog("Player Moved " + getDirection(this.d));
 		}
 		this.updateChampions();
-		this.doEvent();
 		this.setMovementData();
+		this.doEvent();
 	}
 };
 
-Player.prototype.updateView = function(m) {
-	//m = Map Data
+Player.prototype.getView = function() {
 	//This function takes the map file and stores the 20 positions required 
 	//to either draw the players view or objects which the player are likely to interact with
 	//like standing on a presure pad or stairs or if there is a door infront of the player etc..
-	this.View = [];
-
+	view = [];
 	for (pos = 0; pos < 20; pos++) {
 		try {
 			var xy = posToCoordinates(pos, this.x, this.y, this.d);
-			var newView = m[xy.y][xy.x];
+			var newView = tower[towerThis].floor[this.floor].Map[xy.y][xy.x];
 			if (typeof newView === "undefined") {
 				newView = '0001';
 			}
 		} catch (e) {
 			newView = '0001';
 		}
-		this.View.push(newView);
+		view.push(newView);
 	}
-
-};
+	return view;
+}
 
 Player.prototype.doEvent = function() {
 	//this.setMovementData();
-	this.updateView(tower[towerThis].floor[this.floor].Map);
 	//drawPlayersView(this);
 	this.doEventSquare(true);
 }
@@ -220,21 +220,20 @@ Player.prototype.doEvent = function() {
 //mr = true : player moves
 //mr = false: player rotates
 Player.prototype.doEventSquare = function(mr) {
-
 	//this.setMovementData();
-
-	switch (parseInt(this.View[18].substring(3, 4), 16)) {
+	var view = this.getView();
+	switch (parseInt(view[18].substring(3, 4), 16)) {
 
 		case 4:
 			this.doStairs();
 			break;
 		case 6:
-			if (mr) floorActionType(tower[towerThis].triggers[parseInt(getHexToBinaryPosition(this.View[18], 0, 5), 16).toString(10)], this);
+			if (mr) floorActionType(tower[towerThis].triggers[parseInt(getHexToBinaryPosition(view[18], 0, 5), 16).toString(10)], this);
 			break;
 		default:
 			break;
-
 	}
+	//this.updateView();
 };
 
 Player.prototype.doPit = function() {
@@ -323,6 +322,7 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 	if (typeof y !== "undefined") this.y = y;
 	if (typeof d !== "undefined") this.d = d;
 	this.setMovementData();
+	//this.updateView();
 }
 
 Player.prototype.updateChampions = function() {
@@ -419,10 +419,11 @@ Player.prototype.testMode = function(id) {
 		//tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
 		//tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
 		try {
+			var view = this.getView();
 			for (i = 0; i < 17; i++) {
-				var t = this.View[i].substring(2, 4);
-				if (this.View[i].substring(2, 4) === "80") {
-					window.alert("Distance: " + getMonsterDistanceByPos(i) + " Code: " + this.View[i]);
+				var t = view[i].substring(2, 4);
+				if (view[i].substring(2, 4) === "80") {
+					window.alert("Distance: " + getMonsterDistanceByPos(i) + " Code: " + view[i]);
 				}
 			}
 		} catch (e) {

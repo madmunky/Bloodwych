@@ -35,11 +35,16 @@ Run = function() {
 			}
 			last = now;
 			animFrame(run);
-
 		}
 
 		game.init && game.init();
 		render.init && render.init();
 		run();
+		
+		$(function() {
+			canvas.addEventListener('keydown', doKeyDown, true);
+			checkClickEvents();
+			canvas.focus();
+		});
 	}
 }();
