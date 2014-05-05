@@ -115,16 +115,6 @@ Player.prototype.changeDownFloor = function() {
 
 //Take the map code which is in front of the player and see if the player can interact with it.
 Player.prototype.action = function() {
-	//Doors
-	if (this.getBinaryView(15, 12, 4) == '5' && this.getBinaryView(15, 4) == '0') {
-		this.setBinaryView(15, 7, 1);
-		//this.setBinaryView(15, 1, '000'); //Will set the door to 'normal'
-	}
-	//Wall switches
-	if (this.getBinaryView(15, 0, 4) != '0' && this.getBinaryView(15, 8) == '1' && this.getBinaryView(15, 6, 2) == '2') {
-		this.setBinaryView(15, 5, 1);
-		switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
-	}
 	//Wooden doors (in front of player)
 	if (this.getBinaryView(15, 12, 4) == '2' && this.getBinaryView(15, ((5 - this.d) % 4) * 2) == '1') {
 		this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1);
@@ -133,6 +123,21 @@ Player.prototype.action = function() {
 	if (this.getBinaryView(18, 12, 4) == '2' && this.getBinaryView(18, ((7 - this.d) % 4) * 2) == '1') {
 		this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1);
 	}
+	//Wall switches
+	if (this.getBinaryView(15, 0, 4) != '0' && this.getBinaryView(15, 8) == '1' && this.getBinaryView(15, 6, 2) == '2') {
+		this.setBinaryView(15, 5, 1);
+		switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
+	}
+	//Check if something is in the way
+	if(this.getMonstersInRange(15).length > 0) {
+		return false;
+	}
+	//Doors
+	if (this.getBinaryView(15, 12, 4) == '5' && this.getBinaryView(15, 4) == '0') {
+		this.setBinaryView(15, 7, 1);
+		//this.setBinaryView(15, 1, '000'); //Will set the door to 'normal'
+	}
+	return true;
 };
 
 Player.prototype.toggleFrontObject = function() {
