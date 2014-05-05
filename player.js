@@ -362,37 +362,28 @@ Player.prototype.getMonstersInRange = function(pos2) {
 	var p = this;
 	var monstersInRange = [];
 	var pos = -1;
-	for (m = 0; m < monster[towerThis].length; m++) {
-		monstersInRange = getMonsterInRange(p, m, towerThis, monstersInRange);
-	}
-	for (m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
-		if(monster[TOWER_CHAMPIONS][m].tower === towerThis) {
-			monstersInRange = getMonsterInRange(p, m, TOWER_CHAMPIONS, monstersInRange);
-		}
-	}
-	return monstersInRange;
-
-	function getMonsterInRange(p, m, t, mir) {
-		if (p.floor === monster[t][m].floor) {
-			pos = coordinatesToPos(monster[t][m].x, monster[t][m].y, p.x, p.y, p.d);
+	mon = getMonstersInTower(towerThis);
+	for(m in mon) {
+		if (p.floor === mon[m].floor) {
+			pos = coordinatesToPos(mon[m].x, mon[m].y, p.x, p.y, p.d);
 			var sq = CHAR_FRONT_SOLO;
 			var sq2 = 0;
-			if (monster[t][m].square > CHAR_FRONT_SOLO) {
-				sq = (6 + monster[t][m].square - p.d) % 4;
+			if (mon[m].square > CHAR_FRONT_SOLO) {
+				sq = (6 + mon[m].square - p.d) % 4;
 				sq2 = (sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) ? 0 : 1; //extra check for really close-by monsters
 			}
-			if (monster[t][m].floor == p.floor && pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
+			if (mon[m].floor == p.floor && pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 				if (sq2 == 1) {
-					mir.unshift({
-						monster: monster[t][m],
+					monstersInRange.unshift({
+						monster: mon[m],
 						position: pos,
 						distance: getMonsterDistanceByPos(pos, sq2),
 						gfxCoord: getMonsterGfxOffset(pos, sq),
 						square: sq2
 					});
 				} else {
-					mir.push({
-						monster: monster[t][m],
+					monstersInRange.push({
+						monster: mon[m],
 						position: pos,
 						distance: getMonsterDistanceByPos(pos, sq2),
 						gfxCoord: getMonsterGfxOffset(pos, sq),
@@ -401,8 +392,17 @@ Player.prototype.getMonstersInRange = function(pos2) {
 				}
 			}
 		}
-		return mir;
 	}
+/*
+	for (m = 0; m < monster[towerThis].length; m++) {
+		monstersInRange = getMonsterInRange(p, m, towerThis, monstersInRange);
+	}
+	for (m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
+		if(monster[TOWER_CHAMPIONS][m].tower === towerThis) {
+			monstersInRange = getMonsterInRange(p, m, TOWER_CHAMPIONS, monstersInRange);
+		}
+	}*/
+	return monstersInRange;
 }
 
 
