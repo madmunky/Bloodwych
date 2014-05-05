@@ -402,13 +402,6 @@ function grabCharacter(cID, dir, dist,attack) {
 			x: Math.round((width + TORSO.width) * 0.5) - 9,
 			y: height - LEG.height - TORSO.height + 2
 		};
-                
-                if (attack){
-                    armLeftCoord.y = armLeftCoord.y -8;
-                    armRightCoord.y = armRightCoord.y -8;
-                    armSideLeftCoord.y = armSideLeftCoord.y -8;
-                    armSideRightCoord.y = armSideRightCoord.y -8;
-                }
 
 		switch (dir) {
 
@@ -630,13 +623,12 @@ function characterSpriteLocation() {
 }
 
 function drawCharacter(m, dir, dist, player, offset,attack) {
-    
-    var attackArms;
-
-    
+  
     if(typeof attack !== "undefined") {
         attack = false;
     }
+    
+    var attackArms;
     
     if (attack){
         attackArms = 1;
@@ -644,9 +636,7 @@ function drawCharacter(m, dir, dist, player, offset,attack) {
     else {
         attackArms = 0;
     }
-    
-    attackArms = 1;
-    
+        
     if (dist < 4) {
 	if (dist > -1 && typeof m.gfx[dist] !== "undefined" && typeof m.gfx[dist][dir] !== "undefined") {
 		var offx = 64 - Math.floor(m.gfx[dist][dir][attackArms].width / 2),
