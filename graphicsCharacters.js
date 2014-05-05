@@ -402,6 +402,13 @@ function grabCharacter(cID, dir, dist,attack) {
 			x: Math.round((width + TORSO.width) * 0.5) - 9,
 			y: height - LEG.height - TORSO.height + 2
 		};
+                
+                if (attack){
+                    armLeftCoord.y = armLeftCoord.y -8;
+                    armRightCoord.y = armRightCoord.y -8;
+                    armSideLeftCoord.y = armSideLeftCoord.y -8;
+                    armSideRightCoord.y = armSideRightCoord.y -8;
+                }
 
 		switch (dir) {
 
@@ -625,6 +632,7 @@ function characterSpriteLocation() {
 function drawCharacter(m, dir, dist, player, offset,attack) {
     
     var attackArms;
+
     
     if(typeof attack !== "undefined") {
         attack = false;
@@ -637,14 +645,16 @@ function drawCharacter(m, dir, dist, player, offset,attack) {
         attackArms = 0;
     }
     
+    attackArms = 1;
+    
     if (dist < 4) {
 	if (dist > -1 && typeof m.gfx[dist] !== "undefined" && typeof m.gfx[dist][dir] !== "undefined") {
-		var offx = 64 - Math.floor(m.gfx[dist][dir][attack].width / 2),
+		var offx = 64 - Math.floor(m.gfx[dist][dir][attackArms].width / 2),
 			offy = 76;
 
 		if (typeof offset !== "undefined") {
 			offx = offx + offset.x;
-			offy = offy - offset.y - Math.floor(m.gfx[dist][dir][attack].height);
+			offy = offy - offset.y - Math.floor(m.gfx[dist][dir][attackArms].height);
 		}
 		var blur = 0;
 		if (dist <= CHAR_DISTANCE_MID) {
@@ -655,7 +665,7 @@ function drawCharacter(m, dir, dist, player, offset,attack) {
 				blur = 1;
 			}
 		}
-		player.Portal.drawImage(m.gfx[dist][dir][attack], (offx + blur) * scale, offy * scale, m.gfx[dist][dir][attack].width * scale, m.gfx[dist][dir][attack].height * scale);
+		player.Portal.drawImage(m.gfx[dist][dir][attackArms], (offx + blur) * scale, offy * scale, m.gfx[dist][dir][attackArms].width * scale, m.gfx[dist][dir][attackArms].height * scale);
 	}
     }else {
         if (dist > -1 && typeof m.gfx[dist] !== "undefined" && typeof m.gfx[dist][dir] !== "undefined") {
