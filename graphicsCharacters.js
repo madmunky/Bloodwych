@@ -359,6 +359,7 @@ function grabCharacter(cID, dir, dist,attack) {
 		}
                 
                 if (attack) {
+                                       
                     ARM = recolourSprite(characterGfx[IMAGE_CHA_ARM][monsterPalette[cID].arm][dist][3], MON_PALETTE_DEFAULT, monsterPalette[cID].armPalette);
                 }
 
@@ -372,7 +373,7 @@ function grabCharacter(cID, dir, dist,attack) {
 		var charImageObj = new Image();
 		charImageObj.width = width;
 		charImageObj.height = height;
-		//var SPRITELOCATIONS = maleCharacterSpriteLocations;
+                
 		var legCoord = {
 			x: Math.round((width - LEG.width) * 0.5),
 			y: height - LEG.height
@@ -408,19 +409,23 @@ function grabCharacter(cID, dir, dist,attack) {
 				charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
 				charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
 				charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
-				charContext.drawImage(flipImage(ARM), armRightCoord.x, armRightCoord.y, ARM.width, ARM.height);
+                                charContext.drawImage(flipImage(ARM), armRightCoord.x, armRightCoord.y, ARM.width, ARM.height);
 				charContext.drawImage(ARM, armLeftCoord.x, armLeftCoord.y, ARM.width, ARM.height);
 				break;
 			case 3:
 				charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
 				charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
-				charContext.drawImage(flipImage(ARM), armSideRightCoord.x, armSideRightCoord.y, ARM.width, ARM.height);
+                                if (attack){
+                                    charContext.drawImage(ARM, armSideRightCoord.x, armSideRightCoord.y, ARM.width, ARM.height);
+                                }else{
+                                    charContext.drawImage(flipImage(ARM), armSideRightCoord.x, armSideRightCoord.y, ARM.width, ARM.height);
+                                }				
 				charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
 				break;
 			case 1:
 				charContext.drawImage(LEG, legCoord.x, legCoord.y, LEG.width, LEG.height);
 				charContext.drawImage(TORSO, torsoCoord.x, torsoCoord.y, TORSO.width, TORSO.height);
-				charContext.drawImage(flipImage(ARM), armSideLeftCoord.x, armSideLeftCoord.y, ARM.width, ARM.height);
+                                charContext.drawImage(flipImage(ARM), armSideLeftCoord.x, armSideLeftCoord.y, ARM.width, ARM.height);                 				
 				charContext.drawImage(HEAD, headCoord.x, headCoord.y, HEAD.width, HEAD.height);
 				break;
 			case 2:
@@ -619,17 +624,17 @@ function characterSpriteLocation() {
 
 function drawCharacter(m, dir, dist, player, offset,attack) {
     
-    var attack;
+    var attackArms;
     
     if(typeof attack !== "undefined") {
-        attack = 0;
+        attack = false;
     }
     
     if (attack){
-        attack = 1;
+        attackArms = 1;
     }
     else {
-        attack = 0;
+        attackArms = 0;
     }
     
     if (dist < 4) {
