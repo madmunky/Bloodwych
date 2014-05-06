@@ -419,22 +419,32 @@ function grabCharacter(m, part, dir, dist) {
 					if (dir === 0) {
 						var coord = {
 							x: Math.floor((width - torso.width) * 0.5) - arm.width + 5,
-							y: height - leg.height - torso.height + 2
+							y: height - leg.height - torso.height + 1
 						};
 					} else if (dir === 2) {
 						var coord = {
 							x: Math.floor((width + torso.width) * 0.5) - 5, 
-							y: height - leg.height - torso.height + 2
+							y: height - leg.height - torso.height + 1
 						}
-					} else if (dir === 1 || dir === 4) {
+					} else if (dir === 1) {
 						var coord = {
 							x: Math.floor((width - torso.width) * 0.5) - arm.width + 9,
-							y: height - leg.height - torso.height + 2
+							y: height - leg.height - torso.height + 1
 						};
-					} else if (dir === 3 || dir === 5) {
+					} else if (dir === 3) {
 						var coord = {
 							x: Math.floor((width + torso.width) * 0.5) - 9,
-							y: height - leg.height - torso.height + 2
+							y: height - leg.height - torso.height + 1
+						};
+					} else if (dir === 4) {
+						var coord = {
+							x: Math.floor((width - torso.width) * 0.5) - arm.width + 5,
+							y: height - leg.height - torso.height * 1.5
+						};
+					} else if (dir === 5) {
+						var coord = {
+							x: Math.floor((width + torso.width) * 0.5) - 5,
+							y: height - leg.height - torso.height * 1.5
 						};
 					}
 					break;
