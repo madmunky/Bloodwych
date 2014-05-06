@@ -19,33 +19,9 @@ var towerSwitchesData = new Array();
 var loadingInterval = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
-var gameGfxLoaded = {
-	monsterHeads: false,
-	monsterLegs: false,
-	monsterArms: false,
-	monsterTorsos: false,
-	monsterMini: false
-};
-var gameDataLoaded = {
-	towerSwitches: false
-};
-var towerDataLoaded = new Array();
-for(t = 0; t < 6; t++) {
-	towerDataLoaded[t] = {
-		monsterPalette: false,
-		floor: false,
-		switches: false,
-		triggers: false,
-		monsters: false,
-		champions: false
-	};
-}
-/*var monsterDataLoaded = {
-	monsterPalette: false,
-	monsterHeads: false,
-	monsterBodies: false,
-	monsterImages: false
-};*/
+//When a file is called, we increase 'count'
+//When a file is loaded, we increase 'max'
+//When count == max (all is loaded), we increase 'done'
 var dataLoaded = {
 	count: 0,
 	max: 0,
@@ -224,11 +200,20 @@ var championData = new Array();
 var champion = new Array();
 
 //MONSTERS AND CHARACTERS
-var IMAGE_CHA_HEAD = 0,
+var IMAGE_CHA_LEG = 0,
 	IMAGE_CHA_TORSO = 1,
-	IMAGE_CHA_LEG = 2,
-	IMAGE_CHA_ARM = 3,
+	IMAGE_CHA_ARM = 2,
+	IMAGE_CHA_HEAD = 3,
 	IMAGE_CHA_MINI = 4;
+
+var	PART_CHA_LEG = 0,
+	PART_CHA_TORSO = 1,
+	PART_CHA_ARM_LEFT = 2,
+	PART_CHA_HEAD = 3,
+	PART_CHA_MINI = 4,
+	PART_CHA_ARM_RIGHT = 5,
+	PART_CHA_ARM_LEFT_ATTACK = 6,
+	PART_CHA_ARM_RIGHT_ATTACK = 7;
 
 var IMAGE_CHA_DISTANCE_1 = 0,
 	IMAGE_CHA_DISTANCE_2 = 1,
