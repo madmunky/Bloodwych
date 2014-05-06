@@ -1,21 +1,32 @@
 //Init the game
+var debugWindow;
+
+
 $(function() {
 	initGame();
+        if (debug){
+            debugWindow = window.open("","Bloodwych Debug","status=no, width=400, height=200");
+            debugWindow.document.body.style.background = '#000000';
+            debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
+        }
 });
 
 function updatePlayerViewScreen() {
 
-	$('section.debug p').html('');
+	$('section.debug p',debugWindow.document).html('');
 	clearCanvas();
 	configCanvas();
-	ctx.font = "normal 11px verdana, sans-serif";
-	ctx.fillStyle = "#FFF";
+	//ctx.font = "normal 11px verdana, sans-serif";
+	//ctx.fillStyle = "#FFF";
 	for(p = 0; p < 2; p++) {
 		drawPlayersView(player[p]);
-		ctx.fillText("Player " + (p + 1), p * 410, 250);
-		ctx.fillText("T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d, p * 410, 270);
+                debugText(player[p], "Player " + (p + 1));
+                debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
+		//ctx.fillText("Player " + (p + 1), p * 410, 250);
+		//ctx.fillText("T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d, p * 410, 270);
 	}
-	ctx.fillText("FPS: " + fps.getFPS(), 0, 310);
+        debugText(p,"FPS: " + fps.getFPS());
+	//ctx.fillText("FPS: " + fps.getFPS(), 0, 310);
 	/*player[1].updateView(tower[towerThis].floor[player[1].floor].Map);
 	drawPlayersView(player[1]);
 	ctx.fillText("Player 2", 410, 250);
@@ -23,7 +34,7 @@ function updatePlayerViewScreen() {
 	ctx.fillText("Current Map: " + TOWER_NAME[towerThis], 410, 290);
 	ctx.fillText("Floor: " + player[1].floor.toString(), 410, 310);*/
 
-	writeFontImage("Testing: ,!) 123", 0, 320, COLOUR[COLOUR_GREEN]);
+	//writeFontImage("Testing: ,!) 123", 0, 320, COLOUR[COLOUR_GREEN]);
         
 }
 
@@ -145,5 +156,5 @@ function debugTextPrint(p) {
 }
 
 function debugText(p, txt) {
-	$('section.debug.player' + p.id + ' p').append('P' + (p.id + 1) + ': ' + txt + '<br/>');
+	$('section.debug.player' + p.id + ' p',debugWindow.document).append('P' + (p.id + 1) + ': ' + txt + '<br/>');
 }
