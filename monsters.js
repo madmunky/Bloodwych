@@ -412,19 +412,19 @@ function initMonsters(t) {
 	}
 
 	//TESTING!!! REMOVE AFTER
-	if(t.id === TOWER_MOD0) {
+	/*if(t.id === TOWER_MOD0) {
 		var max = monster[t.id].length;
 		monster[t.id][max] = new Monster(max, 1, 0, 55, t.id, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
 		max++;
 		monster[t.id][max] = new Monster(max, 1, 0, 56, t.id, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
 		max++;
-		/*monster[t.id][max] = new Monster(max, 1, 0, CHA_ROSANNE, t.id, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);
+		monster[t.id][max] = new Monster(max, 1, 0, CHA_ROSANNE, t.id, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);
 		max++;
 		monster[t.id][max] = new Monster(max, 1, 0, 25, t.id, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
 		max++;
 		monster[t.id][max] = new Monster(max, 1, 0, 27, t.id, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
-		max++;*/
-	}
+		max++;
+	}*/
 
 	for(i = 0; i < monsterPaletteData.length; i++) {
 		var body = CHA_BODY[monsterBodiesData[i][0]];

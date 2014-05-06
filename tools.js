@@ -254,7 +254,7 @@ function grabImageAt(image, startX, startY, width, height, flip, scale) {
 
 	if (typeof scale === "undefined") {
 		scale = 1;
-	};
+	}
 
 	try {
 		var can = document.createElement('canvas');
