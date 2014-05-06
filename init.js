@@ -126,8 +126,8 @@ function initData() {
 	grabFont();
 	initChampions();
 	initSpells();
-	player[0] = new Player(0, 0, 0);
-	player[1] = new Player(1, 410, 0);
+	player[0] = new Player(0, (canvas.width - (128 * scale)) /2, 30);
+	player[1] = new Player(1, (canvas.width - (128 * scale)) /2, 320);
 	initPlayersQuickStart();
 	initTowerSwitches();
 	switchTower(0);

@@ -8,7 +8,7 @@ img.gfx {
 	display: none;
 }
 div.content {
-	width: 800px;
+	width: 1000px;
 	margin: 0 auto;
 }
 div.logo {
@@ -28,7 +28,7 @@ section.debug {
 	overflow-y: auto;
 }
 canvas {
-	background: url(../images/loading.png) top left no-repeat;
+	background: url(../images/loading.png) center center no-repeat;
 	border: 2px solid #444;
 	clear: both;
 	float: left;
