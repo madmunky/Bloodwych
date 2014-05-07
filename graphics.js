@@ -563,13 +563,13 @@ function recolourSprite(img, paletteFrom, paletteTo) {
 	ctx1.putImageData(imageData, 0, 0);
 	// put the re-colored image back on the image
 
-	var img1 = new Image();
-	img1.width = imageData.width;
-	img1.height = imageData.height;
-	img1.src = c.toDataURL();
-	c = null;
-	return img1;
-	img1 = null;
+	//var img1 = new Image();
+	//img1.width = imageData.width;
+	//img1.height = imageData.height;
+	//img1.src = c.toDataURL();
+	//c = null;
+	return c;
+	//img1 = null;
 }
 
 function recolorImage(img, colour, folder, type, item) {
@@ -634,10 +634,10 @@ function recolorImage(img, colour, folder, type, item) {
 	ctx1.putImageData(imageData, 0, 0);
 	// put the re-colored image back on the image
 
-	var img1 = new Image();
-	img1.width = imageData.width;
-	img1.height = imageData.height;
-	img1.src = c.toDataURL();
+	//var img1 = new Image();
+	//img1.width = imageData.width;
+	//img1.height = imageData.height;
+	//img1.src = c.toDataURL();
 
-	return img1;
+	return c;
 }

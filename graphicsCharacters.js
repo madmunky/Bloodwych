@@ -335,16 +335,16 @@ function grabCharacter(m, part, dir, dist) {
 			can.width = width;
 			can.height = height;
 			var charContext = can.getContext("2d");
-			var charImageObj = new Image();
-			charImageObj.width = width;
-			charImageObj.height = height;
+			//var charImageObj = new Image();
+			//charImageObj.width = width;
+			//charImageObj.height = height;
 
 			charContext.drawImage(mini, 0, 0, mini.width, mini.height);
 
 			charContext.save();
-			charImageObj.src = can.toDataURL();
+			//charImageObj.src = can.toDataURL();
 			delete mini;
-			return charImageObj;
+			return can;
 		}
 	} else if (dist < 4 && part !== IMAGE_CHA_MINI) {
 		if (typeof monsterPalette[form] !== "undefined") {
@@ -392,9 +392,9 @@ function grabCharacter(m, part, dir, dist) {
 			can.width = width;
 			can.height = height;
 			var charContext = can.getContext("2d");
-			var charImageObj = new Image();
-			charImageObj.width = width;
-			charImageObj.height = height;
+			//var charImageObj = new Image();
+			//charImageObj.width = width;
+			//charImageObj.height = height;
 
 			switch (part) {
 				case IMAGE_CHA_LEG:
@@ -453,9 +453,9 @@ function grabCharacter(m, part, dir, dist) {
 			charContext.drawImage(partSprite, coord.x, coord.y, partSprite.width, partSprite.height);
 
 			charContext.save();
-			charImageObj.src = can.toDataURL();
+			//charImageObj.src = can.toDataURL();
 			delete partSprite;
-			return charImageObj;
+			return can;
 		}
 	}
 	//} catch (e) {
