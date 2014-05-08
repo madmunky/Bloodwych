@@ -385,7 +385,7 @@ function grabCharacter(m, part, dir, dist) {
 			var leg = characterGfx[IMAGE_CHA_LEG][monsterPalette[form].leg][dist][d[dir2]];
 			var partSprite = recolourSprite(characterGfx[part][paletteType][dist][d[dir6]], MON_PALETTE_DEFAULT, palette);
 
-			var height = Math.floor(head.height * 0.58) + torso.height + leg.height,
+			var height = Math.floor(head.height * 0.65) + torso.height + leg.height,
 				width = 65; //arm.width + torso.width + arm.width;
 
 			var can = document.createElement('canvas');
@@ -412,7 +412,7 @@ function grabCharacter(m, part, dir, dist) {
 				case IMAGE_CHA_HEAD:
 					var coord = {
 						x: Math.floor((width - head.width) * 0.5),
-						y: height - leg.height - torso.height - Math.floor(head.height * 0.58)
+						y: height - leg.height - torso.height - Math.floor(head.height * 0.65)
 					};
 					break;
 				case IMAGE_CHA_ARM:
