@@ -4,13 +4,14 @@ var debugWindow;
 
 $(function() {
 	initGame();
-        
+       
         if (debug){
             debugWindow = window.open("","Bloodwych Debug","status=no, width=400, height=200");
+            if (debugWindow === null || typeof(debugWindow)==='undefined') { 	
             debugWindow.document.body.innerHTML = '';
             debugWindow.document.body.style.background = '#000000';
             debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
-        }
+            }}
 });
 
 function updatePlayerViewScreen() {
@@ -150,5 +151,7 @@ function debugTextPrint(p) {
 }
 
 function debugText(p, txt) {
+    if (debugWindow === null || typeof(debugWindow)==='undefined') { 
 	$('section.debug.player' + p.id + ' p',debugWindow.document).append('P' + (p.id + 1) + ': ' + txt + '<br/>');
+    }
 }
