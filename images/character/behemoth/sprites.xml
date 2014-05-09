@@ -1,0 +1,18 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="slice01_01.png" x="0" y="51" width="29" height="51"/>
+	<SubTexture name="slice02_02.png" x="78" y="90" width="19" height="36"/>
+	<SubTexture name="slice03_03.png" x="58" y="63" width="23" height="27"/>
+	<SubTexture name="slice04_04.png" x="0" y="0" width="40" height="51"/>
+	<SubTexture name="slice05_05.png" x="40" y="0" width="28" height="36"/>
+	<SubTexture name="slice06_06.png" x="58" y="90" width="20" height="27"/>
+	<SubTexture name="slice09_09.png" x="29" y="51" width="29" height="51"/>
+	<SubTexture name="slice10_10.png" x="58" y="36" width="23" height="27"/>
+	<SubTexture name="slice11_11.png" x="68" y="0" width="19" height="36"/>
+	<SubTexture name="slice12_12.png" x="81" y="57" width="14" height="26"/>
+	<SubTexture name="slice13_13.png" x="87" y="0" width="10" height="18"/>
+	<SubTexture name="slice14_14.png" x="38" y="102" width="16" height="21"/>
+	<SubTexture name="slice15_15.png" x="40" y="36" width="11" height="15"/>
+	<SubTexture name="slice16_16.png" x="0" y="102" width="19" height="21"/>
+	<SubTexture name="slice17_17.png" x="81" y="36" width="15" height="21"/>
+	<SubTexture name="slice18_18.png" x="19" y="102" width="19" height="21"/>
+</TextureAtlas>

@@ -56,6 +56,15 @@
 	var canvas = document.getElementById("game-port");
 	var ctx = canvas.getContext("2d");
 	</script>
+        <script>
+            $(document).ready(function(){
+                function hideNetbeansGlassPane() {
+                    $('#netbeans_glasspane').remove();
+                }
+                setTimeout(hideNetbeansGlassPane, 500);
+            });
+        </script>
+        
 </body>
 
 </html>
