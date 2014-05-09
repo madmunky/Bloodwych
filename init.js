@@ -37,8 +37,9 @@ function updateLoadingScreen(msg, percent) {
 }
 
 function refreshLoadingScreen(msg, percent) {
-	ctx.clearRect(0, 0, 795, 20);
-	ctx.font = "normal 11px verdana, sans-serif";
+	//ctx.clearRect(0, 0, 795, 20);
+        clearCanvas	
+        ctx.font = "normal 11px verdana, sans-serif";
 	ctx.fillStyle = "#FFF";
 	ctx.fillText(percent + "% - " + msg + "...", 0, 15);
 }
@@ -92,7 +93,14 @@ function loadGfxData() {
 	gfxLoadImage("character", "torsos", "");
 	gfxLoadImage("character", "legs", "");
 	gfxLoadImage("character", "minis", "");
-
+        
+        //Monsters
+        gfxLoadImage("character", "behemoth", "");
+        gfxLoadImage("character", "crab", "");
+        gfxLoadImage("character", "dragon", "");
+        gfxLoadImage("character", "nastyfloater", "");
+        gfxLoadImage("character", "summon", "");
+        
 	//Misc
 	gfxLoadImage("misc", "font", "", null);
 }
