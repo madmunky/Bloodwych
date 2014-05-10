@@ -94,10 +94,10 @@ function doKeyDown(e) {
 			player[0].testMode();
 			break; // F cheat
 		case KEY_PLUS:
-			testDirection = (testDirection + 1) % 4;
+			testPalette = testPalette + 1;
 			break;
 		case KEY_MINUS:
-			testDirection = (testDirection + 3) % 4;
+			testPalette = testPalette - 1;
 			break;
 		case KEY_6:
 			testDirection = (testDirection + 3) % 4;

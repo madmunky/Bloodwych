@@ -12,6 +12,7 @@ var characterGfx = [null, null, null, null, null];
 var characterImages = [];
 var testDistance = 0;
 var testDirection = 0;
+var testPalette = 0;
 var timerMaster = 0;
 var timerMonsterMove = 0;
 var players = 0;

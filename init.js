@@ -38,7 +38,7 @@ function updateLoadingScreen(msg, percent) {
 
 function refreshLoadingScreen(msg, percent) {
 	//ctx.clearRect(0, 0, 795, 20);
-        clearCanvas	
+        clearCanvas();	
         ctx.font = "normal 11px verdana, sans-serif";
 	ctx.fillStyle = "#FFF";
 	ctx.fillText(percent + "% - " + msg + "...", 0, 15);
