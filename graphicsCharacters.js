@@ -500,3 +500,4 @@ function drawCharacter(m, dir, dist, player, offset) {
 		}
 	}
 }
+

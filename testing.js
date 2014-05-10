@@ -4,15 +4,16 @@
  * and open the template in the editor.
  */
 //var maleCharacterSpriteLocations = characterSpriteLocation();
-var testMon1 = 5,
+var testMon1 = 0,
         testDistance = 0,
         testDirection = 0;
 var Summon;
+var behemoth;
 
 function testing(){
     
-     if (Summon === null || typeof(Summon)==='undefined') { 
-        Summon = grabSummon();     
+     if (behemoth === null || typeof(behemoth)==='undefined' && gfx['character']['behemoth'].width > 0) { 
+        behemoth = grabSpriteArray(gfx['character']['behemoth'],behemothArray());     
      }    
     testSummon();
     
@@ -66,7 +67,45 @@ function grabSummon(){
 }
 
 function testSummon(){
-    if (Summon !== null || typeof(Summon)!=='undefined') {
-        ctx.drawImage(Summon[0][testDirection][testDistance][0],0,0);
+    if (behemoth !== null || typeof(behemoth)!=='undefined') {
+        ctx.drawImage(behemoth[testMon1],0,0);
     }
+}
+
+function grabSpriteArray(spriteSheetIMG,spriteSheetArray){
+    
+    var ImageArray = [];
+    
+    for (x = 0; x < spriteSheetArray.length;x++){
+        ImageArray.push(grabImageAt(spriteSheetIMG, spriteSheetArray[x][0], spriteSheetArray[x][1], spriteSheetArray[x][2], spriteSheetArray[x][3], false));        
+    }
+    
+    return ImageArray;
+    
+}
+
+function behemothArray(){
+    
+    var ImageArray = new Array();
+
+        //BODY
+	ImageArray[0] = new Array(0, 2, 29, 51);
+        ImageArray[1] = new Array(30, 1, 40, 51);
+        ImageArray[2] = new Array(72, 1, 29, 51);
+        ImageArray[3] = new Array(5, 63, 19, 36);
+        ImageArray[4] = new Array(35, 63, 28, 36);
+        ImageArray[5] = new Array(77, 63, 19, 36);
+        ImageArray[6] = new Array(5, 106, 23, 27);
+        ImageArray[7] = new Array(39, 105, 20, 27);
+        ImageArray[8] = new Array(76, 106, 23, 27);
+        ImageArray[9] = new Array(7, 136, 19, 21 );
+        ImageArray[10] = new Array(43, 136, 15, 21);
+        
+        //ARMS
+        ImageArray[11] = new Array(110, 2, 14, 26);
+        ImageArray[12] = new Array(128, 2, 16, 21);
+        ImageArray[13] = new Array(112, 64, 10, 18);
+        ImageArray[14] = new Array(131, 64, 11, 15);
+    
+    return ImageArray;
 }
