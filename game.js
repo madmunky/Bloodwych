@@ -17,7 +17,7 @@ Game.prototype = {
 	// Update the game model
 	update: function() {
 		timerMaster++;
-		monsterMove();
+		monsterAction();
 	},
 
 	subscribe: function(e, callback, target) {
@@ -37,12 +37,17 @@ Game.prototype = {
 	}
 }
 
-function monsterMove() {
+function monsterAction() {
 	if(timerMaster - timerMonsterMove >= 20) {
 		timerMonsterMove = timerMaster;
+		monsterAttackSequence = 0;
 		mon = getMonstersInTower(towerThis);
 		for(m in mon) {
 			mon[m].move();
 		}
+	}
+	if(timerMaster - timerMonsterAttack >= 3) {
+		timerMonsterAttack = timerMaster;
+		monsterAttackSequence++;
 	}
 }

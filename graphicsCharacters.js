@@ -483,6 +483,14 @@ function drawCharacter(m, dir, dist, player, offset) {
 					if(dir === 0 || dir === 2) {
 						dir1 = 0;
 						dir2 = 2;
+						if(m.attacking) {
+							if(monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+								dir2 = 5;
+							}
+							if(monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+								dir1 = 4;
+							}
+						}
 					}
 				}
 				var offx = 64 - Math.floor(m.gfx[part][dist][dir1].width * 0.5) + offset.x;

@@ -9,6 +9,7 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	this.x = x;
 	this.y = y;
 	this.d = d;
+	this.attacking = false;
 	if(square > CHAR_FRONT_SOLO) {
 		this.square = (square + d) % 4;
 	} else {
@@ -59,12 +60,13 @@ Monster.prototype.canInteract = function() {
 	} else if(this.floor === player[1].floor && this.x + xy.x === player[1].x && this.y + xy.y === player[1].y) {
 		ply = 1;
 	}
-	if(this.isAgressive()) {
+	if(this.isAgressive()) { //enemy
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
 			if (ply > -1) {
 				//attack player
+				this.attack(true);
 				PrintLog('PLAYER ' + (ply + 1) + ' GETS HIT BY MONSTER #' + this.id + '!');
 				return ply;
 			}
@@ -74,6 +76,7 @@ Monster.prototype.canInteract = function() {
 			if(this.id !== mon[m].id && this.floor === mon[m].floor && this.x + xy.x === mon[m].x && this.y + xy.y === mon[m].y) {
 				if (mon[m].champId > -1) {
 					//attack champion
+					this.attack(true);
 					PrintLog('CHAMPION ' + getChampionName(mon[m].champId) + ' GETS HIT BY MONSTER #' + this.id + '!!!');
 					return 2;
 				} else if(this.teamId === 0 && this.square > CHAR_FRONT_SOLO) {
@@ -184,6 +187,7 @@ Monster.prototype.canMoveByWood = function() {
 
 Monster.prototype.move = function() {
 	if (this.teamId >= 0 && !this.isRecruited()) {
+		this.attack(false);
 		var canMove = this.canMove();
 		if (canMove === 2 && this.canInteract() > -1) return;
 		if (canMove === 1) {
@@ -343,12 +347,29 @@ Monster.prototype.getSquareByDirNext = function() {
 	}
 }
 
+Monster.prototype.attack = function(attack) {
+	var team = getMonsterTeam(this.teamId);
+	if(attack) {
+		this.attacking = true;
+		for(i = 1; i < team.length; i++) {
+			team[i].attacking = true;
+		}
+	} else {
+		this.attacking = false;
+		for(i = 1; i < team.length; i++) {
+			team[i].attacking = false;
+		}
+
+	}
+}
+
 Monster.prototype.getChampion = function() {
 	if(this.champId > -1) {
 		return champion[this.champId];
 	}
 	return null;
 }
+
 Monster.prototype.isRecruited = function() {
 	if(this.champId > -1) {
 		return champion[this.champId].recruited;

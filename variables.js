@@ -15,6 +15,7 @@ var testDirection = 0;
 var testPalette = 0;
 var timerMaster = 0;
 var timerMonsterMove = 0;
+var timerMonsterAttack = 0;
 var players = 0;
 var towerSwitchesData = new Array();
 var loadingInterval = 0;
@@ -377,6 +378,7 @@ CHA_BODY[13] = {
 
 var monsterMax = new Array();
 var monsterTeamIdMax = 0;
+var monsterAttackSequence = 0;
 var monster = new Array();
 
 //Switches
