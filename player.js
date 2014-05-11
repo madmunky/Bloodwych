@@ -19,9 +19,9 @@ function Player(id, PortX, PortY) {
 	this.moving = 0; //0 = Forward,1 = Right, 2 = Backwards, 3 = Left
 	this.towerSwitches = new Array();
 
-	this.setBinaryView(18, 8, 1, '1');
+	//this.setBinaryView(18, 8, 1, '1');
 
-	players++;
+	//players++;
 }
 
 Player.prototype.getViewPortal = function() {

@@ -4,41 +4,37 @@ var debugWindow;
 
 $(function() {
 	initGame();
-       
-        if (debug){
-            debugWindow = window.open("","Bloodwych Debug","status=no, width=400, height=200");
-            if (debugWindow !== null || typeof(debugWindow)!=='undefined') { 	
-                debugWindow.document.body.innerHTML = '';
-                debugWindow.document.body.style.background = '#000000';
-                debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
-            }
-        }
-        
+
+	if (debug) {
+		debugWindow = window.open("", "Bloodwych Debug", "status=no, width=400, height=200");
+		if (debugWindow !== null || typeof(debugWindow) !== 'undefined') {
+			debugWindow.document.body.innerHTML = '';
+			debugWindow.document.body.style.background = '#000000';
+			debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
+		}
+	}
+
 });
 
 function updatePlayerViewScreen() {
 
-	$('section.debug p',debugWindow.document).html('');
+	$('section.debug p', debugWindow.document).html('');
 	clearCanvas();
 	configCanvas();
-        debugText(player[0],"FPS: " + fps.getFPS());
-        testing();
-	for(p = 0; p < 2; p++) {		
-                debugText(player[p], "Player " + (p + 1));
-                debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
+	drawDashboard();
+	debugText(player[0], "FPS: " + fps.getFPS());
+	testing();
+	for (p = 0; p < 2; p++) {
+		debugText(player[p], "Player " + (p + 1));
+		debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
 		drawPlayersView(player[p]);
-                
-	}
 
-        
-        
+	}
 	//writeFontImage("Testing: ,!) 123", 0, 320, COLOUR[COLOUR_GREEN]);
-        
 }
 
-function myDIx(canvas, img, PosAry, P, scale) {
-
-	if (typeof img === "undefined" || img === null) {} else {
+function myDIx(canvas, img, PosAry) {
+	if (typeof canvas.drawImage !== "undefined" && typeof img !== "undefined" && img !== null) {
 		canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] * scale), (PosAry[5] * scale), PosAry[2] * scale, PosAry[3] * scale);
 	}
 }
@@ -53,6 +49,14 @@ function configCanvas() {
 
 function clearCanvas() {
 	canvas.width = canvas.width;
+}
+
+function drawDashboard() {
+	myDIx(ctx, gfx["misc"]["dashboard0"], [0, 0, 320, 86, 0, 10]);
+	myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
+	myDIx(ctx, gfx["misc"]["dashboard1"], [0, 0, 320, 86, 0, 114]);
+	writeFontImage(champion[player[0].champion[0]].firstName, 226, 17, COLOUR[COLOUR_YELLOW]);
+	writeFontImage(champion[player[1].champion[0]].firstName, 226, 121, COLOUR[COLOUR_YELLOW]);
 }
 
 //Renders the sub-coloured objects. E.g. for locked doors and banners
@@ -126,12 +130,13 @@ function gfxLoadImage(folder, type, item, sub) {
 
 function checkAllGfxLoaded() {
 	gfxLoaded.max++;
-	if(gfxLoaded.count === gfxLoaded.max) {
+	if (gfxLoaded.count === gfxLoaded.max) {
 		gfxLoaded.done = true;
 	}
 }
 
 //Print debug info for player
+
 function debugTextPrint(p) {
 	if (debug) {
 		hex = p.getBinaryView(15, 0, 16);
@@ -154,7 +159,7 @@ function debugTextPrint(p) {
 }
 
 function debugText(p, txt) {
-    if (debugWindow !== null || typeof(debugWindow)!=='undefined') { 
-	$('section.debug.player' + p.id + ' p',debugWindow.document).append('P' + (p.id + 1) + ': ' + txt + '<br/>');
-    }
+	if (debugWindow !== null || typeof(debugWindow) !== 'undefined') {
+		$('section.debug.player' + p.id + ' p', debugWindow.document).append('P' + (p.id + 1) + ': ' + txt + '<br/>');
+	}
 }

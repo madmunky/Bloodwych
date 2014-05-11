@@ -39,51 +39,69 @@ function getChampionName(id, full) {
 		case CHA_BLODWYN:
 			name = "BLODWYN";
 			if (full) name += " STONEMAIDEN";
+			break;
 		case CHA_ASTROTH:
 			name = "ASTROTH";
 			if (full) name += " SLAEMWORT";
+			break;
 		case CHA_SIR_EDWARD:
 			name = "SIR EDWARD";
 			if (full) name += " LION";
+			break;
 		case CHA_ULRICH:
 			name = "ULRICH";
 			if (full) name += " STERNAXE";
+			break;
 		case CHA_MURLOCK:
-			return "MURLOCK";
+			name = "MURLOCK";
 			if (full) name += " DARKENHEART";
+			break;
 		case CHA_ZOTHEN:
 			name = "ZOTHEN";
 			if (full) name += " RUNECASTER";
+			break;
 		case CHA_MEGRIM:
 			name = "MEGRIM";
 			if (full) name += " OF MOONWYCH";
+			break;
 		case CHA_ZASTAPH:
 			name = "ZASTAPH";
 			if (full) name += " MANTRIC";
+			break;
 		case CHA_ELEANOR:
 			name = "ELEANOR";
 			if (full) name += " OF AVALON";
+			break;
 		case CHA_BALDRICK:
 			name = "BALDRICK";
 			if (full) name += " THE DUNG";
+			break;
 		case CHA_SETHRA:
 			name = "SETHRA";
 			if (full) name += " BHOAGHAIL";
+			break;
 		case CHA_HENGIST:
 			name = "HENGIST";
 			if (full) name += " MELDANASH";
+			break;
 		case CHA_ROSANNE:
 			name = "ROSANNE";
 			if (full) name += " SWIFTHAND";
+			break;
 		case CHA_ELFRIC:
 			name = "ELFRIC";
 			if (full) name += " FALAENDOR";
+			break;
 		case CHA_MR_FLAY:
 			name = "MR. FLAY";
 			if (full) name += " SEPULCRAST";
+			break;
 		case CHA_THAI_CHANG:
 			name = "THAI CHANG";
 			if (full) name += " OF YINN";
+			break;
+		default:
+			break;
 	}
 	return name;
 }

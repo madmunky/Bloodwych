@@ -38,13 +38,18 @@ function updateLoadingScreen(msg, percent) {
 
 function refreshLoadingScreen(msg, percent) {
 	//ctx.clearRect(0, 0, 795, 20);
-        clearCanvas();	
-        ctx.font = "normal 11px verdana, sans-serif";
+	clearCanvas();
+	ctx.font = "normal 11px verdana, sans-serif";
 	ctx.fillStyle = "#FFF";
 	ctx.fillText(percent + "% - " + msg + "...", 0, 15);
 }
 
 function loadGfxData() {
+	//Misc
+	gfxLoadImage("misc", "dashboard0");
+	gfxLoadImage("misc", "dashboard1");
+	gfxLoadImage("misc", "separator");
+
 	//Background
 	gfxLoadImage("dungeon", "background");
 
@@ -93,14 +98,14 @@ function loadGfxData() {
 	gfxLoadImage("character", "torsos", "");
 	gfxLoadImage("character", "legs", "");
 	gfxLoadImage("character", "minis", "");
-        
-        //Monsters
-        gfxLoadImage("character", "behemoth", "");
-        gfxLoadImage("character", "crab", "");
-        gfxLoadImage("character", "dragon", "");
-        gfxLoadImage("character", "nastyfloater", "");
-        gfxLoadImage("character", "summon", "");
-        
+
+	//Monsters
+	gfxLoadImage("character", "behemoth", "");
+	gfxLoadImage("character", "crab", "");
+	gfxLoadImage("character", "dragon", "");
+	gfxLoadImage("character", "nastyfloater", "");
+	gfxLoadImage("character", "summon", "");
+
 	//Misc
 	gfxLoadImage("misc", "font", "", null);
 }
@@ -134,8 +139,8 @@ function initData() {
 	grabFont();
 	initChampions();
 	initSpells();
-	player[0] = new Player(0, (canvas.width - (128 * scale)) /2, 30);
-	player[1] = new Player(1, (canvas.width - (128 * scale)) /2, 320);
+	player[0] = new Player(0, (canvas.width - (128 * scale)) / 2, 12 * scale);
+	player[1] = new Player(1, (canvas.width - (128 * scale)) / 2, 116 * scale);
 	initPlayersQuickStart();
 	initTowerSwitches();
 	switchTower(0);

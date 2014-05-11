@@ -16,7 +16,7 @@ var testPalette = 0;
 var timerMaster = 0;
 var timerMonsterMove = 0;
 var timerMonsterAttack = 0;
-var players = 0;
+//var players = 0;
 var towerSwitchesData = new Array();
 var loadingInterval = 0;
 
