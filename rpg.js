@@ -6,7 +6,7 @@ function calculateAttack(from, to) {
 	} if(critChance <= 4) {
 		crit = 2;
 	}
-	var power = Math.floor(Math.random() * (from.level + (10 * crit));
+	var power = Math.floor(Math.random() * (from.level + (10 * crit)));
 	if(from instanceof Monster) {
 		if(to instanceof Player) {
 			power = power + to.ac
