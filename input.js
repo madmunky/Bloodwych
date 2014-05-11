@@ -135,11 +135,11 @@ function checkClickEvents() {
 	});
 }
 
-        function touchDown() {
+function touchDown() {
             touchXY();
         }
  
-        function touchXY(e) {
+function touchXY(e) {
             if (!e)
                 var e = event;
             e.preventDefault();
@@ -154,7 +154,7 @@ function checkClickEvents() {
             
         }
         
-        function processCanvasInput(x,y,xy){
+function processCanvasInput(x,y,xy){
             
             for (p = 0; p < 2; p++) {
 				xy = {
