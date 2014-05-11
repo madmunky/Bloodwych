@@ -5,7 +5,7 @@ var tower = new Array();
 
 //Setup some global Varibles for needed
 var scale = 3;
-var debug = true;
+var debug = false;
 var debugHigh = false;
 var game;
 var characterGfx = [null, null, null, null, null];

@@ -1,5 +1,8 @@
 function grabFont() {
 	//Grab the font characters from an image and store it in an array.
+        
+        if (gfx['misc']['font'].width > 0){
+        
 	fontImage = gfx['misc']['font'];
 
 	var myFont = [];
@@ -11,10 +14,15 @@ function grabFont() {
 	}
 
 	font = myFont;
+    }else{
+        alert('Font not loaded');
+    }
 
 }
 
 function writeFontImage(fontString, locationX, locationY, paletteTo) {
+
+    if (typeof(font[0]) !== 'undefined'){
 
 	fontString = fontString.toUpperCase();
 
@@ -56,6 +64,7 @@ function writeFontImage(fontString, locationX, locationY, paletteTo) {
 	fontContent.save();
 	ctx.drawImage(can, locationX * scale, locationY * scale, can.width * scale, can.height * scale);
 	can = null;
+    }
 
 }
 
