@@ -448,12 +448,12 @@ function grabCharacter(m, part, dir, dist) {
 						};
 					} else if (dir === 6) {
 						var coord = {
-							x: Math.floor((width - torso.width) * 0.5) - arm.width + 9,
+							x: Math.floor((width - torso.width) * 0.5) + 1,
 							y: height - leg.height - torso.height * 1.5
 						};
 					} else if (dir === 7) {
 						var coord = {
-							x: Math.floor((width + torso.width) * 0.5) - 9,
+							x: Math.floor((width + torso.width) * 0.5) - arm.width - 1,
 							y: height - leg.height - torso.height * 1.5
 						};
 					}
@@ -515,13 +515,13 @@ function drawCharacter(m, dir, dist, player, offset) {
 					} else if(dir === 1) {
 						if(m.attacking) {
 							if(monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
-								dir1 = 6;
+								dir1 = 7;
 							}
 						}
 					} else if(dir === 3) {
 						if(m.attacking) {
 							if(monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
-								dir1 = 7;
+								dir1 = 6;
 							}
 						}
 					}

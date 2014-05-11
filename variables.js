@@ -5,7 +5,7 @@ var tower = new Array();
 
 //Setup some global Varibles for needed
 var scale = 3;
-var debug = false;
+var debug = true;
 var debugHigh = false;
 var game;
 var characterGfx = [null, null, null, null, null];
@@ -204,8 +204,8 @@ var champion = new Array();
 //MONSTERS AND CHARACTERS
 var IMAGE_CHA_LEG = 0,
 	IMAGE_CHA_TORSO = 1,
-	IMAGE_CHA_ARM = 2,
-	IMAGE_CHA_HEAD = 3,
+	IMAGE_CHA_HEAD = 2,
+	IMAGE_CHA_ARM = 3,
 	IMAGE_CHA_MINI = 4;
 
 var	PART_CHA_LEG = 0,
