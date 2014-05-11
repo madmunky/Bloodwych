@@ -39,8 +39,8 @@ Monster.prototype.getGfx = function() {
 	if (characterGfx.length > 0) {
 		for(part = 0; part < 5; part++) {
 			for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-				for (d = 0; d < 6; d++) {
-					if(d < 4 || part === IMAGE_CHA_ARM) { //arms have two more 'directions'
+				for (d = 0; d < 8; d++) {
+					if(d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
 						gfx.push(grabCharacter(this, part, d, dis));
 					}
 				}

@@ -13,13 +13,18 @@ div.content {
 }
 div.logo {
 	text-align: center;
+	clear: both;
+	width: 100%;
 }
 div.behemoth {
 	text-align: center;
+	clear: both;
+	width: 100%;
 }
 section.info {
-	/*float: left;*/
-	/*width: 400px;*/
+	clear: both;
+	width: 100%;
+	float: left;
 }
 section.debug {
 /*	float: left;

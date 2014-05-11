@@ -370,7 +370,7 @@ function grabCharacter(m, part, dir, dist) {
 				case IMAGE_CHA_ARM:
 					paletteType = monsterPalette[form].arm;
 					palette = monsterPalette[form].armPalette;
-					d = [0, 2, 1, 3, 4, 5];
+					d = [0, 2, 1, 3, 4, 5, 4, 5];
 					dir6 = dir;
 					break;
 				case IMAGE_CHA_HEAD:
@@ -446,6 +446,16 @@ function grabCharacter(m, part, dir, dist) {
 							x: Math.floor((width + torso.width) * 0.5) - 5,
 							y: height - leg.height - torso.height * 1.5
 						};
+					} else if (dir === 6) {
+						var coord = {
+							x: Math.floor((width - torso.width) * 0.5) - arm.width + 9,
+							y: height - leg.height - torso.height * 1.5
+						};
+					} else if (dir === 7) {
+						var coord = {
+							x: Math.floor((width + torso.width) * 0.5) - 9,
+							y: height - leg.height - torso.height * 1.5
+						};
 					}
 					break;
 			}
@@ -479,16 +489,39 @@ function drawCharacter(m, dir, dist, player, offset) {
 			if(typeof m.gfx[part] !== "undefined" && typeof m.gfx[part][dist] !== "undefined" && typeof m.gfx[part][dist][dir] !== "undefined") {
 				var dir1 = dir;
 				var dir2 = -1;
-				if(part === IMAGE_CHA_ARM) {
-					if(dir === 0 || dir === 2) {
+				if(part === IMAGE_CHA_ARM) { //attack arms
+					if(dir === 0) {
 						dir1 = 0;
 						dir2 = 2;
 						if(m.attacking) {
-							if(monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+							if(monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
 								dir2 = 5;
 							}
-							if(monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+							if(monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
 								dir1 = 4;
+							}
+						}
+					} else if(dir === 2) {
+						dir1 = 2;
+						dir2 = 0;
+						if(m.attacking) {
+							if(monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+								dir2 = 4;
+							}
+							if(monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+								dir1 = 5;
+							}
+						}
+					} else if(dir === 1) {
+						if(m.attacking) {
+							if(monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+								dir1 = 6;
+							}
+						}
+					} else if(dir === 3) {
+						if(m.attacking) {
+							if(monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+								dir1 = 7;
 							}
 						}
 					}
