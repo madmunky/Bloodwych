@@ -130,7 +130,33 @@ function checkClickEvents() {
 			var x = e.pageX - canvas.offsetLeft;
 			var y = e.pageY - canvas.offsetTop;
 			var xy;
-			for (p = 0; p < 2; p++) {
+			processCanvasInput(x,y,xy);
+		}
+	});
+}
+
+        function touchDown() {
+            touchXY();
+        }
+ 
+        function touchXY(e) {
+            if (!e)
+                var e = event;
+            e.preventDefault();
+            
+            if (typeof player !== "undefined") {
+                        var x = e.targetTouches[0].pageX - canvas.offsetLeft;
+                        var y = e.targetTouches[0].pageY - canvas.offsetTop;
+			var xy;
+			processCanvasInput(x,y,xy);
+		}
+            
+            
+        }
+        
+        function processCanvasInput(x,y,xy){
+            
+            for (p = 0; p < 2; p++) {
 				xy = {
 					x: Math.floor((x - player[p].PortalX) / scale / 42.67),
 					y: Math.floor((y - player[p].PortalY) / scale / 38)
@@ -153,6 +179,5 @@ function checkClickEvents() {
 					}
 				}
 			}
-		}
-	});
-}
+            
+        }

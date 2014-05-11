@@ -47,31 +47,33 @@ function testSummon(){
     
     try{
     if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
-        ctx.drawImage(gfxBehemoth[testMon1][testDistance][testDirection],0,0,gfxBehemoth[testMon1][testDistance][testDirection].width*scale,gfxBehemoth[testMon1][testDistance][testDirection].height*scale);
+        ctx.drawImage(gfxBehemoth[testMon1][testDistance][testDirection],145*scale,25*scale,gfxBehemoth[testMon1][testDistance][testDirection].width*scale,gfxBehemoth[testMon1][testDistance][testDirection].height*scale);
+        ctx.drawImage(gfxBehemoth[1][0][2],133*scale,24*scale,gfxBehemoth[1][0][2].width*scale,gfxBehemoth[1][0][2].height*scale);
+        ctx.drawImage(gfxBehemoth[1][0][3],170*scale,24*scale,gfxBehemoth[1][0][3].width*scale,gfxBehemoth[1][0][3].height*scale);
         }
     }catch(e){}
-    
-    try{
-    if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {        
-        ctx.drawImage(recolourSprite(gfxSummon[testMon1], MON_PALETTE_DEFAULT, testP0),50*scale,0,gfxSummon[testMon1].width*scale,gfxSummon[testMon1].height*scale);
-        }
-    }catch(e){}
-    
-    try{
-    if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
-        ctx.drawImage(recolourSprite(gfxNastyFloater[testMon1], MON_PALETTE_DEFAULT, monsterPalette[testPalette].torsoPalette),0,60*scale,gfxNastyFloater[testMon1].width*scale,gfxNastyFloater[testMon1].height*scale);
-        }
-    }catch(e){}
-    try{
-    if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
-        ctx.drawImage(recolourSprite(gfxDragon[testMon1], MON_PALETTE_DEFAULT, monsterPalette[testPalette].torsoPalette),0,110*scale,gfxDragon[testMon1].width*scale,gfxDragon[testMon1].height*scale);
-        }
-    }catch(e){}
-    try{
-        if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
-        ctx.drawImage(recolourSprite(gfxCrab[testMon1], MON_PALETTE_DEFAULT, monsterPalette[testPalette].torsoPalette),250*scale,0*scale,gfxCrab[testMon1].width*scale,gfxCrab[testMon1].height*scale);
-        }
-    }catch(e){}
+//    
+//    try{
+//    if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {        
+//        ctx.drawImage(recolourSprite(gfxSummon[testMon1], MON_PALETTE_DEFAULT, testP0),50*scale,0,gfxSummon[testMon1].width*scale,gfxSummon[testMon1].height*scale);
+//        }
+//    }catch(e){}
+//    
+//    try{
+//    if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
+//        ctx.drawImage(recolourSprite(gfxNastyFloater[testMon1], MON_PALETTE_DEFAULT, monsterPalette[testPalette].torsoPalette),0,60*scale,gfxNastyFloater[testMon1].width*scale,gfxNastyFloater[testMon1].height*scale);
+//        }
+//    }catch(e){}
+//    try{
+//    if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
+//        ctx.drawImage(recolourSprite(gfxDragon[testMon1], MON_PALETTE_DEFAULT, monsterPalette[testPalette].torsoPalette),0,110*scale,gfxDragon[testMon1].width*scale,gfxDragon[testMon1].height*scale);
+//        }
+//    }catch(e){}
+//    try{
+//        if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
+//        ctx.drawImage(recolourSprite(gfxCrab[testMon1], MON_PALETTE_DEFAULT, monsterPalette[testPalette].torsoPalette),250*scale,0*scale,gfxCrab[testMon1].width*scale,gfxCrab[testMon1].height*scale);
+//        }
+//    }catch(e){}
     
 }
 
@@ -98,15 +100,15 @@ function behemothArray(spriteSheetIMG){
         DISTANCE_5 = [],
         DISTANCE_6 = [];
         //BODY
-	DISTANCE_1.push(grabImageAt(spriteSheetIMG,0, 2, 29, 51, false));
+	DISTANCE_1.push(grabImageAt(spriteSheetIMG,72, 1, 29, 51, false));
         DISTANCE_1.push(grabImageAt(spriteSheetIMG,30, 1, 40, 51, true));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG,30, 1, 40, 51, false));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG,72, 1, 29, 51, false));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG,30, 1, 40, 51, false));        
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG,0, 2, 29, 51, false));
         
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG,5, 63, 19, 36, false));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG,35, 63, 28, 36, true));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG,35, 63, 28, 36, false));
         DISTANCE_2.push(grabImageAt(spriteSheetIMG,77, 63, 19, 36, false));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG,35, 63, 28, 36, true));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG,35, 63, 28, 36, false));        
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG,5, 63, 19, 36, false));
         
         DISTANCE_3.push(grabImageAt(spriteSheetIMG,5, 106, 23, 27, false));
         DISTANCE_3.push(grabImageAt(spriteSheetIMG,39, 105, 20, 27, true));
@@ -116,6 +118,7 @@ function behemothArray(spriteSheetIMG){
         DISTANCE_4.push(grabImageAt(spriteSheetIMG,7, 136, 19, 21, false));
         DISTANCE_4.push(grabImageAt(spriteSheetIMG,43, 136, 15, 21, true));
         DISTANCE_4.push(grabImageAt(spriteSheetIMG,43, 136, 15, 21, false));
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG,78, 136, 19, 21, false));
         
         BODYPART.push(DISTANCE_1,DISTANCE_2,DISTANCE_3,DISTANCE_4);
         ImageArray.push(BODYPART);
