@@ -1,76 +1,123 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script src="/socket.io/socket.io.js"></script>
-	</head>
-	<body>
-		<select name="Colour" id="colour">
-			<option value="white">White</option>
-			<option value="red" style="color:red;">Red</option>
-			<option value="blue" style="color:blue;">Blue</option>
-			<option value="green" style="color:green;">Green</option>
-			<option value="black">Black</option>
-		</select>
-	</body>
-	<script type="text/javascript">
-	$(function () {
-		var socketio = io.connect("127.0.0.1:1337"); //86.24.136.220
 
-		socketio.on("message_to_client", function(data) {
-			var data = data['message'].split(',');
-			var col = data[0];
-			var x = parseInt(data[2]);
-			var y = parseInt(data[1]);
-			$('table').find('tr:nth-child(' + (x + 1) + ')').find('td:nth-child(' + (y + 1) + ')').css('background-color', col);
-		});
+<head>
+    <style>
+    .color-0 {
+        color: black;
+        background-color: white;
+    }
+    .color-1 {
+        color: white;
+        background-color: red;
+    }
+    .color-2 {
+        color: white;
+        background-color: blue;
+    }
+    .color-3 {
+        color: white;
+        background-color: green;
+    }
+    .color-4 {
+        color: white;
+        background-color: black;
+    }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
 
-		function sendMessage(data) {
-			socketio.emit("message_to_server", { message : data});
-		}
+<body>
+    <div class="online-count">Online:
+        <span>0</span>
+    </div>
+    <select name="Colour" id="colour">
+        <option value="0" class="color-0">White</option>
+        <option value="1" class="color-1">Red</option>
+        <option value="2" class="color-2">Blue</option>
+        <option value="3" class="color-3">Green</option>
+        <option value="4" class="color-4">Black</option>
+    </select>
+</body>
+<script type="text/javascript">
+$(function() {
+    var socketio = io.connect("80.101.96.156:1337"); //86.24.136.220
+	var clientCount = 0;
+	var size = 20;
 
-		$('body').on('click', 'td', function() {
-			var col = $('#colour').val();
-			var x = $(this).index();
-			var y = $(this).parent().index();
-			var data = col + ',' + x + ',' + y;
-			sendMessage(data);
-		});
+    socketio.on("message_to_client", function(data) {
+        var data = data['message'].split(',');
+        var col = data[0];
+        var x = parseInt(data[1]);
+        var y = parseInt(data[2]);
+        $('table').find('tr:nth-child(' + (y + 1) + ')').find('td:nth-child(' + (x + 1) + ')').attr('class', 'color-' + col);
+    });
+    socketio.on('online_count_to_client', function(data) {
+        clientCount = data.count;
+        $('.online-count span').text(clientCount);
+    });
 
-		$('body').append('<table border="1" cellpadding="10" cellspacing="0">');
-		for(i = 0; i < 20; i++) {
-			$('table').append('<tr>');
-		}
-		for(i = 0; i < 20; i++) {
-			$('tr').append('<td>');
-		}
+    $('body').on('click touchstart', 'td', function() {
+        var col = $('#colour').val();
+        var x = $(this).index();
+        var y = $(this).parent().index();
+        var data = col + ',' + x + ',' + y;
+        socketio.emit("message_to_server", {
+            message: data
+        });
+    });
 
-		socketio.on("init_to_client", function(data) {
-			var cols = data['message'].split(',');
-			var i = 0;
-			var col = '';
-			for(y = 0; y < 20; y++) {
-				for(x = 0; x < 20; x++) {
-					if(typeof cols[i] === "undefined") {
-						break;
-					} else {
-						switch(data[i]) {
-							case '0': col = 'white'; break;
-							case '1': col = 'red'; break;
-							case '2': col = 'blue'; break;
-							case '3': col = 'green'; break;
-							case '4': col = 'black'; break;
-							default: col = ''; break;
-						}
-						$('table').find('tr:nth-child(' + (x + 1) + ')').find('td:nth-child(' + (y + 1) + ')').css('background-color', col);
-						i++;
-					}
-				}
-				if(typeof cols[i] === "undefined") {
-					break;
-				}
-			}
-		});
+    $('body').append('<table border="1" cellpadding="10" cellspacing="0">');
+    for (i = 0; i < size; i++) {
+        $('table').append('<tr>');
+    }
+    for (i = 0; i < size; i++) {
+        $('tr').append('<td>');
+    }
+
+    socketio.on("init_to_client", function(data) {
+        var cols = data['message'].split(',');
+        var i = 0;
+        var col = '';
+        while (true) {
+            if (typeof cols[i] === "undefined") {
+                break;
+            }
+            $('table').find('tr:nth-child(' + (Math.floor(i / size) + 1) + ')').find('td:nth-child(' + ((i % size) + 1) + ')').attr('class', 'color-' + cols[i]);
+            i++;
+        }
+    });
+
+    window.addEventListener("beforeunload", function (e) {
+        //var confirmationMessage = "You sure you wish to leave?";
+
+        saveData();
+        //(e || window.event).returnValue = confirmationMessage; //Gecko + IE
+ 		//return confirmationMessage;                            //Webkit, Safari, Chrome
 	});
-	</script>
+
+	function saveData() {
+        data = '';
+        for (y = 0; y < size; y++) {
+            for (x = 0; x < size; x++) {
+                if (x !== 0 || y !== 0) {
+                    data = data + ','
+                }
+                cls = $('table').find('tr:nth-child(' + (y + 1) + ')').find('td:nth-child(' + (x + 1) + ')').attr('class');
+                if(typeof cls !== "undefined" && typeof cls.split('-')[1] !== "undefined") {
+                	col = cls.split('-')[1];
+                } else {
+                	col = 0;
+                }
+                data = data + col;
+            }
+        }
+        socketio.emit("close_to_server", {
+            message: data
+        });
+	}
+});
+</script>
+
 </html>
