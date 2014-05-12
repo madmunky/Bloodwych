@@ -18,7 +18,7 @@ $(function() {
 
 function updatePlayerViewScreen() {
         if (debug){
-            if (debugWindow !== null || typeof(debugWindow) !== 'undefined') {}else{
+            if (typeof debugWindow !== "undefined" && debugWindow !== null) {
                 $('section.debug p', debugWindow.document).html('');
             }
         }
@@ -59,8 +59,8 @@ function drawDashboard() {
 	myDIx(ctx, gfx["misc"]["dashboard0"], [0, 0, 320, 86, 0, 10]);
 	myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
 	myDIx(ctx, gfx["misc"]["dashboard1"], [0, 0, 320, 86, 0, 114]);
-	writeFontImage(champion[player[0].champion[0]].firstName, 228, 16.5, COLOUR[COLOUR_YELLOW]);
-	writeFontImage(champion[player[1].champion[0]].firstName, 227, 120.5, COLOUR[COLOUR_YELLOW]);
+	writeFontImage(champion[player[0].champion[0]].firstName, 226, 17, COLOUR[COLOUR_YELLOW]);
+	writeFontImage(champion[player[1].champion[0]].firstName, 226, 121, COLOUR[COLOUR_YELLOW]);
 }
 
 //Renders the sub-coloured objects. E.g. for locked doors and banners
