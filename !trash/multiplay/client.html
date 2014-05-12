@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+			var socketio = io.connect("nb-jni.eperium.local:1337");
+
+			socketio.on("message_to_client", function(data) {
+				document.getElementById("chatlog").innerHTML = ("<hr/>" + data['message'] + document.getElementById("chatlog").innerHTML);
+			});
+
+			function sendMessage() {
+				var msg = document.getElementById("message_input").value;
+				socketio.emit("message_to_server", { message : msg});
+			}
+		</script>
+	</head>
+	<body>
+		<input type="text" id="message_input"/>
+		<button onclick="sendMessage()">send</button>
+		<div id="chatlog"></div>
+	</body>
+</html>
