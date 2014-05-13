@@ -30,6 +30,8 @@ function testing(){
 
 function testSummon(){
     
+    var tmpPalettes = [];
+    
     var testP0 = new Array(COLOUR[0],COLOUR[0],COLOUR[7],COLOUR[8]),
         testP1 = new Array(COLOUR[0],COLOUR[8],COLOUR[4],COLOUR[14]),
         testP2 = new Array(COLOUR[0],COLOUR[5],COLOUR[6],COLOUR[14]),
@@ -43,40 +45,19 @@ function testSummon(){
         testP10 = new Array(COLOUR[0],COLOUR[7],COLOUR[8],COLOUR[4]),
         testP11 = new Array(COLOUR[0],COLOUR[7],COLOUR[8],COLOUR[13]);
 
-        testP0 = testP7;
-    
+        tmpPalettes.push(testP0,testP1,testP2,testP3,testP4,testP5,testP6,testP7,testP8,testP9,testP10,testP11)
+        var myTmp = 6;
+        
     try{
     if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
         
-        var testGfx = gfxNastyFloater;
+        var testGfx = gfxSummon;
         
-        ctx.drawImage(recolourSprite(testGfx[testMon1][testDistance][testDirection], MON_PALETTE_DEFAULT, testP0),145*scale,25*scale,testGfx[testMon1][testDistance][testDirection].width*scale,testGfx[testMon1][testDistance][testDirection].height*scale);
-        ctx.drawImage(recolourSprite(testGfx[1][0][4], MON_PALETTE_DEFAULT, testP0),133*scale,24*scale,testGfx[1][0][4].width*scale,testGfx[1][0][4].height*scale);
-        ctx.drawImage(recolourSprite(testGfx[1][0][5], MON_PALETTE_DEFAULT, testP0),170*scale,24*scale,testGfx[1][0][5].width*scale,testGfx[1][0][5].height*scale);
+        ctx.drawImage(recolourSprite(testGfx[testMon1][testDistance][testDirection], MON_PALETTE_DEFAULT, tmpPalettes[myTmp]),145*scale,25*scale,testGfx[testMon1][testDistance][testDirection].width*scale,testGfx[testMon1][testDistance][testDirection].height*scale);
+        ctx.drawImage(recolourSprite(testGfx[1][0][4], MON_PALETTE_DEFAULT, tmpPalettes[myTmp]),133*scale,24*scale,testGfx[1][0][4].width*scale,testGfx[1][0][4].height*scale);
+        ctx.drawImage(recolourSprite(testGfx[1][0][5], MON_PALETTE_DEFAULT, tmpPalettes[myTmp]),170*scale,24*scale,testGfx[1][0][5].width*scale,testGfx[1][0][5].height*scale);
         }
     }catch(e){}
-//    
-//    try{
-//    if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {        
-//        ctx.drawImage(recolourSprite(gfxSummon[testMon1], MON_PALETTE_DEFAULT, testP0),50*scale,0,gfxSummon[testMon1].width*scale,gfxSummon[testMon1].height*scale);
-//        }
-//    }catch(e){}
-//    
-//    try{
-//    if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
-//        ctx.drawImage(recolourSprite(gfxNastyFloater[testMon1], MON_PALETTE_DEFAULT, monsterPalette[testPalette].torsoPalette),0,60*scale,gfxNastyFloater[testMon1].width*scale,gfxNastyFloater[testMon1].height*scale);
-//        }
-//    }catch(e){}
-//    try{
-//    if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
-//        ctx.drawImage(recolourSprite(gfxDragon[testMon1], MON_PALETTE_DEFAULT, monsterPalette[testPalette].torsoPalette),0,110*scale,gfxDragon[testMon1].width*scale,gfxDragon[testMon1].height*scale);
-//        }
-//    }catch(e){}
-//    try{
-//        if (gfxCrab !== null || typeof(gfxCrab)!=='undefined') {
-//        ctx.drawImage(recolourSprite(gfxCrab[testMon1], MON_PALETTE_DEFAULT, monsterPalette[testPalette].torsoPalette),250*scale,0*scale,gfxCrab[testMon1].width*scale,gfxCrab[testMon1].height*scale);
-//        }
-//    }catch(e){}
     
 }
 
@@ -420,4 +401,52 @@ function crabArray(spriteSheetIMG){
     ImageArray.push(BODYPART);
     
     return ImageArray;
+}
+
+function floaterArray(spriteSheetIMG){
+    
+    var ImageArray = [],
+         BODYPART = [],    
+         DISTANCE_1 = [],
+         DISTANCE_2 = [],
+         DISTANCE_3 = [],
+         DISTANCE_4 = [],
+         DISTANCE_5 = [],
+         DISTANCE_6 = [];
+ 
+    
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG,0,0,24,21,false));    
+    DISTANCE_2.push(grabImageAt(spriteSheetIMG,0,22,20,17,false));    
+    DISTANCE_3.push(grabImageAt(spriteSheetIMG,0,40,15,14,false));   
+    DISTANCE_4.push(grabImageAt(spriteSheetIMG,0,55,13,11,false));
+    DISTANCE_5.push(grabImageAt(spriteSheetIMG,0,67,9,12,false));
+    DISTANCE_6.push(grabImageAt(spriteSheetIMG,0,80,7,9,false));
+    
+    BODYPART.push(DISTANCE_1,DISTANCE_2,DISTANCE_3,DISTANCE_4,DISTANCE_5,DISTANCE_6);
+    ImageArray.push(BODYPART);
+    
+    var BODYPART = [],    
+         DISTANCE_1 = [],
+         DISTANCE_2 = [],
+         DISTANCE_3 = [],
+         DISTANCE_4 = [],
+         DISTANCE_5 = [],
+         DISTANCE_6 = [];
+    
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG,30,0,22,7,false));    
+    DISTANCE_2.push(grabImageAt(spriteSheetIMG,32,9,18,5,false));    
+    DISTANCE_3.push(grabImageAt(spriteSheetIMG,36,15,13,4,false));   
+    DISTANCE_4.push(grabImageAt(spriteSheetIMG,36,20,11,4,false));
+    
+    BODYPART.push(DISTANCE_1,DISTANCE_2,DISTANCE_3,DISTANCE_4);
+    ImageArray.push(BODYPART);
+    
+    var BODYPART = [],    
+         DISTANCE_1 = [],
+         DISTANCE_2 = [],
+         DISTANCE_3 = [],
+         DISTANCE_4 = [],
+         DISTANCE_5 = [],
+         DISTANCE_6 = [];
+    
 }
