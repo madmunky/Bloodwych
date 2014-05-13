@@ -71,17 +71,18 @@
 	}
 	.color-15 {
 		color: white;
-		background-color: rgb(255, 0, 255);
+		background-color: rgb(255, 255, 255);
 	}
 
 	input[type=radio] {
 	    display: none;
 	}
 	input[type=radio] + label {
-		border: solid 2px #fff;
+		border: solid 2px rgba(0, 0, 0, 0.1);
 	    display:inline-block;
 	    width: 50px;
 	    height: 50px;
+	    margin-right: 2px;
 	    text-align: center;
 	    vertical-align: middle;
 	    cursor: pointer;
@@ -90,7 +91,7 @@
 		content: " ";
 		position: absolute;
 		display: block;
-		border: solid 1px #fff;
+		border: solid 1px rgba(255, 255, 255, 0.5);
 		left: 0px;
 		top: 0px;
 	    width: 48px;
@@ -99,8 +100,19 @@
 	}
 	input[type=radio]:checked + label {
 		position: relative;
-		border: solid 2px #000;
+		border: solid 2px rgba(0, 0, 0, 0.5);
 	    z-index: 1;
+	}
+	table {
+		float: left;
+	}
+	canvas {
+		float: left;
+		border: solid 3px #888;
+		width: 120px;
+		height: 120px;
+		margin-left: 20px;
+
 	}
 	</style>
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -118,12 +130,15 @@
 	</div>
 	<p></p>
 	<div class="painting"></div>
+	<canvas id="output" class="output" width="120" height="120"></canvas>
 </body>
 <script type="text/javascript">
 $(function() {
+	var canvas = document.getElementById("output");
+	var ctx = canvas.getContext("2d");
 	var socketio = io.connect("nb-jni.eperium.local:1337"); //80.101.96.156 //86.24.136.220 //nb-jni.eperium.local
 	var clientCount = 0;
-	var size = 20;
+	var size = 40;
 	var saveTimeout = 0;
 
 	socketio.on("message_to_client", function(data) {
@@ -131,7 +146,8 @@ $(function() {
 		var col = data[0];
 		var x = parseInt(data[1]);
 		var y = parseInt(data[2]);
-		$('table').find('tr:nth-child(' + (y + 1) + ')').find('td:nth-child(' + (x + 1) + ')').attr('class', 'color-' + col);
+		drawDot(x, y, col);
+		//$('table').find('tr:nth-child(' + (y + 1) + ')').find('td:nth-child(' + (x + 1) + ')').attr('class', 'color-' + col);
 	});
 	socketio.on('online_count_to_client', function(data) {
 		clientCount = data.count;
@@ -172,7 +188,8 @@ $(function() {
 			if (typeof cols[i] === "undefined") {
 				break;
 			}
-			$('table').find('tr:nth-child(' + (Math.floor(i / size) + 1) + ')').find('td:nth-child(' + ((i % size) + 1) + ')').attr('class', 'color-' + cols[i]);
+			drawDot(i % size, Math.floor(i / size), cols[i]);
+			//$('table').find('tr:nth-child(' + (Math.floor(i / size) + 1) + ')').find('td:nth-child(' + ((i % size) + 1) + ')').attr('class', 'color-' + cols[i]);
 			i++;
 		}
 	});
@@ -189,7 +206,7 @@ $(function() {
 	resetSaveTimeout();
 
 	function clearData() {
-		$('.painting').html('<table border="1" cellpadding="10" cellspacing="0">');
+		$('.painting').html('<table border="0" cellpadding="10" cellspacing="1">');
 		for (i = 0; i < size; i++) {
 			$('.painting table').append('<tr>');
 		}
@@ -217,6 +234,13 @@ $(function() {
 		socketio.emit("close_to_server", {
 			message: data
 		});
+	}
+
+	function drawDot(x, y, col) {
+		var tar = $('table').find('tr:nth-child(' + (y + 1) + ')').find('td:nth-child(' + (x + 1) + ')');
+		tar.attr('class', 'color-' + col);
+		ctx.fillStyle = tar.css('background-color');
+		ctx.fillRect(x * 3, y * 3, 3, 3);
 	}
 });
 </script>
