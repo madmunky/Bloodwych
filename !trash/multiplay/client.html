@@ -5,6 +5,7 @@
 	<style>
 	body {
 		font: 14px Arial;
+		margin: 0;
 	}
 	.color-0 {
 		color: white;
@@ -103,16 +104,54 @@
 		border: solid 2px rgba(0, 0, 0, 0.5);
 	    z-index: 1;
 	}
+	.palette input[type=radio] + label.clear {
+		border: solid 2px rgba(0, 0, 0, 0.1);
+	}
+	p {
+		clear: both;
+		padding: 5px 0;
+		margin: 0;
+	}
 	table {
 		float: left;
 	}
 	canvas {
+		position: fixed;
 		float: left;
 		border: solid 3px #888;
 		width: 120px;
 		height: 120px;
 		margin-left: 20px;
-
+	}
+	td {
+		cursor: crosshair;
+	}
+	.header {
+		position: fixed;
+		background-color: rgb(224, 224, 224);
+		padding: 10px 0;
+		border-bottom: solid 1px #fff;
+		width: 100%;
+		height: 90px;
+		z-index: 3;
+		-webkit-box-shadow: 0 0px 10px 5px #ffffff;
+		box-shadow: 0 0px 10px 5px #ffffff;
+	}
+	.main {
+		position: absolute;
+		width: 900px;
+		top: 120px;
+		margin: 0 auto 10px;
+	}
+	div.online-count {
+		float: left;
+		margin-right: 20px;
+	}
+	div.save-confirmed {
+		display: none;
+		color: #0c0;
+		font-weight: bold;
+		float: left;
 	}
 	</style>
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -120,50 +159,91 @@
 </head>
 
 <body>
-	<div class="online-count">Online:
-		<span>0</span>
+	<div class="header">
+		<div class="online-count">Online:
+			<span>0</span>
+		</div>
+		<div class="save-confirmed">Saved!</div>
+		<p></p>
+		<div class="palette">
+			<input type="radio" value="clear" name="Clear" id="clear">
+			<label for="clear" class="clear">Clear</label>
+		</div>
 	</div>
-	<p></p>
-	<div class="palette">
-		<input type="radio" value="clear" name="Clear" id="clear">
-		<label for="clear" class="clear">Clear</label>
+	<div class="main">
+		<div class="painting"></div>
+		<canvas id="output" class="output" width="120" height="120"></canvas>
 	</div>
-	<p></p>
-	<div class="painting"></div>
-	<canvas id="output" class="output" width="120" height="120"></canvas>
 </body>
 <script type="text/javascript">
 $(function() {
 	var canvas = document.getElementById("output");
 	var ctx = canvas.getContext("2d");
-	var socketio = io.connect("nb-jni.eperium.local:1337"); //80.101.96.156 //86.24.136.220 //nb-jni.eperium.local
+	var socketio = io.connect("80.101.96.156:1337"); //80.101.96.156 //86.24.136.220 //nb-jni.eperium.local
 	var clientCount = 0;
 	var size = 40;
 	var saveTimeout = 0;
+	var drawArray = new Array();
+	var drawInterval = 0;
 
 	socketio.on("message_to_client", function(data) {
-		var data = data['message'].split(',');
-		var col = data[0];
-		var x = parseInt(data[1]);
-		var y = parseInt(data[2]);
-		drawDot(x, y, col);
+		data = data["message"]
+		for(i = 0; i < data.length; i++) {
+			console.log('RECEIVED!');
+			var dot = data[i];
+			drawDot(dot.x, dot.y, dot.col);
+		}
 		//$('table').find('tr:nth-child(' + (y + 1) + ')').find('td:nth-child(' + (x + 1) + ')').attr('class', 'color-' + col);
 	});
 	socketio.on('online_count_to_client', function(data) {
 		clientCount = data.count;
 		$('.online-count span').text(clientCount);
 	});
+	socketio.on("save_data_confirmed_to_client", function(data) {
+		if(data.confirmed) {
+			$('.save-confirmed').show();
+		}
+	});
 
-	$('body').on('click touchstart', 'td', function() {
+	/*$('body').on('click touchstart', 'td', function() {
 		var col = $('input[name=Colour]:checked').val();
 		var x = $(this).index();
 		var y = $(this).parent().index();
 		var data = col + ',' + x + ',' + y;
+		drawDot(x, y, col);
 		socketio.emit("message_to_server", {
 			message: data
 		});
-		resetSaveTimeout();
+	});*/
+	$('body').on('mousedown touchstart', 'td', function() {
+		drawInterval = true;
 	});
+	$('body').on('mousemove touchenter', 'td', function() {
+		if(drawInterval) {
+			var x = $(this).index();
+			var y = $(this).parent().index();
+			var col = $('input[name=Colour]:checked').val();
+			var colOld = getDotColour(x, y);
+			if(colOld != col) {
+				var dot = { x: x, y: y, col: col }
+				drawArray.push(dot);
+				drawDot(x, y, col);
+				resetSaveTimeout();
+				console.log('Drawing at x:' + x + ', y:' + y + ', c:' + col);
+			}
+		}
+	});
+	$('html').on('mouseup', function() {
+		drawInterval = false;
+		if(drawArray.length > 0) {
+			console.log('SEND!' + drawArray.length);
+			socketio.emit("message_to_server", {
+				message: drawArray
+			});
+			drawArray.length = 0;
+		}
+	});
+
 	$('body').on('click touchstart', '#clear', function() {
 		clearData();
 		resetSaveTimeout();
@@ -203,7 +283,6 @@ $(function() {
 			saveData()
 		}, 3000);
 	}
-	resetSaveTimeout();
 
 	function clearData() {
 		$('.painting').html('<table border="0" cellpadding="10" cellspacing="1">');
@@ -222,16 +301,17 @@ $(function() {
 				if (x !== 0 || y !== 0) {
 					data = data + ','
 				}
-				cls = $('table').find('tr:nth-child(' + (y + 1) + ')').find('td:nth-child(' + (x + 1) + ')').attr('class');
+				/*cls = $('table').find('tr:nth-child(' + (y + 1) + ')').find('td:nth-child(' + (x + 1) + ')').attr('class');
 				if (typeof cls !== "undefined" && typeof cls.split('-')[1] !== "undefined") {
 					col = cls.split('-')[1];
 				} else {
 					col = 14;
-				}
+				}*/
+				col = getDotColour(x, y);
 				data = data + col;
 			}
 		}
-		socketio.emit("close_to_server", {
+		socketio.emit("save_data_to_server", {
 			message: data
 		});
 	}
@@ -241,6 +321,15 @@ $(function() {
 		tar.attr('class', 'color-' + col);
 		ctx.fillStyle = tar.css('background-color');
 		ctx.fillRect(x * 3, y * 3, 3, 3);
+		$('.save-confirmed').fadeOut();
+	}
+
+	function getDotColour(x, y) {
+		var cls = $('table').find('tr:nth-child(' + (y + 1) + ')').find('td:nth-child(' + (x + 1) + ')').attr('class');
+		if (typeof cls !== "undefined" && typeof cls.split('-')[1] !== "undefined") {
+			return cls.split('-')[1];
+		}
+		return 14;
 	}
 });
 </script>

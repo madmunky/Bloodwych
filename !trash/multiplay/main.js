@@ -42,7 +42,10 @@ io.sockets.on('connection', function(socket) {
         });
     });
 
-    socket.on('close_to_server', function(data) {
+    socket.on('save_data_to_server', function(data) {
     	fs.writeFile('./data.txt', data["message"], 'UTF-8');
+        io.sockets.emit('save_data_confirmed_to_client', {
+            confirmed: true
+        });
     });
 });
