@@ -88,6 +88,14 @@ function drawUI(p) {
                 }
             }
             
+            try {
+                 var tmp = drawCharacter(monster[champion[0]],0,4,p,0,true);    
+                 ctx.drawImage(tmp,(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,tmp.width*scale,tmp.height*scale);        
+                }catch(e){};
+            
+            
+
+            
     }
 }
 

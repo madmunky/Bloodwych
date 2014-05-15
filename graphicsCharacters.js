@@ -474,7 +474,12 @@ function grabCharacter(m, part, dir, dist) {
 
 }
 
-function drawCharacter(m, dir, dist, player, offset) {
+function drawCharacter(m, dir, dist, player, offset,returnImg) {
+    
+    	if (typeof returnImg === "undefined") {
+		returnImg = false;
+	}
+    
 	var blur = 0;
 	if (dist <= CHAR_DISTANCE_MID) {
 		var br = Math.floor(Math.random() * 20);
@@ -530,12 +535,16 @@ function drawCharacter(m, dir, dist, player, offset) {
 				var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
 
 				if(dist < 4 || part === IMAGE_CHA_MINI) {
+                                    if (!returnImg){
 					player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
+                                    }else{return player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);}
 					if(dir2 > -1) {
 						offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
 						offy = 76 - Math.floor(m.gfx[part][dist][dir2].height) - offset.y;
-						player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
-					}
+						if (!returnImg){
+                                                    player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
+                                                }else{return player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);}
+                                        }
 				}
 			}
 		}
