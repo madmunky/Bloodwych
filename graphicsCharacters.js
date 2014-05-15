@@ -474,7 +474,7 @@ function grabCharacter(m, part, dir, dist) {
 
 }
 
-function drawCharacter(m, dir, dist, player, offset,returnImg) {
+function drawCharacter(m, dir, dist, player, offset,returnImg,doBlur) {
     
         var can = document.createElement('canvas');
         can.width = canvas.width;
@@ -488,8 +488,13 @@ function drawCharacter(m, dir, dist, player, offset,returnImg) {
     	if (typeof returnImg === "undefined") {
 		returnImg = false;
 	}
+        
+        if (typeof doBlur === "undefined") {
+		doBlur = true;
+	}
     
 	var blur = 0;
+        if (doBlur){
 	if (dist <= CHAR_DISTANCE_MID) {
 		var br = Math.floor(Math.random() * 20);
 		if (br === 0) {
@@ -497,7 +502,7 @@ function drawCharacter(m, dir, dist, player, offset,returnImg) {
 		} else if (br === 1) {
 			blur = 1;
 		}
-	}
+	}}
 	if (dist > -1) {
 		for(part = 0; part < 5; part++) {
 			if(typeof m.gfx[part] !== "undefined" && typeof m.gfx[part][dist] !== "undefined" && typeof m.gfx[part][dist][dir] !== "undefined") {

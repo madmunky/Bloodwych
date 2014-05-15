@@ -68,11 +68,11 @@ function leftUI(p){
             for (x=0;x<3;x++){
                 if (p === player[0]){
                     ctx.drawImage(gfxUI[UI_SHIELD],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
-                    ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true),(x * 32*scale) + (p.ScreenX*scale)-50*scale,(p.ScreenY+45)*scale-38*scale);   
+                    ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true,false),(x * 32*scale) + (p.ScreenX*scale)-50*scale,(p.ScreenY+45)*scale-38*scale);   
                 }               
                 else{
                     ctx.drawImage(gfxUI[UI_SHIELD],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
-                    ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true),(x * 32*scale) + (p.ScreenX*scale)-50*scale,(p.ScreenY+45)*scale-38*scale);   
+                    ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true,false),(x * 32*scale) + (p.ScreenX*scale)-50*scale,(p.ScreenY+45)*scale-38*scale);   
                 }
             }
             
