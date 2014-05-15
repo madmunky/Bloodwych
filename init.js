@@ -108,6 +108,7 @@ function loadGfxData() {
 
 	//Misc
 	gfxLoadImage("misc", "font", "", null);
+        gfxLoadImage("misc", "uistuff", "", null);
 }
 
 function loadTowerData(t, start) {
