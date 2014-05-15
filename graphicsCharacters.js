@@ -476,6 +476,15 @@ function grabCharacter(m, part, dir, dist) {
 
 function drawCharacter(m, dir, dist, player, offset,returnImg) {
     
+        var can = document.createElement('canvas');
+        can.width = canvas.width;
+        can.height = canvas.height;
+        var charContext = can.getContext("2d");
+        charContext.imageSmoothingEnabled = false;
+	charContext.webkitImageSmoothingEnabled = false;
+	charContext.mozImageSmoothingEnabled = false;
+	charContext.oImageSmoothingEnabled = false;
+    
     	if (typeof returnImg === "undefined") {
 		returnImg = false;
 	}
@@ -537,17 +546,21 @@ function drawCharacter(m, dir, dist, player, offset,returnImg) {
 				if(dist < 4 || part === IMAGE_CHA_MINI) {
                                     if (!returnImg){
 					player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
-                                    }else{return player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);}
+                                    }else{charContext.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);}
 					if(dir2 > -1) {
 						offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
 						offy = 76 - Math.floor(m.gfx[part][dist][dir2].height) - offset.y;
 						if (!returnImg){
                                                     player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
-                                                }else{return player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);}
+                                                }else{charContext.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);}
                                         }
 				}
 			}
 		}
+                if (returnImg){
+                    charContext.save();
+                    return can;
+                }
 	}
 }
 

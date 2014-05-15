@@ -1,5 +1,6 @@
 function Champion(id, firstName, lastName, level, stat, spellBin, monster) {
 	this.spellBook = new Array();
+        this.pocket = [];
 	this.id = id;
 	this.recruited = false;
 	this.firstName = firstName;
@@ -15,6 +16,9 @@ function Champion(id, firstName, lastName, level, stat, spellBin, monster) {
 			this.addSpellToSpellBook(i);
 		}
 	}
+        for (x = 0; x < 12; x++){
+            this.pocket[x] = 0;
+        }
 }
 
 Champion.prototype.addSpellToSpellBook = function(spell) {

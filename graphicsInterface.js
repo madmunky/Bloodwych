@@ -50,7 +50,42 @@ function drawUI(p) {
     
     if (typeof gfxUI !== "undefined" && gfxUI !== null){
     
-            if (p === player[0]){
+        leftUI(p);   
+        rightUI(p);
+
+            
+    }
+}
+
+function leftUI(p){
+    
+    
+            ctx.drawImage(gfxUI[UI_CHARACTER_BOX],p.ScreenX*scale,p.ScreenY*scale,gfxUI[UI_CHARACTER_BOX].width*scale,gfxUI[UI_CHARACTER_BOX].height*scale);    
+            ctx.drawImage(gfxUI[UI_STATSBOX],(p.ScreenX + 51)*scale,p.ScreenY*scale,gfxUI[UI_STATSBOX].width*scale,gfxUI[UI_STATSBOX].height*scale);    
+            ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 1)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
+            ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 226)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
+            
+            for (x=0;x<3;x++){
+                if (p === player[0]){
+                    ctx.drawImage(gfxUI[UI_SHIELD],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
+                    ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true),(x * 32*scale) + (p.ScreenX*scale)-50*scale,(p.ScreenY+45)*scale-38*scale);   
+                }               
+                else{
+                    ctx.drawImage(gfxUI[UI_SHIELD],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
+                    ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true),(x * 32*scale) + (p.ScreenX*scale)-50*scale,(p.ScreenY+45)*scale-38*scale);   
+                }
+            }
+            
+            try {
+     
+                }catch(e){};
+            
+               
+}
+
+function rightUI(p){
+    
+     if (p === player[0]){
                 ctx.drawImage(gfxUI[UI_NAME_BLUE],p.ScreenX + 226 *scale,(p.ScreenY + 0) *scale,gfxUI[UI_NAME_BLUE].width*scale,gfxUI[UI_NAME_BLUE].height*scale);    
                 ctx.drawImage(gfxUI[UI_ICON_ARROWS_BLUE],p.ScreenX + 226 *scale,(p.ScreenY +45) *scale,gfxUI[UI_ICON_ARROWS_BLUE].width*scale,gfxUI[UI_ICON_ARROWS_BLUE].height*scale);    
                 
@@ -73,33 +108,11 @@ function drawUI(p) {
                 ctx.drawImage(gfxUI[UI_ICON_OPENDOOR],(p.ScreenX + 289) *scale,(p.ScreenY + 22) *scale,gfxUI[UI_ICON_OPENDOOR].width*scale,gfxUI[UI_ICON_OPENDOOR].height*scale);    
                 ctx.drawImage(gfxUI[UI_ICON_POCKETS],(p.ScreenX + 305) *scale,(p.ScreenY + 22) *scale,gfxUI[UI_ICON_POCKETS].width*scale,gfxUI[UI_ICON_POCKETS].height*scale);    
             }
-            
-            ctx.drawImage(gfxUI[UI_CHARACTER_BOX],p.ScreenX*scale,p.ScreenY*scale,gfxUI[UI_CHARACTER_BOX].width*scale,gfxUI[UI_CHARACTER_BOX].height*scale);    
-            ctx.drawImage(gfxUI[UI_STATSBOX],(p.ScreenX + 51)*scale,p.ScreenY*scale,gfxUI[UI_STATSBOX].width*scale,gfxUI[UI_STATSBOX].height*scale);    
-            ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 1)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
-            ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 226)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
-            
-            for (x=0;x<3;x++){
-                if (p === player[0]){
-                    ctx.drawImage(gfxUI[UI_SHIELD_BLUE],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD_BLUE].width*scale,gfxUI[UI_SHIELD_BLUE].height*scale);        
-                }               
-                else{
-                    ctx.drawImage(gfxUI[UI_SHIELD_RED],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD_RED].width*scale,gfxUI[UI_SHIELD_RED].height*scale);        
-                }
-            }
-            
-            try {
-                 var tmp = drawCharacter(monster[champion[0]],0,4,p,0,true);    
-                 ctx.drawImage(tmp,(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,tmp.width*scale,tmp.height*scale);        
-                }catch(e){};
-            
-            
-
-            
-    }
+    
 }
 
 function drawPocketUI(p) {
+    
     
     
 }
