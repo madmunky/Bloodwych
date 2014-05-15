@@ -32,8 +32,10 @@ function updatePlayerViewScreen() {
 		debugText(player[p], "Player " + (p + 1));
 		debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
 		drawPlayersView(player[p]);
+                drawUI(player[p]);
         }
         testing();
+        
 	//writeFontImage("Testing: ,!) 123", 0, 320, COLOUR[COLOUR_GREEN]);
 }
 

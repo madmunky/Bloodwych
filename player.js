@@ -1,9 +1,7 @@
-function Player(id, PortX, PortY) {
+function Player(id, PortX, PortY,ScreenX,ScreenY) {
 	this.id = id;
 	this.champion = new Array();
-	//for (i = 0; i < 4; i++) {
-	//	this.champion[i] = -1;
-	//}
+        this.currentChamp = this.champion[0]; // <--- TEMP NEED TO SELECT CORRECT CHAMP
 	this.x = 0; //posX;
 	this.y = 0; //posY;
 	this.floor = 0; //floor;
@@ -11,17 +9,17 @@ function Player(id, PortX, PortY) {
 	this.PortalX = PortX;
 	this.PortalY = PortY;
 	this.Portal = null;
-	//this.View = [];
+        this.ScreenX = ScreenX;
+        this.ScreenY = ScreenY;
+        this.Action = null;
+        this.Hand = null;
 	this.lastX = 0;
 	this.lastY = 0;
 	this.lastFloor = 0;
 	this.lastTower = towerThis;
 	this.moving = 0; //0 = Forward,1 = Right, 2 = Backwards, 3 = Left
 	this.towerSwitches = new Array();
-
-	//this.setBinaryView(18, 8, 1, '1');
-
-	//players++;
+        
 }
 
 Player.prototype.getViewPortal = function() {
