@@ -106,6 +106,8 @@ function grabUISprites(spriteSheetIMG){
     ImageArray.push(grabImageAt(spriteSheetIMG,287,194,92,6,false));//Long Chain
     ImageArray.push(grabImageAt(spriteSheetIMG,324,1,48,44,false));//Character Box
     ImageArray.push(grabImageAt(spriteSheetIMG,373,1,32,24,false));//Pocket Box
+    ImageArray.push(grabImageAt(spriteSheetIMG,324,46,94,19,false));//Blue Name Box
+    ImageArray.push(grabImageAt(spriteSheetIMG,324,66,94,19,false));//Red Name Box
     
     return ImageArray;
     
