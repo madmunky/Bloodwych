@@ -19,6 +19,7 @@ var timerMonsterAttack = 0;
 //var players = 0;
 var towerSwitchesData = new Array();
 var loadingInterval = 0;
+var gfxUI = [];
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 //When a file is called, we increase 'count'
@@ -553,4 +554,6 @@ var UI_POCKET_EMPTY = 0,
         UI_CHARACTER_BOX = 128,
         UI_POCKETBOX = 129,
         UI_NAME_BLUE = 130,
-        UI_NAME_RED = 131;
+        UI_NAME_RED = 131,
+        UI_SHIELD_RED = 132,
+        UI_SHIELD_BLUE = 133;

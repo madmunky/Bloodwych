@@ -25,7 +25,7 @@ function updatePlayerViewScreen() {
 	
 	clearCanvas();
 	configCanvas();
-	drawDashboard();
+	//drawDashboard();
 	debugText(player[0], "FPS: " + fps.getFPS());
 	
 	for (p = 0; p < 2; p++) {
@@ -34,7 +34,7 @@ function updatePlayerViewScreen() {
 		drawPlayersView(player[p]);
                 drawUI(player[p]);
         }
-        testing();
+        //testing();
         
 	//writeFontImage("Testing: ,!) 123", 0, 320, COLOUR[COLOUR_GREEN]);
 }
