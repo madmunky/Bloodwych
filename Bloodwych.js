@@ -34,7 +34,7 @@ function updatePlayerViewScreen() {
 		drawPlayersView(player[p]);
                 drawUI(player[p]);
         }
-        //testing();
+        testing();
         
 	//writeFontImage("Testing: ,!) 123", 0, 320, COLOUR[COLOUR_GREEN]);
 }

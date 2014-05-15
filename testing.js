@@ -61,16 +61,7 @@ function testSummon(){
 //        }
 //    }catch(e){}
 
-//    try{
-//    if (gfxUI !== null || typeof(gfxUI)!=='undefined') {
-//        
-//        var testGfx = gfxUI,
-//                testVar = UI_NAME_RED ;
-//        
-//        ctx.drawImage(testGfx[testVar],145*scale,25*scale,testGfx[testVar].width*scale,testGfx[testVar].height*scale);
-//        
-//        }
-//    }catch(e){}
+
 //    
 //}
 
