@@ -57,6 +57,8 @@
 	<script src="init.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	var canvas = document.getElementById("game-port");
+        canvas.width = 320 * scale;
+        canvas.height = 200 * scale;
 	var ctx = canvas.getContext("2d");
         canvas.addEventListener("touchstart", touchDown, false);
 	</script>
