@@ -556,4 +556,5 @@ var UI_POCKET_EMPTY = 0,
         UI_NAME_BLUE = 130,
         UI_NAME_RED = 131,
         UI_SHIELD_RED = 132,
-        UI_SHIELD_BLUE = 133;
+        UI_SHIELD_BLUE = 133,
+        UI_PORTRAITS = 134;

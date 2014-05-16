@@ -42,6 +42,28 @@ function grabUISprites(spriteSheetIMG){
     ImageArray.push(grabImageAt(spriteSheetIMG,381,160,30,41,false));//Red Shield
     ImageArray.push(grabImageAt(spriteSheetIMG,412,160,30,41,false));//Blue Shield
     
+    //Grab the character Portraits
+    var ImagePortraits = [];
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,0,210,32,29,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,0,240,32,30,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,0,271,32,31,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,0,303,32,30,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,0,334,32,30,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,0,365,32,29,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,33,210,32,29,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,33,240,32,30,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,33,271,32,31,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,33,303,32,30,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,33,334,32,30,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,33,365,32,29,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,66,210,32,29,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,66,240,32,30,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,66,271,32,31,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,66,303,32,30,false));
+    
+    ImageArray.push(ImagePortraits);
+    ImagePortraits = [];
+    
     return ImageArray;
     
 }
@@ -59,20 +81,22 @@ function drawUI(p) {
 
 function leftUI(p){
     
-    
+
             ctx.drawImage(gfxUI[UI_CHARACTER_BOX],p.ScreenX*scale,p.ScreenY*scale,gfxUI[UI_CHARACTER_BOX].width*scale,gfxUI[UI_CHARACTER_BOX].height*scale);    
             ctx.drawImage(gfxUI[UI_STATSBOX],(p.ScreenX + 51)*scale,p.ScreenY*scale,gfxUI[UI_STATSBOX].width*scale,gfxUI[UI_STATSBOX].height*scale);    
             ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 1)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
             ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 226)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
             
+            ctx.drawImage(gfxUI[UI_PORTRAITS][p.currentChamp],(p.ScreenX+8)*scale,(p.ScreenY+8)*scale,gfxUI[UI_PORTRAITS][p.currentChamp].width*scale,gfxUI[UI_PORTRAITS][p.currentChamp].height*scale);    
+            
             for (x=0;x<3;x++){
                 if (p === player[0]){
                     ctx.drawImage(gfxUI[UI_SHIELD],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
-                    ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true,false),(x * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale);   
+                    ctx.drawImage(drawCharacter(monster[6][p.champion[x+1]],0,1,p,{x: 0, y: 0},true,false),(x * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale);                       
                 }               
                 else{
                     ctx.drawImage(gfxUI[UI_SHIELD],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
-                    ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true,false),(x * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale);   
+                    ctx.drawImage(drawCharacter(monster[6][p.champion[x+1]],0,1,p,{x: 0, y: 0},true,false),(x * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale);   
                 }
             }
             
@@ -95,7 +119,7 @@ function rightUI(p){
                 ctx.drawImage(gfxUI[UI_ICON_ARROWS_RED],p.ScreenX + 226 *scale,(p.ScreenY +45) *scale,gfxUI[UI_ICON_ARROWS_RED].width*scale,gfxUI[UI_ICON_ARROWS_RED].height*scale);    
             }
             
-            writeFontImage(champion[p.champion[0]].firstName, p.ScreenX/scale +226 ,(p.ScreenY+7), COLOUR[COLOUR_YELLOW]);
+            writeFontImage(champion[p.currentChamp].firstName, p.ScreenX/scale +226 ,(p.ScreenY+7), COLOUR[COLOUR_YELLOW]);
             ctx.drawImage(gfxUI[UI_ICON_SPELLBOOK],p.ScreenX + 226 *scale,(p.ScreenY + 22) *scale,gfxUI[UI_ICON_SPELLBOOK].width*scale,gfxUI[UI_ICON_SPELLBOOK].height*scale);    
             ctx.drawImage(gfxUI[UI_ICON_SCROLL],p.ScreenX + 265 *scale,(p.ScreenY + 22) *scale,gfxUI[UI_ICON_SCROLL].width*scale,gfxUI[UI_ICON_SCROLL].height*scale);    
             ctx.drawImage(gfxUI[UI_POCKETBOX],p.ScreenX + 290 *scale,(p.ScreenY + 21) *scale,gfxUI[UI_POCKETBOX].width*scale,gfxUI[UI_POCKETBOX].height*scale);    
