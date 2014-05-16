@@ -64,6 +64,8 @@ function grabUISprites(spriteSheetIMG){
     ImageArray.push(ImagePortraits);
     ImagePortraits = [];
     
+    ImageArray.push(grabImageAt(spriteSheetIMG,285,201,95,8,false));
+    
     return ImageArray;
     
 }
@@ -73,7 +75,8 @@ function drawUI(p) {
     if (typeof gfxUI !== "undefined" && gfxUI !== null){
     
         leftUI(p);   
-        rightUI(p);
+        drawPocketUI(p);
+        myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 100]);
 
             
     }
@@ -87,7 +90,7 @@ function leftUI(p){
             ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 1)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
             ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 226)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
             
-            ctx.drawImage(gfxUI[UI_PORTRAITS][p.currentChamp],(p.ScreenX+8)*scale,(p.ScreenY+8)*scale,gfxUI[UI_PORTRAITS][p.currentChamp].width*scale,gfxUI[UI_PORTRAITS][p.currentChamp].height*scale);    
+            ctx.drawImage(gfxUI[UI_PORTRAITS][p.champion[0]],(p.ScreenX+8)*scale,(p.ScreenY+8)*scale,gfxUI[UI_PORTRAITS][p.champion[0]].width*scale,gfxUI[UI_PORTRAITS][p.champion[0]].height*scale);    
             
             for (x=0;x<3;x++){
                 if (p === player[0]){
@@ -109,7 +112,7 @@ function leftUI(p){
 
 function rightUI(p){
     
-     if (p === player[0]){
+            if (p === player[0]){
                 ctx.drawImage(gfxUI[UI_NAME_BLUE],p.ScreenX + 226 *scale,(p.ScreenY + 0) *scale,gfxUI[UI_NAME_BLUE].width*scale,gfxUI[UI_NAME_BLUE].height*scale);    
                 ctx.drawImage(gfxUI[UI_ICON_ARROWS_BLUE],p.ScreenX + 226 *scale,(p.ScreenY +45) *scale,gfxUI[UI_ICON_ARROWS_BLUE].width*scale,gfxUI[UI_ICON_ARROWS_BLUE].height*scale);    
                 
@@ -119,7 +122,7 @@ function rightUI(p){
                 ctx.drawImage(gfxUI[UI_ICON_ARROWS_RED],p.ScreenX + 226 *scale,(p.ScreenY +45) *scale,gfxUI[UI_ICON_ARROWS_RED].width*scale,gfxUI[UI_ICON_ARROWS_RED].height*scale);    
             }
             
-            writeFontImage(champion[p.currentChamp].firstName, p.ScreenX/scale +226 ,(p.ScreenY+7), COLOUR[COLOUR_YELLOW]);
+            writeFontImage(champion[p.champion[0]].firstName, p.ScreenX/scale +226 ,(p.ScreenY+7), COLOUR[COLOUR_YELLOW]);
             ctx.drawImage(gfxUI[UI_ICON_SPELLBOOK],p.ScreenX + 226 *scale,(p.ScreenY + 22) *scale,gfxUI[UI_ICON_SPELLBOOK].width*scale,gfxUI[UI_ICON_SPELLBOOK].height*scale);    
             ctx.drawImage(gfxUI[UI_ICON_SCROLL],p.ScreenX + 265 *scale,(p.ScreenY + 22) *scale,gfxUI[UI_ICON_SCROLL].width*scale,gfxUI[UI_ICON_SCROLL].height*scale);    
             ctx.drawImage(gfxUI[UI_POCKETBOX],p.ScreenX + 290 *scale,(p.ScreenY + 21) *scale,gfxUI[UI_POCKETBOX].width*scale,gfxUI[UI_POCKETBOX].height*scale);    
@@ -137,6 +140,43 @@ function rightUI(p){
 
 function drawPocketUI(p) {
     
+    if (p === player[0]){
+                ctx.drawImage(gfxUI[UI_NAME_BLUE],p.ScreenX + 226 *scale,(p.ScreenY + 0) *scale,gfxUI[UI_NAME_BLUE].width*scale,gfxUI[UI_NAME_BLUE].height*scale);    
+            }
+    else{
+                ctx.drawImage(gfxUI[UI_NAME_RED],p.ScreenX + 226 *scale,(p.ScreenY + 0) *scale,gfxUI[UI_NAME_RED].width*scale,gfxUI[UI_NAME_RED].height*scale);    
+    }
+            
+    writeFontImage(champion[p.champion[0]].firstName, p.ScreenX/scale +226 ,(p.ScreenY+7), COLOUR[COLOUR_YELLOW]);            
+    
+    var i = 0;
+    for (y=0;y<2;y++){
+        for (x=0;x<6;x++){
+            var pocketImg = champion[p.champion[0]].pocket[i];
+            if (champion[p.champion[0]].pocket[i] === 0){                
+                pocketImg = UI_POCKET_EMPTY;
+                if (y === 0){                    
+                    switch (x) {                        
+                        case 0:{pocketImg = UI_POCKET_EMPTY_LEFT_HAND;};break;
+                        case 1:{pocketImg = UI_POCKET_EMPTY_RIGHT_HAND;};break;
+                        case 2:{pocketImg = UI_POCKET_EMPTY_AMOUR;};break;
+                        case 3:{pocketImg = UI_POCKET_EMPTY_LARGE_SHIELD;};break;                            
+                    }                    
+                }                
+            }else{pocketImg = UI_ICON_BOOKOFSKULLS;}//WRITE SOMETHING HERE TO RETURN THE CORRECT OBJECT VALUE
+            ctx.drawImage(gfxUI[pocketImg],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 23)+ (y*16)) *scale,gfxUI[pocketImg].width*scale,gfxUI[pocketImg].height*scale);    
+            i++;
+        }            
+    }
+    
+    ctx.drawImage(gfxUI[UI_GRAY_BAR],(p.ScreenX + 225) *scale,(p.ScreenY + 54) *scale,gfxUI[UI_GRAY_BAR].width*scale,gfxUI[UI_GRAY_BAR].height*scale);    
+    writeFontImage("Armour +0", p.ScreenX/scale +233 ,(p.ScreenY+55), COLOUR[COLOUR_YELLOW]);            
+    
+    for (x=0;x<6;x++){
+        if (x>3){
+        ctx.drawImage(gfxUI[UI_POCKET_EMPTY],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_POCKET_EMPTY].width*scale,gfxUI[UI_POCKET_EMPTY].height*scale);        
+        }
+    }
     
     
 }
