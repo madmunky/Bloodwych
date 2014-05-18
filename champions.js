@@ -37,7 +37,7 @@ Champion.prototype.toString = function() {
 
 function getChampionName(id, first) {
 	var name = "UNKNOWN";
-	if (typeof full === "undefined") full = false;
+	if (typeof first === "undefined") first = true;
 	switch (id) {
 		case CHA_BLODWYN:
 			if(first) name = "BLODWYN";
