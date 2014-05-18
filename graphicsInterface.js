@@ -64,7 +64,40 @@ function grabUISprites(spriteSheetIMG){
     ImageArray.push(ImagePortraits);
     ImagePortraits = [];
     
+    //Grab the grey bar for the amour stat
     ImageArray.push(grabImageAt(spriteSheetIMG,285,201,95,8,false));
+    
+    //Grab the character Shields    
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,100,210,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,100,227,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,100,244,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,100,261,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,100,278,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,100,295,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,100,312,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,100,329,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,133,210,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,133,227,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,133,244,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,133,261,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,133,278,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,133,295,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,133,312,30,16,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,133,329,30,16,false));    
+    ImageArray.push(ImagePortraits);
+    ImagePortraits = [];
+    
+    //Grab the shield type (heart, spade etc..)
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,165,210,28,11,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,165,224,28,11,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,165,238,28,11,false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG,165,252,28,11,false));
+    ImageArray.push(ImagePortraits);
+    ImagePortraits = [];
+        
+    //Grab the bottom and top of the shield
+    ImageArray.push(grabImageAt(spriteSheetIMG,170,269,20,9,false));
+    ImageArray.push(grabImageAt(spriteSheetIMG,164,279,30,5,false));        
     
     return ImageArray;
     
@@ -116,10 +149,8 @@ function leftUI(p){
                 }
             }
             
-            try {
-     
-                }catch(e){};
-            
+            var t = createShield(p.champion[1],1);
+            ctx.drawImage(t,(p.ScreenX*scale),(p.ScreenY+45)*scale,t.width*scale,t.height*scale);
                
 }
 
@@ -318,5 +349,23 @@ function itemID(id){
         
     }
     
+    
+}
+
+function createShield(id,type){
+    
+    //ID = Characters ID i.e. 0 = Blodwyn
+    //Type = 0 to 3 = Spade,Heart
+    
+    var can = document.createElement('canvas');
+	can.width = 30;
+	can.height = 41;
+	var context = can.getContext("2d");
+	context.drawImage(gfxUI[UI_SHIELD_TOP], 0, 0);
+        context.drawImage(gfxUI[UI_SHIELD_CHARACTERS][id], 0, 5);
+        context.drawImage(gfxUI[UI_SHIELD_TYPES][type], 1, 21);
+        context.drawImage(gfxUI[UI_SHIELD_BOTTOM], 5, 32);
+	context.save();
+	return can;
     
 }
