@@ -1,4 +1,4 @@
-function Champion(id, firstName, lastName, level, stat, spellBin, monster) {
+function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, monster) {
 	this.spellBook = new Array();
         this.pocket = [0,0,0,0,0,0,0,1,0,0,0,0];
 	this.id = id;
@@ -6,6 +6,8 @@ function Champion(id, firstName, lastName, level, stat, spellBin, monster) {
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.level = level;
+	this.prof = prof;
+	this.colour = colour;
 	this.stat = stat;
 	this.monster = monster;
 	for (i = 0; i < SPELL_MAX; i++) {
@@ -30,81 +32,89 @@ Champion.prototype.toString = function() {
 		sb = sb + ", learnt:" + this.spellBook[i].learnt;
 		sb = sb + "], ";
 	}
-	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', level:' + this.level + ', stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + '], spellBook:[' + sb + ']]';
+	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
 }
 
-function getChampionName(id, full) {
+function getChampionName(id, first) {
 	var name = "UNKNOWN";
 	if (typeof full === "undefined") full = false;
 	switch (id) {
 		case CHA_BLODWYN:
-			name = "BLODWYN";
-			if (full) name += " STONEMAIDEN";
+			if(first) name = "BLODWYN";
+			else name = "STONEMAIDEN";
 			break;
 		case CHA_ASTROTH:
-			name = "ASTROTH";
-			if (full) name += " SLAEMWORT";
+			if(first) name = "ASTROTH";
+			else name = "SLAEMWORT";
 			break;
 		case CHA_SIR_EDWARD:
-			name = "SIR EDWARD";
-			if (full) name += " LION";
+			if(first) name = "SIR EDWARD";
+			else name = "LION";
 			break;
 		case CHA_ULRICH:
-			name = "ULRICH";
-			if (full) name += " STERNAXE";
+			if(first) name = "ULRICH";
+			else name = "STERNAXE";
 			break;
 		case CHA_MURLOCK:
-			name = "MURLOCK";
-			if (full) name += " DARKENHEART";
+			if(first) name = "MURLOCK";
+			else name = "DARKENHEART";
 			break;
 		case CHA_ZOTHEN:
-			name = "ZOTHEN";
-			if (full) name += " RUNECASTER";
+			if(first) name = "ZOTHEN";
+			else name = "RUNECASTER";
 			break;
 		case CHA_MEGRIM:
-			name = "MEGRIM";
-			if (full) name += " OF MOONWYCH";
+			if(first) name = "MEGRIM";
+			else name = "OF MOONWYCH";
 			break;
 		case CHA_ZASTAPH:
-			name = "ZASTAPH";
-			if (full) name += " MANTRIC";
+			if(first) name = "ZASTAPH";
+			else name = "MANTRIC";
 			break;
 		case CHA_ELEANOR:
-			name = "ELEANOR";
-			if (full) name += " OF AVALON";
+			if(first) name = "ELEANOR";
+			else name = "OF AVALON";
 			break;
 		case CHA_BALDRICK:
-			name = "BALDRICK";
-			if (full) name += " THE DUNG";
+			if(first) name = "BALDRICK";
+			else name = "THE DUNG";
 			break;
 		case CHA_SETHRA:
-			name = "SETHRA";
-			if (full) name += " BHOAGHAIL";
+			if(first) name = "SETHRA";
+			else name = "BHOAGHAIL";
 			break;
 		case CHA_HENGIST:
-			name = "HENGIST";
-			if (full) name += " MELDANASH";
+			if(first) name = "HENGIST";
+			else name = "MELDANASH";
 			break;
 		case CHA_ROSANNE:
-			name = "ROSANNE";
-			if (full) name += " SWIFTHAND";
+			if(first) name = "ROSANNE";
+			else name = "SWIFTHAND";
 			break;
 		case CHA_ELFRIC:
-			name = "ELFRIC";
-			if (full) name += " FALAENDOR";
+			if(first) name = "ELFRIC";
+			else name = "FALAENDOR";
 			break;
 		case CHA_MR_FLAY:
-			name = "MR. FLAY";
-			if (full) name += " SEPULCRAST";
+			if(first) name = "MR. FLAY";
+			else name = "SEPULCRAST";
 			break;
 		case CHA_THAI_CHANG:
-			name = "THAI CHANG";
-			if (full) name += " OF YINN";
+			if(first) name = "THAI CHANG";
+			else name = "OF YINN";
 			break;
 		default:
 			break;
 	}
 	return name;
+}
+
+function getChampionClass(id) {
+	return id % 4;
+}
+
+function getChampionColour(id) {
+	return ((id + Math.floor(id / 4)) % 4);
 }
 
 function initChampions() {
@@ -146,7 +156,7 @@ function initChampions() {
 		spellBin = spellBin + hex2bin(md.substr(28, 2));
 		spellBin = spellBin + hex2bin(md.substr(30, 2));
 		monster[TOWER_CHAMPIONS][ch] = new Monster(ch + monster[TOWER_MOD0].length, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
-		champion[ch] = new Champion(ch, getChampionName(ch), "tester", level, stat, spellBin, monster[TOWER_CHAMPIONS][ch]);
+		champion[ch] = new Champion(ch, getChampionName(ch, true), getChampionName(ch, false), getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch]);
 		PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
 	}
 }
