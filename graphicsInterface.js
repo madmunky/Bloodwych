@@ -149,7 +149,7 @@ function leftUI(p){
                 }
             }
             
-            var t = createShield(p.champion[1],1);
+            var t = createShield(p.champion[1],0);
             ctx.drawImage(t,(p.ScreenX*scale),(p.ScreenY+45)*scale,t.width*scale,t.height*scale);
                
 }
