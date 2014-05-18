@@ -85,7 +85,7 @@ function fontCharacterToIndex(c) {
 		case 34:
 			return 38; // "
 		case 58:
-			return 34; // :
+			return 36; // :
 		case 35:
 			return 39; // #
 		case 58:

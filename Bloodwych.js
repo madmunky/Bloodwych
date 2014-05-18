@@ -25,7 +25,6 @@ function updatePlayerViewScreen() {
 	
 	clearCanvas();
 	configCanvas();
-	//drawDashboard();
 	debugText(player[0], "FPS: " + fps.getFPS());
 	
 	for (p = 0; p < 2; p++) {
@@ -36,7 +35,6 @@ function updatePlayerViewScreen() {
         }
         testing();
         
-	//writeFontImage("Testing: ,!) 123", 0, 320, COLOUR[COLOUR_GREEN]);
 }
 
 function myDIx(canvas, img, PosAry) {
@@ -57,13 +55,13 @@ function clearCanvas() {
 	canvas.width = canvas.width;
 }
 
-function drawDashboard() {
-	myDIx(ctx, gfx["misc"]["dashboard0"], [0, 0, 320, 86, 0, 10]);
-	myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
-	myDIx(ctx, gfx["misc"]["dashboard1"], [0, 0, 320, 86, 0, 114]);
-	writeFontImage(champion[player[0].champion[0]].firstName, 226, 17, COLOUR[COLOUR_YELLOW]);
-	writeFontImage(champion[player[1].champion[0]].firstName, 226, 121, COLOUR[COLOUR_YELLOW]);
-}
+//function drawDashboard() {
+//	myDIx(ctx, gfx["misc"]["dashboard0"], [0, 0, 320, 86, 0, 10]);
+//	myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
+//	myDIx(ctx, gfx["misc"]["dashboard1"], [0, 0, 320, 86, 0, 114]);
+//	writeFontImage(champion[player[0].champion[0]].firstName, 226, 17, COLOUR[COLOUR_YELLOW]);
+//	writeFontImage(champion[player[1].champion[0]].firstName, 226, 121, COLOUR[COLOUR_YELLOW]);
+//}
 
 //Renders the sub-coloured objects. E.g. for locked doors and banners
 

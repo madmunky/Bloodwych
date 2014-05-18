@@ -85,21 +85,34 @@ function drawUI(p) {
 function leftUI(p){
     
 
-            ctx.drawImage(gfxUI[UI_CHARACTER_BOX],p.ScreenX*scale,p.ScreenY*scale,gfxUI[UI_CHARACTER_BOX].width*scale,gfxUI[UI_CHARACTER_BOX].height*scale);    
+            //ctx.drawImage(gfxUI[UI_CHARACTER_BOX],p.ScreenX*scale,p.ScreenY*scale,gfxUI[UI_CHARACTER_BOX].width*scale,gfxUI[UI_CHARACTER_BOX].height*scale);    
             ctx.drawImage(gfxUI[UI_STATSBOX],(p.ScreenX + 51)*scale,p.ScreenY*scale,gfxUI[UI_STATSBOX].width*scale,gfxUI[UI_STATSBOX].height*scale);    
             ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 1)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
             ctx.drawImage(gfxUI[UI_CHAIN_LONG],(p.ScreenX + 226)*scale,(p.ScreenY+80)*scale,gfxUI[UI_CHAIN_LONG].width*scale,gfxUI[UI_CHAIN_LONG].height*scale);    
             
-            ctx.drawImage(gfxUI[UI_PORTRAITS][p.champion[0]],(p.ScreenX+8)*scale,(p.ScreenY+8)*scale,gfxUI[UI_PORTRAITS][p.champion[0]].width*scale,gfxUI[UI_PORTRAITS][p.champion[0]].height*scale);    
+            //ctx.drawImage(gfxUI[UI_PORTRAITS][p.champion[0]],(p.ScreenX+8)*scale,(p.ScreenY+8)*scale,gfxUI[UI_PORTRAITS][p.champion[0]].width*scale,gfxUI[UI_PORTRAITS][p.champion[0]].height*scale);    
             
-            for (x=0;x<3;x++){
+            for (x=0;x<4;x++){
                 if (p === player[0]){
-                    ctx.drawImage(gfxUI[UI_SHIELD],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
-                    ctx.drawImage(drawCharacter(monster[6][p.champion[x+1]],0,1,p,{x: 0, y: 0},true,false),(x * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale);                       
+                    if (x === 0){
+                        ctx.drawImage(gfxUI[UI_CHAIN_VERT],(x +2 *scale) + (p.ScreenX*scale),(p.ScreenY+5)*scale,gfxUI[UI_CHAIN_VERT].width*scale,gfxUI[UI_CHAIN_VERT].height*scale);        
+                        ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,0,p,{x: 0, y: 0},true,false),(x - 38*scale) + (p.ScreenX*scale)*scale,(p.ScreenY-32)*scale);                       
+                        ctx.drawImage(gfxUI[UI_CHAIN_VERT],(x + 43*scale) + (p.ScreenX*scale),(p.ScreenY+5)*scale,gfxUI[UI_CHAIN_VERT].width*scale,gfxUI[UI_CHAIN_VERT].height*scale);        
+                    }else{
+                        ctx.drawImage(gfxUI[UI_SHIELD],((x-1) * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
+                        ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true,false),((x-1) * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale);                       
+                    }
+                    
                 }               
                 else{
-                    ctx.drawImage(gfxUI[UI_SHIELD],(x * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
-                    ctx.drawImage(drawCharacter(monster[6][p.champion[x+1]],0,1,p,{x: 0, y: 0},true,false),(x * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale);   
+                    if (x === 0){
+                        ctx.drawImage(gfxUI[UI_CHAIN_VERT],(x +2 *scale) + (p.ScreenX*scale),(p.ScreenY+5)*scale,gfxUI[UI_CHAIN_VERT].width*scale,gfxUI[UI_CHAIN_VERT].height*scale);        
+                        ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,0,p,{x: 0, y: 0},true,false),(p.ScreenX-38)*scale,(p.ScreenY-32)*scale);                       
+                        ctx.drawImage(gfxUI[UI_CHAIN_VERT],(x + 43*scale) + (p.ScreenX*scale),(p.ScreenY+5)*scale,gfxUI[UI_CHAIN_VERT].width*scale,gfxUI[UI_CHAIN_VERT].height*scale);        
+                    }else{
+                        ctx.drawImage(gfxUI[UI_SHIELD],((x-1) * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_SHIELD].width*scale,gfxUI[UI_SHIELD].height*scale);        
+                        ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true,false),((x-1) * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale);                       
+                    }
                 }
             }
             
@@ -170,14 +183,140 @@ function drawPocketUI(p) {
     }
     
     ctx.drawImage(gfxUI[UI_GRAY_BAR],(p.ScreenX + 225) *scale,(p.ScreenY + 54) *scale,gfxUI[UI_GRAY_BAR].width*scale,gfxUI[UI_GRAY_BAR].height*scale);    
-    writeFontImage("Armour +0", p.ScreenX/scale +233 ,(p.ScreenY+55), COLOUR[COLOUR_YELLOW]);            
+    writeFontImage("Armour:+0", p.ScreenX/scale +233 ,(p.ScreenY+55), COLOUR[COLOUR_YELLOW]);            
     
     for (x=0;x<6;x++){
-        if (x>3){
-        ctx.drawImage(gfxUI[UI_POCKET_EMPTY],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_POCKET_EMPTY].width*scale,gfxUI[UI_POCKET_EMPTY].height*scale);        
+        
+        switch (x) {
+            
+            case 0:{ctx.drawImage(gfxUI[UI_POCKET_CLUB],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_POCKET_EMPTY].width*scale,gfxUI[UI_POCKET_EMPTY].height*scale);        };break
+            case 1:{ctx.drawImage(gfxUI[UI_POCKET_SPADE],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_POCKET_EMPTY].width*scale,gfxUI[UI_POCKET_EMPTY].height*scale);        };break
+            case 2:{ctx.drawImage(gfxUI[UI_POCKET_HEART],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_POCKET_EMPTY].width*scale,gfxUI[UI_POCKET_EMPTY].height*scale);        };break
+            case 3:{ctx.drawImage(gfxUI[UI_POCKET_DIMOND],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_POCKET_EMPTY].width*scale,gfxUI[UI_POCKET_EMPTY].height*scale);        };break
+            case 4:{ctx.drawImage(gfxUI[UI_POCKET_EMPTY],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_POCKET_EMPTY].width*scale,gfxUI[UI_POCKET_EMPTY].height*scale);        };break
+            case 5:{ctx.drawImage(gfxUI[UI_ICON_BACK],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_POCKET_EMPTY].width*scale,gfxUI[UI_POCKET_EMPTY].height*scale);        };break
+                
         }
     }
     
     
 }
 
+function itemID(id){
+    
+    switch (id) {
+        
+        case 1:{return UI_POCKET_COIN;} //Coinage
+        case 2:{return UI_POCKET_COMMON_KEY;} //Common Keys
+        case 3:{return UI_POCKET_ARROW;} //Arrows
+        case 4:{return UI_POCKET_ELF_ARROW;} //Elf Arrows
+        case 5:{return UI_POCKET_APPLE_1;} //1/3 Apple
+        case 6:{return UI_POCKET_APPLE_2;} //2/3 Apple
+        case 7:{return UI_POCKET_APPLE_3;} //Apple
+        case 8:{return UI_POCKET_BISCUIT_1;} //1/3 Biscuit
+        case 9:{return UI_POCKET_BISCUIT_2;} //2/3 Biscuit
+        case 10:{return UI_POCKET_BISCUIT_3;} //Biscuit
+        case 11:{return UI_POCKET_CHICKEN_1;} //1/3 Chicken
+        case 12:{return UI_POCKET_CHICKEN_2;} //2/3 Chicken
+        case 13:{return UI_POCKET_CHICKEN_3;} //Chicken
+        case 14:{return UI_POCKET_WATER_1;} //1/3 Mead
+        case 15:{return UI_POCKET_WATER_2;} //2/3 Mead
+        case 16:{return UI_POCKET_WATER_3;} //Mead
+        case 17:{return UI_POCKET_WATER_1;} //1/3 Water
+        case 18:{return UI_POCKET_WATER_2;} //2/3 Water
+        case 19:{return UI_POCKET_WATER_3;} //Water
+        case 20:{return UI_POCKET_NEGG;} //N'egg (Green)
+        case 21:{return UI_POCKET_NEGG;} //N'egg (Blue)
+        case 22:{return UI_POCKET_NEGG;} //N'egg (Red)
+        case 23:{return UI_POCKET_POTION;} //Serpent Slime
+        case 24:{return UI_POCKET_POTION;} //Brimstone Broth
+        case 25:{return UI_POCKET_POTION;} //Dragon Ale
+        case 26:{return UI_POCKET_POTION;} //Moon Elixir
+        case 27:{return UI_POCKET_AMOUR_LEATHER;} //Leather Armour
+        case 28:{return UI_POCKET_AMOUR_CHAIN;} //Chain Mail
+        case 29:{return UI_POCKET_AMOUR_PLATE;} //Plate Mail
+        case 30:{return UI_POCKET_AMOUR_CHAIN;} //Mithril Chain
+        case 31:{return UI_POCKET_AMOUR_PLATE;} //Mithril Plate
+        case 32:{return UI_POCKET_AMOUR_CHAIN;} //Adamant Chain
+        case 33:{return UI_POCKET_AMOUR_PLATE;} //Adamant Plate
+        case 34:{return UI_POCKET_AMOUR_CHAIN;} //Crystal Chain
+        case 35:{return UI_POCKET_AMOUR_PLATE;} //Crystal Plate
+        case 36:{return UI_POCKET_SHIELD_1;} //Leather Shield
+        case 37:{return UI_POCKET_SHIELD_2;} //Buckler
+        case 38:{return UI_POCKET_SHIELD_3;} //Rune Shield (Classic)
+        case 39:{return UI_POCKET_SHIELD_4;} //Large Shield
+        case 40:{return UI_POCKET_SHIELD_5;} //Moon Shield
+        case 41:{return UI_POCKET_SHIELD_6;} //Dragon Scale
+        case 42:{return UI_POCKET_SHIELD_7;} //War Shield
+        case 43:{return UI_POCKET_GLOVE;} //Chaos Gloves
+        case 44:{return UI_POCKET_GLOVE;} //Battle Gloves
+        case 45:{return UI_POCKET_GLOVE;} //Mithril Gloves
+        case 46:{return UI_POCKET_GLOVE;} //Adamant Gloves
+        case 47:{return UI_POCKET_GLOVE;} //Crystal Gloves
+        case 48:{return UI_POCKET_DAGGER;} //Dagger
+        case 49:{return UI_POCKET_SWORD_1;} //Stealth Blade
+        case 50:{return UI_POCKET_SHORT_SWORD;} //Short Sword
+        case 51:{return UI_POCKET_SWORD_3;} //Long Sword
+        case 52:{return UI_POCKET_SWORD_4;} //Mithril Sword
+        case 53:{return UI_POCKET_SWORD_5;} //Fleshbane
+        case 54:{return UI_ICON_UNKNOWN;} //Demon Blade
+        case 55:{return UI_ICON_UNKNOWN;} //Ace of Swords
+        case 56:{return UI_POCKET_AXE_1;} //Battle Axe
+        case 57:{return UI_POCKET_AXE_2;} //Mithril Axe
+        case 58:{return UI_POCKET_AXE_3;} //Troll's Axe
+        case 59:{return UI_POCKET_AXE_4;} //Brainbiter
+        case 60:{return UI_POCKET_AXE_1;} //Deathbringer
+        case 61:{return ;} //Staff
+        case 62:{return ;} //Battle Staff
+        case 63:{return ;} //Power Stadd
+        case 64:{return ;} //Blodwyn (RIP)
+        case 65:{return ;} //Murlock (RIP)
+        case 66:{return ;} //Eleanor (RIP)
+        case 67:{return ;} //Roseanne (RIP)
+        case 68:{return ;} //Astroth (RIP)
+        case 69:{return ;} //Zothen (RIP)
+        case 70:{return ;} //Baldrick (RIP)
+        case 71:{return ;} //Elfric (RIP)
+        case 72:{return ;} //Sir Edward (RIP)
+        case 73:{return ;} //Megrim (RIP)
+        case 74:{return ;} //Sethra (RIP)
+        case 75:{return ;} //Mr. Flay (RIP)
+        case 76:{return ;} //Ulrich (RIP)
+        case 77:{return ;} //Zastaph (RIP)
+        case 78:{return ;} //Hengist (RIP)
+        case 79:{return ;} //Thai-Chang (RIP)
+        case 80:{return ;} //Bronze Key
+        case 81:{return ;} //Iron Key
+        case 82:{return ;} //Serpent Key
+        case 83:{return ;} //Chaos Key
+        case 84:{return ;} //Dragon Key
+        case 85:{return ;} //Moon Key
+        case 86:{return ;} //Chromatic Key
+        case 87:{return ;} //Serpent Wand
+        case 88:{return ;} //Chaos Wand
+        case 89:{return ;} //Dragon Wand
+        case 90:{return ;} //Moon Wand
+        case 91:{return ;} //Heal Wand
+        case 92:{return ;} //Long Bow
+        case 93:{return ;} //Frost Bow
+        case 94:{return ;} //Cross Bow
+        case 95:{return ;} //permit
+        case 96:{return ;} //Serpent Crystal
+        case 97:{return ;} //Chaos Crystal
+        case 98:{return ;} //Dragon Crystal
+        case 99:{return ;} //Moon Crystal
+        case 100:{return ;} //Grey Gem
+        case 101:{return ;} //Bluish Gem
+        case 102:{return ;} //Brown Gem
+        case 103:{return ;} //Tan Gem
+        case 104:{return ;} //Grey Ring
+        case 105:{return ;} //Serpent Ring
+        case 106:{return ;} //Chaos Ring
+        case 107:{return ;} //Dragon Ring
+        case 108:{return ;} //Moon Ring
+        case 109:{return ;} //Book of Skulls
+        
+    }
+    
+    
+}

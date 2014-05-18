@@ -1,7 +1,6 @@
 function Player(id, PortX, PortY,ScreenX,ScreenY) {
 	this.id = id;
-	this.champion = new Array();
-        this.currentChamp = 0; // <--- TEMP NEED TO SELECT CORRECT CHAMP
+	this.champion = new Array();        
 	this.x = 0; //posX;
 	this.y = 0; //posY;
 	this.floor = 0; //floor;
@@ -376,3 +375,5 @@ function initPlayersQuickStart() {
         player[0].currentChamp = 0;
         player[1].currentChamp = 4;
 }
+
+

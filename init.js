@@ -137,7 +137,7 @@ function initData() {
 	gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
 	gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
 
-	grabFont();
+	
 	initChampions();
 	initSpells();
 //	player[0] = new Player(0, (canvas.width - (128 * scale)) / 2, 12 * scale,0*scale,10);
@@ -145,6 +145,7 @@ function initData() {
 	player[0] = new Player(0, 96 * scale, 12 * scale,0*scale,10);
 	player[1] = new Player(1, 96 * scale, 116 * scale,0*scale,114);
         gfxUI = grabUISprites(gfx['misc']['uistuff']); 
+        grabFont();
 	initPlayersQuickStart();
 	initTowerSwitches();
 	switchTower(0);

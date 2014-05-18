@@ -261,9 +261,6 @@ function grabImageAt(image, startX, startY, width, height, flip, scale) {
 		can.width = width;
 		can.height = height;
 		var flipcontext = can.getContext("2d");
-		//var flipimageObj = new Image();
-		//flipimageObj.width = width;
-		//flipimageObj.height = height;
 		if (flip) {
 			flipcontext.translate(width, 0);
 			flipcontext.scale(-scale, scale);
@@ -273,10 +270,7 @@ function grabImageAt(image, startX, startY, width, height, flip, scale) {
 
 		flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
 		flipcontext.save();
-		//flipimageObj.src = can.toDataURL();
-		//can = null;
 		return can;
-		//flipimageObj = null;
 	} catch (e) {
 		PrintLog("grabImageAt Error: " + e.toString());
 	}
@@ -288,16 +282,12 @@ function flipImage(image) {
 	can.width = image.width;
 	can.height = image.height;
 	var flipcontext = can.getContext("2d");
-	//var flipimageObj = new Image();
-	//flipimageObj.width = image.width;
-	//flipimageObj.height = image.height;
 
 	flipcontext.translate(image.width, 0);
 	flipcontext.scale(-1, 1);
 
 	flipcontext.drawImage(image, 0, 0, image.width, image.height);
 	flipcontext.save();
-	//flipimageObj.src = can.toDataURL();
 
 	can = null;
 	return can;
@@ -307,3 +297,9 @@ function flipImage(image) {
 String.prototype.contains = function(it) {
 	return this.indexOf(it) !== -1;
 };
+
+function swapElement(array, indexA, indexB) {
+  var tmp = array[indexA];
+  array[indexA] = array[indexB];
+  array[indexB] = tmp;
+}
