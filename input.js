@@ -168,42 +168,20 @@ function processCanvasInput(x, y) {
             }           
             
         }
+         if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_POCKETS){
+            
+            if (uiClickInArea(x,y,UI_CLICK_POCKET_BACK,player[p])){
+                player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
+            }        
+            
+        }
         
         if (player[p].uiLeftPanel.mode === LEFT_PANEL_MODE_STATS){
             
-            if (uiClickInArea(x,y,UI_CLICK_CHAMP1,player[p])){
-                if (player[p].uiLeftPanel.champs[0] === false){
-                    player[p].uiLeftPanel.champs[0] = true;
-                }else{
-                    player[p].uiLeftPanel.champs[0] = false;
-                }
-                
-            }
-            if (uiClickInArea(x,y,UI_CLICK_CHAMP2,player[p])){
-                if (player[p].uiLeftPanel.champs[1] === false){
-                    player[p].uiLeftPanel.champs[1] = true;
-                }else{
-                    player[p].uiLeftPanel.champs[1] = false;
-                }
-                
-            }
-            if (uiClickInArea(x,y,UI_CLICK_CHAMP3,player[p])){
-                if (player[p].uiLeftPanel.champs[2] === false){
-                    player[p].uiLeftPanel.champs[2] = true;
-                }else{
-                    player[p].uiLeftPanel.champs[2] = false;
-                }
-                
-            }
-            if (uiClickInArea(x,y,UI_CLICK_CHAMP4,player[p])){
-                if (player[p].uiLeftPanel.champs[3] === false){
-                    player[p].uiLeftPanel.champs[3] = true;
-                }else{
-                    player[p].uiLeftPanel.champs[3] = false;
-                }
-                
-            }
-            
+            if (uiClickInArea(x,y,UI_CLICK_CHAMP1,player[p])){toggleChampUI(0,player[p]);}
+            if (uiClickInArea(x,y,UI_CLICK_CHAMP2,player[p])){toggleChampUI(1,player[p]);}
+            if (uiClickInArea(x,y,UI_CLICK_CHAMP3,player[p])){toggleChampUI(2,player[p]);}
+            if (uiClickInArea(x,y,UI_CLICK_CHAMP4,player[p])){toggleChampUI(3,player[p]);}           
             
         }
         
