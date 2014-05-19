@@ -665,17 +665,7 @@ function summonArray(spriteSheetIMG) {
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 18, 121, 9, 27, false));
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 10, 121, 7, 27, false));
     
-    DISTANCE_5.push(grabImageAt(spriteSheetIMG, 0, 149, 13, 22, false));
-    DISTANCE_5.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, true));
-    DISTANCE_5.push(grabImageAt(spriteSheetIMG, 26, 149, 13, 22, false));
-    DISTANCE_5.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, false));
-
-    DISTANCE_6.push(grabImageAt(spriteSheetIMG, 0, 172, 11, 17, false));
-    DISTANCE_6.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, true));
-    DISTANCE_6.push(grabImageAt(spriteSheetIMG, 22, 172, 11, 17, false));
-    DISTANCE_6.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, false));
-
-    BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_4, DISTANCE_5, DISTANCE_6);
+    BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_6);
     ImageArray.push(BODYPART);
 
     var DISTANCE_1 = [],
@@ -714,6 +704,25 @@ function summonArray(spriteSheetIMG) {
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, true));
 
     BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_4);
+    ImageArray.push(BODYPART);
+
+    var DISTANCE_1 = [],
+        DISTANCE_2 = [],
+        DISTANCE_3 = [],
+        DISTANCE_4 = []
+        BODYPART = [];
+
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 149, 13, 22, false));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, true));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 26, 149, 13, 22, false));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, false));
+
+    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 0, 172, 11, 17, false));
+    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, true));
+    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 22, 172, 11, 17, false));
+    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, false));
+
+    BODYPART.push(DISTANCE_1, DISTANCE_2);
     ImageArray.push(BODYPART);
 
     return ImageArray;
