@@ -5,7 +5,7 @@ var tower = new Array();
 
 //Setup some global Varibles for needed
 var scale = 3;
-var debug = true;
+var debug = false;
 var debugHigh = false;
 var debugWindow;
 var game;
@@ -572,7 +572,8 @@ var UI_GFX_POCKET_EMPTY = 0,
         UI_GFX_SHIELD_BOTTOM = 138,
         UI_GFX_SHIELD_TOP = 139;
 
-var LEFT_PANEL_MODE_STATS = 0;
+var LEFT_PANEL_MODE_STATS = 0,
+        LEFT_PANEL_MODE_COMMAND = 1;
 
 var UI_RIGHT_PANEL_MAIN = 0,
         UI_RIGHT_PANEL_SPELLBOOK = 1,
@@ -615,5 +616,40 @@ var UI_CLICK_CHAMP1 = 0,
         UI_CLICK_POCKET_CHARACTER_2 = 33,
         UI_CLICK_POCKET_CHARACTER_3 = 34,
         UI_CLICK_POCKET_HAND = 35,
-        UI_CLICK_POCKET_BACK = 36;
+        UI_CLICK_POCKET_BACK = 36,
+        UI_CLICK_PAUSE = 37,
+        UI_CLICK_SAVE = 38,
+        UI_CLICK_SLEEP = 39,
+        UI_CLICK_BACK = 40,
+        UI_CLICK_TOGGLEUP = 41,
+        UI_CLICK_TOGGLEDOWN = 42;
         
+var KEYPAD_8 = 104,
+    KEYPAD_4 = 100,
+    KEYPAD_5 = 101,
+    KEYPAD_6 = 102,
+    KEYPAD_7 = 103,
+    KEYPAD_8 = 104,
+    KEYPAD_9 = 105,
+    KEY_END = 96,
+    KEYPAD_PLUS = 107,
+    KEY_L = 76,
+    KEY_T = 84,
+    KEY_SPACEBAR = 32,
+    KEY_G = 71,
+    KEY_W = 87,
+    KEY_S = 83,
+    KEY_A = 65,
+    KEY_D = 68,
+    KEY_Q = 81,
+    KEY_E = 69,
+    KEY_R = 82,
+    KEY_F = 70,
+    KEY_5 = 53,
+    KEY_6 = 54,
+    KEY_7 = 55,
+    KEY_8 = 56,
+    KEY_9 = 57,
+    KEY_0 = 48,
+    KEY_MINUS = 189,
+    KEY_PLUS = 187;

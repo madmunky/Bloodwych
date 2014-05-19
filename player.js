@@ -19,7 +19,7 @@ function Player(id, PortX, PortY,ScreenX,ScreenY) {
 	this.moving = 0; //0 = Forward,1 = Right, 2 = Backwards, 3 = Left
 	this.towerSwitches = new Array();
         this.uiRightPanel = { activePocket: 0, view: UI_RIGHT_PANEL_MAIN};
-        this.uiLeftPanel = { champs: new Array(true,false,false,false), mode: LEFT_PANEL_MODE_STATS };
+        this.uiLeftPanel = { champs: new Array(false,false,false,false), mode: LEFT_PANEL_MODE_STATS };
         this.communication = [];
 }
 

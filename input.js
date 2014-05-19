@@ -1,34 +1,3 @@
-var KEYPAD_8 = 104,
-    KEYPAD_4 = 100,
-    KEYPAD_5 = 101,
-    KEYPAD_6 = 102,
-    KEYPAD_7 = 103,
-    KEYPAD_8 = 104,
-    KEYPAD_9 = 105,
-    KEY_END = 96,
-    KEYPAD_PLUS = 107,
-    KEY_L = 76,
-    KEY_T = 84,
-    KEY_SPACEBAR = 32,
-    KEY_G = 71,
-    KEY_W = 87,
-    KEY_S = 83,
-    KEY_A = 65,
-    KEY_D = 68,
-    KEY_Q = 81,
-    KEY_E = 69,
-    KEY_R = 82,
-    KEY_F = 70,
-    KEY_5 = 53,
-    KEY_6 = 54,
-    KEY_7 = 55,
-    KEY_8 = 56,
-    KEY_9 = 57,
-    KEY_0 = 48,
-    KEY_MINUS = 189,
-    KEY_PLUS = 187;
-
-
 function doKeyDown(e) {
 
     switch (e.keyCode) {
@@ -159,29 +128,41 @@ function processCanvasInput(x, y) {
         
         if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_MAIN){
             
-            if (uiClickInArea(x,y,UI_CLICK_OPEN_POCKETS,player[p])){
-                player[p].uiRightPanel.view = UI_RIGHT_PANEL_POCKETS;
-            }
+            if (uiClickInArea(x,y,UI_CLICK_OPEN_POCKETS,player[p])){player[p].uiRightPanel.view = UI_RIGHT_PANEL_POCKETS;}            
+            if (uiClickInArea(x,y,UI_CLICK_INTERACT,player[p])){player[p].action();}  
             
-            if(uiClickInArea(x,y,UI_CLICK_INTERACT,player[p])){
-                player[p].action();
-            }           
+            if (uiClickInArea(x,y,UI_CLICK_ROTATE_LEFT,player[p])){player[p].rotateTo(player[0].d - 1);}
+            if (uiClickInArea(x,y,UI_CLICK_ROTATE_RIGHT,player[p])){player[p].rotateTo(player[0].d + 1);}
+            if (uiClickInArea(x,y,UI_CLICK_MOVE_FORWARD,player[p])){player[p].move(DIRECTION_NORTH);}
+            if (uiClickInArea(x,y,UI_CLICK_MOVE_BACKWARDS,player[p])){player[p].move(DIRECTION_SOUTH);}
+            if (uiClickInArea(x,y,UI_CLICK_MOVE_LEFT,player[p])){player[p].move(DIRECTION_WEST);}
+            if (uiClickInArea(x,y,UI_CLICK_MOVE_RIGHT,player[p])){player[p].move(DIRECTION_EAST);}            
             
         }
-         if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_POCKETS){
+        else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_POCKETS){
             
             if (uiClickInArea(x,y,UI_CLICK_POCKET_BACK,player[p])){
                 player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
             }        
             
         }
-        
         if (player[p].uiLeftPanel.mode === LEFT_PANEL_MODE_STATS){
             
             if (uiClickInArea(x,y,UI_CLICK_CHAMP1,player[p])){toggleChampUI(0,player[p]);}
             if (uiClickInArea(x,y,UI_CLICK_CHAMP2,player[p])){toggleChampUI(1,player[p]);}
             if (uiClickInArea(x,y,UI_CLICK_CHAMP3,player[p])){toggleChampUI(2,player[p]);}
             if (uiClickInArea(x,y,UI_CLICK_CHAMP4,player[p])){toggleChampUI(3,player[p]);}           
+            if (uiClickInArea(x,y,UI_CLICK_STATS_BOX,player[p])){player[p].uiLeftPanel.mode = LEFT_PANEL_MODE_COMMAND;}
+            
+        }
+        else if (player[p].uiLeftPanel.mode === LEFT_PANEL_MODE_COMMAND){
+            
+            if (uiClickInArea(x,y,UI_CLICK_BACK,player[p])){player[p].uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;}         
+            if (uiClickInArea(x,y,UI_CLICK_PAUSE,player[p])){alert('PAUSED');} 
+            if (uiClickInArea(x,y,UI_CLICK_SAVE,player[p])){alert('SAVE GAME');} 
+            if (uiClickInArea(x,y,UI_CLICK_SLEEP,player[p])){alert('SLEEPING');} 
+            if (uiClickInArea(x,y,UI_CLICK_TOGGLEUP,player[p])){alert('TOGGLE UP');} 
+            if (uiClickInArea(x,y,UI_CLICK_TOGGLEDOWN,player[p])){alert('TOGGLE DOWN');} 
             
         }
         

@@ -119,19 +119,19 @@ function drawUI(p) {
     
     if (typeof gfxUI !== "undefined" && gfxUI !== null){
     
-        leftUI(p);
+        switch (p.uiLeftPanel.mode){            
+            case LEFT_PANEL_MODE_STATS:{leftUI(p);};break
+            case LEFT_PANEL_MODE_COMMAND:{commandUI(p);};break                
+        }
         
-        switch (p.uiRightPanel.view){
-            
+        switch (p.uiRightPanel.view){            
             case UI_RIGHT_PANEL_MAIN:{rightUI(p);};break
             case UI_RIGHT_PANEL_POCKETS:{drawPocketUI(p);};break
             case UI_RIGHT_PANEL_SPELLBOOK:{};break
-            case UI_RIGHT_PANEL_STATS:{};break
-                
+            case UI_RIGHT_PANEL_STATS:{};break                
         }
         
         myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 100]);
-
             
     }
 }
@@ -140,8 +140,7 @@ function leftUI(p){
     
 
             ctx.drawImage(gfxUI[UI_GFX_STATSBOX],(p.ScreenX + 51)*scale,p.ScreenY*scale,gfxUI[UI_GFX_STATSBOX].width*scale,gfxUI[UI_GFX_STATSBOX].height*scale);    
-            //ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG],(p.ScreenX + 1)*scale,(p.ScreenY+80)*scale,gfxUI[UI_GFX_CHAIN_LONG].width*scale,gfxUI[UI_GFX_CHAIN_LONG].height*scale);    
-            ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG],(p.ScreenX + 226)*scale,(p.ScreenY+80)*scale,gfxUI[UI_GFX_CHAIN_LONG].width*scale,gfxUI[UI_GFX_CHAIN_LONG].height*scale);    
+            ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG],(p.ScreenX + 1)*scale,(p.ScreenY+80)*scale,gfxUI[UI_GFX_CHAIN_LONG].width*scale,gfxUI[UI_GFX_CHAIN_LONG].height*scale);    
                         
             for (x=0;x<4;x++){
                     if (x === 0){
@@ -165,6 +164,35 @@ function leftUI(p){
                         }                        
                     }                    
                 }
+}
+
+function commandUI(p){
+    
+            ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX],p.ScreenX*scale,p.ScreenY*scale,gfxUI[UI_GFX_CHARACTER_BOX].width*scale,gfxUI[UI_GFX_CHARACTER_BOX].height*scale);    
+            ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[0]],(p.ScreenX+8)*scale,(p.ScreenY+8)*scale,gfxUI[UI_GFX_PORTRAITS][p.champion[0]].width*scale,gfxUI[UI_GFX_PORTRAITS][p.champion[0]].height*scale);                  
+            
+            ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE],(p.ScreenX + 57)*scale,p.ScreenY*scale,gfxUI[UI_GFX_ICON_PAUSE].width*scale,gfxUI[UI_GFX_ICON_PAUSE].height*scale);    
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE],(p.ScreenX + 72)*scale,(p.ScreenY)*scale,gfxUI[UI_GFX_ICON_SAVE].width*scale,gfxUI[UI_GFX_ICON_SAVE].height*scale);    
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP],(p.ScreenX + 57)*scale,(p.ScreenY+16)*scale,gfxUI[UI_GFX_ICON_SLEEP].width*scale,gfxUI[UI_GFX_ICON_SLEEP].height*scale);    
+            ctx.drawImage(gfxUI[UI_GFX_ICON_BACK],(p.ScreenX + 72)*scale,(p.ScreenY+16)*scale,gfxUI[UI_GFX_ICON_BACK].width*scale,gfxUI[UI_GFX_ICON_BACK].height*scale);    
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
+            
+            ctx.fillStyle = "#606060";
+            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 47)*scale,94*scale,7*scale);
+            writeFontImage('COMMUNICATE', (p.ScreenX +2) ,(p.ScreenY + 47), COLOUR[COLOUR_YELLOW]);
+            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 55)*scale,60*scale,7*scale);
+            writeFontImage('COMMEND', (p.ScreenX +2) ,(p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+            ctx.fillRect((p.ScreenX +62) *scale,(p.ScreenY + 55)*scale,33*scale,7*scale);
+            writeFontImage('VIEW', (p.ScreenX +65) ,(p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 63)*scale,35*scale,7*scale);
+            writeFontImage('WAIT', (p.ScreenX +2) ,(p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
+            ctx.fillRect((p.ScreenX +37) *scale,(p.ScreenY + 63)*scale,58*scale,7*scale);
+            writeFontImage('CORRECT', (p.ScreenX +41) ,(p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
+            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 71)*scale,59*scale,7*scale);
+            writeFontImage('DISMISS', (p.ScreenX +2) ,(p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+            ctx.fillRect((p.ScreenX +61) *scale,(p.ScreenY + 71)*scale,34*scale,7*scale);
+            writeFontImage('CALL', (p.ScreenX +65) ,(p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
 }
 
 function rightUI(p){
@@ -192,7 +220,9 @@ function rightUI(p){
                 ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR],(p.ScreenX + 289) *scale,(p.ScreenY + 22) *scale,gfxUI[UI_GFX_ICON_OPENDOOR].width*scale,gfxUI[UI_GFX_ICON_OPENDOOR].height*scale);    
                 ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS],(p.ScreenX + 305) *scale,(p.ScreenY + 22) *scale,gfxUI[UI_GFX_ICON_POCKETS].width*scale,gfxUI[UI_GFX_ICON_POCKETS].height*scale);    
             }
-    
+            
+    ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG],(p.ScreenX + 226)*scale,(p.ScreenY+80)*scale,gfxUI[UI_GFX_CHAIN_LONG].width*scale,gfxUI[UI_GFX_CHAIN_LONG].height*scale);    
+            
 }
 
 function drawPocketUI(p) {
@@ -416,7 +446,9 @@ function uiClickAreas(){
     UCA.push({x: 0,  y: 46,width: 30, height: 41}); //CHAMP 2
     UCA.push({x: 32, y: 46,width: 30, height: 41}); //CHAMP 3
     UCA.push({x: 64, y: 46,width: 30, height: 41}); //CHAMP 4
+    
     UCA.push({x: 96, y: 13,width: 128,height: 76}); //3D VIEWPORT
+    
     UCA.push({x: 226,y: 1, width: 94, height: 19}); //NAME TAG AREA
     UCA.push({x: 226,y: 23,width: 37, height: 22}); //SPELLBOOK
     UCA.push({x: 265,y: 23,width: 22, height: 22}); //CHARACTER STATS
@@ -430,21 +462,19 @@ function uiClickAreas(){
     UCA.push({x: 238,y: 63,width: 18, height: 11}); //MOVE BACKWARDS
     UCA.push({x: 257,y: 61,width: 11, height: 13}); //MOVE RIGHT
     UCA.push({x: 269,y: 63,width: 17, height: 13}); //DEFEND
-    //UCA.push({x: }); //
+
     UCA.push({x: 227,y: 24,width: 14, height: 14}); //POCKET SLOT 1
     UCA.push({x: 244,y: 24,width: 14, height: 14}); //POCKET SLOT 2
     UCA.push({x: 258,y: 24,width: 14, height: 14}); //POCKET SLOT 3
     UCA.push({x: 274,y: 24,width: 14, height: 14}); //POCKET SLOT 4
     UCA.push({x: 290,y: 24,width: 14, height: 14}); //POCKET SLOT 5
-    UCA.push({x: 306,y: 24,width: 14, height: 14}); //POCKET SLOT 6
-    
+    UCA.push({x: 306,y: 24,width: 14, height: 14}); //POCKET SLOT 6    
     UCA.push({x: 227,y: 41,width: 14, height: 14}); //POCKET SLOT 7
     UCA.push({x: 244,y: 41,width: 14, height: 14}); //POCKET SLOT 8
     UCA.push({x: 258,y: 41,width: 14, height: 14}); //POCKET SLOT 9
     UCA.push({x: 274,y: 41,width: 14, height: 14}); //POCKET SLOT 10
     UCA.push({x: 290,y: 41,width: 14, height: 14}); //POCKET SLOT 11
-    UCA.push({x: 306,y: 41,width: 14, height: 14}); //POCKET SLOT 12
-    
+    UCA.push({x: 306,y: 41,width: 14, height: 14}); //POCKET SLOT 12    
     UCA.push({x: 227,y: 66,width: 14, height: 14}); //POCKET CHARACTER 0
     UCA.push({x: 244,y: 66,width: 14, height: 14}); //POCKET CHARACTER 1
     UCA.push({x: 258,y: 66,width: 14, height: 14}); //POCKET CHARACTER 2
@@ -452,9 +482,14 @@ function uiClickAreas(){
     UCA.push({x: 290,y: 66,width: 14, height: 14}); //POCKET HAND
     UCA.push({x: 306,y: 66,width: 14, height: 14}); //POCKET BACK
     
+    UCA.push({x: 58,y: 2,width: 16, height: 16}); //PAUSE BUTTON
+    UCA.push({x: 73,y: 2,width: 16, height: 16}); //SAVE BUTTON
+    UCA.push({x: 58,y: 18,width: 16, height: 16}); //SLEEP BUTTON
+    UCA.push({x: 73,y: 18,width: 16, height: 16}); //BACK BUTTON
+    UCA.push({x: 58,y: 34,width: 16, height: 16}); //SCROLLUP BUTTON
+    UCA.push({x: 73,y: 34,width: 16, height: 16}); //SCROLLDOWN BUTTON
+    
     return UCA;
-    
-    
     
 }
 

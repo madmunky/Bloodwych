@@ -140,9 +140,7 @@ function initData() {
 	
 	initChampions();
 	initSpells();
-//	player[0] = new Player(0, (canvas.width - (128 * scale)) / 2, 12 * scale,0*scale,10);
-//	player[1] = new Player(1, (canvas.width - (128 * scale)) / 2, 116 * scale,0*scale,114);
-	player[0] = new Player(0, 96 * scale, 12 * scale,0*scale,0);
+	player[0] = new Player(0, 96 * scale, 12 * scale,0*scale,10);
 	player[1] = new Player(1, 96 * scale, 116 * scale,0*scale,114);
         gfxUI = grabUISprites(gfx['misc']['uistuff']); 
         grabFont();
