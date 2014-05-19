@@ -131,8 +131,8 @@ function processCanvasInput(x, y) {
             if (uiClickInArea(x,y,UI_CLICK_OPEN_POCKETS,player[p])){player[p].uiRightPanel.view = UI_RIGHT_PANEL_POCKETS;}            
             if (uiClickInArea(x,y,UI_CLICK_INTERACT,player[p])){player[p].action();}  
             
-            if (uiClickInArea(x,y,UI_CLICK_ROTATE_LEFT,player[p])){player[p].rotateTo(player[0].d - 1);}
-            if (uiClickInArea(x,y,UI_CLICK_ROTATE_RIGHT,player[p])){player[p].rotateTo(player[0].d + 1);}
+            if (uiClickInArea(x,y,UI_CLICK_ROTATE_LEFT,player[p])){player[p].rotateTo(player[p].d - 1);}
+            if (uiClickInArea(x,y,UI_CLICK_ROTATE_RIGHT,player[p])){player[p].rotateTo(player[p].d + 1);}
             if (uiClickInArea(x,y,UI_CLICK_MOVE_FORWARD,player[p])){player[p].move(DIRECTION_NORTH);}
             if (uiClickInArea(x,y,UI_CLICK_MOVE_BACKWARDS,player[p])){player[p].move(DIRECTION_SOUTH);}
             if (uiClickInArea(x,y,UI_CLICK_MOVE_LEFT,player[p])){player[p].move(DIRECTION_WEST);}
