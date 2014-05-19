@@ -117,14 +117,17 @@ function touchXY(e) {
         var x = e.targetTouches[0].pageX - canvas.offsetLeft;
         var y = e.targetTouches[0].pageY - canvas.offsetTop;
         var xy;
-        processCanvasInput(x, y);
         viewportTouch(x , y, xy);
+        processCanvasInput(x, y);
+        
     }
 }
 
 function processCanvasInput(x, y) {
 
     for (p = 0; p < 2; p++) {
+        
+        if (uiClickInArea(x,y,UI_CLICK_VIEWPORTw,player[p])){player[p].action();}  
         
         if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_MAIN){
             
@@ -205,10 +208,13 @@ function mouseXY(e){
         mouseY = e.offsetY;
         
         if (mouseY > canvas.height / 2){
-          canvas.style.cursor = "url('./images/misc/cursor1.png'),auto"; 
+            if (canvas.style.cursor === "url('./images/misc/cursor1.png'),auto"){                
+            }else{canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";}
         }
         else{
-          canvas.style.cursor = "url('./images/misc/cursor0.png'),auto"; 
+          if (canvas.style.cursor === "url('./images/misc/cursor0.png'),auto"){
+          }else{canvas.style.cursor = "url('./images/misc/cursor0.png'),auto"; 
+          }
         }
         
     }
