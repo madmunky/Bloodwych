@@ -159,9 +159,7 @@ function processCanvasInput(x, y, xy) {
         
         if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_MAIN){
             
-            if (x > (player[p].ScreenX + uiClickArea[UI_CLICK_OPEN_POCKETS].x) * scale && x < (player[p].ScreenX + uiClickArea[UI_CLICK_OPEN_POCKETS].x + uiClickArea[UI_CLICK_OPEN_POCKETS].width) * scale
-                  && y > (player[p].ScreenY + uiClickArea[UI_CLICK_OPEN_POCKETS].y) * scale && y < (player[p].ScreenY + uiClickArea[UI_CLICK_OPEN_POCKETS].y + uiClickArea[UI_CLICK_OPEN_POCKETS].height) * scale
-                    ){
+            if (uiClickInArea(x,y,UI_CLICK_OPEN_POCKETS,player[p])){
                 player[p].uiRightPanel.view = UI_RIGHT_PANEL_POCKETS;
             }
             
@@ -171,12 +169,14 @@ function processCanvasInput(x, y, xy) {
 
 function viewportTouch(x,y,xy){
     
-    xy = {
-            x: Math.floor((x - player[p].PortalX) / scale / 42.67),
-            y: Math.floor((y - player[p].PortalY) / scale / 38)
-    };
-
     for (p = 0; p < 2; p++) {
+            
+        xy = {
+                x: Math.floor((x - player[p].PortalX) / scale / 42.67),
+                y: Math.floor((y - player[p].PortalY) / scale / 38)
+        };
+
+
         if (xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
                 if (xy.x === 0 && xy.y === 0) { //rotate left
                     player[p].rotateTo(player[p].d - 1);

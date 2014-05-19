@@ -8,9 +8,9 @@ function grabUISprites(spriteSheetIMG){
         for (x=0;x<20;x++){
             if (i > 74 && i < 79){
                 extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG,x*16,y*16,16,16,false),SHIELD_PALETTE_DEFAULT,PALETTE_SERPENT));     
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG,x*16,y*16,16,16,false),SHIELD_PALETTE_DEFAULT,PALETTE_MOON));     
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG,x*16,y*16,16,16,false),SHIELD_PALETTE_DEFAULT,PALETTE_CHAOS));     
                 extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG,x*16,y*16,16,16,false),SHIELD_PALETTE_DEFAULT,PALETTE_DRAGON));     
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG,x*16,y*16,16,16,false),SHIELD_PALETTE_DEFAULT,PALETTE_CHAOS));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG,x*16,y*16,16,16,false),SHIELD_PALETTE_DEFAULT,PALETTE_MOON));
                 ImageArray.push(extraColours);
                 extraColours = [];
             }
@@ -231,12 +231,25 @@ function drawPocketUI(p) {
     
     for (x=0;x<6;x++){
         
+        var g;
+        
+        if (x < 4){
+         g = champion[p.champion[x]].prof;
+                
+            switch (g){            
+                case 0:{g = UI_GFX_POCKET_CLUB};break;
+                case 1:{g = UI_GFX_POCKET_HEART};break;
+                case 2:{g = UI_GFX_POCKET_SPADE};break;
+                case 3:{g = UI_GFX_POCKET_DIMOND};break;            
+            }
+        }
+        
         switch (x) {
             
-            case 0:{ctx.drawImage(gfxUI[UI_GFX_POCKET_CLUB][x],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
-            case 1:{ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE][x],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
-            case 2:{ctx.drawImage(gfxUI[UI_GFX_POCKET_HEART][x],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
-            case 3:{ctx.drawImage(gfxUI[UI_GFX_POCKET_DIMOND][x],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
+            case 0:{ctx.drawImage(gfxUI[g][champion[p.champion[x]].colour],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
+            case 1:{ctx.drawImage(gfxUI[g][champion[p.champion[x]].colour],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
+            case 2:{ctx.drawImage(gfxUI[g][champion[p.champion[x]].colour],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
+            case 3:{ctx.drawImage(gfxUI[g][champion[p.champion[x]].colour],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
             case 4:{ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
             case 5:{ctx.drawImage(gfxUI[UI_GFX_ICON_BACK],((p.ScreenX + 225) + (x*16)) *scale,((p.ScreenY + 63)) *scale,gfxUI[UI_GFX_POCKET_EMPTY].width*scale,gfxUI[UI_GFX_POCKET_EMPTY].height*scale);};break
                 
@@ -423,4 +436,11 @@ function uiClickAreas(){
     
     
     
+}
+
+function uiClickInArea(x,y,ui,p) {
+    if(x >= (p.ScreenX + uiClickArea[ui].x) * scale && x <= (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width - 1) * scale
+        && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y <= (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height - 1) * scale)
+    {return true;}
+    return false;
 }
