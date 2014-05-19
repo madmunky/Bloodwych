@@ -1,51 +1,52 @@
 body {
-	font: 11px verdana, sans-serif;
-	background-color: #000;
-	color: #fff;
-	overflow: hidden;
+    font: 11px verdana, sans-serif;
+    background-color: #000;
+    color: #fff;
+    overflow: hidden;
 }
 img.gfx {
-	display: none;
+    display: none;
 }
 div.content {
-	width: 960px;
-	margin: 0 auto;
+    width: 960px;
+    margin: 0 auto;
 }
 div.logo {
-	text-align: center;
-	clear: both;
-	width: 100%;
+    text-align: center;
+    clear: both;
+    width: 100%;
 }
 div.behemoth {
-	text-align: center;
-	clear: both;
-	width: 100%;
+    text-align: center;
+    clear: both;
+    width: 100%;
 }
 section.info {
-	clear: both;
-	width: 100%;
-	float: left;
+    clear: both;
+    width: 100%;
+    float: left;
 }
 section.debug {
-/*	float: left;
+    /*	float: left;
 	height: 200px;
 	width: 400px;*/
-	overflow-y: auto;
+    overflow-y: auto;
 }
 canvas {
-	background: url(../images/loading.png) center center no-repeat;
-	border: 2px solid #444;
-	clear: both;
-	//float: left;
-	padding: 1px;
-	text-align: center;
-        padding-left: 0;
-        padding-right: 0;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
+    background: url(../images/loading.png) center center no-repeat;
+    border: 2px solid #444;
+    clear: both;
+    //float: left;
+    padding: 1px;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    cursor: url(../images/misc/cursor0.png), auto;
 }
 canvas.active {
-	background-color: #000;
-	background-image: none;
+    background-color: #000;
+    background-image: none;
 }
