@@ -343,7 +343,7 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 	var p = this;
 
 	if(form >= 101) {
-		drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
+		drawMonster(m, (6 + p.d - m.d) % 4, distance, this, offset);
 	} else {
 		if (typeof monsterPalette[form] !== "undefined") {
 			drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);

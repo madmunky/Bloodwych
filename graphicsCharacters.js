@@ -550,11 +550,19 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
                 var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
 
                 if (dist < 4 || part === IMAGE_CHA_MINI) {
-                    player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
+                    if (!returnImg) {
+                        player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
+                    } else {
+                        charContext.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
+                    }
                     if (dir2 > -1) {
                         offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
                         offy = 76 - Math.floor(m.gfx[part][dist][dir2].height) - offset.y;
-                        player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
+                        if (!returnImg) {
+                            player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
+                        } else {
+                            charContext.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
+                        }
                     }
                 }
             }
@@ -583,11 +591,11 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
         }
     }
     if (dist > -1) {
-        for (part = 0; part < 5; part++) {
+        for (part = 0; part < 3; part++) {
             if (typeof m.gfx[part] !== "undefined" && typeof m.gfx[part][dist] !== "undefined" && typeof m.gfx[part][dist][dir] !== "undefined") {
                 var dir1 = dir;
                 var dir2 = -1;
-                if (part === IMAGE_MON_ARM) { //attack arms
+                if (part === 4) { //IMAGE_MON_ARM
                     if (dir === 0) {
                         dir1 = 0;
                         dir2 = 2;
@@ -627,20 +635,12 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
                 var offx = 64 - Math.floor(m.gfx[part][dist][dir1].width * 0.5) + offset.x;
                 var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
 
-                if (dist < 4 || part === IMAGE_CHA_MINI) {
-                    if (!returnImg) {
-                        player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
-                    } else {
-                        charContext.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
-                    }
+                if (dist < 4 || part === IMAGE_MON_MINI) {
+                    player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
                     if (dir2 > -1) {
                         offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
                         offy = 76 - Math.floor(m.gfx[part][dist][dir2].height) - offset.y;
-                        if (!returnImg) {
-                            player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
-                        } else {
-                            charContext.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
-                        }
+                        player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
                     }
                 }
             }
@@ -739,7 +739,17 @@ function summonArray(spriteSheetIMG) {
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 18, 121, 9, 27, false));
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 10, 121, 7, 27, false));
     
-    BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_6);
+    DISTANCE_5.push(grabImageAt(spriteSheetIMG, 0, 149, 13, 22, false));
+    DISTANCE_5.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, true));
+    DISTANCE_5.push(grabImageAt(spriteSheetIMG, 26, 149, 13, 22, false));
+    DISTANCE_5.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, false));
+
+    DISTANCE_6.push(grabImageAt(spriteSheetIMG, 0, 172, 11, 17, false));
+    DISTANCE_6.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, true));
+    DISTANCE_6.push(grabImageAt(spriteSheetIMG, 22, 172, 11, 17, false));
+    DISTANCE_6.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, false));
+
+    BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_4, DISTANCE_5, DISTANCE_6);
     ImageArray.push(BODYPART);
 
     var DISTANCE_1 = [],
@@ -778,25 +788,6 @@ function summonArray(spriteSheetIMG) {
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, true));
 
     BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_4);
-    ImageArray.push(BODYPART);
-
-    var DISTANCE_1 = [],
-        DISTANCE_2 = [],
-        DISTANCE_3 = [],
-        DISTANCE_4 = []
-        BODYPART = [];
-
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 149, 13, 22, false));
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, true));
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 26, 149, 13, 22, false));
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, false));
-
-    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 0, 172, 11, 17, false));
-    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, true));
-    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 22, 172, 11, 17, false));
-    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, false));
-
-    BODYPART.push(DISTANCE_1, DISTANCE_2);
     ImageArray.push(BODYPART);
 
     return ImageArray;

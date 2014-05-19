@@ -232,8 +232,8 @@ var NUMBER_OF_DISTANCES = 6,
 	NUMBER_OF_ARMS = 3,
 	NUMBER_OF_MINIS = 8;
 
-var IMAGE_MON_ARM = 0,
-	IMAGE_MON_TORSO = 1,
+var IMAGE_MON_TORSO = 0,
+	IMAGE_MON_ARM = 1,
 	IMAGE_MON_MINI = 2;
 
 //Character body part types
