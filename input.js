@@ -148,12 +148,12 @@ function touchXY(e) {
         var x = e.targetTouches[0].pageX - canvas.offsetLeft;
         var y = e.targetTouches[0].pageY - canvas.offsetTop;
         var xy;
-        processCanvasInput(x, y, xy);
+        processCanvasInput(x, y);
         viewportTouch(x , y, xy);
     }
 }
 
-function processCanvasInput(x, y, xy) {
+function processCanvasInput(x, y) {
 
     for (p = 0; p < 2; p++) {
         
@@ -163,7 +163,50 @@ function processCanvasInput(x, y, xy) {
                 player[p].uiRightPanel.view = UI_RIGHT_PANEL_POCKETS;
             }
             
+            if(uiClickInArea(x,y,UI_CLICK_INTERACT,player[p])){
+                player[p].action();
+            }           
+            
         }
+        
+        if (player[p].uiLeftPanel.mode === LEFT_PANEL_MODE_STATS){
+            
+            if (uiClickInArea(x,y,UI_CLICK_CHAMP1,player[p])){
+                if (player[p].uiLeftPanel.champs[0] === false){
+                    player[p].uiLeftPanel.champs[0] = true;
+                }else{
+                    player[p].uiLeftPanel.champs[0] = false;
+                }
+                
+            }
+            if (uiClickInArea(x,y,UI_CLICK_CHAMP2,player[p])){
+                if (player[p].uiLeftPanel.champs[1] === false){
+                    player[p].uiLeftPanel.champs[1] = true;
+                }else{
+                    player[p].uiLeftPanel.champs[1] = false;
+                }
+                
+            }
+            if (uiClickInArea(x,y,UI_CLICK_CHAMP3,player[p])){
+                if (player[p].uiLeftPanel.champs[2] === false){
+                    player[p].uiLeftPanel.champs[2] = true;
+                }else{
+                    player[p].uiLeftPanel.champs[2] = false;
+                }
+                
+            }
+            if (uiClickInArea(x,y,UI_CLICK_CHAMP4,player[p])){
+                if (player[p].uiLeftPanel.champs[3] === false){
+                    player[p].uiLeftPanel.champs[3] = true;
+                }else{
+                    player[p].uiLeftPanel.champs[3] = false;
+                }
+                
+            }
+            
+            
+        }
+        
     }
 }
 
