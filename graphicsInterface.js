@@ -111,6 +111,8 @@ function grabUISprites(spriteSheetIMG){
     ImageArray.push(grabImageAt(spriteSheetIMG,170,269,20,9,false));
     ImageArray.push(grabImageAt(spriteSheetIMG,164,279,30,5,false));        
     
+    ImageArray.push(grabImageAt(spriteSheetIMG,197,212,94,87,false));        
+    
     return ImageArray;
     
 }
@@ -128,7 +130,7 @@ function drawUI(p) {
             case UI_RIGHT_PANEL_MAIN:{rightUI(p);};break
             case UI_RIGHT_PANEL_POCKETS:{drawPocketUI(p);};break
             case UI_RIGHT_PANEL_SPELLBOOK:{};break
-            case UI_RIGHT_PANEL_STATS:{};break                
+            case UI_RIGHT_PANEL_STATS:{drawStatsPage(p);};break                
         }
         
         myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 100]);
@@ -287,6 +289,25 @@ function drawPocketUI(p) {
     }
     
     
+}
+
+function drawStatsPage(p){
+    ctx.drawImage(gfxUI[UI_GFX_SCRIPT],(p.ScreenX + 225) *scale,(p.ScreenY) *scale,gfxUI[UI_GFX_SCRIPT].width*scale,gfxUI[UI_GFX_SCRIPT].height*scale);    
+    writeFontImage("LEVEL", p.ScreenX +242 ,(p.ScreenY+17), COLOUR[COLOUR_YELLOW]); 
+    writeFontImage("~", p.ScreenX +285 ,(p.ScreenY+17), COLOUR[COLOUR_GREY_DARK]);
+    writeFontImage("0" + champion[p.champion[0]].level, p.ScreenX +297 ,(p.ScreenY+17), COLOUR[COLOUR_WHITE]); 
+    writeFontImage("ST", p.ScreenX +242 ,(p.ScreenY+25), COLOUR[COLOUR_BLUE_DARK]); 
+    writeFontImage(champion[p.champion[0]].stat.str, p.ScreenX +258 ,(p.ScreenY+25), COLOUR[COLOUR_YELLOW]); 
+    writeFontImage("AG", p.ScreenX +281 ,(p.ScreenY+25), COLOUR[COLOUR_BLUE_DARK]); 
+    writeFontImage(champion[p.champion[0]].stat.agi, p.ScreenX +297 ,(p.ScreenY+25), COLOUR[COLOUR_YELLOW]); 
+    writeFontImage("-", p.ScreenX +274 ,(p.ScreenY+25), COLOUR[COLOUR_GREY_DARK]); 
+    writeFontImage("IN", p.ScreenX +242 ,(p.ScreenY+33), COLOUR[COLOUR_BLUE_DARK]); 
+    writeFontImage(champion[p.champion[0]].stat.int, p.ScreenX +258 ,(p.ScreenY+33), COLOUR[COLOUR_YELLOW]); 
+    writeFontImage("CH", (p.ScreenX+281)  ,(p.ScreenY+33), COLOUR[COLOUR_BLUE_DARK]); 
+    writeFontImage("-", p.ScreenX +274 ,(p.ScreenY+33), COLOUR[COLOUR_GREY_DARK]); 
+    writeFontImage(champion[p.champion[0]].stat.cha, p.ScreenX +297 ,(p.ScreenY+33), COLOUR[COLOUR_YELLOW]); 
+    writeFontImage("HP", p.ScreenX +242 ,(p.ScreenY+41), COLOUR[COLOUR_BLACK]); 
+    writeFontImage("VI", p.ScreenX +242 ,(p.ScreenY+49), COLOUR[COLOUR_BLACK]); 
 }
 
 function itemID(id){
