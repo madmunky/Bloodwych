@@ -1,5 +1,5 @@
 //Init the game
-var debugWindow;
+
 
 
 $(function() {

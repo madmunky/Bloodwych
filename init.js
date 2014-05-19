@@ -149,5 +149,6 @@ function initData() {
 	initPlayersQuickStart();
 	initTowerSwitches();
 	switchTower(0);
+        uiClickArea = uiClickAreas();
 	//}
 }

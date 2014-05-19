@@ -43,7 +43,7 @@ Run = function() {
 		
 		$(function() {
 			canvas.addEventListener('keydown', doKeyDown, true);
-			//checkClickEvents();
+			checkClickEvents();
 			canvas.focus();
 		});
 	}
