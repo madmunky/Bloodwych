@@ -550,6 +550,84 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
                 var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
 
                 if (dist < 4 || part === IMAGE_CHA_MINI) {
+                    player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
+                    if (dir2 > -1) {
+                        offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
+                        offy = 76 - Math.floor(m.gfx[part][dist][dir2].height) - offset.y;
+                        player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
+                    }
+                }
+            }
+        }
+        if (returnImg) {
+            charContext.save();
+            return can;
+        }
+    }
+}
+
+function drawMonster(m, dir, dist, player, offset, doBlur) {
+    if (typeof doBlur === "undefined") {
+        doBlur = true;
+    }
+
+    var blur = 0;
+    if (doBlur) {
+        if (dist <= CHAR_DISTANCE_MID) {
+            var br = Math.floor(Math.random() * 20);
+            if (br === 0) {
+                blur = -1;
+            } else if (br === 1) {
+                blur = 1;
+            }
+        }
+    }
+    if (dist > -1) {
+        for (part = 0; part < 5; part++) {
+            if (typeof m.gfx[part] !== "undefined" && typeof m.gfx[part][dist] !== "undefined" && typeof m.gfx[part][dist][dir] !== "undefined") {
+                var dir1 = dir;
+                var dir2 = -1;
+                if (part === IMAGE_MON_ARM) { //attack arms
+                    if (dir === 0) {
+                        dir1 = 0;
+                        dir2 = 2;
+                        if (m.attacking) {
+                            if (monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+                                dir2 = 5;
+                            }
+                            if (monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+                                dir1 = 4;
+                            }
+                        }
+                    } else if (dir === 2) {
+                        dir1 = 2;
+                        dir2 = 0;
+                        if (m.attacking) {
+                            if (monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+                                dir2 = 4;
+                            }
+                            if (monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+                                dir1 = 5;
+                            }
+                        }
+                    } else if (dir === 1) {
+                        if (m.attacking) {
+                            if (monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+                                dir1 = 7;
+                            }
+                        }
+                    } else if (dir === 3) {
+                        if (m.attacking) {
+                            if (monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+                                dir1 = 6;
+                            }
+                        }
+                    }
+                }
+                var offx = 64 - Math.floor(m.gfx[part][dist][dir1].width * 0.5) + offset.x;
+                var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
+
+                if (dist < 4 || part === IMAGE_CHA_MINI) {
                     if (!returnImg) {
                         player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
                     } else {
@@ -566,10 +644,6 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
                     }
                 }
             }
-        }
-        if (returnImg) {
-            charContext.save();
-            return can;
         }
     }
 }
