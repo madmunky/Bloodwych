@@ -431,6 +431,26 @@ function uiClickAreas(){
     UCA.push({x: 257,y: 61,width: 11, height: 13}); //MOVE RIGHT
     UCA.push({x: 269,y: 63,width: 17, height: 13}); //DEFEND
     //UCA.push({x: }); //
+    UCA.push({x: 227,y: 24,width: 14, height: 14}); //POCKET SLOT 1
+    UCA.push({x: 244,y: 24,width: 14, height: 14}); //POCKET SLOT 2
+    UCA.push({x: 258,y: 24,width: 14, height: 14}); //POCKET SLOT 3
+    UCA.push({x: 274,y: 24,width: 14, height: 14}); //POCKET SLOT 4
+    UCA.push({x: 290,y: 24,width: 14, height: 14}); //POCKET SLOT 5
+    UCA.push({x: 306,y: 24,width: 14, height: 14}); //POCKET SLOT 6
+    
+    UCA.push({x: 227,y: 41,width: 14, height: 14}); //POCKET SLOT 7
+    UCA.push({x: 244,y: 41,width: 14, height: 14}); //POCKET SLOT 8
+    UCA.push({x: 258,y: 41,width: 14, height: 14}); //POCKET SLOT 9
+    UCA.push({x: 274,y: 41,width: 14, height: 14}); //POCKET SLOT 10
+    UCA.push({x: 290,y: 41,width: 14, height: 14}); //POCKET SLOT 11
+    UCA.push({x: 306,y: 41,width: 14, height: 14}); //POCKET SLOT 12
+    
+    UCA.push({x: 227,y: 66,width: 14, height: 14}); //POCKET CHARACTER 0
+    UCA.push({x: 244,y: 66,width: 14, height: 14}); //POCKET CHARACTER 1
+    UCA.push({x: 258,y: 66,width: 14, height: 14}); //POCKET CHARACTER 2
+    UCA.push({x: 274,y: 66,width: 14, height: 14}); //POCKET CHARACTER 3
+    UCA.push({x: 290,y: 66,width: 14, height: 14}); //POCKET HAND
+    UCA.push({x: 306,y: 66,width: 14, height: 14}); //POCKET BACK
     
     return UCA;
     
@@ -443,4 +463,9 @@ function uiClickInArea(x,y,ui,p) {
         && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y <= (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height - 1) * scale)
     {return true;}
     return false;
+}
+
+function toggleChampUI(i,p){    
+    if (p.uiLeftPanel.champs[i] === false){
+        p.uiLeftPanel.champs[i] = true;}else{p.uiLeftPanel.champs[i] = false;}    
 }
