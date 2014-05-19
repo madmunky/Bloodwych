@@ -38,6 +38,18 @@ Monster.prototype.getGfx = function() {
 		if(this.form >= 101) {
 			if(this.form === 101) {
 				this.gfx = summonArray(gfx['character']['summon']);
+			} else if(this.form === 102) {
+				this.gfx = floaterArray(gfx['character']['floater']);
+			} else if(this.form === 103) {
+				this.gfx = nastyFloaterArray(gfx['character']['nastyfloater']);
+			} else if(this.form === 104) {
+				this.gfx = crabArray(gfx['character']['crab']);
+			} else if(this.form === 105) {
+				this.gfx = dragonArray(gfx['character']['dragon']);
+			} else if(this.form === 106) {
+				this.gfx = dragonArray(gfx['character']['dragon']);
+			} else if(this.form === 107) {
+				this.gfx = behemothArray(gfx['character']['behemoth']);
 			}
 		} else {
 			var dGfx = [];
@@ -443,19 +455,19 @@ function initMonsters(t) {
 	}
 
 	//TESTING!!! REMOVE AFTER
-	/*if(t.id === TOWER_MOD0) {
+	if(t.id === TOWER_MOD0) {
 		var max = monster[t.id].length;
-		monster[t.id][max] = new Monster(max, 1, 0, 55, t.id, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
+		monster[t.id][max] = new Monster(max, 1, 0, 101, t.id, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 1, 0, 56, t.id, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
-		max++;
-		monster[t.id][max] = new Monster(max, 1, 0, CHA_ROSANNE, t.id, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);
-		max++;
-		monster[t.id][max] = new Monster(max, 1, 0, 25, t.id, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
-		max++;
-		monster[t.id][max] = new Monster(max, 1, 0, 27, t.id, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
-		max++;
-	}*/
+		//monster[t.id][max] = new Monster(max, 1, 0, 56, t.id, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
+		//max++;
+		//monster[t.id][max] = new Monster(max, 1, 0, CHA_ROSANNE, t.id, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);
+		//max++;
+		//monster[t.id][max] = new Monster(max, 1, 0, 25, t.id, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
+		//max++;
+		//monster[t.id][max] = new Monster(max, 1, 0, 27, t.id, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
+		//max++;
+	}
 
 	for(i = 0; i < monsterPaletteData.length; i++) {
 		var body = CHA_BODY[monsterBodiesData[i][0]];

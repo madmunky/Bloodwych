@@ -250,30 +250,32 @@ function PrintLog(myString) {
 	}
 }
 
-function grabImageAt(image, startX, startY, width, height, flip, scale) {
-
-	if (typeof scale === "undefined") {
-		scale = 1;
-	}
-
-	try {
+function grabImageAt(image, startX, startY, width, height, flip, offsetX, offsetY) {
+	//try {
+		if(typeof offsetX === "undefined") {
+			offsetX = 0;
+		}
+		if(typeof offsetY === "undefined") {
+			offsetY = 0;
+		}
 		var can = document.createElement('canvas');
-		can.width = width;
-		can.height = height;
+		can.width = width + offsetX;
+		can.height = height + offsetY;
 		var flipcontext = can.getContext("2d");
 		if (flip) {
 			flipcontext.translate(width, 0);
-			flipcontext.scale(-scale, scale);
+			flipcontext.scale(-1, 1);
+			flipcontext.drawImage(image, startX, startY, width, height, -offsetX, 0, width, height);
 		} else {
-			flipcontext.scale(scale, scale);
+			flipcontext.scale(1, 1);
+			flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
 		}
 
-		flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
 		flipcontext.save();
 		return can;
-	} catch (e) {
-		PrintLog("grabImageAt Error: " + e.toString());
-	}
+	//} catch (e) {
+	//	PrintLog("grabImageAt Error: " + e.toString());
+	//}
 };
 
 function flipImage(image) {

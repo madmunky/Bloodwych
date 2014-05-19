@@ -103,6 +103,7 @@ function loadGfxData() {
 	gfxLoadImage("character", "behemoth", "");
 	gfxLoadImage("character", "crab", "");
 	gfxLoadImage("character", "dragon", "");
+	gfxLoadImage("character", "floater", "");
 	gfxLoadImage("character", "nastyfloater", "");
 	gfxLoadImage("character", "summon", "");
 

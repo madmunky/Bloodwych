@@ -595,7 +595,7 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
             if (typeof m.gfx[part] !== "undefined" && typeof m.gfx[part][dist] !== "undefined" && typeof m.gfx[part][dist][dir] !== "undefined") {
                 var dir1 = dir;
                 var dir2 = -1;
-                if (part === 4) { //IMAGE_MON_ARM
+                if (part === IMAGE_MON_ARM) {
                     if (dir === 0) {
                         dir1 = 0;
                         dir2 = 2;
@@ -750,12 +750,12 @@ function summonArray(spriteSheetIMG) {
         DISTANCE_6 = [],
         BODYPART = [];
 
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, false));
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, true));
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, true));
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, false));
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false));
-    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, false, 24, 19));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, true, 22, 19));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, true, 24, 19));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, false, 21, 19));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 29, 34));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 29, 34));
 
     DISTANCE_2.push(grabImageAt(spriteSheetIMG, 71, 22, 5, 17, false));
     DISTANCE_2.push(grabImageAt(spriteSheetIMG, 71, 22, 5, 17, true));
