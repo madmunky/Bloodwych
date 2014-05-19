@@ -34,21 +34,27 @@ Monster.prototype.toString = function() {
 }
 
 Monster.prototype.getGfx = function() {
-	var gfx = [];
-	var dGfx = [];
 	if (characterGfx.length > 0) {
-		for(part = 0; part < 5; part++) {
-			for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-				for (d = 0; d < 8; d++) {
-					if(d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
-						gfx.push(grabCharacter(this, part, d, dis));
-					}
-				}
-				dGfx.push(gfx);
-				gfx = [];
+		if(this.form >= 101) {
+			if(this.form === 101) {
+				this.gfx = summonArray(gfx['character']['summon']);
 			}
-			this.gfx.push(dGfx);
-			dGfx = [];
+		} else {
+			var dGfx = [];
+			var disGfx = [];
+			for(part = 0; part < 5; part++) {
+				for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+					for (d = 0; d < 8; d++) {
+						if(d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
+							dGfx.push(grabCharacter(this, part, d, dis));
+						}
+					}
+					disGfx.push(dGfx);
+					dGfx = [];
+				}
+				this.gfx.push(disGfx);
+				disGfx = [];
+			}
 		}
 	}
 }
