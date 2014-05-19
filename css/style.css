@@ -44,7 +44,7 @@ canvas {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    cursor: url(../images/misc/cursor0.png), auto;
+/*    cursor: url(../images/misc/cursor0.png), auto;*/
 }
 canvas.active {
     background-color: #000;

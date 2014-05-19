@@ -198,3 +198,19 @@ function viewportTouch(x,y,xy){
             }
     }
 }
+
+function mouseXY(e){
+    if (e.offsetX) {
+        mouseX = e.offsetX;
+        mouseY = e.offsetY;
+        
+        if (mouseY > canvas.height / 2){
+          canvas.style.cursor = "url('./images/misc/cursor1.png'),auto"; 
+        }
+        else{
+          canvas.style.cursor = "url('./images/misc/cursor0.png'),auto"; 
+        }
+        
+    }
+    
+}

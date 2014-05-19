@@ -61,6 +61,7 @@
         canvas.height = 200 * scale;
 	var ctx = canvas.getContext("2d");
         canvas.addEventListener("touchstart", touchDown, false);
+        canvas.addEventListener("mousemove", mouseXY, false);;
 	</script>
         <script>
             $(document).ready(function(){
