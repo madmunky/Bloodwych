@@ -18,7 +18,7 @@ var gfxCrab;
 
 function testing(){
     
-     if (gfxBehemoth === null || typeof(gfxBehemoth)==='undefined' && gfx['character']['behemoth'].width > 0 && gfx['character']['summon'].width > 0) { 
+     /*if (gfxBehemoth === null || typeof(gfxBehemoth)==='undefined' && gfx['character']['behemoth'].width > 0 && gfx['character']['summon'].width > 0) { 
         gfxBehemoth = behemothArray(gfx['character']['behemoth']);     
         gfxSummon = summonArray(gfx['character']['summon']);     
         gfxNastyFloater = nastyFloaterArray(gfx['character']['nastyfloater']);  
@@ -26,7 +26,7 @@ function testing(){
         gfxCrab = crabArray(gfx['character']['crab']);
                
      }    
-    testSummon();
+    testSummon();*/
     
 }
 

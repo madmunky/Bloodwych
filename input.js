@@ -171,6 +171,10 @@ function processCanvasInput(x, y) {
                 player[p].move(DIRECTION_EAST);
                 successfulClick = true;
             }
+            if (uiClickInArea(x, y, UI_CLICK_ATTACK, player[p])) {
+                player[p].attacking = true;
+                successfulClick = true;
+            }
 
         } else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_POCKETS) {
 

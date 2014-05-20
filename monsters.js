@@ -36,21 +36,7 @@ Monster.prototype.toString = function() {
 Monster.prototype.getGfx = function() {
 	if (characterGfx.length > 0) {
 		if(this.form >= 101) {
-			if(this.form === 101) {
-				this.gfx = summonArray(gfx['character']['summon']);
-			} else if(this.form === 102) {
-				this.gfx = floaterArray(gfx['character']['floater']);
-			} else if(this.form === 103) {
-				this.gfx = nastyFloaterArray(gfx['character']['nastyfloater']);
-			} else if(this.form === 104) {
-				this.gfx = crabArray(gfx['character']['crab']);
-			} else if(this.form === 105) {
-				this.gfx = dragonArray(gfx['character']['dragon']);
-			} else if(this.form === 106) {
-				this.gfx = dragonArray(gfx['character']['dragon']);
-			} else if(this.form === 107) {
-				this.gfx = behemothArray(gfx['character']['behemoth']);
-			}
+			this.gfx = grabMonster(this);
 		} else {
 			var dGfx = [];
 			var disGfx = [];
@@ -247,9 +233,9 @@ Monster.prototype.attack = function(attack, target) {
 		this.attacking = true;
 		//calculateAttack(this, target);
 		if(target instanceof Player) {
-			PrintLog('PLAYER ' + (target.id + 1) + ' GETS HIT BY MONSTER #' + this.id + '!');
+			PrintLog('MONSTER #' + this.id + ' HITS PLAYER ' + (target.id + 1) + '!');
 		} else if(target instanceof Monster) {
-			PrintLog('CHAMPION ' + getChampionName(target.champId) + ' GETS HIT BY MONSTER #' + this.id + '!!!');
+			PrintLog('MONSTER #' + this.id + ' HITS CHAMPION ' + getChampionName(target.champId) + '!');
 		}
 		for(i = 1; i < team.length; i++) {
 			team[i].attacking = true;
