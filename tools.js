@@ -270,7 +270,9 @@ function grabImageAt(image, startX, startY, width, height, flip, offsetX, offset
 			flipcontext.scale(1, 1);
 			flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
 		}
-
+		//flipcontext.strokeStyle="red";
+		//flipcontext.rect(0,0,can.width - 1,can.height - 1);
+		//flipcontext.stroke();
 		flipcontext.save();
 		return can;
 	//} catch (e) {

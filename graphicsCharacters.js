@@ -480,10 +480,10 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
     can.width = canvas.width;
     can.height = canvas.height;
     var charContext = can.getContext("2d");
-    charContext.imageSmoothingEnabled = false;
-    charContext.webkitImageSmoothingEnabled = false;
-    charContext.mozImageSmoothingEnabled = false;
-    charContext.oImageSmoothingEnabled = false;
+    //charContext.imageSmoothingEnabled = false;
+    //charContext.webkitImageSmoothingEnabled = false;
+    //charContext.mozImageSmoothingEnabled = false;
+    //charContext.oImageSmoothingEnabled = false;
 
     if (typeof returnImg === "undefined") {
         returnImg = false;
