@@ -20,9 +20,12 @@ function grabFont() {
 
 }
 
-function writeFontImage(fontString, locationX, locationY, paletteTo) {
+function writeFontImage(fontString, locationX, locationY, paletteTo, alignment) {
 
     if (typeof(font[0]) !== 'undefined'){
+    if (typeof alignment === "undefined") {
+    	alignment = FONT_ALIGNMENT_LEFT;
+    }
 
 	fontString = fontString.toUpperCase();
 
@@ -34,7 +37,6 @@ function writeFontImage(fontString, locationX, locationY, paletteTo) {
 	var fontContent = can.getContext("2d");
 
 	for (x = 0; x < chars.length; x++) {
-
 		if (fontCharacterToIndex(chars[x]) >= 0) {
 			fontContent.drawImage(font[fontCharacterToIndex(chars[x])], (x * 8), 0);
 		}
@@ -62,7 +64,14 @@ function writeFontImage(fontString, locationX, locationY, paletteTo) {
 	// put the re-colored image back on the image
 
 	fontContent.save();
-	ctx.drawImage(can, locationX * scale, locationY * scale, can.width * scale, can.height * scale);
+	if(alignment === FONT_ALIGNMENT_RIGHT) {
+		xo = - can.width;
+	} else if(alignment === FONT_ALIGNMENT_CENTER) {
+		xo = - Math.floor(can.width / 2);
+	} else { //FONT_ALIGNMENT_LEFT
+		xo = 0;
+	}
+	ctx.drawImage(can, (xo + locationX) * scale, locationY * scale, can.width * scale, can.height * scale);
 	can = null;
     }
 

@@ -183,6 +183,11 @@ function processCanvasInput(x, y) {
                 successfulClick = true;
             }
 
+        } else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_STATS) {
+
+            player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
+            successfulClick = true;
+            
         }
         if (player[p].uiLeftPanel.mode === LEFT_PANEL_MODE_STATS) {
 
