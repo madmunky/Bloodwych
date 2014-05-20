@@ -118,24 +118,28 @@ function grabUISprites(spriteSheetIMG){
 }
 
 function drawUI(p) {
-    
-    if (typeof gfxUI !== "undefined" && gfxUI !== null){
-    
-        switch (p.uiLeftPanel.mode){            
-            case LEFT_PANEL_MODE_STATS:{leftUI(p);};break
-            case LEFT_PANEL_MODE_COMMAND:{commandUI(p);};break                
-        }
-        
-        switch (p.uiRightPanel.view){            
-            case UI_RIGHT_PANEL_MAIN:{rightUI(p);};break
-            case UI_RIGHT_PANEL_POCKETS:{drawPocketUI(p);};break
-            case UI_RIGHT_PANEL_SPELLBOOK:{};break
-            case UI_RIGHT_PANEL_STATS:{drawStatsPage(p);};break                
-        }
-        
-        myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 100]);
+    if(redrawPlayerUiFlag === p.id || redrawPlayerUiFlag === 2) {
+        if (typeof gfxUI !== "undefined" && gfxUI !== null) {
+            ctx.clearRect(0, (p.id * 104 + 10) * scale, 94 * scale, 86 * scale);
+            ctx.clearRect(226 * scale, (p.id * 104 + 10) * scale, 94 * scale, 86 * scale);
+            switch (p.uiLeftPanel.mode){            
+                case LEFT_PANEL_MODE_STATS:{leftUI(p);};break
+                case LEFT_PANEL_MODE_COMMAND:{commandUI(p);};break                
+            }
             
+            switch (p.uiRightPanel.view){            
+                case UI_RIGHT_PANEL_MAIN:{rightUI(p);};break
+                case UI_RIGHT_PANEL_POCKETS:{drawPocketUI(p);};break
+                case UI_RIGHT_PANEL_SPELLBOOK:{};break
+                case UI_RIGHT_PANEL_STATS:{drawStatsPage(p);};break                
+            }
+            
+            myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 100]);
+        }
     }
+}
+function redrawUI(p) {
+    redrawPlayerUiFlag = p;
 }
 
 function leftUI(p){

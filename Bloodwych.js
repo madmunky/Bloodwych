@@ -23,7 +23,7 @@ function updatePlayerViewScreen() {
         }
     }
 
-    clearCanvas();
+    //clearCanvas();
     configCanvas();
     debugText(player[0], "FPS: " + fps.getFPS());
 
@@ -33,6 +33,7 @@ function updatePlayerViewScreen() {
         drawPlayersView(player[p]);
         drawUI(player[p]);
     }
+    redrawPlayerUiFlag = -1;
     testing();
 
 }

@@ -22,6 +22,7 @@ var towerSwitchesData = new Array();
 var loadingInterval = 0;
 var gfxUI = [];
 var uiClickArea = [];
+var redrawPlayerUiFlag = -1;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 //When a file is called, we increase 'count'

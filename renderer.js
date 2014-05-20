@@ -7,7 +7,9 @@ Renderer.prototype = {
 		this.fps = 60;
 		this.step = 1 / this.fps;
 		//this.ctx = document.getElementById("game-port").getContext("2d");
-
+		//clearCanvas();
+		redrawUI(2);
+		configCanvas();
 	},
 
 	update: function() {

@@ -1,14 +1,13 @@
 Run = function() {
-	var animFrame = (function() {
-		return window.requestAnimationFrame ||
-			window.webkitRequestAnimationFrame ||
-			window.mozRequestAnimationFrame ||
-			window.oRequestAnimationFrame ||
-			window.msRequestAnimationFrame ||
-			function(callback, element) {
-				window.setTimeout(callback, 1000 / 60);
+	var animFrame = window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		window.oRequestAnimationFrame ||
+		window.msRequestAnimationFrame ||
+		function(callback) {
+			window.setTimeout(callback, 10);
 		};
-	})();
+	window.requestAnimFrame = animFrame;
 
 	return function() {
 		game = new Game();
@@ -34,7 +33,7 @@ Run = function() {
 				render.update();
 			}
 			last = now;
-			animFrame(run);
+			requestAnimFrame(run);
 		}
 
 		game.init && game.init();
