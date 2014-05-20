@@ -549,7 +549,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
                 var offx = 64 - Math.floor(m.gfx[part][dist][dir1].width * 0.5) + offset.x;
                 var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
 
-                if (dist < 4 || part === IMAGE_CHA_MINI) {
+                if (dist >= 4 || part !== IMAGE_CHA_MINI) {
                     if (!returnImg) {
                         player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
                     } else {
@@ -635,7 +635,7 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
                 var offx = 64 - Math.floor(m.gfx[part][dist][dir1].width * 0.5) + offset.x;
                 var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
 
-                if (dist < 4 || part === IMAGE_MON_MINI) {
+                if (dist >= 4 || part !== IMAGE_MON_MINI) {
                     player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
                     if (dir2 > -1) {
                         offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
@@ -756,11 +756,15 @@ function summonArray(spriteSheetIMG) {
     DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, false, 21, 19));
     DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 29, 34));
     DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 29, 34));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 29, 34));
+    DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 29, 34));
 
     DISTANCE_2.push(grabImageAt(spriteSheetIMG, 71, 22, 5, 17, false));
     DISTANCE_2.push(grabImageAt(spriteSheetIMG, 71, 22, 5, 17, true));
     DISTANCE_2.push(grabImageAt(spriteSheetIMG, 79, 25, 9, 17, false));
     DISTANCE_2.push(grabImageAt(spriteSheetIMG, 79, 25, 9, 17, true));
+    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, false));
+    DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, true));
     DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, false));
     DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, true));
 
@@ -770,11 +774,15 @@ function summonArray(spriteSheetIMG) {
     DISTANCE_3.push(grabImageAt(spriteSheetIMG, 80, 49, 7, 13, true));
     DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, false));
     DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, true));
+    DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, false));
+    DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, true));
 
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 70, 68, 3, 12, false));
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 70, 68, 3, 12, true));
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 81, 68, 6, 12, false));
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 81, 68, 6, 12, true));
+    DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, false));
+    DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, true));
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, false));
     DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, true));
 
