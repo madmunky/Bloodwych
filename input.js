@@ -221,14 +221,14 @@ function processCanvasInput(x, y) {
                 alert('SLEEPING');
                 successfulClick = true;
             }
-            if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, player[p])) {
-                alert('TOGGLE UP');
-                successfulClick = true;
-            }
-            if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, player[p])) {
-                alert('TOGGLE DOWN');
-                successfulClick = true;
-            }
+//            if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, player[p])) {
+//                alert('TOGGLE UP');
+//                successfulClick = true;
+//            }
+//            if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, player[p])) {
+//                alert('TOGGLE DOWN');
+//                successfulClick = true;
+//            }
 
         }
         if(successfulClick) {

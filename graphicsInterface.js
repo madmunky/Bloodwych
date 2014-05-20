@@ -183,15 +183,15 @@ function commandUI(p){
             ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE],(p.ScreenX + 72)*scale,(p.ScreenY)*scale,gfxUI[UI_GFX_ICON_SAVE].width*scale,gfxUI[UI_GFX_ICON_SAVE].height*scale);    
             ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP],(p.ScreenX + 57)*scale,(p.ScreenY+16)*scale,gfxUI[UI_GFX_ICON_SLEEP].width*scale,gfxUI[UI_GFX_ICON_SLEEP].height*scale);    
             ctx.drawImage(gfxUI[UI_GFX_ICON_BACK],(p.ScreenX + 72)*scale,(p.ScreenY+16)*scale,gfxUI[UI_GFX_ICON_BACK].width*scale,gfxUI[UI_GFX_ICON_BACK].height*scale);    
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
+            //ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
+            //ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
             
             ctx.fillStyle = "#606060";
             
             ctx.fillRect((p.ScreenX +50) *scale,(p.ScreenY)*scale,1*scale,44*scale);
-            ctx.fillRect((p.ScreenX +52) *scale,(p.ScreenY)*scale,1*scale,42*scale);
+            ctx.fillRect((p.ScreenX +52) *scale,(p.ScreenY+1)*scale,1*scale,42*scale);
             ctx.fillRect((p.ScreenX +93) *scale,(p.ScreenY)*scale,1*scale,44*scale);
-            ctx.fillRect((p.ScreenX +91) *scale,(p.ScreenY)*scale,1*scale,42*scale);
+            ctx.fillRect((p.ScreenX +91) *scale,(p.ScreenY+1)*scale,1*scale,42*scale);
             
             ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 47)*scale,93*scale,7*scale);
             writeFontImage('COMMUNICATE', (p.ScreenX +2) ,(p.ScreenY + 47), COLOUR[COLOUR_YELLOW]);
@@ -273,7 +273,7 @@ function drawPocketUI(p) {
         }            
     }
     
-    ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR],(p.ScreenX + 225) *scale,(p.ScreenY + 54) *scale,gfxUI[UI_GFX_GRAY_BAR].width*scale,gfxUI[UI_GFX_GRAY_BAR].height*scale);    
+    ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR],(p.ScreenX + 226) *scale,(p.ScreenY + 54) *scale,gfxUI[UI_GFX_GRAY_BAR].width*scale,gfxUI[UI_GFX_GRAY_BAR].height*scale);    
     writeFontImage("Armour:+0", p.ScreenX/scale +233 ,(p.ScreenY+55), COLOUR[COLOUR_YELLOW]);            
     
     for (x=0;x<6;x++){
