@@ -175,6 +175,11 @@ function processCanvasInput(x, y) {
                 player[p].attacking = true;
                 successfulClick = true;
             }
+            if (uiClickInArea(x, y, UI_CLICK_DEFEND, player[p])) {
+				player[p].attacking = false;
+			    player[p].stopChampionAttack();
+                successfulClick = true;
+            }
 
         } else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_POCKETS) {
 

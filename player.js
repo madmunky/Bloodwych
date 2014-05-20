@@ -227,15 +227,16 @@ Player.prototype.tryAttack = function() {
 
 Player.prototype.attack = function(attack, target) {
     if (attack) {
-        for (c = 0; c < this.champion.length; c++) {
-            if (c < 2) {
-            	var m = champion[this.champion[c]].monster;
-            	m.attacking = true;
-                if (target instanceof Player) {
-                    PrintLog('CHAMPION ' + getChampionName(m.champId) + ' HITS PLAYER ' + (target.id + 1) + '!');
-                } else if (target instanceof Monster) {
-                    PrintLog('CHAMPION ' + getChampionName(m.champId) + ' HITS MONSTER #' + target.id + '!');
-                }
+    	var combat = calculateAttack(this, target);
+        for (c = 0; c < combat.length; c++) {
+        	var att = combat[c].attacker.monster;
+        	var def = combat[c].defender.monster;
+        	var pwr = combat[c].power;
+        	att.attacking = true;
+            if (target instanceof Player) {
+                PrintLog('CHAMPION ' + getChampionName(att.champId) + ' HITS CHAMPION ' + getChampionName(def.champId) + ' FOR ' + pwr + '!');
+            } else if (target instanceof Monster) {
+                PrintLog('CHAMPION ' + getChampionName(att.champId) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
             }
         }
     }

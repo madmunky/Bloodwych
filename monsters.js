@@ -9,8 +9,10 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	this.x = x;
 	this.y = y;
 	this.d = d;
-	this.hp = level * 5 + 30;
+	this.hp = level * 5 + 20;
 	this.attacking = false;
+	this.attackTimer = 0;
+	this.dead = false;
 	if(square > CHAR_FRONT_SOLO) {
 		this.square = (square + d) % 4;
 	} else {
@@ -231,7 +233,7 @@ Monster.prototype.attack = function(attack, target) {
 	var team = getMonsterTeam(this.teamId);
 	if(attack) {
 		this.attacking = true;
-		//calculateAttack(this, target);
+		calculateAttack(this, target);
 		if(target instanceof Player) {
 			PrintLog('MONSTER #' + this.id + ' HITS PLAYER ' + (target.id + 1) + '!');
 		} else if(target instanceof Monster) {
