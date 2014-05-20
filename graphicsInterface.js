@@ -120,8 +120,8 @@ function grabUISprites(spriteSheetIMG){
 function drawUI(p) {
     if(redrawPlayerUiFlag === p.id || redrawPlayerUiFlag === 2) {
         if (typeof gfxUI !== "undefined" && gfxUI !== null) {
-            ctx.clearRect(0, (p.id * 104 + 10) * scale, 94 * scale, 86 * scale);
-            ctx.clearRect(226 * scale, (p.id * 104 + 10) * scale, 94 * scale, 86 * scale);
+            ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 94 * scale, 98 * scale);
+            ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY -10) * scale, 94 * scale, 88 * scale);
             switch (p.uiLeftPanel.mode){            
                 case LEFT_PANEL_MODE_STATS:{leftUI(p);};break
                 case LEFT_PANEL_MODE_COMMAND:{commandUI(p);};break                
@@ -134,7 +134,7 @@ function drawUI(p) {
                 case UI_RIGHT_PANEL_STATS:{drawStatsPage(p);};break                
             }
             
-            myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 100]);
+            myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
         }
     }
 }
@@ -152,7 +152,8 @@ function leftUI(p){
                     if (x === 0){
                         if (p.uiLeftPanel.champs[x] === true){
                         ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT],(x +2 *scale) + (p.ScreenX*scale),(p.ScreenY+5)*scale,gfxUI[UI_GFX_CHAIN_VERT].width*scale,gfxUI[UI_GFX_CHAIN_VERT].height*scale);        
-                        ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,0,p,{x: 0, y: 0},true,false),(x - 38*scale) + (p.ScreenX*scale)*scale,(p.ScreenY-32)*scale);                       
+                        var t = drawCharacter(monster[6][p.champion[x]],0,0,p,{x: 0, y: 0},true,false)
+                        ctx.drawImage(t,(x - 38*scale) + (p.ScreenX*scale)*scale,(p.ScreenY-32)*scale,t.width * scale,t.height * scale);                       
                         ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT],(x + 43*scale) + (p.ScreenX*scale),(p.ScreenY+5)*scale,gfxUI[UI_GFX_CHAIN_VERT].width*scale,gfxUI[UI_GFX_CHAIN_VERT].height*scale);        
                         }
                         else{
@@ -186,20 +187,29 @@ function commandUI(p){
             ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
             
             ctx.fillStyle = "#606060";
-            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 47)*scale,94*scale,7*scale);
+            
+            ctx.fillRect((p.ScreenX +50) *scale,(p.ScreenY)*scale,1*scale,44*scale);
+            ctx.fillRect((p.ScreenX +52) *scale,(p.ScreenY)*scale,1*scale,42*scale);
+            ctx.fillRect((p.ScreenX +93) *scale,(p.ScreenY)*scale,1*scale,44*scale);
+            ctx.fillRect((p.ScreenX +91) *scale,(p.ScreenY)*scale,1*scale,42*scale);
+            
+            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 47)*scale,93*scale,7*scale);
             writeFontImage('COMMUNICATE', (p.ScreenX +2) ,(p.ScreenY + 47), COLOUR[COLOUR_YELLOW]);
-            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 55)*scale,60*scale,7*scale);
+            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 55)*scale,59*scale,7*scale);
             writeFontImage('COMMEND', (p.ScreenX +2) ,(p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-            ctx.fillRect((p.ScreenX +62) *scale,(p.ScreenY + 55)*scale,33*scale,7*scale);
-            writeFontImage('VIEW', (p.ScreenX +65) ,(p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 63)*scale,35*scale,7*scale);
+            ctx.fillRect((p.ScreenX +62) *scale,(p.ScreenY + 55)*scale,32*scale,7*scale);
+            writeFontImage('VIEW', (p.ScreenX +64) ,(p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 63)*scale,34*scale,7*scale);
             writeFontImage('WAIT', (p.ScreenX +2) ,(p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
-            ctx.fillRect((p.ScreenX +37) *scale,(p.ScreenY + 63)*scale,58*scale,7*scale);
-            writeFontImage('CORRECT', (p.ScreenX +41) ,(p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
-            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 71)*scale,59*scale,7*scale);
+            ctx.fillRect((p.ScreenX +37) *scale,(p.ScreenY + 63)*scale,57*scale,7*scale);
+            writeFontImage('CORRECT', (p.ScreenX +40) ,(p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
+            ctx.fillRect((p.ScreenX +1) *scale,(p.ScreenY + 71)*scale,58*scale,7*scale);
             writeFontImage('DISMISS', (p.ScreenX +2) ,(p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
-            ctx.fillRect((p.ScreenX +61) *scale,(p.ScreenY + 71)*scale,34*scale,7*scale);
-            writeFontImage('CALL', (p.ScreenX +65) ,(p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+            ctx.fillRect((p.ScreenX +61) *scale,(p.ScreenY + 71)*scale,33*scale,7*scale);
+            writeFontImage('CALL', (p.ScreenX +64) ,(p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+            
+            ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG],(p.ScreenX + 1)*scale,(p.ScreenY+80)*scale,gfxUI[UI_GFX_CHAIN_LONG].width*scale,gfxUI[UI_GFX_CHAIN_LONG].height*scale);    
+            
 }
 
 function rightUI(p){
