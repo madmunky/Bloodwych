@@ -158,7 +158,8 @@ function leftUI(p){
                     }else{
                         if (p.uiLeftPanel.champs[x] === true){
                             ctx.drawImage(gfxUI[UI_GFX_SHIELD],((x-1) * 32*scale) + (p.ScreenX*scale),(p.ScreenY+45)*scale,gfxUI[UI_GFX_SHIELD].width*scale,gfxUI[UI_GFX_SHIELD].height*scale);        
-                            ctx.drawImage(drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true,false),((x-1) * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale);                       
+                            var t = drawCharacter(monster[6][p.champion[x]],0,1,p,{x: 0, y: 0},true,false);
+                            ctx.drawImage(t,((x-1) * 32*scale) + (p.ScreenX*scale)-49*scale,(p.ScreenY+45)*scale-37*scale,t.width*scale,t.height*scale);                       
                         }
                         else{
                             var t = createShield(p.champion[x],champion[p.champion[x]].prof,champion[p.champion[x]].colour);
