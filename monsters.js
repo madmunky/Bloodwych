@@ -456,9 +456,9 @@ function initMonsters(t) {
 
 	//TESTING!!! REMOVE AFTER
 	if(t.id === TOWER_MOD0) {
-		//var max = monster[t.id].length;
-		//monster[t.id][max] = new Monster(max, 1, 0, 101, t.id, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
-		//max++;
+		var max = monster[t.id].length;
+		monster[t.id][max] = new Monster(max, 1, 0, 101, t.id, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
+		max++;
 		//monster[t.id][max] = new Monster(max, 1, 0, 56, t.id, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
 		//max++;
 		//monster[t.id][max] = new Monster(max, 1, 0, CHA_ROSANNE, t.id, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);

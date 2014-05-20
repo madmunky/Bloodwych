@@ -120,8 +120,8 @@ function grabUISprites(spriteSheetIMG){
 function drawUI(p) {
     if(redrawPlayerUiFlag === p.id || redrawPlayerUiFlag === 2) {
         if (typeof gfxUI !== "undefined" && gfxUI !== null) {
-            ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 94 * scale, 98 * scale);
-            ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY -10) * scale, 94 * scale, 88 * scale);
+            ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
+            ctx.clearRect((p.ScreenX + 226) * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
             switch (p.uiLeftPanel.mode){            
                 case LEFT_PANEL_MODE_STATS:{leftUI(p);};break
                 case LEFT_PANEL_MODE_COMMAND:{commandUI(p);};break                
