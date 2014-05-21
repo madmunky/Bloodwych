@@ -147,7 +147,7 @@ function debugTextPrint(p) {
         hex = p.getBinaryView(15, 0, 16);
         //debugText(p, 'Master timer:' + timerMaster)
         //debugText(p, 'Champ: ' + p.getChampion(0));
-        //debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruited + ' Spells:' + champion[2].spellBook);
+        //debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruitment.recruited + ' Spells:' + champion[2].spellBook);
         //debugText(hex2bin(hex));
         //debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
         debugText(p, hex2bin(getHexToBinaryPosition(p.getView()[15], 0, 16)));

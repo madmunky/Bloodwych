@@ -224,63 +224,21 @@ Player.prototype.tryAttack = function() {
 
 Player.prototype.attack = function(attack, target) {
     if (attack) {
+        var self = this;
         var combat = calculateAttack(this, target);
-        for (c = 0; c < combat.length; c++) {
-            var att = combat[c].attacker;
-            var def = combat[c].defender;
-            var pwr = combat[c].power;
-            var exh = combat[c].exhaustion;
+        for (com = 0; com < combat.length; com++) {
+            var att = combat[com].attacker;
+            var def = combat[com].defender;
+            var pwr = combat[com].power;
+            var exh = combat[com].exhaustion;
             att.monster.attacking = true;
             att.doDamageTo(def, pwr, exh);
-            this.writeAttackPoints(c, att, pwr);
             if (def instanceof Champion) {
                 PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
             } else if (def instanceof Monster) {
                 PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
             }
-            if (target instanceof Player) {
-                target.alertDamagedPlayer();
-            }
-            redrawUI(2);
         }
-    }
-}
-
-Player.prototype.writeAttackPoints = function(c, att, pwr) {
-    if (typeof c !== "undefined" && typeof att !== "undefined" && typeof pwr !== "undefined") {
-        var x = 0,
-            y = 0;
-        switch (c) {
-            case 0:
-                x = 106;
-                y = 0;
-                ctx.clearRect((this.ScreenX + 106) * scale, (this.ScreenY - 10) * scale, 106 * scale, 8 * scale);
-                break;
-            case 1:
-                x = 0;
-                y = 0;
-    			ctx.clearRect(this.ScreenX * scale, (this.ScreenY - 10) * scale, 106 * scale, 8 * scale);
-                break;
-            case 2:
-                x = 106;
-                y = 88;
-    			ctx.clearRect((this.ScreenX + 106) * scale, (this.ScreenY + 78) * scale, 106 * scale, 8 * scale);
-                break;
-            case 3:
-                x = 212;
-                y = 0;
-                ctx.clearRect((this.ScreenX + 212) * scale, (this.ScreenY - 10) * scale, 106 * scale, 8 * scale);
-                break;
-        }
-        writeFontImage(String.fromCharCode(att.prof + 127), (this.ScreenX + x), (this.ScreenY + y - 9), COLOUR[COLOUR_RED]);
-        if (pwr > 0) {
-            writeFontImage('HITS FOR ' + pwr, (this.ScreenX + x + 8), (this.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
-        } else {
-            writeFontImage('MISSES', (this.ScreenX + x + 8), (this.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
-        }
-    } else {
-    	ctx.clearRect(this.ScreenX * scale, (this.ScreenY - 10) * scale, 320 * scale, 8 * scale);
-    	ctx.clearRect((this.ScreenX + 106) * scale, (this.ScreenY + 78) * scale, 106 * scale, 8 * scale);
     }
 }
 
@@ -376,9 +334,14 @@ Player.prototype.updateChampions = function() {
 }
 
 Player.prototype.recruitChampion = function(id) {
-    if (this.champion.length < 4) {
-        this.champion[this.champion.length] = id;
-        champion[id].recruited = true;
+	var len = this.champion.length;
+    if (len < 4) {
+        this.champion[len] = id;
+        champion[id].recruitment = {
+        	recruited: true,
+        	playerId: this.id,
+        	position: len
+        };
         return true;
     }
     return false;

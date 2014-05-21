@@ -7,7 +7,7 @@ function grabFont() {
 
 	var myFont = [];
 
-	for (x = 0; x < 89; x++) {
+	for (x = 0; x < 93; x++) {
 
 		myFont.push(grabImageAt(fontImage, x * 8, 0, 8, 8, false, 1));
 
@@ -78,62 +78,19 @@ try{
     }catch(e){"Write font error: " +e.toString()};
 }
 
-function getFontSymbol(charClass,charColour){
-    
-        var can = document.createElement('canvas');
-	can.width = chars.length * 8;
-	can.height = 8;
-	var fontContent = can.getContext("2d");
-        var fontPos = 90;
-        var paletteTo;
-        
-        switch (charClass){            
-        case PROFESSION_WARRIOR:{fontContent.drawImage(font[fontPos],0,0);};
-        case PROFESSION_WIZARD:{fontContent.drawImage(font[fontPos+1],0,0);};
-        case PROFESSION_ADVENTURER:{fontContent.drawImage(font[fontPos+2],0,0);};
-        case PROFESSION_CUTPURSE:{fontContent.drawImage(font[fontPos+3],0,0);};            
-        }
-        
-        switch (charColour){            
-        case 0:{paletteTo=getClassColour(CLASS_COLOUR_SERP,true);};
-        case 1:{paletteTo=getClassColour(CLASS_COLOUR_DRAG,true);};
-        case 2:{paletteTo=getClassColour(CLASS_COLOUR_MOON,true);};
-        case 3:{paletteTo=getClassColour(CLASS_COLOUR_CHAOS,true);};            
-        }
-                
-        var imageData = fontContent.getImageData(0, 0, can.width, can.height);
-
-	for (var i = 0; i < imageData.data.length; i += 4) {
-		// is this pixel the old rgb?
-		if (imageData.data[i] === 0 &&
-			imageData.data[i + 1] === 240 &&
-			imageData.data[i + 2] === 0
-		) {
-			// change to your new rgb
-			imageData.data[i] = paletteTo[0];
-			imageData.data[i + 1] = paletteTo[1];
-			imageData.data[i + 2] = paletteTo[2];
-		}
-	}
-    
-    	fontContent.putImageData(imageData, 0, 0);
-	fontContent.save();
-        return can;
-}
-
 function fontCharacterToIndex(c) {
 
 	var letterCode = c.charCodeAt(0);
 
 	switch (letterCode) {
-		case 127:
-			return 91; // (hearts)
-		case 128:
-			return 92; // (diamonds)
-		case 129:
-			return 90; // (clubs)
-		case 130:
-			return 89; // (spades)
+		case 3:
+			return 89; // (hearts)
+		case 4:
+			return 90; // (diamonds)
+		case 5:
+			return 91; // (clubs)
+		case 6:
+			return 92; // (spades)
 		case 41:
 			return 45; // )
 		case 33:

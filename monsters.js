@@ -224,23 +224,34 @@ Monster.prototype.move = function() {
 }
 
 Monster.prototype.attack = function(attack, target) {
-	var team = getMonsterTeam(this.teamId);
 	if(attack) {
-		this.attacking = true;
-		calculateAttack(this, target);
-		if(target instanceof Player) {
-			PrintLog('MONSTER #' + this.id + ' HITS PLAYER ' + (target.id + 1) + '!');
-		} else if(target instanceof Monster) {
-			PrintLog('MONSTER #' + this.id + ' HITS CHAMPION ' + getChampionName(target.champId) + '!');
-		}
-		for(i = 1; i < team.length; i++) {
-			team[i].attacking = true;
+		var combat = calculateAttack(this, target);
+        for (com = 0; com < combat.length; com++) {
+            var att = combat[com].attacker;
+            var def = combat[com].defender;
+            var pwr = combat[com].power;
+			att.attacking = true;
+			att.doDamageTo(def, pwr);
+			if (def instanceof Champion) {
+				PrintLog('MONSTER #' + att.id + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
+			} else if (def instanceof Monster) {
+				PrintLog('MONSTER #' + att.id + ' HITS HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+			}
 		}
 	} else {
+		var team = getMonsterTeam(this.teamId);
 		this.attacking = false;
 		for(i = 1; i < team.length; i++) {
 			team[i].attacking = false;
 		}
+	}
+}
+
+Monster.prototype.doDamageTo = function(def, dmg) {
+	if(def instanceof Champion) {
+		def.getDamage(dmg);
+	} else if(def instanceof Monster) {
+		def.getDamage(dmg);
 	}
 }
 
@@ -376,7 +387,7 @@ Monster.prototype.getChampion = function() {
 
 Monster.prototype.isRecruited = function() {
 	if(this.champId > -1) {
-		return champion[this.champId].recruited;
+		return champion[this.champId].recruitment.recruited;
 	}
 	return false;
 }
@@ -452,9 +463,9 @@ function initMonsters(t) {
 
 	//TESTING!!! REMOVE AFTER
 	if(t.id === TOWER_MOD0) {
-		var max = monster[t.id].length;
-		monster[t.id][max] = new Monster(max, 3, 0, 101, t.id, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
-		max++;
+		//var max = monster[t.id].length;
+		//monster[t.id][max] = new Monster(max, 3, 0, 101, t.id, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
+		//max++;
 		//monster[t.id][max] = new Monster(max, 1, 0, 56, t.id, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
 		//max++;
 		//monster[t.id][max] = new Monster(max, 1, 0, CHA_ROSANNE, t.id, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);

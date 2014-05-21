@@ -54,10 +54,6 @@ function timerAction() {
 	if(timerMaster - timerMonsterAttack >= 3) {
 		timerMonsterAttack = timerMaster;
 		monsterAttackSequence++;
-		if(monsterAttackSequence === 6) {
-			player[0].writeAttackPoints();
-			player[1].writeAttackPoints();
-		}
 	}
 	if(timerMaster - timerChampionStats >= 100) {
 		timerChampionStats = timerMaster;

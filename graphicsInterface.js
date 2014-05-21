@@ -204,74 +204,31 @@ function leftUI(p) {
 }
 
 function leftUIStats(p) {
+	var rgb;
     if (p.uiLeftPanel.champs[0] === true) {
         for (c = 0; c < p.champion.length; c++) {
             var champ = champion[p.champion[c]];
-            var rgb = getClassColour(champ.colour);
+            rgb = CLASS_COLOUR[champ.colour];
             var hp = Math.floor(21 * champ.stat.hp / champ.stat.hpMax);
-            ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+            ctx.fillStyle = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
             ctx.fillRect((p.ScreenX + 55 + c * 9) * scale, (p.ScreenY + 35 - hp) * scale, 7 * scale, hp * scale);
         }
     } else {
         var champ = champion[p.champion[0]];
-        var rgb;
         var hp = Math.floor(35 * champ.stat.hp / champ.stat.hpMax);
         var vit = Math.floor(35 * champ.stat.vit / champ.stat.vitMax);
         var sp = Math.floor(35 * champ.stat.sp / champ.stat.spMax);
         if (p === player[0]){
-            rgb = getClassColour(CLASS_COLOUR_MOON);
+            rgb = CLASS_COLOUR[CLASS_COLOUR_MOON];
         }
         else{
-            rgb = getClassColour(CLASS_COLOUR_DRAG);
+            rgb = CLASS_COLOUR[CLASS_COLOUR_DRAG];
         }        
-        ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+        ctx.fillStyle = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
         ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 15) * scale, hp * scale, 5 * scale);
         ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 22) * scale, vit * scale, 5 * scale);
         ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 29) * scale, sp * scale, 5 * scale);
     }
-}
-
-function getClassColour(c,palette) {
-    
-    if (typeof palette === 'undefined'){
-        palette = false;
-    }
-    
-    var red = 255,
-        grn = 255,
-        blu = 255;
-    switch (c) {
-        case CLASS_COLOUR_SERP:
-            red = COLOUR[COLOUR_GREEN][0];
-            grn = COLOUR[COLOUR_GREEN][1];
-            blu = COLOUR[COLOUR_GREEN][2];
-            break;
-        case CLASS_COLOUR_CHAOS:
-            red = COLOUR[COLOUR_YELLOW][0];
-            grn = COLOUR[COLOUR_YELLOW][1];
-            blu = COLOUR[COLOUR_YELLOW][2];
-            break;
-        case CLASS_COLOUR_DRAG:
-            red = COLOUR[COLOUR_RED][0];
-            grn = COLOUR[COLOUR_RED][1];
-            blu = COLOUR[COLOUR_RED][2];
-            break;
-        case CLASS_COLOUR_MOON:
-            red = COLOUR[COLOUR_BLUE_DARK][0];
-            grn = COLOUR[COLOUR_BLUE_DARK][1];
-            blu = COLOUR[COLOUR_BLUE_DARK][2];
-            break;
-        default:
-            break;
-    }
-    if (palette){
-        return new Array(red,grn,blu);        
-    }
-    return {
-        r: red,
-        g: grn,
-        b: blu
-    };
 }
 
 function commandUI(p) {

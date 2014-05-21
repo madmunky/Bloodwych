@@ -2,7 +2,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.spellBook = new Array();
         this.pocket = [0,0,0,0,0,0,0,1,0,0,0,0];
 	this.id = id;
-	this.recruited = false;
+	this.recruitment = { recruited: false, playerId: 0, position: 0 };
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.level = level;
@@ -25,10 +25,18 @@ Champion.prototype.addSpellToSpellBook = function(spell) {
 }
 
 Champion.prototype.doDamageTo = function(def, dmg, exh) {
-	this.stat.vit -= exh;
-	if(this.stat.vit <= 0) {
-		this.stat.vit = 0;
+	var self = this;
+	if(typeof exh !== "undefined") {
+		this.stat.vit -= exh;
+		if(this.stat.vit <= 0) {
+			this.stat.vit = 0;
+		}
 	}
+	(function(d) {
+	    setTimeout(function() {
+	        self.writeAttackPoints(d);
+	    }, self.recruitment.position * 400);
+	})(dmg);
 	if(def instanceof Champion) {
 		def.getDamage(dmg);
 	} else if(def instanceof Monster) {
@@ -38,13 +46,67 @@ Champion.prototype.doDamageTo = function(def, dmg, exh) {
 
 //Damage is 'safe' when champ doesn't get killed by it (e.g. by lack of vitality)
 Champion.prototype.getDamage = function(dmg, safe) {
+	var self = this;
 	this.stat.hp -= dmg;
-	if(this.stat.hp <= 0) {
+    if(this.stat.hp <= 0) {
 		this.stat.hp = 0;
-		if(typeof safe === "undefined" || !safe) {
+	}
+    if(typeof safe === "undefined" || !safe) {
+    	if(this.recruitment.recruited) {
+		    (function(d) {
+		        setTimeout(function() {
+		            self.writeAttackPoints(d, true);
+		        }, self.recruitment.position * 400);
+		    })(dmg);
+	        player[self.recruitment.playerId].alertDamagedPlayer();
+	        redrawUI(2);
+	    }
+		if(this.stat.hp <= 0) {
 			this.monster.die();
 		}
 	}
+}
+
+Champion.prototype.writeAttackPoints = function(pwr, def) {
+    if (typeof pwr !== "undefined" && this.recruitment.recruited) {
+    	var p = player[this.recruitment.playerId];
+        var x = 0,
+            y = 0;
+        switch (this.recruitment.position) {
+            case 0:
+                x = 106;
+                y = 88;
+                break;
+            case 1:
+                x = 0;
+                y = 0;
+                break;
+            case 2:
+                x = 106;
+                y = 0;
+                break;
+            case 3:
+                x = 212;
+                y = 0;
+                break;
+        }
+        ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 106 * scale, 8 * scale);
+        writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
+        if (typeof def === "undefined" || def === false) {
+            if (pwr > 0) {
+                writeFontImage('HITS FOR ' + pwr, (p.ScreenX + x + 8), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+            } else {
+                writeFontImage('MISSES', (p.ScreenX + x + 8), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+            }
+        } else {
+            writeFontImage('DEFENDS', (p.ScreenX + x + 8), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+        }
+        (function(p, x, y) {
+            setTimeout(function() {
+                ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 106 * scale, 8 * scale);
+            }, 1500);
+        })(p, x, y);
+    }
 }
 
 Champion.prototype.toString = function() {

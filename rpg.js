@@ -1,17 +1,21 @@
 function calculateAttack(att, def) {
 	combat = new Array();
+	if(att instanceof Monster) {
+		var mon = new Array();
+		if(att.teamId != 0) {
+			mon = getMonsterTeam(att.teamId);
+		} else {
+			mon[0] = att;
+		}
+	}
 
 	for (a = 0; a < 2; a++) {
 	    var attack = 0;
 		var crit = 1;
-		if(Math.floor(Math.random() * 20) >= 19) {
-			crit = 2;
-		}
 		var hit = 1.0;
 		var exhaustion = 0;
 		var defense = 0;
 		var fromDir = 0;
-		var fromLevel = 0;
 
 		//Attacker calculations
 		if(att instanceof Player) {
@@ -19,15 +23,22 @@ function calculateAttack(att, def) {
         	if(typeof from === "undefined" || from.monster.dead) {
         		continue;
         	}
+			if(Math.floor(Math.random() * 20) >= 19) {
+				crit = 2;
+			}
         	fromDir = from.monster.d;
-        	fromLevel = from.level;
 			attack += Math.floor(from.stat.str / 8);
 			attack += Math.floor(from.stat.agi / 32);
-			attack += 0; //weapon items
-			exhaustion = Math.floor(attack / 2);
-			hit = hit * (from.stat.vit / from.stat.vitMax + 0.5);
+			attack += 3; //weapon items
+			exhaustion = Math.floor(attack / 3);
+			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
 		} else {
-
+			var from = mon[a];
+        	if(typeof from === "undefined" || from.dead) {
+        		continue;
+        	}
+        	fromDir = from.d;
+			attack += 4 + from.level * 4;
 		}
 
 		//Defender calculations
@@ -56,12 +67,12 @@ function calculateAttack(att, def) {
 			for (d = 0; d < mon.length; d++) {
 				if(Math.random() < 1.0 / (mon.length - d)) {
 					var to = mon[d];
-					if(to.champId > -1) {
+					if(to.champId > -1) { //champion
 						to = champion[to.champId];
 						defense += 10 + Math.floor(to.stat.agi / 4);
 						defense -= to.stat.ac;
 						defense -= 0; //armour items
-					} else {
+					} else { //monster
 						if(!to.attacking) {
 							defense += 10;
 						}

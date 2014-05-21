@@ -65,6 +65,13 @@ function floorActionType(trig, p) {
 			break;
 		case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:
 			tower[towerThis].floor[p.floor].Map[p.y][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 1], 7, 1, '1');
+			for(ch = 0; ch < p.champion.length; ch++) {
+				var champ = champion[p.champion[ch]];
+				if(champ.monster.dead) {
+					champ.stat.hp = 1;
+					champ.monster.dead = false;
+				}
+			}
 			break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:
 			break;
