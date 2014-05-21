@@ -459,7 +459,7 @@ function initMonsters(t) {
 		//max++;
 	}
 
-	for(i = 0; i < monsterPaletteData.length; i++) {
+	for(i = 0; i < monsterPaletteData.length-8; i++) {
 		var body = CHA_BODY[monsterBodiesData[i][0]];
 		monsterPalette[i] = {
 			gender: CHA_GENDER_MALE,
