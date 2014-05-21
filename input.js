@@ -142,6 +142,12 @@ function processCanvasInput(x, y) {
                 player[p].action();
                 successfulClick = true;
             }
+            
+            if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, player[p])) {
+                player[p].uiRightPanel.view = UI_RIGHT_PANEL_SPELLBOOK;
+                successfulClick = true;
+            }
+            
             if (uiClickInArea(x, y, UI_CLICK_CHARACTER_STATS, player[p])) {
                 player[p].uiRightPanel.view = UI_RIGHT_PANEL_STATS;
                 successfulClick = true;
@@ -189,6 +195,12 @@ function processCanvasInput(x, y) {
             }
 
         } else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_STATS) {
+
+            player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
+            successfulClick = true;
+            
+        }
+        else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_SPELLBOOK) {
 
             player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
             successfulClick = true;
