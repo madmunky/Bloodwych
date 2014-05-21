@@ -25,7 +25,7 @@ function calculateAttack(att, def) {
 			attack += Math.floor(from.stat.agi / 32);
 			attack += 0; //weapon items
 			exhaustion = Math.floor(attack / 2);
-			hit = hit * (from.stat.vit / from.stat.vitMax + 0.25);
+			hit = hit * (from.stat.vit / from.stat.vitMax + 0.5);
 		} else {
 
 		}
@@ -48,8 +48,8 @@ function calculateAttack(att, def) {
 			}
 		} else if(def instanceof Monster) {
 			var mon = new Array();
-			if(def.teamId > 0) {
-				mon = getMonsterTeam(id);
+			if(def.teamId != 0) {
+				mon = getMonsterTeam(def.teamId);
 			} else {
 				mon[0] = def;
 			}
@@ -57,8 +57,9 @@ function calculateAttack(att, def) {
 				if(Math.random() < 1.0 / (mon.length - d)) {
 					var to = mon[d];
 					if(!to.attacking) {
-						defense += 10 + to.level * 2;
+						defense += 10;
 					}
+					defense += 10 + to.level * 2;
 					break;
 				}
 			}

@@ -22,7 +22,7 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 		this.champId = champId; //optional Champion ID
 		this.hp = 0;
 	} else {
-		this.hp = level * 10 + 20;
+		this.hp = level * 10 + 25;
 	}
 	this.gfx = [];
 }
@@ -399,6 +399,7 @@ Monster.prototype.die = function() {
 	this.dead = true;
 	this.attacking = false;
 	this.hp = 0;
+	updateMonsterTeam(this.teamId);
 }
 
 Monster.prototype.setBinaryView = function(pos18, index, length, to) {
@@ -569,14 +570,19 @@ function updateMonsterTeam(id) {
 		if(team.length > 1) {
 			leader = team[0];
 			leader.square = leader.d;
+			leader.teamId = Math.abs(id);
 			var s = 1;
 			for(i = 1; i < team.length; i++) {
 				team[i].x = leader.x;
 				team[i].y = leader.y;
 				team[i].d = leader.d;
 				team[i].square = (leader.d + s) % 4;
+				team[i].teamId = -Math.abs(id);
 				s++;
 			}
+		} else {
+			leader = team[0];
+			leader.teamId = 0;
 		}
 	}
 }
