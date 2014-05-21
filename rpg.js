@@ -56,10 +56,17 @@ function calculateAttack(att, def) {
 			for (d = 0; d < mon.length; d++) {
 				if(Math.random() < 1.0 / (mon.length - d)) {
 					var to = mon[d];
-					if(!to.attacking) {
-						defense += 10;
+					if(to.champId > -1) {
+						to = champion[to.champId];
+						defense += 10 + Math.floor(to.stat.agi / 4);
+						defense -= to.stat.ac;
+						defense -= 0; //armour items
+					} else {
+						if(!to.attacking) {
+							defense += 10;
+						}
+						defense += 10 + to.level * 2;
 					}
-					defense += 10 + to.level * 2;
 					break;
 				}
 			}

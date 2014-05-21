@@ -27,7 +27,7 @@ function writeFontImage(fontString, locationX, locationY, paletteTo, alignment) 
     	alignment = FONT_ALIGNMENT_LEFT;
     }
 
-	fontString = fontString.toUpperCase();
+	fontString = ("" + fontString).toUpperCase();
 
 	var chars = fontString.split('');
 

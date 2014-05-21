@@ -231,12 +231,14 @@ Player.prototype.attack = function(attack, target) {
         	var pwr = combat[c].power;
             var exh = combat[c].exhaustion;
         	att.monster.attacking = true;
-            att.doDamageTo(combat[c].defender, pwr, exh);
+            att.doDamageTo(def, pwr, exh);
             if (def instanceof Champion) {
                 PrintLog('CHAMPION ' + getChampionName(att.monster.champId) + ' HITS CHAMPION ' + getChampionName(def.monster.champId) + ' FOR ' + pwr + '!');
-                target.alertDamagedPlayer();
             } else if (def instanceof Monster) {
                 PrintLog('CHAMPION ' + getChampionName(att.monster.champId) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+            }
+            if(target instanceof Player) {
+            	target.alertDamagedPlayer();
             }
             redrawUI(2);
         }
