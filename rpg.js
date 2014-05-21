@@ -11,6 +11,7 @@ function calculateAttack(att, def) {
 		var exhaustion = 0;
 		var defense = 0;
 		var fromDir = 0;
+		var fromLevel = 0;
 
 		//Attacker calculations
 		if(att instanceof Player) {
@@ -19,11 +20,12 @@ function calculateAttack(att, def) {
         		continue;
         	}
         	fromDir = from.monster.d;
+        	fromLevel = from.level;
 			attack += Math.floor(from.stat.str / 8);
 			attack += Math.floor(from.stat.agi / 32);
 			attack += 0; //weapon items
 			exhaustion = Math.floor(attack / 2);
-			hit = from.stat.vit / from.stat.vitMax + 0.25;
+			hit = hit * (from.stat.vit / from.stat.vitMax + 0.25);
 		} else {
 
 		}
@@ -45,20 +47,36 @@ function calculateAttack(att, def) {
 				}
 			}
 		} else if(def instanceof Monster) {
-
+			var mon = new Array();
+			if(def.teamId > 0) {
+				mon = getMonsterTeam(id);
+			} else {
+				mon[0] = def;
+			}
+			for (d = 0; d < mon.length; d++) {
+				if(Math.random() < 1.0 / (mon.length - d)) {
+					var to = mon[d];
+					if(!to.attacking) {
+						defense += 10 + to.level * 2;
+					}
+					break;
+				}
+			}
 		}
 
 		//Final calculations
-		var power = Math.floor(Math.random() * 20 * crit) + attack - defense;
-		if(Math.random() > hit || power < 0) {
-			power = 0;
+		if(typeof from !== "undefined" && typeof to !== "undefined") {
+			var power = Math.floor(Math.random() * 20 * crit) + attack - defense;
+			if(Math.random() > hit || power < 0) {
+				power = 0;
+			}
+			combat.push({
+				attacker: from,
+				defender: to,
+				power: power,
+				exhaustion: exhaustion
+			});
 		}
-		combat.push({
-			attacker: from,
-			defender: to,
-			power: power,
-			exhaustion: exhaustion
-		});
 	}
 	return combat;
 }

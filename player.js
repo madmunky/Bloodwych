@@ -214,13 +214,10 @@ Player.prototype.tryAttack = function() {
             return true;
         }
     }
-    mon = getMonstersInTower(towerThis);
-    for (m in mon) {
-    	//attack monster
-        if (this.id !== mon[m].id && this.floor === mon[m].floor && this.x + xy.x === mon[m].x && this.y + xy.y === mon[m].y) {
-            this.attack(true, mon[m]);
-            return true;
-        }
+    var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
+    if(mon !== null) {
+        this.attack(true, mon);
+        return true;
     }
     this.stopChampionAttack();
 }

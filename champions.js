@@ -31,6 +31,8 @@ Champion.prototype.doDamageTo = function(def, dmg, exh) {
 	}
 	if(def instanceof Champion) {
 		def.getDamage(dmg);
+	} else if(def instanceof Monster) {
+		def.getDamage(dmg);
 	}
 }
 
@@ -40,15 +42,9 @@ Champion.prototype.getDamage = function(dmg, safe) {
 	if(this.stat.hp <= 0) {
 		this.stat.hp = 0;
 		if(typeof safe === "undefined" || !safe) {
-			this.die();
+			this.monster.die();
 		}
 	}
-}
-
-Champion.prototype.die = function() {
-	this.monster.dead = true;
-	this.monster.attacking = false;
-	this.stat.hp = 0;
 }
 
 Champion.prototype.toString = function() {
