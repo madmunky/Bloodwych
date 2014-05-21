@@ -37,8 +37,9 @@ try{
 	var fontContent = can.getContext("2d");
 
 	for (x = 0; x < chars.length; x++) {
-		if (fontCharacterToIndex(chars[x]) >= 0) {
-			fontContent.drawImage(font[fontCharacterToIndex(chars[x])], (x * 8), 0);
+		var chr = fontCharacterToIndex(chars[x]);
+		if (chr >= 0) {
+			fontContent.drawImage(font[chr], (x * 8), 0);
 		}
 	}
 
@@ -120,71 +121,19 @@ function getFontSymbol(charClass,charColour){
         return can;
 }
 
-function writeAttackFont(fontString, champ) {
-
-    if (typeof(font[0]) !== 'undefined'){
-    if (typeof alignment === "undefined") {
-    	alignment = FONT_ALIGNMENT_LEFT;
-    }
-
-	fontString = fontString.toUpperCase();
-
-	var chars = fontString.split('');
-
-	var can = document.createElement('canvas');
-	can.width = chars.length * 8;
-	can.height = 8;
-	var fontContent = can.getContext("2d");
-        
-        fontContent.drawImage(getFontSymbol(champ.prof,champ.colour),0,0);
-        
-	for (x = 0; x < chars.length; x++) {
-		if (fontCharacterToIndex(chars[x]) >= 0) {
-			fontContent.drawImage(font[fontCharacterToIndex(chars[x])],8+ (x * 8), 0);
-		}
-	}
-
-	fontContent.save();
-	// pull the entire image into an array of pixel data
-	var imageData = fontContent.getImageData(0, 0, can.width, can.height);
-
-	for (var i = 0; i < imageData.data.length; i += 4) {
-		// is this pixel the old rgb?
-		if (imageData.data[i] === 0 &&
-			imageData.data[i + 1] === 240 &&
-			imageData.data[i + 2] === 0
-		) {
-			// change to your new rgb
-			imageData.data[i] = paletteTo[0];
-			imageData.data[i + 1] = paletteTo[1];
-			imageData.data[i + 2] = paletteTo[2];
-		}
-	}
-
-	// put the altered data back on the canvas  
-	fontContent.putImageData(imageData, 0, 0);
-	// put the re-colored image back on the image
-
-	fontContent.save();
-	if(alignment === FONT_ALIGNMENT_RIGHT) {
-		xo = - can.width;
-	} else if(alignment === FONT_ALIGNMENT_CENTER) {
-		xo = - Math.floor(can.width / 2);
-	} else { //FONT_ALIGNMENT_LEFT
-		xo = 0;
-	}
-	ctx.drawImage(can, (xo + locationX) * scale, locationY * scale, can.width * scale, can.height * scale);
-	can = null;
-    }
-
-}
-
 function fontCharacterToIndex(c) {
 
 	var letterCode = c.charCodeAt(0);
 
 	switch (letterCode) {
-
+		case 127:
+			return 91; // (hearts)
+		case 128:
+			return 92; // (diamonds)
+		case 129:
+			return 90; // (clubs)
+		case 130:
+			return 89; // (spades)
 		case 41:
 			return 45; // )
 		case 33:

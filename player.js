@@ -188,7 +188,7 @@ Player.prototype.move = function(d) {
     this.moving = d;
     this.lastX = this.x;
     this.lastY = this.y;
-	this.attacking = false;
+    this.attacking = false;
     this.stopChampionAttack();
     var viewIndex = [15, 16, 19, 17];
     if (this.canMoveToPos(viewIndex[d])) {
@@ -215,7 +215,7 @@ Player.prototype.tryAttack = function() {
         }
     }
     var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
-    if(mon !== null) {
+    if (mon !== null) {
         this.attack(true, mon);
         return true;
     }
@@ -224,32 +224,71 @@ Player.prototype.tryAttack = function() {
 
 Player.prototype.attack = function(attack, target) {
     if (attack) {
-    	var combat = calculateAttack(this, target);
+        var combat = calculateAttack(this, target);
         for (c = 0; c < combat.length; c++) {
-        	var att = combat[c].attacker;
-        	var def = combat[c].defender;
-        	var pwr = combat[c].power;
+            var att = combat[c].attacker;
+            var def = combat[c].defender;
+            var pwr = combat[c].power;
             var exh = combat[c].exhaustion;
-        	att.monster.attacking = true;
+            att.monster.attacking = true;
             att.doDamageTo(def, pwr, exh);
+            this.writeAttackPoints(c, att, pwr);
             if (def instanceof Champion) {
-                PrintLog('CHAMPION ' + getChampionName(att.monster.champId) + ' HITS CHAMPION ' + getChampionName(def.monster.champId) + ' FOR ' + pwr + '!');
+                PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
             } else if (def instanceof Monster) {
-                PrintLog('CHAMPION ' + getChampionName(att.monster.champId) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+                PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
             }
-            if(target instanceof Player) {
-            	target.alertDamagedPlayer();
+            if (target instanceof Player) {
+                target.alertDamagedPlayer();
             }
             redrawUI(2);
         }
     }
 }
 
+Player.prototype.writeAttackPoints = function(c, att, pwr) {
+    if (typeof c !== "undefined" && typeof att !== "undefined" && typeof pwr !== "undefined") {
+        var x = 0,
+            y = 0;
+        switch (c) {
+            case 0:
+                x = 106;
+                y = 0;
+                ctx.clearRect((this.ScreenX + 106) * scale, (this.ScreenY - 10) * scale, 106 * scale, 8 * scale);
+                break;
+            case 1:
+                x = 0;
+                y = 0;
+    			ctx.clearRect(this.ScreenX * scale, (this.ScreenY - 10) * scale, 106 * scale, 8 * scale);
+                break;
+            case 2:
+                x = 106;
+                y = 88;
+    			ctx.clearRect((this.ScreenX + 106) * scale, (this.ScreenY + 78) * scale, 106 * scale, 8 * scale);
+                break;
+            case 3:
+                x = 212;
+                y = 0;
+                ctx.clearRect((this.ScreenX + 212) * scale, (this.ScreenY - 10) * scale, 106 * scale, 8 * scale);
+                break;
+        }
+        writeFontImage(String.fromCharCode(att.prof + 127), (this.ScreenX + x), (this.ScreenY + y - 9), COLOUR[COLOUR_RED]);
+        if (pwr > 0) {
+            writeFontImage('HITS FOR ' + pwr, (this.ScreenX + x + 8), (this.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+        } else {
+            writeFontImage('MISSES', (this.ScreenX + x + 8), (this.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+        }
+    } else {
+    	ctx.clearRect(this.ScreenX * scale, (this.ScreenY - 10) * scale, 320 * scale, 8 * scale);
+    	ctx.clearRect((this.ScreenX + 106) * scale, (this.ScreenY + 78) * scale, 106 * scale, 8 * scale);
+    }
+}
+
 Player.prototype.stopChampionAttack = function() {
-	for (c = 0; c < this.champion.length; c++) {
-		var m = champion[this.champion[c]].monster;
-		m.attacking = false;
-	}
+    for (c = 0; c < this.champion.length; c++) {
+        var m = champion[this.champion[c]].monster;
+        m.attacking = false;
+    }
 }
 
 Player.prototype.getView = function() {
@@ -357,31 +396,31 @@ Player.prototype.restoreChampionStats = function() {
     var alertPlayer = false;
     for (c = 0; c < this.champion.length; c++) {
         var champ = champion[this.champion[c]];
-        if(!champ.monster.dead) {
-            if(champ.stat.vitMax * 0.15 > champ.stat.vit) {
+        if (!champ.monster.dead) {
+            if (champ.stat.vitMax * 0.15 > champ.stat.vit) {
                 dmg = (champ.stat.vitMax * 0.15) - champ.stat.vit;
                 champ.getDamage(dmg, true);
-                if(dmg > 0) {
+                if (dmg > 0) {
                     alertPlayer = true;
                 }
             }
-            if(!champ.monster.attacking) {
+            if (!champ.monster.attacking) {
                 champ.stat.hp = champ.stat.hp + Math.floor((Math.random() * (champ.stat.str / 16)) + champ.stat.str / 16);
-                if(champ.stat.hp > champ.stat.hpMax) {
+                if (champ.stat.hp > champ.stat.hpMax) {
                     champ.stat.hp = champ.stat.hpMax;
                 }
                 champ.stat.vit = champ.stat.vit + Math.floor((Math.random() * (champ.stat.agi / 12)) + champ.stat.agi / 12);
-                if(champ.stat.vit > champ.stat.vitMax) {
+                if (champ.stat.vit > champ.stat.vitMax) {
                     champ.stat.vit = champ.stat.vitMax;
                 }
             }
             champ.stat.sp = champ.stat.sp + Math.floor((Math.random() * (champ.stat.int / 12)) + champ.stat.int / 12);
-            if(champ.stat.sp > champ.stat.spMax) {
+            if (champ.stat.sp > champ.stat.spMax) {
                 champ.stat.sp = champ.stat.spMax;
             }
         }
     }
-    if(alertPlayer) {
+    if (alertPlayer) {
         this.alertDamagedPlayer();
     }
     redrawUI(2);
