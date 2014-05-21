@@ -9,7 +9,6 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	this.x = x;
 	this.y = y;
 	this.d = d;
-	this.hp = level * 5 + 20;
 	this.attacking = false;
 	this.attackTimer = 0;
 	this.dead = false;
@@ -21,6 +20,9 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	this.champId = -1;
 	if (typeof champId !== "undefined") {
 		this.champId = champId; //optional Champion ID
+		this.hp = 0;
+	} else {
+		this.hp = level * 10 + 20;
 	}
 	this.gfx = [];
 }
@@ -32,7 +34,7 @@ Monster.prototype.toString = function() {
 	if (this.champId !== -1) {
 		cha = ', champion:' + getChampionName(this.champId) + '(' + this.champId + ')';
 	}
-	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', teamId:' + this.teamId + ', teamSize:' + getMonsterTeam(this.teamId).length + cha + ']';
+	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', hp:' + this.hp + ', teamId:' + this.teamId + ', teamSize:' + getMonsterTeam(this.teamId).length + cha + ']';
 }
 
 Monster.prototype.getGfx = function() {
@@ -191,7 +193,7 @@ Monster.prototype.canMoveByWood = function() {
 }
 
 Monster.prototype.move = function() {
-	if (this.teamId >= 0 && !this.isRecruited()) {
+	if (!this.dead && this.teamId >= 0 && !this.isRecruited()) {
 		this.attack(false);
 		var canMove = this.canMove();
 		if (canMove === 2 && this.canInteract() > -1) return;

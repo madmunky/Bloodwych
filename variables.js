@@ -17,6 +17,7 @@ var testPalette = 0;
 var timerMaster = 0;
 var timerMonsterMove = 0;
 var timerMonsterAttack = 0;
+var timerChampionStats = 0;
 //var players = 0;
 var towerSwitchesData = new Array();
 var loadingInterval = 0;
@@ -44,6 +45,11 @@ var CLASS_SERP = 0,
 	CLASS_DRAG = 1,
 	CLASS_MOON = 2,
 	CLASS_CHAOS = 3;
+
+var CLASS_COLOUR_SERP = 0,
+	CLASS_COLOUR_CHAOS = 1,
+	CLASS_COLOUR_DRAG = 2,
+	CLASS_COLOUR_MOON = 3;
 
 var COLOUR_BLACK = 0,
 	COLOUR_GREY_DARKEST = 1,

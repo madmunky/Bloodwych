@@ -229,15 +229,19 @@ Player.prototype.attack = function(attack, target) {
     if (attack) {
     	var combat = calculateAttack(this, target);
         for (c = 0; c < combat.length; c++) {
-        	var att = combat[c].attacker.monster;
-        	var def = combat[c].defender.monster;
+        	var att = combat[c].attacker;
+        	var def = combat[c].defender;
         	var pwr = combat[c].power;
-        	att.attacking = true;
-            if (target instanceof Player) {
-                PrintLog('CHAMPION ' + getChampionName(att.champId) + ' HITS CHAMPION ' + getChampionName(def.champId) + ' FOR ' + pwr + '!');
-            } else if (target instanceof Monster) {
-                PrintLog('CHAMPION ' + getChampionName(att.champId) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+            var exh = combat[c].exhaustion;
+        	att.monster.attacking = true;
+            att.doDamageTo(combat[c].defender, pwr, exh);
+            if (def instanceof Champion) {
+                PrintLog('CHAMPION ' + getChampionName(att.monster.champId) + ' HITS CHAMPION ' + getChampionName(def.monster.champId) + ' FOR ' + pwr + '!');
+                target.alertDamagedPlayer();
+            } else if (def instanceof Monster) {
+                PrintLog('CHAMPION ' + getChampionName(att.monster.champId) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
             }
+            redrawUI(2);
         }
     }
 }
@@ -350,6 +354,47 @@ Player.prototype.getChampion = function(loc) {
     return null;
 }
 
+Player.prototype.restoreChampionStats = function() {
+    var alertPlayer = false;
+    for (c = 0; c < this.champion.length; c++) {
+        var champ = champion[this.champion[c]];
+        if(!champ.monster.dead) {
+            if(champ.stat.vitMax * 0.15 > champ.stat.vit) {
+                dmg = (champ.stat.vitMax * 0.15) - champ.stat.vit;
+                champ.getDamage(dmg, true);
+                if(dmg > 0) {
+                    alertPlayer = true;
+                }
+            }
+            if(!champ.monster.attacking) {
+                champ.stat.hp = champ.stat.hp + Math.floor((Math.random() * (champ.stat.str / 16)) + champ.stat.str / 16);
+                if(champ.stat.hp > champ.stat.hpMax) {
+                    champ.stat.hp = champ.stat.hpMax;
+                }
+                champ.stat.vit = champ.stat.vit + Math.floor((Math.random() * (champ.stat.agi / 12)) + champ.stat.agi / 12);
+                if(champ.stat.vit > champ.stat.vitMax) {
+                    champ.stat.vit = champ.stat.vitMax;
+                }
+            }
+            champ.stat.sp = champ.stat.sp + Math.floor((Math.random() * (champ.stat.int / 12)) + champ.stat.int / 12);
+            if(champ.stat.sp > champ.stat.spMax) {
+                champ.stat.sp = champ.stat.spMax;
+            }
+        }
+    }
+    if(alertPlayer) {
+        this.alertDamagedPlayer();
+    }
+    redrawUI(2);
+}
+
+Player.prototype.alertDamagedPlayer = function() {
+    this.uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;
+    for (ch = 0; ch < this.champion.length; ch++) {
+        toggleChampUI(ch, this, true);
+    }
+}
+
 //Returns a list of monsters and their distance pos relative to the player
 //pos2 : when defined it only lists the monsters on this square
 Player.prototype.getMonstersInRange = function(pos2) {
@@ -358,7 +403,7 @@ Player.prototype.getMonstersInRange = function(pos2) {
     var pos = -1;
     mon = getMonstersInTower(towerThis);
     for (m in mon) {
-        if (p.floor === mon[m].floor) {
+        if (p.floor === mon[m].floor && !mon[m].dead) {
             pos = coordinatesToPos(mon[m].x, mon[m].y, p.x, p.y, p.d);
             var sq = CHAR_FRONT_SOLO;
             var sq2 = 0;

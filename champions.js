@@ -24,6 +24,33 @@ Champion.prototype.addSpellToSpellBook = function(spell) {
 	this.spellBook[spell].learnt = true;
 }
 
+Champion.prototype.doDamageTo = function(def, dmg, exh) {
+	this.stat.vit -= exh;
+	if(this.stat.vit <= 0) {
+		this.stat.vit = 0;
+	}
+	if(def instanceof Champion) {
+		def.getDamage(dmg);
+	}
+}
+
+//Damage is 'safe' when champ doesn't get killed by it (e.g. by lack of vitality)
+Champion.prototype.getDamage = function(dmg, safe) {
+	this.stat.hp -= dmg;
+	if(this.stat.hp <= 0) {
+		this.stat.hp = 0;
+		if(typeof safe === "undefined" || !safe) {
+			this.die();
+		}
+	}
+}
+
+Champion.prototype.die = function() {
+	this.monster.dead = true;
+	this.monster.attacking = false;
+	this.stat.hp = 0;
+}
+
 Champion.prototype.toString = function() {
 	sb = "";
 	for (i = 0; i < SPELL_MAX; i++) {
@@ -140,11 +167,11 @@ function initChampions() {
 			int: int,
 			cha: cha,
 			hp: hp,
-			hpMax: hpMax,
+			hpMax: hp,
 			vit: vit,
-			vitMax: vitMax,
+			vitMax: vit,
 			sp: sp,
-			spMax: spMax,
+			spMax: sp,
 			ac: ac
 		};
 		var spellBin = hex2bin(md.substr(24, 2));

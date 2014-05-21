@@ -55,4 +55,10 @@ function timerAction() {
 		timerMonsterAttack = timerMaster;
 		monsterAttackSequence++;
 	}
+	if(timerMaster - timerChampionStats >= 100) {
+		timerChampionStats = timerMaster;
+		for(p = 0; p < 2; p++) {
+			player[p].restoreChampionStats();
+		}
+	}
 }
