@@ -30,7 +30,7 @@ function calculateAttack(att, def) {
 			attack += Math.floor(from.stat.str / 8);
 			attack += Math.floor(from.stat.agi / 32);
 			attack += 3; //weapon items
-			exhaustion = Math.floor(attack / 3);
+			exhaustion = Math.floor(attack / 4);
 			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
 		} else {
 			var from = mon[a];

@@ -463,15 +463,15 @@ function initMonsters(t) {
 
 	//TESTING!!! REMOVE AFTER
 	if(t.id === TOWER_MOD0) {
-		//var max = monster[t.id].length;
-		//monster[t.id][max] = new Monster(max, 3, 0, 101, t.id, 3, 13, 24, 3, CHAR_FRONT_LEFT, 0);
-		//max++;
-		//monster[t.id][max] = new Monster(max, 1, 0, 56, t.id, 3, 13, 23, 2, CHAR_FRONT_RIGHT, 0);
-		//max++;
-		//monster[t.id][max] = new Monster(max, 1, 0, CHA_ROSANNE, t.id, 3, 13, 24, 3, CHAR_FRONT_RIGHT, 0);
-		//max++;
-		//monster[t.id][max] = new Monster(max, 1, 0, 25, t.id, 3, 13, 23, 3, CHAR_BACK_LEFT, -4);
-		//max++;
+		var max = monster[t.id].length;
+		monster[t.id][max] = new Monster(max, 0, 0, 101, t.id, 3, 12, 18, 3, CHAR_FRONT_LEFT, 0);
+		max++;
+		monster[t.id][max] = new Monster(max, 0, 0, 101, t.id, 3, 14, 18, 2, CHAR_BACK_RIGHT, 0);
+		max++;
+		monster[t.id][max] = new Monster(max, 0, 0, 101, t.id, 3, 13, 16, 1, CHAR_BACK_LEFT, 0);
+		max++;
+		monster[t.id][max] = new Monster(max, 0, 0, 101, t.id, 3, 13, 20, 0, CHAR_FRONT_RIGHT, 0);
+		max++;
 		//monster[t.id][max] = new Monster(max, 1, 0, 27, t.id, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
 		//max++;
 	}
@@ -578,8 +578,8 @@ function getMonsterTeam(id) {
 function updateMonsterTeam(id) {
 	if(id != 0) {
 		var team = getMonsterTeam(id);
+		leader = team[0];
 		if(team.length > 1) {
-			leader = team[0];
 			leader.square = leader.d;
 			leader.teamId = Math.abs(id);
 			var s = 1;
