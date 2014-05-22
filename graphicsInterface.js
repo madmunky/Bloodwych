@@ -385,7 +385,10 @@ function drawPocketUI(p) {
             } //WRITE SOMETHING HERE TO RETURN THE CORRECT OBJECT VALUE
             ctx.drawImage(gfxUI[pocketImg], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketImg].width * scale, gfxUI[pocketImg].height * scale);
             if (pocketImg === UI_GFX_POCKET_COIN){
-               writeFontImage("0"+champion[p.champion[p.uiRightPanel.activePocket]].pocket[POCKET_AMOUNT_COINS].toString(), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, COLOUR[COLOUR_YELLOW]);     
+               writeFontImage(champion[p.champion[p.uiRightPanel.activePocket]].pocket[POCKET_AMOUNT_COINS].toString(), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);     
+            }
+            if (pocketImg === UI_GFX_POCKET_COMMON_KEY){
+               writeFontImage("0"+champion[p.champion[p.uiRightPanel.activePocket]].pocket[POCKET_AMOUNT_KEYS].toString(), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);     
             }
             i++;
         }
