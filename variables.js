@@ -220,6 +220,7 @@ var CHA_BLODWYN = 0,
     CHA_THAI_CHANG = 15;
 
 var championData = new Array();
+var chamionPocketData = [];
 var champion = new Array();
 
 //MONSTERS AND CHARACTERS
@@ -689,3 +690,21 @@ var KEYPAD_8 = 104,
     KEY_0 = 48,
     KEY_MINUS = 189,
     KEY_PLUS = 187;
+
+var POCKET_LEFT_HAND = 0,
+        POCKET_RIGHT_HAND = 1,
+        POCKET_TORSO = 2,
+        POCKET_SHIELD = 3,
+        POCKET_SLOT_0 = 4,
+        POCKET_SLOT_1 = 5,
+        POCKET_SLOT_2 = 6,
+        POCKET_SLOT_3 = 7,
+        POCKET_SLOT_4 = 8,
+        POCKET_SLOT_5 = 9,
+        POCKET_SLOT_6 = 10,
+        POCKET_SLOT_7 = 11,
+        POCKET_SLOT_8 = 12,
+        POCKET_AMOUNT_COINS = 13,
+        POCKET_AMOUNT_KEYS = 14,
+        POCKET_AMOUNT_ARROWS = 15,
+        POCKET_AMOUNT_UNKNOWN = 16;

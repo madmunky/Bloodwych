@@ -28,6 +28,9 @@ function getFileData(file_name, callback, t, type, length) {
 				case "championData":
 					championData = callback(this.response, length);
 					break;
+                                case "championPocketData":
+					championPocketData = callback(this.response, length);
+					break;
 				case "towerSwitchesData":
 					towerSwitchesData = callback(this.response, length);
 					break;

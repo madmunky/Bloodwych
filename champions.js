@@ -1,6 +1,6 @@
-function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, monster) {
+function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, monster,pocketData) {
 	this.spellBook = new Array();
-        this.pocket = [0,0,0,0,0,0,0,1,0,0,0,0];
+        this.pocket = pocketData;
 	this.id = id;
 	this.recruitment = { recruited: false, playerId: 0, position: 0 };
 	this.firstName = firstName;
@@ -206,6 +206,12 @@ function initChampions() {
 	champion.length = 0;
 	monster[TOWER_CHAMPIONS] = new Array();
 	for (ch = 0; ch < CHAMPION_MAX; ch++) {
+                var pk = championPocketData[ch].match(/.{1,2}/g);
+                for (i = 0; i < 16; i++){                    
+                    var a = hex2dec(pk[i].substr(0,2));
+                    a = parseInt(a);
+                    pk[i] = a;
+                };
 		var md = championData[ch];
 		var level = hex2dec(md.substr(0, 2));
 		var str = hex2dec(md.substr(2, 2));
@@ -241,7 +247,7 @@ function initChampions() {
 		spellBin = spellBin + hex2bin(md.substr(28, 2));
 		spellBin = spellBin + hex2bin(md.substr(30, 2));
 		monster[TOWER_CHAMPIONS][ch] = new Monster(ch + monster[TOWER_MOD0].length, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
-		champion[ch] = new Champion(ch, getChampionName(ch, true), getChampionName(ch, false), getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch]);
+		champion[ch] = new Champion(ch, getChampionName(ch, true), getChampionName(ch, false), getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch],pk);
 		PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
 	}
 }

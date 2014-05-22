@@ -116,17 +116,18 @@ function loadTowerData(t, start) {
 	var id = t.id;
 
 	if (typeof start === "boolean" && start) {
-		getFileData('maps/MOD0.charstats', readSimpleDataHex, t, "championData", 32);
-		getFileData('maps/heads.monsters', readSimpleData, null, "monsterHeads", 1);
-		getFileData('maps/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
-		getFileData('maps/palette.monsters', readSimpleData, null, "monsterPalette", 20);
-		getFileData('maps/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
+		getFileData('data/charstats.data', readSimpleDataHex, t, "championData", 32);
+                getFileData('data/charpockets.data', readSimpleDataHex, t, "championPocketData", 16);
+		getFileData('data/heads.monsters', readSimpleData, null, "monsterHeads", 1);
+		getFileData('data/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
+		getFileData('data/palette.monsters', readSimpleData, null, "monsterPalette", 20);
+		getFileData('data/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
 	}
 
-	getFileData('maps/' + TOWER_NAME[id] + '.MAP', readMapData, t, "floor");
-	getFileData('maps/' + TOWER_NAME[id] + '.switches', readSimpleData, t, "switches", 4);
-	getFileData('maps/' + TOWER_NAME[id] + '.triggers', readSimpleData, t, "triggers", 4);
-	getFileData('maps/' + TOWER_NAME[id] + '.monsters', readSimpleDataHex, t, "monsterData", 6);
+	getFileData('data/' + TOWER_NAME[id] + '.MAP', readMapData, t, "floor");
+	getFileData('data/' + TOWER_NAME[id] + '.switches', readSimpleData, t, "switches", 4);
+	getFileData('data/' + TOWER_NAME[id] + '.triggers', readSimpleData, t, "triggers", 4);
+	getFileData('data/' + TOWER_NAME[id] + '.monsters', readSimpleDataHex, t, "monsterData", 6);
 }
 
 
