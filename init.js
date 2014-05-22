@@ -120,7 +120,7 @@ function loadTowerData(t, start) {
                 getFileData('data/charpockets.data', readSimpleDataHex, t, "championPocketData", 16);
 		getFileData('data/heads.monsters', readSimpleData, null, "monsterHeads", 1);
 		getFileData('data/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
-		getFileData('data/palette.monsters', readSimpleData, null, "monsterPalette", 20);
+		getFileData('data/palette.monsters', readSimpleData, null, "monsterPalette", 4);
 		getFileData('data/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
 	}
 

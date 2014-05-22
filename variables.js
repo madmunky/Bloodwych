@@ -330,6 +330,7 @@ var monsterPaletteData;
 var monsterHeadsData;
 var monsterBodiesData;
 var monsterPalette = new Array();
+var monsterBigPalette = new Array();
 
 CHA_BODY[0] = {
     leg: CHA_LEG_FEMALE_NAKED,

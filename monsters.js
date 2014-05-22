@@ -40,6 +40,7 @@ Monster.prototype.toString = function() {
 Monster.prototype.getGfx = function() {
 	if (characterGfx.length > 0) {
 		if(this.form >= 101) {
+			var level = Math.floor(this.level / 3);
 			this.gfx = grabMonster(this);
 		} else {
 			var dGfx = [];
@@ -476,8 +477,9 @@ function initMonsters(t) {
 		//max++;
 	}
 
-	for(i = 0; i < monsterPaletteData.length-8; i++) {
+	for(i = 0; i < monsterBodiesData.length; i++) {
 		var body = CHA_BODY[monsterBodiesData[i][0]];
+		var j = i * 5;
 		monsterPalette[i] = {
 			gender: CHA_GENDER_MALE,
 			head: monsterHeadsData[i][0],
@@ -485,13 +487,20 @@ function initMonsters(t) {
 			torso: body.torso,
 			arm: body.arm,
 			mini: body.mini,
-			headPalette: [COLOUR[monsterPaletteData[i][0]], COLOUR[monsterPaletteData[i][1]], COLOUR[monsterPaletteData[i][2]], COLOUR[monsterPaletteData[i][3]]],
-			legPalette: [COLOUR[monsterPaletteData[i][4]], COLOUR[monsterPaletteData[i][5]], COLOUR[monsterPaletteData[i][6]], COLOUR[monsterPaletteData[i][7]]],
-			torsoPalette: [COLOUR[monsterPaletteData[i][8]], COLOUR[monsterPaletteData[i][9]], COLOUR[monsterPaletteData[i][10]], COLOUR[monsterPaletteData[i][11]]],
-			armPalette: [COLOUR[monsterPaletteData[i][12]], COLOUR[monsterPaletteData[i][13]], COLOUR[monsterPaletteData[i][14]], COLOUR[monsterPaletteData[i][15]]],
-			miniPalette: [COLOUR[monsterPaletteData[i][16]], COLOUR[monsterPaletteData[i][17]], COLOUR[monsterPaletteData[i][18]], COLOUR[monsterPaletteData[i][19]]],
+			headPalette: [COLOUR[monsterPaletteData[j][0]], COLOUR[monsterPaletteData[j][1]], COLOUR[monsterPaletteData[j][2]], COLOUR[monsterPaletteData[j][3]]],
+			legPalette: [COLOUR[monsterPaletteData[j+1][0]], COLOUR[monsterPaletteData[j+1][1]], COLOUR[monsterPaletteData[j+1][2]], COLOUR[monsterPaletteData[j+1][3]]],
+			torsoPalette: [COLOUR[monsterPaletteData[j+2][0]], COLOUR[monsterPaletteData[j+2][1]], COLOUR[monsterPaletteData[j+2][2]], COLOUR[monsterPaletteData[j+2][3]]],
+			armPalette: [COLOUR[monsterPaletteData[j+3][0]], COLOUR[monsterPaletteData[j+3][1]], COLOUR[monsterPaletteData[j+3][2]], COLOUR[monsterPaletteData[j+3][3]]],
+			miniPalette: [COLOUR[monsterPaletteData[j+4][0]], COLOUR[monsterPaletteData[j+4][1]], COLOUR[monsterPaletteData[j+4][2]], COLOUR[monsterPaletteData[j+4][3]]],
 			bodyId: monsterBodiesData[i][0]
 		};
+	}
+	for(i = 0; i < monsterBodiesData.length; i++) {
+		monsterBigPalette[i] = new Array();
+		for(j = 0; j < 8; j++) { //levels
+			var k = i + j + 86;
+			monsterBigPalette[i][j] = [COLOUR[COLOUR_BLACK], COLOUR[monsterPaletteData[k][0]], COLOUR[monsterPaletteData[k][1]], COLOUR[monsterPaletteData[k][2]]];
+		}
 	}
 }
 

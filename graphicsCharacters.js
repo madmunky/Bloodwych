@@ -655,19 +655,10 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
 
 function grabMonster(m) {
     var form = m.form;
-    /*                this.gfx = grabMonster(gfx['character']['summon']);
-            } else if(this.form === 102) {
-                this.gfx = floaterArray(gfx['character']['floater']);
-            } else if(this.form === 103) {
-                this.gfx = nastyFloaterArray(gfx['character']['nastyfloater']);
-            } else if(this.form === 104) {
-                this.gfx = crabArray(gfx['character']['crab']);
-            } else if(this.form === 105) {
-                this.gfx = dragonArray(gfx['character']['dragon']);
-            } else if(this.form === 106) {
-                this.gfx = dragonArray(gfx['character']['dragon']);
-            } else if(this.form === 107) {
-                this.gfx = behemothArray(gfx['character']['behemoth']);*/
+    var level = Math.floor(m.level / 3);
+    if(level > 7) {
+        level = 7;
+    }
     switch(form) {
         case MON_FORM_SUMMON: //SUMMON
         var spriteSheetIMG = gfx['character']['summon'];
@@ -771,7 +762,7 @@ function grabMonster(m) {
         BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_4, DISTANCE_5, DISTANCE_6);
         ImageArray.push(BODYPART);
 
-        return ImageArray;
+        break;
 
 
        case MON_FORM_BEHOLDER: //FLOATER
@@ -889,7 +880,7 @@ function grabMonster(m) {
         BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_4, DISTANCE_5, DISTANCE_6);
         ImageArray.push(BODYPART);
 
-        return ImageArray;
+        break;
    
 
        case MON_FORM_ENTITY: //NASTY FLOATER
@@ -943,7 +934,7 @@ function grabMonster(m) {
         BODYPART.push(DISTANCE_1, DISTANCE_2);
         ImageArray.push(BODYPART);
 
-        return ImageArray;
+        break;
 
 
        case MON_FORM_CRAB: //CRAB
@@ -1005,7 +996,7 @@ function grabMonster(m) {
         BODYPART.push(DISTANCE_1, DISTANCE_2);
         ImageArray.push(BODYPART);
 
-        return ImageArray;
+        break;
 
  
        case MON_FORM_DRAGON: case MON_FORM_DRAGON_SMALL: //DRAGON
@@ -1083,7 +1074,7 @@ function grabMonster(m) {
         BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3);
         ImageArray.push(BODYPART);
 
-        return ImageArray;
+        break;
 
  
         case MON_FORM_BEHEMOTH: //BEHEMOTH
@@ -1142,10 +1133,20 @@ function grabMonster(m) {
 
         BODYPART.push(DISTANCE_1, DISTANCE_2);
         ImageArray.push(BODYPART);
-        return ImageArray;
+        break;
 
    
         default:
         return null;
     }
+    for(var i = 0; i < ImageArray.length; i++) {
+        for(var j = 0; j < ImageArray[i].length; j++) {
+            for(var k = 0; k < ImageArray[i][j].length; k++) {
+
+                ImageArray[i][j][k] = recolourSprite(ImageArray[i][j][k], MON_PALETTE_DEFAULT, monsterBigPalette[form - 101][level]);
+            }
+        }
+    }
+
+    return ImageArray;
 }
