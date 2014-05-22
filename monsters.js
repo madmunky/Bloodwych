@@ -465,21 +465,21 @@ function initMonsters(t) {
 	//TESTING!!! REMOVE AFTER
 	if(t.id === TOWER_MOD0) {
 		var max = monster[t.id].length;
-		monster[t.id][max] = new Monster(max, 12, 0, 102, t.id, 3, 12, 18, 3, CHAR_FRONT_LEFT, 0);
+		monster[t.id][max] = new Monster(max, 0, 0, 101, t.id, 3, 12, 18, 3, CHAR_FRONT_LEFT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 15, 0, 106, t.id, 3, 14, 18, 2, CHAR_BACK_RIGHT, 0);
+		monster[t.id][max] = new Monster(max, 3, 0, 101, t.id, 3, 14, 18, 2, CHAR_BACK_RIGHT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 18, 0, 101, t.id, 3, 13, 16, 1, CHAR_BACK_LEFT, 0);
+		monster[t.id][max] = new Monster(max, 6, 0, 101, t.id, 3, 13, 16, 1, CHAR_BACK_LEFT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 21, 0, 107, t.id, 3, 13, 20, 0, CHAR_FRONT_RIGHT, 0);
+		monster[t.id][max] = new Monster(max, 9, 0, 107, t.id, 3, 13, 20, 0, CHAR_FRONT_RIGHT, 0);
 		max++;
 		//monster[t.id][max] = new Monster(max, 1, 0, 27, t.id, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
 		//max++;
 	}
 
-	for(i = 0; i < 14; i++) {
+	for(i = 0; i < 7; i++) {
 		monsterBigPalette[i] = new Array();                
-		for(j = 0; j < 14; j++) { //levels
+		for(j = 0; j < 14; j++) { //palettes
 			var k = 430 + j;
 			monsterBigPalette[i][j] = [COLOUR[monsterPaletteData[k][0]], COLOUR[monsterPaletteData[k][1]], COLOUR[monsterPaletteData[k][2]], COLOUR[monsterPaletteData[k][3]]];                        
 		}

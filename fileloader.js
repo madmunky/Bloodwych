@@ -7,6 +7,9 @@ function getFileData(file_name, callback, t, type, length) {
 				case "monsterPalette":
 					monsterPaletteData = callback(this.response, length);
 					break;
+				case "monsterPaletteMeta":
+					monsterPaletteMetaData = callback(this.response, length);
+					break;
 				case "monsterHeads":
 					monsterHeadsData = callback(this.response, length);
 					break;

@@ -327,6 +327,7 @@ var MON_PALETTE_DEFAULT = [COLOUR[COLOUR_BLACK], COLOUR[COLOUR_GREY_LIGHT], COLO
 var SHIELD_PALETTE_DEFAULT = new Array(new Array(0, 46, 0, 255), COLOUR[COLOUR_RED], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLUE]);
 
 var monsterPaletteData;
+var monsterPaletteMetaData;
 var monsterHeadsData;
 var monsterBodiesData;
 var monsterPalette = new Array();

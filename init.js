@@ -117,10 +117,11 @@ function loadTowerData(t, start) {
 
 	if (typeof start === "boolean" && start) {
 		getFileData('data/charstats.data', readSimpleDataHex, t, "championData", 32);
-                getFileData('data/charpockets.data', readSimpleDataHex, t, "championPocketData", 16);
+        getFileData('data/charpockets.data', readSimpleDataHex, t, "championPocketData", 16);
 		getFileData('data/heads.monsters', readSimpleData, null, "monsterHeads", 1);
 		getFileData('data/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
 		getFileData('data/palette.monsters', readSimpleData, null, "monsterPalette", 4);
+		getFileData('data/palette_meta.monsters', readSimpleData, null, "monsterPaletteMeta", 8);
 		getFileData('data/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
 	}
 
