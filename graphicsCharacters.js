@@ -580,6 +580,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 }
 
 function drawMonster(m, dir, dist, player, offset, doBlur) {
+    try{
     if (typeof doBlur === "undefined") {
         doBlur = true;
     }
@@ -651,6 +652,7 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
             }
         }
     }
+}catch(e){PrintLog("JORG - DRAW MONSTER ISSUE! - " + e.toString());}
 }
 
 function grabMonster(m) {
