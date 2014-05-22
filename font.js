@@ -36,7 +36,7 @@ try{
 	can.height = 8;
 	var fontContent = can.getContext("2d");
 
-	for (x = 0; x < chars.length; x++) {
+	for (var x = 0; x < chars.length; x++) {
 		var chr = fontCharacterToIndex(chars[x]);
 		if (chr >= 0) {
 			fontContent.drawImage(font[chr], (x * 8), 0);

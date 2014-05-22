@@ -384,6 +384,9 @@ function drawPocketUI(p) {
                 pocketImg = itemID(champion[p.champion[p.uiRightPanel.activePocket]].pocket[i]);
             } //WRITE SOMETHING HERE TO RETURN THE CORRECT OBJECT VALUE
             ctx.drawImage(gfxUI[pocketImg], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketImg].width * scale, gfxUI[pocketImg].height * scale);
+            if (pocketImg === UI_GFX_POCKET_COIN){
+               writeFontImage("0"+champion[p.champion[p.uiRightPanel.activePocket]].pocket[POCKET_AMOUNT_COINS].toString(), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, COLOUR[COLOUR_YELLOW]);     
+            }
             i++;
         }
     }
@@ -696,7 +699,7 @@ function itemID(id) {
             } //Short Sword
         case 51:
             {
-                return UI_GFX_POCKET_SWORD_3;
+                return UI_GFX_POCKET_SWORD_2;
             } //Long Sword
         case 52:
             {

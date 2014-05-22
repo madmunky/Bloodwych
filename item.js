@@ -4,4 +4,9 @@
  * and open the template in the editor.
  */
 
-
+function Item(id, gfx, gfxD, quantity) {
+	this.id = id;
+        this.gfx = gfx;
+        this.gfxD = gfxD;
+        this.quantity = quantity;                
+}
