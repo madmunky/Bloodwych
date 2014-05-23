@@ -34,7 +34,7 @@ Monster.prototype.toString = function() {
 	if (this.champId !== -1) {
 		cha = ', champion:' + getChampionName(this.champId) + '(' + this.champId + ')';
 	}
-	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', hp:' + this.hp + ', teamId:' + this.teamId + ', teamSize:' + getMonsterTeam(this.teamId).length + cha + ']';
+	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', hp:' + this.hp + ', teamId:' + this.teamId + cha + ']';
 }
 
 Monster.prototype.getGfx = function() {
@@ -452,7 +452,7 @@ function initMonsters(t) {
 					square++;
 					teamId = -monsterTeamIdMax;
 				}
-			} else if (form === 21 || form === 22) {
+			} else if (form === MON_FORM_VENDOR_1 || form === MON_FORM_VENDOR_2 || form >= MON_FORM_BEHOLDER) {
 				square = -1;
 			} else {
 				square = 0;
@@ -464,7 +464,7 @@ function initMonsters(t) {
 
 	//TESTING!!! REMOVE AFTER
 	if(t.id === TOWER_MOD0) {
-                var testType = 103;
+        var testType = 101;
 		var max = monster[t.id].length;
 		monster[t.id][max] = new Monster(max, 0, 0, testType, t.id, 3, 12, 18, 3, CHAR_FRONT_LEFT, 0);
 		max++;

@@ -673,25 +673,25 @@ function grabMonster(m) {
             DISTANCE_5 = [],
             DISTANCE_6 = [];
 
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 0, 19, 47, false));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 21, 0, 14, 47, true));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 39, 0, 19, 47, false));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 21, 0, 14, 47, false));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 0, 19, 47, false));      //Front body - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 21, 0, 14, 47, true));      //Right body - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 39, 0, 19, 47, false));     //Back body - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 21, 0, 14, 47, false));     //Left body - distance 1
 
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 0, 48, 15, 39, false));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 16, 48, 11, 39, true));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 30, 48, 15, 39, false));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 16, 48, 11, 39, false));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 0, 48, 15, 39, false));     //Front body - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 16, 48, 11, 39, true));     //Right body - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 30, 48, 15, 39, false));    //Back body - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 16, 48, 11, 39, false));    //Left body - distance 2
         
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 0, 88, 11, 32, false));
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 12, 88, 9, 32, true));    
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 22, 88, 11, 32, false));
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 12, 88, 9, 32, false));
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 0, 88, 11, 32, false));     //Front body - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 12, 88, 9, 32, true));      //Right body - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 22, 88, 11, 32, false));    //Back body - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 12, 88, 9, 32, false));     //Left body - distance 3
 
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 0, 121, 9, 27, false));
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 10, 121, 7, 27, true));    
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 18, 121, 9, 27, false));
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 10, 121, 7, 27, false));
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 0, 121, 9, 27, false));     //Front body - distance 4
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 10, 121, 7, 27, true));     //Right body - distance 4  
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 18, 121, 9, 27, false));    //Back body - distance 4
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 10, 121, 7, 27, false));    //Left body - distance 4
         
         BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_4);
         ImageArray.push(BODYPART);
@@ -704,41 +704,41 @@ function grabMonster(m) {
             DISTANCE_6 = [],
             BODYPART = [];
 
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, false, 24, 19));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, false, 7, 19));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, true, 24, 19));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, true, 7, 19));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 29, 34));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 29, 34));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 7, 34));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 7, 34));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, false, 24, 19));  //Left arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, false, 7, 19));  //Side right arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, true, 24, 19));   //Right arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, true, 7, 19));   //Side left arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 29, 34)); //Left attack arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 29, 34));  //Right attack arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 7, 34));  //Side right attack arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 7, 34));   //Side left attack arm - distance 1
 
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 71, 22, 5, 17, false, 18, 16));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 79, 25, 9, 17, false, 6, 16));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 71, 22, 5, 17, true, 18, 16));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 79, 25, 9, 17, true, 6, 16));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, false, 21, 29));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, true, 21, 29));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, false, 6, 29));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, true, 6, 29));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 71, 22, 5, 17, false, 18, 16)); //Left arm - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 79, 25, 9, 17, false, 6, 16));  //Side right arm - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 71, 22, 5, 17, true, 18, 16));  //Right arm - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 79, 25, 9, 17, true, 6, 16));   //Side left arm - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, false, 21, 29)); //Left attack arm - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, true, 21, 29));  //Right attack arm - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, false, 6, 29));  //Side right attack arm - distance 2
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 96, 25, 8, 12, true, 6, 29));   //Side left attack arm - distance 2
 
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 69, 49, 4, 13, false, 15, 14));
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 80, 49, 7, 13, false, 6, 14));
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 69, 49, 4, 13, true, 15, 14));
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 80, 49, 7, 13, true, 6, 14));
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, false, 18, 23));
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, true, 18, 23));
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, false, 6, 23));
-        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, true, 6, 23));
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 69, 49, 4, 13, false, 15, 14)); //Left arm - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 80, 49, 7, 13, false, 6, 14));  //Side right arm - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 69, 49, 4, 13, true, 15, 14));  //Right arm - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 80, 49, 7, 13, true, 6, 14));   //Side left arm - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, false, 18, 23)); //Left attack arm - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, true, 18, 23));  //Right attack arm - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, false, 6, 23));  //Side right attack arm - distance 3
+        DISTANCE_3.push(grabImageAt(spriteSheetIMG, 97, 49, 7, 11, true, 6, 23));   //Side left attack arm - distance 3
 
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 70, 68, 3, 12, false, 12, 11));
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 81, 68, 6, 12, false, 5, 11));
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 70, 68, 3, 12, true, 12, 11));
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 81, 68, 6, 12, true, 5, 11));
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, false, 15, 20));
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, true, 15, 20));
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, false, 5, 20));
-        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, true, 5, 20));
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 70, 68, 3, 12, false, 12, 11)); //Left arm - distance 4
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 81, 68, 6, 12, false, 5, 11));  //Side right arm - distance 4
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 70, 68, 3, 12, true, 12, 11));  //Right arm - distance 4
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 81, 68, 6, 12, true, 5, 11));   //Side left arm - distance 4
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, false, 15, 20));  //Left attack arm - distance 4
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, true, 15, 20));   //Right attack arm - distance 4
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, false, 5, 20));   //Side right attack arm - distance 4
+        DISTANCE_4.push(grabImageAt(spriteSheetIMG, 98, 68, 6, 9, true, 5, 20));    //Side left attack arm - distance 4
 
         BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_4);
         ImageArray.push(BODYPART);
@@ -751,15 +751,15 @@ function grabMonster(m) {
             DISTANCE_6 = [],
             BODYPART = [];
 
-        DISTANCE_5.push(grabImageAt(spriteSheetIMG, 0, 149, 13, 22, false));
-        DISTANCE_5.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, true));
-        DISTANCE_5.push(grabImageAt(spriteSheetIMG, 26, 149, 13, 22, false));
-        DISTANCE_5.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, false));
+        DISTANCE_5.push(grabImageAt(spriteSheetIMG, 0, 149, 13, 22, false));    //Front mini - distance 5
+        DISTANCE_5.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, true));     //Right mini - distance 5
+        DISTANCE_5.push(grabImageAt(spriteSheetIMG, 26, 149, 13, 22, false));   //Back mini - distance 5
+        DISTANCE_5.push(grabImageAt(spriteSheetIMG, 16, 149, 8, 22, false));    //Left mini - distance 5
 
-        DISTANCE_6.push(grabImageAt(spriteSheetIMG, 0, 172, 11, 17, false));
-        DISTANCE_6.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, true));
-        DISTANCE_6.push(grabImageAt(spriteSheetIMG, 22, 172, 11, 17, false));
-        DISTANCE_6.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, false));
+        DISTANCE_6.push(grabImageAt(spriteSheetIMG, 0, 172, 11, 17, false));    //Front mini - distance 6
+        DISTANCE_6.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, true));     //Right mini - distance 6
+        DISTANCE_6.push(grabImageAt(spriteSheetIMG, 22, 172, 11, 17, false));   //Back mini - distance 6
+        DISTANCE_6.push(grabImageAt(spriteSheetIMG, 14, 172, 6, 17, false));    //Left mini - distance 6
         
         BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3, DISTANCE_4, DISTANCE_5, DISTANCE_6);
         ImageArray.push(BODYPART);

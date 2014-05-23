@@ -4,7 +4,7 @@ var player = new Array();
 var tower = new Array();
 
 //Setup some global Varibles for needed
-var scale = 1;
+var scale = 3;
 var debug = true;
 var debugHigh = false;
 var debugWindow;
@@ -310,7 +310,9 @@ var CHA_BODY = new Array();
 var CHA_GENDER_MALE = 0,
     CHA_GENDER_FEMALE = 1;
 
-var MON_FORM_SUMMON = 101,
+var MON_FORM_VENDOR_1 = 21,
+    MON_FORM_VENDOR_2 = 22,
+    MON_FORM_SUMMON = 101,
     MON_FORM_BEHOLDER = 102,
     MON_FORM_ENTITY = 103,
     MON_FORM_CRAB = 104,
