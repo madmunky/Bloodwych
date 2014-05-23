@@ -464,7 +464,7 @@ function initMonsters(t) {
 
 	//TESTING!!! REMOVE AFTER
 	if(t.id === TOWER_MOD0) {
-                var testType = 101;
+                var testType = 103;
 		var max = monster[t.id].length;
 		monster[t.id][max] = new Monster(max, 0, 0, testType, t.id, 3, 12, 18, 3, CHAR_FRONT_LEFT, 0);
 		max++;
@@ -474,16 +474,14 @@ function initMonsters(t) {
 		max++;
 		monster[t.id][max] = new Monster(max, 9, 0, testType, t.id, 3, 13, 20, 0, CHAR_FRONT_RIGHT, 0);
 		max++;
-                monster[t.id][max] = new Monster(max, 12, 0, testType, t.id, 3, 12, 18, 3, CHAR_FRONT_LEFT, 0);
-		max++;
-		monster[t.id][max] = new Monster(max, 15, 0, testType, t.id, 3, 14, 18, 2, CHAR_BACK_RIGHT, 0);
-		max++;
-		monster[t.id][max] = new Monster(max, 18, 0, testType, t.id, 3, 13, 16, 1, CHAR_BACK_LEFT, 0);
-		max++;
-		monster[t.id][max] = new Monster(max, 21, 0, testType, t.id, 3, 13, 20, 0, CHAR_FRONT_RIGHT, 0);
-		max++;
-		//monster[t.id][max] = new Monster(max, 1, 0, 27, t.id, 3, 13, 23, 3, CHAR_BACK_RIGHT, -4);
-		//max++;
+//                monster[t.id][max] = new Monster(max, 12, 0, testType, t.id, 3, 12, 18, 3, CHAR_FRONT_LEFT, 0);
+//		max++;
+//		monster[t.id][max] = new Monster(max, 15, 0, testType, t.id, 3, 14, 18, 2, CHAR_BACK_RIGHT, 0);
+//		max++;
+//		monster[t.id][max] = new Monster(max, 18, 0, testType, t.id, 3, 13, 16, 1, CHAR_BACK_LEFT, 0);
+//		max++;
+//		monster[t.id][max] = new Monster(max, 21, 0, testType, t.id, 3, 13, 20, 0, CHAR_FRONT_RIGHT, 0);
+//		max++;
 	}
 
 	for(i = 0; i < 6; i++) {
