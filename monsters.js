@@ -402,7 +402,7 @@ Monster.prototype.isAgressive = function() {
 
 Monster.prototype.getDamage = function(dmg) {
 	this.hp -= dmg;
-	if(this.hp <= 0) {
+	if(this.hp < 0) {
 		this.die();
 	}
 }
@@ -410,7 +410,7 @@ Monster.prototype.getDamage = function(dmg) {
 Monster.prototype.die = function() {
 	this.dead = true;
 	this.attacking = false;
-	this.hp = 0;
+	this.hp = -1;
 	updateMonsterTeam(this.teamId);
 }
 

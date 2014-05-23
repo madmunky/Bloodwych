@@ -10,8 +10,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
     this.Portal = null;
     this.ScreenX = ScreenX;
     this.ScreenY = ScreenY;
-    this.Action = null;
-    this.Hand = null;
+    this.pocket = initPocketItem();
     this.lastX = 0;
     this.lastY = 0;
     this.lastFloor = 0;

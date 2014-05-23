@@ -68,7 +68,7 @@ function floorActionType(trig, p) {
 			for(ch = 0; ch < p.champion.length; ch++) {
 				var champ = champion[p.champion[ch]];
 				if(champ.monster.dead) {
-					champ.stat.hp = 1;
+					champ.stat.hp = 0;
 					champ.monster.dead = false;
 				}
 			}

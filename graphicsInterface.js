@@ -120,7 +120,7 @@ function grabUISprites(spriteSheetIMG) {
     ImagePortraits.push(grabImageAt(spriteSheetIMG, 431, 215, 31, 41, false)); //Moon Fairy
     ImageArray.push(ImagePortraits);
     ImagePortraits = [];
-    
+
     return ImageArray;
 
 }
@@ -131,15 +131,39 @@ function drawUI(p) {
             ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
             ctx.clearRect((p.ScreenX + 226) * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
             switch (p.uiLeftPanel.mode) {
-                case LEFT_PANEL_MODE_STATS:{leftUI(p);};break
-                case LEFT_PANEL_MODE_COMMAND:{commandUI(p);};break
+                case LEFT_PANEL_MODE_STATS:
+                    {
+                        leftUI(p);
+                    };
+                    break
+                case LEFT_PANEL_MODE_COMMAND:
+                    {
+                        commandUI(p);
+                    };
+                    break
             }
 
             switch (p.uiRightPanel.view) {
-                case UI_RIGHT_PANEL_MAIN:{rightUI(p);};break
-                case UI_RIGHT_PANEL_POCKETS:{drawPocketUI(p);};break
-                case UI_RIGHT_PANEL_SPELLBOOK:{spellBook(p)};break
-                case UI_RIGHT_PANEL_STATS:{drawStatsPage(p);};break
+                case UI_RIGHT_PANEL_MAIN:
+                    {
+                        rightUI(p);
+                    };
+                    break
+                case UI_RIGHT_PANEL_POCKETS:
+                    {
+                        drawPocketUI(p);
+                    };
+                    break
+                case UI_RIGHT_PANEL_SPELLBOOK:
+                    {
+                        spellBook(p)
+                    };
+                    break
+                case UI_RIGHT_PANEL_STATS:
+                    {
+                        drawStatsPage(p);
+                    };
+                    break
             }
 
             myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
@@ -148,7 +172,7 @@ function drawUI(p) {
 }
 
 function spellBook(p) {
-    
+
     ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 226 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].height * scale);
@@ -156,7 +180,7 @@ function spellBook(p) {
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-    
+
     writeFontImage("SP.PTS", p.ScreenX + 226, (p.ScreenY + 78), COLOUR[COLOUR_PINK]);
     writeFontImage("0" + champion[p.champion[0]].stat.sp + "/0" + champion[p.champion[0]].stat.spMax, p.ScreenX + 280, (p.ScreenY + 78), COLOUR[COLOUR_GREEN]);
 
@@ -218,12 +242,11 @@ function leftUIStats(p) {
         var hp = Math.floor(35 * champ.stat.hp / champ.stat.hpMax);
         var vit = Math.floor(35 * champ.stat.vit / champ.stat.vitMax);
         var sp = Math.floor(35 * champ.stat.sp / champ.stat.spMax);
-        if (p === player[0]){
+        if (p === player[0]) {
             rgb = getClassColour(CLASS_COLOUR_MOON);
-        }
-        else{
+        } else {
             rgb = getClassColour(CLASS_COLOUR_DRAG);
-        }        
+        }
         ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
         ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 15) * scale, hp * scale, 5 * scale);
         ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 22) * scale, vit * scale, 5 * scale);
@@ -231,12 +254,12 @@ function leftUIStats(p) {
     }
 }
 
-function getClassColour(c,palette) {
-    
-    if (typeof palette === 'undefined'){
+function getClassColour(c, palette) {
+
+    if (typeof palette === 'undefined') {
         palette = false;
     }
-    
+
     var red = 255,
         grn = 255,
         blu = 255;
@@ -264,8 +287,8 @@ function getClassColour(c,palette) {
         default:
             break;
     }
-    if (palette){
-        return new Array(red,grn,blu);        
+    if (palette) {
+        return new Array(red, grn, blu);
     }
     return {
         r: red,
@@ -353,43 +376,43 @@ function drawPocketUI(p) {
     var i = 0;
     for (y = 0; y < 2; y++) {
         for (x = 0; x < 6; x++) {
-            var pocketImg = champion[p.champion[p.uiRightPanel.activePocket]].pocket[i];
-            if (champion[p.champion[p.uiRightPanel.activePocket]].pocket[i] === 0) {
-                pocketImg = UI_GFX_POCKET_EMPTY;
+            var pocket = champion[p.champion[p.uiRightPanel.activePocket]].pocket[i];
+            var pocketId = pocket.id;
+            if (pocketId === 0) {
+                pocketId = UI_GFX_POCKET_EMPTY;
                 if (y === 0) {
                     switch (x) {
                         case 0:
-                            {
-                                pocketImg = UI_GFX_POCKET_EMPTY_LEFT_HAND;
-                            };
+                            pocketId = UI_GFX_POCKET_EMPTY_LEFT_HAND;
                             break;
                         case 1:
-                            {
-                                pocketImg = UI_GFX_POCKET_EMPTY_RIGHT_HAND;
-                            };
+                            pocketId = UI_GFX_POCKET_EMPTY_RIGHT_HAND;
                             break;
                         case 2:
-                            {
-                                pocketImg = UI_GFX_POCKET_EMPTY_AMOUR;
-                            };
+                            pocketId = UI_GFX_POCKET_EMPTY_AMOUR;
                             break;
                         case 3:
-                            {
-                                pocketImg = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
-                            };
+                            pocketId = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
+                            break;
+                        case
+                        default:
                             break;
                     }
                 }
             } else {
-                pocketImg = itemID(champion[p.champion[p.uiRightPanel.activePocket]].pocket[i]);
+                pocketId = itemID(pocketId);
             } //WRITE SOMETHING HERE TO RETURN THE CORRECT OBJECT VALUE
-            ctx.drawImage(gfxUI[pocketImg], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketImg].width * scale, gfxUI[pocketImg].height * scale);
-            if (pocketImg === UI_GFX_POCKET_COIN){
-               writeFontImage(champion[p.champion[p.uiRightPanel.activePocket]].pocket[POCKET_AMOUNT_COINS].toString(), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);     
+            ctx.drawImage(gfxUI[pocketId], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+            if (pocketId === UI_GFX_POCKET_COIN || pocketId === UI_GFX_POCKET_COMMON_KEY) {
+                var qty = pocket.quantity;
+                if (qty < 10) {
+                    qty = "0" + qty;
+                }
+                writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
             }
-            if (pocketImg === UI_GFX_POCKET_COMMON_KEY){
-               writeFontImage("0"+champion[p.champion[p.uiRightPanel.activePocket]].pocket[POCKET_AMOUNT_KEYS].toString(), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);     
-            }
+            //if (pocketId === UI_GFX_POCKET_COMMON_KEY){
+            //   writeFontImage("0"+champion[p.champion[p.uiRightPanel.activePocket]].pocket[POCKET_AMOUNT_KEYS].toString(), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);     
+            //}
             i++;
         }
     }
@@ -422,7 +445,7 @@ function drawPocketUI(p) {
                     break;
                 case 3:
                     {
-                        g = UI_GFX_POCKET_DIMOND
+                        g = UI_GFX_POCKET_DIAMOND
                     };
                     break;
             }
@@ -751,7 +774,7 @@ function itemID(id) {
         case 63:
             {
                 return;
-            } //Power Stadd
+            } //Power Staff
         case 64:
             {
                 return;
@@ -936,8 +959,9 @@ function itemID(id) {
             {
                 return;
             } //Book of Skulls
-            default : {
-                    return UI_GFX_POCKET_EMPTY;
+        default:
+            {
+                return UI_GFX_POCKET_EMPTY;
             }
     }
 

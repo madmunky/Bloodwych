@@ -48,14 +48,15 @@ Champion.prototype.doDamageTo = function(def, dmg, exh) {
     }
 }
 
-//Damage is 'safe' when champ doesn't get killed by it (e.g. by lack of vitality)
+//Damage is 'safe' when champ doesn't get killed by it (e.g. by low vitality)
 Champion.prototype.getDamage = function(dmg, safe) {
     var self = this;
     this.stat.hp -= dmg;
-    if (this.stat.hp <= 0) {
-        this.stat.hp = 0;
-    }
-    if (typeof safe === "undefined" || !safe) {
+    if (typeof safe !== "undefined" && safe) {
+	    if (this.stat.hp <= 0) {
+	        this.stat.hp = 0;
+	    }
+    } else {
         if (this.recruitment.recruited) {
             (function(d) {
                 setTimeout(function() {
@@ -65,10 +66,14 @@ Champion.prototype.getDamage = function(dmg, safe) {
             player[self.recruitment.playerId].alertDamagedPlayer();
             redrawUI(2);
         }
-        if (this.stat.hp <= 0) {
+        if (this.stat.hp < 0) {
             this.monster.die();
         }
     }
+}
+
+Champion.prototype.getWeaponPower = function() {
+	return this.pocket[0].getWeaponPower() + this.pocket[1].getWeaponPower();
 }
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
@@ -121,7 +126,7 @@ Champion.prototype.toString = function() {
         sb = sb + ", learnt:" + this.spellBook[i].learnt;
         sb = sb + "], ";
     }
-    return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
+    return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', pocket:[' + this.pocket + '], stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
 }
 
 function getChampionName(id, first) {
@@ -210,10 +215,18 @@ function initChampions() {
     champion.length = 0;
     monster[TOWER_CHAMPIONS] = new Array();
     for (ch = 0; ch < CHAMPION_MAX; ch++) {
+    	var slot = new Array();
         var pk = championPocketData[ch].match(/.{1,2}/g);
         for (i = 0; i < 16; i++) {
             var a = hex2dec(pk[i].substr(0, 2));
             pk[i] = parseInt(a);
+        }
+        for (i = 0; i < 12; i++) {
+        	if(pk[i] >= 1 && pk[i] < 5) {
+        		slot[i] = initPocketItem(pk[i], pk[pk[i] + 11]);
+        	} else {
+	        	slot[i] = initPocketItem(pk[i]);
+	        }
         }
         var md = championData[ch];
         var level = hex2dec(md.substr(0, 2));
@@ -250,14 +263,7 @@ function initChampions() {
         spellBin = spellBin + hex2bin(md.substr(28, 2));
         spellBin = spellBin + hex2bin(md.substr(30, 2));
         monster[TOWER_CHAMPIONS][ch] = new Monster(ch + monster[TOWER_MOD0].length, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
-        champion[ch] = new Champion(ch, getChampionName(ch, true), getChampionName(ch, false), getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch], pk);
-        for (i = 0; i < 12; i++) {
-        	if(pk[i] >= 1 && pk[i] < 5) {
-        		initPocketItem(pk[i], pk[pk[i] + 11], champion[ch], i);
-        	} else {
-	        	initPocketItem(pk[i], 1, champion[ch], i);
-	        }
-        }
+        champion[ch] = new Champion(ch, getChampionName(ch, true), getChampionName(ch, false), getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch], slot);
         PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
     }
 }

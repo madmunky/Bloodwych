@@ -29,7 +29,7 @@ function calculateAttack(att, def) {
         	fromDir = from.monster.d;
 			attack += Math.floor(from.stat.str / 8);
 			attack += Math.floor(from.stat.agi / 32);
-			attack += 3; //weapon items
+			attack += from.getWeaponPower();
 			exhaustion = Math.floor(attack / 4);
 			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
 		} else {
@@ -76,7 +76,7 @@ function calculateAttack(att, def) {
 						if(!to.attacking) {
 							defense += 10;
 						}
-						defense += 10 + to.level * 2;
+						defense += 5 + to.level * 2;
 					}
 					break;
 				}
