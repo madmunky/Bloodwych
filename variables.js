@@ -695,6 +695,9 @@ var KEYPAD_8 = 104,
     KEY_MINUS = 189,
     KEY_PLUS = 187;
 
+//items
+var item = new Array();
+
 var POCKET_LEFT_HAND = 0,
         POCKET_RIGHT_HAND = 1,
         POCKET_TORSO = 2,
@@ -711,4 +714,4 @@ var POCKET_LEFT_HAND = 0,
         POCKET_AMOUNT_KEYS = 13,
         POCKET_AMOUNT_COINS = 12,
         POCKET_AMOUNT_ARROWS = 11,
-        POCKET_AMOUNT_UNKNOWN = 14;
+        POCKET_AMOUNT_ELF_ARROWS = 14;

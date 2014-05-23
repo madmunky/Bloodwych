@@ -491,7 +491,7 @@ function initMonsters(t) {
 			var k = 431;
                         var b = monsterPaletteMetaData[i][j];
 			monsterBigPalette[i][j] = [COLOUR[monsterPaletteData[k+b][0]], COLOUR[monsterPaletteData[k+b][1]], COLOUR[monsterPaletteData[k+b][2]], COLOUR[monsterPaletteData[k+b][3]]];                        
-                        PrintLog("Loading Big Monster Palette: " + i.toString() + " - " + j.toString());
+                        //PrintLog("Loading Big Monster Palette: " + i.toString() + " - " + j.toString());
 		}
                 
 	}
