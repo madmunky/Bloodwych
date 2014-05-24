@@ -393,8 +393,7 @@ function drawPocketUI(p) {
                             break;
                         case 3:
                             pocketId = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
-                            break;
-                        case
+                            break;                        
                         default:
                             break;
                     }

@@ -83,7 +83,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
             y = 0;
         switch (this.recruitment.position) {
             case 0:
-                x = 106;
+                x = 96;
                 y = 88;
                 break;
             case 1:
@@ -91,7 +91,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
                 y = 0;
                 break;
             case 2:
-                x = 106;
+                x = 96;
                 y = 0;
                 break;
             case 3:
@@ -103,12 +103,12 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
         writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
         if (typeof def === "undefined" || def === false) {
             if (pwr > 0) {
-                writeFontImage('HITS FOR ' + pwr, (p.ScreenX + x + 8), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+                writeFontImage('HITS FOR ' + pwr, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
             } else {
-                writeFontImage('MISSES', (p.ScreenX + x + 8), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+                writeFontImage('MISSES', (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
             }
         } else {
-            writeFontImage('DEFENDS', (p.ScreenX + x + 8), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+            writeFontImage('DEFENDS', (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
         }
         (function(p, x, y) {
             setTimeout(function() {
