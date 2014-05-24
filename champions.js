@@ -57,6 +57,10 @@ Champion.prototype.getDamage = function(dmg, safe) {
 	        this.stat.hp = 0;
 	    }
     } else {
+        if (this.stat.hp < 0) {
+            this.stat.hp = -1;
+            this.monster.die();
+        }
         if (this.recruitment.recruited) {
             (function(d) {
                 setTimeout(function() {
@@ -64,16 +68,18 @@ Champion.prototype.getDamage = function(dmg, safe) {
                 }, self.recruitment.position * 400);
             })(dmg);
             player[self.recruitment.playerId].alertDamagedPlayer();
+            player[self.recruitment.playerId].checkDead();
             redrawUI(2);
-        }
-        if (this.stat.hp < 0) {
-            this.monster.die();
         }
     }
 }
 
 Champion.prototype.getWeaponPower = function() {
 	return this.pocket[0].getWeaponPower() + this.pocket[1].getWeaponPower();
+}
+
+Champion.prototype.getArmourClass = function() {
+	return 10 - this.stat.ac - this.pocket[2].getArmourClass() - this.pocket[3].getArmourClass();
 }
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
@@ -229,18 +235,18 @@ function initChampions() {
 	        }
         }
         var md = championData[ch];
-        var level = hex2dec(md.substr(0, 2));
-        var str = hex2dec(md.substr(2, 2));
-        var agi = hex2dec(md.substr(4, 2));
-        var int = hex2dec(md.substr(6, 2));
-        var cha = hex2dec(md.substr(8, 2));
-        var hp = hex2dec(md.substr(10, 2));
-        var hpMax = hex2dec(md.substr(12, 2));
-        var vit = hex2dec(md.substr(14, 2));
-        var vitMax = hex2dec(md.substr(16, 2));
-        var sp = hex2dec(md.substr(18, 2));
-        var spMax = hex2dec(md.substr(20, 2));
-        var ac = hex2dec(md.substr(22, 2));
+        var level = parseInt(hex2dec(md.substr(0, 2)));
+        var str = parseInt(hex2dec(md.substr(2, 2)));
+        var agi = parseInt(hex2dec(md.substr(4, 2)));
+        var int = parseInt(hex2dec(md.substr(6, 2)));
+        var cha = parseInt(hex2dec(md.substr(8, 2)));
+        var hp = parseInt(hex2dec(md.substr(10, 2)));
+        var hpMax = parseInt(hex2dec(md.substr(12, 2)));
+        var vit = parseInt(hex2dec(md.substr(14, 2)));
+        var vitMax = parseInt(hex2dec(md.substr(16, 2)));
+        var sp = parseInt(hex2dec(md.substr(18, 2)));
+        var spMax = parseInt(hex2dec(md.substr(20, 2)));
+        var ac = parseInt(hex2dec(md.substr(22, 2)));
         var stat = {
             str: str,
             agi: agi,

@@ -260,38 +260,38 @@ function getCharacterSprite(length, graphicsFolder, graphic, spriteWidth, sprite
 
 
 
-                    MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 2, spriteHeight - 4, false));
-                    POSITION = POSITION + spriteHeight - 4;
+                    MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 2, spriteHeight - 5, false));
+                    POSITION = POSITION + spriteHeight - 5;
 
-                    MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 8, spriteHeight - 4, false));
-                    MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 8, spriteHeight - 4, true));
-                    POSITION = POSITION + spriteHeight - 4;
+                    MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 8, spriteHeight - 5, false));
+                    MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 8, spriteHeight - 5, true));
+                    POSITION = POSITION + spriteHeight - 5;
 
-                    MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 2, spriteHeight - 4, false));
-                    POSITION = POSITION + spriteHeight - 4;
-
-
-
-                    FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 8, false));
-                    POSITION = POSITION + spriteHeight - 8;
-
-                    FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 10, spriteHeight - 8, false));
-                    FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 10, spriteHeight - 8, true));
-                    POSITION = POSITION + spriteHeight - 8;
-
-                    FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 8, false));
-                    POSITION = POSITION + spriteHeight - 8;
+                    MID.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 2, spriteHeight - 5, false));
+                    POSITION = POSITION + spriteHeight - 5;
 
 
 
-                    DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 11, false));
-                    POSITION = POSITION + spriteHeight - 11;
+                    FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 9, false));
+                    POSITION = POSITION + spriteHeight - 9;
 
-                    DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 12, spriteHeight - 11, false));
-                    DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 12, spriteHeight - 11, true));
-                    POSITION = POSITION + spriteHeight - 11;
+                    FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 10, spriteHeight - 9, false));
+                    FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 10, spriteHeight - 9, true));
+                    POSITION = POSITION + spriteHeight - 9;
 
-                    DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], (x * colSize), POSITION, spriteWidth - 6, spriteHeight - 11, false));
+                    FAR.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 9, false));
+                    POSITION = POSITION + spriteHeight - 9;
+
+
+
+                    DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 6, spriteHeight - 12, false));
+                    POSITION = POSITION + spriteHeight - 12;
+
+                    DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 12, spriteHeight - 12, false));
+                    DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], x * colSize, POSITION, spriteWidth - 12, spriteHeight - 12, true));
+                    POSITION = POSITION + spriteHeight - 12;
+
+                    DISTANT.push(grabImageAt(gfx[graphicsFolder][graphic], (x * colSize), POSITION, spriteWidth - 6, spriteHeight - 12, false));
 
                     break;
                 default:
@@ -673,10 +673,10 @@ function grabMonster(m) {
             DISTANCE_5 = [],
             DISTANCE_6 = [];
 
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 0, 19, 47, false));      //Front body - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 21, 0, 14, 47, true));      //Right body - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 39, 0, 19, 47, false));     //Back body - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 21, 0, 14, 47, false));     //Left body - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 0, 19, 48, false));      //Front body - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 21, 0, 14, 48, true));      //Right body - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 39, 0, 19, 48, false));     //Back body - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 21, 0, 14, 48, false));     //Left body - distance 1
 
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 0, 48, 15, 39, false));     //Front body - distance 2
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 16, 48, 11, 39, true));     //Right body - distance 2
@@ -704,14 +704,14 @@ function grabMonster(m) {
             DISTANCE_6 = [],
             BODYPART = [];
 
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, false, 24, 19));  //Left arm - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, false, 7, 19));  //Side right arm - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, true, 24, 19));   //Right arm - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, true, 7, 19));   //Side left arm - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 29, 34)); //Left attack arm - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 29, 34));  //Right attack arm - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 7, 34));  //Side right attack arm - distance 1
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 7, 34));   //Side left attack arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, false, 24, 20));  //Left arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, false, 7, 20));  //Side right arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 69, 0, 7, 21, true, 24, 20));   //Right arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 79, 0, 11, 21, true, 7, 20));   //Side left arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 29, 35)); //Left attack arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 29, 35));  //Right attack arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, false, 7, 35));  //Side right attack arm - distance 1
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 92, 0, 12, 17, true, 7, 35));   //Side left attack arm - distance 1
 
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 71, 22, 5, 17, false, 18, 16)); //Left arm - distance 2
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 79, 25, 9, 17, false, 6, 16));  //Side right arm - distance 2
@@ -963,10 +963,10 @@ function grabMonster(m) {
             DISTANCE_3 = [],
             DISTANCE_4 = [];
 
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 0, 56, 29, false));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 57, 0, 56, 29, false));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 114, 0, 56, 29, false));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 57, 0, 56, 29, true));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 0, 56, 30, false));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 57, 0, 56, 30, false));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 114, 0, 56, 30, false));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 57, 0, 56, 30, true));
 
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 8, 31, 38, 19, false));
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 65, 31, 41, 19, false));
@@ -1026,10 +1026,10 @@ function grabMonster(m) {
             DISTANCE_4 = [],
             DISTANCE_5 = [];
 
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 2, 63, 50, false,0,4));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 64, 1, 63, 55, true,0,4));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 1, 74, 55, false,0,4));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 64, 1, 63, 55, false,0,4));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 2, 63, 50, false,0,5));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 64, 1, 63, 55, true,0,5));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 1, 74, 55, false,0,5));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 64, 1, 63, 55, false,0,5));
 
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 9, 58, 45, 37, false));
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 73, 58, 45, 39, true));

@@ -197,36 +197,38 @@ function leftUI(p) {
 
     ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 
-    for (x = 0; x < 4; x++) {
-        if (x === 0) {
-            if (p.uiLeftPanel.champs[x] === true) {
-                ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (x + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
-                var t = drawCharacter(monster[6][p.champion[x]], 0, 0, p, {
+    var ch = p.getOrderedChampionIds();
+    for (c = 0; c < 4; c++) {
+    	var c1 = ch[c];
+    	var champ = p.champion[c1];
+        if (c === 0) {
+            if (p.uiLeftPanel.champs[c] === true) {
+                ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
+                var t = drawCharacter(monster[6][champ], 0, 0, p, {
                     x: 0,
-                    y: 0
+                    y: -1
                 }, true, false)
-                ctx.drawImage(t, (x - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, t.width * scale, t.height * scale);
-                ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (x + 43 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
+                ctx.drawImage(t, (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, t.width * scale, t.height * scale);
+                ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 43 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
             } else {
                 ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
-                ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[0]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[0]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[0]].height * scale);
+                ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][champ], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][champ].width * scale, gfxUI[UI_GFX_PORTRAITS][champ].height * scale);
             }
         } else {
-            if (p.uiLeftPanel.champs[x] === true) {
-                ctx.drawImage(gfxUI[UI_GFX_SHIELD], ((x - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD].width * scale, gfxUI[UI_GFX_SHIELD].height * scale);
-                var t = drawCharacter(monster[6][p.champion[x]], 0, 1, p, {
+        	var t;
+        	if (champion[champ].monster.dead){
+                t = createShield(champ, champion[champ].prof, 4);
+                ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
+            } else if (p.uiLeftPanel.champs[c] === true) {
+                ctx.drawImage(gfxUI[UI_GFX_SHIELD], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD].width * scale, gfxUI[UI_GFX_SHIELD].height * scale);
+                t = drawCharacter(monster[6][champ], 0, 1, p, {
                     x: 0,
                     y: 0
                 }, true, false);
-                ctx.drawImage(t, ((x - 1) * 32 * scale) + (p.ScreenX * scale) - 49 * scale, (p.ScreenY + 45) * scale - 37 * scale, t.width * scale, t.height * scale);
+                ctx.drawImage(t, ((c - 1) * 32 * scale) + (p.ScreenX * scale) - 49 * scale, (p.ScreenY + 45) * scale - 37 * scale, t.width * scale, t.height * scale);
             } else {
-                var t;
-                if (champion[p.champion[x]].monster.dead){
-                    t = createShield(p.champion[x], champion[p.champion[x]].prof, 4);
-                }else{
-                    t = createShield(p.champion[x], champion[p.champion[x]].prof, champion[p.champion[x]].colour);
-                }                
-                ctx.drawImage(t, (((x - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
+                t = createShield(champ, champion[champ].prof, champion[champ].colour);              
+                ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
             }
         }
     }
@@ -234,19 +236,33 @@ function leftUI(p) {
 
 function leftUIStats(p) {
     if (p.uiLeftPanel.champs[0] === true) {
+  		var ch = p.getOrderedChampionIds();
         for (c = 0; c < p.champion.length; c++) {
-            var champ = champion[p.champion[c]];
+        	var c1 = ch[c];
+            var champ = champion[p.champion[c1]];
             var rgb = getClassColour(champ.colour);
             var hp = Math.floor(21 * champ.stat.hp / champ.stat.hpMax);
+            if(hp < 0) {
+        		hp = 0;
+        	}
             ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
             ctx.fillRect((p.ScreenX + 55 + c * 9) * scale, (p.ScreenY + 35 - hp) * scale, 7 * scale, hp * scale);
         }
     } else {
-        var champ = champion[p.champion[0]];
+        var champ = champion[p.champion[p.championLeader]];
         var rgb;
         var hp = Math.floor(35 * champ.stat.hp / champ.stat.hpMax);
         var vit = Math.floor(35 * champ.stat.vit / champ.stat.vitMax);
         var sp = Math.floor(35 * champ.stat.sp / champ.stat.spMax);
+        if(hp < 0) {
+        	hp = 0;
+        }
+        if(vit < 0) {
+        	vit = 0;
+        }
+        if(sp < 0) {
+        	sp = 0;
+        }
         if (p === player[0]) {
             rgb = getClassColour(CLASS_COLOUR_MOON);
         } else {
@@ -305,7 +321,7 @@ function getClassColour(c, palette) {
 function commandUI(p) {
 
     ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
-    ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[0]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[0]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[0]].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[championLeader]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[championLeader]].height * scale);
 
     ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
@@ -356,7 +372,7 @@ function rightUI(p) {
         ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
     }
 
-    writeFontImage(champion[p.champion[p.uiRightPanel.activePocket]].firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(champion[p.champion[p.championLeader]].firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].width * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SCROLL].width * scale, gfxUI[UI_GFX_ICON_SCROLL].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_POCKETBOX], p.ScreenX + 290 * scale, (p.ScreenY + 21) * scale, gfxUI[UI_GFX_POCKETBOX].width * scale, gfxUI[UI_GFX_POCKETBOX].height * scale);
@@ -381,12 +397,14 @@ function drawPocketUI(p) {
         ctx.drawImage(gfxUI[UI_GFX_NAME_RED], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_RED].width * scale, gfxUI[UI_GFX_NAME_RED].height * scale);
     }
 
-    writeFontImage(champion[p.champion[p.uiRightPanel.activePocket]].firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
+    var ch = p.getOrderedChampionIds();
+    var cp = ch[p.uiRightPanel.activePocket]
+    writeFontImage(champion[p.champion[cp]].firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
 
     var i = 0;
     for (y = 0; y < 2; y++) {
         for (x = 0; x < 6; x++) {
-            var pocket = champion[p.champion[p.uiRightPanel.activePocket]].pocket[i];
+            var pocket = champion[p.champion[cp]].pocket[i];
             var pocketId = pocket.id;
             if (pocketId === 0) {
                 pocketId = UI_GFX_POCKET_EMPTY;
@@ -434,35 +452,35 @@ function drawPocketUI(p) {
     }
 
     ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 226) * scale, (p.ScreenY + 54) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
-    writeFontImage("Armour:+0", p.ScreenX / scale + 233, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+    var ac = "" + champion[p.champion[cp]].getArmourClass();
+    if(ac >= 0) {
+    	ac = "+" + ac;
+    } else {
+    	ac = "-" + ac;
+    }
+    writeFontImage("Armour:", p.ScreenX / scale + 233, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), COLOUR[COLOUR_WHITE]);
 
+    var ch = p.getOrderedChampionIds();
     for (x = 0; x < 6; x++) {
-
+    	var x1 = ch[x];
         var g;
 
         if (x < 4) {
-            g = champion[p.champion[x]].prof;
+            g = champion[p.champion[x1]].prof;
 
             switch (g) {
                 case 0:
-                    {
-                        g = UI_GFX_POCKET_CLUB
-                    };
+                    g = UI_GFX_POCKET_CLUB;
                     break;
                 case 1:
-                    {
-                        g = UI_GFX_POCKET_HEART
-                    };
+                    g = UI_GFX_POCKET_HEART;
                     break;
                 case 2:
-                    {
-                        g = UI_GFX_POCKET_SPADE
-                    };
+                    g = UI_GFX_POCKET_SPADE;
                     break;
                 case 3:
-                    {
-                        g = UI_GFX_POCKET_DIAMOND
-                    };
+                    g = UI_GFX_POCKET_DIAMOND;
                     break;
             }
         }
@@ -471,22 +489,22 @@ function drawPocketUI(p) {
 
             case 0:
                 {
-                    ctx.drawImage(gfxUI[g][champion[p.champion[x]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                 };
                 break
             case 1:
                 {
-                    ctx.drawImage(gfxUI[g][champion[p.champion[x]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                 };
                 break
             case 2:
                 {
-                    ctx.drawImage(gfxUI[g][champion[p.champion[x]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                 };
                 break
             case 3:
                 {
-                    ctx.drawImage(gfxUI[g][champion[p.champion[x]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                 };
                 break
             case 4:
@@ -516,29 +534,29 @@ function drawStatsPage(p) {
     ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
     writeFontImage("LEVEL", p.ScreenX + 242, (p.ScreenY + 17), COLOUR[COLOUR_YELLOW]);
     writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 17), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage("0" + champion[p.champion[0]].level.toString(), p.ScreenX + 297, (p.ScreenY + 17), COLOUR[COLOUR_WHITE]);
+    writeFontImage("0" + champion[p.champion[p.championLeader]].level.toString(), p.ScreenX + 297, (p.ScreenY + 17), COLOUR[COLOUR_WHITE]);
 
     writeFontImage("ST", p.ScreenX + 242, (p.ScreenY + 25), COLOUR[COLOUR_BLUE_DARK]);
-    writeFontImage(champion[p.champion[0]].stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 25), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 25), COLOUR[COLOUR_YELLOW]);
     writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 25), COLOUR[COLOUR_GREY_DARKEST]);
     writeFontImage("AG", p.ScreenX + 281, (p.ScreenY + 25), COLOUR[COLOUR_BLUE_DARK]);
-    writeFontImage(champion[p.champion[0]].stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 25), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 25), COLOUR[COLOUR_YELLOW]);
 
     writeFontImage("IN", p.ScreenX + 242, (p.ScreenY + 33), COLOUR[COLOUR_BLUE_DARK]);
-    writeFontImage(champion[p.champion[0]].stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 33), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 33), COLOUR[COLOUR_YELLOW]);
     writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 33), COLOUR[COLOUR_GREY_DARKEST]);
     writeFontImage("CH", (p.ScreenX + 281), (p.ScreenY + 33), COLOUR[COLOUR_BLUE_DARK]);
-    writeFontImage(champion[p.champion[0]].stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 33), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 33), COLOUR[COLOUR_YELLOW]);
 
     writeFontImage("HP", p.ScreenX + 242, (p.ScreenY + 41), COLOUR[COLOUR_BLACK]);
-    writeFontImage(champion[p.champion[0]].stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 41), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 41), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
     writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 41), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage(champion[p.champion[0]].stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 41), COLOUR[COLOUR_GREEN]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 41), COLOUR[COLOUR_GREEN]);
 
     writeFontImage("VI", p.ScreenX + 242, (p.ScreenY + 49), COLOUR[COLOUR_BLACK]);
-    writeFontImage(champion[p.champion[0]].stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
     writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage(champion[p.champion[0]].stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 49), COLOUR[COLOUR_GREEN]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 49), COLOUR[COLOUR_GREEN]);
 }
 
 function itemID(id) {

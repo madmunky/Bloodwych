@@ -1,6 +1,7 @@
 function Player(id, PortX, PortY, ScreenX, ScreenY) {
     this.id = id;
     this.champion = new Array();
+    this.championLeader = 0;
     this.x = 0; //posX;
     this.y = 0; //posY;
     this.floor = 0; //floor;
@@ -203,6 +204,7 @@ Player.prototype.move = function(d) {
         this.doEvent(false);
     }
 }
+
 Player.prototype.tryAttack = function() {
     xy = getOffsetByRotation(this.d);
     var hexNext = this.getBinaryView(15, 0, 16);
@@ -243,7 +245,7 @@ Player.prototype.attack = function(attack, target) {
 
 Player.prototype.stopChampionAttack = function() {
     for (c = 0; c < this.champion.length; c++) {
-        var m = champion[this.champion[c]].monster;
+        var m = this.getChampion(c).monster;
         m.attacking = false;
     }
 }
@@ -285,6 +287,7 @@ Player.prototype.doEvent = function(mr) {
             break;
     }
     this.updateChampions();
+    this.resetChampUI();
     //this.updateView();
 };
 
@@ -318,7 +321,7 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 
 Player.prototype.updateChampions = function() {
     for (c = 0; c < this.champion.length; c++) {
-        var m = champion[this.champion[c]].monster;
+        var m = this.getChampion(c).monster;
         m.tower = towerThis;
         m.floor = this.floor;
         m.x = this.x;
@@ -330,6 +333,20 @@ Player.prototype.updateChampions = function() {
             m.square = (this.d + c) % 4;
         }
     }
+}
+
+//check if all champions are dead
+//also assign a new champion as leader. used when the leader dies
+Player.prototype.checkDead = function() {
+	var leader = this.getChampion(this.championLeader).monster;
+	if(leader.dead) {
+		for (c = 0; c < this.champion.length; c++) {
+			var m = this.getChampion(c).monster;
+			if(!m.dead) {
+				this.championLeader = c;
+			}
+		}
+	}
 }
 
 Player.prototype.recruitChampion = function(id) {
@@ -345,19 +362,30 @@ Player.prototype.recruitChampion = function(id) {
     }
     return false;
 }
-
 //loc = location number (0-3)
 Player.prototype.getChampion = function(loc) {
-    if (this.champion[loc] > -1) {
+    if (typeof this.champion[loc] !== "undefined") {
         return champion[this.champion[loc]];
     }
     return null;
 }
 
+//gets champions. champion 0 is the leader
+Player.prototype.getOrderedChampionIds = function(loc) {
+	var ch = new Array();
+	ch.push(this.championLeader);
+	for (c = 0; c < this.champion.length; c++) {
+		if(c !== this.championLeader) {
+	        ch.push(c);
+	    }
+    }
+    return ch;
+}
+
 Player.prototype.restoreChampionStats = function() {
     var alertPlayer = false;
     for (c = 0; c < this.champion.length; c++) {
-        var champ = champion[this.champion[c]];
+        var champ = this.getChampion(c);
         if (!champ.monster.dead) {
             if (champ.stat.vitMax * 0.15 > champ.stat.vit) {
                 dmg = (champ.stat.vitMax * 0.15) - champ.stat.vit;
@@ -391,12 +419,21 @@ Player.prototype.restoreChampionStats = function() {
 Player.prototype.alertDamagedPlayer = function() {
     this.uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;
     for (ch = 0; ch < this.champion.length; ch++) {
-        if (champion[this.champion[ch]].monster.dead && ch > 0){
+        if (this.getChampion(ch).monster.dead && ch > 0){
             toggleChampUI(ch, this, false);
-        }else{
+        } else {
             toggleChampUI(ch, this, true);
         }
         
+    }
+}
+
+Player.prototype.resetChampUI = function() {
+    for (ch = 0; ch < this.champion.length; ch++) {
+    	if (this.uiLeftPanel.champs[ch] === true) {
+        	toggleChampUI(ch, this, false);
+        	redrawUI(2);
+        }
     }
 }
 

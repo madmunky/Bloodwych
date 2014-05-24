@@ -52,8 +52,7 @@ function calculateAttack(att, def) {
 					if(!to.attacking) {
 						defense += 10 + Math.floor(to.stat.agi / 4);
 					}
-					defense -= to.stat.ac;
-					defense -= 0; //armour items
+					defense -= to.getArmourClass();
 					break;
 				}
 			}
@@ -70,8 +69,7 @@ function calculateAttack(att, def) {
 					if(to.champId > -1) { //champion
 						to = champion[to.champId];
 						defense += 10 + Math.floor(to.stat.agi / 4);
-						defense -= to.stat.ac;
-						defense -= 0; //armour items
+						defense -= to.getArmourClass();
 					} else { //monster
 						if(!to.attacking) {
 							defense += 10;

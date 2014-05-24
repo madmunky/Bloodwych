@@ -5,12 +5,12 @@
 JORG
 -----
 
-* Combat
-* Player attack
+* FIXED! Fix negative champion stats
+* FIXED! Fix big monster bottom offset
+* Fix Big monster 'edge of screen'
 
 CHRIS
 ------
 
-* All monsters ripping
-* Fix popup blocker issue
-* FIX REPO FROM HANGING
+* Fix return image for Pockets (recoloured correctly)
+* Add Dungeon gfx to Item Object

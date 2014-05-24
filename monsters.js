@@ -388,7 +388,7 @@ Monster.prototype.getChampion = function() {
 
 Monster.prototype.isRecruited = function() {
 	if(this.champId > -1) {
-		return champion[this.champId].recruitment.recruited;
+		return this.getChampion().recruitment.recruited;
 	}
 	return false;
 }
@@ -466,13 +466,13 @@ function initMonsters(t) {
 	if(t.id === TOWER_MOD0) {
         var testType = 107;
 		var max = monster[t.id].length;
-		monster[t.id][max] = new Monster(max, 0, 0, testType, t.id, 3, 12, 18, 3, CHAR_FRONT_SOLO, 0);
+		monster[t.id][max] = new Monster(max, 0, 0, 101, t.id, 3, 12, 18, 3, CHAR_FRONT_SOLO, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 3, 0, testType, t.id, 3, 14, 18, 2, CHAR_FRONT_SOLO, 0);
+		monster[t.id][max] = new Monster(max, 3, 0, 102, t.id, 3, 14, 18, 2, CHAR_FRONT_SOLO, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 6, 0, testType, t.id, 3, 13, 16, 1, CHAR_FRONT_SOLO, 0);
+		monster[t.id][max] = new Monster(max, 6, 0, 106, t.id, 3, 13, 16, 2, CHAR_FRONT_SOLO, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 9, 0, testType, t.id, 3, 13, 20, 0, CHAR_FRONT_SOLO, 0);
+		monster[t.id][max] = new Monster(max, 9, 0, 107, t.id, 3, 13, 20, 0, CHAR_FRONT_SOLO, 0);
 		max++;
 //                monster[t.id][max] = new Monster(max, 12, 0, testType, t.id, 3, 12, 18, 3, CHAR_FRONT_LEFT, 0);
 //		max++;
@@ -550,7 +550,7 @@ function getMonsterGfxOffset(pos, sub) {
 	var offy = -xy.y * 4 + suby;
 
 	var x = Math.round(offx * (190.0 / (offy + 6)));
-	var y = Math.round(49 - 340.0 / (offy + 6));
+	var y = Math.round(48 - 340.0 / (offy + 6));
 
 	return {
 		x: x,

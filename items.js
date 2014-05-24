@@ -48,7 +48,7 @@ Item.prototype.getType = function() {
 }
 
 Item.prototype.getWeaponPower = function() {
-    if (this.type === ITEM_TYPE_WEAPON) {
+    if (this.type === ITEM_TYPE_ARMOUR || this.type === ITEM_TYPE_SHIELD || this.type === ITEM_TYPE_GLOVES) {
         switch (this.id) {
             case 48:
                 return 2;
@@ -87,6 +87,10 @@ Item.prototype.getWeaponPower = function() {
         }
     }
     return 0;
+}
+
+Item.prototype.getArmourClass = function() {
+	return 0;
 }
 
 Item.prototype.toString = function() {

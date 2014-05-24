@@ -70,10 +70,9 @@ function floorActionType(trig, p) {
 				if(champ.monster.dead) {
 					champ.stat.hp = 0;
 					champ.monster.dead = false;
+					redrawUI(2);
 				}
 			}
-                        redrawUI(2);
-                        drawUI(p);
 			break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:
 			break;
