@@ -156,7 +156,7 @@ function drawUI(p) {
                     break
                 case UI_RIGHT_PANEL_SPELLBOOK:
                     {
-                        spellBook(p)
+                        spellBook(p);
                     };
                     break
                 case UI_RIGHT_PANEL_STATS:
@@ -220,7 +220,12 @@ function leftUI(p) {
                 }, true, false);
                 ctx.drawImage(t, ((x - 1) * 32 * scale) + (p.ScreenX * scale) - 49 * scale, (p.ScreenY + 45) * scale - 37 * scale, t.width * scale, t.height * scale);
             } else {
-                var t = createShield(p.champion[x], champion[p.champion[x]].prof, champion[p.champion[x]].colour);
+                var t;
+                if (champion[p.champion[x]].monster.dead){
+                    t = createShield(p.champion[x], champion[p.champion[x]].prof, 4);
+                }else{
+                    t = createShield(p.champion[x], champion[p.champion[x]].prof, champion[p.champion[x]].colour);
+                }                
                 ctx.drawImage(t, (((x - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
             }
         }
@@ -305,7 +310,12 @@ function commandUI(p) {
     ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
-    ctx.drawImage(gfxUI[UI_GFX_ICON_BACK], (p.ScreenX + 72) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    if (p === player[0]){
+        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK],COLOUR[COLOUR_BLUE]), (p.ScreenX + 72) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    }else{
+        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK],COLOUR[COLOUR_RED]), (p.ScreenX + 72) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    }
+    
     //ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
     //ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
 
@@ -400,8 +410,18 @@ function drawPocketUI(p) {
                 }
             } else {
                 pocketId = itemID(pocketId);
-            } //WRITE SOMETHING HERE TO RETURN THE CORRECT OBJECT VALUE
-            ctx.drawImage(gfxUI[pocketId], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+            }
+            if (pocketId >= 88 && pocketId <= 92){
+                if (p === player[0]){
+                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId],COLOUR[COLOUR_BLUE]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                }
+                else{
+                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId],COLOUR[COLOUR_RED]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                }
+            }else{
+                ctx.drawImage(gfxUI[pocketId], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+            }           
+            
             if (pocketId === UI_GFX_POCKET_COIN || pocketId === UI_GFX_POCKET_COMMON_KEY) {
                 var qty = pocket.quantity;
                 if (qty < 10) {
@@ -409,9 +429,6 @@ function drawPocketUI(p) {
                 }
                 writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
             }
-            //if (pocketId === UI_GFX_POCKET_COMMON_KEY){
-            //   writeFontImage("0"+champion[p.champion[p.uiRightPanel.activePocket]].pocket[POCKET_AMOUNT_KEYS].toString(), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);     
-            //}
             i++;
         }
     }
@@ -479,7 +496,13 @@ function drawPocketUI(p) {
                 break
             case 5:
                 {
-                    ctx.drawImage(gfxUI[UI_GFX_ICON_BACK], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    if (p === player[0]){
+                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK],COLOUR[COLOUR_BLUE]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    }
+                    else{
+                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK],COLOUR[COLOUR_RED]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    }
+                    
                 };
                 break
 
@@ -994,6 +1017,9 @@ function createShield(id, type, colour) {
                 colour = PALETTE_MOON;
             };
             break;
+        default:{
+                colour = PALETTE_DEAD;
+        }
 
     }
 
@@ -1001,10 +1027,18 @@ function createShield(id, type, colour) {
     can.width = 30;
     can.height = 41;
     var context = can.getContext("2d");
-    context.drawImage(gfxUI[UI_GFX_SHIELD_TOP], 0, 0);
-    context.drawImage(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], 0, 5);
-    context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
-    context.drawImage(gfxUI[UI_GFX_SHIELD_BOTTOM], 5, 32);
+    if (colour === PALETTE_DEAD){
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], COLOUR[COLOUR_BLACK]), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], COLOUR[COLOUR_BLACK]), 0, 5);
+        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], COLOUR[COLOUR_BLACK]), 5, 32);
+    }else{
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], COLOUR[COLOUR_GREY_LIGHT]), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], COLOUR[COLOUR_GREY_LIGHT]), 0, 5);
+        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], COLOUR[COLOUR_GREY_LIGHT]), 5, 32);
+    }
+
     context.save();
     return can;
 
@@ -1300,4 +1334,31 @@ function toggleChampUI(i, p, set) {
     } else {
         p.uiLeftPanel.champs[i] = set;
     }
+}
+
+function recolourUiGfx(img,colourTo){
+    
+    var can = document.createElement('canvas');
+	can.width = img.width;
+	can.height = img.height;
+	var canContent = can.getContext("2d");
+        canContent.drawImage(img,0,0);
+	var imageData = canContent.getImageData(0, 0, can.width, can.height);
+
+	for (var i = 0; i < imageData.data.length; i += 4) {
+		// is this pixel the old rgb?
+		if (imageData.data[i] === 0 &&
+			imageData.data[i + 1] === 224 &&
+			imageData.data[i + 2] === 0
+		) {
+			// change to your new rgb
+			imageData.data[i] = colourTo[0];
+			imageData.data[i + 1] = colourTo[1];
+			imageData.data[i + 2] = colourTo[2];
+		}
+	}
+
+	canContent.putImageData(imageData, 0, 0);
+	canContent.save();
+	return can;    
 }

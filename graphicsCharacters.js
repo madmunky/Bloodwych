@@ -1016,7 +1016,7 @@ function grabMonster(m) {
         break;
 
             }
-       case MON_FORM_DRAGON: case MON_FORM_DRAGON_SMALL: //DRAGON
+       case MON_FORM_DRAGON: case MON_FORM_DRAGON_SMALL:{ //DRAGON
         var spriteSheetIMG = gfx['character']['dragon'];
         var ImageArray = [],
             BODYPART = [],
@@ -1108,8 +1108,8 @@ function grabMonster(m) {
 
         break;
 
- 
-        case MON_FORM_BEHEMOTH: //BEHEMOTH
+       }
+       case MON_FORM_BEHEMOTH:{ //BEHEMOTH
         var spriteSheetIMG = gfx['character']['behemoth'];
         var ImageArray = [],
             BODYPART = [],
@@ -1153,13 +1153,21 @@ function grabMonster(m) {
 
 
         //ARMS
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 110, 2, 14, 26, false));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 110, 2, 14, 26, true));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, false));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, true));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 110, 2, 14, 26, false,35,15));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 110, 2, 14, 26, false,4,15));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 110, 2, 14, 26, true,35,15));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 110, 2, 14, 26, true,4,15));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, false,35,31));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, true,35,31));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, false,5,31));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, true,5,31));
 
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 112, 64, 10, 18, false));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 112, 64, 10, 18, true));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 112, 64, 10, 18, false,23,10));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 112, 64, 10, 18, false,4,10));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 112, 64, 10, 18, true,24,10));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 112, 64, 10, 18, true,4,10));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, false));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, true));
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, false));
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, true));
 
@@ -1167,15 +1175,16 @@ function grabMonster(m) {
         ImageArray.push(BODYPART);
         break;
 
-   
+       }
         default:
         return null;
     }
     for(var i = 0; i < ImageArray.length; i++) {
         for(var j = 0; j < ImageArray[i].length; j++) {
             for(var k = 0; k < ImageArray[i][j].length; k++) {
-
-                ImageArray[i][j][k] = recolourSprite(ImageArray[i][j][k], MON_PALETTE_DEFAULT, monsterBigPalette[form - 101][level]);
+                if (form < 107){
+                    ImageArray[i][j][k] = recolourSprite(ImageArray[i][j][k], MON_PALETTE_DEFAULT, monsterBigPalette[form - 101][level]);
+                }
             }
         }
     }

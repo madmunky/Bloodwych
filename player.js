@@ -391,7 +391,12 @@ Player.prototype.restoreChampionStats = function() {
 Player.prototype.alertDamagedPlayer = function() {
     this.uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;
     for (ch = 0; ch < this.champion.length; ch++) {
-        toggleChampUI(ch, this, true);
+        if (champion[this.champion[ch]].monster.dead && ch > 0){
+            toggleChampUI(ch, this, false);
+        }else{
+            toggleChampUI(ch, this, true);
+        }
+        
     }
 }
 

@@ -43,7 +43,7 @@ function timerAction() {
 		monsterAttackSequence = 0;
 		mon = getMonstersInTower(towerThis);
 		for(m in mon) {
-			//mon[m].move();
+			mon[m].move();
 		}
 		for(p = 0; p < 2; p++) {
 			if(player[p].attacking) {
