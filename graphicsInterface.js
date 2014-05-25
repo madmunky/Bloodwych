@@ -382,6 +382,24 @@ function rightUI(p) {
         ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_OPENDOOR].width * scale, gfxUI[UI_GFX_ICON_OPENDOOR].height * scale);
         ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
     }
+    
+    var ch = p.getOrderedChampionIds();
+    for (x = 0;x < 4;x++){
+        var a = champion[p.champion[ch[x]]].prof;
+        var b = champion[p.champion[ch[x]]].colour;
+        if (x < 2){
+            ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][b], ((p.ScreenX + 289) + (x * 16)) * scale, ((p.ScreenY + 46)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);        
+        }else{
+            ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][b], ((p.ScreenX + 289) + ((x-2) * 16)) * scale, ((p.ScreenY + 60)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+        }
+        if (x === p.championLeader){
+            if (x < 2){
+                ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 289) + (x * 16)) * scale, ((p.ScreenY + 46)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
+            }else{
+                ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 289) + ((x-2) * 16)) * scale, ((p.ScreenY + 60)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
+            }            
+        } 
+    }
 
     ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 
@@ -465,24 +483,12 @@ function drawPocketUI(p) {
 
         switch (x) {
 
-            case 0:
+            case 0: case 1: case 2: case 3:
                 {
                     ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-                };
-                break
-            case 1:
-                {
-                    ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-                };
-                break
-            case 2:
-                {
-                    ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-                };
-                break
-            case 3:
-                {
-                    ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    if (x === cp){
+                        ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
+                    }                    
                 };
                 break
             case 4:
