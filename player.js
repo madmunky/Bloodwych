@@ -19,6 +19,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
     this.moving = 0; //0 = Forward,1 = Right, 2 = Backwards, 3 = Left
     this.attacking = false;
     this.towerSwitches = new Array();
+    this.messageTimeout = 0;
     this.uiRightPanel = {
         activePocket: 0,
         view: UI_RIGHT_PANEL_MAIN
@@ -122,25 +123,9 @@ Player.prototype.changeDownFloor = function() {
 //Take the map code which is in front of the player and see if the player can interact with it.
 Player.prototype.action = function() {
     //Wooden doors (in front of player)
-    if (this.getBinaryView(15, 12, 4) === '2' && this.getBinaryView(15, ((5 - this.d) % 4) * 2) === '1') {
-   		if(this.pocket.id === ITEM_KEY) {
-   			this.consumeItemInHand();
-   			this.setBinaryView(15, 11, 1);
-   			this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1);
-    	} else if(this.getBinaryView(15, 11, 1) === '0') {
-	        this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1);
-	    }
-    }
+	this.checkWoodenDoor(15);
     //Wooden doors (on player)
-    if (this.getBinaryView(18, 12, 4) === '2' && this.getBinaryView(18, ((7 - this.d) % 4) * 2) === '1') {
-    	if(this.pocket.id === ITEM_KEY) {
-   			this.consumeItemInHand();
-   			this.setBinaryView(18, 11, 1);
-   			this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1);
-    	} else if(this.getBinaryView(18, 11, 1) === '0') {
-        	this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1);
-	    }
-    }
+	this.checkWoodenDoor(18);
     //Wall switches
     if (this.getBinaryView(15, 0, 4) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
         this.setBinaryView(15, 5, 1);
@@ -162,6 +147,20 @@ Player.prototype.toggleFrontObject = function() {
     if (debug) {
         this.setBinaryView(15, 12, 1);
     }
+}
+Player.prototype.checkWoodenDoor = function(pos18) {
+	if (this.getBinaryView(pos18, 12, 4) === '2' && this.getBinaryView(pos18, ((5 - this.d) % 4) * 2) === '1') {
+		if(this.pocket.id === ITEM_KEY) {
+			this.consumeItemInHand();
+			this.setBinaryView(pos18, 11, 1);
+			this.setBinaryView(pos18, ((5 - this.d) % 4) * 2 + 1, 1);
+		} else if(this.getBinaryView(pos18, 11, 1) === '0') {
+	        this.setBinaryView(pos18, ((5 - this.d) % 4) * 2 + 1, 1);
+	    }
+	    if(this.getBinaryView(pos18, 11, 1) === '1') {
+	    	this.message("The door is locked", COLOUR[COLOUR_GREEN]);
+	    }
+	}
 }
 
 //Sets a binary index on a hexadecimal string to a certain binary flag
@@ -537,6 +536,10 @@ Player.prototype.exchangeItemWithHand = function(s) {
 		item.setPocketItem(itemH.id, itemH.quantity);
 		itemH.setPocketItem(temp.id, temp.quantity);
 	}
+}
+
+Player.prototype.message = function(txt, col) {
+	fadeFont(this, txt, 50, 3000, 0, this.ScreenY, col);
 }
 
 Player.prototype.testMode = function(id) {

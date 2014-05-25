@@ -20,6 +20,44 @@ function grabFont() {
 
 }
 
+function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, alignment) {
+	(function(fontString, locationX, locationY, paletteTo, alignment) {
+		var alpha = 0.0;
+		clearInterval(p.messageTimeout);
+		clearTimeout(p.messageTimeout);
+	    p.messageTimeout = setInterval(function () {
+	    	ctx.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+	    	ctx.save();
+	    	ctx.globalAlpha = alpha;
+	        writeFontImage(fontString, locationX, locationY - 9, paletteTo, alignment);
+	        ctx.restore();
+	        alpha = alpha + 0.1;
+	        if (alpha > 1) {
+			    (function(fontString, locationX, locationY, paletteTo, alignment) {
+			    	clearInterval(p.messageTimeout);
+			    	var alpha = 1.0;
+				    p.messageTimeout = setTimeout(function() {
+				    	(function(fontString, locationX, locationY, paletteTo, alignment, alpha) {
+						    p.messageTimeout = setInterval(function () {
+						    	ctx.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+								ctx.save();
+								ctx.globalAlpha = alpha;
+						        writeFontImage(fontString, locationX, locationY - 9, paletteTo, alignment);
+						        ctx.restore();
+						        alpha = alpha - 0.1;
+						        if (alpha < 0) {
+						            ctx.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+						            clearInterval(p.messageTimeout);
+						        }
+						    }, speed);
+						})(fontString, locationX, locationY, paletteTo, alignment, alpha);
+				    }, delay);
+				})(fontString, locationX, locationY, paletteTo, alignment);
+	        }
+	    }, speed);
+	})(fontString, locationX, locationY, paletteTo, alignment);
+}
+
 function writeFontImage(fontString, locationX, locationY, paletteTo, alignment) {
 try{
     if (typeof(font[0]) !== 'undefined'){

@@ -5,7 +5,6 @@
 JORG
 -----
 
-* Add communication text at top
 * Add "you are dead"
 * Fix Big monster 'edge of screen'
 * Better coin/key exchange
@@ -21,6 +20,7 @@ CHRIS
 
 * Big monster drawing fixes
 * Add Dungeon gfx to Item Object
+* Add more click areas e.g. champion signs, for selecting leader and exchanging
 * Communication Text Array
 * Finish Spell Book
 * Finish Character Stats Page
