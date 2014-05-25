@@ -435,7 +435,7 @@ function drawPocketUI(p) {
                 }
                 ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
             } else {
-                ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
             }
 
             if (pocket.getType() === ITEM_TYPE_STACKABLE) {
@@ -856,7 +856,30 @@ function uiClickAreas() {
         width: 16,
         height: 16
     }); //SCROLLDOWN BUTTON
-
+        UCA.push({
+        x: 289,
+        y: 96,
+        width: 16,
+        height: 16
+    }); //Character Front Left Icon
+        UCA.push({
+        x: 305,
+        y: 96,
+        width: 16,
+        height: 16
+    }); //Character Front Right Icon
+        UCA.push({
+        x: 289,
+        y: 112,
+        width: 16,
+        height: 16
+    }); //Character Back Left Icon
+        UCA.push({
+        x: 305,
+        y: 112,
+        width: 16,
+        height: 16
+    }); //Character Back Right Icon
     return UCA;
 
 }
