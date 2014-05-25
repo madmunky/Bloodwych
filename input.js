@@ -197,8 +197,7 @@ function processCanvasInput(x, y) {
 	        }
 			for(cid = UI_CLICK_POCKET_CHARACTER_0; cid <= UI_CLICK_POCKET_CHARACTER_3; cid++) {
 	        	if (uiClickInArea(x, y, cid, player[p])) {
-					var ch = player[p].getOrderedChampionIds();
-					player[p].uiRightPanel.activePocket = ch[cid - UI_CLICK_POCKET_CHARACTER_0];
+					player[p].uiRightPanel.activePocket = cid - UI_CLICK_POCKET_CHARACTER_0;
 					successfulClick = true;
 					break;
 	        	}

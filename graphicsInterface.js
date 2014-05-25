@@ -383,21 +383,12 @@ function rightUI(p) {
         ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
     }
     
-    var ch = p.getOrderedChampionIds();
-    for (x = 0;x < 4;x++){
-        var a = champion[p.champion[ch[x]]].prof;
-        var b = champion[p.champion[ch[x]]].colour;
-        if (x < 2){
-            ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][b], ((p.ScreenX + 289) + (x * 16)) * scale, ((p.ScreenY + 46)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);        
-        }else{
-            ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][b], ((p.ScreenX + 289) + ((x-2) * 16)) * scale, ((p.ScreenY + 60)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-        }
-        if (x === p.championLeader){
-            if (x < 2){
-                ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 289) + (x * 16)) * scale, ((p.ScreenY + 46)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
-            }else{
-                ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 289) + ((x-2) * 16)) * scale, ((p.ScreenY + 60)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
-            }            
+    for (c = 0;c < 4;c++){
+        var a = champion[p.champion[c]].prof;
+        var b = champion[p.champion[c]].colour;
+        ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+        if (c === p.championLeader){
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
         } 
     }
 
@@ -451,7 +442,7 @@ function drawPocketUI(p) {
                 ctx.drawImage(gfxUI[pocketId], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
             }
 
-            if (pocketId === UI_GFX_POCKET_COIN || pocketId === UI_GFX_POCKET_COMMON_KEY) {
+            if (pocket.getType() === ITEM_TYPE_STACKABLE) {
                 var qty = pocket.quantity;
                 if (qty < 10) {
                     qty = "0" + qty;
@@ -486,7 +477,7 @@ function drawPocketUI(p) {
             case 0: case 1: case 2: case 3:
                 {
                     ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-                    if (x === cp){
+                    if (ch[x] === cp){
                         ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
                     }                    
                 };
@@ -495,7 +486,7 @@ function drawPocketUI(p) {
                 {
                     pid = itemID(p.pocket.id);
                     ctx.drawImage(gfxUI[pid], ((p.ScreenX + 225) + (x * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[pid].width * scale, gfxUI[pid].height * scale);
-                    if (pid === UI_GFX_POCKET_COIN || pid === UI_GFX_POCKET_COMMON_KEY) {
+                    if (p.pocket.getType() === ITEM_TYPE_STACKABLE) {
                         var qty = p.pocket.quantity;
                         if (qty < 10) {
                             qty = "0" + qty;

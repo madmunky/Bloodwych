@@ -517,7 +517,8 @@ Player.prototype.consumeItemInHand = function(s) {
 }
 
 Player.prototype.exchangeItemWithHand = function(s) {
-	var item = this.getChampion(this.uiRightPanel.activePocket).pocket[s];
+	var ch = this.getOrderedChampionIds();
+	var item = this.getChampion(ch[this.uiRightPanel.activePocket]).pocket[s];
 	var itemH = this.pocket;
 	if(item.type === ITEM_TYPE_STACKABLE && (itemH.id === 0 || item.id === itemH.id)) {
 		if(itemH.id === 0) {
@@ -565,6 +566,5 @@ function initPlayersQuickStart() {
         player[0].recruitChampion(i);
         player[1].recruitChampion(i + 4);
     }
-    player[0].currentChamp = 0;
-    player[1].currentChamp = 4;
+    player[0].championLeader = 1;
 }
