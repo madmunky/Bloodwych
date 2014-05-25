@@ -69,7 +69,7 @@ Champion.prototype.getDamage = function(dmg, safe) {
             })(dmg);
             player[self.recruitment.playerId].alertDamagedPlayer();
             player[self.recruitment.playerId].checkDead();
-            redrawUI(2);
+            redrawUI(self.recruitment.playerId);
         }
     }
 }
@@ -229,9 +229,9 @@ function initChampions() {
         }
         for (i = 0; i < 12; i++) {
         	if(pk[i] >= 1 && pk[i] < 5) {
-        		slot[i] = initPocketItem(pk[i], pk[pk[i] + 11]);
+        		slot[i] = newPocketItem(pk[i], pk[pk[i] + 11]);
         	} else {
-	        	slot[i] = initPocketItem(pk[i]);
+	        	slot[i] = newPocketItem(pk[i]);
 	        }
         }
         var md = championData[ch];

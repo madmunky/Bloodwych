@@ -93,6 +93,23 @@ Item.prototype.getArmourClass = function() {
 	return 0;
 }
 
+
+Item.prototype.setPocketItem = function(id, q) {
+	if(typeof id === "undefined" || id === 0) {
+		id = 0;
+		q = 0;
+	} else if(typeof q === "undefined") {
+		q = 1;
+	}
+	this.id = id;
+	this.quantity = q;
+	this.location.tower = -1;
+	this.location.floor = 0;
+	this.location.x = 0;
+	this.location.y = 0;
+	this.location.square = 0;
+}
+
 Item.prototype.toString = function() {
 	var loc = "";
     if (typeof this.location.tower !== "undefined" && this.location.tower !== -1) {
@@ -125,12 +142,12 @@ function initItems() {
     }
 }
 
-function initPocketItem(id, q) {
-	if(typeof q === "undefined") {
-		q = 1;
-	} else if(typeof id === "undefined" || id === 0) {
+function newPocketItem(id, q) {
+	if(typeof id === "undefined" || id === 0) {
 		id = 0;
 		q = 0;
+	} else if(typeof q === "undefined") {
+		q = 1;
 	}
     return new Item(id, q, {
         tower: -1,

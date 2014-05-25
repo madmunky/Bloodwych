@@ -66,11 +66,11 @@ function floorActionType(trig, p) {
 		case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:
 			tower[towerThis].floor[p.floor].Map[p.y][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 1], 7, 1, '1');
 			for(ch = 0; ch < p.champion.length; ch++) {
-				var champ = champion[p.champion[ch]];
+				var champ = p.getChampion(ch);
 				if(champ.monster.dead) {
 					champ.stat.hp = 0;
 					champ.monster.dead = false;
-					redrawUI(2);
+					redrawUI(p);
 				}
 			}
 			break;

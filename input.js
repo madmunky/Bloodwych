@@ -188,7 +188,21 @@ function processCanvasInput(x, y) {
             }
 
         } else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_POCKETS) {
-
+        	for(s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
+	        	if(uiClickInArea(x, y, s, player[p])) {
+	        		player[p].exchangeItemWithHand(s - UI_CLICK_POCKET_SLOT_1);
+	        		successfulClick = true;
+	        		break;
+	        	}
+	        }
+			for(cid = UI_CLICK_POCKET_CHARACTER_0; cid <= UI_CLICK_POCKET_CHARACTER_3; cid++) {
+	        	if (uiClickInArea(x, y, cid, player[p])) {
+					var ch = player[p].getOrderedChampionIds();
+					player[p].uiRightPanel.activePocket = ch[cid - UI_CLICK_POCKET_CHARACTER_0];
+					successfulClick = true;
+					break;
+	        	}
+	        }
             if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, player[p])) {
                 player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
                 successfulClick = true;

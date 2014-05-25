@@ -11,7 +11,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
     this.Portal = null;
     this.ScreenX = ScreenX;
     this.ScreenY = ScreenY;
-    this.pocket = initPocketItem();
+    this.pocket = newPocketItem();
     this.lastX = 0;
     this.lastY = 0;
     this.lastFloor = 0;
@@ -122,15 +122,27 @@ Player.prototype.changeDownFloor = function() {
 //Take the map code which is in front of the player and see if the player can interact with it.
 Player.prototype.action = function() {
     //Wooden doors (in front of player)
-    if (this.getBinaryView(15, 12, 4) == '2' && this.getBinaryView(15, ((5 - this.d) % 4) * 2) == '1') {
-        this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1);
+    if (this.getBinaryView(15, 12, 4) === '2' && this.getBinaryView(15, ((5 - this.d) % 4) * 2) === '1') {
+   		if(this.pocket.id === ITEM_KEY) {
+   			this.consumeItemInHand();
+   			this.setBinaryView(15, 11, 1);
+   			this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1);
+    	} else if(this.getBinaryView(15, 11, 1) === '0') {
+	        this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1);
+	    }
     }
     //Wooden doors (on player)
-    if (this.getBinaryView(18, 12, 4) == '2' && this.getBinaryView(18, ((7 - this.d) % 4) * 2) == '1') {
-        this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1);
+    if (this.getBinaryView(18, 12, 4) === '2' && this.getBinaryView(18, ((7 - this.d) % 4) * 2) === '1') {
+    	if(this.pocket.id === ITEM_KEY) {
+   			this.consumeItemInHand();
+   			this.setBinaryView(18, 11, 1);
+   			this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1);
+    	} else if(this.getBinaryView(18, 11, 1) === '0') {
+        	this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1);
+	    }
     }
     //Wall switches
-    if (this.getBinaryView(15, 0, 4) != '0' && this.getBinaryView(15, 8) == '1' && this.getBinaryView(15, 6, 2) == '2') {
+    if (this.getBinaryView(15, 0, 4) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
         this.setBinaryView(15, 5, 1);
         switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
     }
@@ -139,7 +151,7 @@ Player.prototype.action = function() {
         return false;
     }
     //Doors
-    if (this.getBinaryView(15, 12, 4) == '5' && this.getBinaryView(15, 4) == '0') {
+    if (this.getBinaryView(15, 12, 4) === '5' && this.getBinaryView(15, 4) === '0') {
         this.setBinaryView(15, 7, 1);
         //this.setBinaryView(15, 1, '000'); //Will set the door to 'normal'
     }
@@ -413,7 +425,7 @@ Player.prototype.restoreChampionStats = function() {
     if (alertPlayer) {
         this.alertDamagedPlayer();
     }
-    redrawUI(2);
+    redrawUI(this.id);
 }
 
 Player.prototype.alertDamagedPlayer = function() {
@@ -432,7 +444,7 @@ Player.prototype.resetChampUI = function() {
     for (ch = 0; ch < this.champion.length; ch++) {
     	if (this.uiLeftPanel.champs[ch] === true) {
         	toggleChampUI(ch, this, false);
-        	redrawUI(2);
+        	redrawUI(this.id);
         }
     }
 }
@@ -494,6 +506,36 @@ Player.prototype.drawMonster = function(m, distance, offset) {
             drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
         }
     }
+}
+
+Player.prototype.consumeItemInHand = function(s) {
+	if(this.pocket.quantity <= 1) {
+		this.pocket.setPocketItem();
+	} else {
+		this.pocket.quantity--;
+	}
+}
+
+Player.prototype.exchangeItemWithHand = function(s) {
+	var item = this.getChampion(this.uiRightPanel.activePocket).pocket[s];
+	var itemH = this.pocket;
+	if(item.type === ITEM_TYPE_STACKABLE && (itemH.id === 0 || item.id === itemH.id)) {
+		if(itemH.id === 0) {
+			itemH.setPocketItem(item.id, 1);
+			item.quantity--;
+			if(item.quantity === 0) {
+				item.setPocketItem();
+			}
+		} else if(item.id === itemH.id) {
+			var qty = itemH.quantity;
+			itemH.setPocketItem();
+			item.setPocketItem(item.id, item.quantity + qty);
+		}
+	} else {
+		var temp = newPocketItem(item.id, item.quantity);
+		item.setPocketItem(itemH.id, itemH.quantity);
+		itemH.setPocketItem(temp.id, temp.quantity);
+	}
 }
 
 Player.prototype.testMode = function(id) {

@@ -41,14 +41,14 @@ function timerAction() {
 	if(timerMaster - timerMonsterMove >= 20) {
 		timerMonsterMove = timerMaster;
 		monsterAttackSequence = 0;
-		mon = getMonstersInTower(towerThis);
-		for(m in mon) {
-			mon[m].move();
-		}
 		for(p = 0; p < 2; p++) {
 			if(player[p].attacking) {
 				player[p].tryAttack();
 			}
+		}
+		mon = getMonstersInTower(towerThis);
+		for(m in mon) {
+			mon[m].move();
 		}
 	}
 	if(timerMaster - timerMonsterAttack >= 3) {

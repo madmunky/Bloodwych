@@ -7,10 +7,10 @@ function grabUISprites(spriteSheetIMG) {
     for (y = 0; y < 6; y++) {
         for (x = 0; x < 20; x++) {
             if (i > 74 && i < 79) {
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), SHIELD_PALETTE_DEFAULT, PALETTE_SERPENT));
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), SHIELD_PALETTE_DEFAULT, PALETTE_CHAOS));
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), SHIELD_PALETTE_DEFAULT, PALETTE_DRAGON));
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), SHIELD_PALETTE_DEFAULT, PALETTE_MOON));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_SERPENT));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_CHAOS));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_DRAGON));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_MOON));
                 ImageArray.push(extraColours);
                 extraColours = [];
             } else {
@@ -126,7 +126,7 @@ function grabUISprites(spriteSheetIMG) {
 }
 
 function drawUI(p) {
-    if (redrawPlayerUiFlag === p.id || redrawPlayerUiFlag === 2) {
+    if (redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
         if (typeof gfxUI !== "undefined" && gfxUI !== null) {
             ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
             ctx.clearRect((p.ScreenX + 226) * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
@@ -187,7 +187,9 @@ function spellBook(p) {
 }
 
 function redrawUI(p) {
-    redrawPlayerUiFlag = p;
+    if (redrawPlayerUiFlag === 0 || redrawPlayerUiFlag & (p + 1) !== (p + 1)) {
+        redrawPlayerUiFlag = redrawPlayerUiFlag + (p + 1);
+    }
 }
 
 function leftUI(p) {
@@ -199,8 +201,8 @@ function leftUI(p) {
 
     var ch = p.getOrderedChampionIds();
     for (c = 0; c < 4; c++) {
-    	var c1 = ch[c];
-    	var champ = p.champion[c1];
+        var c1 = ch[c];
+        var champ = p.champion[c1];
         if (c === 0) {
             if (p.uiLeftPanel.champs[c] === true) {
                 ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
@@ -215,8 +217,8 @@ function leftUI(p) {
                 ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][champ], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][champ].width * scale, gfxUI[UI_GFX_PORTRAITS][champ].height * scale);
             }
         } else {
-        	var t;
-        	if (champion[champ].monster.dead){
+            var t;
+            if (champion[champ].monster.dead) {
                 t = createShield(champ, champion[champ].prof, 4);
                 ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
             } else if (p.uiLeftPanel.champs[c] === true) {
@@ -227,7 +229,7 @@ function leftUI(p) {
                 }, true, false);
                 ctx.drawImage(t, ((c - 1) * 32 * scale) + (p.ScreenX * scale) - 49 * scale, (p.ScreenY + 45) * scale - 37 * scale, t.width * scale, t.height * scale);
             } else {
-                t = createShield(champ, champion[champ].prof, champion[champ].colour);              
+                t = createShield(champ, champion[champ].prof, champion[champ].colour);
                 ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
             }
         }
@@ -236,15 +238,15 @@ function leftUI(p) {
 
 function leftUIStats(p) {
     if (p.uiLeftPanel.champs[0] === true) {
-  		var ch = p.getOrderedChampionIds();
+        var ch = p.getOrderedChampionIds();
         for (c = 0; c < p.champion.length; c++) {
-        	var c1 = ch[c];
+            var c1 = ch[c];
             var champ = champion[p.champion[c1]];
             var rgb = getClassColour(champ.colour);
             var hp = Math.floor(21 * champ.stat.hp / champ.stat.hpMax);
-            if(hp < 0) {
-        		hp = 0;
-        	}
+            if (hp < 0) {
+                hp = 0;
+            }
             ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
             ctx.fillRect((p.ScreenX + 55 + c * 9) * scale, (p.ScreenY + 35 - hp) * scale, 7 * scale, hp * scale);
         }
@@ -254,14 +256,14 @@ function leftUIStats(p) {
         var hp = Math.floor(35 * champ.stat.hp / champ.stat.hpMax);
         var vit = Math.floor(35 * champ.stat.vit / champ.stat.vitMax);
         var sp = Math.floor(35 * champ.stat.sp / champ.stat.spMax);
-        if(hp < 0) {
-        	hp = 0;
+        if (hp < 0) {
+            hp = 0;
         }
-        if(vit < 0) {
-        	vit = 0;
+        if (vit < 0) {
+            vit = 0;
         }
-        if(sp < 0) {
-        	sp = 0;
+        if (sp < 0) {
+            sp = 0;
         }
         if (p === player[0]) {
             rgb = getClassColour(CLASS_COLOUR_MOON);
@@ -326,12 +328,8 @@ function commandUI(p) {
     ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
-    if (p === player[0]){
-        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK],COLOUR[COLOUR_BLUE]), (p.ScreenX + 72) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
-    }else{
-        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK],COLOUR[COLOUR_RED]), (p.ScreenX + 72) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
-    }
-    
+    ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+
     //ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
     //ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
 
@@ -398,7 +396,7 @@ function drawPocketUI(p) {
     }
 
     var ch = p.getOrderedChampionIds();
-    var cp = ch[p.uiRightPanel.activePocket]
+    var cp = ch[p.uiRightPanel.activePocket];
     writeFontImage(champion[p.champion[cp]].firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
 
     var i = 0;
@@ -421,7 +419,7 @@ function drawPocketUI(p) {
                             break;
                         case 3:
                             pocketId = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
-                            break;                        
+                            break;
                         default:
                             break;
                     }
@@ -429,17 +427,12 @@ function drawPocketUI(p) {
             } else {
                 pocketId = itemID(pocketId);
             }
-            if (pocketId >= 88 && pocketId <= 92){
-                if (p === player[0]){
-                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId],COLOUR[COLOUR_BLUE]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-                }
-                else{
-                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId],COLOUR[COLOUR_RED]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-                }
-            }else{
+            if (pocketId >= 88 && pocketId <= 92) {
+                ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+            } else {
                 ctx.drawImage(gfxUI[pocketId], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-            }           
-            
+            }
+
             if (pocketId === UI_GFX_POCKET_COIN || pocketId === UI_GFX_POCKET_COMMON_KEY) {
                 var qty = pocket.quantity;
                 if (qty < 10) {
@@ -453,36 +446,21 @@ function drawPocketUI(p) {
 
     ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 226) * scale, (p.ScreenY + 54) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
     var ac = "" + champion[p.champion[cp]].getArmourClass();
-    if(ac >= 0) {
-    	ac = "+" + ac;
+    if (ac >= 0) {
+        ac = "+" + ac;
     } else {
-    	ac = "-" + ac;
+        ac = "-" + ac;
     }
     writeFontImage("Armour:", p.ScreenX / scale + 233, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
     writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), COLOUR[COLOUR_WHITE]);
 
     var ch = p.getOrderedChampionIds();
     for (x = 0; x < 6; x++) {
-    	var x1 = ch[x];
+        var x1 = ch[x];
         var g;
 
         if (x < 4) {
-            g = champion[p.champion[x1]].prof;
-
-            switch (g) {
-                case 0:
-                    g = UI_GFX_POCKET_CLUB;
-                    break;
-                case 1:
-                    g = UI_GFX_POCKET_HEART;
-                    break;
-                case 2:
-                    g = UI_GFX_POCKET_SPADE;
-                    break;
-                case 3:
-                    g = UI_GFX_POCKET_DIAMOND;
-                    break;
-            }
+            g = champion[p.champion[x1]].prof + UI_GFX_POCKET_SPADE;
         }
 
         switch (x) {
@@ -509,18 +487,21 @@ function drawPocketUI(p) {
                 break
             case 4:
                 {
-                    ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    pid = itemID(p.pocket.id);
+                    ctx.drawImage(gfxUI[pid], ((p.ScreenX + 225) + (x * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[pid].width * scale, gfxUI[pid].height * scale);
+                    if (pid === UI_GFX_POCKET_COIN || pid === UI_GFX_POCKET_COMMON_KEY) {
+                        var qty = p.pocket.quantity;
+                        if (qty < 10) {
+                            qty = "0" + qty;
+                        }
+                        writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+                    }
+                    //ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY], ((p.ScreenX + 225) + (x * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                 };
                 break
             case 5:
                 {
-                    if (p === player[0]){
-                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK],COLOUR[COLOUR_BLUE]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-                    }
-                    else{
-                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK],COLOUR[COLOUR_RED]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-                    }
-                    
+                    ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                 };
                 break
 
@@ -805,11 +786,11 @@ function itemID(id) {
             } //Deathbringer
         case 61:
             {
-                return;
+                return UI_GFX_POCKET_STAFF;
             } //Staff
         case 62:
             {
-                return;
+                return UI_GFX_POCKET_STAFF;
             } //Battle Staff
         case 63:
             {
@@ -1035,9 +1016,10 @@ function createShield(id, type, colour) {
                 colour = PALETTE_MOON;
             };
             break;
-        default:{
+        default:
+            {
                 colour = PALETTE_DEAD;
-        }
+            }
 
     }
 
@@ -1045,16 +1027,16 @@ function createShield(id, type, colour) {
     can.width = 30;
     can.height = 41;
     var context = can.getContext("2d");
-    if (colour === PALETTE_DEAD){
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], COLOUR[COLOUR_BLACK]), 0, 0);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], COLOUR[COLOUR_BLACK]), 0, 5);
+    if (colour === PALETTE_DEAD) {
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 0, 5);
         context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], COLOUR[COLOUR_BLACK]), 5, 32);
-    }else{
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], COLOUR[COLOUR_GREY_LIGHT]), 0, 0);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], COLOUR[COLOUR_GREY_LIGHT]), 0, 5);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 5, 32);
+    } else {
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 0, 5);
         context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], COLOUR[COLOUR_GREY_LIGHT]), 5, 32);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 5, 32);
     }
 
     context.save();
@@ -1354,29 +1336,29 @@ function toggleChampUI(i, p, set) {
     }
 }
 
-function recolourUiGfx(img,colourTo){
-    
+function recolourUiGfx(img, colourFrom, colourTo) {
+
     var can = document.createElement('canvas');
-	can.width = img.width;
-	can.height = img.height;
-	var canContent = can.getContext("2d");
-        canContent.drawImage(img,0,0);
-	var imageData = canContent.getImageData(0, 0, can.width, can.height);
+    can.width = img.width;
+    can.height = img.height;
+    var canContent = can.getContext("2d");
+    canContent.drawImage(img, 0, 0);
+    var imageData = canContent.getImageData(0, 0, can.width, can.height);
 
-	for (var i = 0; i < imageData.data.length; i += 4) {
-		// is this pixel the old rgb?
-		if (imageData.data[i] === 0 &&
-			imageData.data[i + 1] === 224 &&
-			imageData.data[i + 2] === 0
-		) {
-			// change to your new rgb
-			imageData.data[i] = colourTo[0];
-			imageData.data[i + 1] = colourTo[1];
-			imageData.data[i + 2] = colourTo[2];
-		}
-	}
+    for (var i = 0; i < imageData.data.length; i += 4) {
+        // is this pixel the old rgb?
+        if (imageData.data[i] === colourFrom[0] &&
+            imageData.data[i + 1] === colourFrom[1] &&
+            imageData.data[i + 2] === colourFrom[2]
+        ) {
+            // change to your new rgb
+            imageData.data[i] = colourTo[0];
+            imageData.data[i + 1] = colourTo[1];
+            imageData.data[i + 2] = colourTo[2];
+        }
+    }
 
-	canContent.putImageData(imageData, 0, 0);
-	canContent.save();
-	return can;    
+    canContent.putImageData(imageData, 0, 0);
+    canContent.save();
+    return can;
 }

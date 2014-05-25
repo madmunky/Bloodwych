@@ -5,12 +5,16 @@
 JORG
 -----
 
-* FIXED! Fix negative champion stats
-* FIXED! Fix big monster bottom offset
+* Add communication text at top
+* Add "you are dead"
 * Fix Big monster 'edge of screen'
+* Better coin/key exchange
+* Big door (un)locking with common keys
+* Fix pockets after one or more are dead
 
 CHRIS
 ------
 
+* Big monster drawing fixes
 * Fix return image for Pockets (recoloured correctly)
 * Add Dungeon gfx to Item Object

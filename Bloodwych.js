@@ -33,7 +33,7 @@ function updatePlayerViewScreen() {
         drawPlayersView(player[p]);
         drawUI(player[p]);
     }
-    redrawPlayerUiFlag = -1;
+    redrawPlayerUiFlag = 0;
     testing();
 
 }
