@@ -11,10 +11,22 @@ JORG
 * Better coin/key exchange
 * Big door (un)locking with common keys
 * Fix pockets after one or more are dead
+* Fix pockets (don't allow common keys/coins in different slots)
+* Fix pockets only allow correct items to hands/amour slots
+* Show text for select pocket item
+* Allow moving of character positions
 
 CHRIS
 ------
 
 * Big monster drawing fixes
-* Fix return image for Pockets (recoloured correctly)
 * Add Dungeon gfx to Item Object
+* Communication Text Array
+* Finish Spell Book
+* Finish Character Stats Page
+* Fix pocket item positions
+* Make Fairy Screens
+* Make YOU ARE DEAD screen
+* Make Sleeping Screen
+* Add movement key highlight
+

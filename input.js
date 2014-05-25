@@ -36,7 +36,14 @@ function doKeyDown(e) {
             player[0].action();
             break; // SpaceBar        
         case KEY_G:
-            player[0].changeDownFloor();
+            //player[0].changeDownFloor();
+            if (champion[player[0].championLeader].pocket[POCKET_SLOT_0].id < 109){
+                champion[player[0].championLeader].pocket[POCKET_SLOT_0].id = (champion[player[0].championLeader].pocket[POCKET_SLOT_0].id + 1);    
+            }else{
+                champion[player[0].championLeader].pocket[POCKET_SLOT_0].id = 0;
+            }            
+            redrawUI(2);
+            PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
             break; // G KEY  
         case KEY_W:
             player[0].move(DIRECTION_NORTH);

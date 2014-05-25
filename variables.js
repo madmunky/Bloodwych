@@ -703,7 +703,7 @@ var KEYPAD_4 = 100,
 //items
 var item = new Array();
 var itemGfxD = new Array();
-var itemRef = new Array();
+var itemRef = new Array(109);
 
 var POCKET_LEFT_HAND = 0,
     POCKET_RIGHT_HAND = 1,
@@ -743,4 +743,6 @@ var ITEM_TYPE_EMPTY = 0,
     ITEM_TYPE_CRYSTAL = 13,
     ITEM_TYPE_GEM = 14,
     ITEM_TYPE_RING = 15,
-    ITEM_TYPE_BOOK = 16;
+    ITEM_TYPE_BOOK = 16,
+    ITEM_TYPE_SCROLL = 17;
+
