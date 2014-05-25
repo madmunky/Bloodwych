@@ -149,13 +149,18 @@ Player.prototype.toggleFrontObject = function() {
     }
 }
 Player.prototype.checkWoodenDoor = function(pos18) {
-	if (this.getBinaryView(pos18, 12, 4) === '2' && this.getBinaryView(pos18, ((5 - this.d) % 4) * 2) === '1') {
+	if(pos18 === 18) {
+		d = 2;
+	} else { //pos18 === 15
+		d = 0;
+	}
+	if (this.getBinaryView(pos18, 12, 4) === '2' && this.getBinaryView(pos18, ((5 + d - this.d) % 4) * 2) === '1') {
 		if(this.pocket.id === ITEM_KEY) {
 			this.consumeItemInHand();
 			this.setBinaryView(pos18, 11, 1);
-			this.setBinaryView(pos18, ((5 - this.d) % 4) * 2 + 1, 1);
-		} else if(this.getBinaryView(pos18, 11, 1) === '0') {
-	        this.setBinaryView(pos18, ((5 - this.d) % 4) * 2 + 1, 1);
+		}
+		if(this.getBinaryView(pos18, 11, 1) === '0') {
+	        this.setBinaryView(pos18, ((5 + d - this.d) % 4) * 2 + 1, 1);
 	    }
 	    if(this.getBinaryView(pos18, 11, 1) === '1') {
 	    	this.message("The door is locked", COLOUR[COLOUR_GREEN]);
