@@ -135,12 +135,12 @@ var DIRECTION_NORTH = 0,
     DIRECTION_SOUTH = 2,
     DIRECTION_WEST = 3;
 
-var CHAR_DISTANCE_VERY_CLOSE = 0,
-    CHAR_DISTANCE_CLOSE = 1,
-    CHAR_DISTANCE_MID = 2,
-    CHAR_DISTANCE_FAR = 3,
-    CHAR_DISTANCE_DISTANT = 4,
-    CHAR_DISTANCE_VERY_DISTANT = 5;
+var DISTANCE_VERY_CLOSE = 0,
+    DISTANCE_CLOSE = 1,
+    DISTANCE_MID = 2,
+    DISTANCE_FAR = 3,
+    DISTANCE_DISTANT = 4,
+    DISTANCE_VERY_DISTANT = 5;
 
 var CHAR_FRONT_SOLO = -1,
     CHAR_FRONT_LEFT = 0,
@@ -702,6 +702,8 @@ var KEYPAD_4 = 100,
 
 //items
 var item = new Array();
+var itemGfxD = new Array();
+var itemRef = new Array();
 
 var POCKET_LEFT_HAND = 0,
     POCKET_RIGHT_HAND = 1,

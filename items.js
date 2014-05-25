@@ -3,8 +3,7 @@ function Item(id, quantity, location) {
     this.quantity = quantity;
     this.location = location;
     this.type = this.getType();
-    this.gfx = [];
-    this.gfxD = [];
+    this.itemRef = itemRef[id];
 }
 
 Item.prototype.getType = function() {
@@ -90,28 +89,28 @@ Item.prototype.getWeaponPower = function() {
 }
 
 Item.prototype.getArmourClass = function() {
-	return 0;
+    return 0;
 }
 
 
 Item.prototype.setPocketItem = function(id, q) {
-	if(typeof id === "undefined" || id === 0) {
-		id = 0;
-		q = 0;
-	} else if(typeof q === "undefined") {
-		q = 1;
-	}
-	this.id = id;
-	this.quantity = q;
-	this.location.tower = -1;
-	this.location.floor = 0;
-	this.location.x = 0;
-	this.location.y = 0;
-	this.location.square = 0;
+    if (typeof id === "undefined" || id === 0) {
+        id = 0;
+        q = 0;
+    } else if (typeof q === "undefined") {
+        q = 1;
+    }
+    this.id = id;
+    this.quantity = q;
+    this.location.tower = -1;
+    this.location.floor = 0;
+    this.location.x = 0;
+    this.location.y = 0;
+    this.location.square = 0;
 }
 
 Item.prototype.toString = function() {
-	var loc = "";
+    var loc = "";
     if (typeof this.location.tower !== "undefined" && this.location.tower !== -1) {
         loc = ", location:[";
         loc = loc + "tower:" + this.location.tower;
@@ -143,12 +142,12 @@ function initItems() {
 }
 
 function newPocketItem(id, q) {
-	if(typeof id === "undefined" || id === 0) {
-		id = 0;
-		q = 0;
-	} else if(typeof q === "undefined") {
-		q = 1;
-	}
+    if (typeof id === "undefined" || id === 0) {
+        id = 0;
+        q = 0;
+    } else if (typeof q === "undefined") {
+        q = 1;
+    }
     return new Item(id, q, {
         tower: -1,
         floor: 0,
@@ -156,4 +155,35 @@ function newPocketItem(id, q) {
         y: 0,
         square: 0
     });
+}
+
+//This is the big item list
+//itemGfx was the former gfxUI, but only for pocket items
+function initItemRefs() {
+	createItemRef(0, "", null, null);
+    createItemRef(1, "Coinage", itemGfx[1], itemGfxD[1]);
+    createItemRef(2, "Common keys", itemGfx[2], itemGfxD[2]);
+    createItemRef(3, "Arrows", itemGfx[3], itemGfxD[3]);
+    createItemRef(4, "Elf arrows", itemGfx[3], itemGfxD[3]); //same dungeon gfx as arrows
+    //more here...
+}
+
+//Read out the items here
+function createItemRef(id, name, gfx, gfxD) {
+    itemRef[id] = {
+        name: name,
+        gfx: gfx,
+        gfxD: gfxD
+    };
+}
+
+//Read the dungeon item gfx here
+//Reads in the image
+function initItemGfxD() {
+	for(i = 0; i < 0; i++) {
+		itemGfxD[i] = new Array();
+		for(d = DISTANCE_VERY_CLOSE; d <= DISTANCE_DISTANT; d++) {
+			itemGfxD[i][d] = null;
+		}
+	}
 }
