@@ -5,9 +5,7 @@
 JORG
 -----
 
-* Add defending vitality loss (rpg)
 * Fix Big monster 'edge of screen'
-* Better coin/key exchange
 * Big door (un)locking with common keys
 * Fix pockets (don't allow common keys/coins in different slots)
 * Fix pockets only allow correct items to hands/amour slots

@@ -548,6 +548,14 @@ Player.prototype.drawMonster = function(m, distance, offset) {
     }
 }
 
+Player.prototype.getActivePocketChampion = function() {
+    var ch = this.getOrderedChampionIds();
+    if(this.getChampion(ch[this.uiRightPanel.activePocket]) !== null) {
+        return this.getChampion(ch[this.uiRightPanel.activePocket]);
+    }
+    return null;
+}
+
 Player.prototype.consumeItemInHand = function(s) {
 	if(this.pocket.quantity <= 1) {
 		this.pocket.setPocketItem();
@@ -557,9 +565,9 @@ Player.prototype.consumeItemInHand = function(s) {
 }
 
 Player.prototype.exchangeItemWithHand = function(s) {
-	var ch = this.getOrderedChampionIds();
-	if(this.getChampion(ch[this.uiRightPanel.activePocket]) !== null) {
-		var item = this.getChampion(ch[this.uiRightPanel.activePocket]).pocket[s];
+    var ch = this.getActivePocketChampion();
+	if(ch !== null) {
+		var item = ch.pocket[s];
 		var itemH = this.pocket;
 		if(item.type === ITEM_TYPE_STACKABLE && (itemH.id === 0 || item.id === itemH.id)) {
 			if(itemH.id === 0) {
@@ -573,12 +581,34 @@ Player.prototype.exchangeItemWithHand = function(s) {
 				itemH.setPocketItem();
 				item.setPocketItem(item.id, item.quantity + qty);
 			}
+        } else if(itemH.type === ITEM_TYPE_STACKABLE) {
+            i = this.findItem(itemH.id);
+            var qty = 0;
+            if(i > -1) {
+                qty = ch.pocket[i].quantity;
+                ch.pocket[i].setPocketItem();
+            }
+            var temp = newPocketItem(item.id, item.quantity);
+            item.setPocketItem(itemH.id, itemH.quantity + qty);
+            itemH.setPocketItem(temp.id, temp.quantity);
 		} else {
 			var temp = newPocketItem(item.id, item.quantity);
 			item.setPocketItem(itemH.id, itemH.quantity);
 			itemH.setPocketItem(temp.id, temp.quantity);
 		}
 	}
+}
+
+Player.prototype.findItem = function(i) {
+    var ch = this.getActivePocketChampion();
+    if(ch !== null) {
+        for(ip = 0; ip < ch.pocket.length; ip++) {
+            if(ch.pocket[ip].id === i) {
+                return ip;
+            }
+        }
+    }
+    return -1;
 }
 
 Player.prototype.message = function(txt, col) {

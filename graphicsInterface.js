@@ -370,7 +370,7 @@ function rightUI(p) {
         ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
     }
 
-    writeFontImage(champion[p.champion[p.championLeader]].firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(p.getChampion(p.championLeader).firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].width * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SCROLL].width * scale, gfxUI[UI_GFX_ICON_SCROLL].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_POCKETBOX], p.ScreenX + 290 * scale, (p.ScreenY + 21) * scale, gfxUI[UI_GFX_POCKETBOX].width * scale, gfxUI[UI_GFX_POCKETBOX].height * scale);
@@ -384,8 +384,8 @@ function rightUI(p) {
     }
     
     for (c = 0;c < 4;c++){
-        var a = champion[p.champion[c]].prof;
-        var b = champion[p.champion[c]].colour;
+        var a = p.getChampion(c).prof;
+        var b = p.getChampion(c).colour;
         ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
         if (c === p.championLeader){
             ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
@@ -404,14 +404,15 @@ function drawPocketUI(p) {
         ctx.drawImage(gfxUI[UI_GFX_NAME_RED], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_RED].width * scale, gfxUI[UI_GFX_NAME_RED].height * scale);
     }
 
-    var ch = p.getOrderedChampionIds();
-    var cp = ch[p.uiRightPanel.activePocket];
-    writeFontImage(champion[p.champion[cp]].firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
+    var chp = p.getActivePocketChampion();
+    //var ch = p.getOrderedChampionIds();
+    //var cp = ch[p.uiRightPanel.activePocket];
+    writeFontImage(chp.firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
 
     var i = 0;
     for (y = 0; y < 2; y++) {
         for (x = 0; x < 6; x++) {
-            var pocket = champion[p.champion[cp]].pocket[i];
+            var pocket = chp.pocket[i];
             var pocketId = pocket.id;            
             if (pocketId === 0) {               
                 pocketId = UI_GFX_POCKET_EMPTY;
@@ -450,7 +451,7 @@ function drawPocketUI(p) {
     }
 
     ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 226) * scale, (p.ScreenY + 54) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
-    var ac = "" + champion[p.champion[cp]].getArmourClass();
+    var ac = "" + chp.getArmourClass();
     if (ac >= 0) {
         ac = "+" + ac;
     } else {
@@ -461,19 +462,19 @@ function drawPocketUI(p) {
 
     var ch = p.getOrderedChampionIds();
     for (x = 0; x < 6; x++) {
-        var x1 = ch[x];
+        var cid = ch[x];
         var g;
 
         if (x < 4) {
-            g = champion[p.champion[x1]].prof + UI_GFX_POCKET_SPADE;
+            g = champion[p.champion[cid]].prof + UI_GFX_POCKET_SPADE;
         }
 
         switch (x) {
 
             case 0: case 1: case 2: case 3:
                 {
-                    ctx.drawImage(gfxUI[g][champion[p.champion[x1]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-                    if (ch[x] === cp){
+                    ctx.drawImage(gfxUI[g][champion[p.champion[cid]].colour], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    if (chp.recruitment.recruited && cid === chp.recruitment.position){
                         ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
                     }                    
                 };
