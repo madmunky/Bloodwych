@@ -18,8 +18,6 @@ CHRIS
 * Add more click areas e.g. champion signs, for selecting leader and exchanging
 * Communication Text Array
 * Finish Spell Book
-* Finish Character Stats Page
-* Fix pocket item positions in image 
 * Change drawImage coords for UI images to use the uiClickInArea values
 * Make Fairy Screens
 * Make Sleeping Screen

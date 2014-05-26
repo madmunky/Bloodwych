@@ -273,9 +273,9 @@ function initItemRefs() {
         createItemRef(33, "Adamant Plate", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_PLATE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_GREEN]), itemGfxD[x]);
         createItemRef(34, "Crystal Chain", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_CHAIN],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), itemGfxD[x]);
         createItemRef(35, "Crystal Plate", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_PLATE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), itemGfxD[x]);
-        createItemRef(36, "Leather Shield", gfxUI[UI_GFX_POCKET_SHIELD_1], itemGfxD[x]);
-        createItemRef(37, "Buckler", gfxUI[UI_GFX_POCKET_SHIELD_2], itemGfxD[x]);
-        createItemRef(38, "Rune Shield", gfxUI[UI_GFX_POCKET_SHIELD_3], itemGfxD[x]);
+        createItemRef(36, "Leather Shield", gfxUI[UI_GFX_POCKET_SHIELD_2], itemGfxD[x]);
+        createItemRef(37, "Buckler", gfxUI[UI_GFX_POCKET_SHIELD_3], itemGfxD[x]);
+        createItemRef(38, "Rune Shield", gfxUI[UI_GFX_POCKET_SHIELD_1], itemGfxD[x]);
         createItemRef(39, "Large Shield", gfxUI[UI_GFX_POCKET_SHIELD_4], itemGfxD[x]);
         createItemRef(40, "Moon Shield", gfxUI[UI_GFX_POCKET_SHIELD_5], itemGfxD[x]);
         createItemRef(41, "Dragon Scale", gfxUI[UI_GFX_POCKET_SHIELD_6], itemGfxD[x]);
