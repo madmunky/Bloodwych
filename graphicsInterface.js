@@ -544,6 +544,7 @@ function drawStatsPage(p) {
     writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_GREY_DARKEST]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 49), COLOUR[COLOUR_GREEN]);
     
+    writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 57), COLOUR[COLOUR_YELLOW]);
     var t = foodBar(p.getChampion(p.championLeader).food,60);
     ctx.drawImage(t, (p.ScreenX + 245) * scale, (p.ScreenY + 65) * scale, t.width * scale, t.height * scale);
     
