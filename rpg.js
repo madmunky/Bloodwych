@@ -13,8 +13,9 @@ function calculateAttack(att, def) {
 	    var attack = 0;
 		var crit = 1;
 		var hit = 1.0;
-		var exhaustion = 0;
 		var defense = 0;
+		var attExhaustion = 0;
+		var defExhaustion = 0;
 		var fromDir = 0;
 
 		//Attacker calculations
@@ -30,7 +31,7 @@ function calculateAttack(att, def) {
 			attack += Math.round(from.stat.str / 8);
 			attack += Math.round(from.stat.agi / 32);
 			attack += from.getWeaponPower();
-			exhaustion = Math.round(attack / 3);
+			attExhaustion = Math.floor(Math.random() * 2) + 1; //Math.round(attack / 3);
 			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
 		} else {
 			var from = mon[a];
@@ -57,6 +58,7 @@ function calculateAttack(att, def) {
 						defense += 5 + Math.round(to.stat.agi / 4);
 					}
 					defense -= to.getArmourClass();
+					defExhaustion = Math.floor(Math.random() * 2) + 1;
 					break;
 				}
 			}
@@ -72,13 +74,14 @@ function calculateAttack(att, def) {
 					var to = mon[d];
 					if(to.champId > -1) { //champion
 						to = champion[to.champId];
-						defense += 10 + Math.round(to.stat.agi / 4);
+						defense += 15 + Math.round(to.stat.agi / 4);
 						defense -= to.getArmourClass();
+						defExhaustion = Math.floor(Math.random() * 2) + 1;
 					} else { //monster
 						if(!to.attacking) {
-							defense += 10;
+							defense += 5;
 						}
-						defense += 5 + to.level * 2;
+						defense += 10 + to.level * 2;
 					}
 					break;
 				}
@@ -95,7 +98,8 @@ function calculateAttack(att, def) {
 				attacker: from,
 				defender: to,
 				power: power,
-				exhaustion: exhaustion
+				attExhaustion: attExhaustion,
+				defExhaustion: defExhaustion
 			});
 		}
 	}

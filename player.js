@@ -53,6 +53,10 @@ Player.prototype.canMoveToPos = function(pos) {
     if (getHexToBinaryPosition(hex, 8) == '1') {
         return false;
     }
+    var xy = getOffsetByRotation((this.d + this.moving) % 4);
+    if(getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y) !== null) {
+        return false;
+    }
 
     var objThis = getHexToBinaryPosition(view[18], 12, 4);
     var objNext = getHexToBinaryPosition(hex, 12, 4);
@@ -210,16 +214,12 @@ Player.prototype.move = function(d) {
 	    this.moving = d;
 	    this.lastX = this.x;
 	    this.lastY = this.y;
-	    this.attacking = false;
-	    this.stopChampionAttack();
+	    this.attack(false);
 	    var viewIndex = [15, 16, 19, 17];
 	    if (this.canMoveToPos(viewIndex[d])) {
 	        xy = getOffsetByRotation((this.d + d) % 4);
 	        this.x = this.x + xy.x;
 	        this.y = this.y + xy.y;
-	        if (debug) {
-	            //PrintLog("Player Moved " + getDirection(this.d));
-	        }
 	        this.setMovementData();
 	        this.doEvent(true);
 	    } else if (d === 2) { //check current square when moving backward
@@ -244,36 +244,45 @@ Player.prototype.tryAttack = function() {
 	        this.attack(true, mon);
 	        return true;
 	    }
-	    this.stopChampionAttack();
+	    this.attack(false);
 	}
 }
 
 Player.prototype.attack = function(attack, target) {
     if (attack) {
-        var self = this;
         var combat = calculateAttack(this, target);
         for (com = 0; com < combat.length; com++) {
-            var att = combat[com].attacker;
-            var def = combat[com].defender;
-            var pwr = combat[com].power;
-            var exh = combat[com].exhaustion;
-            att.monster.attacking = true;
-            att.doDamageTo(def, pwr, exh);
-            if (def instanceof Champion) {
-                PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
-            } else if (def instanceof Monster) {
-                PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+            (function(combat, com) {
+                var att = combat[com].attacker;
+                att.recruitment.attackTimer = setTimeout(function() {
+                    att.recruitment.attackTimer = 0;
+                    var def = combat[com].defender;
+                    var pwr = combat[com].power;
+                    var aExh = combat[com].attExhaustion;
+                    var dExh = combat[com].defExhaustion;
+                    att.monster.attacking = true;
+                    att.doDamageTo(def, pwr, aExh, dExh);
+                    if (def instanceof Champion) {
+                        PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
+                    } else if (def instanceof Monster) {
+                        PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+                    }
+                }, att.recruitment.position * 400);
+            })(combat, com)
+        }
+    } else {
+        for (c = 0; c < this.champion.length; c++) {
+            var ch = this.getChampion(c);
+            if(ch !== null) {
+                var m = ch.monster;
+                if(ch.recruitment.attackTimer !== 0) {
+                    clearTimeout(ch.recruitment.attackTimer);
+                    ch.recruitment.attackTimer = 0;
+                }
+                m.attacking = false;
             }
         }
-    }
-}
-
-Player.prototype.stopChampionAttack = function() {
-    for (c = 0; c < this.champion.length; c++) {
-    	if(this.getChampion(c) !== null) {
-	        var m = this.getChampion(c).monster;
-	        m.attacking = false;
-	    }
+        this.attacking = false;
     }
 }
 
@@ -381,7 +390,7 @@ Player.prototype.checkDead = function() {
 		}
 		if(deadNum == 4) {
 			this.dead = true;
-	    	this.stopChampionAttack();
+	    	this.attack(false);
 			this.setMovementData();
 		}
 	}

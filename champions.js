@@ -5,7 +5,8 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
     this.recruitment = {
         recruited: false,
         playerId: 0,
-        position: 0
+        position: 0,
+        attackTimer: 0
     };
     this.firstName = firstName;
     this.lastName = lastName;
@@ -28,12 +29,18 @@ Champion.prototype.addSpellToSpellBook = function(spell) {
     this.spellBook[spell].learnt = true;
 }
 
-Champion.prototype.doDamageTo = function(def, dmg, exh) {
+Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
     var self = this;
-    if (typeof exh !== "undefined") {
-        this.stat.vit -= exh;
+    if (typeof aExh !== "undefined") {
+        this.stat.vit -= aExh;
         if (this.stat.vit <= 0) {
             this.stat.vit = 0;
+        }
+    }
+    if (typeof dExh !== "undefined") {
+        def.stat.vit -= dExh;
+        if (def.stat.vit <= 0) {
+            def.stat.vit = 0;
         }
     }
     if (def instanceof Champion) {
@@ -42,11 +49,7 @@ Champion.prototype.doDamageTo = function(def, dmg, exh) {
         def.getDamage(dmg);
     }
     if (this.recruitment.recruited) {
-	    (function(d) {
-	        setTimeout(function() {
-	            self.writeAttackPoints(d);
-	        }, self.recruitment.position * 400);
-	    })(dmg);
+	    self.writeAttackPoints(dmg);
 	    redrawUI(self.recruitment.playerId);
 	}
 }
@@ -65,11 +68,7 @@ Champion.prototype.getDamage = function(dmg, safe) {
             this.monster.die();
         }
         if (this.recruitment.recruited) {
-            (function(d) {
-                setTimeout(function() {
-                    self.writeAttackPoints(d, true);
-                }, self.recruitment.position * 400);
-            })(dmg);
+            self.writeAttackPoints(dmg, true);
             player[self.recruitment.playerId].alertDamagedPlayer();
             player[self.recruitment.playerId].checkDead();
             redrawUI(self.recruitment.playerId);
@@ -108,7 +107,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
                 y = 0;
                 break;
         }
-        ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 106 * scale, 8 * scale);
+        ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 96 * scale, 8 * scale);
         writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
         if (typeof def === "undefined" || def === false) {
             if (pwr > 0) {
@@ -121,7 +120,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
         }
         (function(p, x, y) {
             setTimeout(function() {
-                ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 106 * scale, 8 * scale);
+                ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 96 * scale, 8 * scale);
             }, 1500);
         })(p, x, y);
     }

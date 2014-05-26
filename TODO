@@ -23,7 +23,7 @@ CHRIS
 * Communication Text Array
 * Finish Spell Book
 * Finish Character Stats Page
-* Fix pocket item positions
+* Fix pocket item positions (change drawImage coords to uiClickInArea values)
 * Make Fairy Screens
 * Make Sleeping Screen
 * Add movement key highlight

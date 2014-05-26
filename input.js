@@ -189,8 +189,8 @@ function processCanvasInput(x, y) {
                 successfulClick = true;
             }
             if (uiClickInArea(x, y, UI_CLICK_DEFEND, player[p])) {
-				player[p].attacking = false;
-			    player[p].stopChampionAttack();
+				//player[p].attacking = false;
+			    player[p].attack(false);
                 successfulClick = true;
             }
 
