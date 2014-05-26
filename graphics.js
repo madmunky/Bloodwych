@@ -540,9 +540,10 @@ function drawWoodenObject(p, x) {
 }
 
 function drawRect(p, x, y, w, h, c) {
+	var off = scale * 0.5;
 	p.Portal.lineWidth = scale;
 	p.Portal.strokeStyle = 'rgba(' + c + ')';
-	p.Portal.strokeRect(x * scale + 0.5, y * scale + 0.5, w * scale, h * scale);
+	p.Portal.strokeRect(x * scale + off, y * scale + off, w * scale, h * scale);
 }
 
 function recolourSprite(img, paletteFrom, paletteTo) {

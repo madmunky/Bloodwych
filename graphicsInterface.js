@@ -386,10 +386,12 @@ function rightUI(p) {
     }
     
     for (c = 0;c < 4;c++){
-        var a = p.getChampion(c).prof;
-        var b = p.getChampion(c).colour;
+    	var ca = [0, 1, 3, 2];
+    	var c1 = ca[c]
+        var a = p.getChampion(c1).prof;
+        var b = p.getChampion(c1).colour;
         ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-        if (c === p.championLeader){
+        if (c1 === p.championLeader){
             ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
         } 
     }
@@ -500,6 +502,10 @@ function drawPocketUI(p) {
                     ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
                     if (p.pocket.id > 0) {
                         writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
+                        if(p.pocket.type === ITEM_TYPE_FOOD) {
+	                        var t = foodBar(chp.food, 69);
+  							ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
+  						}
                     }
                     //ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY], ((p.ScreenX + 225) + (x * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                 };
@@ -518,35 +524,35 @@ function drawPocketUI(p) {
 
 function drawStatsPage(p) {
     ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
-    writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 17), COLOUR[COLOUR_YELLOW]);
-    writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 17), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage("0" + champion[p.champion[p.championLeader]].level.toString(), p.ScreenX + 297, (p.ScreenY + 17), COLOUR[COLOUR_WHITE]);
+    writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 16), COLOUR[COLOUR_YELLOW]);
+    writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 16), COLOUR[COLOUR_GREY_DARKEST]);
+    writeFontImage("0" + champion[p.champion[p.championLeader]].level.toString(), p.ScreenX + 297, (p.ScreenY + 16), COLOUR[COLOUR_WHITE]);
 
-    writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 25), COLOUR[COLOUR_BLUE_DARK]);
-    writeFontImage(champion[p.champion[p.championLeader]].stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 25), COLOUR[COLOUR_YELLOW]);
-    writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 25), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 25), COLOUR[COLOUR_BLUE_DARK]);
-    writeFontImage(champion[p.champion[p.championLeader]].stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 25), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 24), COLOUR[COLOUR_BLUE_DARK]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 24), COLOUR[COLOUR_YELLOW]);
+    writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 24), COLOUR[COLOUR_GREY_DARKEST]);
+    writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 24), COLOUR[COLOUR_BLUE_DARK]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 24), COLOUR[COLOUR_YELLOW]);
 
-    writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 33), COLOUR[COLOUR_BLUE_DARK]);
-    writeFontImage(champion[p.champion[p.championLeader]].stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 33), COLOUR[COLOUR_YELLOW]);
-    writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 33), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 33), COLOUR[COLOUR_BLUE_DARK]);
-    writeFontImage(champion[p.champion[p.championLeader]].stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 33), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 32), COLOUR[COLOUR_BLUE_DARK]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 32), COLOUR[COLOUR_YELLOW]);
+    writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 32), COLOUR[COLOUR_GREY_DARKEST]);
+    writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 32), COLOUR[COLOUR_BLUE_DARK]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 32), COLOUR[COLOUR_YELLOW]);
 
-    writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 41), COLOUR[COLOUR_BLACK]);
-    writeFontImage(champion[p.champion[p.championLeader]].stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 41), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-    writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 41), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage(champion[p.champion[p.championLeader]].stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 41), COLOUR[COLOUR_GREEN]);
+    writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 40), COLOUR[COLOUR_BLACK]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 40), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+    writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 40), COLOUR[COLOUR_GREY_DARKEST]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 40), COLOUR[COLOUR_GREEN]);
 
-    writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 49), COLOUR[COLOUR_BLACK]);
-    writeFontImage(champion[p.champion[p.championLeader]].stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-    writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage(champion[p.champion[p.championLeader]].stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 49), COLOUR[COLOUR_GREEN]);
+    writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 48), COLOUR[COLOUR_BLACK]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 48), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+    writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 48), COLOUR[COLOUR_GREY_DARKEST]);
+    writeFontImage(champion[p.champion[p.championLeader]].stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 48), COLOUR[COLOUR_GREEN]);
     
-    writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 57), COLOUR[COLOUR_YELLOW]);
-    var t = foodBar(p.getChampion(p.championLeader).food,60);
-    ctx.drawImage(t, (p.ScreenX + 245) * scale, (p.ScreenY + 65) * scale, t.width * scale, t.height * scale);
+    writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 56), COLOUR[COLOUR_YELLOW]);
+    var t = foodBar(p.getChampion(p.championLeader).food,62);
+    ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 65) * scale, t.width * scale, t.height * scale);
     
     
 }
@@ -953,10 +959,10 @@ function foodBar(foodVal,width){
     can.width = width;
     can.height = 5;
     var canContent = can.getContext("2d");
-    var t = Math.floor(foodVal / 255.0 * (width-10));    
+    var t = Math.floor(foodVal / 255.0 * (width-12));    
     canContent.drawImage(gfxUI[UI_GFX_FOOD_POINTER], 0, 1);
-    canContent.fillStyle = 'rgb(128, 32, 0)';
-    canContent.fillRect(5, 0, t, 5);    
+    canContent.fillStyle = 'rgb(' + COLOUR[COLOUR_RED_DARK][0] + ',' + COLOUR[COLOUR_RED_DARK][1] + ',' + COLOUR[COLOUR_RED_DARK][2] + ')';
+    canContent.fillRect(6, 0, t, 5);    
     canContent.drawImage(flipImage(gfxUI[UI_GFX_FOOD_POINTER]), width-4, 1);
     canContent.save();
     return can; 

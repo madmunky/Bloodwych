@@ -126,26 +126,29 @@ Player.prototype.changeDownFloor = function() {
 
 //Take the map code which is in front of the player and see if the player can interact with it.
 Player.prototype.action = function() {
-    //Wooden doors (in front of player)
-	this.checkWoodenDoor(15);
-    //Wooden doors (on player)
-	this.checkWoodenDoor(18);
-    //Wall switches
-    if (this.getBinaryView(15, 0, 4) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
-        this.setBinaryView(15, 5, 1);
-        switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
-    }
-    //Check if something is in the way
-    if (this.getMonstersInRange(15).length > 0) {
-        return false;
-    }
-    //Doors
-    if (this.getBinaryView(15, 12, 4) === '5' && this.getBinaryView(15, 4) === '0') {
-        this.setBinaryView(15, 7, 1);
-        //this.setBinaryView(15, 1, '000'); //Will set the door to 'normal'
-    }
-    return true;
-};
+	if(!this.dead) {
+	    //Wooden doors (in front of player)
+		this.checkWoodenDoor(15);
+	    //Wooden doors (on player)
+		this.checkWoodenDoor(18);
+	    //Wall switches
+	    if (this.getBinaryView(15, 0, 4) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
+	        this.setBinaryView(15, 5, 1);
+	        switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
+	    }
+	    //Check if something is in the way
+	    if (this.getMonstersInRange(15).length > 0) {
+	        return false;
+	    }
+	    //Doors
+	    if (this.getBinaryView(15, 12, 4) === '5' && this.getBinaryView(15, 4) === '0') {
+	        this.setBinaryView(15, 7, 1);
+	        //this.setBinaryView(15, 1, '000'); //Will set the door to 'normal'
+	    }
+	    return true;
+	}
+	return false;
+}
 
 Player.prototype.toggleFrontObject = function() {
     if (debug) {
@@ -573,7 +576,7 @@ Player.prototype.consumeItemInHand = function() {
 
 Player.prototype.useItemInHand = function() {
     var ch = this.getActivePocketChampion();
-    if(ch !== null) {
+    if(ch !== null && !ch.dead) {
         var itemH = this.pocket;
         if(itemH.id !== 0) {
             switch(itemH.type) {

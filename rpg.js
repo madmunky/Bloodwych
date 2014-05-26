@@ -17,24 +17,30 @@ function calculateAttack(att, def) {
 		var attExhaustion = 0;
 		var defExhaustion = 0;
 		var fromDir = 0;
+		var from;
+		var to;
+		var fmon;
+		var tmon;
 
 		//Attacker calculations
 		if(att instanceof Player) {
-        	var from = champion[att.champion[a]];
-        	if(typeof from === "undefined" || from.monster.dead) {
+        	from = champion[att.champion[a]];
+        	fmon = from.monster;
+        	if(typeof from === "undefined" || fmon.dead) {
         		continue;
         	}
 			if(Math.floor(Math.random() * 20) >= 19) {
 				crit = 2;
 			}
-        	fromDir = from.monster.d;
+        	fromDir = fmon.d;
 			attack += Math.round(from.stat.str / 8);
 			attack += Math.round(from.stat.agi / 32);
 			attack += from.getWeaponPower();
 			attExhaustion = Math.floor(Math.random() * 2) + 1;
 			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
 		} else {
-			var from = mon[a];
+			from = mon[a];
+			fmon = from;
         	if(typeof from === "undefined" || from.dead) {
         		continue;
         	}
@@ -45,10 +51,12 @@ function calculateAttack(att, def) {
 		//Defender calculations
 		if(def instanceof Player) {
 			for (d = 0; d < 2; d++) {
-				var to = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
+				to = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
+				tmon = to.monster;
 				var d1 = 0;
 				if(typeof to === "undefined" || to.monster.dead) {
 					to = champion[def.champion[(4 + fromDir - def.d + d) % 4]];
+					tmon = to.monster;
 					if(typeof to === "undefined" || to.monster.dead) {
 						d1 += 2;
 						continue;
@@ -73,9 +81,11 @@ function calculateAttack(att, def) {
 			}
 			for (d = 0; d < mon.length; d++) {
 				if(Math.random() < 1.0 / (mon.length - d)) {
-					var to = mon[d];
+					to = mon[d];
+					tmon = to;
 					if(to.champId > -1) { //champion
 						to = champion[to.champId];
+						tmon = to.monster;
 						defense += 15 + Math.round(to.stat.agi / 4);
 						defense -= to.getArmourClass();
 						defExhaustion = Math.floor(Math.random() * 2) + 1;
@@ -91,7 +101,7 @@ function calculateAttack(att, def) {
 		}
 
 		//Final calculations
-		if(typeof from !== "undefined" && !from.monster.dead && typeof to !== "undefined" && !to.monster.dead) {
+		if(typeof from !== "undefined" && !fmon.dead && typeof to !== "undefined" && !tmon.dead) {
 			var power = Math.floor(Math.random() * 20 * crit) + attack - defense;
 			if(Math.random() > hit || power < 0) {
 				power = 0;
