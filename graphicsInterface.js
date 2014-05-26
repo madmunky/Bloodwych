@@ -121,6 +121,8 @@ function grabUISprites(spriteSheetIMG) {
     ImageArray.push(ImagePortraits);
     ImagePortraits = [];
 
+    ImageArray.push(grabImageAt(spriteSheetIMG, 93, 176, 4, 3, false)); //Food Bar Pointer
+
     return ImageArray;
 
 }
@@ -447,7 +449,7 @@ function drawPocketUI(p) {
                 if (pocketId < 3){
                     writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
                 }else{
-                    writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 30) + (y * 16)), COLOUR[COLOUR_GREEN]);
+                    writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 31) + (y * 16)), COLOUR[COLOUR_GREEN]);
                 }
                 
             }
@@ -541,6 +543,11 @@ function drawStatsPage(p) {
     writeFontImage(champion[p.champion[p.championLeader]].stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
     writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_GREY_DARKEST]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 49), COLOUR[COLOUR_GREEN]);
+    
+    var t = foodBar(p.getChampion(p.championLeader).food,60);
+    ctx.drawImage(t, (p.ScreenX + 245) * scale, (p.ScreenY + 65) * scale, t.width * scale, t.height * scale);
+    
+    
 }
 
 function createShield(id, type, colour) {
@@ -938,4 +945,18 @@ function recolourUiGfx(img, colourFrom, colourTo) {
     canContent.putImageData(imageData, 0, 0);
     canContent.save();
     return can;
+}
+
+function foodBar(foodVal,width){
+   var can = document.createElement('canvas');
+    can.width = width;
+    can.height = 5;
+    var canContent = can.getContext("2d");
+    var t = Math.floor(foodVal / 255.0 * (width-10));    
+    canContent.drawImage(gfxUI[UI_GFX_FOOD_POINTER], 0, 1);
+    canContent.fillStyle = 'rgb(128, 32, 0)';
+    canContent.fillRect(5, 0, t, 5);    
+    canContent.drawImage(flipImage(gfxUI[UI_GFX_FOOD_POINTER]), width-4, 1);
+    canContent.save();
+    return can; 
 }

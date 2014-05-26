@@ -293,7 +293,6 @@ function flipImage(image) {
 	flipcontext.drawImage(image, 0, 0, image.width, image.height);
 	flipcontext.save();
 
-	can = null;
 	return can;
 
 };
