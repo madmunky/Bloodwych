@@ -444,7 +444,12 @@ function drawPocketUI(p) {
                 if (qty < 10) {
                     qty = "0" + qty;
                 }
-                writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
+                if (pocketId < 3){
+                    writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
+                }else{
+                    writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 30) + (y * 16)), COLOUR[COLOUR_GREEN]);
+                }
+                
             }
             i++;
         }
