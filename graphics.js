@@ -289,12 +289,15 @@ function drawPlayersView(p) {
 	p.getViewPortal();
 
 	if(p.dead) {
-		p.Portal.clearRect(0.5, 0.5, 128 * scale, 76 * scale);
+		//p.Portal.clearRect(0.5, 0.5, 128 * scale, 76 * scale);
+                p.Portal.fillStyle = 'rgb(0, 0, 0)';
+                p.Portal.fillRect(0.5, 0.5, 128 * scale, 76 * scale);
+                //p.PlayerCanvas.width =  p.PlayerCanvas.width;
 		drawRect(p, 1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK]);
 		drawRect(p, 0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT]);
 		drawRect(p, 2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT]);
-		writeFontImage(TEXT_THOU, Math.floor(p.PortalX / scale) + 64, Math.floor(p.PortalY / scale) + 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER);
-		writeFontImage(TEXT_ART_DEAD, Math.floor(p.PortalX / scale) + 64, Math.floor(p.PortalY / scale) + 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER);
+		writeFontImage(TEXT_THOU, 64, 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);
+		writeFontImage(TEXT_ART_DEAD, 64, 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);
 	} else {
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
 

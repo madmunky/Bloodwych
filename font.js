@@ -20,17 +20,20 @@ function grabFont() {
 
 }
 
-function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, alignment) {
+function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, alignment,myContent) {
+        if (typeof myContent === 'undefined'){
+        myContent = ctx;
+        }
 	(function(fontString, locationX, locationY, paletteTo, alignment) {
 		var alpha = 0.0;
 		clearInterval(p.messageTimeout);
 		clearTimeout(p.messageTimeout);
 	    p.messageTimeout = setInterval(function () {
-	    	ctx.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
-	    	ctx.save();
-	    	ctx.globalAlpha = alpha;
+	    	myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+	    	myContent.save();
+	    	myContent.globalAlpha = alpha;
 	        writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
-	        ctx.restore();
+	        myContent.restore();
 	        alpha = alpha + 0.1;
 	        if (alpha > 1) {
 			    (function(fontString, locationX, locationY, paletteTo, alignment) {
@@ -39,14 +42,14 @@ function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, 
 				    p.messageTimeout = setTimeout(function() {
 				    	(function(fontString, locationX, locationY, paletteTo, alignment, alpha) {
 						    p.messageTimeout = setInterval(function () {
-						    	ctx.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
-								ctx.save();
-								ctx.globalAlpha = alpha;
+						    	myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+								myContent.save();
+								myContent.globalAlpha = alpha;
 						        writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
-						        ctx.restore();
+						        myContent.restore();
 						        alpha = alpha - 0.1;
 						        if (alpha < 0) {
-						            ctx.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+						            myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
 						            clearInterval(p.messageTimeout);
 						        }
 						    }, speed);
@@ -58,11 +61,14 @@ function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, 
 	})(fontString, locationX, locationY, paletteTo, alignment);
 }
 
-function writeFontImage(fontString, locationX, locationY, paletteTo, alignment) {
+function writeFontImage(fontString, locationX, locationY, paletteTo, alignment,myContent) {
 try{
     if (typeof(font[0]) !== 'undefined'){
     if (typeof alignment === "undefined") {
     	alignment = FONT_ALIGNMENT_LEFT;
+    }
+    if (typeof myContent === 'undefined'){
+        myContent = ctx;
     }
 
 	fontString = ("" + fontString).toUpperCase();
@@ -110,7 +116,7 @@ try{
 	} else { //FONT_ALIGNMENT_LEFT
 		xo = 0;
 	}
-	ctx.drawImage(can, (xo + locationX) * scale, locationY * scale, can.width * scale, can.height * scale);
+	myContent.drawImage(can, (xo + locationX) * scale, locationY * scale, can.width * scale, can.height * scale);
 	can = null;
     }
     }catch(e){"Write font error: " +e.toString()};
