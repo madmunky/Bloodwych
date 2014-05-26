@@ -82,7 +82,13 @@ Champion.prototype.getWeaponPower = function() {
 }
 
 Champion.prototype.getArmourClass = function() {
-	return 10 - this.stat.ac - this.pocket[2].getArmourClass() - this.pocket[3].getArmourClass();
+	var ac = this.stat.ac;
+	var arm = this.pocket[2].getArmourClass();
+	var sld = this.pocket[3].getArmourClass();
+	if(ac > arm) {
+		arm = ac; 
+	}
+	return 10 - arm - sld;
 }
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {

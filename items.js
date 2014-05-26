@@ -106,6 +106,64 @@ Item.prototype.getFoodValue = function() {
 }
 
 Item.prototype.getArmourClass = function() {
+    if (this.type === ITEM_TYPE_ARMOUR) {
+    	switch (this.id) {
+    		case 27:
+    		return 3;
+    		case 28:
+    		return 5;
+    		case 29:
+    		return 7;
+    		case 30:
+    		return 8;
+    		case 31:
+    		return 11;
+    		case 32:
+    		return 13;
+    		case 33:
+    		return 15;
+    		case 34:
+    		return 17;
+    		case 35:
+    		return 19;
+    		default:
+    		break;
+    	}
+    } else if (this.type === ITEM_TYPE_SHIELD) {
+    	switch (this.id) {
+    		case 36:
+    		return 1;
+    		case 37:
+    		return 2;
+    		case 38:
+    		return 4;
+    		case 39:
+    		return 3;
+    		case 40:
+    		return 4;
+    		case 41:
+    		return 5;
+    		case 42:
+    		return 7;
+    		default:
+    		break;
+    	}
+	} else if (this.type === ITEM_TYPE_GLOVES) {
+		switch (this.id) {
+    		case 43:
+    		return 1;
+    		case 44:
+    		return 2;
+    		case 45:
+    		return 3;
+    		case 46:
+    		return 4;
+    		case 47:
+    		return 5;
+    		default:
+    		break;
+    	}
+    }
     return 0;
 }
 
