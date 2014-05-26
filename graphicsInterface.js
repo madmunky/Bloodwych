@@ -875,25 +875,25 @@ function uiClickAreas() {
     }); //SCROLLDOWN BUTTON
         UCA.push({
         x: 289,
-        y: 96,
+        y: 48,
         width: 16,
         height: 16
     }); //Character Front Left Icon
         UCA.push({
         x: 305,
-        y: 96,
+        y: 48,
         width: 16,
         height: 16
     }); //Character Front Right Icon
         UCA.push({
         x: 289,
-        y: 112,
+        y: 64,
         width: 16,
         height: 16
     }); //Character Back Left Icon
         UCA.push({
         x: 305,
-        y: 112,
+        y: 64,
         width: 16,
         height: 16
     }); //Character Back Right Icon
