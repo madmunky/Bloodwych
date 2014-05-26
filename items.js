@@ -47,7 +47,7 @@ Item.prototype.getType = function() {
 }
 
 Item.prototype.getWeaponPower = function() {
-    if (this.type === ITEM_TYPE_ARMOUR || this.type === ITEM_TYPE_SHIELD || this.type === ITEM_TYPE_GLOVES) {
+    if (this.type === ITEM_TYPE_WEAPON) {
         switch (this.id) {
             case 48:
                 return 2;

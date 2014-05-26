@@ -30,19 +30,20 @@ function doKeyDown(e) {
             switchTower((towerThis + 1) % TOWER_NAME.length);
             break;
         case KEY_T:
-            player[0].changeUpFloor();
+            //player[0].changeUpFloor();
+            var ch = player[0].getActivePocketChampion();
+            ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 1) % 110, 1);
+            redrawUI(0);
+            PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
             break; // T KEY     
         case KEY_SPACEBAR:
             player[0].action();
             break; // SpaceBar        
         case KEY_G:
             //player[0].changeDownFloor();
-            if (champion[player[0].championLeader].pocket[POCKET_SLOT_0].id < 109){
-                champion[player[0].championLeader].pocket[POCKET_SLOT_0].id = (champion[player[0].championLeader].pocket[POCKET_SLOT_0].id + 1);    
-            }else{
-                champion[player[0].championLeader].pocket[POCKET_SLOT_0].id = 0;
-            }            
-            redrawUI(2);
+            var ch = player[0].getActivePocketChampion();
+            ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 109) % 110, 1);
+            redrawUI(0);
             PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
             break; // G KEY  
         case KEY_W:

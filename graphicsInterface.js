@@ -463,8 +463,6 @@ function drawPocketUI(p) {
     var ac = "" + chp.getArmourClass();
     if (ac >= 0) {
         ac = "+" + ac;
-    } else {
-        ac = "-" + ac;
     }
     writeFontImage(TEXT_ARMOUR + ":", p.ScreenX / scale + 233, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
     writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), COLOUR[COLOUR_WHITE]);
