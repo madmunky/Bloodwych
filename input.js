@@ -209,6 +209,10 @@ function processCanvasInput(x, y) {
 					break;
 	        	}
 	        }
+            if (uiClickInArea(x, y, UI_CLICK_POCKET_HAND, player[p])) {
+                player[p].useItemInHand();
+                successfulClick = true;
+            }
             if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, player[p])) {
                 player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
                 successfulClick = true;

@@ -555,12 +555,42 @@ Player.prototype.getActivePocketChampion = function() {
     return null;
 }
 
-Player.prototype.consumeItemInHand = function(s) {
+Player.prototype.consumeItemInHand = function() {
 	if(this.pocket.quantity <= 1) {
 		this.pocket.setPocketItem();
 	} else {
 		this.pocket.quantity--;
 	}
+}
+
+Player.prototype.useItemInHand = function() {
+    var ch = this.getActivePocketChampion();
+    if(ch !== null) {
+        var itemH = this.pocket;
+        if(itemH.id !== 0) {
+            switch(itemH.type) {
+                case ITEM_TYPE_STACKABLE:
+                var i = this.findItem(itemH.id);
+                if(i > -1) {
+                    itemH.quantity++;
+                    ch.pocket[i].quantity--;
+                    if(ch.pocket[i].quantity === 0) {
+                        ch.pocket[i].setPocketItem();
+                    }
+                }
+                break;
+                case ITEM_TYPE_FOOD:
+                if(itemH.id % 3 === 2) {
+                    itemH.setPocketItem();
+                } else {
+                    itemH.id--;
+                }
+                break;
+                default:
+                break;
+            }
+        }
+    }
 }
 
 Player.prototype.exchangeItemWithHand = function(s) {
@@ -581,7 +611,7 @@ Player.prototype.exchangeItemWithHand = function(s) {
 				item.setPocketItem(item.id, item.quantity + qty);
 			}
         } else if(itemH.type === ITEM_TYPE_STACKABLE) {
-            i = this.findItem(itemH.id);
+            var i = this.findItem(itemH.id);
             var qty = 0;
             if(i > -1) {
                 qty = ch.pocket[i].quantity;
