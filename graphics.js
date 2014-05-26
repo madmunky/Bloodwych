@@ -289,7 +289,7 @@ function drawPlayersView(p) {
 	p.getViewPortal();
 
 	if(p.dead) {
-		p.Portal.clearRect(0, 0, 128 , 76 );
+		p.Portal.clearRect(0.5, 0.5, 128 * scale, 76 * scale);
 		drawRect(p, 1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK]);
 		drawRect(p, 0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT]);
 		drawRect(p, 2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT]);
@@ -537,9 +537,9 @@ function drawWoodenObject(p, x) {
 }
 
 function drawRect(p, x, y, w, h, c) {
-	p.Portal.lineWidth = 1;
+	p.Portal.lineWidth = scale;
 	p.Portal.strokeStyle = 'rgba(' + c + ')';
-	p.Portal.strokeRect(0 + 0.5, 0 + 0.5, w , h );
+	p.Portal.strokeRect(x * scale + 0.5, y * scale + 0.5, w * scale, h * scale);
 }
 
 function recolourSprite(img, paletteFrom, paletteTo) {
