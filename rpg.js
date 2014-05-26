@@ -46,13 +46,15 @@ function calculateAttack(att, def) {
 		if(def instanceof Player) {
 			for (d = 0; d < 2; d++) {
 				var to = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
+				var d1 = 0;
 				if(typeof to === "undefined" || to.monster.dead) {
 					to = champion[def.champion[(4 + fromDir - def.d + d) % 4]];
 					if(typeof to === "undefined" || to.monster.dead) {
+						d1 += 2;
 						continue;
 					}
 				}
-				if(Math.random() < (d + 1.0) * 0.5) {
+				if(Math.random() < (d + d1 + 1.0) * 0.5) {
 					defense = 10;
 					if(!to.attacking) {
 						defense += 5 + Math.round(to.stat.agi / 4);
@@ -89,7 +91,7 @@ function calculateAttack(att, def) {
 		}
 
 		//Final calculations
-		if(typeof from !== "undefined" && typeof to !== "undefined") {
+		if(typeof from !== "undefined" && !from.monster.dead && typeof to !== "undefined" && !to.monster.dead) {
 			var power = Math.floor(Math.random() * 20 * crit) + attack - defense;
 			if(Math.random() > hit || power < 0) {
 				power = 0;

@@ -490,6 +490,10 @@ function drawPocketUI(p) {
                         }
                         writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
                     }
+                    ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
+                    if (p.pocket.id > 0) {
+                        writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
+                    }
                     //ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY], ((p.ScreenX + 225) + (x * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                 };
                 break

@@ -598,33 +598,35 @@ Player.prototype.exchangeItemWithHand = function(s) {
 	if(ch !== null) {
 		var item = ch.pocket[s];
 		var itemH = this.pocket;
-		if(item.type === ITEM_TYPE_STACKABLE && (itemH.id === 0 || item.id === itemH.id)) {
-			if(itemH.id === 0) {
-				itemH.setPocketItem(item.id, 1);
-				item.quantity--;
-				if(item.quantity === 0) {
-					item.setPocketItem();
-				}
-			} else if(item.id === itemH.id) {
-				var qty = itemH.quantity;
-				itemH.setPocketItem();
-				item.setPocketItem(item.id, item.quantity + qty);
-			}
-        } else if(itemH.type === ITEM_TYPE_STACKABLE) {
-            var i = this.findItem(itemH.id);
-            var qty = 0;
-            if(i > -1) {
-                qty = ch.pocket[i].quantity;
-                ch.pocket[i].setPocketItem();
-            }
-            var temp = newPocketItem(item.id, item.quantity);
-            item.setPocketItem(itemH.id, itemH.quantity + qty);
-            itemH.setPocketItem(temp.id, temp.quantity);
-		} else {
-			var temp = newPocketItem(item.id, item.quantity);
-			item.setPocketItem(itemH.id, itemH.quantity);
-			itemH.setPocketItem(temp.id, temp.quantity);
-		}
+        if(itemH.id === 0 || ((s !== 2 || itemH.type === ITEM_TYPE_ARMOUR) && (s !== 3 || itemH.type === ITEM_TYPE_SHIELD))) {
+    		if(item.type === ITEM_TYPE_STACKABLE && (itemH.id === 0 || item.id === itemH.id)) {
+    			if(itemH.id === 0) {
+    				itemH.setPocketItem(item.id, 1);
+    				item.quantity--;
+    				if(item.quantity === 0) {
+    					item.setPocketItem();
+    				}
+    			} else if(item.id === itemH.id) {
+    				var qty = itemH.quantity;
+    				itemH.setPocketItem();
+    				item.setPocketItem(item.id, item.quantity + qty);
+    			}
+            } else if(itemH.type === ITEM_TYPE_STACKABLE) {
+                var i = this.findItem(itemH.id);
+                var qty = 0;
+                if(i > -1) {
+                    qty = ch.pocket[i].quantity;
+                    ch.pocket[i].setPocketItem();
+                }
+                var temp = newPocketItem(item.id, item.quantity);
+                item.setPocketItem(itemH.id, itemH.quantity + qty);
+                itemH.setPocketItem(temp.id, temp.quantity);
+    		} else {
+    			var temp = newPocketItem(item.id, item.quantity);
+    			item.setPocketItem(itemH.id, itemH.quantity);
+    			itemH.setPocketItem(temp.id, temp.quantity);
+    		}
+        }
 	}
 }
 

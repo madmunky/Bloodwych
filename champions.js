@@ -108,7 +108,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
                 break;
         }
         ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 96 * scale, 8 * scale);
-        writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
+        writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x + 2), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
         if (typeof def === "undefined" || def === false) {
             if (pwr > 0) {
                 writeFontImage(TEXT_HITS_FOR + pwr, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
