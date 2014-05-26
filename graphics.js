@@ -289,7 +289,7 @@ function drawPlayersView(p) {
 	p.getViewPortal();
 
 	if(p.dead) {
-		ctx.clearRect(p.PortalX + 0.5, p.PortalY + 0.5, 128 * scale, 76 * scale);
+		p.Portal.clearRect(0, 0, 128 , 76 );
 		drawRect(p, 1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK]);
 		drawRect(p, 0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT]);
 		drawRect(p, 2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT]);
@@ -448,7 +448,7 @@ function drawPlayersView(p) {
 		}
 	}
 	p.Portal.save();
-	ctx.drawImage(p.Portal.canvas, p.PortalX, p.PortalY);
+	ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);
 }
 
 function drawMonsterOnPos(p, pos) {
@@ -537,9 +537,9 @@ function drawWoodenObject(p, x) {
 }
 
 function drawRect(p, x, y, w, h, c) {
-	ctx.lineWidth = scale;
-	ctx.strokeStyle = 'rgba(' + c + ')';
-	ctx.strokeRect(p.PortalX + x * scale + 0.5, p.PortalY + y * scale + 0.5, w * scale, h * scale);
+	p.Portal.lineWidth = 1;
+	p.Portal.strokeStyle = 'rgba(' + c + ')';
+	p.Portal.strokeRect(0 + 0.5, 0 + 0.5, w , h );
 }
 
 function recolourSprite(img, paletteFrom, paletteTo) {
