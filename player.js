@@ -439,8 +439,16 @@ Player.prototype.restoreChampionStats = function() {
         var champ = this.getChampion(c);
         if(champ !== null) {
 	        if (!champ.monster.dead) {
+                if(champ.food > 0) {
+                    champ.food--;
+                } else {
+                    champ.stat.vit -= Math.floor(Math.random() * 10) + 5;
+                    if(champ.stat.vit < 0) {
+                        champ.stat.vit = 0;
+                    }
+                }
 	            if (champ.stat.vitMax * 0.15 > champ.stat.vit) {
-	                dmg = (champ.stat.vitMax * 0.15) - champ.stat.vit;
+	                dmg = Math.floor(champ.stat.vitMax * 0.15) - champ.stat.vit;
 	                champ.getDamage(dmg, true);
 	                if (dmg > 0) {
 	                    alertPlayer = true;
@@ -580,10 +588,19 @@ Player.prototype.useItemInHand = function() {
                 }
                 break;
                 case ITEM_TYPE_FOOD:
-                if(itemH.id % 3 === 2) {
-                    itemH.setPocketItem();
+                if(itemH.id <= 19) {
+                    if(itemH.id % 3 === 2) {
+                        itemH.setPocketItem();
+                    } else {
+                        itemH.setPocketItem(itemH.id - 1);
+                    }
                 } else {
-                    itemH.id--;
+                    itemH.setPocketItem();
+                }
+                var fd = itemH.getFoodValue();
+                ch.food += fd;
+                if(ch.food > 255) {
+                    ch.food = 255;
                 }
                 break;
                 default:

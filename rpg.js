@@ -31,7 +31,7 @@ function calculateAttack(att, def) {
 			attack += Math.round(from.stat.str / 8);
 			attack += Math.round(from.stat.agi / 32);
 			attack += from.getWeaponPower();
-			attExhaustion = Math.floor(Math.random() * 2) + 1; //Math.round(attack / 3);
+			attExhaustion = Math.floor(Math.random() * 2) + 1;
 			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
 		} else {
 			var from = mon[a];

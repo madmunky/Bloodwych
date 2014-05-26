@@ -14,6 +14,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
     this.prof = prof;
     this.colour = colour;
     this.stat = stat;
+    this.food = 255;
     this.monster = monster;
     for (i = 0; i < SPELL_MAX; i++) {
         this.spellBook[i] = new Array();

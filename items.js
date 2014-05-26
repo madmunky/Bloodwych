@@ -88,6 +88,23 @@ Item.prototype.getWeaponPower = function() {
     return 0;
 }
 
+Item.prototype.getFoodValue = function() {
+    if (this.type === ITEM_TYPE_FOOD) {
+        if(this.id <= 13) {
+            return 16;
+        } else if(this.id <= 19) {
+            return 10;
+        } else if(this.id <= 20) {
+            return 33;
+        } else if(this.id <= 21) {
+            return 66;
+        } else if(this.id <= 22) {
+            return 66;
+        }
+    }
+    return 0;
+}
+
 Item.prototype.getArmourClass = function() {
     return 0;
 }
@@ -167,24 +184,24 @@ function initItemRefs() {
         createItemRef(2, "Common Keys", gfxUI[UI_GFX_POCKET_COMMON_KEY], itemGfxD[x]);
         createItemRef(3, "Arrows", gfxUI[UI_GFX_POCKET_ARROW], itemGfxD[x]);
         createItemRef(4, "Elf Arrows", gfxUI[UI_GFX_POCKET_ELF_ARROW], itemGfxD[x]);
-        createItemRef(5, "1/3 Apple", gfxUI[UI_GFX_POCKET_APPLE_1], itemGfxD[x]);
-        createItemRef(6, "2/3 Apple", gfxUI[UI_GFX_POCKET_APPLE_2], itemGfxD[x]);
+        createItemRef(5, "Apple", gfxUI[UI_GFX_POCKET_APPLE_1], itemGfxD[x]);
+        createItemRef(6, "Apple", gfxUI[UI_GFX_POCKET_APPLE_2], itemGfxD[x]);
         createItemRef(7, "Apple", gfxUI[UI_GFX_POCKET_APPLE_3], itemGfxD[x]);
-        createItemRef(8, "1/3 Biscuit", gfxUI[UI_GFX_POCKET_BISCUIT_1], itemGfxD[x]);
-        createItemRef(9, "2/3 Biscuit", gfxUI[UI_GFX_POCKET_BISCUIT_2], itemGfxD[x]);
+        createItemRef(8, "Biscuit", gfxUI[UI_GFX_POCKET_BISCUIT_1], itemGfxD[x]);
+        createItemRef(9, "Biscuit", gfxUI[UI_GFX_POCKET_BISCUIT_2], itemGfxD[x]);
         createItemRef(10, "Biscuit", gfxUI[UI_GFX_POCKET_BISCUIT_3], itemGfxD[x]);
-        createItemRef(11, "1/3 Chicken", gfxUI[UI_GFX_POCKET_CHICKEN_1], itemGfxD[x]);
-        createItemRef(12, "2/3 Chicken", gfxUI[UI_GFX_POCKET_CHICKEN_2], itemGfxD[x]);
+        createItemRef(11, "Chicken", gfxUI[UI_GFX_POCKET_CHICKEN_1], itemGfxD[x]);
+        createItemRef(12, "Chicken", gfxUI[UI_GFX_POCKET_CHICKEN_2], itemGfxD[x]);
         createItemRef(13, "Chicken", gfxUI[UI_GFX_POCKET_CHICKEN_3], itemGfxD[x]);
-        createItemRef(14, "1/3 Mead", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_1],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), itemGfxD[x]);
-        createItemRef(15, "2/3 Mead", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_2],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), itemGfxD[x]);
+        createItemRef(14, "Mead", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_1],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), itemGfxD[x]);
+        createItemRef(15, "Mead", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_2],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), itemGfxD[x]);
         createItemRef(16, "Mead", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_3],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), itemGfxD[x]);
-        createItemRef(17, "1/3 Water", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_1],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_BLUE_DARK]), itemGfxD[x]);
-        createItemRef(18, "2/3 Water", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_2],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_BLUE_DARK]), itemGfxD[x]);
+        createItemRef(17, "Water", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_1],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_BLUE_DARK]), itemGfxD[x]);
+        createItemRef(18, "Water", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_2],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_BLUE_DARK]), itemGfxD[x]);
         createItemRef(19, "Water", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_3],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_BLUE_DARK]), itemGfxD[x]);
-        createItemRef(20, "N'egg (Green)", recolourUiGfx(gfxUI[UI_GFX_POCKET_NEGG],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_GREEN]), itemGfxD[x]);
-        createItemRef(21, "N'egg (Blue)", recolourUiGfx(gfxUI[UI_GFX_POCKET_NEGG],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_BLUE_DARK]), itemGfxD[x]);
-        createItemRef(22, "N'egg (Red)", recolourUiGfx(gfxUI[UI_GFX_POCKET_NEGG],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_RED]), itemGfxD[x]);
+        createItemRef(20, "N'egg", recolourUiGfx(gfxUI[UI_GFX_POCKET_NEGG],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_GREEN]), itemGfxD[x]);
+        createItemRef(21, "N'egg", recolourUiGfx(gfxUI[UI_GFX_POCKET_NEGG],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_BLUE_DARK]), itemGfxD[x]);
+        createItemRef(22, "N'egg", recolourUiGfx(gfxUI[UI_GFX_POCKET_NEGG],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_RED]), itemGfxD[x]);
         createItemRef(23, "Serpent Slime", recolourUiGfx(gfxUI[UI_GFX_POCKET_POTION],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_GREEN]), itemGfxD[x]);
         createItemRef(24, "Brimstone Broth", recolourUiGfx(gfxUI[UI_GFX_POCKET_POTION],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_YELLOW]), itemGfxD[x]);
         createItemRef(25, "Dragon Ale", recolourUiGfx(gfxUI[UI_GFX_POCKET_POTION],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_RED]), itemGfxD[x]);
@@ -200,7 +217,7 @@ function initItemRefs() {
         createItemRef(35, "Crystal Plate", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_PLATE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), itemGfxD[x]);
         createItemRef(36, "Leather Shield", gfxUI[UI_GFX_POCKET_SHIELD_1], itemGfxD[x]);
         createItemRef(37, "Buckler", gfxUI[UI_GFX_POCKET_SHIELD_2], itemGfxD[x]);
-        createItemRef(38, "Rune Shield (Classic)", gfxUI[UI_GFX_POCKET_SHIELD_3], itemGfxD[x]);
+        createItemRef(38, "Rune Shield", gfxUI[UI_GFX_POCKET_SHIELD_3], itemGfxD[x]);
         createItemRef(39, "Large Shield", gfxUI[UI_GFX_POCKET_SHIELD_4], itemGfxD[x]);
         createItemRef(40, "Moon Shield", gfxUI[UI_GFX_POCKET_SHIELD_5], itemGfxD[x]);
         createItemRef(41, "Dragon Scale", gfxUI[UI_GFX_POCKET_SHIELD_6], itemGfxD[x]);
