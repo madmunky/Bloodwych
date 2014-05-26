@@ -27,10 +27,10 @@ function calculateAttack(att, def) {
 				crit = 2;
 			}
         	fromDir = from.monster.d;
-			attack += Math.floor(from.stat.str / 8);
-			attack += Math.floor(from.stat.agi / 32);
+			attack += Math.round(from.stat.str / 8);
+			attack += Math.round(from.stat.agi / 32);
 			attack += from.getWeaponPower();
-			exhaustion = Math.floor(attack / 4);
+			exhaustion = Math.round(attack / 3);
 			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
 		} else {
 			var from = mon[a];
@@ -47,10 +47,14 @@ function calculateAttack(att, def) {
 				var to = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
 				if(typeof to === "undefined" || to.monster.dead) {
 					to = champion[def.champion[(4 + fromDir - def.d + d) % 4]];
+					if(typeof to === "undefined" || to.monster.dead) {
+						continue;
+					}
 				}
 				if(Math.random() < (d + 1.0) * 0.5) {
+					defense = 10;
 					if(!to.attacking) {
-						defense += 10 + Math.floor(to.stat.agi / 4);
+						defense += 5 + Math.round(to.stat.agi / 4);
 					}
 					defense -= to.getArmourClass();
 					break;
@@ -68,7 +72,7 @@ function calculateAttack(att, def) {
 					var to = mon[d];
 					if(to.champId > -1) { //champion
 						to = champion[to.champId];
-						defense += 10 + Math.floor(to.stat.agi / 4);
+						defense += 10 + Math.round(to.stat.agi / 4);
 						defense -= to.getArmourClass();
 					} else { //monster
 						if(!to.attacking) {

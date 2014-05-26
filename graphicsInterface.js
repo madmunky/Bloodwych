@@ -129,7 +129,7 @@ function drawUI(p) {
     if (redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
         if (typeof gfxUI !== "undefined" && gfxUI !== null) {
             ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
-            ctx.clearRect((p.ScreenX + 226) * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
+            ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 2) * scale, 95 * scale, 90 * scale);
             switch (p.uiLeftPanel.mode) {
                 case LEFT_PANEL_MODE_STATS:
                     {
@@ -181,13 +181,13 @@ function spellBook(p) {
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 
-    writeFontImage("SP.PTS", p.ScreenX + 226, (p.ScreenY + 78), COLOUR[COLOUR_PINK]);
+    writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 78), COLOUR[COLOUR_PINK]);
     writeFontImage("0" + champion[p.champion[0]].stat.sp + "/0" + champion[p.champion[0]].stat.spMax, p.ScreenX + 280, (p.ScreenY + 78), COLOUR[COLOUR_GREEN]);
 
 }
 
 function redrawUI(p) {
-    if (redrawPlayerUiFlag === 0 || redrawPlayerUiFlag & (p + 1) !== (p + 1)) {
+    if (redrawPlayerUiFlag === 0 || (redrawPlayerUiFlag & (p + 1)) !== (p + 1)) {
         redrawPlayerUiFlag = redrawPlayerUiFlag + (p + 1);
     }
 }
@@ -341,19 +341,19 @@ function commandUI(p) {
     ctx.fillRect((p.ScreenX + 91) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
 
     ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 47) * scale, 93 * scale, 7 * scale);
-    writeFontImage('COMMUNICATE', (p.ScreenX + 2), (p.ScreenY + 47), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_COMMUNICATE, (p.ScreenX + 2), (p.ScreenY + 47), COLOUR[COLOUR_YELLOW]);
     ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 55) * scale, 59 * scale, 7 * scale);
-    writeFontImage('COMMEND', (p.ScreenX + 2), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_COMMEND, (p.ScreenX + 2), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
     ctx.fillRect((p.ScreenX + 62) * scale, (p.ScreenY + 55) * scale, 32 * scale, 7 * scale);
-    writeFontImage('VIEW', (p.ScreenX + 64), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_VIEW, (p.ScreenX + 64), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
     ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 63) * scale, 34 * scale, 7 * scale);
-    writeFontImage('WAIT', (p.ScreenX + 2), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_WAIT, (p.ScreenX + 2), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
     ctx.fillRect((p.ScreenX + 37) * scale, (p.ScreenY + 63) * scale, 57 * scale, 7 * scale);
-    writeFontImage('CORRECT', (p.ScreenX + 40), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_CORRECT, (p.ScreenX + 40), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
     ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 71) * scale, 58 * scale, 7 * scale);
-    writeFontImage('DISMISS', (p.ScreenX + 2), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_DISMISS, (p.ScreenX + 2), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
     ctx.fillRect((p.ScreenX + 61) * scale, (p.ScreenY + 71) * scale, 33 * scale, 7 * scale);
-    writeFontImage('CALL', (p.ScreenX + 64), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_CALL, (p.ScreenX + 64), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
 
     ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 
@@ -456,7 +456,7 @@ function drawPocketUI(p) {
     } else {
         ac = "-" + ac;
     }
-    writeFontImage("Armour:", p.ScreenX / scale + 233, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_ARMOUR + ":", p.ScreenX / scale + 233, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
     writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), COLOUR[COLOUR_WHITE]);
 
     var ch = p.getOrderedChampionIds();
@@ -506,28 +506,28 @@ function drawPocketUI(p) {
 
 function drawStatsPage(p) {
     ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
-    writeFontImage("LEVEL", p.ScreenX + 242, (p.ScreenY + 17), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 17), COLOUR[COLOUR_YELLOW]);
     writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 17), COLOUR[COLOUR_GREY_DARKEST]);
     writeFontImage("0" + champion[p.champion[p.championLeader]].level.toString(), p.ScreenX + 297, (p.ScreenY + 17), COLOUR[COLOUR_WHITE]);
 
-    writeFontImage("ST", p.ScreenX + 242, (p.ScreenY + 25), COLOUR[COLOUR_BLUE_DARK]);
+    writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 25), COLOUR[COLOUR_BLUE_DARK]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 25), COLOUR[COLOUR_YELLOW]);
     writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 25), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage("AG", p.ScreenX + 281, (p.ScreenY + 25), COLOUR[COLOUR_BLUE_DARK]);
+    writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 25), COLOUR[COLOUR_BLUE_DARK]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 25), COLOUR[COLOUR_YELLOW]);
 
-    writeFontImage("IN", p.ScreenX + 242, (p.ScreenY + 33), COLOUR[COLOUR_BLUE_DARK]);
+    writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 33), COLOUR[COLOUR_BLUE_DARK]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 33), COLOUR[COLOUR_YELLOW]);
     writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 33), COLOUR[COLOUR_GREY_DARKEST]);
-    writeFontImage("CH", (p.ScreenX + 281), (p.ScreenY + 33), COLOUR[COLOUR_BLUE_DARK]);
+    writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 33), COLOUR[COLOUR_BLUE_DARK]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 33), COLOUR[COLOUR_YELLOW]);
 
-    writeFontImage("HP", p.ScreenX + 242, (p.ScreenY + 41), COLOUR[COLOUR_BLACK]);
+    writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 41), COLOUR[COLOUR_BLACK]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 41), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
     writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 41), COLOUR[COLOUR_GREY_DARKEST]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 41), COLOUR[COLOUR_GREEN]);
 
-    writeFontImage("VI", p.ScreenX + 242, (p.ScreenY + 49), COLOUR[COLOUR_BLACK]);
+    writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 49), COLOUR[COLOUR_BLACK]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
     writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 49), COLOUR[COLOUR_GREY_DARKEST]);
     writeFontImage(champion[p.champion[p.championLeader]].stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 49), COLOUR[COLOUR_GREEN]);

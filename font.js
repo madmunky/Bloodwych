@@ -29,7 +29,7 @@ function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, 
 	    	ctx.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
 	    	ctx.save();
 	    	ctx.globalAlpha = alpha;
-	        writeFontImage(fontString, locationX, locationY - 9, paletteTo, alignment);
+	        writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
 	        ctx.restore();
 	        alpha = alpha + 0.1;
 	        if (alpha > 1) {
@@ -42,7 +42,7 @@ function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, 
 						    	ctx.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
 								ctx.save();
 								ctx.globalAlpha = alpha;
-						        writeFontImage(fontString, locationX, locationY - 9, paletteTo, alignment);
+						        writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
 						        ctx.restore();
 						        alpha = alpha - 0.1;
 						        if (alpha < 0) {

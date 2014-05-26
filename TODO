@@ -5,11 +5,10 @@
 JORG
 -----
 
-* Add "you are dead"
+* Add defending vitality loss (rpg)
 * Fix Big monster 'edge of screen'
 * Better coin/key exchange
 * Big door (un)locking with common keys
-* Fix pockets after one or more are dead
 * Fix pockets (don't allow common keys/coins in different slots)
 * Fix pockets only allow correct items to hands/amour slots
 * Show text for select pocket item
@@ -26,7 +25,6 @@ CHRIS
 * Finish Character Stats Page
 * Fix pocket item positions
 * Make Fairy Screens
-* Make YOU ARE DEAD screen
 * Make Sleeping Screen
 * Add movement key highlight
 

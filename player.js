@@ -12,6 +12,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
     this.ScreenX = ScreenX;
     this.ScreenY = ScreenY;
     this.pocket = newPocketItem();
+    this.dead = false;
     this.lastX = 0;
     this.lastY = 0;
     this.lastFloor = 0;
@@ -163,7 +164,7 @@ Player.prototype.checkWoodenDoor = function(pos18) {
 	        this.setBinaryView(pos18, ((5 + d - this.d) % 4) * 2 + 1, 1);
 	    }
 	    if(this.getBinaryView(pos18, 11, 1) === '1') {
-	    	this.message("The door is locked", COLOUR[COLOUR_GREEN]);
+	    	this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
 	    }
 	}
 }
@@ -187,56 +188,64 @@ Player.prototype.getBinaryView = function(pos18, index, length) {
 
 Player.prototype.setMovementData = function() {
     tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
-    this.setBinaryView(18, 8, 1, '1');
-    //player[1].setBinaryView(18, 8, 1, '1');
-    this.lastX = this.x;
-    this.lastY = this.y;
-    this.lastFloor = this.floor;
-    this.lastTower = towerThis;
+    if(!this.dead) {
+	    this.setBinaryView(18, 8, 1, '1');
+	    //player[1].setBinaryView(18, 8, 1, '1');
+	    this.lastX = this.x;
+	    this.lastY = this.y;
+	    this.lastFloor = this.floor;
+	    this.lastTower = towerThis;
+	}
 }
 
 Player.prototype.rotateTo = function(d) {
-    this.d = (d + 4) % 4;
-    this.doEvent(false);
+	if(!this.dead) {
+	    this.d = (d + 4) % 4;
+    	this.doEvent(false);
+    }
 }
 
 Player.prototype.move = function(d) {
-    this.moving = d;
-    this.lastX = this.x;
-    this.lastY = this.y;
-    this.attacking = false;
-    this.stopChampionAttack();
-    var viewIndex = [15, 16, 19, 17];
-    if (this.canMoveToPos(viewIndex[d])) {
-        xy = getOffsetByRotation((this.d + d) % 4);
-        this.x = this.x + xy.x;
-        this.y = this.y + xy.y;
-        if (debug) {
-            //PrintLog("Player Moved " + getDirection(this.d));
-        }
-        this.setMovementData();
-        this.doEvent(true);
-    } else if (d === 2) { //check current square when moving backward
-        this.doEvent(false);
-    }
+	if(!this.dead) {
+	    this.moving = d;
+	    this.lastX = this.x;
+	    this.lastY = this.y;
+	    this.attacking = false;
+	    this.stopChampionAttack();
+	    var viewIndex = [15, 16, 19, 17];
+	    if (this.canMoveToPos(viewIndex[d])) {
+	        xy = getOffsetByRotation((this.d + d) % 4);
+	        this.x = this.x + xy.x;
+	        this.y = this.y + xy.y;
+	        if (debug) {
+	            //PrintLog("Player Moved " + getDirection(this.d));
+	        }
+	        this.setMovementData();
+	        this.doEvent(true);
+	    } else if (d === 2) { //check current square when moving backward
+	        this.doEvent(false);
+	    }
+	}
 }
 
 Player.prototype.tryAttack = function() {
-    xy = getOffsetByRotation(this.d);
-    var hexNext = this.getBinaryView(15, 0, 16);
-    if (getHexToBinaryPosition(hexNext, 8) === '1') {
-        if (this.floor === player[1 - this.id].floor && this.x + xy.x === player[1 - this.id].x && this.y + xy.y === player[1 - this.id].y) {
-            //attack player
-            this.attack(true, player[1 - this.id]);
-            return true;
-        }
-    }
-    var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
-    if (mon !== null) {
-        this.attack(true, mon);
-        return true;
-    }
-    this.stopChampionAttack();
+	if(!this.dead) {
+	    xy = getOffsetByRotation(this.d);
+	    var hexNext = this.getBinaryView(15, 0, 16);
+	    if (getHexToBinaryPosition(hexNext, 8) === '1') {
+	        if (this.floor === player[1 - this.id].floor && this.x + xy.x === player[1 - this.id].x && this.y + xy.y === player[1 - this.id].y) {
+	            //attack player
+	            this.attack(true, player[1 - this.id]);
+	            return true;
+	        }
+	    }
+	    var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
+	    if (mon !== null) {
+	        this.attack(true, mon);
+	        return true;
+	    }
+	    this.stopChampionAttack();
+	}
 }
 
 Player.prototype.attack = function(attack, target) {
@@ -261,8 +270,10 @@ Player.prototype.attack = function(attack, target) {
 
 Player.prototype.stopChampionAttack = function() {
     for (c = 0; c < this.champion.length; c++) {
-        var m = this.getChampion(c).monster;
-        m.attacking = false;
+    	if(this.getChampion(c) !== null) {
+	        var m = this.getChampion(c).monster;
+	        m.attacking = false;
+	    }
     }
 }
 
@@ -304,7 +315,6 @@ Player.prototype.doEvent = function(mr) {
     }
     this.updateChampions();
     this.resetChampUI();
-    //this.updateView();
 };
 
 Player.prototype.doPit = function() {
@@ -337,17 +347,19 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 
 Player.prototype.updateChampions = function() {
     for (c = 0; c < this.champion.length; c++) {
-        var m = this.getChampion(c).monster;
-        m.tower = towerThis;
-        m.floor = this.floor;
-        m.x = this.x;
-        m.y = this.y;
-        m.d = this.d;
-        if (this.champion.length === 1) {
-            m.square = -1
-        } else {
-            m.square = (this.d + c) % 4;
-        }
+    	if(this.getChampion(c) !== null) {
+	        var m = this.getChampion(c).monster;
+	        m.tower = towerThis;
+	        m.floor = this.floor;
+	        m.x = this.x;
+	        m.y = this.y;
+	        m.d = this.d;
+	        if (this.champion.length === 1) {
+	            m.square = -1
+	        } else {
+	            m.square = (this.d + c) % 4;
+	        }
+	    }
     }
 }
 
@@ -355,12 +367,22 @@ Player.prototype.updateChampions = function() {
 //also assign a new champion as leader. used when the leader dies
 Player.prototype.checkDead = function() {
 	var leader = this.getChampion(this.championLeader).monster;
+	var deadNum = 0;
 	if(leader.dead) {
 		for (c = 0; c < this.champion.length; c++) {
-			var m = this.getChampion(c).monster;
-			if(!m.dead) {
-				this.championLeader = c;
+			if(this.getChampion(c) !== null) {
+				var m = this.getChampion(c).monster;
+				if(m !== null && !m.dead) {
+					this.championLeader = c;
+				} else {
+					deadNum++;
+				}
 			}
+		}
+		if(deadNum == 4) {
+			this.dead = true;
+	    	this.stopChampionAttack();
+			this.setMovementData();
 		}
 	}
 }
@@ -368,19 +390,24 @@ Player.prototype.checkDead = function() {
 Player.prototype.recruitChampion = function(id) {
 	var len = this.champion.length;
     if (len < 4) {
-        this.champion[len] = id;
-        champion[id].recruitment = {
-        	recruited: true,
-        	playerId: this.id,
-        	position: len
-        };
-        return true;
-    }
+		if(typeof id === "undefined") {
+			this.champion[len] = -1;
+		} else {
+	        this.champion[len] = id;
+	        champion[id].recruitment = {
+	        	recruited: true,
+	        	playerId: this.id,
+	        	position: len
+	        };
+	        return true;
+	    }
+	}
     return false;
 }
+
 //loc = location number (0-3)
 Player.prototype.getChampion = function(loc) {
-    if (typeof this.champion[loc] !== "undefined") {
+    if (loc > -1 && typeof this.champion[loc] !== "undefined") {
         return champion[this.champion[loc]];
     }
     return null;
@@ -402,15 +429,15 @@ Player.prototype.restoreChampionStats = function() {
     var alertPlayer = false;
     for (c = 0; c < this.champion.length; c++) {
         var champ = this.getChampion(c);
-        if (!champ.monster.dead) {
-            if (champ.stat.vitMax * 0.15 > champ.stat.vit) {
-                dmg = (champ.stat.vitMax * 0.15) - champ.stat.vit;
-                champ.getDamage(dmg, true);
-                if (dmg > 0) {
-                    alertPlayer = true;
-                }
-            }
-            if (!champ.monster.attacking) {
+        if(champ !== null) {
+	        if (!champ.monster.dead) {
+	            if (champ.stat.vitMax * 0.15 > champ.stat.vit) {
+	                dmg = (champ.stat.vitMax * 0.15) - champ.stat.vit;
+	                champ.getDamage(dmg, true);
+	                if (dmg > 0) {
+	                    alertPlayer = true;
+	                }
+	            }
                 champ.stat.hp = champ.stat.hp + Math.floor((Math.random() * (champ.stat.str / 16)) + champ.stat.str / 16);
                 if (champ.stat.hp > champ.stat.hpMax) {
                     champ.stat.hp = champ.stat.hpMax;
@@ -419,12 +446,12 @@ Player.prototype.restoreChampionStats = function() {
                 if (champ.stat.vit > champ.stat.vitMax) {
                     champ.stat.vit = champ.stat.vitMax;
                 }
-            }
-            champ.stat.sp = champ.stat.sp + Math.floor((Math.random() * (champ.stat.int / 12)) + champ.stat.int / 12);
-            if (champ.stat.sp > champ.stat.spMax) {
-                champ.stat.sp = champ.stat.spMax;
-            }
-        }
+	            champ.stat.sp = champ.stat.sp + Math.floor((Math.random() * (champ.stat.int / 12)) + champ.stat.int / 12);
+	            if (champ.stat.sp > champ.stat.spMax) {
+	                champ.stat.sp = champ.stat.spMax;
+	            }
+	        }
+	    }
     }
     if (alertPlayer) {
         this.alertDamagedPlayer();
@@ -435,7 +462,7 @@ Player.prototype.restoreChampionStats = function() {
 Player.prototype.alertDamagedPlayer = function() {
     this.uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;
     for (ch = 0; ch < this.champion.length; ch++) {
-        if (this.getChampion(ch).monster.dead && ch > 0){
+        if (this.getChampion(ch) !== null && this.getChampion(ch).monster.dead && ch > 0){
             toggleChampUI(ch, this, false);
         } else {
             toggleChampUI(ch, this, true);
@@ -522,24 +549,26 @@ Player.prototype.consumeItemInHand = function(s) {
 
 Player.prototype.exchangeItemWithHand = function(s) {
 	var ch = this.getOrderedChampionIds();
-	var item = this.getChampion(ch[this.uiRightPanel.activePocket]).pocket[s];
-	var itemH = this.pocket;
-	if(item.type === ITEM_TYPE_STACKABLE && (itemH.id === 0 || item.id === itemH.id)) {
-		if(itemH.id === 0) {
-			itemH.setPocketItem(item.id, 1);
-			item.quantity--;
-			if(item.quantity === 0) {
-				item.setPocketItem();
+	if(this.getChampion(ch[this.uiRightPanel.activePocket]) !== null) {
+		var item = this.getChampion(ch[this.uiRightPanel.activePocket]).pocket[s];
+		var itemH = this.pocket;
+		if(item.type === ITEM_TYPE_STACKABLE && (itemH.id === 0 || item.id === itemH.id)) {
+			if(itemH.id === 0) {
+				itemH.setPocketItem(item.id, 1);
+				item.quantity--;
+				if(item.quantity === 0) {
+					item.setPocketItem();
+				}
+			} else if(item.id === itemH.id) {
+				var qty = itemH.quantity;
+				itemH.setPocketItem();
+				item.setPocketItem(item.id, item.quantity + qty);
 			}
-		} else if(item.id === itemH.id) {
-			var qty = itemH.quantity;
-			itemH.setPocketItem();
-			item.setPocketItem(item.id, item.quantity + qty);
+		} else {
+			var temp = newPocketItem(item.id, item.quantity);
+			item.setPocketItem(itemH.id, itemH.quantity);
+			itemH.setPocketItem(temp.id, temp.quantity);
 		}
-	} else {
-		var temp = newPocketItem(item.id, item.quantity);
-		item.setPocketItem(itemH.id, itemH.quantity);
-		itemH.setPocketItem(temp.id, temp.quantity);
 	}
 }
 
@@ -576,3 +605,12 @@ function initPlayersQuickStart() {
     }
     player[0].championLeader = 1;
 }
+
+function initPlayersStart(c1, c2) {
+    player[0].recruitChampion(c1);
+    player[1].recruitChampion(c2);
+    for (i = 1; i < 4; i++) {
+        player[0].recruitChampion();
+        player[1].recruitChampion();
+    }
+ }

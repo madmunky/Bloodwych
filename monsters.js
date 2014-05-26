@@ -260,7 +260,7 @@ Monster.prototype.rotateToPlayer = function() {
 	//Move to player
 	if (this.champId === -1) {
 		var rnd = Math.floor(Math.random() * 2);
-		if (Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y)) {
+		if (!player[0].dead && Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y)) {
 			//player 1 is closer
 			if (rnd === 0) {
 				if (player[0].x > this.x && (this.d === 0 || this.d === 2)) {
@@ -285,7 +285,7 @@ Monster.prototype.rotateToPlayer = function() {
 					return true;
 				}
 			}
-		} else {
+		} else if(!player[1].dead) {
 			//player 2 is closer
 			if (rnd === 0) {
 				if (player[1].x > this.x && (this.d === 0 || this.d === 2)) {
@@ -387,7 +387,7 @@ Monster.prototype.getChampion = function() {
 }
 
 Monster.prototype.isRecruited = function() {
-	if(this.champId > -1) {
+	if(this.getChampion() !== null && this.champId > -1) {
 		return this.getChampion().recruitment.recruited;
 	}
 	return false;
@@ -613,7 +613,7 @@ function updateMonsterTeam(id) {
 				team[i].teamId = -Math.abs(id);
 				s++;
 			}
-		} else {
+		} else if (team.length === 1) {
 			leader = team[0];
 			leader.teamId = 0;
 		}

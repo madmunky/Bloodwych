@@ -70,7 +70,7 @@ function floorActionType(trig, p) {
 				if(champ.monster.dead) {
 					champ.stat.hp = 0;
 					champ.monster.dead = false;
-					redrawUI(p);
+					redrawUI(p.id);
 				}
 			}
 			break;

@@ -38,14 +38,17 @@ Game.prototype = {
 }
 
 function timerAction() {
-	if(timerMaster - timerMonsterMove >= 20) {
-		timerMonsterMove = timerMaster;
-		monsterAttackSequence = 0;
+	if(timerMaster - timerChampionAttack >= 20) {
+		timerChampionAttack = timerMaster;
 		for(p = 0; p < 2; p++) {
 			if(player[p].attacking) {
 				player[p].tryAttack();
 			}
 		}
+	}
+	if(timerMaster - timerMonsterMove >= 20) {
+		timerMonsterMove = timerMaster;
+		monsterAttackSequence = 0;
 		mon = getMonstersInTower(towerThis);
 		for(m in mon) {
 			mon[m].move();

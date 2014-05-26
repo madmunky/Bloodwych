@@ -36,16 +36,19 @@ Champion.prototype.doDamageTo = function(def, dmg, exh) {
             this.stat.vit = 0;
         }
     }
-    (function(d) {
-        setTimeout(function() {
-            self.writeAttackPoints(d);
-        }, self.recruitment.position * 400);
-    })(dmg);
     if (def instanceof Champion) {
         def.getDamage(dmg);
     } else if (def instanceof Monster) {
         def.getDamage(dmg);
     }
+    if (this.recruitment.recruited) {
+	    (function(d) {
+	        setTimeout(function() {
+	            self.writeAttackPoints(d);
+	        }, self.recruitment.position * 400);
+	    })(dmg);
+	    redrawUI(self.recruitment.playerId);
+	}
 }
 
 //Damage is 'safe' when champ doesn't get killed by it (e.g. by low vitality)
@@ -109,12 +112,12 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
         writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
         if (typeof def === "undefined" || def === false) {
             if (pwr > 0) {
-                writeFontImage('HITS FOR ' + pwr, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+                writeFontImage(TEXT_HITS_FOR + pwr, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
             } else {
-                writeFontImage('MISSES', (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+                writeFontImage(TEXT_MISSES, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
             }
         } else {
-            writeFontImage('DEFENDS', (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+            writeFontImage(TEXT_DEFENDS, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
         }
         (function(p, x, y) {
             setTimeout(function() {
