@@ -231,8 +231,9 @@ Monster.prototype.attack = function(attack, target) {
             var att = combat[com].attacker;
             var def = combat[com].defender;
             var pwr = combat[com].power;
+            var dExh = combat[com].defExhaustion;
 			att.attacking = true;
-			att.doDamageTo(def, pwr);
+			att.doDamageTo(def, pwr, dExh);
 			if (def instanceof Champion) {
 				PrintLog('MONSTER #' + att.id + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
 			} else if (def instanceof Monster) {
@@ -248,8 +249,14 @@ Monster.prototype.attack = function(attack, target) {
 	}
 }
 
-Monster.prototype.doDamageTo = function(def, dmg) {
+Monster.prototype.doDamageTo = function(def, dmg, dExh) {
 	if(def instanceof Champion) {
+		if (typeof dExh !== "undefined") {
+            def.stat.vit -= dExh;
+            if (def.stat.vit <= 0) {
+                def.stat.vit = 0;
+            }
+        }
 		def.getDamage(dmg);
 	} else if(def instanceof Monster) {
 		def.getDamage(dmg);

@@ -8,6 +8,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
     this.d = 0; //d;
     this.PortalX = PortX;
     this.PortalY = PortY;
+    this.PlayerCanvas= document.createElement('canvas');
     this.Portal = null;
     this.ScreenX = ScreenX;
     this.ScreenY = ScreenY;
@@ -30,21 +31,19 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
         mode: LEFT_PANEL_MODE_STATS
     };
     this.communication = [];
+
+    this.PlayerCanvas.width = 128 * scale;
+    this.PlayerCanvas.height = 76 * scale;
+    this.PlayerCanvas.getContext("2d").imageSmoothingEnabled = false;
+    this.PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
+    this.PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
+    this.PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
+    this.PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 }
 
 Player.prototype.getViewPortal = function() {
-
-    var Portal = document.createElement('canvas');
-    Portal.width = 128 * scale;
-    Portal.height = 76 * scale;
-    Portal.getContext("2d").imageSmoothingEnabled = false;
-    Portal.getContext("2d").webkitImageSmoothingEnabled = false;
-    Portal.getContext("2d").mozImageSmoothingEnabled = false;
-    Portal.getContext("2d").oImageSmoothingEnabled = false;
-    Portal.getContext("2d").font = "bold 20px Calibri";
-    this.Portal = Portal.getContext("2d");
-
-};
+    this.Portal = this.PlayerCanvas.getContext("2d");
+}
 
 Player.prototype.canMoveToPos = function(pos) {
     //Check other player

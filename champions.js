@@ -37,13 +37,13 @@ Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
             this.stat.vit = 0;
         }
     }
-    if (typeof dExh !== "undefined") {
-        def.stat.vit -= dExh;
-        if (def.stat.vit <= 0) {
-            def.stat.vit = 0;
-        }
-    }
     if (def instanceof Champion) {
+        if (typeof dExh !== "undefined") {
+            def.stat.vit -= dExh;
+            if (def.stat.vit <= 0) {
+                def.stat.vit = 0;
+            }
+        }
         def.getDamage(dmg);
     } else if (def instanceof Monster) {
         def.getDamage(dmg);
