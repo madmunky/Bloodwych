@@ -193,6 +193,19 @@ function processCanvasInput(x, y) {
 			    player[p].attack(false);
                 successfulClick = true;
             }
+            if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, player[p])) {
+                player[p].championLeader = 0;
+                successfulClick = true;
+            } else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_RIGHT, player[p])) {
+                player[p].championLeader = 1;
+                successfulClick = true;
+            } else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_LEFT, player[p])) {
+                player[p].championLeader = 3;
+                successfulClick = true;
+            } else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_RIGHT, player[p])) {
+                player[p].championLeader = 2;
+                successfulClick = true;
+            }
 
         } else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_POCKETS) {
         	for(s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
