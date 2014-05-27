@@ -55,6 +55,7 @@ function loadGfxData() {
 
 	//Stone wall and shelf
 	gfxLoadImage("dungeon", "stone", "wall");
+	gfxLoadImage("dungeon", "stone", "wall2");
 	gfxLoadImage("dungeon", "stone", "shelf");
 
 	//Wall decorations, banners, wall buttons and gem slots

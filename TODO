@@ -4,15 +4,13 @@
 
 JORG
 -----
-
 * Fix Big monster 'edge of screen'
 * Big door (un)locking with common keys
 * Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
-* Allow moving of character positions
+* Allow switching champions in group
 
 CHRIS
 ------
-
 * Big monster drawing fixes
 * Add Dungeon gfx to Item Object
 * Add more click areas e.g. champion signs, for selecting leader and exchanging
@@ -23,3 +21,7 @@ CHRIS
 * Make Sleeping Screen
 * Add movement key highlight
 
+QUESTIONS FOR CHRIS
+------
+* Do we get more xp for killing higher level monsters?
+* Is there something like a maximum strength/agility/intelligence/charisma, like there is for hp/vit/sp?

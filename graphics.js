@@ -159,18 +159,23 @@ function bin2type(b) {
 	}
 }
 
-function getStoneWall(HexCode, d, pos, P, pos18) {
+function getStoneWall(HexCode, d, pos, p, pos18) {
 	//if (getHexToBinaryPosition(HexCode, 8) === '0') { ???????????????
 	//    return gfx["dungeon"]["stone"]["wall"];
 	//}
-	P.Portal.drawImage(gfx["dungeon"]["stone"]["wall"], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale), (gfxPos[pos][5] * scale), gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+	var wall = "wall";
+	if((p.x + p.y + p.d) % 2 === 1) {
+		wall = "wall2";
+	}
+
+	p.Portal.drawImage(gfx["dungeon"]["stone"][wall], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale), (gfxPos[pos][5] * scale), gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
 	if (d === parseInt(getHexToBinaryPosition(HexCode, 10, 2))) {
 		return getWallDeco();
 	}
-	return gfx["dungeon"]["stone"]["wall"];
+	return gfx["dungeon"]["stone"][wall];
 
 	function getWallDeco() {
-		var xy = posToCoordinates(pos18, P.x, P.y, P.d);
+		var xy = posToCoordinates(pos18, p.x, p.y, p.d);
 		var RND4 = Math.floor(xy.x * 1.27 + xy.y * 2.68) % 4; //For random banner faces
 		var RND6 = Math.floor(xy.x * 5.76 + xy.y * 4.82) % 6; //For random switches
 		var RND8 = Math.floor(xy.x * 5.76 + xy.y * 4.42) % 8; //For random banner frames
@@ -181,7 +186,7 @@ function getStoneWall(HexCode, d, pos, P, pos18) {
 			} else if (getHexToBinaryPosition(HexCode, 6, 2) === '1') { //Sign
 				var col = parseInt(getHexToBinaryPosition(HexCode, 0, 6)); //Sign colour
 				if (col === 0) { //Random Color
-					P.Portal.drawImage(gfx["dungeon"]["deco"]["banner"][RND8], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale), (gfxPos[pos][5] * scale), gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+					p.Portal.drawImage(gfx["dungeon"]["deco"]["banner"][RND8], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale), (gfxPos[pos][5] * scale), gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
 					switch (RND4) {
 						case 0:
 							return gfx["dungeon"]["deco"]["serpent-head"];
@@ -195,7 +200,7 @@ function getStoneWall(HexCode, d, pos, P, pos18) {
 							return null;
 					}
 				} else if (col <= 4) { //Tower Flags
-					P.Portal.drawImage(gfx["dungeon"]["deco"]["banner"][col], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale), (gfxPos[pos][5] * scale), gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
+					p.Portal.drawImage(gfx["dungeon"]["deco"]["banner"][col], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale), (gfxPos[pos][5] * scale), gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
 					if (col === 1) { //Serpent Flag
 						return gfx["dungeon"]["deco"]["serpent-head"];
 					} else if (col === 2) { //Dragon Flag
@@ -224,12 +229,12 @@ function getStoneWall(HexCode, d, pos, P, pos18) {
 					return gfx["dungeon"]["deco"]["gem"][col];
 				}
 			} else {
-				return gfx["dungeon"]["stone"]["wall"];
+				return gfx["dungeon"]["stone"][wall];
 			}
 		}
 		//} catch (e) {}
 
-		return gfx["dungeon"]["stone"]["wall"];
+		return gfx["dungeon"]["stone"][wall];
 	}
 }
 
