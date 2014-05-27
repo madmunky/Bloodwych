@@ -15,6 +15,10 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
     this.colour = colour;
     this.stat = stat;
     this.food = 255;
+    this.xp = 0;
+    this.xp2 = 0;
+    this.spellUp = 0;
+    this.levelUp = 0;
     this.monster = monster;
     for (i = 0; i < SPELL_MAX; i++) {
         this.spellBook[i] = new Array();
@@ -32,6 +36,10 @@ Champion.prototype.addSpellToSpellBook = function(spell) {
 
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
     var self = this;
+    if (this.recruitment.recruited) {
+        self.writeAttackPoints(dmg);
+        redrawUI(self.recruitment.playerId);
+    }
     if (typeof aExh !== "undefined") {
         this.stat.vit -= aExh;
         if (this.stat.vit <= 0) {
@@ -49,10 +57,6 @@ Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
     } else if (def instanceof Monster) {
         def.getDamage(dmg);
     }
-    if (this.recruitment.recruited) {
-	    self.writeAttackPoints(dmg);
-	    redrawUI(self.recruitment.playerId);
-	}
 }
 
 //Damage is 'safe' when champ doesn't get killed by it (e.g. by low vitality)
@@ -64,15 +68,15 @@ Champion.prototype.getDamage = function(dmg, safe) {
 	        this.stat.hp = 0;
 	    }
     } else {
-        if (this.stat.hp < 0) {
-            this.stat.hp = -1;
-            this.monster.die();
-        }
         if (this.recruitment.recruited) {
             self.writeAttackPoints(dmg, true);
             player[self.recruitment.playerId].alertDamagedPlayer();
             player[self.recruitment.playerId].checkDead();
             redrawUI(self.recruitment.playerId);
+        }
+        if (this.stat.hp < 0) {
+            this.stat.hp = -1;
+            this.monster.die();
         }
     }
 }

@@ -117,3 +117,26 @@ function calculateAttack(att, def) {
 	}
 	return combat;
 }
+
+function getXpForLevel(lvl) {
+	switch(lvl) {
+		case 1:
+		return 11;
+		default:
+		return lvl * 10;
+	}
+	return 0;
+}
+
+function getXpForSpell(lvl, prof) {
+	var fairx = [ 2, 1, 2, 2 ]; //exponent
+	var fairs = [ 0, 0, 1, 1 ]; //starting
+
+	switch(lvl) {
+		case 1:
+		return Math.ceil(11 * fairx[prof] / 2) - (5 * fairs[prof]);
+		default:
+		return lvl * 5 * fairx[prof] - 5 * fairs[prof];
+	}
+	return 0;
+}

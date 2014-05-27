@@ -252,6 +252,7 @@ Player.prototype.tryAttack = function() {
 
 Player.prototype.attack = function(attack, target) {
     if (attack) {
+        var self = this;
         var combat = calculateAttack(this, target);
         for (com = 0; com < combat.length; com++) {
             (function(combat, com) {
@@ -268,9 +269,14 @@ Player.prototype.attack = function(attack, target) {
                         PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
                     } else if (def instanceof Monster) {
                         PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+                        self.addChampionXp(pwr, att);
+                    }
+                    if(def.dead) {
+                        self.attack(false);
+                        self.addChampionXp(128);
                     }
                 }, att.recruitment.position * 400);
-            })(combat, com)
+            })(combat, com);
         }
     } else {
         for (c = 0; c < this.champion.length; c++) {
@@ -434,6 +440,32 @@ Player.prototype.getOrderedChampionIds = function(loc) {
 	    }
     }
     return ch;
+}
+
+Player.prototype.addChampionXp1 = function(xp, ch) {
+    ch.xp += xp;
+    if(ch.xp > 255) {
+        ch.xp = 0;
+        ch.xp2++;
+        if(ch.xp2 >= getXpForSpell(ch.level, ch.prof)) {
+            ch.levelUp++;
+        }
+        if(ch.xp2 >= getXpForLevel(ch.level)) {
+            ch.xp2 = 0;
+            ch.levelUp++;
+        }
+    }
+}
+
+Player.prototype.addChampionXp = function(xp, ch) {
+    if(typeof ch !== "undefined") {
+        this.addChampionXp1(xp, ch);
+    } else {
+        for (c = 0; c < this.champion.length; c++) {
+            var ch = this.getChampion(c);
+            this.addChampionXp1(xp, ch);
+        }
+    }
 }
 
 Player.prototype.restoreChampionStats = function() {

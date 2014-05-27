@@ -580,8 +580,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 }
 
 function drawMonster(m, dir, dist, player, offset, doBlur) {
-    m.attacking = true;
-    try{
+    //m.attacking = true;
     if (typeof doBlur === "undefined") {
         doBlur = true;
     }
@@ -598,68 +597,79 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
         }
     }
     if (dist > -1) {
-        for (part = 0; part < 3; part++) {
-            if (typeof m.gfx[part] !== "undefined" && typeof m.gfx[part][dist] !== "undefined" && typeof m.gfx[part][dist][dir] !== "undefined") {
-                var dir1 = dir;
-                var dir2 = -1;
-                
-                if (part === IMAGE_MON_ARM) {
-                    if (dir === 0) {
-                        dir1 = 0;
-                        dir2 = 2;
-                       // dir1 = 4;
-                       // dir2 = 5;
-                        if (m.attacking) {
-                            if (monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
-                                dir2 = 5;
+        for (part1 = 0; part1 < 3; part1++) {
+            try {
+                var part = part1;
+                var armoffx = 0;
+                var armoffy = 0;
+                if(dir === 2) { // reverse drawing for back view
+                    part = 2 - part1;
+                    if(part === IMAGE_MON_ARM) {
+                        armoffx = Math.ceil((dist + 8.0) / 3.0);
+                        armoffy = Math.ceil(7.0 / (dist + 1.0));
+                    }
+                }
+                if (typeof m.gfx[part] !== "undefined" && typeof m.gfx[part][dist] !== "undefined" && typeof m.gfx[part][dist][dir] !== "undefined") {
+                    var dir1 = dir;
+                    var dir2 = -1;
+                    
+                    if (part === IMAGE_MON_ARM) {
+                        if (dir === 0) {
+                            dir1 = 0;
+                            dir2 = 2;
+                           // dir1 = 4;
+                           // dir2 = 5;
+                            if (m.attacking) {
+                                if (monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+                                    dir2 = 5;
+                                }
+                                if (monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+                                    dir1 = 4;
+                                }
                             }
-                            if (monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
-                                dir1 = 4;
+                        } else if (dir === 2) {
+                            dir1 = 2;
+                            dir2 = 0;
+                            //dir1 = 4;
+                            //wdir2 = 5;
+                            if (m.attacking) {
+                                if (monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+                                    dir2 = 4;
+                                }
+                                if (monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+                                    dir1 = 5;
+                                }
                             }
-                        }
-                    } else if (dir === 2) {
-                        dir1 = 2;
-                        dir2 = 0;
-                        //dir1 = 4;
-                        //wdir2 = 5;
-                        if (m.attacking) {
-                            if (monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
-                                dir2 = 4;
+                        } else if (dir === 1) {
+                            
+                            if (m.attacking) {
+                                if (monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
+                                    dir1 = 7;
+                                }
                             }
-                            if (monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
-                                dir1 = 5;
-                            }
-                        }
-                    } else if (dir === 1) {
-                        
-                        if (m.attacking) {
-                            if (monsterAttackSequence === 2 || monsterAttackSequence === 3 || monsterAttackSequence === 4) {
-                                dir1 = 7;
-                            }
-                        }
-                    } else if (dir === 3) {
-                        if (m.attacking) {
-                            if (monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
-                                dir1 = 6;
+                        } else if (dir === 3) {
+                            if (m.attacking) {
+                                if (monsterAttackSequence === 1 || monsterAttackSequence === 2 || monsterAttackSequence === 4) {
+                                    dir1 = 6;
+                                }
                             }
                         }
                     }
-                }
-                var offx = 64 - Math.floor(m.gfx[part][dist][dir1].width * 0.5) + offset.x;
-                var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
+                    var offx = 64 - Math.floor(m.gfx[part][dist][dir1].width * 0.5) + offset.x;
+                    var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
 
-                if (dist >= 4 || part !== IMAGE_MON_MINI) {
-                    player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
-                    if (dir2 > -1) {
-                        offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
-                        offy = 76 - Math.floor(m.gfx[part][dist][dir2].height) - offset.y;
-                        player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
+                    if (dist >= 4 || part !== IMAGE_MON_MINI) {
+                        player.Portal.drawImage(m.gfx[part][dist][dir1], (offx - armoffx + blur) * scale, (offy - armoffy) * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
+                        if (dir2 > -1) {
+                            offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
+                            offy = 76 - Math.floor(m.gfx[part][dist][dir2].height) - offset.y;
+                            player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + armoffx + blur) * scale, (offy - armoffy) * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
+                        }
                     }
                 }
-            }
+            }catch(e){PrintLog("JORG - DRAW MONSTER ISSUE! - PT" + part + ' DS' + dist + ' DR' + dir + ' - ' + e.toString());}
         }
     }
-}catch(e){PrintLog("JORG - DRAW MONSTER ISSUE! - " + e.toString());}
 }
 
 function grabMonster(m) {
@@ -1016,13 +1026,13 @@ function grabMonster(m) {
 
         DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 2, 63, 50, false,0,5));
         DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 1, 74, 55, true,0,0));
-        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 64, 1, 63, 55, false,0,5));
+        DISTANCE_1.push(grabImageAt(spriteSheetIMG, 64, 1, 63, 55, false,0,0));
         DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 1, 74, 55, false,0,0));
         
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 9, 58, 45, 37, false,0,7));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 138, 57, 54, 39, true,0,7));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 73, 58, 45, 39, true,0,7));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 138, 57, 54, 39, false,0,7));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 9, 58, 45, 37, false,0,2));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 138, 57, 54, 39, true,0,0));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 73, 58, 45, 39, true,0,0));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 138, 57, 54, 39, false,0,0));
 
         DISTANCE_3.push(grabImageAt(spriteSheetIMG, 16, 100, 31, 28, false));
         DISTANCE_3.push(grabImageAt(spriteSheetIMG, 144, 100, 40, 28, false));
@@ -1058,14 +1068,14 @@ function grabMonster(m) {
         DISTANCE_1.push(grabImageAt(spriteSheetIMG, 269, 32, 23, 22, false,23,10));
         DISTANCE_1.push(grabImageAt(spriteSheetIMG, 269, 32, 23, 22, true,23,10));
 
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 208, 81, 10, 16, false,23,3));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 225, 83, 18, 14, true,20,7));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 208, 81, 10, 16, true,23,3));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 225, 83, 18, 14, false,20,7));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 208, 81, 10, 16, false,23,0));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 225, 83, 18, 14, true,18,0));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 208, 81, 10, 16, true,23,0));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 225, 83, 18, 14, false,18,0));
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 253, 81, 10, 16, false,21,10));
         DISTANCE_2.push(grabImageAt(spriteSheetIMG, 253, 81, 10, 16, true,21,10));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 276, 82, 16, 15, false,20,15));
-        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 276, 82, 16, 15, true,20,15));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 276, 82, 16, 15, false,16,8));
+        DISTANCE_2.push(grabImageAt(spriteSheetIMG, 276, 82, 16, 15, true,16,8));
 
         DISTANCE_3.push(grabImageAt(spriteSheetIMG, 208, 117, 8, 11, false,20,0));
         DISTANCE_3.push(grabImageAt(spriteSheetIMG, 228, 117, 14, 11, true,20,0));

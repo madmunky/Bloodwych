@@ -151,7 +151,10 @@ function debugTextPrint(p) {
         //debugText(hex2bin(hex));
         //debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
         debugText(p, hex2bin(getHexToBinaryPosition(p.getView()[15], 0, 16)));
-        debugText(p, hex2dec(getHexToBinaryPosition(p.getView()[15], 0, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 4, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 8, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 12, 4)));
+        for(c = 0; c < 4; c++) {
+            debugText(p, 'XP' + c + ': ' + p.getChampion(c).xp + ' - XP2' + c + ': ' + p.getChampion(c).xp2 + ' / ' + getXpForSpell(p.getChampion(c).level, p.getChampion(c).prof) + ' / ' + getXpForLevel(p.getChampion(c).level) + ' - Level up' + c + ': ' + p.getChampion(c).levelUp);
+        }
+        //debugText(p, hex2dec(getHexToBinaryPosition(p.getView()[15], 0, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 4, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 8, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 12, 4)));
         //debugText(p.getView()[15]);
         //debugText(p.getView()[15].substring(0,2));
         //debugText(parseInt(getHexToBinaryPosition(p.getView()[15], 0, 5), 16).toString(10));
