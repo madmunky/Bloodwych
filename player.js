@@ -196,7 +196,6 @@ Player.prototype.setMovementData = function() {
     tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
     if(!this.dead) {
 	    this.setBinaryView(18, 8, 1, '1');
-	    //player[1].setBinaryView(18, 8, 1, '1');
 	    this.lastX = this.x;
 	    this.lastY = this.y;
 	    this.lastFloor = this.floor;

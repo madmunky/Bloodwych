@@ -191,20 +191,22 @@ Monster.prototype.move = function() {
 		var canMove = this.canMove();
 		if (canMove === 2 && this.canInteract() > -1) return;
 		if (canMove === 1) {
-			if (this.rotateToPlayer()) return;
 			xy = getOffsetByRotation(this.d);
-			if (this.teamId > 0) {
+			if (this.teamId > 0 || this.square === CHAR_FRONT_SOLO) {
+				if (this.followPlayer()) return;
 				this.x += xy.x;
 				this.y += xy.y;
 				updateMonsterTeam(this.teamId);
-			} else if (this.square === CHAR_FRONT_SOLO) {
-				this.x += xy.x;
-				this.y += xy.y;
+			//} else if (this.square === CHAR_FRONT_SOLO) {
+				//if (this.followPlayer()) return;
+				//this.x += xy.x;
+				//this.y += xy.y;
 			} else {
 				var sq = this.getSquareByDir();
 				switch (sq) {
 					case CHAR_FRONT_LEFT:
 					case CHAR_FRONT_RIGHT:
+						if (this.followPlayer()) return;
 						this.x += xy.x;
 						this.y += xy.y;
 						break;
@@ -214,7 +216,7 @@ Monster.prototype.move = function() {
 				this.square = this.getSquareByDirNext();
 			}
 		} else if (canMove != 3) {
-			if (this.rotateToPlayer()) {
+			if (this.followPlayer()) {
 				return;
 			} else {
 				var turn = Math.floor(Math.random() * 2) * 2 - 1;
@@ -263,17 +265,25 @@ Monster.prototype.doDamageTo = function(def, dmg, dExh) {
 	}
 }
 
-Monster.prototype.rotateToPlayer = function() {
+Monster.prototype.followPlayer = function() {
 	//Move to player
 	if (this.champId === -1) {
 		var rnd = Math.floor(Math.random() * 2);
 		if (!player[0].dead && Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y)) {
 			//player 1 is closer
-			if (rnd === 0) {
-				if (player[0].x > this.x && (this.d === 0 || this.d === 2)) {
+			if (player[0].x > this.x && (this.d === 1)) {
+				return false;
+			} else if (player[0].x < this.x && (this.d === 3)) {
+				return false;
+			} else if (player[0].y > this.y && (this.d === 2)) {
+				return false;
+			} else if (player[0].y < this.y && (this.d === 0)) {
+				return false;
+			} else if (rnd === 0) {
+				if (player[0].x >= this.x && (this.d === 0 || this.d === 2)) {
 					this.rotateTo(1);
 					return true;
-				} else if (player[0].x < this.x && (this.d === 0 || this.d === 2)) {
+				} else if (player[0].x <= this.x && (this.d === 0 || this.d === 2)) {
 					this.rotateTo(3);
 					return true;
 				} else if ((player[0].x < this.x && this.d === 1) || (player[0].x > this.x && this.d === 3)) {
@@ -281,10 +291,10 @@ Monster.prototype.rotateToPlayer = function() {
 					return true;
 				}
 			} else if (rnd === 1) {
-				if (player[0].y > this.y && (this.d === 1 || this.d === 3)) {
+				if (player[0].y >= this.y && (this.d === 1 || this.d === 3)) {
 					this.rotateTo(2);
 					return true;
-				} else if (player[0].y < this.y && (this.d === 1 || this.d === 3)) {
+				} else if (player[0].y <= this.y && (this.d === 1 || this.d === 3)) {
 					this.rotateTo(0);
 					return true;
 				} else if ((player[0].y < this.y && this.d === 2) || (player[0].y > this.y && this.d === 0)) {
@@ -294,11 +304,19 @@ Monster.prototype.rotateToPlayer = function() {
 			}
 		} else if(!player[1].dead) {
 			//player 2 is closer
-			if (rnd === 0) {
-				if (player[1].x > this.x && (this.d === 0 || this.d === 2)) {
+			if (player[1].x > this.x && (this.d === 1)) {
+				return false;
+			} else if (player[1].x < this.x && (this.d === 3)) {
+				return false;
+			} else if (player[1].y > this.y && (this.d === 2)) {
+				return false;
+			} else if (player[1].y < this.y && (this.d === 0)) {
+				return false;
+			} else if (rnd === 0) {
+				if (player[1].x >= this.x && (this.d === 0 || this.d === 2)) {
 					this.rotateTo(1);
 					return true;
-				} else if (player[1].x < this.x && (this.d === 0 || this.d === 2)) {
+				} else if (player[1].x <= this.x && (this.d === 0 || this.d === 2)) {
 					this.rotateTo(3);
 					return true;
 				} else if ((player[1].x < this.x && this.d === 1) || (player[1].x > this.x && this.d === 3)) {
@@ -306,10 +324,10 @@ Monster.prototype.rotateToPlayer = function() {
 					return true;
 				}
 			} else if (rnd === 1) {
-				if (player[1].y > this.y && (this.d === 1 || this.d === 3)) {
+				if (player[1].y >= this.y && (this.d === 1 || this.d === 3)) {
 					this.rotateTo(2);
 					return true;
-				} else if (player[1].y < this.y && (this.d === 1 || this.d === 3)) {
+				} else if (player[1].y <= this.y && (this.d === 1 || this.d === 3)) {
 					this.rotateTo(0);
 					return true;
 				} else if ((player[1].y < this.y && this.d === 2) || (player[1].y > this.y && this.d === 0)) {

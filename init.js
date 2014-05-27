@@ -92,9 +92,9 @@ function loadGfxData() {
 	gfxLoadImage("dungeon", "floor", "pit-down");
 	gfxLoadImage("dungeon", "floor", "pit-up");
 	gfxLoadImage("dungeon", "floor", "switch");
-        
-        //Items
-        gfxLoadImage("dungeon", "items2", "");
+
+	//Items
+	gfxLoadImage("dungeon", "items2", "");
 
 	//Characters
 	gfxLoadImage("character", "heads", "");
@@ -113,7 +113,7 @@ function loadGfxData() {
 
 	//Misc
 	gfxLoadImage("misc", "font", "", null);
-        gfxLoadImage("misc", "uistuff", "", null);
+	gfxLoadImage("misc", "uistuff", "", null);
 }
 
 function loadTowerData(t, start) {
@@ -121,7 +121,7 @@ function loadTowerData(t, start) {
 
 	if (typeof start === "boolean" && start) {
 		getFileData('data/charstats.data', readSimpleDataHex, t, "championData", 32);
-        getFileData('data/charpockets.data', readSimpleDataHex, t, "championPocketData", 16);
+		getFileData('data/charpockets.data', readSimpleDataHex, t, "championPocketData", 16);
 		getFileData('data/heads.monsters', readSimpleData, null, "monsterHeads", 1);
 		getFileData('data/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
 		getFileData('data/palette.monsters', readSimpleData, null, "monsterPalette", 4);
@@ -144,18 +144,17 @@ function initData() {
 	gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
 	gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
 
-	
 	initChampions();
 	initSpells();
-	player[0] = new Player(0, 96 * scale, 12 * scale,0*scale,10);
-	player[1] = new Player(1, 96 * scale, 116 * scale,0*scale,114);
-        gfxUI = grabUISprites(gfx['misc']['uistuff']); 
-        dungeonItems = dungeonItems();
-        initItemRefs();        
-        font = grabFont();
+	player[0] = new Player(0, 96 * scale, 12 * scale, 0 * scale, 10);
+	player[1] = new Player(1, 96 * scale, 116 * scale, 0 * scale, 114);
+	gfxUI = grabUISprites(gfx['misc']['uistuff']);
+	dungeonItems = dungeonItems();
+	initItemRefs();
+	font = grabFont();
 	initPlayersQuickStart();
 	initTowerSwitches();
 	switchTower(0);
-        uiClickArea = uiClickAreas();
+	uiClickArea = uiClickAreas();
 	//}
 }

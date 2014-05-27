@@ -1,0 +1,83 @@
+Hacking : Object Data Structure 
+
+The data for the objects is stored according to its respective tower / dungeon, and is found at immediately following the map data, in a 1024 ($400) byte block. In the PC version, this is contained with the .ob files for each tower. There is an additional 2 bytes of data at the beginning to define the amount of object data used in the block.
+
+These 1026 byte blocks, are found at the following locations;
+
+[$0FC7C] The Keep
+[$1107E] The Serpent Tower
+[$12480] The Moon Tower
+[$13882] The Dragon Tower
+[$14C84] The Chaos Tower
+[$16086] Zendik's Tower
+
+
+The data for the objects is stored in such a way that there is no fixed length for each entry within the data table. This is to allow for only one entry when items are placed on top of one another in the same location.
+
+The first two bytes of data represents the amount of data used for item-placements listed within the data table, and is then followed by the data itself.
+
+In the case of the Keep [$FBBC] (PC: mod0.ob) this is a value of 03 3F.
+
+
+This is then followed by a minimum of 5 bytes, with an additional 2 bytes added for each extra item in this location.
+
+
+This can be represented as the following;
+
+       AB CD EF GH IJ  ...  KL MN ... etc
+
+
+
+A = The position of the items in the location (4 positions for a standard floor, and 2 positions for a shelf)
+
+      This has one of four options;
+
+00 - Position 1 - North West Space, North Facing Bottom Shelf,  West Facing Top Shelf 
+04 - Position 2 - North East Space, East Facing Bottom Shelf,  North Facing Top Shelf 
+08 - Position 3 - South West Space, West Facing Bottom Shelf,  South Facing Top Shelf 
+12 - Position 4 - South East Space, South Facing Bottom Shelf,  East Facing Top Shelf
+
+
+BCD = The index number for the location.
+
+       This is not a standard x,y,z coordinate reference, but a number which represents the location according to where it is within the entire map data of the tower / dungeon. This should be taken as an index number, as if the marker is found by "counting through" the map locations. This means that a value of 0 00 would represent the first floor location at coordinate 0,0 on the 0 (bottom) floor of a tower. Moving along to 0,1 would be represented by the index number 0 01 and so on.
+
+EF = The number of items in the given location, minus 1. 
+
+       Where there is only one item stored in the location, this has a value of 00. Where there are two items, a value of 01 and so on. This is an important piece of information as with no "termination" byte, it is this which is used to tell us how many bytes of data will need to be read for the object data for this location.
+
+GH - This is the object code for the first item in the location. This is a representation of the item, based on the object lookup table, which will need to be referenced in order to determine which items are in the location.
+
+IJ - This is the number of item GH to be "stacked" at this point. Whilst this is commonly used for Coinage and Common Keys, which are usually place in multiple numbers, this can also be used to stack multiple numbers of any item, to a maximum number of 255.
+
+KL - This is identical to GH, in those situations where EF is greater than zero. It gives the object code for the next item stored at a given location.
+
+LM - Again, this is identical to IJ, in those situations where EF is greater than zero, and gives the number of the item represented bu KL to be stored at the location.
+
+
+
+In order to aid the understanding of the object data structure, here is an example piece of code, from the first item stored for the Keep.
+
+        C8 0E 00 07 01
+
+This data would represent:
+     1 item on the location (00 on EF.) 
+     1 (01 on IJ)  x Apple (07 on GH)  at index postion 8 0E (8 OE on B CD), in the C position (C on A.)
+
+
+The next set of data in the list is:
+
+         88 0E 00 07 01 
+
+This data would represent;
+    1 item on the location. 
+    1 x Apple  at index position 8 0E, in the 8 position of the location.
+
+
+And skipping through to the fourth piece of data we see the following;
+
+         88 8E 02 50 01 30 01 02 05 
+
+Which represents;
+    3 items on the location
+    1 x Bronze Key , 1 x Dagger, 5 x Common Keys  at index position 8 8E in the 8 position of the location.

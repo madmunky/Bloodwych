@@ -279,11 +279,11 @@ function initItemRefs() {
         createItemRef(40, "Moon Shield", gfxUI[UI_GFX_POCKET_SHIELD_5], dungeonItems[DUNGEON_ITEM_LARGE_SHIELD]);
         createItemRef(41, "Dragon Scale", gfxUI[UI_GFX_POCKET_SHIELD_6], dungeonItems[DUNGEON_ITEM_LARGE_SHIELD]);
         createItemRef(42, "War Shield", gfxUI[UI_GFX_POCKET_SHIELD_7], dungeonItems[DUNGEON_ITEM_LARGE_SHIELD]);
-        createItemRef(43, "Chaos Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_YELLOW]), dungeonItems[DUNGEON_ITEM_LARGE_GLOVE]);
-        createItemRef(44, "Battle Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_GREY_LIGHT]), dungeonItems[DUNGEON_ITEM_LARGE_GLOVE]);
-        createItemRef(45, "Mithril Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_BLUE]), dungeonItems[DUNGEON_ITEM_LARGE_GLOVE]);
-        createItemRef(46, "Adamant Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_GREEN]), dungeonItems[DUNGEON_ITEM_LARGE_GLOVE]);
-        createItemRef(47, "Crystal Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), dungeonItems[DUNGEON_ITEM_LARGE_GLOVE]);
+        createItemRef(43, "Chaos Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_YELLOW]), dungeonItems[DUNGEON_ITEM_GLOVE]);
+        createItemRef(44, "Battle Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_GREY_LIGHT]), dungeonItems[DUNGEON_ITEM_GLOVE]);
+        createItemRef(45, "Mithril Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_BLUE]), dungeonItems[DUNGEON_ITEM_GLOVE]);
+        createItemRef(46, "Adamant Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_GREEN]), dungeonItems[DUNGEON_ITEM_GLOVE]);
+        createItemRef(47, "Crystal Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_PINK]), dungeonItems[DUNGEON_ITEM_GLOVE]);
         createItemRef(48, "Dagger", gfxUI[UI_GFX_POCKET_DAGGER], dungeonItems[DUNGEON_ITEM_DAGGER]);
         createItemRef(49, "Stealth Blade", gfxUI[UI_GFX_POCKET_SHORT_SWORD], dungeonItems[DUNGEON_ITEM_DAGGER]);
         createItemRef(50, "Short Sword", gfxUI[UI_GFX_POCKET_SWORD_1], dungeonItems[DUNGEON_ITEM_DAGGER]);
