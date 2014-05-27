@@ -8,39 +8,39 @@ function Item(id, quantity, location) {
 
 Item.prototype.getType = function() {
     var id = this.id;
-    if (id === 0) {
+    if (id === ITEM_EMPTY) {
         return ITEM_TYPE_EMPTY;
-    } else if (id <= 4) {
+    } else if (id <= ITEM_ELF_ARROWS) {
         return ITEM_TYPE_STACKABLE;
-    } else if (id <= 22) {
+    } else if (id <= ITEM_NEGG_RED) {
         return ITEM_TYPE_FOOD;
-    } else if (id <= 26) {
+    } else if (id <= ITEM_MOON_ELIXIR) {
         return ITEM_TYPE_POTION;
-    } else if (id <= 35) {
+    } else if (id <= ITEM_CRYSTAL_PLATE) {
         return ITEM_TYPE_ARMOUR;
-    } else if (id <= 42) {
+    } else if (id <= ITEM_WAR_SHIELD) {
         return ITEM_TYPE_SHIELD;
-    } else if (id <= 47) {
+    } else if (id <= ITEM_CRYSTAL_GLOVES) {
         return ITEM_TYPE_GLOVES;
-    } else if (id <= 63) {
+    } else if (id <= ITEM_POWER_STAFF) {
         return ITEM_TYPE_WEAPON;
-    } else if (id <= 79) {
+    } else if (id <= ITEM_THAI_CHANG_RIP) {
         return ITEM_TYPE_RIP;
-    } else if (id <= 86) {
+    } else if (id <= ITEM_CHROMATIC_KEY) {
         return ITEM_TYPE_KEY;
-    } else if (id <= 91) {
+    } else if (id <= ITEM_HEAL_WAND) {
         return ITEM_TYPE_WAND;
-    } else if (id <= 94) {
+    } else if (id <= ITEM_CROSS_BOW) {
         return ITEM_TYPE_BOW;
-    } else if (id <= 95) {
+    } else if (id <= ITEM_PERMIT) {
         return ITEM_TYPE_SCROLL;
-    } else if (id <= 99) {
+    } else if (id <= ITEM_MOON_CRYSTAL) {
         return ITEM_TYPE_CRYSTAL;
-    } else if (id <= 103) {
+    } else if (id <= ITEM_TAN_GEM) {
         return ITEM_TYPE_GEM;
-    } else if (id <= 108) {
+    } else if (id <= ITEM_MOON_RING) {
         return ITEM_TYPE_RING;
-    } else if (id <= 109) {
+    } else if (id <= ITEM_BOOK_OF_SKULLS) {
         return ITEM_TYPE_BOOK;
     }
     return -1;
@@ -49,39 +49,39 @@ Item.prototype.getType = function() {
 Item.prototype.getWeaponPower = function() {
     if (this.type === ITEM_TYPE_WEAPON) {
         switch (this.id) {
-            case 48:
+            case ITEM_DAGGER:
                 return 2;
-            case 49:
+            case ITEM_STEALTH_BLADE:
                 return 3;
-            case 50:
+            case ITEM_SHORT_SWORD:
                 return 4;
-            case 51:
+            case ITEM_LONG_SWORD:
                 return 5;
-            case 52:
+            case ITEM_MITHRIL_SWORD:
                 return 7;
-            case 53:
+            case ITEM_FLESHBANE:
                 return 9;
-            case 54:
+            case ITEM_DEMON_BLADE:
                 return 13;
-            case 55:
+            case ITEM_ACE_OF_SWORDS:
                 return 17;
 
-            case 56:
+            case ITEM_BATTLE_AXE:
                 return 6;
-            case 57:
+            case ITEM_MITHRIL_AXE:
                 return 8;
-            case 58:
+            case ITEM_TROLLS_AXE:
                 return 11;
-            case 59:
+            case ITEM_BRAINBITER:
                 return 14;
-            case 60:
+            case ITEM_DEATHBRINGER:
                 return 19;
 
-            case 61:
+            case ITEM_STAFF:
                 return 4;
-            case 62:
+            case ITEM_BATTLE_STAFF:
                 return 7;
-            case 63:
+            case ITEM_POWER_STAFF:
                 return 10;
         }
     }
@@ -90,15 +90,15 @@ Item.prototype.getWeaponPower = function() {
 
 Item.prototype.getFoodValue = function() {
     if (this.type === ITEM_TYPE_FOOD) {
-        if(this.id <= 13) {
+        if(this.id <= ITEM_CHICKEN) {
             return 16;
-        } else if(this.id <= 19) {
+        } else if(this.id <= ITEM_WATER) {
             return 10;
-        } else if(this.id <= 20) {
+        } else if(this.id <= ITEM_NEGG_GREEN) {
             return 33;
-        } else if(this.id <= 21) {
+        } else if(this.id <= ITEM_NEGG_BLUE) {
             return 66;
-        } else if(this.id <= 22) {
+        } else if(this.id <= ITEM_NEGG_RED) {
             return 66;
         }
     }
@@ -108,57 +108,57 @@ Item.prototype.getFoodValue = function() {
 Item.prototype.getArmourClass = function() {
     if (this.type === ITEM_TYPE_ARMOUR) {
     	switch (this.id) {
-    		case 27:
+    		case ITEM_LEATHER_ARMOUR:
     		return 3;
-    		case 28:
+    		case ITEM_CHAIN_MAIL:
     		return 5;
-    		case 29:
+    		case ITEM_PLATE_MAIL:
     		return 7;
-    		case 30:
+    		case ITEM_MITHRIL_CHAIN:
     		return 8;
-    		case 31:
+    		case ITEM_MITHRIL_PLATE:
     		return 11;
-    		case 32:
+    		case ITEM_ADAMANT_CHAIN:
     		return 13;
-    		case 33:
+    		case ITEM_ADAMANT_PLATE:
     		return 15;
-    		case 34:
+    		case ITEM_CRYSTAL_CHAIN:
     		return 17;
-    		case 35:
+    		case ITEM_CRYSTAL_PLATE:
     		return 19;
     		default:
     		break;
     	}
     } else if (this.type === ITEM_TYPE_SHIELD) {
     	switch (this.id) {
-    		case 36:
+    		case ITEM_LEATHER_SHIELD:
     		return 1;
-    		case 37:
+    		case ITEM_BUCKLER:
     		return 2;
-    		case 38:
+    		case ITEM_RUNE_SHIELD:
     		return 4;
-    		case 39:
+    		case ITEM_LARGE_SHIELD:
     		return 3;
-    		case 40:
+    		case ITEM_MOON_SHIELD:
     		return 4;
-    		case 41:
+    		case ITEM_DRAGON_SCALE:
     		return 5;
-    		case 42:
+    		case ITEM_WAR_SHIELD:
     		return 7;
     		default:
     		break;
     	}
 	} else if (this.type === ITEM_TYPE_GLOVES) {
 		switch (this.id) {
-    		case 43:
+    		case ITEM_CHAOS_GLOVES:
     		return 1;
-    		case 44:
+    		case ITEM_BATTLE_GLOVES:
     		return 2;
-    		case 45:
+    		case ITEM_MITHRIL_GLOVES:
     		return 3;
-    		case 46:
+    		case ITEM_ADAMANT_GLOVES:
     		return 4;
-    		case 47:
+    		case ITEM_CRYSTAL_GLOVES:
     		return 5;
     		default:
     		break;
