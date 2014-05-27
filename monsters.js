@@ -39,7 +39,7 @@ Monster.prototype.toString = function() {
 
 Monster.prototype.getGfx = function() {
 	if (characterGfx.length > 0) {
-		if(this.form >= 101) {
+		if(this.form >= MON_FORM_SUMMON) {
 			var level = Math.floor(this.level / 3);
 			this.gfx = grabMonster(this);
 		} else {

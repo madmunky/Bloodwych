@@ -604,7 +604,7 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
                 var armoffy = 0;
                 if(dir === 2) { // reverse drawing for back view
                     part = 2 - part1;
-                    if(part === IMAGE_MON_ARM) {
+                    if(m.form >= MON_FORM_CRAB && m.form < MON_FORM_BEHEMOTH && part === IMAGE_MON_ARM) {
                         armoffx = Math.ceil((dist + 8.0) / 3.0);
                         armoffy = Math.ceil(7.0 / (dist + 1.0));
                     }

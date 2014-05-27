@@ -269,11 +269,11 @@ Player.prototype.attack = function(attack, target) {
                         PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
                     } else if (def instanceof Monster) {
                         PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
-                        self.addChampionXp(pwr, att);
+                        self.gainChampionXp(pwr, att);
                     }
                     if(def.dead) {
                         self.attack(false);
-                        self.addChampionXp(128);
+                        self.gainChampionXp(128);
                     }
                 }, att.recruitment.position * 400);
             })(combat, com);
@@ -442,28 +442,29 @@ Player.prototype.getOrderedChampionIds = function(loc) {
     return ch;
 }
 
-Player.prototype.addChampionXp1 = function(xp, ch) {
+Player.prototype.gainChampionXp1 = function(xp, ch) {
     ch.xp += xp;
     if(ch.xp > 255) {
         ch.xp = 0;
         ch.xp2++;
         if(ch.xp2 >= getXpForSpell(ch.level, ch.prof)) {
-            ch.levelUp++;
+            ch.spellUp++;
         }
         if(ch.xp2 >= getXpForLevel(ch.level)) {
             ch.xp2 = 0;
             ch.levelUp++;
+            ch.checkGainLevel();
         }
     }
 }
 
-Player.prototype.addChampionXp = function(xp, ch) {
+Player.prototype.gainChampionXp = function(xp, ch) {
     if(typeof ch !== "undefined") {
-        this.addChampionXp1(xp, ch);
+        this.gainChampionXp1(xp, ch);
     } else {
         for (c = 0; c < this.champion.length; c++) {
             var ch = this.getChampion(c);
-            this.addChampionXp1(xp, ch);
+            this.gainChampionXp1(xp, ch);
         }
     }
 }
@@ -577,10 +578,10 @@ Player.prototype.drawMonster = function(m, distance, offset) {
     //var loc = characterSpriteLocation();
     var p = this;
 
-    if (form >= 101) {
-        if (form <= 102) {
+    if (form >= MON_FORM_SUMMON) {
+        if (form <= MON_FORM_BEHOLDER) {
           var dis = [ 0, 1, 2, 3, 4, 5 ];
-        } else if (form === 106) {
+        } else if (form === MON_FORM_DRAGON_SMALL) {
             var dis = [ 1, 1, 2, 2, 3, 4 ];
         } else {
             var dis = [ 0, 0, 1, 1, 2, 3 ];
