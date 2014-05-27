@@ -68,15 +68,15 @@ Champion.prototype.getDamage = function(dmg, safe) {
 	        this.stat.hp = 0;
 	    }
     } else {
+        if (this.stat.hp < 0) {
+            this.stat.hp = -1;
+            this.monster.die();
+        }
         if (this.recruitment.recruited) {
             self.writeAttackPoints(dmg, true);
             player[self.recruitment.playerId].alertDamagedPlayer();
             player[self.recruitment.playerId].checkDead();
             redrawUI(self.recruitment.playerId);
-        }
-        if (this.stat.hp < 0) {
-            this.stat.hp = -1;
-            this.monster.die();
         }
     }
 }
