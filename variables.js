@@ -23,6 +23,7 @@ var timerChampionAttack = 16;
 var towerSwitchesData = new Array();
 var loadingInterval = 0;
 var gfxUI = [];
+var font;
 var uiClickArea = [];
 var redrawPlayerUiFlag = 0;
 

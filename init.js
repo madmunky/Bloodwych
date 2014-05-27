@@ -147,7 +147,7 @@ function initData() {
 	player[1] = new Player(1, 96 * scale, 116 * scale,0*scale,114);
         gfxUI = grabUISprites(gfx['misc']['uistuff']); 
         initItemRefs();
-        grabFont();
+        font = grabFont();
 	initPlayersQuickStart();
 	initTowerSwitches();
 	switchTower(0);
