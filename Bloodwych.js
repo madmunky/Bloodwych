@@ -32,9 +32,10 @@ function updatePlayerViewScreen() {
         debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
         drawPlayersView(player[p]);
         drawUI(player[p]);
+        testing(player[p]);
     }
     redrawPlayerUiFlag = 0;
-    testing();
+
 
 }
 

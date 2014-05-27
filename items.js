@@ -377,11 +377,12 @@ function dungeonItems(){
         for (y = 0; y < 3; y++) {
             for (x = 0; x < 9; x++) {
                 var i = [];
-                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 10, 33, 10, false));
-                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 12, 33, 12, false));
-                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 8, 33, 8, false));
-                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 7, 33, 7, false));
-                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 6, 33, 6, false));
+                var b = y * 42;
+                i.push(grabImageAt(spriteSheetIMG, x * 33, b +(y + 0), 33, 10, false));
+                i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 10), 33, 12, false));
+                i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 22), 33, 8, false));
+                i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 30), 33, 7, false));
+                i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 37), 33, 6, false));
                 dItems.push(i);
             }
         }

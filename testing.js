@@ -16,17 +16,13 @@ var gfxDragon;
 var gfxCrab;
 
 
-function testing(){
+function testing(p){
     
-     /*if (gfxBehemoth === null || typeof(gfxBehemoth)==='undefined' && gfx['character']['behemoth'].width > 0 && gfx['character']['summon'].width > 0) { 
-        gfxBehemoth = behemothArray(gfx['character']['behemoth']);     
-        gfxSummon = summonArray(gfx['character']['summon']);     
-        gfxNastyFloater = nastyFloaterArray(gfx['character']['nastyfloater']);  
-        gfxDragon = dragonArray(gfx['character']['dragon']);
-        gfxCrab = crabArray(gfx['character']['crab']);
-               
-     }    
-    testSummon();*/
+    var x = testPalette,
+            y = testMon1;
+    
+    ctx.drawImage(recolourSprite(dungeonItems[x][y],DUN_ITEM_PALETTE_DEFAULT,new Array(COLOUR[COLOUR_RED],COLOUR[COLOUR_RED_DARK])),(p.PortalX + 60),(p.PortalY + 201),dungeonItems[x][y].width * scale,dungeonItems[x][y].height * scale);
+
     
 }
 
