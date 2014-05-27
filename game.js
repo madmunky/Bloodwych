@@ -6,7 +6,6 @@ Game.prototype = {
 		this.step = 1 / this.fps;
 		this.reset();
 		this.eventQueue = [];
-
 	},
 
 	// Reset the game

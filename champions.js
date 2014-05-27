@@ -105,7 +105,8 @@ Champion.prototype.checkGainLevel = function() {
 			int: 5,
 			cha: 5,
 			hp: 10,
-			vit: 8
+			vit: 8,
+			sp: 3
 		}
 		stat[PROFESSION_WIZARD] = {
 			str: 5,
@@ -113,7 +114,8 @@ Champion.prototype.checkGainLevel = function() {
 			int: 10,
 			cha: 5,
 			hp: 5,
-			vit: 8
+			vit: 8,
+			sp: 10
 		}
 		stat[PROFESSION_ADVENTURER] = {
 			str: 7,
@@ -121,7 +123,8 @@ Champion.prototype.checkGainLevel = function() {
 			int: 7,
 			cha: 10,
 			hp: 8,
-			vit: 8
+			vit: 8,
+			sp: 5
 		}
 		stat[PROFESSION_CUTPURSE] = {
 			str: 5,
@@ -129,16 +132,22 @@ Champion.prototype.checkGainLevel = function() {
 			int: 5,
 			cha: 5,
 			hp: 8,
-			vit: 8
+			vit: 8,
+			sp: 5
 		}
 		for (l = 0; l < this.levelUp; l++) {
-			this.stat.str += Math.Floor(Math.random()) * stat[prof].str;
-			this.stat.agi += Math.Floor(Math.random()) * stat[prof].agi;
-			this.stat.int += Math.Floor(Math.random()) * stat[prof].int;
-			this.stat.cha += Math.Floor(Math.random()) * stat[prof].cha;
-			this.stat.hp += Math.Floor(Math.random()) * stat[prof].hp;
-			this.stat.vit += Math.Floor(Math.random()) * stat[prof].vit;
+			this.stat.str += Math.floor(Math.random() * stat[prof].str) + 1;
+			this.stat.agi += Math.floor(Math.random() * stat[prof].agi) + 1;
+			this.stat.int += Math.floor(Math.random() * stat[prof].int) + 1;
+			this.stat.cha += Math.floor(Math.random() * stat[prof].cha) + 1;
+			this.stat.hpMax += Math.floor(Math.random() * stat[prof].hp) + 1;
+			this.stat.vitMax += Math.floor(Math.random() * stat[prof].vit) + 1;
+			this.stat.spMax += Math.floor(Math.random() * stat[prof].sp) + 1;
 			this.level++;
+		}
+		if(this.recruitment.recruited) {
+			var p = this.recruitment.playerId;
+			player[p].message(this.firstName + TEXT_GAINED_LEVEL, COLOUR[COLOUR_RED], true);
 		}
 		this.levelUp = 0;
 	}
@@ -146,6 +155,7 @@ Champion.prototype.checkGainLevel = function() {
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
 	if (typeof pwr !== "undefined" && this.recruitment.recruited) {
+		var self = this;
 		var p = player[this.recruitment.playerId];
 		var x = 0,
 			y = 0;
@@ -180,7 +190,9 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		}
 		(function(p, x, y) {
 			setTimeout(function() {
-				ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 96 * scale, 8 * scale);
+				if(p.messageTimeout === 0 || self.recruitment.position === 0) {
+					ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 96 * scale, 8 * scale);
+				}
 			}, 1500);
 		})(p, x, y);
 	}

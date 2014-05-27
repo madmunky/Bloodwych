@@ -442,31 +442,31 @@ Player.prototype.getOrderedChampionIds = function(loc) {
     return ch;
 }
 
-Player.prototype.gainChampionXp1 = function(xp, ch) {
-    ch.xp += xp;
-    if(ch.xp > 255) {
-        ch.xp = 0;
-        ch.xp2++;
-        if(ch.xp2 >= getXpForSpell(ch.level, ch.prof)) {
-            ch.spellUp++;
-        }
-        if(ch.xp2 >= getXpForLevel(ch.level)) {
-            ch.xp2 = 0;
-            ch.levelUp++;
-            ch.checkGainLevel();
-        }
-    }
-}
-
 Player.prototype.gainChampionXp = function(xp, ch) {
     if(typeof ch !== "undefined") {
-        this.gainChampionXp1(xp, ch);
+        gainChampionXp1();
     } else {
         for (c = 0; c < this.champion.length; c++) {
             var ch = this.getChampion(c);
-            this.gainChampionXp1(xp, ch);
+            gainChampionXp1();
         }
     }
+
+	function gainChampionXp1() {
+	    ch.xp += xp;
+	    if(ch.xp > 255) {
+	        ch.xp = ch.xp % 256;
+	        ch.xp2++;
+	        if(ch.xp2 >= getXpForSpell(ch.level, ch.prof)) {
+	            ch.spellUp++;
+	        }
+	        if(ch.xp2 >= getXpForLevel(ch.level)) {
+	            ch.xp2 = 0;
+	            ch.levelUp++;
+	            ch.checkGainLevel();
+	        }
+	    }
+	}
 }
 
 Player.prototype.restoreChampionStats = function() {
@@ -698,8 +698,18 @@ Player.prototype.findItem = function(i) {
     return -1;
 }
 
-Player.prototype.message = function(txt, col) {
-	fadeFont(this, txt, 50, 3000, 0, this.ScreenY, col);
+Player.prototype.message = function(txt, col, wait) {
+	var self = this;
+	if(typeof wait === "undefined") {
+		wait = false;
+	}
+	if(this.messageTimeout === 0 || !wait) {
+		fadeFont(this, txt, 50, 3000, 0, this.ScreenY, col);
+	} else {
+		setTimeout(function() {
+			self.message(txt, col, wait);
+		}, 500);
+	}
 }
 
 Player.prototype.testMode = function(id) {

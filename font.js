@@ -49,6 +49,7 @@ function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, 
 						        if (alpha < 0) {
 						            myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
 						            clearInterval(p.messageTimeout);
+						            p.messageTimeout = 0;
 						        }
 						    }, speed);
 						})(fontString, locationX, locationY, paletteTo, alignment, alpha);
@@ -160,7 +161,7 @@ function fontCharacterToIndex(c) {
 		case 40:
 			return 44; // (
 		case 39:
-			return 42; // '
+			return 43; // '
 		case 45:
 			return 49; // -
 		case 46:

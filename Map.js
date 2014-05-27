@@ -74,4 +74,6 @@ function switchTower(id, po) {
 	player[0].updateChampions();
 	player[1].updateChampions();
 	$('canvas').addClass('active');
+	player[0].message("WELCOME THEE TRAVELLER, TO MADMUNKY AND ", COLOUR[COLOUR_YELLOW], true);
+	player[0].message("     WISHBONE'S REMAKE OF BLOODWYCH     ", COLOUR[COLOUR_YELLOW], true);
 }
