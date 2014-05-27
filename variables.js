@@ -25,6 +25,7 @@ var loadingInterval = 0;
 var gfxUI = [];
 var font;
 var uiClickArea = [];
+var dungeonItems = [];
 var redrawPlayerUiFlag = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
@@ -776,3 +777,34 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
 	TEXT_DEFENDS = "DEFENDS",
 	TEXT_THOU = "THOU",
 	TEXT_ART_DEAD = "ART DEAD";
+
+//Dungeon Items
+var DUNGEON_ITEM_POTION = 1,
+        DUNGEON_ITEM_RIP = 2,
+        DUNGEON_ITEM_SMALL_SHIELD = 3,
+        DUNGEON_ITEM_KEY = 4,
+        DUNGEON_ITEM_COIN = 5,
+        DUNGEON_ITEM_AMOUR = 6,
+        DUNGEON_ITEM_APPLE = 7,
+        DUNGEON_ITEM_BISCUTT = 8,
+        DUNGEON_ITEM_CHICKEN = 9,
+        DUNGEON_ITEM_SWORD = 10,
+        DUNGEON_ITEM_AXE = 11,
+        DUNGEON_ITEM_BOW = 12,
+        DUNGEON_ITEM_CROSS_BOW = 13,
+        DUNGEON_ITEM_WAND1 = 14,
+        DUNGEON_ITEM_STAFF = 15,
+        DUNGEON_ITEM_DAGGER = 16,
+        DUNGEON_ITEM_LARGE_SHIELD = 17,
+        DUNGEON_ITEM_DRINK = 18,
+        DUNGEON_ITEM_RING = 19,
+        DUNGEON_ITEM_GEM = 20,
+        DUNGEON_ITEM_GLOVE = 21,
+        DUNGEON_ITEM_PERMIT = 22,
+        DUNGEON_ITEM_BOOK_OF_SKULLS = 23,
+        DUNGEON_ITEM_BONE = 24,
+        DUNGEON_ITEM_WAND = 25,
+        DUNGEON_ITEM_NEGG = 26,
+        DUNGEON_ITEM_APPLE_HALF = 27;
+        
+        

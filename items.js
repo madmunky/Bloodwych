@@ -167,7 +167,6 @@ Item.prototype.getArmourClass = function() {
     return 0;
 }
 
-
 Item.prototype.setPocketItem = function(id, q) {
     if (typeof id === "undefined" || id === 0) {
         id = 0;
@@ -332,7 +331,7 @@ function initItemRefs() {
         createItemRef(92, "Long Bow", gfxUI[UI_GFX_POCKET_BOW], itemGfxD[x]);
         createItemRef(93, "Frost Bow", recolourUiGfx(gfxUI[UI_GFX_POCKET_BOW],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_WHITE]), itemGfxD[x]);
         createItemRef(94, "Cross Bow", gfxUI[UI_GFX_POCKET_CROSS_BOW], itemGfxD[x]);
-        createItemRef(95, "permit", gfxUI[UI_GFX_POCKET_PERMIT], itemGfxD[x]);
+        createItemRef(95, "Permit", gfxUI[UI_GFX_POCKET_PERMIT], itemGfxD[x]);
         createItemRef(96, "Serpent Crystal", gfxUI[UI_GFX_POCKET_GEM_SERPENT], itemGfxD[x]);
         createItemRef(97, "Chaos Crystal", gfxUI[UI_GFX_POCKET_GEM_CHAOS], itemGfxD[x]);
         createItemRef(98, "Dragon Crystal", gfxUI[UI_GFX_POCKET_GEM_DRAGON], itemGfxD[x]);
@@ -368,4 +367,24 @@ function initItemGfxD() {
 			itemGfxD[i][d] = null;
 		}
 	}
+}
+
+function dungeonItems(){
+    
+    var spriteSheetIMG = gfx['dungeon']['items2'];
+    var dItems = [];
+    
+        for (y = 0; y < 3; y++) {
+            for (x = 0; x < 9; x++) {
+                var i = [];
+                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 10, 33, 10, false));
+                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 12, 33, 12, false));
+                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 8, 33, 8, false));
+                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 7, 33, 7, false));
+                i.push(grabImageAt(spriteSheetIMG, x * 33, y * 6, 33, 6, false));
+                dItems.push(i);
+            }
+        }
+        
+    return dItems;    
 }

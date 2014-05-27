@@ -91,6 +91,9 @@ function loadGfxData() {
 	gfxLoadImage("dungeon", "floor", "pit-down");
 	gfxLoadImage("dungeon", "floor", "pit-up");
 	gfxLoadImage("dungeon", "floor", "switch");
+        
+        //Items
+        gfxLoadImage("dungeon", "items2", "");
 
 	//Characters
 	gfxLoadImage("character", "heads", "");
@@ -146,7 +149,8 @@ function initData() {
 	player[0] = new Player(0, 96 * scale, 12 * scale,0*scale,10);
 	player[1] = new Player(1, 96 * scale, 116 * scale,0*scale,114);
         gfxUI = grabUISprites(gfx['misc']['uistuff']); 
-        initItemRefs();
+        dungeonItems = dungeonItems();
+        initItemRefs();        
         font = grabFont();
 	initPlayersQuickStart();
 	initTowerSwitches();
