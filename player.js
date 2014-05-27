@@ -546,8 +546,11 @@ Player.prototype.drawMonster = function(m, distance, offset) {
     var p = this;
 
     if (form >= 101) {
-        var dis = [ 0, 1, 2, 3, 4, 5 ];
-        if (form >= 102) {
+        if (form <= 102) {
+          var dis = [ 0, 1, 2, 3, 4, 5 ];
+        } else if (form === 106) {
+            var dis = [ 1, 1, 2, 2, 3, 4 ];
+        } else {
             var dis = [ 0, 0, 1, 1, 2, 3 ];
         }
         drawMonster(m, (6 + p.d - m.d) % 4, dis[distance], this, offset);
