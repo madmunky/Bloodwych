@@ -26,3 +26,4 @@ QUESTIONS FOR CHRIS
 ------
 * Do we get more xp for killing higher level monsters?
 * Is there something like a maximum strength/agility/intelligence/charisma, like there is for hp/vit/sp?
+* A bronze door = 0 (001) 0101000 (1) 0101 -- 001 = bronze, 1 = locked. When we unlock it, does it also set the 001 to 000, or only the 1 to 0?
