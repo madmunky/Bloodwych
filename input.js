@@ -144,6 +144,7 @@ function processCanvasInput(x, y) {
 
             if (uiClickInArea(x, y, UI_CLICK_OPEN_POCKETS, player[p])) {
                 player[p].uiRightPanel.view = UI_RIGHT_PANEL_POCKETS;
+                player[p].uiRightPanel.activePocket = 0;
                 successfulClick = true;
             }
             if (uiClickInArea(x, y, UI_CLICK_INTERACT, player[p])) {
@@ -195,41 +196,16 @@ function processCanvasInput(x, y) {
                 successfulClick = true;
             }
             if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, player[p])) {
-                //player[p].switchChampions(0);
-                if(player[p].championHighlite === 0) {
-                    player[p].championLeader = 0;
-                    player[p].championHighlite = -1;
-                } else if(player[p].championHighlite === -1) {
-                    player[p].championHighlite = 0;
-                } else {
-                }
+                player[p].exchangeChampionPosition(0);
                 successfulClick = true;
             } else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_RIGHT, player[p])) {
-                if(player[p].championHighlite === 1) {
-                    player[p].championLeader = 1;
-                    player[p].championHighlite = -1;
-                } else if(player[p].championHighlite === -1) {
-                    player[p].championHighlite = 1;
-                } else {
-                }
+            	player[p].exchangeChampionPosition(1);
                 successfulClick = true;
             } else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_LEFT, player[p])) {
-                if(player[p].championHighlite === 3) {
-                    player[p].championLeader = 3;
-                    player[p].championHighlite = -1;
-                } else if(player[p].championHighlite === -1) {
-                    player[p].championHighlite = 3;
-                } else {
-                }
+            	player[p].exchangeChampionPosition(3);
                 successfulClick = true;
             } else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_RIGHT, player[p])) {
-                if(player[p].championHighlite === 2) {
-                    player[p].championLeader = 2;
-                    player[p].championHighlite = -1;
-                } else if(player[p].championHighlite === -1) {
-                    player[p].championHighlite = 2;
-                } else {
-                }
+            	player[p].exchangeChampionPosition(2);
                 successfulClick = true;
             }
 

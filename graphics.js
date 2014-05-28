@@ -298,9 +298,9 @@ function drawPlayersView(p) {
                 p.Portal.fillStyle = 'rgb(0, 0, 0)';
                 p.Portal.fillRect(0.5, 0.5, 128 * scale, 76 * scale);
                 //p.PlayerCanvas.width =  p.PlayerCanvas.width;
-		drawRect(p, 1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK]);
-		drawRect(p, 0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT]);
-		drawRect(p, 2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT]);
+		drawRect(1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK], p);
+		drawRect(0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT], p);
+		drawRect(2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT], p);
 		writeFontImage(TEXT_THOU, 64, 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);
 		writeFontImage(TEXT_ART_DEAD, 64, 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);
 	} else {
@@ -544,11 +544,15 @@ function drawWoodenObject(p, x) {
 	}
 }
 
-function drawRect(p, x, y, w, h, c) {
+function drawRect(x, y, w, h, c, p) {
+	var cx = ctx;
+	if(typeof p !== "undefined") {
+		cx = p.Portal;
+	}
 	var off = scale * 0.5;
-	p.Portal.lineWidth = scale;
-	p.Portal.strokeStyle = 'rgba(' + c + ')';
-	p.Portal.strokeRect(x * scale + off, y * scale + off, w * scale, h * scale);
+	cx.lineWidth = scale;
+	cx.strokeStyle = 'rgba(' + c + ')';
+	cx.strokeRect(x * scale + off, y * scale + off, w * scale, h * scale);
 }
 
 function recolourSprite(img, paletteFrom, paletteTo) {

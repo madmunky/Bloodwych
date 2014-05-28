@@ -394,6 +394,28 @@ Player.prototype.updateChampions = function() {
 	}
 }
 
+Player.prototype.exchangeChampionPosition = function(c) {
+	if(this.championHighlite === c) {
+        this.championLeader = c;
+        this.championHighlite = -1;
+    } else if(this.championHighlite === -1) {
+    	if(!this.getChampion(c).monster.dead) {
+        	this.championHighlite = c;
+    	}
+    } else {
+    	if(this.championLeader === c) {
+    		this.championLeader = this.championHighlite;
+    	} else if(this.championLeader === this.championHighlite) {
+    		this.championLeader = c;
+    	}
+    	var temp = this.champion[c];
+    	this.champion[c] = this.champion[this.championHighlite];
+    	this.champion[this.championHighlite] = temp;
+    	this.championHighlite = -1;
+    	this.updateChampions();
+    }
+}
+
 //check if all champions are dead
 //also assign a new champion as leader. used when the leader dies
 Player.prototype.checkDead = function() {
