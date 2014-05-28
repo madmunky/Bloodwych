@@ -135,6 +135,11 @@ function processCanvasInput(x, y) {
 
     for (p = 0; p < 2; p++) {
         var successfulClick = false;
+        
+        if (player[p].sleeping === true && uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, player[p])){
+                player[p].sleeping = false;
+        }
+        
         if (uiClickInArea(x, y, UI_CLICK_VIEWPORT, player[p])) {
             player[p].action();
             successfulClick = true;
@@ -233,17 +238,17 @@ function processCanvasInput(x, y) {
                 successfulClick = true;
             }
 
-        } else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_STATS) {
-
-            player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
-            successfulClick = true;
-            
+        } else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_STATS ) {
+            if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, player[p])) {
+                player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
+                successfulClick = true;                
+            }                
         }
         else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_SPELLBOOK) {
-
-            player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
-            successfulClick = true;
-            
+            if (uiClickInArea(x, y, UI_CLICK_CLOSE_SPELLBOOK, player[p])) {
+               player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
+               successfulClick = true;
+            }
         }
         if (player[p].uiLeftPanel.mode === LEFT_PANEL_MODE_STATS) {
 
@@ -283,7 +288,9 @@ function processCanvasInput(x, y) {
                 successfulClick = true;
             }
             if (uiClickInArea(x, y, UI_CLICK_SLEEP, player[p])) {
-                alert('SLEEPING');
+                player[p].sleeping = true;
+                player[p].uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;
+                player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
                 successfulClick = true;
             }
 //            if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, player[p])) {
@@ -294,7 +301,6 @@ function processCanvasInput(x, y) {
 //                alert('TOGGLE DOWN');
 //                successfulClick = true;
 //            }
-
         }
         if(successfulClick) {
             redrawUI(p);       

@@ -49,7 +49,7 @@ function Spell(id) {
 	this.description = '';
 	switch(id) {
 		case SPELL_ARMOUR: 	stat = { name: 'Armour', level: 1, class: CLASS_SERP, description: 'Wear this spell with pride.' }; break;
-		case SPELL_DEFLECT: stat = { name: 'Deflect', level: 1, class: CLASS_CHAOS, description: 'A spell a day keeps an arrow away.' }; break;
+		case SPELL_DEFLECT:     stat = { name: 'Deflect', level: 1, class: CLASS_CHAOS, description: 'A spell a day keeps an arrow away.' }; break;
 		case SPELL_ARMOUR: 	stat = { name: 'Missile', level: 1, class: CLASS_DRAG, description: 'One in the eye for Archers.' }; break;
 		default: break;
 	}

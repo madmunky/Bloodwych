@@ -18,15 +18,11 @@ var gfxCrab;
 
 function testing(p){
     
-    var x = testMon1,
-            y = 0;
-    //DUN_ITEM_PALETTE_DEFAULT = new Array(COLOUR[COLOUR_RED], COLOUR[COLOUR_BLUE],COLOUR[COLOUR_GREY_LIGHT]);
-    //var t = itemRef[x].gfxD[y].toDataURL();
-    ctx.drawImage(itemRef[x].gfxD[y],(p.PortalX + 60),(p.PortalY + 201),itemRef[x].gfxD[y].width * scale,itemRef[x].gfxD[y].height * scale);
-
-    //ctx.drawImage(recolourSprite(itemRef[x].gfxD[y],DUN_ITEM_PALETTE_DEFAULT,new Array(COLOUR[COLOUR_WHITE],COLOUR[COLOUR_RED],COLOUR[COLOUR_BROWN])),(p.PortalX + 60),(p.PortalY + 201),itemRef[x].gfxD[y].width * scale,itemRef[x].gfxD[y].height * scale);
-
-    
+//    var x = testMon1,
+//            y = 0;
+//    
+//    ctx.drawImage(itemRef[x].gfxD[y],(p.PortalX + 60),(p.PortalY + 201),itemRef[x].gfxD[y].width * scale,itemRef[x].gfxD[y].height * scale);
+//    
 }
 
 function testSummon(){

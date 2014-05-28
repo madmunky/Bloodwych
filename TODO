@@ -7,23 +7,18 @@ JORG
 * COD Fix Big monster 'edge of screen'
 * COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
 * COD Allow switching champions in group
+* COD Fix Attacking stops when monster team member dies
 
 CHRIS
 ------
 * GFX Big monster drawing fixes
-* GFX Add Dungeon gfx to Item Object
 * UI  Add more click areas e.g. champion signs, for selecting leader and exchanging
 * UI  Communication Text Array
 * UI  Finish Spell Book
-* UI  Change drawImage coords for UI images to use the uiClickInArea values
+* UI  Change drawImage cords for UI images to use the uiClickInArea values
 * UI  Make Fairy Screens
 * UI  Make Sleeping Screen
 * UI  Add movement key highlight
-* UI  Fix UI scroll/book closing for player, when other player opens scroll/book
 
 QUESTIONS FOR CHRIS
-------
-* Could you screenshot and send me a side-view behemoth close in front of the player please?
-* Do we get more xp for killing higher level monsters?
-* Is there something like a maximum strength/agility/intelligence/charisma (strMax, agiMax, intMax, chaMax), like there is for hp/vit/sp?
-* A bronze door = 0 (001) 0101000 (1) 0101 -- 001 = bronze, 1 = locked. When we unlock it, does it also set the 001 to 000, or only the 1 to 0?
+-------------------

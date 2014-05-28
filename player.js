@@ -15,6 +15,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.ScreenY = ScreenY;
 	this.pocket = newPocketItem();
 	this.dead = false;
+        this.sleeping = false;
 	this.lastX = 0;
 	this.lastY = 0;
 	this.lastFloor = 0;

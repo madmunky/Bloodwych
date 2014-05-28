@@ -920,6 +920,25 @@ function uiClickAreas() {
 		width: 16,
 		height: 16
 	}); //Character Back Right Icon
+        UCA.push({
+		x: 225,
+		y: 0,
+		width: 95,
+		height: 101
+	}); //Character Stats Exit
+                UCA.push({
+		x: 256,
+		y: 0,
+		width: 34,
+		height: 10
+	}); //Spell Book Exit
+        UCA.push({
+		x: 0,
+		y: 0,
+		width: 320,
+		height: 86
+	}); //Player Area
+        
 	return UCA;
 
 }
@@ -982,4 +1001,31 @@ function foodBar(foodVal, width) {
 	canContent.drawImage(flipImage(gfxUI[UI_GFX_FOOD_POINTER]), width - 4, 1);
 	canContent.save();
 	return can;
+}
+
+function coverViewPort(p){
+    
+    p.Portal.fillStyle = 'rgb(0, 0, 0)';
+    p.Portal.fillRect(0.5, 0.5, 128 * scale, 76 * scale);
+    drawRect(1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK], p);
+    drawRect(0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT], p);
+    drawRect(2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT], p);
+    
+}
+
+function showFairy(c,p){
+    
+    coverViewPort(p);
+    c = champion[c];
+    p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN]);
+    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][c.colour],8 * scale,5* scale,gfxUI[UI_GFX_FAIRIES][c.colour].width * scale, gfxUI[UI_GFX_FAIRIES][c.colour].height * scale);
+    for (x = 0;x<5;x++){        
+        if (x < 4){
+            p.Portal.drawImage(gfxUI[80+x],(17+(x * 16)) * scale,50* scale,gfxUI[80+x].width * scale, gfxUI[80+x].height * scale);
+        }
+        else{
+            p.Portal.drawImage(gfxUI[UI_GFX_ICON_BACK],(32+(x * 16)) * scale,50* scale,gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+        }
+    }
+    
 }

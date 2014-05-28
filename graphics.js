@@ -294,16 +294,20 @@ function drawPlayersView(p) {
 	p.getViewPortal();
 
 	if(p.dead) {
-		//p.Portal.clearRect(0.5, 0.5, 128 * scale, 76 * scale);
-                p.Portal.fillStyle = 'rgb(0, 0, 0)';
-                p.Portal.fillRect(0.5, 0.5, 128 * scale, 76 * scale);
-                //p.PlayerCanvas.width =  p.PlayerCanvas.width;
-		drawRect(1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK], p);
-		drawRect(0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT], p);
-		drawRect(2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT], p);
-		writeFontImage(TEXT_THOU, 64, 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);
-		writeFontImage(TEXT_ART_DEAD, 64, 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);
-	} else {
+                coverViewPort(p);
+                writeFontImage(TEXT_THOU, 64, 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);
+                writeFontImage(TEXT_ART_DEAD, 64, 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);                
+	}else if (p.sleeping){  
+                showFairy(p.champion[0],p);
+//                coverViewPort(p);
+//                writeFontImage("THOU ART", 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER,p.Portal);
+//		writeFontImage("ASLEEP", 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER,p.Portal);
+//                for (x = 0;x< p.champion.length;x++){
+//                    if (p.champion[x].spellUp > 0){
+//                        showFairy(p.champion[x],p);
+//                    }
+//                }
+        }else {
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
 
 		for (x = 0; x < 19; x++) {
