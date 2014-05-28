@@ -195,16 +195,41 @@ function processCanvasInput(x, y) {
                 successfulClick = true;
             }
             if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, player[p])) {
-                player[p].championLeader = 0;
+                //player[p].switchChampions(0);
+                if(player[p].championHighlite === 0) {
+                    player[p].championLeader = 0;
+                    player[p].championHighlite = -1;
+                } else if(player[p].championHighlite === -1) {
+                    player[p].championHighlite = 0;
+                } else {
+                }
                 successfulClick = true;
             } else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_RIGHT, player[p])) {
-                player[p].championLeader = 1;
+                if(player[p].championHighlite === 1) {
+                    player[p].championLeader = 1;
+                    player[p].championHighlite = -1;
+                } else if(player[p].championHighlite === -1) {
+                    player[p].championHighlite = 1;
+                } else {
+                }
                 successfulClick = true;
             } else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_LEFT, player[p])) {
-                player[p].championLeader = 3;
+                if(player[p].championHighlite === 3) {
+                    player[p].championLeader = 3;
+                    player[p].championHighlite = -1;
+                } else if(player[p].championHighlite === -1) {
+                    player[p].championHighlite = 3;
+                } else {
+                }
                 successfulClick = true;
             } else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_RIGHT, player[p])) {
-                player[p].championLeader = 2;
+                if(player[p].championHighlite === 2) {
+                    player[p].championLeader = 2;
+                    player[p].championHighlite = -1;
+                } else if(player[p].championHighlite === -1) {
+                    player[p].championHighlite = 2;
+                } else {
+                }
                 successfulClick = true;
             }
 

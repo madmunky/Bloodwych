@@ -11,6 +11,7 @@ function grabUISprites(spriteSheetIMG) {
                 extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_CHAOS));
                 extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_DRAGON));
                 extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_MOON));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_SELECTED));
                 ImageArray.push(extraColours);
                 extraColours = [];
             } else {
@@ -387,10 +388,14 @@ function rightUI(p) {
     
     for (c = 0;c < 4;c++){
     	var ca = [0, 1, 3, 2];
-    	var c1 = ca[c]
+    	var c1 = ca[c];
         var a = p.getChampion(c1).prof;
         var b = p.getChampion(c1).colour;
-        ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+        if(c1 === p.championHighlite) {
+            ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][4], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+        } else {
+            ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE+a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+        }
         if (c1 === p.championLeader){
             if (c % 2 === 0 ){
                 ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);

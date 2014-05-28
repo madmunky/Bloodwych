@@ -2,6 +2,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.id = id;
 	this.champion = new Array();
 	this.championLeader = 0;
+	this.championHighlite = -1;
 	this.x = 0; //posX;
 	this.y = 0; //posY;
 	this.floor = 0; //floor;
