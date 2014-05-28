@@ -3,28 +3,37 @@ function doKeyDown(e) {
     switch (e.keyCode) {
 
         case KEYPAD_8:
+            if (!player[1].sleeping){
             player[1].move(DIRECTION_NORTH);
+            }
             break; //8
         case KEYPAD_5:
-            player[1].move(DIRECTION_SOUTH);
+            if (!player[1].sleeping){
+            player[1].move(DIRECTION_SOUTH);}
             break; //5
         case KEYPAD_4:
-            player[1].move(DIRECTION_WEST);
+            if (!player[1].sleeping){
+            player[1].move(DIRECTION_WEST);}
             break; //4
         case KEYPAD_6:
-            player[1].move(DIRECTION_EAST);
+            if (!player[1].sleeping){
+            player[1].move(DIRECTION_EAST);}
             break; //6
         case KEYPAD_7:
-            player[1].rotateTo(player[1].d - 1);
+            if (!player[1].sleeping){
+            player[1].rotateTo(player[1].d - 1);}
             break; //7
         case KEYPAD_9:
-            player[1].rotateTo(player[1].d + 1);
+            if (!player[1].sleeping){
+            player[1].rotateTo(player[1].d + 1);}
             break; //9
         case KEY_END:
-            player[1].action();
+            if (!player[1].sleeping){
+            player[1].action();}
             break; //End Key
         case KEYPAD_PLUS:
-            player[1].toggleFrontObject();
+            if (!player[1].sleeping){
+            player[1].toggleFrontObject();}
             break; //+ Key
         case KEY_L: // THE L KEY
             switchTower((towerThis + 1) % TOWER_NAME.length);
@@ -37,9 +46,11 @@ function doKeyDown(e) {
             PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
             break; // T KEY     
         case KEY_SPACEBAR:
-            player[0].action();
+            if (!player[0].sleeping){
+            player[0].action();}
             break; // SpaceBar        
         case KEY_G:
+            
             //player[0].changeDownFloor();
             var ch = player[0].getActivePocketChampion();
             ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 109) % 110, 1);
@@ -47,28 +58,36 @@ function doKeyDown(e) {
             PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
             break; // G KEY  
         case KEY_W:
-            player[0].move(DIRECTION_NORTH);
+            if (!player[0].sleeping){
+            player[0].move(DIRECTION_NORTH);}
             break; // W KEY
         case KEY_S:
-            player[0].move(DIRECTION_SOUTH);
+            if (!player[0].sleeping){
+            player[0].move(DIRECTION_SOUTH);}
             break; // S KEY
         case KEY_A:
-            player[0].move(DIRECTION_WEST);
+            if (!player[0].sleeping){
+            player[0].move(DIRECTION_WEST);}
             break; // A KEY
         case KEY_D:
-            player[0].move(DIRECTION_EAST);
+            if (!player[0].sleeping){
+            player[0].move(DIRECTION_EAST);}
             break; // D KEY
         case KEY_Q:
-            player[0].rotateTo(player[0].d - 1);
+            if (!player[0].sleeping){
+            player[0].rotateTo(player[0].d - 1);}
             break; // Q KEY
         case KEY_E:
-            player[0].rotateTo(player[0].d + 1);
+            if (!player[0].sleeping){
+            player[0].rotateTo(player[0].d + 1);}
             break; // E KEY
         case KEY_R:
-            player[0].toggleFrontObject();
+            if (!player[0].sleeping){
+            player[0].toggleFrontObject();}
             break; //R Key
         case KEY_F:
-            player[0].testMode();
+            if (!player[0].sleeping){
+            player[0].testMode();}
             break; // F cheat
         case KEY_PLUS:
             testPalette = testPalette + 1;
@@ -332,7 +351,7 @@ function viewportTouch(x, y, xy) {
             } else if (xy.x === 1 && xy.y === 1) { //move backward
                 player[p].move(DIRECTION_SOUTH);
             } else if (xy.y === 2) { //action
-                player[p].action();
+                //player[p].action();
             }
         }
     }

@@ -128,7 +128,7 @@ Player.prototype.changeDownFloor = function() {
 
 //Take the map code which is in front of the player and see if the player can interact with it.
 Player.prototype.action = function() {
-	if (!this.dead) {
+	if (!this.dead || !this.sleeping) {
 		//Wooden doors (in front of player)
 		this.checkWoodenDoor(15);
 		//Wooden doors (on player)
@@ -210,7 +210,7 @@ Player.prototype.getBinaryView = function(pos18, index, length) {
 
 Player.prototype.setMovementData = function() {
 	tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
-	if (!this.dead) {
+	if (!this.dead || !this.sleeping) {
 		this.setBinaryView(18, 8, 1, '1');
 		this.lastX = this.x;
 		this.lastY = this.y;
@@ -220,14 +220,14 @@ Player.prototype.setMovementData = function() {
 }
 
 Player.prototype.rotateTo = function(d) {
-	if (!this.dead) {
+	if (!this.dead || !this.sleeping) {
 		this.d = (d + 4) % 4;
 		this.doEvent(false);
 	}
 }
 
 Player.prototype.move = function(d) {
-	if (!this.dead) {
+	if (!this.dead || !this.sleeping) {
 		this.moving = d;
 		this.lastX = this.x;
 		this.lastY = this.y;
@@ -246,7 +246,7 @@ Player.prototype.move = function(d) {
 }
 
 Player.prototype.tryAttack = function() {
-	if (!this.dead) {
+	if (!this.dead || !this.sleeping) {
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
