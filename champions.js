@@ -76,6 +76,7 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			self.writeAttackPoints(dmg, true);
 			player[self.recruitment.playerId].alertDamagedPlayer();
 			player[self.recruitment.playerId].checkDead();
+			player[self.recruitment.playerId].updateChampions();
 			redrawUI(self.recruitment.playerId);
 		}
 	}
