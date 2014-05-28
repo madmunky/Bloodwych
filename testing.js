@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 //var maleCharacterSpriteLocations = characterSpriteLocation();
-var testMon1 = 48,
+var testMon1 = 96,
         testDistance = 0,
         testDirection = 0,
         testPalette = 0;
