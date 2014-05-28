@@ -15,9 +15,6 @@ function initGame() {
 			}
 			updateLoadingScreen("Loading Tower Data", 50);
 		} else if (newvalue === 2) {
-			for (var i = 0; i < 6; i++) {
-				initMonsters(tower[i]);
-			}
 			initData();
 			if (typeof game === "undefined") {
 				Run();
@@ -144,6 +141,10 @@ function initData() {
 	gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
 	gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
 
+	initMonsterGfx();
+	for (var i = 0; i < 6; i++) {
+		initMonsters(tower[i]);
+	}
 	initChampions();
 	initSpells();
 	player[0] = new Player(0, 96 * scale, 12 * scale, 0 * scale, 10);

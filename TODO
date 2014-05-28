@@ -5,7 +5,6 @@
 JORG
 -----
 * COD Fix Big monster 'edge of screen'
-* COD Big door (un)locking with common keys
 * COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
 * COD Allow switching champions in group
 

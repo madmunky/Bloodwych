@@ -319,8 +319,7 @@ function getCharacterSprite(length, graphicsFolder, graphic, spriteWidth, sprite
     }
 }
 
-function grabCharacter(m, part, dir, dist) {
-    var form = m.form;
+function grabCharacter(form, part, dir, dist) {
     if (dist >= 4 && part === IMAGE_CHA_MINI) {
         if (typeof monsterPalette[form] !== "undefined") {
             var miniId = monsterPalette[form].mini;
@@ -511,7 +510,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
     }
     if (dist > -1) {
         for (part = 0; part < 5; part++) {
-            if (typeof m.gfx[part] !== "undefined" && typeof m.gfx[part][dist] !== "undefined" && typeof m.gfx[part][dist][dir] !== "undefined") {
+            if (typeof m.ref.gfx[part] !== "undefined" && typeof m.ref.gfx[part][dist] !== "undefined" && typeof m.ref.gfx[part][dist][dir] !== "undefined") {
                 var dir1 = dir;
                 var dir2 = -1;
                 if (part === IMAGE_CHA_ARM) { //attack arms
@@ -551,22 +550,22 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
                         }
                     }
                 }
-                var offx = 64 - Math.floor(m.gfx[part][dist][dir1].width * 0.5) + offset.x;
-                var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
+                var offx = 64 - Math.floor(m.ref.gfx[part][dist][dir1].width * 0.5) + offset.x;
+                var offy = 76 - Math.floor(m.ref.gfx[part][dist][dir1].height) - offset.y;
 
                 if (dist >= 4 || part !== IMAGE_CHA_MINI) {
                     if (!returnImg) {
-                        player.Portal.drawImage(m.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
+                        player.Portal.drawImage(m.ref.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.ref.gfx[part][dist][dir1].width * scale, m.ref.gfx[part][dist][dir1].height * scale);
                     } else {
-                        charContext.drawImage(m.gfx[part][dist][dir1], (offx + blur), offy, m.gfx[part][dist][dir1].width, m.gfx[part][dist][dir1].height);
+                        charContext.drawImage(m.ref.gfx[part][dist][dir1], (offx + blur), offy, m.ref.gfx[part][dist][dir1].width, m.ref.gfx[part][dist][dir1].height);
                     }
                     if (dir2 > -1) {
-                        offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
-                        offy = 76 - Math.floor(m.gfx[part][dist][dir2].height) - offset.y;
+                        offx = 64 - Math.floor(m.ref.gfx[part][dist][dir2].width * 0.5) + offset.x;
+                        offy = 76 - Math.floor(m.ref.gfx[part][dist][dir2].height) - offset.y;
                         if (!returnImg) {
-                            player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
+                            player.Portal.drawImage(m.ref.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.ref.gfx[part][dist][dir2].width * scale, m.ref.gfx[part][dist][dir2].height * scale);
                         } else {
-                            charContext.drawImage(m.gfx[part][dist][dir2], (offx + blur), offy, m.gfx[part][dist][dir2].width, m.gfx[part][dist][dir2].height);
+                            charContext.drawImage(m.ref.gfx[part][dist][dir2], (offx + blur), offy, m.ref.gfx[part][dist][dir2].width, m.ref.gfx[part][dist][dir2].height);
                         }
                     }
                 }
@@ -604,12 +603,12 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
                 var armoffy = 0;
                 if(dir === 2) { // reverse drawing for back view
                     part = 2 - part1;
-                    if(m.form >= MON_FORM_CRAB && m.form < MON_FORM_BEHEMOTH && part === IMAGE_MON_ARM) {
+                    if(m.ref.id >= MON_FORM_CRAB && m.ref.id < MON_FORM_BEHEMOTH && part === IMAGE_MON_ARM) {
                         armoffx = Math.ceil((dist + 8.0) / 3.0);
                         armoffy = Math.ceil(7.0 / (dist + 1.0));
                     }
                 }
-                if (typeof m.gfx[part] !== "undefined" && typeof m.gfx[part][dist] !== "undefined" && typeof m.gfx[part][dist][dir] !== "undefined") {
+                if (typeof m.ref.gfx[part] !== "undefined" && typeof m.ref.gfx[part][dist] !== "undefined" && typeof m.ref.gfx[part][dist][dir] !== "undefined") {
                     var dir1 = dir;
                     var dir2 = -1;
                     
@@ -655,15 +654,15 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
                             }
                         }
                     }
-                    var offx = 64 - Math.floor(m.gfx[part][dist][dir1].width * 0.5) + offset.x;
-                    var offy = 76 - Math.floor(m.gfx[part][dist][dir1].height) - offset.y;
+                    var offx = 64 - Math.floor(m.ref.gfx[part][dist][dir1].width * 0.5) + offset.x;
+                    var offy = 76 - Math.floor(m.ref.gfx[part][dist][dir1].height) - offset.y;
 
                     if (dist >= 4 || part !== IMAGE_MON_MINI) {
-                        player.Portal.drawImage(m.gfx[part][dist][dir1], (offx - armoffx + blur) * scale, (offy - armoffy) * scale, m.gfx[part][dist][dir1].width * scale, m.gfx[part][dist][dir1].height * scale);
+                        player.Portal.drawImage(m.ref.gfx[part][dist][dir1], (offx - armoffx + blur) * scale, (offy - armoffy) * scale, m.ref.gfx[part][dist][dir1].width * scale, m.ref.gfx[part][dist][dir1].height * scale);
                         if (dir2 > -1) {
-                            offx = 64 - Math.floor(m.gfx[part][dist][dir2].width * 0.5) + offset.x;
-                            offy = 76 - Math.floor(m.gfx[part][dist][dir2].height) - offset.y;
-                            player.Portal.drawImage(m.gfx[part][dist][dir2], (offx + armoffx + blur) * scale, (offy - armoffy) * scale, m.gfx[part][dist][dir2].width * scale, m.gfx[part][dist][dir2].height * scale);
+                            offx = 64 - Math.floor(m.ref.gfx[part][dist][dir2].width * 0.5) + offset.x;
+                            offy = 76 - Math.floor(m.ref.gfx[part][dist][dir2].height) - offset.y;
+                            player.Portal.drawImage(m.ref.gfx[part][dist][dir2], (offx + armoffx + blur) * scale, (offy - armoffy) * scale, m.ref.gfx[part][dist][dir2].width * scale, m.ref.gfx[part][dist][dir2].height * scale);
                         }
                     }
                 }
@@ -672,12 +671,7 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
     }
 }
 
-function grabMonster(m) {
-    var form = m.form;
-    var level = Math.floor(m.level / 3);
-    if(level > 7) {
-        level = 7;
-    }
+function grabMonster(form, level) {
     switch(form) {
        case MON_FORM_SUMMON:{ //SUMMON
         var spriteSheetIMG = gfx['character']['summon'];

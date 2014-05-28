@@ -587,7 +587,7 @@ Player.prototype.getMonstersInRange = function(pos2) {
 
 
 Player.prototype.drawMonster = function(m, distance, offset) {
-	var form = m.form;
+	var form = m.ref.id;
 	//var loc = characterSpriteLocation();
 	var p = this;
 
