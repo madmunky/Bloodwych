@@ -201,9 +201,14 @@ Item.prototype.toString = function() {
 
 //Dungeon items
 
-function initItems() {
-	for (i = 0; i < itemData.length; i++) {
-		var id = 0;
+function initItems(t) {
+	item[t.id] = new Array();
+	for (i = 0; i < t.itemData.length; i++) {
+		var itd = t.itemData[i];
+
+
+
+		/*var id = 0;
 		var quantity = 1;
 		var location = {
 			tower: tower,
@@ -212,8 +217,8 @@ function initItems() {
 			y: y,
 			square: square
 		};
-		item[i] = new Item(id, quantity, location);
-		PrintLog('Loaded item: ' + item[i]);
+		item[t.id][i] = new Item(id, quantity, location);
+		PrintLog('Loaded item: ' + item[t.id][i]);*/
 	}
 }
 
@@ -393,4 +398,26 @@ function initItemsGfxD() {
 	}
 
 	return dItems;
+}
+
+//used for indexed items
+function indexToCoordinates(ix) {
+	var xy = new Array();
+	//tower[towerThis].floor[this.floor].Map[xy.y][xy.x]
+	var tw = tower[towerThis];
+	var isnext = 0;
+	var is = 0;
+	for(f = 0; f < tw.length; f++) {
+		isnext = tw.floor[f].Map.Width * tw.floor[f].Map.Height;
+		if(is + isnext > ix) {
+			for(y = 0; y < tw.floor[f].Map.Height; y++) {
+				isnext = tw.floor[f].Map.Width * (y + 1);
+				if(is + isnext > ix) {
+					//WIP - DO NOT TOUCH!
+				}
+				is += isnext;
+			}
+		}
+		is += isnext;
+	}
 }

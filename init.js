@@ -145,6 +145,7 @@ function initData() {
 	initMonsterGfx();
 	for (var i = 0; i < 6; i++) {
 		initMonsters(tower[i]);
+		initItems(tower[i]);
 	}
 	initChampions();
 	initSpells();

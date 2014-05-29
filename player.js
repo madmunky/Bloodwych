@@ -788,9 +788,9 @@ Player.prototype.actionItem = function(s) {
 			break;
 	}
 	if (itH.id === 0) { //take item
-		for (i = item.length - 1; i >= 0; i--) {
-			if (item[i].location.tower === towerThis && item[i].location.floor === this.floor && item[i].location.x === xyi.x && item[i].location.y === xyi.y && item[i].square === s) {
-				var it = item.splice(i, 1);
+		for (i = item[towerThis].length - 1; i >= 0; i--) {
+			if (item[towerThis][i].location.tower === towerThis && item[towerThis][i].location.floor === this.floor && item[towerThis][i].location.x === xyi.x && item[towerThis][i].location.y === xyi.y && item[towerThis][i].square === s) {
+				var it = item[towerThis].splice(i, 1);
 				break;
 			}
 		}
@@ -799,7 +799,7 @@ Player.prototype.actionItem = function(s) {
 		}
 	} else { //drop item
 		itH.setPocketItem();
-		item[item.length] = new Item(itH.id, itH.quantity, {
+		item[towerThis][item.length] = new Item(itH.id, itH.quantity, {
 			tower: towerThis,
 			floor: this.floor,
 			x: xyi.x,
