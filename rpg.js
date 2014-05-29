@@ -14,6 +14,7 @@ function calculateAttack(att, def) {
 		var crit = 1;
 		var hit = 1.0;
 		var defense = 0;
+		var defChance = 1;
 		var attExhaustion = 0;
 		var defExhaustion = 0;
 		var fromDir = 0;
@@ -33,9 +34,13 @@ function calculateAttack(att, def) {
 				crit = 2;
 			}
         	fromDir = fmon.d;
+        	if(from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === ITEM_DAGGER || from.pocket[0].id === ITEM_STEALTH_BLADE) && att.d === def.d) {
+        		defChance = 0.5;
+			}
+			attack += from.getWeaponPower(0);
+			attack += from.getWeaponPower(1);
 			attack += Math.round(from.stat.str / 8);
 			attack += Math.round(from.stat.agi / 32);
-			attack += from.getWeaponPower();
 			attExhaustion = Math.floor(Math.random() * 2) + 1;
 			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
 		} else {
@@ -50,27 +55,27 @@ function calculateAttack(att, def) {
 
 		//Defender calculations
 		if(def instanceof Player) {
+			var ch = [];
+			var ch1 = [];
 			for (d = 0; d < 2; d++) {
-				to = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
+				ch[0] = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
+				ch[1] = champion[def.champion[(4 + fromDir - def.d + d) % 4]];
+				//tmon = to1[d].monster;
+				if(typeof ch[0] !== "undefined" && !ch[0].monster.dead) {
+					ch1.push(ch[0]);
+				} else if(typeof ch[1] !== "undefined" && !ch[1].monster.dead) {
+					ch1.push(ch[1]);
+				}
+			}
+			if(ch1.length > 0) {
+				to = ch1[Math.floor(Math.random() * ch1.length)];
 				tmon = to.monster;
-				var d1 = 0;
-				if(typeof to === "undefined" || to.monster.dead) {
-					to = champion[def.champion[(4 + fromDir - def.d + d) % 4]];
-					tmon = to.monster;
-					if(typeof to === "undefined" || to.monster.dead) {
-						d1 += 2;
-						continue;
-					}
+				defense = 10;
+				if(!to.attacking) {
+					defense += 10 + Math.round(to.stat.agi / 4);
 				}
-				if(Math.random() < (d + d1 + 1.0) * 0.5) {
-					defense = 10;
-					if(!to.attacking) {
-						defense += 5 + Math.round(to.stat.agi / 4);
-					}
-					defense -= to.getArmourClass();
-					defExhaustion = Math.floor(Math.random() * 2) + 1;
-					break;
-				}
+				defense -= to.getArmourClass();
+				defExhaustion = Math.floor(Math.random() * 2) + 1;
 			}
 		} else if(def instanceof Monster) {
 			var mon = new Array();
@@ -91,7 +96,7 @@ function calculateAttack(att, def) {
 						defExhaustion = Math.floor(Math.random() * 2) + 1;
 					} else { //monster
 						if(!to.attacking) {
-							defense += 5;
+							defense += 10;
 						}
 						defense += 10 + to.level * 2;
 					}
@@ -102,7 +107,7 @@ function calculateAttack(att, def) {
 
 		//Final calculations
 		if(typeof from !== "undefined" && !fmon.dead && typeof to !== "undefined" && !tmon.dead) {
-			var power = Math.floor(Math.random() * 20 * crit) + attack - defense;
+			var power = Math.floor(Math.random() * 20 * crit + attack - (defChance * defense));
 			if(Math.random() > hit || power < 0) {
 				power = 0;
 			}

@@ -82,8 +82,8 @@ Champion.prototype.getDamage = function(dmg, safe) {
 	}
 }
 
-Champion.prototype.getWeaponPower = function() {
-	return this.pocket[0].getWeaponPower() + this.pocket[1].getWeaponPower();
+Champion.prototype.getWeaponPower = function(s) {
+	return this.pocket[s].getWeaponPower();
 }
 
 Champion.prototype.getArmourClass = function() {

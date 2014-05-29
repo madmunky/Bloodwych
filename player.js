@@ -15,7 +15,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.ScreenY = ScreenY;
 	this.pocket = newPocketItem();
 	this.dead = false;
-        this.sleeping = false;
+	this.sleeping = false;
 	this.lastX = 0;
 	this.lastY = 0;
 	this.lastFloor = 0;
@@ -377,11 +377,11 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 	//this.updateView();
 }
 
-Player.prototype.countAliveChampions = function() {
+Player.prototype.getAliveChampionCount = function() {
 	var cnt = 0;
 	for (c = 0; c < this.champion.length; c++) {
 		var dd = this.getChampion(c).monster.dead;
-		if(!dd) {
+		if (!dd) {
 			cnt++;
 		}
 	}
@@ -389,7 +389,7 @@ Player.prototype.countAliveChampions = function() {
 }
 
 Player.prototype.updateChampions = function() {
-	var cnt = this.countAliveChampions();
+	var cnt = this.getAliveChampionCount();
 	for (c = 0; c < this.champion.length; c++) {
 		var ch = this.getChampion(c);
 		if (ch !== null) {
@@ -399,7 +399,7 @@ Player.prototype.updateChampions = function() {
 			m.x = this.x;
 			m.y = this.y;
 			m.d = this.d;
-			if(!m.dead && cnt === 1 && c === 0) {
+			if (!m.dead && cnt === 1 && c === 0) {
 				m.square = -1;
 			} else {
 				m.square = (this.d + c) % 4;
@@ -409,31 +409,31 @@ Player.prototype.updateChampions = function() {
 }
 
 Player.prototype.exchangeChampionPosition = function(c) {
-	if(this.championHighlite === c) {
-        this.championLeader = c;
-        this.championHighlite = -1;
-    } else if(this.championHighlite === -1) {
-    	if(!this.getChampion(c).monster.dead) {
-        	this.championHighlite = c;
-    	}
-    } else {
-    	if(this.attacking) {
-    		clearTimeout(this.getChampion(c).recruitment.attackTimer);
-    		clearTimeout(this.getChampion(this.championHighlite).recruitment.attackTimer);
-    		this.getChampion(c).monster.attacking = false;
-    		this.getChampion(this.championHighlite).monster.attacking = false;
-    	}
-    	if(this.championLeader === c) {
-    		this.championLeader = this.championHighlite;
-    	} else if(this.championLeader === this.championHighlite) {
-    		this.championLeader = c;
-    	}
-    	var temp = this.champion[c];
-   		this.champion[c] = this.champion[this.championHighlite];
-   		this.champion[this.championHighlite] = temp;
-    	this.championHighlite = -1;
-    	this.updateChampions();
-    }
+	if (this.championHighlite === c) {
+		this.championLeader = c;
+		this.championHighlite = -1;
+	} else if (this.championHighlite === -1) {
+		if (!this.getChampion(c).monster.dead) {
+			this.championHighlite = c;
+		}
+	} else {
+		if (this.attacking) {
+			clearTimeout(this.getChampion(c).recruitment.attackTimer);
+			clearTimeout(this.getChampion(this.championHighlite).recruitment.attackTimer);
+			this.getChampion(c).monster.attacking = false;
+			this.getChampion(this.championHighlite).monster.attacking = false;
+		}
+		if (this.championLeader === c) {
+			this.championLeader = this.championHighlite;
+		} else if (this.championLeader === this.championHighlite) {
+			this.championLeader = c;
+		}
+		var temp = this.champion[c];
+		this.champion[c] = this.champion[this.championHighlite];
+		this.champion[this.championHighlite] = temp;
+		this.championHighlite = -1;
+		this.updateChampions();
+	}
 }
 
 //check if all champions are dead
@@ -531,21 +531,6 @@ Player.prototype.restoreChampionStats = function() {
 		var champ = this.getChampion(c);
 		if (champ !== null) {
 			if (!champ.monster.dead) {
-				if (champ.food > 0) {
-					champ.food--;
-				} else {
-					champ.stat.vit -= Math.floor(Math.random() * 10) + 5;
-					if (champ.stat.vit < 0) {
-						champ.stat.vit = 0;
-					}
-				}
-				if (champ.stat.vitMax * 0.15 > champ.stat.vit) {
-					dmg = Math.floor(champ.stat.vitMax * 0.15) - champ.stat.vit;
-					champ.getDamage(dmg, true);
-					if (dmg > 0) {
-						alertPlayer = true;
-					}
-				}
 				champ.stat.hp = champ.stat.hp + Math.floor((Math.random() * (champ.stat.str / 16)) + champ.stat.str / 16);
 				if (champ.stat.hp > champ.stat.hpMax) {
 					champ.stat.hp = champ.stat.hpMax;
@@ -557,6 +542,21 @@ Player.prototype.restoreChampionStats = function() {
 				champ.stat.sp = champ.stat.sp + Math.floor((Math.random() * (champ.stat.int / 12)) + champ.stat.int / 12);
 				if (champ.stat.sp > champ.stat.spMax) {
 					champ.stat.sp = champ.stat.spMax;
+				}
+				if (champ.food > 0) {
+					champ.food--;
+				} else {
+					champ.stat.vit -= Math.floor(Math.random() * 9) + 3;
+					if (champ.stat.vit < 0) {
+						champ.stat.vit = 0;
+					}
+				}
+				if (champ.stat.vitMax * 0.15 > champ.stat.vit) {
+					dmg = Math.floor(champ.stat.vitMax * 0.15) - champ.stat.vit;
+					champ.getDamage(dmg, true);
+					if (dmg > 0) {
+						alertPlayer = true;
+					}
 				}
 			}
 		}
@@ -756,35 +756,55 @@ Player.prototype.findItem = function(i) {
 
 Player.prototype.actionItem = function(s) {
 	var itH = this.pocket;
-	if(itH.id === 0) { //take item
-		var xy = getOffsetByRotation(this.d);
-		var xyi = new Array();
-		switch(s) {
-			case 0: xyi = { x: this.x, y: this.y };
-			case 1: xyi = { x: this.x, y: this.y };
-			case 2: xyi = { x: this.x + xy.x, y: this.y + xy.y };
-			case 3: xyi = { x: this.x + xy.x, y: this.y + xy.y };
-		}
-		for(i = item.length - 1; i >= 0; i--) {
-			if(item[i].location.tower === towerThis && item[i].location.floor === this.floor && item[i].location.x === xyi.x && item[i].location.y === xyi.y && item[i].square === s) {
+	xy = getOffsetByRotation(this.d);
+	xyi = new Array();
+	switch (s) {
+		case 0:
+			xyi = {
+				x: this.x,
+				y: this.y
+			};
+			break;
+		case 1:
+			xyi = {
+				x: this.x,
+				y: this.y
+			};
+			break;
+		case 2:
+			xyi = {
+				x: this.x + xy.x,
+				y: this.y + xy.y
+			};
+			break;
+		case 3:
+			xyi = {
+				x: this.x + xy.x,
+				y: this.y + xy.y
+			};
+			break;
+		default:
+			break;
+	}
+	if (itH.id === 0) { //take item
+		for (i = item.length - 1; i >= 0; i--) {
+			if (item[i].location.tower === towerThis && item[i].location.floor === this.floor && item[i].location.x === xyi.x && item[i].location.y === xyi.y && item[i].square === s) {
 				var it = item.splice(i, 1);
 				break;
 			}
 		}
-		if(typeof it !== "undefined") {
+		if (typeof it !== "undefined") {
 			itH.setPocketItem(it.id, it.quantity);
 		}
 	} else { //drop item
-		xy = getOffsetByRotation(this.d);
-		xyi = new Array();
-		switch(s) {
-			case 0: xyi = { x: this.x, y: this.y };
-			case 1: xyi = { x: this.x, y: this.y };
-			case 2: xyi = { x: this.x + xy.x, y: this.y + xy.y };
-			case 3: xyi = { x: this.x + xy.x, y: this.y + xy.y };
-		}
 		itH.setPocketItem();
-		item[item.length] = new Item(itH.id, itH.quantity, { tower: towerThis, floor: this.floor, x: xyi.x, y: xyi.y, square: s });
+		item[item.length] = new Item(itH.id, itH.quantity, {
+			tower: towerThis,
+			floor: this.floor,
+			x: xyi.x,
+			y: xyi.y,
+			square: s
+		});
 	}
 }
 
@@ -825,7 +845,7 @@ Player.prototype.testMode = function(id) {
 }
 
 function initPlayersQuickStart() {
-	for(p = 0; p < 2; p++) {
+	for (p = 0; p < 2; p++) {
 		for (i = 0; i < 4; i++) {
 			player[p].recruitChampion(i + p * 8);
 		}
