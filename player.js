@@ -669,13 +669,13 @@ Player.prototype.consumeItemInHand = function() {
 Player.prototype.useItemInHand = function() {
 	var ch = this.getActivePocketChampion();
 	if (ch !== null && !ch.dead) {
-		var itemH = this.pocket;
-		if (itemH.id !== 0) {
-			switch (itemH.type) {
+		var itH = this.pocket;
+		if (itH.id !== 0) {
+			switch (itH.type) {
 				case ITEM_TYPE_STACKABLE:
-					var i = this.findItem(itemH.id);
+					var i = this.findItem(itH.id);
 					if (i > -1) {
-						itemH.quantity++;
+						itH.quantity++;
 						ch.pocket[i].quantity--;
 						if (ch.pocket[i].quantity === 0) {
 							ch.pocket[i].setPocketItem();
@@ -683,16 +683,16 @@ Player.prototype.useItemInHand = function() {
 					}
 					break;
 				case ITEM_TYPE_FOOD:
-					if (itemH.id <= 19) {
-						if (itemH.id % 3 === 2) {
-							itemH.setPocketItem();
+					if (itH.id <= 19) {
+						if (itH.id % 3 === 2) {
+							itH.setPocketItem();
 						} else {
-							itemH.setPocketItem(itemH.id - 1);
+							itH.setPocketItem(itH.id - 1);
 						}
 					} else {
-						itemH.setPocketItem();
+						itH.setPocketItem();
 					}
-					var fd = itemH.getFoodValue();
+					var fd = itH.getFoodValue();
 					ch.food += fd;
 					if (ch.food > 255) {
 						ch.food = 255;
@@ -708,35 +708,35 @@ Player.prototype.useItemInHand = function() {
 Player.prototype.exchangeItemWithHand = function(s) {
 	var ch = this.getActivePocketChampion();
 	if (ch !== null) {
-		var item = ch.pocket[s];
-		var itemH = this.pocket;
-		if (itemH.id === 0 || ((s !== 2 || itemH.type === ITEM_TYPE_ARMOUR) && (s !== 3 || itemH.type === ITEM_TYPE_SHIELD))) {
-			if (item.type === ITEM_TYPE_STACKABLE && (itemH.id === 0 || item.id === itemH.id)) {
-				if (itemH.id === 0) {
-					itemH.setPocketItem(item.id, 1);
-					item.quantity--;
-					if (item.quantity === 0) {
-						item.setPocketItem();
+		var it = ch.pocket[s];
+		var itH = this.pocket;
+		if (itH.id === 0 || ((s !== 2 || itH.type === ITEM_TYPE_ARMOUR) && (s !== 3 || itH.type === ITEM_TYPE_SHIELD))) {
+			if (it.type === ITEM_TYPE_STACKABLE && (itH.id === 0 || it.id === itH.id)) {
+				if (itH.id === 0) {
+					itH.setPocketItem(it.id, 1);
+					it.quantity--;
+					if (it.quantity === 0) {
+						it.setPocketItem();
 					}
-				} else if (item.id === itemH.id) {
-					var qty = itemH.quantity;
-					itemH.setPocketItem();
-					item.setPocketItem(item.id, item.quantity + qty);
+				} else if (it.id === itH.id) {
+					var qty = itH.quantity;
+					itH.setPocketItem();
+					it.setPocketItem(it.id, it.quantity + qty);
 				}
-			} else if (itemH.type === ITEM_TYPE_STACKABLE) {
-				var i = this.findItem(itemH.id);
+			} else if (itH.type === ITEM_TYPE_STACKABLE) {
+				var i = this.findItem(itH.id);
 				var qty = 0;
 				if (i > -1) {
 					qty = ch.pocket[i].quantity;
 					ch.pocket[i].setPocketItem();
 				}
-				var temp = newPocketItem(item.id, item.quantity);
-				item.setPocketItem(itemH.id, itemH.quantity + qty);
-				itemH.setPocketItem(temp.id, temp.quantity);
+				var temp = newPocketItem(it.id, it.quantity);
+				it.setPocketItem(itH.id, itH.quantity + qty);
+				itH.setPocketItem(temp.id, temp.quantity);
 			} else {
-				var temp = newPocketItem(item.id, item.quantity);
-				item.setPocketItem(itemH.id, itemH.quantity);
-				itemH.setPocketItem(temp.id, temp.quantity);
+				var temp = newPocketItem(it.id, it.quantity);
+				it.setPocketItem(itH.id, itH.quantity);
+				itH.setPocketItem(temp.id, temp.quantity);
 			}
 		}
 	}
@@ -752,6 +752,44 @@ Player.prototype.findItem = function(i) {
 		}
 	}
 	return -1;
+}
+
+Player.prototype.takeItem = function(s) {
+	if(this.pocket.id === 0) {
+		var xy = getOffsetByRotation(this.d);
+		var xyi = new Array();
+		switch(s) {
+			case 0: xyi = { x: this.x, y: this.y };
+			case 1: xyi = { x: this.x, y: this.y };
+			case 2: xyi = { x: this.x + xy.x, y: this.y + xy.y };
+			case 3: xyi = { x: this.x + xy.x, y: this.y + xy.y };
+		}
+		for(i = item.length - 1; i >= 0; i--) {
+			if(item[i].location.tower === towerThis && item[i].location.floor === this.floor && item[i].location.x === xyi.x && item[i].location.y === xyi.y && item[i].square === s) {
+				var it = item.splice(i, 1);
+				break;
+			}
+		}
+		if(typeof it !== "undefined") {
+			this.pocket.setPocketItem(it.id, it.quantity);
+		}
+	}
+}
+
+Player.prototype.dropItem = function(s) {
+	var it = this.pocket;
+	if(it.id > 0) {
+		xy = getOffsetByRotation(this.d);
+		xyi = new Array();
+		switch(s) {
+			case 0: xyi = { x: this.x, y: this.y };
+			case 1: xyi = { x: this.x, y: this.y };
+			case 2: xyi = { x: this.x + xy.x, y: this.y + xy.y };
+			case 3: xyi = { x: this.x + xy.x, y: this.y + xy.y };
+		}
+		it.setPocketItem();
+		item[item.length] = new Item(it.id, it.quantity, { tower: towerThis, floor: this.floor, x: xyi.x, y: xyi.y, square: s });
+	}
 }
 
 Player.prototype.message = function(txt, col, wait) {
