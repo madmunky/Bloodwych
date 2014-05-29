@@ -27,12 +27,16 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.timerChampionStats = 0;
 	this.uiRightPanel = {
 		activePocket: 0,
-		view: UI_RIGHT_PANEL_MAIN
+		mode: UI_RIGHT_PANEL_MAIN
 	};
 	this.uiLeftPanel = {
 		champs: new Array(false, false, false, false),
 		mode: LEFT_PANEL_MODE_STATS
 	};
+        this.uiCenterPanel = {
+            mode: temp
+        };
+        
 	this.communication = [];
 
 	this.PlayerCanvas.width = 128 * scale;

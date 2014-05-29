@@ -146,11 +146,11 @@ function processCanvasInput(x, y) {
 			successfulClick = true;
 		}
 
-		if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_MAIN) 
+		if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) 
                 {
 
 			if (uiClickInArea(x, y, UI_CLICK_OPEN_POCKETS, player[p])) {
-				player[p].uiRightPanel.view = UI_RIGHT_PANEL_POCKETS;
+				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_POCKETS;
 				player[p].uiRightPanel.activePocket = 0;
 				successfulClick = true;
 			}
@@ -160,12 +160,12 @@ function processCanvasInput(x, y) {
 			}
 
 			if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, player[p])) {
-				player[p].uiRightPanel.view = UI_RIGHT_PANEL_SPELLBOOK;
+				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_SPELLBOOK;
 				successfulClick = true;
 			}
 
 			if (uiClickInArea(x, y, UI_CLICK_CHARACTER_STATS, player[p])) {
-				player[p].uiRightPanel.view = UI_RIGHT_PANEL_STATS;
+				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_STATS;
 				successfulClick = true;
 			}
 
@@ -216,7 +216,7 @@ function processCanvasInput(x, y) {
 				successfulClick = true;
 			}
 
-		} else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_POCKETS) {
+		} else if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
 			for (s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
 				if (uiClickInArea(x, y, s, player[p])) {
 					player[p].exchangeItemWithHand(s - UI_CLICK_POCKET_SLOT_1);
@@ -236,18 +236,18 @@ function processCanvasInput(x, y) {
 				successfulClick = true;
 			}
 			if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, player[p])) {
-				player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
+				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				successfulClick = true;
 			}
 
-		} else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_STATS) {
+		} else if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
 			if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, player[p])) {
-				player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
+				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				successfulClick = true;
 			}
-		} else if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_SPELLBOOK) {
+		} else if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
 			if (uiClickInArea(x, y, UI_CLICK_CLOSE_SPELLBOOK, player[p])) {
-				player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
+				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				successfulClick = true;
 			}
 		}
@@ -291,7 +291,7 @@ function processCanvasInput(x, y) {
 			if (uiClickInArea(x, y, UI_CLICK_SLEEP, player[p])) {
 				player[p].sleeping = true;
 				player[p].uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;
-				player[p].uiRightPanel.view = UI_RIGHT_PANEL_MAIN;
+				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				player[p].attack(false);
 				successfulClick = true;
 			}

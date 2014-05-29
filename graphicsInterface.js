@@ -155,7 +155,7 @@ function drawUI(p) {
 					break
 			}
 
-			switch (p.uiRightPanel.view) {
+			switch (p.uiRightPanel.mode) {
 				case UI_RIGHT_PANEL_MAIN:
 					{
 						rightUI(p);
