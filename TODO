@@ -17,8 +17,18 @@ CHRIS
 * UI  Finish Spell Book
 * UI  Change drawImage cords for UI images to use the uiClickInArea values
 * UI  Make Fairy Screens
-* UI  Make Sleeping Screen
 * UI  Add movement key highlight
 
 QUESTIONS FOR CHRIS
 -------------------
+
+QUESTIONS FOR JORG
+------------------
+
+1. Need to try link a text to a screen (fairy)
+2. I've added the gfx to hightlight the arrows when moving but need to work out how to highlight them for the right direction and delay the gfx
+3. need to work out how we store the fairy screens
+4. I have all the spell descriptions but not sure how to add them to your spell object
+5. need a function to return the next two spells available for a champ
+6. need to increase the player timer when sleeping :)
+7. Need to work out how we are going to store all this text I have found :)

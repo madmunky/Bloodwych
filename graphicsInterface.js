@@ -124,6 +124,15 @@ function grabUISprites(spriteSheetIMG) {
 
 	ImageArray.push(grabImageAt(spriteSheetIMG, 93, 176, 4, 3, false)); //Food Bar Pointer
 
+        //Movement Highlights
+        ImagePortraits.push(grabImageAt(spriteSheetIMG, 170, 311, 12, 10, false)); //Rotate Left
+        ImagePortraits.push(grabImageAt(spriteSheetIMG, 186, 311, 18, 9, false)); //Move Forward
+        ImagePortraits.push(grabImageAt(spriteSheetIMG, 206, 311, 12, 10, false)); //Rotate Right
+        ImagePortraits.push(grabImageAt(spriteSheetIMG, 170, 326, 11, 11, false)); //Move Left
+        ImagePortraits.push(grabImageAt(spriteSheetIMG, 186, 326, 18, 9, false)); //Move Back
+        ImagePortraits.push(grabImageAt(spriteSheetIMG, 207, 326, 11, 11, false)); //Move Right
+        
+
 	return ImageArray;
 
 }
@@ -1017,7 +1026,7 @@ function showFairy(c,p){
     
     coverViewPort(p);
     c = champion[c];
-    p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN]);
+    writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS",0,0,COLOUR[COLOUR_GREEN]);
     p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][c.colour],8 * scale,5* scale,gfxUI[UI_GFX_FAIRIES][c.colour].width * scale, gfxUI[UI_GFX_FAIRIES][c.colour].height * scale);
     for (x = 0;x<5;x++){        
         if (x < 4){
