@@ -337,23 +337,23 @@ function viewportTouch(x, y, xy) {
         };
 
 
-        if (xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
-            if (xy.x === 0 && xy.y === 0) { //rotate left
-                player[p].rotateTo(player[p].d - 1);
-            } else if (xy.x === 2 && xy.y === 0) { //rotate right
-                player[p].rotateTo(player[p].d + 1);
-            } else if (xy.x === 1 && xy.y === 0) { //move forward
-                player[p].move(DIRECTION_NORTH);
-            } else if (xy.x === 0 && xy.y === 1) { //move left
-                player[p].move(DIRECTION_WEST);
-            } else if (xy.x === 2 && xy.y === 1) { //move right
-                player[p].move(DIRECTION_EAST);
-            } else if (xy.x === 1 && xy.y === 1) { //move backward
-                player[p].move(DIRECTION_SOUTH);
-            } else if (xy.y === 2) { //action
-                //player[p].action();
-            }
-        }
+//        if (xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
+//            if (xy.x === 0 && xy.y === 0) { //rotate left
+//                player[p].rotateTo(player[p].d - 1);
+//            } else if (xy.x === 2 && xy.y === 0) { //rotate right
+//                player[p].rotateTo(player[p].d + 1);
+//            } else if (xy.x === 1 && xy.y === 0) { //move forward
+//                player[p].move(DIRECTION_NORTH);
+//            } else if (xy.x === 0 && xy.y === 1) { //move left
+//                player[p].move(DIRECTION_WEST);
+//            } else if (xy.x === 2 && xy.y === 1) { //move right
+//                player[p].move(DIRECTION_EAST);
+//            } else if (xy.x === 1 && xy.y === 1) { //move backward
+//                player[p].move(DIRECTION_SOUTH);
+//            } else if (xy.y === 2) { //action
+//                //player[p].action();
+//            }
+//        }
     }
 }
 

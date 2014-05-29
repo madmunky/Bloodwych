@@ -130,6 +130,7 @@ function loadTowerData(t, start) {
 	getFileData('data/' + TOWER_NAME[id] + '.switches', readSimpleData, t, "switches", 4);
 	getFileData('data/' + TOWER_NAME[id] + '.triggers', readSimpleData, t, "triggers", 4);
 	getFileData('data/' + TOWER_NAME[id] + '.monsters', readSimpleDataHex, t, "monsterData", 6);
+        getFileData('data/' + TOWER_NAME[id] + '.ob', readSimpleData, t, "objectData", 0);
 }
 
 
