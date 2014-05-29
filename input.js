@@ -141,12 +141,13 @@ function processCanvasInput(x, y) {
 			player[p].sleeping = false;
 		}
 
-		if (uiClickInArea(x, y, UI_CLICK_VIEWPORT, player[p])) {
+		if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, player[p])) {
 			player[p].action();
 			successfulClick = true;
 		}
 
-		if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_MAIN) {
+		if (player[p].uiRightPanel.view === UI_RIGHT_PANEL_MAIN) 
+                {
 
 			if (uiClickInArea(x, y, UI_CLICK_OPEN_POCKETS, player[p])) {
 				player[p].uiRightPanel.view = UI_RIGHT_PANEL_POCKETS;

@@ -947,6 +947,54 @@ function uiClickAreas() {
 		width: 320,
 		height: 86
 	}); //Player Area
+        UCA.push({
+		x: 141,
+		y: 38,
+		width: 38,
+		height: 13
+	}); //Portal - Shelf Top
+        UCA.push({
+		x: 141,
+		y: 51,
+		width: 38,
+		height: 13
+	}); //Portal - Shelf Bottom
+        UCA.push({
+		x: 135,
+		y: 35,
+		width: 50,
+		height: 29
+	}); //Portal - Switch
+        UCA.push({
+		x: 118,
+		y: 23,
+		width: 83,
+		height: 53
+	}); //Portal - Door
+        UCA.push({
+		x: 119,
+		y: 83,
+		width: 25,
+		height: 6
+	}); //Portal - Item Close Left
+        UCA.push({
+		x: 175,
+		y: 83,
+		width: 25,
+		height: 6
+	}); //Portal - Item Close Right
+        UCA.push({
+		x: 127,
+		y: 72,
+		width: 20,
+		height: 7
+	}); //Portal - Item Back Left
+        UCA.push({
+		x: 172,
+		y: 72,
+		width: 20,
+		height: 7
+	}); //Portal - Item Back Right
         
 	return UCA;
 
@@ -1025,9 +1073,8 @@ function coverViewPort(p){
 function showFairy(c,p){
     
     coverViewPort(p);
-    c = champion[c];
     writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS",0,0,COLOUR[COLOUR_GREEN]);
-    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][c.colour],8 * scale,5* scale,gfxUI[UI_GFX_FAIRIES][c.colour].width * scale, gfxUI[UI_GFX_FAIRIES][c.colour].height * scale);
+    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0],8 * scale,5* scale,gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
     for (x = 0;x<5;x++){        
         if (x < 4){
             p.Portal.drawImage(gfxUI[80+x],(17+(x * 16)) * scale,50* scale,gfxUI[80+x].width * scale, gfxUI[80+x].height * scale);
