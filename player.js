@@ -24,6 +24,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.attacking = false;
 	this.towerSwitches = new Array();
 	this.messageTimeout = 0;
+	this.timerChampionStats = 0;
 	this.uiRightPanel = {
 		activePocket: 0,
 		view: UI_RIGHT_PANEL_MAIN
@@ -128,7 +129,7 @@ Player.prototype.changeDownFloor = function() {
 
 //Take the map code which is in front of the player and see if the player can interact with it.
 Player.prototype.action = function() {
-	if (!this.dead || !this.sleeping) {
+	if (!this.dead && !this.sleeping) {
 		//Wooden doors (in front of player)
 		this.checkWoodenDoor(15);
 		//Wooden doors (on player)
@@ -210,7 +211,7 @@ Player.prototype.getBinaryView = function(pos18, index, length) {
 
 Player.prototype.setMovementData = function() {
 	tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
-	if (!this.dead || !this.sleeping) {
+	if (!this.dead && !this.sleeping) {
 		this.setBinaryView(18, 8, 1, '1');
 		this.lastX = this.x;
 		this.lastY = this.y;
@@ -220,14 +221,14 @@ Player.prototype.setMovementData = function() {
 }
 
 Player.prototype.rotateTo = function(d) {
-	if (!this.dead || !this.sleeping) {
+	if (!this.dead && !this.sleeping) {
 		this.d = (d + 4) % 4;
 		this.doEvent(false);
 	}
 }
 
 Player.prototype.move = function(d) {
-	if (!this.dead || !this.sleeping) {
+	if (!this.dead && !this.sleeping) {
 		this.moving = d;
 		this.lastX = this.x;
 		this.lastY = this.y;
@@ -246,7 +247,7 @@ Player.prototype.move = function(d) {
 }
 
 Player.prototype.tryAttack = function() {
-	if (!this.dead || !this.sleeping) {
+	if (!this.dead && !this.sleeping) {
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
@@ -287,7 +288,7 @@ Player.prototype.attack = function(attack, target) {
 						self.gainChampionXp(pwr, att);
 					}
 					if (def.dead) {
-						self.attack(false);
+						//self.attack(false);
 						self.gainChampionXp(128);
 					}
 				}, att.recruitment.position * 400);
@@ -575,8 +576,8 @@ Player.prototype.alertDamagedPlayer = function() {
 		} else {
 			toggleChampUI(ch, this, true);
 		}
-
 	}
+	this.sleeping = false;
 }
 
 Player.prototype.resetChampUI = function() {

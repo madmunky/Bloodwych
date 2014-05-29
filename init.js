@@ -130,7 +130,7 @@ function loadTowerData(t, start) {
 	getFileData('data/' + TOWER_NAME[id] + '.switches', readSimpleData, t, "switches", 4);
 	getFileData('data/' + TOWER_NAME[id] + '.triggers', readSimpleData, t, "triggers", 4);
 	getFileData('data/' + TOWER_NAME[id] + '.monsters', readSimpleDataHex, t, "monsterData", 6);
-        getFileData('data/' + TOWER_NAME[id] + '.ob', readSimpleData, t, "objectData", 0);
+	getFileData('data/' + TOWER_NAME[id] + '.ob', readSimpleData, t, "itemData", 0);
 }
 
 
@@ -151,7 +151,7 @@ function initData() {
 	player[0] = new Player(0, 96 * scale, 12 * scale, 0 * scale, 10);
 	player[1] = new Player(1, 96 * scale, 116 * scale, 0 * scale, 114);
 	gfxUI = grabUISprites(gfx['misc']['uistuff']);
-	dungeonItems = dungeonItems();
+	itemsGfxD = initItemsGfxD();
 	initItemRefs();
 	font = grabFont();
 	initPlayersQuickStart();

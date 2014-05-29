@@ -17,7 +17,7 @@ var testPalette = 0;
 var timerMaster = 0;
 var timerMonsterMove = 0;
 var timerMonsterAttack = 0;
-var timerChampionStats = 0;
+//var timerChampionStats = 0;
 var timerChampionAttack = 16;
 //var players = 0;
 var towerSwitchesData = new Array();
@@ -25,7 +25,7 @@ var loadingInterval = 0;
 var gfxUI = [];
 var font;
 var uiClickArea = [];
-var dungeonItems = [];
+var itemsGfxD = [];
 var redrawPlayerUiFlag = 0;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
@@ -790,7 +790,9 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
 	TEXT_DEFENDS = "DEFENDS",
 	TEXT_THOU = "THOU",
 	TEXT_ART_DEAD = "ART DEAD",
-	TEXT_GAINED_LEVEL = " GAINED A LEVEL";
+	TEXT_GAINED_LEVEL = " GAINED A LEVEL",
+	TEXT_THOU_ART = "THOU ART",
+	TEXT_ASLEEP = "ASLEEP";
 
 //Dungeon Items
 var DUNGEON_ITEM_POTION = 0,

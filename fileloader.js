@@ -31,15 +31,15 @@ function getFileData(file_name, callback, t, type, length) {
 				case "championData":
 					championData = callback(this.response, length);
 					break;
-                                case "championPocketData":
+				case "championPocketData":
 					championPocketData = callback(this.response, length);
 					break;
 				case "towerSwitchesData":
 					towerSwitchesData = callback(this.response, length);
 					break;
-                                case "objectData":
-                                        t.objectData = callback(this.response, length);
-                                        break;
+				case "itemData":
+					t.itemData = callback(this.response, length);
+					break;
 				default:
 					break;
 			}
@@ -53,7 +53,7 @@ function getFileData(file_name, callback, t, type, length) {
 
 function checkAllDataLoaded() {
 	dataLoaded.max++;
-	if(dataLoaded.count === dataLoaded.max) {
+	if (dataLoaded.count === dataLoaded.max) {
 		dataLoaded.done++;
 	}
 }
@@ -100,27 +100,27 @@ function readMapData(evt) {
 function readSimpleData(evt, length) {
 	var uInt8Array = new Uint8Array(evt);
 	var Data = [];
-        
-        if (length === 0){
-            return uInt8Array;
-        }else{
-            for (x = 0; x < uInt8Array.length / length; x++) {
-                    //Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
-                    var tmp = [];
-                    for (y = 0; y < length; y++) {
-                            tmp.push(uInt8Array[x * length + y]);
-                    }
-                    Data.push(tmp);
-                    //x = x + length - 1;
-            }
-        }
+
+	if (length === 0) {
+		return uInt8Array;
+	} else {
+		for (x = 0; x < uInt8Array.length / length; x++) {
+			//Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
+			var tmp = [];
+			for (y = 0; y < length; y++) {
+				tmp.push(uInt8Array[x * length + y]);
+			}
+			Data.push(tmp);
+			//x = x + length - 1;
+		}
+	}
 	return Data;
 }
 
 function readSimpleDataHex(evt, length) {
 	var uInt8Array = new Uint8Array(evt);
 	var Data = [];
-        
+
 	for (x = 0; x < uInt8Array.length / length; x++) {
 		//Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
 		var tmp = '';

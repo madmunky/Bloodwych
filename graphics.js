@@ -300,8 +300,8 @@ function drawPlayersView(p) {
 	}else if (p.sleeping){  
                 //showFairy(p.champion[0],p);
                 coverViewPort(p);
-                writeFontImage("THOU ART", 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER,p.Portal);
-		writeFontImage("ASLEEP", 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER,p.Portal);
+                writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER,p.Portal);
+		writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER,p.Portal);
                 for (x = 0;x< p.champion.length;x++){
                     if (p.champion[x].spellUp > 0){
                         showFairy(p.champion[x],p);
