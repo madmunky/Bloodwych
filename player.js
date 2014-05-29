@@ -754,8 +754,9 @@ Player.prototype.findItem = function(i) {
 	return -1;
 }
 
-Player.prototype.takeItem = function(s) {
-	if(this.pocket.id === 0) {
+Player.prototype.actionItem = function(s) {
+	var itH = this.pocket;
+	if(itH.id === 0) { //take item
 		var xy = getOffsetByRotation(this.d);
 		var xyi = new Array();
 		switch(s) {
@@ -771,14 +772,9 @@ Player.prototype.takeItem = function(s) {
 			}
 		}
 		if(typeof it !== "undefined") {
-			this.pocket.setPocketItem(it.id, it.quantity);
+			itH.setPocketItem(it.id, it.quantity);
 		}
-	}
-}
-
-Player.prototype.dropItem = function(s) {
-	var it = this.pocket;
-	if(it.id > 0) {
+	} else { //drop item
 		xy = getOffsetByRotation(this.d);
 		xyi = new Array();
 		switch(s) {
@@ -787,8 +783,8 @@ Player.prototype.dropItem = function(s) {
 			case 2: xyi = { x: this.x + xy.x, y: this.y + xy.y };
 			case 3: xyi = { x: this.x + xy.x, y: this.y + xy.y };
 		}
-		it.setPocketItem();
-		item[item.length] = new Item(it.id, it.quantity, { tower: towerThis, floor: this.floor, x: xyi.x, y: xyi.y, square: s });
+		itH.setPocketItem();
+		item[item.length] = new Item(itH.id, itH.quantity, { tower: towerThis, floor: this.floor, x: xyi.x, y: xyi.y, square: s });
 	}
 }
 
