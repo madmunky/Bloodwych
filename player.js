@@ -34,7 +34,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 		mode: LEFT_PANEL_MODE_STATS
 	};
         this.uiCenterPanel = {
-            mode: temp
+            mode: null
         };
         
 	this.communication = [];

@@ -53,6 +53,12 @@ function hex2dec(num) {
 	return ret;
 }
 
+
+function dec2hex(num) {
+	var ret = parseInt(num, 10).toString(16).toUpperCase();
+	return ret;
+}
+
 function convertBase(num) {
 	this.from = function(baseFrom) {
 		this.to = function(baseTo) {

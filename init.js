@@ -145,7 +145,6 @@ function initData() {
 	initMonsterGfx();
 	for (var i = 0; i < 6; i++) {
 		initMonsters(tower[i]);
-		initItems(tower[i]);
 	}
 	initChampions();
 	initSpells();
@@ -154,6 +153,9 @@ function initData() {
 	gfxUI = grabUISprites(gfx['misc']['uistuff']);
 	itemsGfxD = initItemsGfxD();
 	initItemRefs();
+	for (var i = 0; i < 6; i++) {
+		initItems(tower[i]);
+	}
 	font = grabFont();
 	initPlayersQuickStart();
 	initTowerSwitches();
