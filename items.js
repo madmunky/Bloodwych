@@ -214,18 +214,22 @@ function initItems(t) {
 		var dr = [0, 1, 3, 2];
 		while (is + i < len) {
 			var i1 = i + is;
-			var dd = t.itemData[i1]; //direction (A)
-			var dx = t.itemData[i1 + 1]; //index number (BCD)
-			var d = parseInt(hex2dec(getHexToBinaryPosition(dec2hex(dd), 0, 2)));
+			var dd = t.itemData[i1]; //direction + part index (AB)
+			var dx = t.itemData[i1 + 1]; //rest of index (CD)
+			var d = Math.floor(dd / 16); //parseInt(hex2dec(getHexToBinaryPosition(dec2hex(dd), 0, 4)));
+			var dir = Math.floor(d / 4);
 			var x = ((dd % 16) * 256 + dx) / 2;
 			var xy = indexToCoordinates(x);
 			var n = t.itemData[i1 + 2] + 1;
 			for(di = 0; di < n; di++) {
 				var max = item[t.id].length;
-				var id = t.itemData[i1 + di + 3];
-				var qt = t.itemData[i1 + di + 4];
-				item[t.id][max] = new Item(id, qt, { tower: t.id, floor: xy.floor, x: xy.x, y: xy.y, square: dr[d] });
-				PrintLog('Loaded item: ' + item[t.id][max]);
+				var id = t.itemData[di * 2 + i1 + 3];
+				if(id === 19) {
+					PrintLog("!!!!!!!!!!!!!! " + dd + ' ' + d);
+				}
+				var qt = t.itemData[di * 2 + i1 + 4];
+				item[t.id][max] = new Item(id, qt, { tower: t.id, floor: xy.floor, x: xy.x, y: xy.y, square: dr[dir] });
+				PrintLog('Loaded item: ' + item[t.id][max] + ' ' + d);
 			}
 			i = i + 3 + n * 2;
 		}
