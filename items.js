@@ -226,7 +226,7 @@ function initItems(t) {
 				var id = t.itemData[di * 2 + i1 + 3];
 				var qt = t.itemData[di * 2 + i1 + 4];
 				item[t.id][max] = new Item(id, qt, { tower: t.id, floor: xy.floor, x: xy.x, y: xy.y, square: dr[dir] });
-				PrintLog('Loaded item: ' + item[t.id][max] + ' ' + d);
+				PrintLog('Loaded item: ' + item[t.id][max]);
 			}
 			i = i + 3 + n * 2;
 		}

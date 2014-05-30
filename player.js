@@ -823,13 +823,14 @@ Player.prototype.actionItem = function(s) {
 			itH.setPocketItem(it[0].id, it[0].quantity);
 		}
 	} else { //drop item
-		item[towerThis][item[towerThis].length] = new Item(itH.id, itH.quantity, {
+		var it = new Item(itH.id, itH.quantity, {
 			tower: towerThis,
 			floor: this.floor,
 			x: xyi.x,
 			y: xyi.y,
 			square: (this.d + s) % 4
 		});
+		item[towerThis].unshift(it);
 		itH.setPocketItem();
 	}
 }
@@ -878,8 +879,8 @@ Player.prototype.getObjectOnPos = function(pos, d) {
 }
 
 Player.prototype.getObject = function(f, x, y, d) {
-	var hex = tower[towerThis].floor[f].Map[y][x];
 	if(x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
+		var hex = tower[towerThis].floor[f].Map[y][x];
 		if(getHexToBinaryPosition(hex, 12, 4) === '1') { //wall
 			if (typeof d ==="undefined" || this.d === (parseInt(getHexToBinaryPosition(hex, 10, 2)) + d) % 4) {
 				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco
