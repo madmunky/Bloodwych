@@ -846,8 +846,11 @@ Player.prototype.getItemsInRange = function(pos2) {
 			if(pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 				//check shelf
 				var sh = false;
-				var ob = tower[towerThis].floor[this.floor].Map[it.location.y][it.location.x];
-				if(getHexToBinaryPosition(ob, 12, 4) == '1') {
+				if(this.getObject(it.location.floor, it.location.x, it.location.y, 2) === 'shelf') {
+					sh = true;
+				}
+				/*var ob = tower[towerThis].floor[this.floor].Map[it.location.y][it.location.x];
+				if(getHexToBinaryPosition(ob, 12, 4) === '1') {
 					if (getHexToBinaryPosition(ob, 8) === '1') { //Wall has something on it
 						if (getHexToBinaryPosition(ob, 6, 2) === '0') { //Shelf
 							if (this.d === (parseInt(getHexToBinaryPosition(ob, 10, 2)) + 2) % 4) {
@@ -855,7 +858,7 @@ Player.prototype.getItemsInRange = function(pos2) {
 							}
 						}
 					}
-				}
+				}*/
 				if (sq2 == 1) {
 					itemsInRange.unshift({
 						item: it,
@@ -878,6 +881,36 @@ Player.prototype.getItemsInRange = function(pos2) {
 	}
 	return itemsInRange;
 }
+
+Player.prototype.getObjectOnPos = function(pos, d) {
+	var xy = posToCoordinates(pos, this.x, this.y, this.d);
+	return this.getObject(this.floor, xy.x, xy.y, d);
+}
+
+Player.prototype.getObject = function(f, x, y, d) {
+	var hex = tower[towerThis].floor[f].Map[y][x];
+	if(x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
+		if(getHexToBinaryPosition(hex, 12, 4) === '1') { //wall
+			if (typeof d ==="undefined" || this.d === (parseInt(getHexToBinaryPosition(hex, 10, 2)) + d) % 4) {
+				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco
+					if (getHexToBinaryPosition(hex, 6, 2) === '0') { //shelf
+						return 'shelf';
+					} else if (getHexToBinaryPosition(hex, 6, 2) === '2') { //Switch
+						return 'switch';
+					} else if (getHexToBinaryPosition(hex, 6, 2) === '3') { //Crystal Gem
+						return 'gem';
+					}
+				}
+			}
+		} else if(getHexToBinaryPosition(hex, 12, 4) === '5') { //door
+			if (typeof d ==="undefined" || this.d === (parseInt(getHexToBinaryPosition(hex, 10, 2)) + d) % 2) {
+				return 'door';
+			}
+		}
+	}
+	return '';
+}
+
 
 Player.prototype.message = function(txt, col, wait) {
 	var self = this;

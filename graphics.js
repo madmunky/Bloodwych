@@ -316,7 +316,10 @@ function drawPlayersView(p) {
 			if (BlockType === '2') {
 				drawWoodenObject(p, x);
 			} else {
-
+				if(p.getObjectOnPos(x, 2) !== 'shelf') { //draw items not on shelf first
+					drawItemsOnPos(p, x);
+				}
+				drawMonsterOnPos(p, x);
 				switch (x) {
 					case 0:
 						{
@@ -455,8 +458,9 @@ function drawPlayersView(p) {
 						};
 						break;
 				}
-				drawItemsOnPos(p, x);
-				drawMonsterOnPos(p, x);
+				if(p.getObjectOnPos(x, 2) === 'shelf') { //draw items on shelf last
+					drawItemsOnPos(p, x);
+				}
 			}
 		}
 	}

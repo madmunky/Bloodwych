@@ -224,9 +224,6 @@ function initItems(t) {
 			for(di = 0; di < n; di++) {
 				var max = item[t.id].length;
 				var id = t.itemData[di * 2 + i1 + 3];
-				if(id === 19) {
-					PrintLog("!!!!!!!!!!!!!! " + dd + ' ' + d);
-				}
 				var qt = t.itemData[di * 2 + i1 + 4];
 				item[t.id][max] = new Item(id, qt, { tower: t.id, floor: xy.floor, x: xy.x, y: xy.y, square: dr[dir] });
 				PrintLog('Loaded item: ' + item[t.id][max] + ' ' + d);
