@@ -549,14 +549,20 @@ function drawWoodenObject(p, x) {
 	if (BlockSides[x][0] > -1) {
 		myDIx(p.Portal, bin2type(s[p.d]), gfxPos[BlockSides[x][0]]);
 	}
-	if(!inFront) drawMonsterOnPos(p, x);
+	if(!inFront) {
+		drawItemsOnPos(p, x);
+		drawMonsterOnPos(p, x);
+	}
 	if (BlockSides[x][1] > -1) {
 		myDIx(p.Portal, bin2type(s[(p.d + 1) % 4]), gfxPos[BlockSides[x][1]]);
 	}
 	if (BlockSides[x][3] > -1) {
 		myDIx(p.Portal, bin2type(s[(p.d + 3) % 4]), gfxPos[BlockSides[x][3]]);
 	}
-	if(inFront) drawMonsterOnPos(p, x);
+	if(inFront) {
+		drawItemsOnPos(p, x);
+		drawMonsterOnPos(p, x);
+	}
 	if (BlockSides[x][2] > -1) {
 		myDIx(p.Portal, bin2type(s[(p.d + 2) % 4]), gfxPos[BlockSides[x][2]]);
 	}

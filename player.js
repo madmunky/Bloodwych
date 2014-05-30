@@ -813,24 +813,24 @@ Player.prototype.actionItem = function(s) {
 			break;
 	}
 	if (itH.id === 0) { //take item
-		for (i = item[towerThis].length - 1; i >= 0; i--) {
-			if (item[towerThis][i].location.tower === towerThis && item[towerThis][i].location.floor === this.floor && item[towerThis][i].location.x === xyi.x && item[towerThis][i].location.y === xyi.y && item[towerThis][i].square === s) {
+		for (i = 0; i < item[towerThis].length; i++) {
+			if (item[towerThis][i].location.tower === towerThis && item[towerThis][i].location.floor === this.floor && item[towerThis][i].location.x === xyi.x && item[towerThis][i].location.y === xyi.y && item[towerThis][i].location.square === (this.d + s) % 4) {
 				var it = item[towerThis].splice(i, 1);
 				break;
 			}
 		}
-		if (typeof it !== "undefined") {
-			itH.setPocketItem(it.id, it.quantity);
+		if (typeof it[0] !== "undefined") {
+			itH.setPocketItem(it[0].id, it[0].quantity);
 		}
 	} else { //drop item
-		itH.setPocketItem();
-		item[towerThis][item.length] = new Item(itH.id, itH.quantity, {
+		item[towerThis][item[towerThis].length] = new Item(itH.id, itH.quantity, {
 			tower: towerThis,
 			floor: this.floor,
 			x: xyi.x,
 			y: xyi.y,
-			square: s
+			square: (this.d + s) % 4
 		});
+		itH.setPocketItem();
 	}
 }
 
@@ -849,16 +849,6 @@ Player.prototype.getItemsInRange = function(pos2) {
 				if(this.getObject(it.location.floor, it.location.x, it.location.y, 2) === 'shelf') {
 					sh = true;
 				}
-				/*var ob = tower[towerThis].floor[this.floor].Map[it.location.y][it.location.x];
-				if(getHexToBinaryPosition(ob, 12, 4) === '1') {
-					if (getHexToBinaryPosition(ob, 8) === '1') { //Wall has something on it
-						if (getHexToBinaryPosition(ob, 6, 2) === '0') { //Shelf
-							if (this.d === (parseInt(getHexToBinaryPosition(ob, 10, 2)) + 2) % 4) {
-								sh = true;
-							}
-						}
-					}
-				}*/
 				if (sq2 == 1) {
 					itemsInRange.unshift({
 						item: it,

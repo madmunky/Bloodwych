@@ -137,9 +137,9 @@ function processCanvasInput(x, y) {
 	for (p = 0; p < 2; p++) {
 		var successfulClick = false;
 
-                if (!player[p].sleeping && !player[p].dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, player[p])) {
-			checkViewPortal(player[p],x,y);
-		}    
+		if (!player[p].sleeping && !player[p].dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, player[p])) {
+			successfulClick = checkViewPortal(player[p], x, y);
+		}
 
 		if (player[p].sleeping && uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, player[p])) {
 			player[p].sleeping = false;
@@ -150,8 +150,7 @@ function processCanvasInput(x, y) {
 			successfulClick = true;
 		}
 
-		if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) 
-                {
+		if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
 
 			if (uiClickInArea(x, y, UI_CLICK_OPEN_POCKETS, player[p])) {
 				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_POCKETS;
@@ -363,55 +362,78 @@ function mouseXY(e) {
 
 }
 
-function checkViewPortal(p,x,y){
-    
-    switch (p.uiCenterPanel.mode){
-        case UI_CENTER_PANEL_VIEWPORT:{
-                if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_CLOSE, p)) {
-                    alert('LEFT CLOSE ITEM');
-                };
-                if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_CLOSE, p)) {
-                    alert('RIGHT CLOSE ITEM');
-                };
-  
-                
-            switch (p.getObjectOnPos(15, 2)){
-                case 'shelf':{
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_TOP, p)) {
-                        alert('TOP SHELF');
-                    };
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_BOTTOM, p)) {
-                        alert('BOTTOM SHELF');
-                    };
-                };break;
-                case 'door':{
-                       if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, p)) {
-                           alert('DOOR AREA'); 
-                       };  
-                }break;
-                case 'switch':{
-                      if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
-                           alert('SWITCH AREA');
-                      };   
-                }break;
-                case 'wall':{};break;
-                default:{
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_BACK, p)) {
-                        alert('LEFT BACK ITEM');
-                    };
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_BACK, p)) {
-                            alert('RIGHT BACK ITEM');
-                    }; 
-                };break
-            }
-            
-        };break;
-        case UI_CENTER_PANEL_SLEEPING:{};break;
-        case UI_CENTER_PANEL_DEAD:{};break;  
-        case UI_CENTER_PANEL_FAIRY:
-        case UI_CENTER_PANEL_FAIRY_DRAGON:
-        case UI_CENTER_PANEL_FAIRY_SERPENT:
-        case UI_CENTER_PANEL_FAIRY_MOON:
-        case UI_CENTER_PANEL_FAIRY_CHAOS:{};break;    
-    }    
+function checkViewPortal(p, x, y) {
+
+	switch (p.uiCenterPanel.mode) {
+		case UI_CENTER_PANEL_VIEWPORT:
+			{
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_CLOSE, p)) {
+					p.actionItem(0); //alert('LEFT CLOSE ITEM');
+					return true;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_CLOSE, p)) {
+					p.actionItem(1); //alert('RIGHT CLOSE ITEM');
+					return true;
+				}
+
+				switch (p.getObjectOnPos(15, 2)) {
+					case 'shelf':
+						{
+							if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_TOP, p)) {
+								p.actionItem(3); //alert('TOP SHELF');
+								return true;
+							} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_BOTTOM, p)) {
+								p.actionItem(2); //alert('BOTTOM SHELF');
+								return true;
+							};
+						};
+						break;
+					case 'door':
+						{
+							if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, p)) {
+								alert('DOOR AREA');
+								return true;
+							};
+						}
+						break;
+					case 'switch':
+						{
+							if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
+								alert('SWITCH AREA');
+								return true;
+							};
+						}
+						break;
+					case 'wall':
+						{};
+						break;
+					default:
+						{
+							if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_BACK, p)) {
+								p.actionItem(3); //alert('LEFT BACK ITEM');
+								return true;
+							} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_BACK, p)) {
+								p.actionItem(2); //alert('RIGHT BACK ITEM');
+								return true;
+							};
+						};
+						break
+				}
+
+			};
+			break;
+		case UI_CENTER_PANEL_SLEEPING:
+			{};
+			break;
+		case UI_CENTER_PANEL_DEAD:
+			{};
+			break;
+		case UI_CENTER_PANEL_FAIRY:
+		case UI_CENTER_PANEL_FAIRY_DRAGON:
+		case UI_CENTER_PANEL_FAIRY_SERPENT:
+		case UI_CENTER_PANEL_FAIRY_MOON:
+		case UI_CENTER_PANEL_FAIRY_CHAOS:
+			{};
+			break;
+	}
+	return false;
 }
