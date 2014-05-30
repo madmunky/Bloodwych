@@ -658,19 +658,12 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 Player.prototype.drawItem = function(it, distance, offset) {
 	var iGfx = itemRef[it.id].gfxD[distance];
 	if(typeof iGfx !== "undefined") {
-		var ob = tower[towerThis].floor[this.floor].Map[it.location.y][it.location.x];
-		if(getHexToBinaryPosition(ob, 12, 4) == '1') {
-			if (getHexToBinaryPosition(ob, 8) === '1') { //Wall has something on it
-				if (getHexToBinaryPosition(ob, 6, 2) === '0') { //Shelf
-					if (this.d === (parseInt(getHexToBinaryPosition(ob, 10, 2)) + 2) % 4) {
-						var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
-	   					var offy = 60 - Math.floor(iGfx.height) - offset.y;
-					}
-				}
-			}
+		if(this.getObject(this.floor, it.location.x, it.location.y, 2) === 'shelf') {
+			var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
+	   		var offy = 60 - Math.floor(iGfx.height) - offset.y;
 		} else {
 		    var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
-	   		var offy = 76 - Math.floor(iGfx.height) - offset.y;
+	   		var offy = 77 - Math.floor(iGfx.height) - offset.y;
 	    }
 		this.Portal.drawImage(iGfx, offx * scale, offy * scale, iGfx.width * scale, iGfx.height * scale);
 	}
@@ -813,7 +806,7 @@ Player.prototype.actionItem = function(s) {
 			break;
 	}
 	if (itH.id === 0) { //take item
-		for (i = 0; i < item[towerThis].length; i++) {
+		for (i = item[towerThis].length - 1; i >= 0; i--) {
 			if (item[towerThis][i].location.tower === towerThis && item[towerThis][i].location.floor === this.floor && item[towerThis][i].location.x === xyi.x && item[towerThis][i].location.y === xyi.y && item[towerThis][i].location.square === (this.d + s) % 4) {
 				var it = item[towerThis].splice(i, 1);
 				break;
@@ -830,7 +823,7 @@ Player.prototype.actionItem = function(s) {
 			y: xyi.y,
 			square: (this.d + s) % 4
 		});
-		item[towerThis].unshift(it);
+		item[towerThis].push(it);
 		itH.setPocketItem();
 	}
 }

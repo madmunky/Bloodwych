@@ -233,6 +233,7 @@ function initItems(t) {
 
 		//TESTING
 		item[t.id][item[t.id].length] = new Item(ITEM_WAR_SHIELD, 1, { tower: t.id, floor: 3, x: 12, y: 22, square: 0 });
+		item[t.id][item[t.id].length] = new Item(ITEM_CRYSTAL_PLATE, 1, { tower: t.id, floor: 3, x: 12, y: 22, square: 1 });
 		//END OF TESTING
 	}catch(e){"Item init error: " + e.toString()};
 }
@@ -464,7 +465,7 @@ function getItemGfxOffset(pos, sub, sh) {
 		var offx = xy.x * 4;
 		var offy = -xy.y * 4;
 		var x = Math.round(offx * (200.0 / (offy + 6)));
-		var y = Math.round(33 - 370.0 / (offy + 12 + suby * 20));
+		var y = Math.round(33 - 320.0 / (offy + 11 + suby * 20));
 	} else {
 		if (sub === CHAR_FRONT_LEFT) {
 			subx = 1;
@@ -482,7 +483,10 @@ function getItemGfxOffset(pos, sub, sh) {
 		var offx = xy.x * 4 + subx;
 		var offy = -xy.y * 4 + suby;
 		var x = Math.round(offx * (190.0 / (offy + 6)));
-		var y = Math.round(48 - 340.0 / (offy + 6));
+		var y = 0;
+		if(pos !== 18) {
+			y = Math.round(50 - 390.0 / (offy + 6));
+		}
 	}
 
 	return {
