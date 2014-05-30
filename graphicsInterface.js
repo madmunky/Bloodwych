@@ -949,49 +949,49 @@ function uiClickAreas() {
 	}); //Player Area
         UCA.push({
 		x: 141,
-		y: 38,
+		y: 28,
 		width: 38,
 		height: 13
 	}); //Portal - Shelf Top
         UCA.push({
 		x: 141,
-		y: 51,
+		y: 41,
 		width: 38,
 		height: 13
 	}); //Portal - Shelf Bottom
         UCA.push({
 		x: 135,
-		y: 35,
+		y: 25,
 		width: 50,
 		height: 29
 	}); //Portal - Switch
         UCA.push({
 		x: 118,
-		y: 23,
+		y: 13,
 		width: 83,
 		height: 53
 	}); //Portal - Door
         UCA.push({
 		x: 119,
-		y: 83,
+		y: 73,
 		width: 25,
 		height: 6
 	}); //Portal - Item Close Left
         UCA.push({
 		x: 175,
-		y: 83,
+		y: 73,
 		width: 25,
 		height: 6
 	}); //Portal - Item Close Right
         UCA.push({
 		x: 127,
-		y: 72,
+		y: 62,
 		width: 20,
 		height: 7
 	}); //Portal - Item Back Left
         UCA.push({
 		x: 172,
-		y: 72,
+		y: 62,
 		width: 20,
 		height: 7
 	}); //Portal - Item Back Right

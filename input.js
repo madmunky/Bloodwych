@@ -366,9 +366,52 @@ function mouseXY(e) {
 function checkViewPortal(p,x,y){
     
     switch (p.uiCenterPanel.mode){
-        
-          
-    
-    }
-    
+        case UI_CENTER_PANEL_VIEWPORT:{
+                if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_CLOSE, p)) {
+                    alert('LEFT CLOSE ITEM');
+                };
+                if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_CLOSE, p)) {
+                    alert('RIGHT CLOSE ITEM');
+                };
+  
+                
+            switch (p.getObjectOnPos(15, 2)){
+                case 'shelf':{
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_TOP, p)) {
+                        alert('TOP SHELF');
+                    };
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_BOTTOM, p)) {
+                        alert('BOTTOM SHELF');
+                    };
+                };break;
+                case 'door':{
+                       if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, p)) {
+                           alert('DOOR AREA'); 
+                       };  
+                }break;
+                case 'switch':{
+                      if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
+                           alert('SWITCH AREA');
+                      };   
+                }break;
+                case 'wall':{};break;
+                default:{
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_BACK, p)) {
+                        alert('LEFT BACK ITEM');
+                    };
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_BACK, p)) {
+                            alert('RIGHT BACK ITEM');
+                    }; 
+                };break
+            }
+            
+        };break;
+        case UI_CENTER_PANEL_SLEEPING:{};break;
+        case UI_CENTER_PANEL_DEAD:{};break;  
+        case UI_CENTER_PANEL_FAIRY:
+        case UI_CENTER_PANEL_FAIRY_DRAGON:
+        case UI_CENTER_PANEL_FAIRY_SERPENT:
+        case UI_CENTER_PANEL_FAIRY_MOON:
+        case UI_CENTER_PANEL_FAIRY_CHAOS:{};break;    
+    }    
 }
