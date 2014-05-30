@@ -31,7 +31,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	};
 	this.uiLeftPanel = {
 		champs: new Array(false, false, false, false),
-		mode: LEFT_PANEL_MODE_STATS
+		mode: UI_LEFT_PANEL_MODE_STATS
 	};
         this.uiCenterPanel = {
             mode: null
@@ -573,7 +573,7 @@ Player.prototype.restoreChampionStats = function() {
 }
 
 Player.prototype.alertDamagedPlayer = function() {
-	this.uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;
+	this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 	for (ch = 0; ch < this.champion.length; ch++) {
 		if (this.getChampion(ch) !== null && this.getChampion(ch).monster.dead && ch > 0) {
 			toggleChampUI(ch, this, false);

@@ -137,6 +137,10 @@ function processCanvasInput(x, y) {
 	for (p = 0; p < 2; p++) {
 		var successfulClick = false;
 
+                if (!player[p].sleeping && !player[p].dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, player[p])) {
+			checkViewPortal(player[p],x,y);
+		}    
+
 		if (player[p].sleeping && uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, player[p])) {
 			player[p].sleeping = false;
 		}
@@ -251,7 +255,7 @@ function processCanvasInput(x, y) {
 				successfulClick = true;
 			}
 		}
-		if (player[p].uiLeftPanel.mode === LEFT_PANEL_MODE_STATS) {
+		if (player[p].uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
 
 			if (uiClickInArea(x, y, UI_CLICK_CHAMP1, player[p])) {
 				toggleChampUI(0, player[p]);
@@ -270,14 +274,14 @@ function processCanvasInput(x, y) {
 				successfulClick = true;
 			}
 			if (uiClickInArea(x, y, UI_CLICK_STATS_BOX, player[p])) {
-				player[p].uiLeftPanel.mode = LEFT_PANEL_MODE_COMMAND;
+				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_COMMAND;
 				successfulClick = true;
 			}
 
-		} else if (player[p].uiLeftPanel.mode === LEFT_PANEL_MODE_COMMAND) {
+		} else if (player[p].uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
 
 			if (uiClickInArea(x, y, UI_CLICK_BACK, player[p])) {
-				player[p].uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;
+				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 				successfulClick = true;
 			}
 			if (uiClickInArea(x, y, UI_CLICK_PAUSE, player[p])) {
@@ -290,7 +294,7 @@ function processCanvasInput(x, y) {
 			}
 			if (uiClickInArea(x, y, UI_CLICK_SLEEP, player[p])) {
 				player[p].sleeping = true;
-				player[p].uiLeftPanel.mode = LEFT_PANEL_MODE_STATS;
+				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				player[p].attack(false);
 				successfulClick = true;
@@ -357,4 +361,14 @@ function mouseXY(e) {
 
 	}
 
+}
+
+function checkViewPortal(p,x,y){
+    
+    switch (p.uiCenterPanel.mode){
+        
+          
+    
+    }
+    
 }

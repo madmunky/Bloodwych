@@ -143,12 +143,12 @@ function drawUI(p) {
 			ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
 			ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 2) * scale, 95 * scale, 90 * scale);
 			switch (p.uiLeftPanel.mode) {
-				case LEFT_PANEL_MODE_STATS:
+				case UI_LEFT_PANEL_MODE_STATS:
 					{
 						leftUI(p);
 					};
 					break
-				case LEFT_PANEL_MODE_COMMAND:
+				case UI_LEFT_PANEL_MODE_COMMAND:
 					{
 						commandUI(p);
 					};
