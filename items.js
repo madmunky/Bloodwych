@@ -402,34 +402,6 @@ function initItemsGfxD() {
 	return dItems;
 }
 
-function getItemDistanceByPos(pos, sq) {
-	if (pos <= 4) {
-		return DISTANCE_DISTANT;
-	} else if (pos <= 9) {
-		return DISTANCE_DISTANT;
-	} else if (pos <= 12) {
-		if (sq === 1) {
-			return DISTANCE_FAR;
-		} else {
-			return DISTANCE_FAR;
-		}
-	} else if (pos <= 15) {
-		if (sq === 1) {
-			return DISTANCE_MID;
-		} else {
-			return DISTANCE_CLOSE;
-		}
-	} else if (pos === 18) {
-		if (sq === 1) {
-			return DISTANCE_VERY_CLOSE;
-		} else {
-			return -1;
-		}
-	} else {
-		return -1;
-	}
-}
-
 //used for indexed items
 function indexToCoordinates(ix) {
 	var xy = new Array();
@@ -452,29 +424,65 @@ function indexToCoordinates(ix) {
 	}
 }
 
-function getItemGfxOffset(pos, sub) {
-	var xy = posToCoordinates(pos, 0, 0, 0);
-	if (sub === CHAR_FRONT_SOLO) {
-		subx = 0;
-		suby = -1;
-	} else if (sub === CHAR_FRONT_LEFT) {
-		subx = 1;
-		suby = -1;
-	} else if (sub === CHAR_FRONT_RIGHT) {
-		subx = -1;
-		suby = -1;
-	} else if (sub === CHAR_BACK_LEFT) {
-		subx = 1;
-		suby = 1;
+function getItemDistanceByPos(pos, sq, sh) {
+	if (pos <= 4) {
+		return DISTANCE_DISTANT;
+	} else if (pos <= 9) {
+		return DISTANCE_DISTANT;
+	} else if (pos <= 12) {
+		if (sq === 1) {
+			return DISTANCE_FAR;
+		} else {
+			return DISTANCE_FAR;
+		}
+	} else if (pos <= 15) {
+		if (sq === 1 && !sh) {
+			return DISTANCE_MID;
+		} else {
+			return DISTANCE_CLOSE;
+		}
+	} else if (pos === 18) {
+		if (sq === 1) {
+			return DISTANCE_VERY_CLOSE;
+		} else {
+			return -1;
+		}
 	} else {
-		subx = -1;
-		suby = 1;
+		return -1;
 	}
-	var offx = xy.x * 4 + subx;
-	var offy = -xy.y * 4 + suby;
+}
 
-	var x = Math.round(offx * (190.0 / (offy + 6)));
-	var y = Math.round(48 - 340.0 / (offy + 6));
+function getItemGfxOffset(pos, sub, sh) {
+	var xy = posToCoordinates(pos, 0, 0, 0);
+	if(sh) {
+		if (sub === CHAR_FRONT_LEFT || sub === CHAR_BACK_RIGHT) {
+			suby = 0; //bottom shelf
+		} else {
+			suby = 1; //top shelf
+		}
+		var offx = xy.x * 4;
+		var offy = -xy.y * 4;
+		var x = Math.round(offx * (200.0 / (offy + 6)));
+		var y = Math.round(33 - 370.0 / (offy + 12 + suby * 20));
+	} else {
+		if (sub === CHAR_FRONT_LEFT) {
+			subx = 1;
+			suby = -1;
+		} else if (sub === CHAR_FRONT_RIGHT) {
+			subx = -1;
+			suby = -1;
+		} else if (sub === CHAR_BACK_LEFT) {
+			subx = 1;
+			suby = 1;
+		} else {
+			subx = -1;
+			suby = 1;
+		}
+		var offx = xy.x * 4 + subx;
+		var offy = -xy.y * 4 + suby;
+		var x = Math.round(offx * (190.0 / (offy + 6)));
+		var y = Math.round(48 - 340.0 / (offy + 6));
+	}
 
 	return {
 		x: x,

@@ -837,27 +837,39 @@ Player.prototype.actionItem = function(s) {
 Player.prototype.getItemsInRange = function(pos2) {
 	var itemsInRange = [];
 	var pos = -1;
-	for(i = 0; i < item[towerThis].length; i++) {
+	for(i = item[towerThis].length - 1; i >= 0; i--) {
 		var it = item[towerThis][i];
 		if (this.floor === it.location.floor) {
 			pos = coordinatesToPos(it.location.x, it.location.y, this.x, this.y, this.d);
 			sq = (6 + it.location.square - this.d) % 4;
 			sq2 = (sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) ? 0 : 1;
 			if(pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
+				//check shelf
+				var sh = false;
+				var ob = tower[towerThis].floor[this.floor].Map[it.location.y][it.location.x];
+				if(getHexToBinaryPosition(ob, 12, 4) == '1') {
+					if (getHexToBinaryPosition(ob, 8) === '1') { //Wall has something on it
+						if (getHexToBinaryPosition(ob, 6, 2) === '0') { //Shelf
+							if (this.d === (parseInt(getHexToBinaryPosition(ob, 10, 2)) + 2) % 4) {
+								sh = true;
+							}
+						}
+					}
+				}
 				if (sq2 == 1) {
 					itemsInRange.unshift({
 						item: it,
 						position: pos,
-						distance: getItemDistanceByPos(pos, sq2),
-						gfxCoord: getItemGfxOffset(pos, sq),
+						distance: getItemDistanceByPos(pos, sq2, sh),
+						gfxCoord: getItemGfxOffset(pos, sq, sh),
 						square: sq2
 					});
 				} else {
 					itemsInRange.push({
 						item: it,
 						position: pos,
-						distance: getItemDistanceByPos(pos, sq2),
-						gfxCoord: getItemGfxOffset(pos, sq),
+						distance: getItemDistanceByPos(pos, sq2, sh),
+						gfxCoord: getItemGfxOffset(pos, sq, sh),
 						square: sq2
 					});
 				}
