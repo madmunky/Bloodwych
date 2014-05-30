@@ -655,6 +655,27 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 	}
 }
 
+Player.prototype.drawItem = function(it, distance, offset) {
+	var iGfx = itemRef[it.id].gfxD[distance];
+	if(typeof iGfx !== "undefined") {
+		var ob = tower[towerThis].floor[this.floor].Map[it.location.y][it.location.x];
+		if(getHexToBinaryPosition(ob, 12, 4) == '1') {
+			if (getHexToBinaryPosition(ob, 8) === '1') { //Wall has something on it
+				if (getHexToBinaryPosition(ob, 6, 2) === '0') { //Shelf
+					if (this.d === (parseInt(getHexToBinaryPosition(ob, 10, 2)) + 2) % 4) {
+						var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
+	   					var offy = 60 - Math.floor(iGfx.height) - offset.y;
+					}
+				}
+			}
+		} else {
+		    var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
+	   		var offy = 76 - Math.floor(iGfx.height) - offset.y;
+	    }
+		this.Portal.drawImage(iGfx, offx * scale, offy * scale, iGfx.width * scale, iGfx.height * scale);
+	}
+}
+
 Player.prototype.getActivePocketChampion = function() {
 	var ch = this.getOrderedChampionIds();
 	if (this.getChampion(ch[this.uiRightPanel.activePocket]) !== null) {
@@ -678,7 +699,7 @@ Player.prototype.useItemInHand = function() {
 		if (itH.id !== 0) {
 			switch (itH.type) {
 				case ITEM_TYPE_STACKABLE:
-					var i = this.findItem(itH.id);
+					var i = this.findPocketItem(itH.id);
 					if (i > -1) {
 						itH.quantity++;
 						ch.pocket[i].quantity--;
@@ -729,7 +750,7 @@ Player.prototype.exchangeItemWithHand = function(s) {
 					it.setPocketItem(it.id, it.quantity + qty);
 				}
 			} else if (itH.type === ITEM_TYPE_STACKABLE) {
-				var i = this.findItem(itH.id);
+				var i = this.findPocketItem(itH.id);
 				var qty = 0;
 				if (i > -1) {
 					qty = ch.pocket[i].quantity;
@@ -747,7 +768,7 @@ Player.prototype.exchangeItemWithHand = function(s) {
 	}
 }
 
-Player.prototype.findItem = function(i) {
+Player.prototype.findPocketItem = function(i) {
 	var ch = this.getActivePocketChampion();
 	if (ch !== null) {
 		for (ip = 0; ip < ch.pocket.length; ip++) {
@@ -811,6 +832,39 @@ Player.prototype.actionItem = function(s) {
 			square: s
 		});
 	}
+}
+
+Player.prototype.getItemsInRange = function(pos2) {
+	var itemsInRange = [];
+	var pos = -1;
+	for(i = 0; i < item[towerThis].length; i++) {
+		var it = item[towerThis][i];
+		if (this.floor === it.location.floor) {
+			pos = coordinatesToPos(it.location.x, it.location.y, this.x, this.y, this.d);
+			sq = (6 + it.location.square - this.d) % 4;
+			sq2 = (sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) ? 0 : 1;
+			if(pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
+				if (sq2 == 1) {
+					itemsInRange.unshift({
+						item: it,
+						position: pos,
+						distance: getItemDistanceByPos(pos, sq2),
+						gfxCoord: getItemGfxOffset(pos, sq),
+						square: sq2
+					});
+				} else {
+					itemsInRange.push({
+						item: it,
+						position: pos,
+						distance: getItemDistanceByPos(pos, sq2),
+						gfxCoord: getItemGfxOffset(pos, sq),
+						square: sq2
+					});
+				}
+			}
+		}
+	}
+	return itemsInRange;
 }
 
 Player.prototype.message = function(txt, col, wait) {

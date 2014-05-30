@@ -187,6 +187,7 @@ Item.prototype.setPocketItem = function(id, q) {
 
 Item.prototype.toString = function() {
 	var loc = "";
+	var ref = "";
 	if (typeof this.location.tower !== "undefined" && this.location.tower !== -1) {
 		loc = ", location:[";
 		loc = loc + "tower:" + this.location.tower;
@@ -196,7 +197,10 @@ Item.prototype.toString = function() {
 		loc = loc + ", square:" + this.location.square;
 		loc = loc + "]";
 	}
-	return '[id:' + this.id + ', quantity:' + this.quantity + loc + ']';
+	if(typeof this.itemRef !== "undefined") {
+		ref = ", itemRef:[name:" + this.itemRef.name + "]";
+	}
+	return '[id:' + this.id + ', quantity:' + this.quantity + loc + ref + ']';
 }
 
 //Dungeon items
@@ -207,6 +211,7 @@ function initItems(t) {
 		var len = t.itemData[0] * 256 + t.itemData[1];
 		var i = 0;
 		var is = 2;
+		var dr = [0, 1, 3, 2];
 		while (is + i < len) {
 			var i1 = i + is;
 			var dd = t.itemData[i1]; //direction (A)
@@ -219,11 +224,15 @@ function initItems(t) {
 				var max = item[t.id].length;
 				var id = t.itemData[i1 + di + 3];
 				var qt = t.itemData[i1 + di + 4];
-				item[t.id][max] = new Item(id, qt, { tower: t.id, floor: xy.floor, x: xy.x, y: xy.y, square: d });
+				item[t.id][max] = new Item(id, qt, { tower: t.id, floor: xy.floor, x: xy.x, y: xy.y, square: dr[d] });
 				PrintLog('Loaded item: ' + item[t.id][max]);
 			}
 			i = i + 3 + n * 2;
 		}
+
+		//TESTING
+		item[t.id][item[t.id].length] = new Item(ITEM_WAR_SHIELD, 1, { tower: t.id, floor: 3, x: 12, y: 22, square: 0 });
+		//END OF TESTING
 	}catch(e){"Item init error: " + e.toString()};
 }
 
@@ -372,18 +381,6 @@ function createItemRef(id, name, gfx, gfxD) {
 	};
 }
 
-//Read the dungeon item gfx here
-//Reads in the image
-
-function initItemGfxD() {
-	for (i = 0; i < 0; i++) {
-		itemGfxD[i] = new Array();
-		for (d = DISTANCE_VERY_CLOSE; d <= DISTANCE_DISTANT; d++) {
-			itemGfxD[i][d] = null;
-		}
-	}
-}
-
 function initItemsGfxD() {
 
 	var spriteSheetIMG = gfx['dungeon']['items2'];
@@ -405,6 +402,34 @@ function initItemsGfxD() {
 	return dItems;
 }
 
+function getItemDistanceByPos(pos, sq) {
+	if (pos <= 4) {
+		return DISTANCE_DISTANT;
+	} else if (pos <= 9) {
+		return DISTANCE_DISTANT;
+	} else if (pos <= 12) {
+		if (sq === 1) {
+			return DISTANCE_FAR;
+		} else {
+			return DISTANCE_FAR;
+		}
+	} else if (pos <= 15) {
+		if (sq === 1) {
+			return DISTANCE_MID;
+		} else {
+			return DISTANCE_CLOSE;
+		}
+	} else if (pos === 18) {
+		if (sq === 1) {
+			return DISTANCE_VERY_CLOSE;
+		} else {
+			return -1;
+		}
+	} else {
+		return -1;
+	}
+}
+
 //used for indexed items
 function indexToCoordinates(ix) {
 	var xy = new Array();
@@ -424,5 +449,35 @@ function indexToCoordinates(ix) {
 			}
 		}
 		is += isnext;
+	}
+}
+
+function getItemGfxOffset(pos, sub) {
+	var xy = posToCoordinates(pos, 0, 0, 0);
+	if (sub === CHAR_FRONT_SOLO) {
+		subx = 0;
+		suby = -1;
+	} else if (sub === CHAR_FRONT_LEFT) {
+		subx = 1;
+		suby = -1;
+	} else if (sub === CHAR_FRONT_RIGHT) {
+		subx = -1;
+		suby = -1;
+	} else if (sub === CHAR_BACK_LEFT) {
+		subx = 1;
+		suby = 1;
+	} else {
+		subx = -1;
+		suby = 1;
+	}
+	var offx = xy.x * 4 + subx;
+	var offy = -xy.y * 4 + suby;
+
+	var x = Math.round(offx * (190.0 / (offy + 6)));
+	var y = Math.round(48 - 340.0 / (offy + 6));
+
+	return {
+		x: x,
+		y: y
 	}
 }

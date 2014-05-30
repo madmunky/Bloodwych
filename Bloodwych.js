@@ -160,9 +160,13 @@ function debugTextPrint(p) {
         //debugText(p.getView()[15].substring(0,2));
         //debugText(parseInt(getHexToBinaryPosition(p.getView()[15], 0, 5), 16).toString(10));
         //debugText(parseInt(p.getView()[15].substring(0,2), 16).toString(10));
-        var mon = p.getMonstersInRange();
+        /*var mon = p.getMonstersInRange();
         for (i in mon) {
             debugText(p, 'Monster:' + mon[i].monster + ' - MonsterPos:' + mon[i].position + ' - MonsterOffset:' + getMonsterGfxOffset(15, 0).x + ', ' + getMonsterGfxOffset(12, 0).x + ', ' + getMonsterGfxOffset(9, 0).x);
+        }*/
+        var it = p.getItemsInRange();
+        for(i in it) {
+            debugText(p, 'Item:' + it[i].item + ' - ItemPos:' + it[i].position);
         }
     }
 }

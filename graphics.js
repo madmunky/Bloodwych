@@ -455,6 +455,7 @@ function drawPlayersView(p) {
 						};
 						break;
 				}
+				drawItemsOnPos(p, x);
 				drawMonsterOnPos(p, x);
 			}
 		}
@@ -468,6 +469,15 @@ function drawMonsterOnPos(p, pos) {
 		var monPos = p.getMonstersInRange(pos);
 		for (i in monPos) {
 			p.drawMonster(monPos[i].monster, monPos[i].distance, monPos[i].gfxCoord);
+		}
+	}
+}
+
+function drawItemsOnPos(p, pos) {
+	if ((pos > -1 && pos <= 15) || pos === 18) {
+		var itPos = p.getItemsInRange(pos);
+		for (i in itPos) {
+			p.drawItem(itPos[i].item, itPos[i].distance, itPos[i].gfxCoord);
 		}
 	}
 }
