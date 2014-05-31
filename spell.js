@@ -34,7 +34,25 @@ function reviveChampOnGround(f, x, y) {
 				champion[ch].monster.y = y;
 				champion[ch].monster.hp = 0;
 				champion[ch].monster.dead = false;
+				if(champion[ch].recruitment.recruited && !champion[ch].recruitment.attached && champion[ch].recruitment.playerId > -1) {
+					var p = player[champion[ch].recruitment.playerId];
+					if(p.dead) {
+						champion[ch].recruitment.attached = true;
+						var i = p.getChampionPosition(ch);
+						p.exchangeChampionPosition(0, i);
+						p.championLeader = 0;
+						p.tower = towerThis;
+						p.floor = f;
+						p.x = x;
+						p.y = y
+						p.dead = false;
+						p.updateChampions();
+						redrawUI(p.id);
+					}
+				}
+				return true;
 			}
 		}
 	}
+	return false;
 }

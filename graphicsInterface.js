@@ -252,7 +252,7 @@ function leftUIStats(p) {
 		var ch = p.getOrderedChampionIds();
 		for (c = 0; c < p.champion.length; c++) {
 			var c1 = ch[c];
-			var champ = champion[p.champion[c1]];
+			var champ = p.getChampion(c1);
 			var rgb = getClassColour(champ.colour);
 			var hp = Math.floor(21 * champ.stat.hp / champ.stat.hpMax);
 			if (hp < 0) {
@@ -400,7 +400,7 @@ function rightUI(p) {
 		var ch = p.getChampion(c1);
 		var a = ch.prof;
 		var b = ch.colour;
-		if (!ch.monster.dead) {
+		if (!ch.monster.dead && ch.recruitment.attached) {
 			if (c1 === p.championHighlite) {
 				ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][4], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
 			} else {
@@ -511,7 +511,11 @@ function drawPocketUI(p) {
 			case 2:
 			case 3:
 				{
-					ctx.drawImage(gfxUI[g][p.getChampion(cid).colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+					if(!p.getChampion(cid).recruitment.attached) {
+						ctx.drawImage(gfxUI[g][4], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+					} else {
+						ctx.drawImage(gfxUI[g][p.getChampion(cid).colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+					}
 					if (chp.recruitment.recruited && c === p.uiRightPanel.activePocket) {
 						drawRect(((p.ScreenX + 225) + (c * 16)), ((p.ScreenY + 63)), 15, 14, COLOUR[COLOUR_YELLOW]);
 						//ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);

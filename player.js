@@ -232,6 +232,7 @@ Player.prototype.rotate = function(r) {
 			highliteMovementArrow(this, 2);
 		}
 		this.d = (4 + this.d + r) % 4;
+		this.doEvent(false);
 	}
 }
 
@@ -407,7 +408,7 @@ Player.prototype.updateChampions = function() {
 	var cnt = this.getAliveChampionCount();
 	for (c = 0; c < this.champion.length; c++) {
 		var ch = this.getChampion(c);
-		if (ch !== null) {
+		if (ch !== null && ch.recruitment.attached) {
 			var m = ch.monster;
 			m.tower = towerThis;
 			m.floor = this.floor;
@@ -423,29 +424,29 @@ Player.prototype.updateChampions = function() {
 	}
 }
 
-Player.prototype.exchangeChampionPosition = function(c) {
-	if (this.championHighlite === c) {
+Player.prototype.exchangeChampionPosition = function(ct, c) {
+	if (ct === c) {
 		this.championLeader = c;
 		this.championHighlite = -1;
-	} else if (this.championHighlite === -1) {
+	} else if (ct === -1) {
 		if (!this.getChampion(c).monster.dead) {
 			this.championHighlite = c;
 		}
 	} else {
 		if (this.attacking) {
 			clearTimeout(this.getChampion(c).recruitment.attackTimer);
-			clearTimeout(this.getChampion(this.championHighlite).recruitment.attackTimer);
+			clearTimeout(this.getChampion(ct).recruitment.attackTimer);
 			this.getChampion(c).monster.attacking = false;
-			this.getChampion(this.championHighlite).monster.attacking = false;
+			this.getChampion(ct).monster.attacking = false;
 		}
 		if (this.championLeader === c) {
-			this.championLeader = this.championHighlite;
-		} else if (this.championLeader === this.championHighlite) {
+			this.championLeader = ct;
+		} else if (this.championLeader === ct) {
 			this.championLeader = c;
 		}
 		var temp = this.champion[c];
-		this.champion[c] = this.champion[this.championHighlite];
-		this.champion[this.championHighlite] = temp;
+		this.champion[c] = this.champion[ct];
+		this.champion[ct] = temp;
 		this.championHighlite = -1;
 		this.updateChampions();
 	}
@@ -470,6 +471,13 @@ Player.prototype.checkDead = function() {
 		if (deadNum == 4) {
 			this.dead = true;
 			this.attack(false);
+			for (c = 0; c < this.champion.length; c++) {
+				var ch = this.getChampion(c);
+				if (ch !== null && ch.recruitment.attached) {
+					ch.recruitment.attached = false;
+					dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, 0);
+				}
+			}
 			this.setMovementData();
 		}
 	}
@@ -484,8 +492,10 @@ Player.prototype.recruitChampion = function(id) {
 			this.champion[len] = id;
 			champion[id].recruitment = {
 				recruited: true,
+				attached: true,
 				playerId: this.id,
-				position: len
+				position: len,
+				attackTimer: 0
 			};
 			return true;
 		}
@@ -499,6 +509,17 @@ Player.prototype.getChampion = function(loc) {
 		return champion[this.champion[loc]];
 	}
 	return null;
+}
+
+
+Player.prototype.getChampionPosition = function(id) {
+	for (c = 0; c < this.champion.length; c++) {
+		var ch = this.getChampion(c);
+		if(ch.id === id) {
+			return c;
+		}
+	}
+	return -1;
 }
 
 //gets champions. champion 0 is the leader
@@ -819,6 +840,14 @@ Player.prototype.actionItem = function(s) {
 			}
 		}
 		if (typeof it !== "undefined") {
+			for(c = 0; c < this.champion.length; c++) {
+				var ch = this.getChampion(c);
+				if(ch.id === it[0].id - ITEM_BLODWYN_RIP && !ch.recruitment.attached) {
+					ch.recruitment.attached = true;
+					return true;
+				}
+			}
+
 			itH.setPocketItem(it[0].id, it[0].quantity);
 			return true;
 		}
@@ -937,7 +966,7 @@ function initPlayersQuickStart() {
 		for (i = 0; i < 4; i++) {
 			player[p].recruitChampion(i + p * 8);
 		}
-		player[p].getChampion(0).pocket[4].setPocketItem(80);
+		/*player[p].getChampion(0).pocket[4].setPocketItem(80);
 		player[p].getChampion(0).pocket[8].setPocketItem(80);
 		player[p].getChampion(0).pocket[9].setPocketItem(81);
 		player[p].getChampion(1).pocket[4].setPocketItem(81);
@@ -948,8 +977,13 @@ function initPlayersQuickStart() {
 		player[p].getChampion(2).pocket[9].setPocketItem(84);
 		player[p].getChampion(3).pocket[4].setPocketItem(84);
 		player[p].getChampion(3).pocket[8].setPocketItem(85);
-		player[p].getChampion(3).pocket[9].setPocketItem(86);
+		player[p].getChampion(3).pocket[9].setPocketItem(86);*/
 	}
+	/*
+	player[1].getChampion(1).monster.dead = true;
+	player[1].getChampion(2).monster.dead = true;
+	player[1].getChampion(3).monster.dead = true;
+	player[1].getChampion(3).recruitment.attached = false;*/
 }
 
 function initPlayersStart(c1, c2) {

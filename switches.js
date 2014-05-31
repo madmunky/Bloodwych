@@ -72,7 +72,7 @@ function floorActionType(trig, p) {
 			}
 			for(ch = 0; ch < p.champion.length; ch++) {
 				var champ = p.getChampion(ch);
-				if(champ.monster.dead) {
+				if(champ.monster.dead && champ.recruitment.attached) {
 					champ.stat.hp = 0;
 					champ.monster.dead = false;
 					redrawUI(p.id);

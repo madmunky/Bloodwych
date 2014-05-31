@@ -183,16 +183,16 @@ function processCanvasInput(x, y) {
 				//player[p].attacking = false;
 				player[p].attack(false);
 			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, player[p])) {
-				player[p].exchangeChampionPosition(0);
+				player[p].exchangeChampionPosition(player[p].championHighlite, 0);
 				successfulClick = true;
 			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_RIGHT, player[p])) {
-				player[p].exchangeChampionPosition(1);
+				player[p].exchangeChampionPosition(player[p].championHighlite, 1);
 				successfulClick = true;
 			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_LEFT, player[p])) {
-				player[p].exchangeChampionPosition(3);
+				player[p].exchangeChampionPosition(player[p].championHighlite, 3);
 				successfulClick = true;
 			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_RIGHT, player[p])) {
-				player[p].exchangeChampionPosition(2);
+				player[p].exchangeChampionPosition(player[p].championHighlite, 2);
 				successfulClick = true;
 			}
 
@@ -206,8 +206,13 @@ function processCanvasInput(x, y) {
 			}
 			for (cid = UI_CLICK_POCKET_CHARACTER_0; cid <= UI_CLICK_POCKET_CHARACTER_3; cid++) {
 				if (uiClickInArea(x, y, cid, player[p])) {
-					player[p].uiRightPanel.activePocket = cid - UI_CLICK_POCKET_CHARACTER_0;
-					successfulClick = true;
+					var ap = cid - UI_CLICK_POCKET_CHARACTER_0;
+					var c = player[p].getOrderedChampionIds();
+					var ch = player[p].getChampion(c[ap]);
+					if(ch.recruitment.attached) {
+						player[p].uiRightPanel.activePocket = ap;
+						successfulClick = true;
+					}
 					break;
 				}
 			}

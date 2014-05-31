@@ -413,8 +413,15 @@ Monster.prototype.die = function() {
 		this.attacking = false;
 		this.hp = -1;
 		updateMonsterTeam(this.teamId);
+		var sq = this.square;
+		if(sq === -1) {
+			sq = 0;
+		}
 		if (this.champId > -1) {
-			dropItem(this.champId + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, this.square);
+			var ch = champion[this.champId];
+			if(!ch.recruitment.recruited || !ch.recruitment.attached) {
+				dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, sq);
+			}
 		} else {
 			if(Math.floor(Math.random() * 2) === 1) {
 				var it = Math.floor(Math.random() * ITEM_WATER + 1);
@@ -422,7 +429,7 @@ Monster.prototype.die = function() {
 				if(it <= ITEM_ELF_ARROWS) {
 					qt = Math.floor(Math.random() * (this.level + 1) * 3) + 1;
 				}
-				dropItem(it, qt, this.floor, this.x, this.y, this.square);
+				dropItem(it, qt, this.floor, this.x, this.y, sq);
 			}
 		}
 	}

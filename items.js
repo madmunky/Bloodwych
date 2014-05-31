@@ -239,20 +239,20 @@ function initItems(t) {
 		}
 
 		//TESTING
-		item[t.id][item[t.id].length] = new Item(ITEM_WAR_SHIELD, 1, {
+		/*item[t.id][item[t.id].length] = new Item(ITEM_ROSANNE_RIP, 1, {
 			tower: t.id,
 			floor: 3,
 			x: 12,
 			y: 22,
 			square: 0
 		});
-		item[t.id][item[t.id].length] = new Item(ITEM_CRYSTAL_PLATE, 1, {
+		item[t.id][item[t.id].length] = new Item(ITEM_MR_FLAY_RIP, 1, {
 			tower: t.id,
 			floor: 3,
 			x: 12,
 			y: 22,
 			square: 1
-		});
+		});*/
 		//END OF TESTING
 	} catch (e) {
 		"Item init error: " + e.toString()
@@ -359,7 +359,7 @@ function initItemRefs() {
 	createItemRef(64, "Blodwyn (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(65, "Murlock (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_YELLOW]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(66, "Eleanor (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
-	createItemRef(67, "Roseanne (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_BLUE]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
+	createItemRef(67, "Rosanne (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_BLUE]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(68, "Astroth (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_YELLOW]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(69, "Zothen (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(70, "Baldrick (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_BLUE]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));

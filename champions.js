@@ -4,6 +4,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.id = id;
 	this.recruitment = {
 		recruited: false,
+		attached: false,
 		playerId: 0,
 		position: 0,
 		attackTimer: 0
@@ -72,7 +73,7 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			this.stat.hp = -1;
 			this.monster.die();
 		}
-		if (this.recruitment.recruited) {
+		if (this.recruitment.recruited && this.recruitment.attached) {
 			self.writeAttackPoints(dmg, true);
 			player[self.recruitment.playerId].alertDamagedPlayer();
 			player[self.recruitment.playerId].checkDead();
