@@ -673,31 +673,31 @@ function uiClickAreas() {
 
 	UCA.push({
 		x: 2,
-		y: 1,
+		y: 0,
 		width: 47,
 		height: 44
 	}); //CHAMP 1
 	UCA.push({
 		x: 52,
-		y: 7,
+		y: 6,
 		width: 41,
 		height: 32
 	}); //STATS GRAPH
 	UCA.push({
 		x: 0,
-		y: 46,
+		y: 45,
 		width: 30,
 		height: 41
 	}); //CHAMP 2
 	UCA.push({
 		x: 32,
-		y: 46,
+		y: 45,
 		width: 30,
 		height: 41
 	}); //CHAMP 3
 	UCA.push({
 		x: 64,
-		y: 46,
+		y: 45,
 		width: 30,
 		height: 41
 	}); //CHAMP 4
@@ -717,25 +717,25 @@ function uiClickAreas() {
 	}); //NAME TAG AREA
 	UCA.push({
 		x: 226,
-		y: 23,
+		y: 22,
 		width: 37,
 		height: 22
 	}); //SPELLBOOK
 	UCA.push({
 		x: 265,
-		y: 23,
+		y: 22,
 		width: 22,
 		height: 22
 	}); //CHARACTER STATS
 	UCA.push({
 		x: 290,
-		y: 24,
+		y: 23,
 		width: 14,
 		height: 14
 	}); //INTERACT
 	UCA.push({
 		x: 306,
-		y: 25,
+		y: 24,
 		width: 14,
 		height: 12
 	}); //OPEN POCKETS
@@ -777,147 +777,147 @@ function uiClickAreas() {
 	}); //MOVE RIGHT
 	UCA.push({
 		x: 269,
-		y: 48,
+		y: 47,
 		width: 17,
 		height: 13
 	}); //ATTACK
 	UCA.push({
 		x: 269,
-		y: 63,
+		y: 62,
 		width: 17,
 		height: 13
 	}); //DEFEND
 
 	UCA.push({
-		x: 227,
-		y: 24,
+		x: 225,
+		y: 23,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 1
 	UCA.push({
-		x: 244,
-		y: 24,
+		x: 242,
+		y: 23,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 2
 	UCA.push({
-		x: 258,
-		y: 24,
+		x: 257,
+		y: 23,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 3
 	UCA.push({
 		x: 274,
-		y: 24,
+		y: 23,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 4
 	UCA.push({
-		x: 290,
-		y: 24,
+		x: 289,
+		y: 23,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 5
 	UCA.push({
-		x: 306,
-		y: 24,
+		x: 305,
+		y: 23,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 6    
 	UCA.push({
-		x: 227,
-		y: 41,
+		x: 226,
+		y: 40,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 7
 	UCA.push({
-		x: 244,
-		y: 41,
+		x: 243,
+		y: 40,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 8
 	UCA.push({
-		x: 258,
-		y: 41,
+		x: 257,
+		y: 40,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 9
 	UCA.push({
-		x: 274,
-		y: 41,
+		x: 273,
+		y: 40,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 10
 	UCA.push({
-		x: 290,
-		y: 41,
+		x: 289,
+		y: 40,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 11
 	UCA.push({
-		x: 306,
-		y: 41,
+		x: 305,
+		y: 40,
 		width: 14,
 		height: 14
 	}); //POCKET SLOT 12    
 	UCA.push({
 		x: 227,
-		y: 66,
+		y: 64,
 		width: 14,
 		height: 14
 	}); //POCKET CHARACTER 0
 	UCA.push({
 		x: 244,
-		y: 66,
+		y: 64,
 		width: 14,
 		height: 14
 	}); //POCKET CHARACTER 1
 	UCA.push({
 		x: 258,
-		y: 66,
+		y: 64,
 		width: 14,
 		height: 14
 	}); //POCKET CHARACTER 2
 	UCA.push({
 		x: 274,
-		y: 66,
+		y: 64,
 		width: 14,
 		height: 14
 	}); //POCKET CHARACTER 3
 	UCA.push({
 		x: 290,
-		y: 66,
+		y: 64,
 		width: 14,
 		height: 14
 	}); //POCKET HAND
 	UCA.push({
 		x: 306,
-		y: 66,
+		y: 64,
 		width: 14,
 		height: 14
 	}); //POCKET BACK
 
 	UCA.push({
-		x: 58,
-		y: 2,
+		x: 56,
+		y: 0,
 		width: 16,
 		height: 16
 	}); //PAUSE BUTTON
 	UCA.push({
 		x: 73,
-		y: 2,
+		y: 0,
 		width: 16,
 		height: 16
 	}); //SAVE BUTTON
 	UCA.push({
-		x: 58,
-		y: 18,
+		x: 57,
+		y: 17,
 		width: 16,
 		height: 16
 	}); //SLEEP BUTTON
 	UCA.push({
 		x: 73,
-		y: 18,
+		y: 17,
 		width: 16,
 		height: 16
 	}); //BACK BUTTON
@@ -935,25 +935,25 @@ function uiClickAreas() {
 	}); //SCROLLDOWN BUTTON
 	UCA.push({
 		x: 289,
-		y: 48,
+		y: 46,
 		width: 16,
 		height: 16
 	}); //Character Front Left Icon
 	UCA.push({
 		x: 305,
-		y: 48,
+		y: 46,
 		width: 16,
 		height: 16
 	}); //Character Front Right Icon
 	UCA.push({
 		x: 289,
-		y: 64,
+		y: 62,
 		width: 16,
 		height: 16
 	}); //Character Back Left Icon
 	UCA.push({
 		x: 305,
-		y: 64,
+		y: 62,
 		width: 16,
 		height: 16
 	}); //Character Back Right Icon
@@ -1036,6 +1036,7 @@ function uiClickAreas() {
 function uiClickInArea(x, y, ui, p) {
 	if (x >= (p.ScreenX + uiClickArea[ui].x) * scale && x < (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width) * scale && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y < (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height) * scale) {
 		if (ui !== UI_CLICK_VIEWPORT) {
+                    
 			ctx.fillStyle = 'rgb(255, 0, 255)';
 			ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
 		}

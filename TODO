@@ -12,12 +12,15 @@ JORG
 CHRIS
 ------
 * GFX Big monster drawing fixes
-* UI  Add more click areas e.g. champion signs, for selecting leader and exchanging
 * UI  Communication Text Array
 * UI  Finish Spell Book
 * UI  Change drawImage cords for UI images to use the uiClickInArea values
 * UI  Make Fairy Screens
 * UI  Add movement key highlight
+* UI  Make Start Screen
+* UI  Make Champion select start screen
+* Find Amour Palette's
+
 
 QUESTIONS FOR CHRIS
 -------------------
@@ -26,8 +29,7 @@ QUESTIONS FOR JORG
 ------------------
 
 1. Need to try link a text to a screen (fairy)
-2. I've added the gfx to hightlight the arrows when moving but need to work out how to highlight them for the right direction and delay the gfx
-3. need to work out how we store the fairy screens
+2. I've added the gfx to height light the arrows when moving but need to work out how to highlight them for the right direction and delay the gfx
 4. I have all the spell descriptions but not sure how to add them to your spell object
 5. need a function to return the next two spells available for a champ
 6. need to increase the player timer when sleeping :)
