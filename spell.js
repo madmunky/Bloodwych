@@ -20,3 +20,21 @@ function initSpells() {
 		spell[sp] = new Spell(sp);
 	}
 }
+
+function reviveChampOnGround(f, x, y) {
+	if(getMonsterAt(f, x, y) === null) {
+		for (i = item[towerThis].length - 1; i >= 0; i--) {
+			var it = item[towerThis][i];
+			if(it.id >= ITEM_BLODWYN_RIP && it.id <= ITEM_THAI_CHANG_RIP && it.location.tower === towerThis && it.location.floor === f && it.location.x === x && it.location.y === y) {
+				var ch = it.id - ITEM_BLODWYN_RIP;
+				item[towerThis].splice(i, 1);
+				champion[ch].stat.hp = 0;
+				champion[ch].monster.floor = f;
+				champion[ch].monster.x = x;
+				champion[ch].monster.y = y;
+				champion[ch].monster.hp = 0;
+				champion[ch].monster.dead = false;
+			}
+		}
+	}
+}

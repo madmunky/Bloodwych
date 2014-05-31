@@ -95,6 +95,7 @@ Item.prototype.getFoodValue = function() {
 		} else if (this.id <= ITEM_WATER) {
 			return 10;
 		} else if (this.id <= ITEM_NEGG_GREEN) {
+			alert(1);
 			return 33;
 		} else if (this.id <= ITEM_NEGG_BLUE) {
 			return 66;
@@ -197,7 +198,7 @@ Item.prototype.toString = function() {
 		loc = loc + ", square:" + this.location.square;
 		loc = loc + "]";
 	}
-	if(typeof this.itemRef !== "undefined") {
+	if (typeof this.itemRef !== "undefined") {
 		ref = ", itemRef:[name:" + this.itemRef.name + "]";
 	}
 	return '[id:' + this.id + ', quantity:' + this.quantity + loc + ref + ']';
@@ -221,21 +222,41 @@ function initItems(t) {
 			var x = ((dd % 16) * 256 + dx) / 2;
 			var xy = indexToCoordinates(x);
 			var n = t.itemData[i1 + 2] + 1;
-			for(di = 0; di < n; di++) {
+			for (di = 0; di < n; di++) {
 				var max = item[t.id].length;
 				var id = t.itemData[di * 2 + i1 + 3];
 				var qt = t.itemData[di * 2 + i1 + 4];
-				item[t.id][max] = new Item(id, qt, { tower: t.id, floor: xy.floor, x: xy.x, y: xy.y, square: dr[dir] });
+				item[t.id][max] = new Item(id, qt, {
+					tower: t.id,
+					floor: xy.floor,
+					x: xy.x,
+					y: xy.y,
+					square: dr[dir]
+				});
 				PrintLog('Loaded item: ' + item[t.id][max]);
 			}
 			i = i + 3 + n * 2;
 		}
 
 		//TESTING
-		item[t.id][item[t.id].length] = new Item(ITEM_WAR_SHIELD, 1, { tower: t.id, floor: 3, x: 12, y: 22, square: 0 });
-		item[t.id][item[t.id].length] = new Item(ITEM_CRYSTAL_PLATE, 1, { tower: t.id, floor: 3, x: 12, y: 22, square: 1 });
+		item[t.id][item[t.id].length] = new Item(ITEM_WAR_SHIELD, 1, {
+			tower: t.id,
+			floor: 3,
+			x: 12,
+			y: 22,
+			square: 0
+		});
+		item[t.id][item[t.id].length] = new Item(ITEM_CRYSTAL_PLATE, 1, {
+			tower: t.id,
+			floor: 3,
+			x: 12,
+			y: 22,
+			square: 1
+		});
 		//END OF TESTING
-	}catch(e){"Item init error: " + e.toString()};
+	} catch (e) {
+		"Item init error: " + e.toString()
+	};
 }
 
 function newPocketItem(id, q) {
@@ -252,6 +273,19 @@ function newPocketItem(id, q) {
 		y: 0,
 		square: 0
 	});
+}
+
+//new dungeon item
+
+function dropItem(id, q, f, x, y, s) {
+	var it = new Item(id, q, {
+		tower: towerThis,
+		floor: f,
+		x: x,
+		y: y,
+		square: s
+	});
+	item[towerThis].push(it);
 }
 
 //This is the big item list
@@ -324,8 +358,8 @@ function initItemRefs() {
 	createItemRef(63, "Power Staff", recolourUiGfx(gfxUI[UI_GFX_POCKET_STAFF], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_PINK]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_STAFF], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(64, "Blodwyn (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(65, "Murlock (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_YELLOW]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
-	createItemRef(66, "Eleanor (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_BLUE]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
-	createItemRef(67, "Roseanne (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
+	createItemRef(66, "Eleanor (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
+	createItemRef(67, "Roseanne (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_BLUE]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(68, "Astroth (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_YELLOW]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(69, "Zothen (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(70, "Baldrick (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_BLUE]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
@@ -405,19 +439,24 @@ function initItemsGfxD() {
 }
 
 //used for indexed items
+
 function indexToCoordinates(ix) {
 	var xy = new Array();
 	//tower[towerThis].floor[this.floor].Map[xy.y][xy.x]
 	var tw = tower[towerThis];
 	var isnext = 0;
 	var is = 0;
-	for(fl = 0; fl < tw.floor.length; fl++) {
+	for (fl = 0; fl < tw.floor.length; fl++) {
 		isnext = tw.floor[fl].Width * tw.floor[fl].Height;
-		if(ix < is + isnext) {
-			for(y = 0; y < tw.floor[fl].Width; y++) {
+		if (ix < is + isnext) {
+			for (y = 0; y < tw.floor[fl].Width; y++) {
 				isnext = tw.floor[fl].Height;
-				if(ix < is + isnext) {
-					return { floor: fl, x: ix - is, y: y };
+				if (ix < is + isnext) {
+					return {
+						floor: fl,
+						x: ix - is,
+						y: y
+					};
 				}
 				is += isnext;
 			}
@@ -456,7 +495,7 @@ function getItemDistanceByPos(pos, sq, sh) {
 
 function getItemGfxOffset(pos, sub, sh) {
 	var xy = posToCoordinates(pos, 0, 0, 0);
-	if(sh) {
+	if (sh) {
 		if (sub === CHAR_FRONT_LEFT || sub === CHAR_BACK_RIGHT) {
 			suby = 0.22; //bottom shelf
 		} else {
@@ -484,7 +523,7 @@ function getItemGfxOffset(pos, sub, sh) {
 		var offy = -xy.y * 4 + suby;
 		var x = Math.round(offx * (190.0 / (offy + 6)));
 		var y = 0;
-		if(pos !== 18) {
+		if (pos !== 18) {
 			y = Math.round(50 - 390.0 / (offy + 6));
 		}
 	}

@@ -348,6 +348,7 @@ Player.prototype.getView = function() {
 //mr = false: player rotates
 Player.prototype.doEvent = function(mr) {
 	//this.setMovementData();
+	this.updateChampions();
 	var view = this.getView();
 	switch (parseInt(view[18].substring(3, 4), 16)) {
 
@@ -360,7 +361,6 @@ Player.prototype.doEvent = function(mr) {
 		default:
 			break;
 	}
-	this.updateChampions();
 	this.resetChampUI();
 };
 
@@ -712,19 +712,15 @@ Player.prototype.useItemInHand = function() {
 					}
 					break;
 				case ITEM_TYPE_FOOD:
-					if (itH.id <= 19) {
-						if (itH.id % 3 === 2) {
-							itH.setPocketItem();
-						} else {
-							itH.setPocketItem(itH.id - 1);
-						}
-					} else {
-						itH.setPocketItem();
-					}
 					var fd = itH.getFoodValue();
 					ch.food += fd;
 					if (ch.food > 255) {
 						ch.food = 255;
+					}
+					if (itH.id <= ITEM_WATER && itH.id % 3 !== 2) {
+						itH.setPocketItem(itH.id - 1);
+					} else {
+						itH.setPocketItem();
 					}
 					break;
 				default:
@@ -827,14 +823,7 @@ Player.prototype.actionItem = function(s) {
 			return true;
 		}
 	} else { //drop item
-		var it = new Item(itH.id, itH.quantity, {
-			tower: towerThis,
-			floor: this.floor,
-			x: xyi.x,
-			y: xyi.y,
-			square: (this.d + s) % 4
-		});
-		item[towerThis].push(it);
+		dropItem(itH.id, itH.quantity, this.floor, xyi.x, xyi.y, (this.d + s) % 4);
 		itH.setPocketItem();
 		return true;
 	}

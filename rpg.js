@@ -50,7 +50,7 @@ function calculateAttack(att, def) {
         		continue;
         	}
         	fromDir = from.d;
-			attack += 4 + from.level * 2;
+			attack += 4 + from.level * 4;
 		}
 
 		//Defender calculations
@@ -98,7 +98,7 @@ function calculateAttack(att, def) {
 						if(!to.attacking) {
 							defense += 10;
 						}
-						defense += 10 + to.level * 2;
+						defense += 10 + to.level * 3;
 					}
 					break;
 				}

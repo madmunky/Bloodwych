@@ -408,10 +408,24 @@ Monster.prototype.getDamage = function(dmg) {
 }
 
 Monster.prototype.die = function() {
-	this.dead = true;
-	this.attacking = false;
-	this.hp = -1;
-	updateMonsterTeam(this.teamId);
+	if(!this.dead) {
+		this.dead = true;
+		this.attacking = false;
+		this.hp = -1;
+		updateMonsterTeam(this.teamId);
+		if (this.champId > -1) {
+			dropItem(this.champId + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, this.square);
+		} else {
+			if(Math.floor(Math.random() * 2) === 1) {
+				var it = Math.floor(Math.random() * ITEM_WATER + 1);
+				var qt = 1;
+				if(it <= ITEM_ELF_ARROWS) {
+					qt = Math.floor(Math.random() * (this.level + 1) * 3) + 1;
+				}
+				dropItem(it, qt, this.floor, this.x, this.y, this.square);
+			}
+		}
+	}
 }
 
 Monster.prototype.setBinaryView = function(pos18, index, length, to) {

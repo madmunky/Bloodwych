@@ -61,10 +61,15 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '0');
 			break;
 		case SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL:
-			tower[towerThis].floor[p.floor].Map[p.y][p.x + 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x + 1], 7, 1, '1');
+			if(getMonsterAt(p.floor, p.x + 1, p.y) === null) {
+				tower[towerThis].floor[p.floor].Map[p.y][p.x + 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x + 1], 7, 1, '1');
+			}
+			reviveChampOnGround(p.floor, p.x + 2, p.y);
 			break;
 		case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:
-			tower[towerThis].floor[p.floor].Map[p.y][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 1], 7, 1, '1');
+			if(getMonsterAt(p.floor, p.x - 1, p.y) === null) {
+				tower[towerThis].floor[p.floor].Map[p.y][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 1], 7, 1, '1');
+			}
 			for(ch = 0; ch < p.champion.length; ch++) {
 				var champ = p.getChampion(ch);
 				if(champ.monster.dead) {
