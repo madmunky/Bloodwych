@@ -89,12 +89,13 @@ Champion.prototype.getWeaponPower = function(s) {
 
 Champion.prototype.getArmourClass = function() {
 	var ac = this.stat.ac;
-	var arm = this.pocket[2].getArmourClass();
-	var sld = this.pocket[3].getArmourClass();
+	var arm = this.pocket[POCKET_TORSO].getArmourClass();
+	var sld = this.pocket[POCKET_SHIELD].getArmourClass();
+	var glv = this.pocket[POCKET_GLOVES].getArmourClass();
 	if (ac > arm) {
 		arm = ac;
 	}
-	return 10 - arm - sld;
+	return 10 - arm - sld - glv;
 }
 
 Champion.prototype.checkGainLevel = function() {
@@ -305,7 +306,7 @@ function initChampions() {
 			var a = hex2dec(pk[i].substr(0, 2));
 			pk[i] = parseInt(a);
 		}
-		for (i = 0; i < 12; i++) {
+		for (i = 0; i <= POCKET_GLOVES; i++) {
 			if (pk[i] >= 1 && pk[i] < 5) {
 				slot[i] = newPocketItem(pk[i], pk[pk[i] + 11]);
 			} else {

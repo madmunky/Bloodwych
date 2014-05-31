@@ -152,15 +152,15 @@ Item.prototype.getArmourClass = function() {
 	} else if (this.type === ITEM_TYPE_GLOVES) {
 		switch (this.id) {
 			case ITEM_CHAOS_GLOVES:
-				return 1;
+				return 0;
 			case ITEM_BATTLE_GLOVES:
-				return 2;
+				return 1;
 			case ITEM_MITHRIL_GLOVES:
-				return 3;
+				return 2;
 			case ITEM_ADAMANT_GLOVES:
-				return 4;
+				return 3;
 			case ITEM_CRYSTAL_GLOVES:
-				return 5;
+				return 4;
 			default:
 				break;
 		}
@@ -239,20 +239,20 @@ function initItems(t) {
 		}
 
 		//TESTING
-		/*item[t.id][item[t.id].length] = new Item(ITEM_ROSANNE_RIP, 1, {
+		item[t.id][item[t.id].length] = new Item(ITEM_CRYSTAL_GLOVES, 1, {
 			tower: t.id,
 			floor: 3,
 			x: 12,
 			y: 22,
 			square: 0
 		});
-		item[t.id][item[t.id].length] = new Item(ITEM_MR_FLAY_RIP, 1, {
+		item[t.id][item[t.id].length] = new Item(ITEM_MITHRIL_GLOVES, 1, {
 			tower: t.id,
 			floor: 3,
 			x: 12,
 			y: 22,
 			square: 1
-		});*/
+		});
 		//END OF TESTING
 	} catch (e) {
 		"Item init error: " + e.toString()

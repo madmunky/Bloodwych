@@ -37,8 +37,13 @@ function calculateAttack(att, def) {
         	if(from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === ITEM_DAGGER || from.pocket[0].id === ITEM_STEALTH_BLADE) && att.d === def.d) {
         		defChance = 0.5;
 			}
-			attack += from.getWeaponPower(0);
-			attack += from.getWeaponPower(1);
+			var wp = from.getWeaponPower(0);
+			if(wp > 0) {
+				attack += wp;
+			} else {
+				attack += from.getWeaponPower(1);
+			}
+			//attack += from.getWeaponPower(1);
 			attack += Math.round(from.stat.str / 8);
 			attack += Math.round(from.stat.agi / 32);
 			attExhaustion = Math.floor(Math.random() * 2) + 1;
