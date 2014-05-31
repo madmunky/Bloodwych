@@ -124,14 +124,13 @@ function grabUISprites(spriteSheetIMG) {
 
 	ImageArray.push(grabImageAt(spriteSheetIMG, 93, 176, 4, 3, false)); //Food Bar Pointer
 
-        //Movement Highlights
-        ImagePortraits.push(grabImageAt(spriteSheetIMG, 170, 311, 12, 10, false)); //Rotate Left
-        ImagePortraits.push(grabImageAt(spriteSheetIMG, 186, 311, 18, 9, false)); //Move Forward
-        ImagePortraits.push(grabImageAt(spriteSheetIMG, 206, 311, 12, 10, false)); //Rotate Right
-        ImagePortraits.push(grabImageAt(spriteSheetIMG, 170, 326, 11, 11, false)); //Move Left
-        ImagePortraits.push(grabImageAt(spriteSheetIMG, 186, 326, 18, 9, false)); //Move Back
-        ImagePortraits.push(grabImageAt(spriteSheetIMG, 207, 326, 11, 11, false)); //Move Right
-        
+	//Movement Highlights
+	ImageArray.push(grabImageAt(spriteSheetIMG, 170, 311, 12, 10, false)); //Rotate Left
+	ImageArray.push(grabImageAt(spriteSheetIMG, 187, 311, 16, 9, false)); //Move Forward
+	ImageArray.push(grabImageAt(spriteSheetIMG, 206, 311, 12, 10, false)); //Rotate Right
+	ImageArray.push(grabImageAt(spriteSheetIMG, 170, 326, 11, 11, false)); //Move Left
+	ImageArray.push(grabImageAt(spriteSheetIMG, 186, 326, 18, 9, false)); //Move Back
+	ImageArray.push(grabImageAt(spriteSheetIMG, 207, 326, 11, 11, false)); //Move Right
 
 	return ImageArray;
 
@@ -418,6 +417,12 @@ function rightUI(p) {
 
 		}
 	}
+	if(!p.attacking) {
+		ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
+		if (p.pocket.id > 0) {
+			writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
+		}
+	}
 
 	ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 
@@ -522,14 +527,20 @@ function drawPocketUI(p) {
 						if (qty < 10) {
 							qty = "0" + qty;
 						}
-						writeFontImage(qty, ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+						if (p.pocket.id < 3) {
+							writeFontImage(qty, ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+						} else {
+							writeFontImage(qty, ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
+						}
 					}
-					ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
-					if (p.pocket.id > 0) {
-						writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
-						if (p.pocket.type === ITEM_TYPE_FOOD) {
-							var t = foodBar(chp.food, 69);
-							ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
+					if(!p.attacking) {
+						ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
+						if (p.pocket.id > 0) {
+							writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
+							if (p.pocket.type === ITEM_TYPE_FOOD) {
+								var t = foodBar(chp.food, 69);
+								ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
+							}
 						}
 					}
 					//ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY], ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
@@ -545,6 +556,23 @@ function drawPocketUI(p) {
 	}
 
 
+}
+
+function highliteMovementArrow(p, m) {
+	if(p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
+		var c = m + UI_CLICK_ROTATE_LEFT;
+		var g = m + UI_GFX_MOVEMENT_ROTATE_LEFT;
+		var x = (p.ScreenX + uiClickArea[c].x);
+		var y = (p.ScreenY + uiClickArea[c].y);
+		ctx.drawImage(gfxUI[g], x * scale, y * scale, gfxUI[g].width * scale, gfxUI[g].height * scale);
+		setTimeout(function() {
+			if (p === player[0]) {
+				ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].width * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].height * scale);
+			} else {
+				ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
+			}
+		}, 150);
+	}
 }
 
 function drawStatsPage(p) {
@@ -714,27 +742,21 @@ function uiClickAreas() {
 	UCA.push({
 		x: 228,
 		y: 49,
-		width: 9,
+		width: 10,
 		height: 11
 	}); //ROTATE LEFT
 	UCA.push({
-		x: 238,
+		x: 239,
 		y: 49,
-		width: 18,
+		width: 16,
 		height: 11
 	}); //MOVE FORWARD
 	UCA.push({
-		x: 257,
+		x: 254,
 		y: 49,
-		width: 9,
+		width: 10,
 		height: 11
 	}); //ROTATE RIGHT
-	UCA.push({
-		x: 269,
-		y: 48,
-		width: 17,
-		height: 13
-	}); //ATTACK
 	UCA.push({
 		x: 226,
 		y: 61,
@@ -753,6 +775,12 @@ function uiClickAreas() {
 		width: 11,
 		height: 13
 	}); //MOVE RIGHT
+	UCA.push({
+		x: 269,
+		y: 48,
+		width: 17,
+		height: 13
+	}); //ATTACK
 	UCA.push({
 		x: 269,
 		y: 63,
@@ -929,79 +957,88 @@ function uiClickAreas() {
 		width: 16,
 		height: 16
 	}); //Character Back Right Icon
-        UCA.push({
+	UCA.push({
 		x: 225,
 		y: 0,
 		width: 95,
 		height: 101
 	}); //Character Stats Exit
-                UCA.push({
+	UCA.push({
 		x: 256,
 		y: 0,
 		width: 34,
 		height: 10
 	}); //Spell Book Exit
-        UCA.push({
+	UCA.push({
 		x: 0,
 		y: 0,
 		width: 320,
 		height: 86
 	}); //Player Area
-        UCA.push({
-		x: 141,
-		y: 28,
-		width: 38,
-		height: 13
+	UCA.push({
+		x: 135,
+		y: 25,
+		width: 50,
+		height: 15
 	}); //Portal - Shelf Top
-        UCA.push({
-		x: 141,
-		y: 41,
-		width: 38,
-		height: 13
+	UCA.push({
+		x: 135,
+		y: 40,
+		width: 50,
+		height: 15
 	}); //Portal - Shelf Bottom
-        UCA.push({
+	UCA.push({
 		x: 135,
 		y: 25,
 		width: 50,
 		height: 29
 	}); //Portal - Switch
-        UCA.push({
+	UCA.push({
 		x: 118,
 		y: 13,
 		width: 83,
 		height: 53
 	}); //Portal - Door
-        UCA.push({
-		x: 119,
-		y: 73,
-		width: 25,
-		height: 6
+	UCA.push({
+		x: 110,
+		y: 71,
+		width: 45,
+		height: 7
 	}); //Portal - Item Close Left
-        UCA.push({
-		x: 175,
-		y: 73,
-		width: 25,
-		height: 6
+	UCA.push({
+		x: 165,
+		y: 71,
+		width: 45,
+		height: 7
 	}); //Portal - Item Close Right
-        UCA.push({
-		x: 127,
+	UCA.push({
+		x: 120,
 		y: 62,
-		width: 20,
-		height: 7
+		width: 35,
+		height: 9
 	}); //Portal - Item Back Left
-        UCA.push({
-		x: 172,
+	UCA.push({
+		x: 165,
 		y: 62,
-		width: 20,
-		height: 7
+		width: 35,
+		height: 9
 	}); //Portal - Item Back Right
-        
+	UCA.push({
+		x: 110,
+		y: 8,
+		width: 99,
+		height: 63
+	}); //Portal - Wooden Door       
 	return UCA;
 
 }
 
 function uiClickInArea(x, y, ui, p) {
-	if (x >= (p.ScreenX + uiClickArea[ui].x) * scale && x <= (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width - 1) * scale && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y <= (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height - 1) * scale) {
+	if (x >= (p.ScreenX + uiClickArea[ui].x) * scale && x < (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width) * scale && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y < (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height) * scale) {
+		if (ui !== UI_CLICK_VIEWPORT) {
+			ctx.fillStyle = 'rgb(255, 0, 255)';
+			ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
+		}
 		return true;
 	}
 	return false;
@@ -1060,28 +1097,27 @@ function foodBar(foodVal, width) {
 	return can;
 }
 
-function coverViewPort(p){
-    
-    p.Portal.fillStyle = 'rgb(0, 0, 0)';
-    p.Portal.fillRect(0.5, 0.5, 128 * scale, 76 * scale);
-    drawRect(1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK], p);
-    drawRect(0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT], p);
-    drawRect(2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT], p);
-    
+function coverViewPort(p) {
+
+	p.Portal.fillStyle = 'rgb(0, 0, 0)';
+	p.Portal.fillRect(0.5, 0.5, 128 * scale, 76 * scale);
+	drawRect(1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK], p);
+	drawRect(0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT], p);
+	drawRect(2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT], p);
+
 }
 
-function showFairy(c,p){
-    
-    coverViewPort(p);
-    writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS",0,0,COLOUR[COLOUR_GREEN]);
-    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0],8 * scale,5* scale,gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
-    for (x = 0;x<5;x++){        
-        if (x < 4){
-            p.Portal.drawImage(gfxUI[80+x],(17+(x * 16)) * scale,50* scale,gfxUI[80+x].width * scale, gfxUI[80+x].height * scale);
-        }
-        else{
-            p.Portal.drawImage(gfxUI[UI_GFX_ICON_BACK],(32+(x * 16)) * scale,50* scale,gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
-        }
-    }
-    
+function showFairy(c, p) {
+
+	coverViewPort(p);
+	writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", 0, 0, COLOUR[COLOUR_GREEN]);
+	p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
+	for (x = 0; x < 5; x++) {
+		if (x < 4) {
+			p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+		} else {
+			p.Portal.drawImage(gfxUI[UI_GFX_ICON_BACK], (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+		}
+	}
+
 }

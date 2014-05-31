@@ -224,15 +224,25 @@ Player.prototype.setMovementData = function() {
 	}
 }
 
-Player.prototype.rotateTo = function(d) {
+Player.prototype.rotate = function(r) {
 	if (!this.dead && !this.sleeping) {
-		this.d = (d + 4) % 4;
-		this.doEvent(false);
+		if(r === -1) {
+			highliteMovementArrow(this, 0);
+		} else {
+			highliteMovementArrow(this, 2);
+		}
+		this.d = (4 + this.d + r) % 4;
 	}
+}
+
+Player.prototype.rotateTo = function(d) {
+	this.d = (d + 4) % 4;
 }
 
 Player.prototype.move = function(d) {
 	if (!this.dead && !this.sleeping) {
+		m = [ 1, 5, 4, 3 ];
+		highliteMovementArrow(this, m[d]);
 		this.moving = d;
 		this.lastX = this.x;
 		this.lastY = this.y;
@@ -812,8 +822,9 @@ Player.prototype.actionItem = function(s) {
 				break;
 			}
 		}
-		if (typeof it[0] !== "undefined") {
+		if (typeof it !== "undefined") {
 			itH.setPocketItem(it[0].id, it[0].quantity);
+			return true;
 		}
 	} else { //drop item
 		var it = new Item(itH.id, itH.quantity, {
@@ -825,7 +836,9 @@ Player.prototype.actionItem = function(s) {
 		});
 		item[towerThis].push(it);
 		itH.setPocketItem();
+		return true;
 	}
+	return false;
 }
 
 Player.prototype.getItemsInRange = function(pos2) {
@@ -843,23 +856,13 @@ Player.prototype.getItemsInRange = function(pos2) {
 				if(this.getObject(it.location.floor, it.location.x, it.location.y, 2) === 'shelf') {
 					sh = true;
 				}
-				if (sq2 == 1) {
-					itemsInRange.unshift({
-						item: it,
-						position: pos,
-						distance: getItemDistanceByPos(pos, sq2, sh),
-						gfxCoord: getItemGfxOffset(pos, sq, sh),
-						square: sq2
-					});
-				} else {
-					itemsInRange.push({
-						item: it,
-						position: pos,
-						distance: getItemDistanceByPos(pos, sq2, sh),
-						gfxCoord: getItemGfxOffset(pos, sq, sh),
-						square: sq2
-					});
-				}
+				itemsInRange.unshift({
+					item: it,
+					position: pos,
+					distance: getItemDistanceByPos(pos, sq2, sh),
+					gfxCoord: getItemGfxOffset(pos, sq, sh),
+					square: sq2
+				});
 			}
 		}
 	}
@@ -871,11 +874,12 @@ Player.prototype.getObjectOnPos = function(pos, d) {
 	return this.getObject(this.floor, xy.x, xy.y, d);
 }
 
+//if (this.getBinaryView(pos18, 12, 4) === '2' && this.getBinaryView(pos18, ((5 + d - this.d) % 4) * 2) === '1') {
 Player.prototype.getObject = function(f, x, y, d) {
 	if(x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
 		var hex = tower[towerThis].floor[f].Map[y][x];
 		if(getHexToBinaryPosition(hex, 12, 4) === '1') { //wall
-			if (typeof d ==="undefined" || this.d === (parseInt(getHexToBinaryPosition(hex, 10, 2)) + d) % 4) {
+			if (typeof d ==="undefined" || (this.d + d) % 4 === parseInt(getHexToBinaryPosition(hex, 10, 2))) {
 				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco
 					if (getHexToBinaryPosition(hex, 6, 2) === '0') { //shelf
 						return 'shelf';
@@ -886,8 +890,15 @@ Player.prototype.getObject = function(f, x, y, d) {
 					}
 				}
 			}
+			return 'wall';
+		} else if(getHexToBinaryPosition(hex, 12, 4) === '2') { //wood
+			if(getHexToBinaryPosition(hex, ((7 - d - this.d) % 4) * 2) === '1') {
+				return 'wood-door';
+			} else if (getHexToBinaryPosition(hex, ((7 - d - this.d) % 4) * 2 + 1, 1) === '1') {
+				return 'wood';
+			}
 		} else if(getHexToBinaryPosition(hex, 12, 4) === '5') { //door
-			if (typeof d ==="undefined" || this.d === (parseInt(getHexToBinaryPosition(hex, 10, 2)) + d) % 2) {
+			if (typeof d ==="undefined" || (this.d + d) % 2 === parseInt(getHexToBinaryPosition(hex, 5, 1))) {
 				return 'door';
 			}
 		}

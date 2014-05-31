@@ -160,10 +160,12 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		var p = player[this.recruitment.playerId];
 		var x = 0,
 			y = 0;
+			w = 96;
 		switch (this.recruitment.position) {
 			case 0:
 				x = 96;
 				y = 88;
+				w = 128;
 				break;
 			case 1:
 				x = 0;
@@ -178,7 +180,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 				y = 0;
 				break;
 		}
-		ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 96 * scale, 8 * scale);
+		ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
 		writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x + 2), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
 		if (typeof def === "undefined" || def === false) {
 			if (pwr > 0) {
@@ -189,13 +191,13 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		} else {
 			writeFontImage(TEXT_DEFENDS, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
 		}
-		(function(p, x, y) {
+		(function(p, x, y, w) {
 			setTimeout(function() {
 				if(p.messageTimeout === 0 || self.recruitment.position === 0) {
-					ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, 96 * scale, 8 * scale);
+					ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
 				}
 			}, 1500);
-		})(p, x, y);
+		})(p, x, y, w);
 	}
 }
 

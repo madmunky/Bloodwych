@@ -164,7 +164,7 @@ function getStoneWall(HexCode, d, pos, p, pos18) {
 	//    return gfx["dungeon"]["stone"]["wall"];
 	//}
 	var wall = "wall";
-	if((p.x + p.y + p.d) % 2 === 1) {
+	if ((p.x + p.y + p.d) % 2 === 1) {
 		wall = "wall2";
 	}
 
@@ -293,21 +293,21 @@ function drawPlayersView(p) {
 	debugTextPrint(p); //see bloodwych.js
 	p.getViewPortal();
 
-	if(p.dead) {
-                coverViewPort(p);
-                writeFontImage(TEXT_THOU, 64, 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);
-                writeFontImage(TEXT_ART_DEAD, 64, 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER,p.Portal);                
-	}else if (p.sleeping){  
-                //showFairy(p.champion[0],p);
-                coverViewPort(p);
-                writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER,p.Portal);
-		writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER,p.Portal);
-                for (x = 0;x< p.champion.length;x++){
-                    if (champion[p.champion[x]].spellUp > 0){
-                        showFairy(champion[p.champion[x]],p);
-                    }
-                }
-        }else {
+	if (p.dead) {
+		coverViewPort(p);
+		writeFontImage(TEXT_THOU, 64, 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER, p.Portal);
+		writeFontImage(TEXT_ART_DEAD, 64, 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER, p.Portal);
+	} else if (p.sleeping) {
+		//showFairy(p.champion[0],p);
+		coverViewPort(p);
+		writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, p.Portal);
+		writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, p.Portal);
+		for (x = 0; x < p.champion.length; x++) {
+			if (champion[p.champion[x]].spellUp > 0) {
+				showFairy(champion[p.champion[x]], p);
+			}
+		}
+	} else {
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
 
 		for (x = 0; x < 19; x++) {
@@ -316,10 +316,9 @@ function drawPlayersView(p) {
 			if (BlockType === '2') {
 				drawWoodenObject(p, x);
 			} else {
-				if(p.getObjectOnPos(x, 2) !== 'shelf') { //draw items not on shelf first
+				if (p.getObjectOnPos(x, 2) !== 'shelf') { //draw items not on shelf first
 					drawItemsOnPos(p, x);
 				}
-				drawMonsterOnPos(p, x);
 				switch (x) {
 					case 0:
 						{
@@ -458,9 +457,10 @@ function drawPlayersView(p) {
 						};
 						break;
 				}
-				if(p.getObjectOnPos(x, 2) === 'shelf') { //draw items on shelf last
+				if (p.getObjectOnPos(x, 2) === 'shelf') { //draw items on shelf last
 					drawItemsOnPos(p, x);
 				}
+				drawMonsterOnPos(p, x);
 			}
 		}
 	}
@@ -549,7 +549,7 @@ function drawWoodenObject(p, x) {
 	if (BlockSides[x][0] > -1) {
 		myDIx(p.Portal, bin2type(s[p.d]), gfxPos[BlockSides[x][0]]);
 	}
-	if(!inFront) {
+	if (!inFront) {
 		drawItemsOnPos(p, x);
 		drawMonsterOnPos(p, x);
 	}
@@ -559,7 +559,7 @@ function drawWoodenObject(p, x) {
 	if (BlockSides[x][3] > -1) {
 		myDIx(p.Portal, bin2type(s[(p.d + 3) % 4]), gfxPos[BlockSides[x][3]]);
 	}
-	if(inFront) {
+	if (inFront) {
 		drawItemsOnPos(p, x);
 		drawMonsterOnPos(p, x);
 	}
@@ -570,7 +570,7 @@ function drawWoodenObject(p, x) {
 
 function drawRect(x, y, w, h, c, p) {
 	var cx = ctx;
-	if(typeof p !== "undefined") {
+	if (typeof p !== "undefined") {
 		cx = p.Portal;
 	}
 	var off = scale * 0.5;
@@ -623,45 +623,45 @@ function recolourSprite(img, paletteFrom, paletteTo) {
 }
 
 function recolourSpriteArray(img, paletteFrom, paletteTo) {
-    
-    var newArray = []
-    
-    for (x = 0;x < img.length;x++){
-        
-        var myImg = img[x];
-        
-    	var c = document.createElement('canvas');
-	var ctx1 = c.getContext("2d");
-	var w = myImg.width;
-	var h = myImg.height;
 
-	c.width = w;
-	c.height = h;
+	var newArray = []
 
-	// draw the image on the temporary canvas
-	ctx1.drawImage(myImg, 0, 0, w, h);
+	for (x = 0; x < img.length; x++) {
 
-	// pull the entire image into an array of pixel data
-	var imageData = ctx1.getImageData(0, 0, w, h);
+		var myImg = img[x];
+
+		var c = document.createElement('canvas');
+		var ctx1 = c.getContext("2d");
+		var w = myImg.width;
+		var h = myImg.height;
+
+		c.width = w;
+		c.height = h;
+
+		// draw the image on the temporary canvas
+		ctx1.drawImage(myImg, 0, 0, w, h);
+
+		// pull the entire image into an array of pixel data
+		var imageData = ctx1.getImageData(0, 0, w, h);
 
 
-	for (var i = 0; i < imageData.data.length; i += 4) {
+		for (var i = 0; i < imageData.data.length; i += 4) {
 
-		for (j = 0; j < paletteTo.length; j++) {
-			if (imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
-				imageData.data[i] = paletteTo[j][0];
-				imageData.data[i + 1] = paletteTo[j][1];
-				imageData.data[i + 2] = paletteTo[j][2];
-				imageData.data[i + 3] = paletteTo[j][3];
-				j = j + 4;
+			for (j = 0; j < paletteTo.length; j++) {
+				if (imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
+					imageData.data[i] = paletteTo[j][0];
+					imageData.data[i + 1] = paletteTo[j][1];
+					imageData.data[i + 2] = paletteTo[j][2];
+					imageData.data[i + 3] = paletteTo[j][3];
+					j = j + 4;
+				}
 			}
+
 		}
 
+		ctx1.putImageData(imageData, 0, 0);
+		newArray.push(c);
 	}
-
-	ctx1.putImageData(imageData, 0, 0);
-        newArray.push(c);
-        }
 	return newArray;
 }
 

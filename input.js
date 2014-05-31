@@ -15,10 +15,10 @@ function doKeyDown(e) {
 			player[1].move(DIRECTION_EAST);
 			break; //6
 		case KEYPAD_7:
-			player[1].rotateTo(player[1].d - 1);
+			player[1].rotate(-1);
 			break; //7
 		case KEYPAD_9:
-			player[1].rotateTo(player[1].d + 1);
+			player[1].rotate(1);
 			break; //9
 		case KEY_END:
 			player[1].action();
@@ -60,10 +60,10 @@ function doKeyDown(e) {
 			player[0].move(DIRECTION_EAST);
 			break; // D KEY
 		case KEY_Q:
-			player[0].rotateTo(player[0].d - 1);
+			player[0].rotate(-1);
 			break; // Q KEY
 		case KEY_E:
-			player[0].rotateTo(player[0].d + 1);
+			player[0].rotate(1);
 			break; // E KEY
 		case KEY_R:
 			player[0].toggleFrontObject();
@@ -145,10 +145,10 @@ function processCanvasInput(x, y) {
 			player[p].sleeping = false;
 		}
 
-		if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, player[p])) {
-			player[p].action();
-			successfulClick = true;
-		}
+		//if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, player[p])) {
+		//	player[p].action();
+		//	successfulClick = true;
+		//}
 
 		if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
 
@@ -156,56 +156,33 @@ function processCanvasInput(x, y) {
 				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_POCKETS;
 				player[p].uiRightPanel.activePocket = 0;
 				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_INTERACT, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_INTERACT, player[p])) {
 				player[p].action();
 				successfulClick = true;
-			}
-
-			if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, player[p])) {
 				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_SPELLBOOK;
 				successfulClick = true;
-			}
-
-			if (uiClickInArea(x, y, UI_CLICK_CHARACTER_STATS, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_CHARACTER_STATS, player[p])) {
 				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_STATS;
 				successfulClick = true;
-			}
-
-			if (uiClickInArea(x, y, UI_CLICK_ROTATE_LEFT, player[p])) {
-				player[p].rotateTo(player[p].d - 1);
-				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_ROTATE_RIGHT, player[p])) {
-				player[p].rotateTo(player[p].d + 1);
-				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_MOVE_FORWARD, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_LEFT, player[p])) {
+				player[p].rotate(-1);
+			} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_RIGHT, player[p])) {
+				player[p].rotate(1);
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_FORWARD, player[p])) {
 				player[p].move(DIRECTION_NORTH);
-				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_MOVE_BACKWARDS, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_BACKWARDS, player[p])) {
 				player[p].move(DIRECTION_SOUTH);
-				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_MOVE_LEFT, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_LEFT, player[p])) {
 				player[p].move(DIRECTION_WEST);
-				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_MOVE_RIGHT, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_RIGHT, player[p])) {
 				player[p].move(DIRECTION_EAST);
-				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_ATTACK, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_ATTACK, player[p])) {
 				player[p].attacking = true;
-				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_DEFEND, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_DEFEND, player[p])) {
 				//player[p].attacking = false;
 				player[p].attack(false);
-				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, player[p])) {
 				player[p].exchangeChampionPosition(0);
 				successfulClick = true;
 			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_RIGHT, player[p])) {
@@ -237,8 +214,7 @@ function processCanvasInput(x, y) {
 			if (uiClickInArea(x, y, UI_CLICK_POCKET_HAND, player[p])) {
 				player[p].useItemInHand();
 				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, player[p])) {
 				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				successfulClick = true;
 			}
@@ -259,20 +235,16 @@ function processCanvasInput(x, y) {
 			if (uiClickInArea(x, y, UI_CLICK_CHAMP1, player[p])) {
 				toggleChampUI(0, player[p]);
 				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_CHAMP2, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP2, player[p])) {
 				toggleChampUI(1, player[p]);
 				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_CHAMP3, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP3, player[p])) {
 				toggleChampUI(2, player[p]);
 				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_CHAMP4, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP4, player[p])) {
 				toggleChampUI(3, player[p]);
 				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_STATS_BOX, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_STATS_BOX, player[p])) {
 				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_COMMAND;
 				successfulClick = true;
 			}
@@ -282,16 +254,13 @@ function processCanvasInput(x, y) {
 			if (uiClickInArea(x, y, UI_CLICK_BACK, player[p])) {
 				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_PAUSE, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, player[p])) {
 				alert('PAUSED');
 				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_SAVE, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_SAVE, player[p])) {
 				alert('SAVE GAME');
 				successfulClick = true;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_SLEEP, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_SLEEP, player[p])) {
 				player[p].sleeping = true;
 				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
@@ -325,9 +294,9 @@ function viewportTouch(x, y, xy) {
 
 		//        if (xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
 		//            if (xy.x === 0 && xy.y === 0) { //rotate left
-		//                player[p].rotateTo(player[p].d - 1);
+		//                player[p].rotate(-1);
 		//            } else if (xy.x === 2 && xy.y === 0) { //rotate right
-		//                player[p].rotateTo(player[p].d + 1);
+		//                player[p].rotate(1);
 		//            } else if (xy.x === 1 && xy.y === 0) { //move forward
 		//                player[p].move(DIRECTION_NORTH);
 		//            } else if (xy.x === 0 && xy.y === 1) { //move left
@@ -363,76 +332,77 @@ function mouseXY(e) {
 }
 
 function checkViewPortal(p, x, y) {
-
 	switch (p.uiCenterPanel.mode) {
 		case UI_CENTER_PANEL_VIEWPORT:
-			{
-				if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_CLOSE, p)) {
-					p.actionItem(0); //alert('LEFT CLOSE ITEM');
-					return true;
-				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_CLOSE, p)) {
-					p.actionItem(1); //alert('RIGHT CLOSE ITEM');
+			if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_CLOSE, p)) {
+				if (p.actionItem(0)) {
 					return true;
 				}
-
-				switch (p.getObjectOnPos(15, 2)) {
-					case 'shelf':
-						{
-							if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_TOP, p)) {
-								p.actionItem(3); //alert('TOP SHELF');
-								return true;
-							} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_BOTTOM, p)) {
-								p.actionItem(2); //alert('BOTTOM SHELF');
-								return true;
-							};
-						};
-						break;
-					case 'door':
-						{
-							if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, p)) {
-								alert('DOOR AREA');
-								return true;
-							};
-						}
-						break;
-					case 'switch':
-						{
-							if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
-								alert('SWITCH AREA');
-								return true;
-							};
-						}
-						break;
-					case 'wall':
-						{};
-						break;
-					default:
-						{
-							if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_BACK, p)) {
-								p.actionItem(3); //alert('LEFT BACK ITEM');
-								return true;
-							} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_BACK, p)) {
-								p.actionItem(2); //alert('RIGHT BACK ITEM');
-								return true;
-							};
-						};
-						break
+			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_CLOSE, p)) {
+				if (p.actionItem(1)) {
+					return true;
 				}
+			}
+			var o15 = p.getObjectOnPos(15, 2);
+			var o18 = p.getObjectOnPos(18, 0);
+			if (o15 === 'shelf') {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_TOP, p)) {
+					if (p.actionItem(3)) {
+						return true;
+					}
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_BOTTOM, p)) {
+					if (p.actionItem(2)) {
+						return true;
+					}
+				}
+			} else if (o15 === 'switch') {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
+					p.action();
+					return true;
+				}
+			} else if (o15 === 'wood' || o18 === 'wood') {
+				return true;
+			} else if (o15 === 'wood-door' || o18 === 'wood-door') {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_WOODEN_DOOR, p)) {
+					p.action();
+					return true;
+				}
+			} else if (o15 === 'wall') {
+				return true;
+			}
 
-			};
+			if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_BACK, p)) {
+				if (p.actionItem(3)) {
+					return true;
+				}
+			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_RIGHT_BACK, p)) {
+				if (p.actionItem(2)) {
+					return true;
+				}
+			}
+
+			if (o15 === 'door') {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, p)) {
+					p.action();
+					return true;
+				}
+			}
 			break;
 		case UI_CENTER_PANEL_SLEEPING:
-			{};
 			break;
 		case UI_CENTER_PANEL_DEAD:
-			{};
 			break;
 		case UI_CENTER_PANEL_FAIRY:
+			break;
 		case UI_CENTER_PANEL_FAIRY_DRAGON:
+			break;
 		case UI_CENTER_PANEL_FAIRY_SERPENT:
+			break;
 		case UI_CENTER_PANEL_FAIRY_MOON:
+			break;
 		case UI_CENTER_PANEL_FAIRY_CHAOS:
-			{};
+			break;
+		default:
 			break;
 	}
 	return false;

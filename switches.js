@@ -52,10 +52,10 @@ function floorActionType(trig, p) {
 		case SWITCH_FLOOR_NONE:
 			break;
 		case SWITCH_FLOOR_SPIN_180:
-			p.d = (p.d + 2) % 4;
+			p.rotateTo((p.d + 2) % 4);
 			break;
 		case SWITCH_FLOOR_SPIN_RANDOM:
-			p.d = p.d = (Math.floor(Math.random() * 4));
+			p.rotateTo(Math.floor(Math.random() * 4));
 			break;
 		case SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '0');
