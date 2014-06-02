@@ -790,8 +790,7 @@ Player.prototype.exchangeItemWithHand = function(s) {
 			} else {
 				if((s === POCKET_LEFT_HAND || s === POCKET_RIGHT_HAND) && it.id === 0) {
 					if(itH.type === ITEM_TYPE_GLOVES) {
-						//var it = ch.pocket[POCKET_GLOVES];
-						this.exchangeItemWithHand(POCKET_GLOVES); //it = ch.pocket[POCKET_GLOVES];
+						this.exchangeItemWithHand(POCKET_GLOVES);
 					} else if(itH.id === 0) {
 						var it = ch.pocket[POCKET_GLOVES];
 					}
@@ -901,6 +900,13 @@ Player.prototype.getItemsInRange = function(pos2) {
 		}
 	}
 	return itemsInRange;
+}
+
+Player.prototype.castSpell = function(s, c) {
+	if(c.sp >= spell[s].cost) {
+		castSpell(s, c.monster);
+		c.sp -= spell[s].cost;
+	}
 }
 
 Player.prototype.getObjectOnPos = function(pos, d) {

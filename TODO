@@ -26,6 +26,7 @@ QUESTIONS FOR CHRIS
 QUESTIONS FOR JORG
 ------------------
 1. Need to try link a text to a screen (fairy)
-4. I have all the spell descriptions but not sure how to add them to your spell object
-5. need a function to return the next two spells available for a champ
-7. Need to work out how we are going to store all this text I have found :)
+2. I have all the spell descriptions but not sure how to add them to your spell object
+	In initSpells(), extend new Spell with the proper parameters: new Spell(id, name, description, prof, level, cost);
+3. need a function to return the next two spells available for a champ
+4. Need to work out how we are going to store all this text I have found :)
