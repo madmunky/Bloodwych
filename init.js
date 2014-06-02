@@ -162,6 +162,7 @@ function initData() {
 	initTowerSwitches();
 	switchTower(0);
 	uiClickArea = uiClickAreas();
+        
         for (p in player){
             redrawUI[p.id];
         }
