@@ -482,7 +482,7 @@ function drawPocketUI(p) {
 					}
 				}
                                 if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES){                                    
-                                    ctx.drawImage(flipImageVert(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);                                    
+                                    ctx.drawImage(flipImageVert(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);                                    
                                 }else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES){
                                     ctx.drawImage(flipImageVert(flipImage(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]))), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                                 }else{
@@ -971,13 +971,13 @@ function uiClickAreas() {
 	}); //Character Front Right Icon
 	UCA.push({
 		x: 289,
-		y: 62,
+		y: 61,
 		width: 16,
 		height: 16
 	}); //Character Back Left Icon
 	UCA.push({
 		x: 305,
-		y: 62,
+		y: 61,
 		width: 16,
 		height: 16
 	}); //Character Back Right Icon
@@ -1053,17 +1053,59 @@ function uiClickAreas() {
 		width: 98,
 		height: 63
 	}); //Portal - Wooden Door       
-	return UCA;
+	UCA.push({
+		x: 113,
+		y: 64,
+		width: 15,
+		height: 13
+	}); //Fairy - Serpent Spell
+	UCA.push({
+		x: 129,
+		y: 64,
+		width: 15,
+		height: 13
+	}); //Fairy - Chaos Spell  
+        UCA.push({
+		x: 145,
+		y: 64,
+		width: 15,
+		height: 13
+	}); //Fairy - Dragon Spell  
+        UCA.push({
+		x: 161,
+		y: 64,
+		width: 15,
+		height: 13
+	}); //Fairy - Moon Spell  
+        UCA.push({
+		x: 193,
+		y: 64,
+		width: 15,
+		height: 13
+	}); //Fairy - Back Button   
+        UCA.push({
+		x: 136,
+		y: 23,
+		width: 81,
+		height: 10
+	}); //Fairy - Text Area 1 
+        UCA.push({
+		x: 111,
+		y: 35,
+		width: 81,
+		height: 10
+	}); //Fairy - Text Area 2 
+    return UCA;
 
 }
 
 function uiClickInArea(x, y, ui, p) {
 	if (x >= (p.ScreenX + uiClickArea[ui].x) * scale && x < (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width) * scale && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y < (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height) * scale) {
-		if (ui !== UI_CLICK_VIEWPORT) {
-                    
-			ctx.fillStyle = 'rgb(255, 0, 255)';
-			ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
-		}
+//		if (ui !== UI_CLICK_VIEWPORT) {
+//                    
+//			ctx.fillStyle = 'rgb(255, 0, 255)';
+//			ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
+//		}
 		return true;
 	}
 	return false;
@@ -1133,6 +1175,9 @@ function coverViewPort(p) {
 }
 
 function showFairy(c, p) {
+
+        if (p.uiCenterPanel )
+
 
 	coverViewPort(p);
 	writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", 0, 0, COLOUR[COLOUR_GREEN]);
