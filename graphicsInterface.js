@@ -1156,7 +1156,7 @@ function foodBar(foodVal, width) {
 	can.width = width;
 	can.height = 5;
 	var canContent = can.getContext("2d");
-	var t = Math.floor(foodVal / 255.0 * (width - 12));
+	var t = Math.floor(foodVal / 200.0 * (width - 12));
 	canContent.drawImage(gfxUI[UI_GFX_FOOD_POINTER], 0, 1);
 	canContent.fillStyle = 'rgb(' + COLOUR[COLOUR_RED_DARK][0] + ',' + COLOUR[COLOUR_RED_DARK][1] + ',' + COLOUR[COLOUR_RED_DARK][2] + ')';
 	canContent.fillRect(6, 0, t, 5);

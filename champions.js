@@ -74,11 +74,15 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			this.monster.die();
 		}
 		if (this.recruitment.recruited && this.recruitment.attached) {
-			self.writeAttackPoints(dmg, true);
-			player[self.recruitment.playerId].alertDamagedPlayer();
-			player[self.recruitment.playerId].checkDead();
-			player[self.recruitment.playerId].updateChampions();
-			redrawUI(self.recruitment.playerId);
+			if(self.recruitment.playerId > -1) {
+				if(!player[self.recruitment.playerId].attacking) {
+					self.writeAttackPoints(dmg, true);
+				}
+				player[self.recruitment.playerId].alertDamagedPlayer();
+				player[self.recruitment.playerId].checkDead();
+				player[self.recruitment.playerId].updateChampions();
+				redrawUI(self.recruitment.playerId);
+			}
 		}
 	}
 }

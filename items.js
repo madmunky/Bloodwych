@@ -239,6 +239,7 @@ function initItems(t) {
 		}
 
 		//TESTING
+		/*
 		item[t.id][item[t.id].length] = new Item(ITEM_CRYSTAL_GLOVES, 1, {
 			tower: t.id,
 			floor: 3,
@@ -252,7 +253,7 @@ function initItems(t) {
 			x: 12,
 			y: 22,
 			square: 1
-		});
+		});*/
 		//END OF TESTING
 	} catch (e) {
 		"Item init error: " + e.toString()
