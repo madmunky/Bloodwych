@@ -403,7 +403,7 @@ function initItemRefs() {
 	createItemRef(108, "Moon Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_BLUE]), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], DUN_ITEM_PALETTE_DEFAULT, new Array(COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK])));
 	createItemRef(109, "Book of Skulls", gfxUI[UI_GFX_ICON_BOOKOFSKULLS], itemsGfxD[DUNGEON_ITEM_BOOK_OF_SKULLS]);
 
-	itemsGfxD = [];
+	//itemsGfxD = [];
 
 }
 
@@ -437,25 +437,25 @@ function initItemsGfxD() {
         
         var i = [];
         i.push(grabImageAt(spriteSheetIMG, 305, 0, 29, 26, false));
-        i.push(grabImageAt(spriteSheetIMG, 305, 27, 16, 16, false));
-        i.push(grabImageAt(spriteSheetIMG, 305, 43, 12, 11, false));
-        i.push(grabImageAt(spriteSheetIMG, 305, 54, 8, 8, false));
+        i.push(grabImageAt(spriteSheetIMG, 312, 27, 16, 16, false));
+        i.push(grabImageAt(spriteSheetIMG, 315, 43, 12, 11, false));
+        i.push(grabImageAt(spriteSheetIMG, 317, 54, 8, 8, false));
         dItems.push(i);
         i = [];
 
         var i = [];
         i.push(grabImageAt(spriteSheetIMG, 353, 0, 39, 33, false));
-        i.push(grabImageAt(spriteSheetIMG, 355, 32, 22, 19, false));
-        i.push(grabImageAt(spriteSheetIMG, 353, 51, 16, 12, false));
-        i.push(grabImageAt(spriteSheetIMG, 353, 63, 11, 9, false));
+        i.push(grabImageAt(spriteSheetIMG, 363, 33, 22, 19, false));
+        i.push(grabImageAt(spriteSheetIMG, 366, 52, 16, 12, false));
+        i.push(grabImageAt(spriteSheetIMG, 369, 65, 11, 9, false));
         dItems.push(i);
         i = [];
 
         var i = [];
         i.push(grabImageAt(spriteSheetIMG, 311, 63, 31, 27, false));
-        i.push(grabImageAt(spriteSheetIMG, 311, 90, 15, 15, false));
-        i.push(grabImageAt(spriteSheetIMG, 311, 105, 11, 11, false));
-        i.push(grabImageAt(spriteSheetIMG, 311, 116, 7, 7, false));
+        i.push(grabImageAt(spriteSheetIMG, 319, 91, 15, 15, false));
+        i.push(grabImageAt(spriteSheetIMG, 321, 107, 11, 11, false));
+        i.push(grabImageAt(spriteSheetIMG, 323, 119, 7, 7, false));
         dItems.push(i);
         i = [];
 
