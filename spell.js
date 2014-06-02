@@ -1,5 +1,3 @@
-var spell = new Array();
-
 function Spell(id, name, description, prof, level) {
 	this.name = name;
 	this.level = level;
