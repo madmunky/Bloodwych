@@ -511,9 +511,7 @@ function drawPocketUI(p) {
 			case 2:
 			case 3:
 				{
-					if(!p.getChampion(cid).recruitment.attached) {
-						ctx.drawImage(gfxUI[g][4], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-					} else {
+					if(p.getChampion(cid).recruitment.attached) {
 						ctx.drawImage(gfxUI[g][p.getChampion(cid).colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
 					}
 					if (chp.recruitment.recruited && c === p.uiRightPanel.activePocket) {

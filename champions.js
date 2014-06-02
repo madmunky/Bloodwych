@@ -306,13 +306,14 @@ function initChampions() {
 			var a = hex2dec(pk[i].substr(0, 2));
 			pk[i] = parseInt(a);
 		}
-		for (i = 0; i <= POCKET_GLOVES; i++) {
+		for (i = 0; i < POCKET_GLOVES; i++) {
 			if (pk[i] >= 1 && pk[i] < 5) {
 				slot[i] = newPocketItem(pk[i], pk[pk[i] + 11]);
 			} else {
 				slot[i] = newPocketItem(pk[i]);
 			}
 		}
+		slot[POCKET_GLOVES] = newPocketItem();
 		var md = championData[ch];
 		var level = parseInt(hex2dec(md.substr(0, 2)));
 		var str = parseInt(hex2dec(md.substr(2, 2)));
