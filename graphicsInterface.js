@@ -803,110 +803,110 @@ function uiClickAreas() {
 	UCA.push({
 		x: 225,
 		y: 23,
-		width: 14,
-		height: 14
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 1
 	UCA.push({
-		x: 242,
+		x: 241,
 		y: 23,
-		width: 14,
-		height: 14
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 2
 	UCA.push({
 		x: 257,
 		y: 23,
-		width: 14,
-		height: 14
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 3
 	UCA.push({
-		x: 274,
+		x: 273,
 		y: 23,
-		width: 14,
-		height: 14
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 4
 	UCA.push({
 		x: 289,
 		y: 23,
-		width: 14,
-		height: 14
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 5
 	UCA.push({
 		x: 305,
 		y: 23,
-		width: 14,
-		height: 14
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 6    
 	UCA.push({
-		x: 226,
-		y: 40,
-		width: 14,
-		height: 14
+		x: 225,
+		y: 38,
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 7
 	UCA.push({
-		x: 243,
-		y: 40,
-		width: 14,
-		height: 14
+		x: 241,
+		y: 38,
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 8
 	UCA.push({
 		x: 257,
-		y: 40,
-		width: 14,
-		height: 14
+		y: 38,
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 9
 	UCA.push({
 		x: 273,
-		y: 40,
-		width: 14,
-		height: 14
+		y: 38,
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 10
 	UCA.push({
 		x: 289,
-		y: 40,
-		width: 14,
-		height: 14
+		y: 38,
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 11
 	UCA.push({
 		x: 305,
-		y: 40,
-		width: 14,
-		height: 14
+		y: 38,
+		width: 16,
+		height: 16
 	}); //POCKET SLOT 12    
 	UCA.push({
-		x: 227,
-		y: 64,
-		width: 14,
-		height: 14
+		x: 225,
+		y: 63,
+		width: 16,
+		height: 16
 	}); //POCKET CHARACTER 0
 	UCA.push({
-		x: 244,
-		y: 64,
-		width: 14,
-		height: 14
+		x: 241,
+		y: 63,
+		width: 16,
+		height: 16
 	}); //POCKET CHARACTER 1
 	UCA.push({
-		x: 258,
-		y: 64,
-		width: 14,
-		height: 14
+		x: 257,
+		y: 63,
+		width: 16,
+		height: 16
 	}); //POCKET CHARACTER 2
 	UCA.push({
-		x: 274,
-		y: 64,
-		width: 14,
-		height: 14
+		x: 273,
+		y: 63,
+		width: 16,
+		height: 16
 	}); //POCKET CHARACTER 3
 	UCA.push({
-		x: 290,
-		y: 64,
-		width: 14,
-		height: 14
+		x: 289,
+		y: 63,
+		width: 16,
+		height: 16
 	}); //POCKET HAND
 	UCA.push({
-		x: 306,
-		y: 64,
-		width: 14,
-		height: 14
+		x: 304,
+		y: 63,
+		width: 16,
+		height: 16
 	}); //POCKET BACK
 
 	UCA.push({
@@ -1007,7 +1007,7 @@ function uiClickAreas() {
 	}); //Portal - Switch
 	UCA.push({
 		x: 118,
-		y: 13,
+		y: 12,
 		width: 83,
 		height: 53
 	}); //Portal - Door
@@ -1036,9 +1036,9 @@ function uiClickAreas() {
 		height: 9
 	}); //Portal - Item Back Right
 	UCA.push({
-		x: 110,
+		x: 111,
 		y: 8,
-		width: 99,
+		width: 98,
 		height: 63
 	}); //Portal - Wooden Door       
 	return UCA;
