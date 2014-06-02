@@ -303,6 +303,23 @@ function flipImage(image) {
 
 };
 
+function flipImageVert(image) {
+
+	var can = document.createElement('canvas');
+	can.width = image.width;
+	can.height = image.height;
+	var flipcontext = can.getContext("2d");
+
+	//flipcontext.translate(image.width, 0);
+	flipcontext.scale(1, -1);
+
+	flipcontext.drawImage(image, 0,(image.height * -1)+2, image.width, image.height);
+	flipcontext.save();
+
+	return can;
+
+};
+
 String.prototype.contains = function(it) {
 	return this.indexOf(it) !== -1;
 };

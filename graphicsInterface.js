@@ -246,7 +246,13 @@ function leftUI(p) {
 					ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
 				}
 			}
-		}
+		}else{
+                    if (p === player[1]){
+                        ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_RED].width * scale, gfxUI[UI_GFX_SHIELD_RED].height * scale);   
+                    }else{
+                        ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
+                    }					
+                }
 	}
 }
 
@@ -475,7 +481,13 @@ function drawPocketUI(p) {
 							break;
 					}
 				}
-				ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                                if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES){                                    
+                                    ctx.drawImage(flipImageVert(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);                                    
+                                }else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES){
+                                    ctx.drawImage(flipImageVert(flipImage(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]))), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                                }else{
+                                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                                }				
 			} else {
 				ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
 			}
