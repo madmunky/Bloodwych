@@ -600,38 +600,39 @@ function highliteMovementArrow(p, m) {
 }
 
 function drawStatsPage(p) {
-	ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
-	writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 16), COLOUR[COLOUR_YELLOW]);
-	writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 16), COLOUR[COLOUR_GREY_DARKEST]);
-	writeFontImage("0" + champion[p.champion[p.championLeader]].level.toString(), p.ScreenX + 297, (p.ScreenY + 16), COLOUR[COLOUR_WHITE]);
+	var ch = p.getChampion(p.championLeader);
+	if(ch !== null) {
+		ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+		writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 16), COLOUR[COLOUR_YELLOW]);
+		writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 16), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage("0" + ch.level.toString(), p.ScreenX + 297, (p.ScreenY + 16), COLOUR[COLOUR_WHITE]);
 
-	writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 24), COLOUR[COLOUR_BLUE_DARK]);
-	writeFontImage(champion[p.champion[p.championLeader]].stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 24), COLOUR[COLOUR_YELLOW]);
-	writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 24), COLOUR[COLOUR_GREY_DARKEST]);
-	writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 24), COLOUR[COLOUR_BLUE_DARK]);
-	writeFontImage(champion[p.champion[p.championLeader]].stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 24), COLOUR[COLOUR_YELLOW]);
+		writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 24), COLOUR[COLOUR_BLUE_DARK]);
+		writeFontImage(ch.stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 24), COLOUR[COLOUR_YELLOW]);
+		writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 24), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 24), COLOUR[COLOUR_BLUE_DARK]);
+		writeFontImage(ch.stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 24), COLOUR[COLOUR_YELLOW]);
 
-	writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 32), COLOUR[COLOUR_BLUE_DARK]);
-	writeFontImage(champion[p.champion[p.championLeader]].stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 32), COLOUR[COLOUR_YELLOW]);
-	writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 32), COLOUR[COLOUR_GREY_DARKEST]);
-	writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 32), COLOUR[COLOUR_BLUE_DARK]);
-	writeFontImage(champion[p.champion[p.championLeader]].stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 32), COLOUR[COLOUR_YELLOW]);
+		writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 32), COLOUR[COLOUR_BLUE_DARK]);
+		writeFontImage(ch.stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 32), COLOUR[COLOUR_YELLOW]);
+		writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 32), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 32), COLOUR[COLOUR_BLUE_DARK]);
+		writeFontImage(ch.stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 32), COLOUR[COLOUR_YELLOW]);
 
-	writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 40), COLOUR[COLOUR_BLACK]);
-	writeFontImage(champion[p.champion[p.championLeader]].stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 40), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-	writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 40), COLOUR[COLOUR_GREY_DARKEST]);
-	writeFontImage(champion[p.champion[p.championLeader]].stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 40), COLOUR[COLOUR_GREEN]);
+		writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 40), COLOUR[COLOUR_BLACK]);
+		writeFontImage(ch.stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 40), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+		writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 40), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage(ch.stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 40), COLOUR[COLOUR_GREEN]);
 
-	writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 48), COLOUR[COLOUR_BLACK]);
-	writeFontImage(champion[p.champion[p.championLeader]].stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 48), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-	writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 48), COLOUR[COLOUR_GREY_DARKEST]);
-	writeFontImage(champion[p.champion[p.championLeader]].stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 48), COLOUR[COLOUR_GREEN]);
+		writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 48), COLOUR[COLOUR_BLACK]);
+		writeFontImage(ch.stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 48), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+		writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 48), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 48), COLOUR[COLOUR_GREEN]);
 
-	writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 56), COLOUR[COLOUR_YELLOW]);
-	var t = foodBar(p.getChampion(p.championLeader).food, 62);
-	ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 65) * scale, t.width * scale, t.height * scale);
-
-
+		writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 56), COLOUR[COLOUR_YELLOW]);
+		var t = foodBar(ch.food, 62);
+		ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 65) * scale, t.width * scale, t.height * scale);
+	}
 }
 
 function createShield(id, type, colour) {

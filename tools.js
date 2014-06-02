@@ -181,11 +181,15 @@ function posToCoordinates(pos, x, y, d) {
 		default:
 			break;
 	}
-	return { x: newx, y: newy };
+	return {
+		x: newx,
+		y: newy
+	};
 }
 
 //Given a specific x and y, relative to another x, y and d(irection), return the position
 //Returns -1 when not in range of 0-19
+
 function coordinatesToPos(xt, yt, x, y, d) {
 	var pos = -1;
 	xy = getOffsetByRotation(d);
@@ -258,29 +262,29 @@ function PrintLog(myString) {
 
 function grabImageAt(image, startX, startY, width, height, flip, offsetX, offsetY) {
 	//try {
-		if(typeof offsetX === "undefined") {
-			offsetX = 0;
-		}
-		if(typeof offsetY === "undefined") {
-			offsetY = 0;
-		}
-		var can = document.createElement('canvas');
-		can.width = width + offsetX;
-		can.height = height + offsetY;
-		var flipcontext = can.getContext("2d");
-		if (flip) {
-			flipcontext.translate(width, 0);
-			flipcontext.scale(-1, 1);
-			flipcontext.drawImage(image, startX, startY, width, height, -offsetX, 0, width, height);
-		} else {
-			flipcontext.scale(1, 1);
-			flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
-		}
-		//flipcontext.strokeStyle="red";
-		//flipcontext.rect(0,0,can.width - 1,can.height - 1);
-		//flipcontext.stroke();
-		flipcontext.save();
-		return can;
+	if (typeof offsetX === "undefined") {
+		offsetX = 0;
+	}
+	if (typeof offsetY === "undefined") {
+		offsetY = 0;
+	}
+	var can = document.createElement('canvas');
+	can.width = width + offsetX;
+	can.height = height + offsetY;
+	var flipcontext = can.getContext("2d");
+	if (flip) {
+		flipcontext.translate(width, 0);
+		flipcontext.scale(-1, 1);
+		flipcontext.drawImage(image, startX, startY, width, height, -offsetX, 0, width, height);
+	} else {
+		flipcontext.scale(1, 1);
+		flipcontext.drawImage(image, startX, startY, width, height, 0, 0, width, height);
+	}
+	//flipcontext.strokeStyle="red";
+	//flipcontext.rect(0,0,can.width - 1,can.height - 1);
+	//flipcontext.stroke();
+	flipcontext.save();
+	return can;
 	//} catch (e) {
 	//	PrintLog("grabImageAt Error: " + e.toString());
 	//}
@@ -313,7 +317,7 @@ function flipImageVert(image) {
 	//flipcontext.translate(image.width, 0);
 	flipcontext.scale(1, -1);
 
-	flipcontext.drawImage(image, 0,(image.height * -1)+2, image.width, image.height);
+	flipcontext.drawImage(image, 0, (image.height * -1) + 2, image.width, image.height);
 	flipcontext.save();
 
 	return can;
@@ -325,7 +329,11 @@ String.prototype.contains = function(it) {
 };
 
 function swapElement(array, indexA, indexB) {
-  var tmp = array[indexA];
-  array[indexA] = array[indexB];
-  array[indexB] = tmp;
+	var tmp = array[indexA];
+	array[indexA] = array[indexB];
+	array[indexB] = tmp;
+}
+
+function mathSign(n) {
+	return n ? n < 0 ? -1 : 1 : 0;
 }

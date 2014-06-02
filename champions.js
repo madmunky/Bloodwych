@@ -15,7 +15,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.prof = prof;
 	this.colour = colour;
 	this.stat = stat;
-	this.food = 255;
+	this.food = 200;
 	this.xp = 0;
 	this.xp2 = 0;
 	this.spellUp = 0;

@@ -701,8 +701,8 @@ Player.prototype.useItemInHand = function() {
 				case ITEM_TYPE_FOOD:
 					var fd = itH.getFoodValue();
 					ch.food += fd;
-					if (ch.food > 255) {
-						ch.food = 255;
+					if (ch.food > 200) {
+						ch.food = 200;
 					}
 					if (itH.id <= ITEM_WATER && itH.id % 3 !== 2) {
 						itH.setPocketItem(itH.id - 1);
