@@ -209,7 +209,7 @@ function processCanvasInput(x, y) {
 					var ap = cid - UI_CLICK_POCKET_CHARACTER_0;
 					var c = player[p].getOrderedChampionIds();
 					var ch = player[p].getChampion(c[ap]);
-					if(ch.recruitment.attached) {
+					if(ch !==  null && ch.recruitment.attached) {
 						player[p].uiRightPanel.activePocket = ap;
 						successfulClick = true;
 					}

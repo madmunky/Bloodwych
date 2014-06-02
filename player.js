@@ -396,9 +396,12 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 Player.prototype.getAliveChampionCount = function() {
 	var cnt = 0;
 	for (c = 0; c < this.champion.length; c++) {
-		var dd = this.getChampion(c).monster.dead;
-		if (!dd) {
-			cnt++;
+		var ch = this.getChampion(c);
+		if(ch !== null) {
+			var dd = ch.monster.dead;
+			if (!dd) {
+				cnt++;
+			}
 		}
 	}
 	return cnt;
@@ -459,13 +462,16 @@ Player.prototype.checkDead = function() {
 	var deadNum = 0;
 	if (leader.dead) {
 		for (c = 0; c < this.champion.length; c++) {
-			if (this.getChampion(c) !== null) {
-				var m = this.getChampion(c).monster;
-				if (m !== null && !m.dead) {
+			var ch = this.getChampion(c);
+			if (ch !== null) {
+				var m = ch.monster;
+				if (m !== null && !m.dead && ch.recruitment.attached) {
 					this.championLeader = c;
 				} else {
 					deadNum++;
 				}
+			} else {
+				deadNum++;
 			}
 		}
 		if (deadNum == 4) {
@@ -505,7 +511,7 @@ Player.prototype.recruitChampion = function(id) {
 
 //loc = location number (0-3)
 Player.prototype.getChampion = function(loc) {
-	if (loc > -1 && typeof this.champion[loc] !== "undefined") {
+	if (loc > -1 && typeof this.champion[loc] !== "undefined" && this.champion[loc] !== null && this.champion[loc] > -1) {
 		return champion[this.champion[loc]];
 	}
 	return null;
@@ -545,17 +551,19 @@ Player.prototype.gainChampionXp = function(xp, ch) {
 	}
 
 	function gainChampionXp1() {
-		ch.xp += xp;
-		if (ch.xp > 255) {
-			ch.xp = ch.xp % 256;
-			ch.xp2++;
-			if (ch.xp2 >= getXpForSpell(ch.level, ch.prof)) {
-				ch.spellUp++;
-			}
-			if (ch.xp2 >= getXpForLevel(ch.level)) {
-				ch.xp2 = 0;
-				ch.levelUp++;
-				ch.checkGainLevel();
+		if(ch !== null) {
+			ch.xp += xp;
+			if (ch.xp > 255) {
+				ch.xp = ch.xp % 256;
+				ch.xp2++;
+				if (ch.xp2 >= getXpForSpell(ch.level, ch.prof)) {
+					ch.spellUp++;
+				}
+				if (ch.xp2 >= getXpForLevel(ch.level)) {
+					ch.xp2 = 0;
+					ch.levelUp++;
+					ch.checkGainLevel();
+				}
 			}
 		}
 	}
@@ -847,7 +855,7 @@ Player.prototype.actionItem = function(s) {
 		if (typeof it !== "undefined") {
 			for(c = 0; c < this.champion.length; c++) {
 				var ch = this.getChampion(c);
-				if(ch.id === it[0].id - ITEM_BLODWYN_RIP && !ch.recruitment.attached) {
+				if(ch !== null && ch.id === it[0].id - ITEM_BLODWYN_RIP && !ch.recruitment.attached) {
 					ch.recruitment.attached = true;
 					return true;
 				}

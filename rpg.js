@@ -25,9 +25,12 @@ function calculateAttack(att, def) {
 
 		//Attacker calculations
 		if(att instanceof Player) {
-        	from = champion[att.champion[a]];
-        	fmon = from.monster;
-        	if(typeof from === "undefined" || fmon.dead) {
+        	from = att.getChampion(a);
+        	if(typeof from === "undefined" || from === null || !from.recruitment.attached) {
+        		continue;
+        	}
+	        fmon = from.monster;
+        	if(fmon.dead) {
         		continue;
         	}
 			if(Math.floor(Math.random() * 20) >= 19) {

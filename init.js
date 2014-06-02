@@ -158,6 +158,7 @@ function initData() {
 	}
 	font = grabFont();
 	initPlayersQuickStart();
+	//initPlayersStart(0, 4);
 	initTowerSwitches();
 	switchTower(0);
 	uiClickArea = uiClickAreas();
