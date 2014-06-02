@@ -57,7 +57,7 @@ function switchTower(id, po) {
 		}
 	}*/
 	if (towerLast === TOWER_MOD0 && towerThis === TOWER_MOD0) { //from tower to tower (start of game)
-		player[po].setPlayerPosition(3, 3, 21, 1); //(3, 12, 23, 0);
+		player[po].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
 		if(player.length > 1) {
 			player[1 - po].setPlayerPosition(3, 14, 23, 0); //(3, 14, 23, 0);
 		}

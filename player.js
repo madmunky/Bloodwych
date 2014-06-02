@@ -789,8 +789,11 @@ Player.prototype.exchangeItemWithHand = function(s) {
 				itH.setPocketItem(temp.id, temp.quantity);
 			} else {
 				if((s === POCKET_LEFT_HAND || s === POCKET_RIGHT_HAND) && it.id === 0) {
-					if(itH.id === 0 || itH.type === ITEM_TYPE_GLOVES) {
-						it = ch.pocket[POCKET_GLOVES];
+					if(itH.type === ITEM_TYPE_GLOVES) {
+						//var it = ch.pocket[POCKET_GLOVES];
+						this.exchangeItemWithHand(POCKET_GLOVES); //it = ch.pocket[POCKET_GLOVES];
+					} else if(itH.id === 0) {
+						var it = ch.pocket[POCKET_GLOVES];
 					}
 				}
 				var temp = newPocketItem(it.id, it.quantity);
