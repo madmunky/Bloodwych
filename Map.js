@@ -13,12 +13,15 @@ function Map(Width, Height, xOff, yOff) {
 }
 
 function checkSwitchTower(p, trig) {
-	if ((trig[0] == 18 || trig[0] == 38) && parseInt(player[0].getView()[18].substring(3, 4), 16) === 6 && parseInt(player[1].getView()[18].substring(3, 4), 16) === 6) {
-		if (player[1 - p].floor === player[p].floor && player[1 - p].x === trig[2] && player[1 - p].y === trig[3]) {
-			var tw = Math.floor(trig[1] * 0.5);
-			//sw = getHexToBinaryPosition(tower[towerThis].floor[player[p].floor].Map[trig[3]][trig[2]], 1, 1);
-			//sw = getHexToBinaryPosition(player[0].getView()[18], 1, 1);
-			switchTower(tw, 0);
+	if(player.length === 1) {
+	} else {
+		if ((trig[0] == 18 || trig[0] == 38) && parseInt(player[0].getView()[18].substring(3, 4), 16) === 6 && parseInt(player[1].getView()[18].substring(3, 4), 16) === 6) {
+			if (player[1 - p].floor === player[p].floor && player[1 - p].x === trig[2] && player[1 - p].y === trig[3]) {
+				var tw = Math.floor(trig[1] * 0.5);
+				//sw = getHexToBinaryPosition(tower[towerThis].floor[player[p].floor].Map[trig[3]][trig[2]], 1, 1);
+				//sw = getHexToBinaryPosition(player[0].getView()[18], 1, 1);
+				switchTower(tw, 0);
+			}
 		}
 	}
 }
@@ -54,10 +57,12 @@ function switchTower(id, po) {
 		}
 	}*/
 	if (towerLast === TOWER_MOD0 && towerThis === TOWER_MOD0) { //from tower to tower (start of game)
-		player[po].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
-		player[1 - po].setPlayerPosition(3, 14, 23, 0); //(3, 14, 23, 0);
+		player[po].setPlayerPosition(3, 3, 21, 1); //(3, 12, 23, 0);
+		if(player.length > 1) {
+			player[1 - po].setPlayerPosition(3, 14, 23, 0); //(3, 14, 23, 0);
+		}
 	} else if (towerThis !== TOWER_MOD0) { //from keep to tower
-		for (p = 0; p < 2; p++) {
+		for (p = 0; p < player.length; p++) {
 			var pt = Math.abs(p - po);
 			floor = player[p].towerSwitches[0][towerThis].floor;
 			x = player[p].towerSwitches[0][towerThis].x;
@@ -65,7 +70,7 @@ function switchTower(id, po) {
 			player[pt].setPlayerPosition(floor, x, y);
 		}
 	} else if (towerThis === TOWER_MOD0) { //from tower to keep
-		for (p = 0; p < 2; p++) {
+		for (p = 0; p < player.length; p++) {
 			var pt = Math.abs(p - po);
 			floor = player[p].towerSwitches[1][towerLast].floor;
 			x = player[p].towerSwitches[1][towerLast].x;
@@ -73,8 +78,9 @@ function switchTower(id, po) {
 			player[pt].setPlayerPosition(floor, x, y);
 		}
 	}
-	player[0].updateChampions();
-	player[1].updateChampions();
+	for(p = 0; p < player.length; p++) {
+		player[p].updateChampions();
+	}
 	$('canvas').addClass('active');
 	player[0].message("WELCOME THEE TRAVELLER, TO MADMUNKY AND ", COLOUR[COLOUR_YELLOW], true);
 	player[0].message("     WISHBONE'S REMAKE OF BLOODWYCH     ", COLOUR[COLOUR_YELLOW], true);

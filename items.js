@@ -521,14 +521,14 @@ function getItemGfxOffset(pos, sub, sh) {
 	var xy = posToCoordinates(pos, 0, 0, 0);
 	if (sh) {
 		if (sub === CHAR_FRONT_LEFT || sub === CHAR_BACK_RIGHT) {
-			suby = 0.22; //bottom shelf
+			suby = 0.05; //bottom shelf
 		} else {
 			suby = 1; //top shelf
 		}
 		var offx = xy.x * 4;
 		var offy = -xy.y * 4;
 		var x = Math.round(offx * (200.0 / (offy + 6)));
-		var y = Math.round(38 - 350.0 / (offy + 5 + suby * 10));
+		var y = Math.round(33 - 250.0 / (offy + 5 + suby * 10));
 	} else {
 		if (sub === CHAR_FRONT_LEFT) {
 			subx = 1;

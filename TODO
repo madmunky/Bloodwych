@@ -6,8 +6,7 @@ JORG
 -----
 * COD Fix Big monster 'edge of screen'
 * COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
-* COD Allow switching champions in group
-* COD Fix Attacking stops when monster team member dies
+* COD Get tower switching for 1 player
 
 CHRIS
 ------
@@ -16,10 +15,9 @@ CHRIS
 * UI  Finish Spell Book
 * UI  Change drawImage cords for UI images to use the uiClickInArea values
 * UI  Make Fairy Screens
-* UI  Add movement key highlight
 * UI  Make Start Screen
 * UI  Make Champion select start screen
-* Find Amour Palette's
+* UI  Find Amour Palette's
 
 
 QUESTIONS FOR CHRIS
@@ -27,10 +25,7 @@ QUESTIONS FOR CHRIS
 
 QUESTIONS FOR JORG
 ------------------
-
 1. Need to try link a text to a screen (fairy)
-2. I've added the gfx to height light the arrows when moving but need to work out how to highlight them for the right direction and delay the gfx
 4. I have all the spell descriptions but not sure how to add them to your spell object
 5. need a function to return the next two spells available for a champ
-6. need to increase the player timer when sleeping :)
 7. Need to work out how we are going to store all this text I have found :)

@@ -39,7 +39,7 @@ Game.prototype = {
 function timerAction() {
 	if(timerMaster - timerChampionAttack >= 20) {
 		timerChampionAttack = timerMaster;
-		for(p = 0; p < 2; p++) {
+		for(p = 0; p < player.length; p++) {
 			if(player[p].attacking) {
 				player[p].tryAttack();
 			}
@@ -58,7 +58,7 @@ function timerAction() {
 		monsterAttackSequence++;
 	}
 
-	for(p = 0; p < 2; p++) {
+	for(p = 0; p < player.length; p++) {
 		var tm = 100;
 		if(player[p].sleeping) {
 			tm = 50;

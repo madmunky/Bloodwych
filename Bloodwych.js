@@ -27,7 +27,7 @@ function updatePlayerViewScreen() {
     configCanvas();
     debugText(player[0], "FPS: " + fps.getFPS());
 
-    for (p = 0; p < 2; p++) {
+    for (p = 0; p < player.length; p++) {
         debugText(player[p], "Player " + (p + 1));
         debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
         drawPlayersView(player[p]);

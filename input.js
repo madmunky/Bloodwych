@@ -1,31 +1,36 @@
 function doKeyDown(e) {
+	if (player.length > 1) {
+		switch (e.keyCode) {
 
+			case KEYPAD_8:
+				player[1].move(DIRECTION_NORTH);
+				break; //8
+			case KEYPAD_5:
+				player[1].move(DIRECTION_SOUTH);
+				break; //5
+			case KEYPAD_4:
+				player[1].move(DIRECTION_WEST);
+				break; //4
+			case KEYPAD_6:
+				player[1].move(DIRECTION_EAST);
+				break; //6
+			case KEYPAD_7:
+				player[1].rotate(-1);
+				break; //7
+			case KEYPAD_9:
+				player[1].rotate(1);
+				break; //9
+			case KEY_END:
+				player[1].action();
+				break; //End Key
+			case KEYPAD_PLUS:
+				player[1].toggleFrontObject();
+				break; //+ Key
+			default:
+				break;
+		}
+	}
 	switch (e.keyCode) {
-
-		case KEYPAD_8:
-			player[1].move(DIRECTION_NORTH);
-			break; //8
-		case KEYPAD_5:
-			player[1].move(DIRECTION_SOUTH);
-			break; //5
-		case KEYPAD_4:
-			player[1].move(DIRECTION_WEST);
-			break; //4
-		case KEYPAD_6:
-			player[1].move(DIRECTION_EAST);
-			break; //6
-		case KEYPAD_7:
-			player[1].rotate(-1);
-			break; //7
-		case KEYPAD_9:
-			player[1].rotate(1);
-			break; //9
-		case KEY_END:
-			player[1].action();
-			break; //End Key
-		case KEYPAD_PLUS:
-			player[1].toggleFrontObject();
-			break; //+ Key
 		case KEY_L: // THE L KEY
 			switchTower((towerThis + 1) % TOWER_NAME.length);
 			break;
@@ -40,7 +45,6 @@ function doKeyDown(e) {
 			player[0].action();
 			break; // SpaceBar        
 		case KEY_G:
-
 			//player[0].changeDownFloor();
 			var ch = player[0].getActivePocketChampion();
 			ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 109) % 110, 1);
@@ -134,7 +138,7 @@ function touchXY(e) {
 
 function processCanvasInput(x, y) {
 
-	for (p = 0; p < 2; p++) {
+	for (p = 0; p < player.length; p++) {
 		var successfulClick = false;
 
 		if (!player[p].sleeping && !player[p].dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, player[p])) {
@@ -209,7 +213,7 @@ function processCanvasInput(x, y) {
 					var ap = cid - UI_CLICK_POCKET_CHARACTER_0;
 					var c = player[p].getOrderedChampionIds();
 					var ch = player[p].getChampion(c[ap]);
-					if(ch !==  null && ch.recruitment.attached) {
+					if (ch !== null && ch.recruitment.attached) {
 						player[p].uiRightPanel.activePocket = ap;
 						successfulClick = true;
 					}
@@ -289,7 +293,7 @@ function processCanvasInput(x, y) {
 
 function viewportTouch(x, y, xy) {
 
-	for (p = 0; p < 2; p++) {
+	for (p = 0; p < player.length; p++) {
 
 		xy = {
 			x: Math.floor((x - player[p].PortalX) / scale / 42.67),

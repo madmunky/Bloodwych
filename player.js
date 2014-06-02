@@ -975,7 +975,7 @@ Player.prototype.testMode = function(id) {
 }
 
 function initPlayersQuickStart() {
-	for (p = 0; p < 2; p++) {
+	for (p = 0; p < player.length; p++) {
 		for (i = 0; i < 4; i++) {
 			player[p].recruitChampion(i + p * 8);
 		}
@@ -1000,10 +1000,11 @@ function initPlayersQuickStart() {
 }
 
 function initPlayersStart(c1, c2) {
-	player[0].recruitChampion(c1);
-	player[1].recruitChampion(c2);
-	for (i = 1; i < 4; i++) {
-		player[0].recruitChampion();
-		player[1].recruitChampion();
+	var ch = [c1, c2];
+	for (p = 0; p < player.length; p++) {
+		player[p].recruitChampion(ch[p]);
+		for (i = 1; i < 4; i++) {
+			player[p].recruitChampion();
+		}
 	}
 }

@@ -153,7 +153,7 @@ function floorActionType(trig, p) {
 }
 
 function initTowerSwitches() {
-	for (p = 0; p < 2; p++) { //player
+	for (p = 0; p < player.length; p++) { //player
 		for (i = 0; i < 2; i++) { //0: to tower, 1: to keep
 			player[p].towerSwitches[i] = new Array();
 			for (t = 0; t < 5; t++) { //tower
