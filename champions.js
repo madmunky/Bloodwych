@@ -156,6 +156,54 @@ Champion.prototype.checkGainLevel = function() {
 	}
 }
 
+
+
+Champion.prototype.restoreStats = function() {
+	var alertPlayer = false;
+	if(this.recruitment.playerId > -1) {
+		var p = player[this.recruitment.playerId];
+	}
+	if (this !== null) {
+		if (!this.monster.dead) {
+			this.stat.hp = this.stat.hp + Math.floor((Math.random() * (this.stat.str / 16)) + this.stat.str / 16);
+			if (this.stat.hp > this.stat.hpMax) {
+				this.stat.hp = this.stat.hpMax;
+			}
+			this.stat.vit = this.stat.vit + Math.floor((Math.random() * (this.stat.agi / 12)) + this.stat.agi / 12);
+			if (this.stat.vit > this.stat.vitMax) {
+				this.stat.vit = this.stat.vitMax;
+			}
+			this.stat.sp = this.stat.sp + Math.floor((Math.random() * (this.stat.int / 12)) + this.stat.int / 12);
+			if (this.stat.sp > this.stat.spMax) {
+				this.stat.sp = this.stat.spMax;
+			}
+			if(this.recruitment.recruited && this.id !== CHA_MR_FLAY) {
+				if (this.food > 0) {
+					this.food--;
+				} else {
+					this.stat.vit -= Math.floor(Math.random() * 9) + 3;
+					if (this.stat.vit < 0) {
+						this.stat.vit = 0;
+					}
+				}
+			}
+			if (this.stat.vitMax * 0.15 > this.stat.vit) {
+				dmg = Math.ceil(this.stat.vitMax * 0.15) - this.stat.vit;
+				this.getDamage(dmg, true);
+				if (dmg > 0) {
+					alertPlayer = true;
+				}
+			}
+		}
+	}
+	if(typeof p !== "undefined") {
+		if (alertPlayer) {
+			p.alertDamagedPlayer();
+		}
+		redrawUI(p.id);
+	}
+}
+
 Champion.prototype.writeAttackPoints = function(pwr, def) {
 	if (typeof pwr !== "undefined" && this.recruitment.recruited) {
 		var self = this;

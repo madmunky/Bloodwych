@@ -37,35 +37,48 @@ Game.prototype = {
 }
 
 function timerAction() {
-	if(timerMaster - timerChampionAttack >= 20) {
+	if (timerMaster - timerChampionAttack >= 20) {
 		timerChampionAttack = timerMaster;
-		for(p = 0; p < player.length; p++) {
-			if(player[p].attacking) {
+		for (p = 0; p < player.length; p++) {
+			if (player[p].attacking) {
 				player[p].tryAttack();
 			}
 		}
 	}
-	if(timerMaster - timerMonsterMove >= 20) {
+	if (timerMaster - timerMonsterMove >= 20) {
 		timerMonsterMove = timerMaster;
 		monsterAttackSequence = 0;
 		mon = getMonstersInTower(towerThis);
-		for(m in mon) {
+		for (m in mon) {
 			mon[m].move();
 		}
 	}
-	if(timerMaster - timerMonsterAttack >= 3) {
+	if (timerMaster - timerMonsterAttack >= 3) {
 		timerMonsterAttack = timerMaster;
 		monsterAttackSequence++;
 	}
 
-	for(p = 0; p < player.length; p++) {
+	for (p = 0; p < player.length; p++) {
 		var tm = 100;
-		if(player[p].sleeping) {
+		if (player[p].sleeping) {
 			tm = 50;
 		}
-		if(timerMaster - player[p].timerChampionStats >= tm) {
+		if (timerMaster - player[p].timerChampionStats >= tm) {
 			player[p].timerChampionStats = timerMaster;
-			player[p].restoreChampionStats();
+			for (c = 0; c < player[p].champion.length; c++) {
+				var ch = player[p].getChampion(c);
+				if (ch !== null) {
+					ch.restoreStats();
+				}
+			}
+		}
+	}
+	if (timerChampionStats >= 100) {
+		timerChampionStats = timerMaster;
+		for (ch = 0; ch < champion.length; ch++) {
+			if (!champion[ch].recruitment.recruited) {
+				champion[ch].restoreStats();
+			}
 		}
 	}
 }

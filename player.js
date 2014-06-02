@@ -569,48 +569,6 @@ Player.prototype.gainChampionXp = function(xp, ch) {
 	}
 }
 
-Player.prototype.restoreChampionStats = function() {
-	var alertPlayer = false;
-	for (c = 0; c < this.champion.length; c++) {
-		var champ = this.getChampion(c);
-		if (champ !== null) {
-			if (!champ.monster.dead) {
-				champ.stat.hp = champ.stat.hp + Math.floor((Math.random() * (champ.stat.str / 16)) + champ.stat.str / 16);
-				if (champ.stat.hp > champ.stat.hpMax) {
-					champ.stat.hp = champ.stat.hpMax;
-				}
-				champ.stat.vit = champ.stat.vit + Math.floor((Math.random() * (champ.stat.agi / 12)) + champ.stat.agi / 12);
-				if (champ.stat.vit > champ.stat.vitMax) {
-					champ.stat.vit = champ.stat.vitMax;
-				}
-				champ.stat.sp = champ.stat.sp + Math.floor((Math.random() * (champ.stat.int / 12)) + champ.stat.int / 12);
-				if (champ.stat.sp > champ.stat.spMax) {
-					champ.stat.sp = champ.stat.spMax;
-				}
-				if (champ.food > 0) {
-					champ.food--;
-				} else {
-					champ.stat.vit -= Math.floor(Math.random() * 9) + 3;
-					if (champ.stat.vit < 0) {
-						champ.stat.vit = 0;
-					}
-				}
-				if (champ.stat.vitMax * 0.15 > champ.stat.vit) {
-					dmg = Math.floor(champ.stat.vitMax * 0.15) - champ.stat.vit;
-					champ.getDamage(dmg, true);
-					if (dmg > 0) {
-						alertPlayer = true;
-					}
-				}
-			}
-		}
-	}
-	if (alertPlayer) {
-		this.alertDamagedPlayer();
-	}
-	redrawUI(this.id);
-}
-
 Player.prototype.alertDamagedPlayer = function() {
 	this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 	for (ch = 0; ch < this.champion.length; ch++) {
