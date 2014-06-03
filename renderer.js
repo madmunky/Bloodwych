@@ -4,7 +4,7 @@ function Renderer(game) {
 };
 Renderer.prototype = {
 	init: function() {
-		this.fps = 1;
+		this.fps = 10;
 		this.step = 1 / this.fps;
 		redrawUI(2);
 		configCanvas();

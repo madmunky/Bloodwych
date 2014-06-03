@@ -304,16 +304,16 @@ function drawPlayersView(p) {
 		coverViewPort(p);
 		writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, p.Portal);
 		writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, p.Portal);
-                if (p.spellCurrentChamp === null){
+                if (p.fairyDetails.champ === null){
                     for (x = 0; x < p.champion.length; x++) {
 			if (champion[p.champion[x]].spellUp > 0) {
                                 p.uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY;
-                                p.spellCurrentChamp = p.champion[x];
+                                p.fairyDetails.champ = p.champion[x];
                                 break;
 			}
                     }}
                 else {
-                    showFairy(champion[p.spellCurrentChamp], p);
+                    showFairy(champion[p.fairyDetails.champ], p);
                     }                              
 	} else {
                 p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
