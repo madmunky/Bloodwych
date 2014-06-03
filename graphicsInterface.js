@@ -1277,7 +1277,7 @@ function showFairySpellDetailsScreen(spell,p,c){
     writeFontImage(spell.ref.name, 43, 12, spellColour,FONT_ALIGNMENT_LEFT, p.Portal);
     writeFontImage("LEVEL "+spell.ref.level, 43, 23, COLOUR[COLOUR_GREY_LIGHT],FONT_ALIGNMENT_LEFT, p.Portal);
     writeFontImage(spell.ref.cost + " GOLD", 43, 31, COLOUR[COLOUR_GREY_LIGHT],FONT_ALIGNMENT_LEFT, p.Portal);
-    
+    p.message(spell.ref.description, COLOUR[COLOUR_GREEN], false, 0);
     
     for (x = 0; x < 5; x++) {
         if (x < 4) {
@@ -1290,5 +1290,21 @@ function showFairySpellDetailsScreen(spell,p,c){
     }
     
     writeFontImage("OK ?", 43, 55, COLOUR[COLOUR_RED],FONT_ALIGNMENT_LEFT, p.Portal);
+    
+}
+
+function buySpell(p){
+    
+    if (p.fairyDetails.champ.findPocketItem(ITEM_COINAGE).quantity >= p.fairyDetails.spell.ref.cost){
+        
+        p.message("", COLOUR[COLOUR_BLACK], false, 0);
+        p.fairyDetails.next++;
+        p.fairyDetails.champ = null;
+        p.uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
+        p.sleep();
+        
+    }else{
+        p.message(TEXT_PAUPER, COLOUR[COLOUR_GREEN], false, 0);
+    }
     
 }

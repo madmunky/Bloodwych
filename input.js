@@ -234,11 +234,21 @@ function processCanvasInput(x, y) {
                 }
                 
                 if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SPELLDETAILS){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
-                        //show buy spell screen
+                    
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {                      
+                        buySpell(p);
                     }
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+                        
+                        switch (p.fairyDetails.spell.ref.colour){
+                            
+                            case 0:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SERPENT);}break;
+                            case 1:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_CHAOS);}break;
+                            case 2:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_DRAGON);}break;
+                            case 3:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_MOON);}break;
+                            
+                        }                        
+                        
                     }
                 }
 
