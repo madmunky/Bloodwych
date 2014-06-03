@@ -164,6 +164,7 @@ function processCanvasInput(x, y) {
                     }
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, player[p])) {
                         player[p].spellCurrentChamp = null;
+                        player[p].canShowFairyTimer = -1;
                         player[p].uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
                     }
 			successfulClick = checkViewPortal(player[p], x, y);
@@ -323,6 +324,7 @@ function processCanvasInput(x, y) {
 				successfulClick = true;
 			} else if (uiClickInArea(x, y, UI_CLICK_SLEEP, player[p])) {
 				player[p].sleeping = true;
+				player[p].canShowFairyTimer = false;
 				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				player[p].attack(false);

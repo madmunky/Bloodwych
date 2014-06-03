@@ -7,7 +7,8 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 		attached: false,
 		playerId: 0,
 		position: 0,
-		attackTimer: 0
+		attackTimer: 0,
+		canShowFairyTimer: false
 	};
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -18,7 +19,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.food = 200;
 	this.xp = 0;
 	this.xp2 = 0;
-	this.spellUp = 0;
+	this.spellUp = 1;
 	this.levelUp = 0;
 	this.monster = monster;
 	for (pg = 0; pg < COLOUR_MAX; pg++) {
@@ -161,7 +162,9 @@ Champion.prototype.checkGainLevel = function() {
 	}
 }
 
+Champion.prototype.checkGainSpell = function() {
 
+}
 
 Champion.prototype.restoreStats = function() {
 	var alertPlayer = false;
@@ -204,6 +207,8 @@ Champion.prototype.restoreStats = function() {
 	if(typeof p !== "undefined") {
 		if (alertPlayer) {
 			p.alertDamagedPlayer();
+		} else {
+			this.recruitment.canShowFairyTimer = true;
 		}
 		redrawUI(p.id);
 	}

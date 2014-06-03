@@ -16,6 +16,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.pocket = newPocketItem();
 	this.dead = false;
 	this.sleeping = false;
+	this.canShowFairyTimer = false;
 	this.lastX = 0;
 	this.lastY = 0;
 	this.lastFloor = 0;
@@ -454,6 +455,17 @@ Player.prototype.exchangeChampionPosition = function(ct, c) {
 		this.championHighlite = -1;
 		this.updateChampions();
 	}
+}
+
+Player.prototype.checkAllChampionsWhoGainSpell = function() {
+	var chs = new Array();
+	for (c = 0; c < this.champion.length; c++) {
+		var ch = this.getChampion(c);
+		if (ch !== null && !ch.monster.dead && ch.recruitment.attached && ch.recruitment.playerId > -1 && ch.spellUp > 0) {
+			chs.push(ch);
+		}
+	}
+	return chs;
 }
 
 //check if all champions are dead
@@ -906,13 +918,16 @@ Player.prototype.getObject = function(f, x, y, d) {
 }
 
 
-Player.prototype.message = function(txt, col, wait) {
+Player.prototype.message = function(txt, col, wait, delay) {
+	if(typeof delay === "undefined") {
+		delay = 3000;
+	}
 	var self = this;
 	if (typeof wait === "undefined") {
 		wait = false;
 	}
 	if (this.messageTimeout === 0 || !wait) {
-		fadeFont(this, txt, 50, 3000, 0, this.ScreenY, col);
+		fadeFont(this, txt, 50, delay, 0, this.ScreenY, col);
 	} else {
 		setTimeout(function() {
 			self.message(txt, col, wait);

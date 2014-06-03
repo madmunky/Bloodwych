@@ -1181,6 +1181,7 @@ function showFairy(c, p) {
 
         if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY ){
             ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
+            //p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 3000);
             writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
             p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
             for (x = 0; x < 5; x++) {

@@ -36,24 +36,26 @@ function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, 
 	        if (alpha > 1) {
 			    (function(fontString, locationX, locationY, paletteTo, alignment) {
 			    	clearInterval(p.messageTimeout);
-			    	var alpha = 1.0;
-				    p.messageTimeout = setTimeout(function() {
-				    	(function(fontString, locationX, locationY, paletteTo, alignment, alpha) {
-						    p.messageTimeout = setInterval(function () {
-						    	myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
-								myContent.save();
-								myContent.globalAlpha = alpha;
-						        writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
-						        myContent.restore();
-						        alpha = alpha - 0.1;
-						        if (alpha < 0) {
-						            myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
-						            clearInterval(p.messageTimeout);
-						            p.messageTimeout = 0;
-						        }
-						    }, speed);
-						})(fontString, locationX, locationY, paletteTo, alignment, alpha);
-				    }, delay);
+			    	if(delay > 0) {
+				    	var alpha = 1.0;
+					    p.messageTimeout = setTimeout(function() {
+					    	(function(fontString, locationX, locationY, paletteTo, alignment, alpha) {
+							    p.messageTimeout = setInterval(function () {
+							    	myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+									myContent.save();
+									myContent.globalAlpha = alpha;
+							        writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
+							        myContent.restore();
+							        alpha = alpha - 0.1;
+							        if (alpha < 0) {
+							            myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+							            clearInterval(p.messageTimeout);
+							            p.messageTimeout = 0;
+							        }
+							    }, speed);
+							})(fontString, locationX, locationY, paletteTo, alignment, alpha);
+					    }, delay);
+					}
 				})(fontString, locationX, locationY, paletteTo, alignment);
 	        }
 	    }, speed);
