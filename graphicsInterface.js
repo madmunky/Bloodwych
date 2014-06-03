@@ -1055,32 +1055,32 @@ function uiClickAreas() {
 		height: 63
 	}); //Portal - Wooden Door       
 	UCA.push({
-		x: 113,
-		y: 64,
+		x: 110,
+		y: 60,
 		width: 15,
 		height: 13
 	}); //Fairy - Serpent Spell
 	UCA.push({
-		x: 129,
-		y: 64,
+		x: 126,
+		y: 60,
 		width: 15,
 		height: 13
 	}); //Fairy - Chaos Spell  
         UCA.push({
-		x: 145,
-		y: 64,
+		x: 142,
+		y: 60,
 		width: 15,
 		height: 13
 	}); //Fairy - Dragon Spell  
         UCA.push({
-		x: 161,
-		y: 64,
+		x: 158,
+		y: 60,
 		width: 15,
 		height: 13
 	}); //Fairy - Moon Spell  
         UCA.push({
-		x: 193,
-		y: 64,
+		x: 190,
+		y: 60,
 		width: 15,
 		height: 13
 	}); //Fairy - Back Button   
@@ -1177,18 +1177,43 @@ function coverViewPort(p) {
 
 function showFairy(c, p) {
 
-        if (p.uiCenterPanel )
+    ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 8 * scale);
+    coverViewPort(p);        
 
-
-	coverViewPort(p);
-	writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", 0, 0, COLOUR[COLOUR_GREEN]);
-	p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
-	for (x = 0; x < 5; x++) {
-		if (x < 4) {
-			p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
-		} else {
-			p.Portal.drawImage(gfxUI[UI_GFX_ICON_BACK], (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
-		}
-	}
+        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY ){
+            ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
+            writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+            p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
+            for (x = 0; x < 5; x++) {
+                if (x < 4) {
+                        p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+                } else {
+                        p.Portal.drawImage(gfxUI[UI_GFX_ICON_BACK], (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+                }
+            }
+        }else{
+            
+            //ctx.fillStyle = 'rgb(255, 0, 255)';
+            //ctx.fillRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 8 * scale);		
+            writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+        }
+        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT ){            
+            p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][1].width * scale, gfxUI[UI_GFX_FAIRIES][1].height * scale);
+            var mySpells = [];
+            mySpells[0] = spell[0];
+            mySpells[1] = spell[1];
+            writeFontImage(mySpells[0].name, 43, 12, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT, p.Portal);
+            writeFontImage(mySpells[1].name, 43, 22, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT, p.Portal);
+            for (x = 0; x < 5; x++) {
+                if (x < 4) {
+                    if (x === 0){
+                        p.Portal.drawImage(gfxUI[80 + x],17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+                    }                        
+                } else {
+                        p.Portal.drawImage(gfxUI[UI_GFX_ICON_BACK], (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+                }
+            }
+        }
+        
 
 }

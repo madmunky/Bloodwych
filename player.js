@@ -25,6 +25,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.towerSwitches = new Array();
 	this.messageTimeout = 0;
 	this.timerChampionStats = 0;
+        this.spellCurrentChamp = null;
 	this.uiRightPanel = {
 		activePocket: 0,
 		mode: UI_RIGHT_PANEL_MAIN

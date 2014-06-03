@@ -145,8 +145,15 @@ function processCanvasInput(x, y) {
 			successfulClick = checkViewPortal(player[p], x, y);
 		}
 
-		if (player[p].sleeping && uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, player[p])) {
+		if (player[p].sleeping && player[p].spellCurrentChamp === null && uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, player[p])) {
 			player[p].sleeping = false;
+		}
+                
+                if (player[p].sleeping && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY){
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, player[p])) {
+                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY_SERPENT;
+                    }
+			successfulClick = checkViewPortal(player[p], x, y);
 		}
 
 		//if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, player[p])) {
