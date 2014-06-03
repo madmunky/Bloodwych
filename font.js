@@ -7,7 +7,7 @@ function grabFont() {
 
 	var myFont = [];
 
-	for (x = 0; x < 93; x++) {
+	for (x = 0; x < 94; x++) {
 		myFont.push(grabImageAt(fontImage, x * 8, 0, 8, 8, false, 1));
 	}
 	return myFont;
@@ -197,7 +197,7 @@ function fontCharacterToIndex(c) {
 		case 62:
 			return 36; // >    
 		case 63:
-			return 36; // ?    
+			return 93; // ?    
 		case 126:
 			return 87; // ~
 
