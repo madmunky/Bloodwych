@@ -145,7 +145,7 @@ function processCanvasInput(x, y) {
 			successfulClick = checkViewPortal(player[p], x, y);
 		}
 
-		if (player[p].sleeping && player[p].spellCurrentChamp === null && uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, player[p])) {
+		if (player[p].sleeping && player[p].fairyDetails.champ === null && uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, player[p])) {
 			player[p].sleeping = false;
 		}
                 
@@ -163,14 +163,17 @@ function processCanvasInput(x, y) {
                         player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY_MOON;
                     }
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, player[p])) {
-                        player[p].spellCurrentChamp = null;
+                        player[p].fairyDetails.champ = null;
                         player[p].canShowFairyTimer = -1;
                         player[p].uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
                     }
 			successfulClick = checkViewPortal(player[p], x, y);
 		}
                 if (player[p].sleeping && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, player[p])) {
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, player[p])) {
+                        //show buy spell screen                       
+                    } 
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, player[p])) {
                         //show buy spell screen                       
                     } 
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, player[p])) {

@@ -1086,15 +1086,15 @@ function uiClickAreas() {
 	}); //Fairy - Back Button   
         UCA.push({
 		x: 136,
-		y: 23,
+		y: 13,
 		width: 81,
-		height: 10
+		height: 8
 	}); //Fairy - Text Area 1 
         UCA.push({
-		x: 111,
-		y: 35,
+		x: 136,
+		y: 23,
 		width: 81,
-		height: 10
+		height: 8
 	}); //Fairy - Text Area 2 
     return UCA;
 
@@ -1176,7 +1176,7 @@ function coverViewPort(p) {
 
 function showFairy(c, p) {
 
-    ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 8 * scale);
+    ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 6 * scale);
     coverViewPort(p);        
 
         if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY ){
@@ -1191,10 +1191,7 @@ function showFairy(c, p) {
                         p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);                
                 }
             }
-        }else{
-            
-            //ctx.fillStyle = 'rgb(255, 0, 255)';
-            //ctx.fillRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 8 * scale);		
+        }else{            	
             writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
         }
         if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT ){            
@@ -1209,9 +1206,11 @@ function showFairy(c, p) {
         if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON ){            
             showFairySpellScreen(3,p,c);
         }
+        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SPELLDETAILS ){            
+            showFairySpellDetailsScreen(p.fairyDetails.spell,p,c);
+        }
 
 }
-
 
 function showFairySpellScreen(spellClass,p,c){
     
@@ -1241,5 +1240,13 @@ function showFairySpellScreen(spellClass,p,c){
                 p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);                
         }
     }
+    
+}
+
+function showFairySpellDetailsScreen(spell,p,c){
+    
+    
+    
+    
     
 }
