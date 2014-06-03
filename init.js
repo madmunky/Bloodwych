@@ -146,8 +146,8 @@ function initData() {
 	for (var i = 0; i < 6; i++) {
 		initMonsters(tower[i]);
 	}
-	initChampions();
 	initSpells();
+	initChampions();
 	player[0] = new Player(0, 96 * scale, 12 * scale, 0 * scale, 10);
 	player[1] = new Player(1, 96 * scale, 116 * scale, 0 * scale, 114);
 	gfxUI = grabUISprites(gfx['misc']['uistuff']);

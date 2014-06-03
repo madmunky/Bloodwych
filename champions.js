@@ -21,18 +21,18 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.spellUp = 0;
 	this.levelUp = 0;
 	this.monster = monster;
-	for (i = 0; i < SPELL_MAX; i++) {
-		this.spellBook[i] = new Array();
-		this.spellBook[i].castSuccessful = 0;
-		this.spellBook[i].learnt = false;
-		if (spellBin.substr(i, 1) == '1') {
-			this.addSpellToSpellBook(i);
+	for (cl = 0; cl < COLOUR_MAX; cl++) {
+		this.spellBook[cl] = new Array();
+		for (i = 0; i < SPELL_MAX; i++) {
+			this.spellBook[cl][i] = new Array();
+			this.spellBook[cl][i].castSuccessful = 0;
+			this.spellBook[cl][i].learnt = false;
+			this.spellBook[cl][i].ref = spell[cl][i];
+			if (spellBin.substr(i, 1) == '1') {
+				this.addSpellToSpellBook(cl, i);
+			}
 		}
 	}
-}
-
-Champion.prototype.addSpellToSpellBook = function(spell) {
-	this.spellBook[spell].learnt = true;
 }
 
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
@@ -208,10 +208,19 @@ Champion.prototype.restoreStats = function() {
 	}
 }
 
+Champion.prototype.addSpellToSpellBook = function(cl, id) {
+	this.spellBook[cl][id].learnt = true;
+}
 
-
-Champion.prototype.getNextSpells = function(prof) {
-	
+Champion.prototype.getUnlearntSpellsByColour = function(cl) {
+	var sp = new Array();
+	for(id = 0; id < SPELL_MAX; id++) {
+		var sb = this.spellBook[cl][id];
+		if(!sb.learnt) {
+			sp.push(sb);
+		}
+	}
+	return sp;
 }
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
@@ -263,13 +272,16 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 
 Champion.prototype.toString = function() {
 	sb = "";
-	for (i = 0; i < SPELL_MAX; i++) {
-		sb = sb + "" + i + ":[";
-		sb = sb + "castSuccesful:" + this.spellBook[i].castSuccessful;
-		sb = sb + ", learnt:" + this.spellBook[i].learnt;
-		sb = sb + "], ";
+	for (cl = 0; cl < COLOUR_MAX; cl++) {
+		for (i = 0; i < SPELL_MAX; i++) {
+			sb = sb + "[" + cl + "]" + "[" + i + "]:";
+			sb = sb + this.spellBook[cl][i].learnt;
+			if(i < 7) {
+				sb = sb + ", ";
+			}
+		}
 	}
-	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', pocket:[' + this.pocket + '], stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
+	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', spellBook:[' + sb + '], stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
 }
 
 function getChampionClass(id) {
@@ -335,5 +347,6 @@ function initChampions() {
 		monster[TOWER_CHAMPIONS][ch] = new Monster(ch + monster[TOWER_MOD0].length, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
 		champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch], slot);
 		PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
+		var ul = champion[ch].getUnlearntSpellsByColour(champion[ch].colour);
 	}
 }

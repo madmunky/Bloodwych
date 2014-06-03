@@ -44,12 +44,14 @@ var gfxLoaded = {
 };
 
 //COLOURS AND PALETTES
-var CLASS_SERP = 0,
-	CLASS_DRAG = 1,
-	CLASS_MOON = 2,
-	CLASS_CHAOS = 3;
+var COLOUR_MAX = 4,
+	COLOUR_SERP = 0,
+	COLOUR_DRAG = 1,
+	COLOUR_MOON = 2,
+	COLOUR_CHAOS = 3;
 
-var PROFESSION_WARRIOR = 0,
+var PROFESSION_MAX = 4,
+	PROFESSION_WARRIOR = 0,
 	PROFESSION_WIZARD = 1,
 	PROFESSION_ADVENTURER = 2,
 	PROFESSION_CUTPURSE = 3;
@@ -1032,7 +1034,7 @@ var ITEM_EMPTY = 0,
 
 //spells
 var spell = new Array();
-var SPELL_MAX = 32;
+var SPELL_MAX = 8;
 
 //Serpent spells
 var SPELL_ARMOUR = 0,
