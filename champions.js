@@ -21,15 +21,16 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.spellUp = 0;
 	this.levelUp = 0;
 	this.monster = monster;
-	for (cl = 0; cl < COLOUR_MAX; cl++) {
-		this.spellBook[cl] = new Array();
-		for (i = 0; i < SPELL_MAX; i++) {
-			this.spellBook[cl][i] = new Array();
-			this.spellBook[cl][i].castSuccessful = 0;
-			this.spellBook[cl][i].learnt = false;
-			this.spellBook[cl][i].ref = spell[cl][i];
-			if (spellBin.substr(i, 1) == '1') {
-				this.addSpellToSpellBook(cl, i);
+	for (pg = 0; pg < COLOUR_MAX; pg++) {
+		this.spellBook[pg] = new Array();
+		var spl = getSpellBookPage(pg);
+		for (rw = 0; rw < SPELL_MAX; rw++) {
+			this.spellBook[pg][rw] = new Array();
+			this.spellBook[pg][rw].castSuccessful = 0;
+			this.spellBook[pg][rw].learnt = false;
+			this.spellBook[pg][rw].ref = spl[rw];
+			if (spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
+				this.addSpellToSpellBook(pg, rw);
 			}
 		}
 	}
@@ -213,14 +214,19 @@ Champion.prototype.addSpellToSpellBook = function(cl, id) {
 }
 
 Champion.prototype.getUnlearntSpellsByColour = function(cl) {
-	var sp = new Array();
-	for(id = 0; id < SPELL_MAX; id++) {
-		var sb = this.spellBook[cl][id];
-		if(!sb.learnt) {
-			sp.push(sb);
+	var sb = new Array();
+	for(pg = 0; pg < COLOUR_MAX; pg++) {
+		for(rw = 0; rw < SPELL_MAX; rw++) {
+			var sp = this.spellBook[pg][rw];
+			if(!sp.learnt && sp.ref.colour === cl) {
+				sb.push(sp);
+			}
 		}
 	}
-	return sp;
+	return sb.sort(function(a, b) {
+		return (a.ref.id - b.ref.id);
+	});
+	return sb;
 }
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
@@ -347,6 +353,6 @@ function initChampions() {
 		monster[TOWER_CHAMPIONS][ch] = new Monster(ch + monster[TOWER_MOD0].length, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
 		champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch], slot);
 		PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
-		var ul = champion[ch].getUnlearntSpellsByColour(champion[ch].colour);
+		var ul = champion[ch].getUnlearntSpellsByColour(1);
 	}
 }
