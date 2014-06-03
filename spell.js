@@ -3,7 +3,7 @@ function Spell(id, name, description, prof, level) {
 	this.level = level;
 	this.prof = prof;
 	this.description = description;
-	this.cost = this.level * 5;
+	this.cost = (this.level + 1) * 5;
 }
 
 function initSpells() {

@@ -310,9 +310,6 @@ function initChampions() {
 		var vitMax = parseInt(hex2dec(md.substr(16, 2)));
 		var sp = parseInt(hex2dec(md.substr(18, 2)));
 		var spMax = parseInt(hex2dec(md.substr(20, 2)));
-		if(ch === CHA_MEGRIM) {
-			alert(hex2dec(md.substr(18, 2)));
-		}
 		var ac = parseInt(hex2dec(md.substr(22, 2)));
 		var stat = {
 			str: str,
