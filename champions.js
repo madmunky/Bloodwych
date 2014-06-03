@@ -19,7 +19,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.xp = 0;
 	this.xp2 = 0;
 	this.spellUp = 1;
-	this.levelUp = 0;
+	this.levelUp = 1;
 	this.monster = monster;
 	for (pg = 0; pg < COLOUR_MAX; pg++) {
 		this.spellBook[pg] = new Array();
@@ -30,7 +30,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 			this.spellBook[pg][rw].learnt = false;
 			this.spellBook[pg][rw].ref = spl[rw];
 			if (spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
-				this.addSpellToSpellBook(pg, rw);
+				this.addSpellToSpellBook(spl[rw]);
 			}
 		}
 	}
@@ -103,7 +103,7 @@ Champion.prototype.getArmourClass = function() {
 	return 10 - arm - sld - glv;
 }
 
-Champion.prototype.checkGainLevel = function() {
+Champion.prototype.gainLevel = function() {
 	if (this.levelUp > 0) {
 		var prof = this.prof;
 		var stat = new Array();
@@ -155,9 +155,9 @@ Champion.prototype.checkGainLevel = function() {
 		}
 		if(this.recruitment.recruited) {
 			var p = this.recruitment.playerId;
-			player[p].message(this.firstName + TEXT_GAINED_LEVEL, COLOUR[COLOUR_RED], true);
+			player[p].message(this.firstName + TEXT_GAINED_LEVEL, COLOUR[COLOUR_RED]);
 		}
-		this.levelUp = 0;
+		this.levelUp--;
 	}
 }
 
@@ -211,8 +211,8 @@ Champion.prototype.restoreStats = function() {
 	}
 }
 
-Champion.prototype.addSpellToSpellBook = function(cl, id) {
-	this.spellBook[cl][id].learnt = true;
+Champion.prototype.addSpellToSpellBook = function(sp) {
+	this.getSpellInBook(sp).learnt = true;
 }
 
 Champion.prototype.getUnlearntSpellsByColour = function(cl) {
@@ -221,14 +221,64 @@ Champion.prototype.getUnlearntSpellsByColour = function(cl) {
 		for(rw = 0; rw < SPELL_MAX; rw++) {
 			var sp = this.spellBook[pg][rw];
 			if(!sp.learnt && sp.ref.colour === cl) {
-				sb.push(sp);
+				sb.push(sp.ref);
 			}
 		}
 	}
 	return sb.sort(function(a, b) {
-		return (a.ref.id - b.ref.id);
+		return (a.id - b.id);
 	});
 	return sb;
+}
+
+Champion.prototype.getSpellInBook = function(sp) {
+	for(pg = 0; pg < COLOUR_MAX; pg++) {
+		for(rw = 0; rw < SPELL_MAX; rw++) {
+			var sb = this.spellBook[pg][rw];
+			if(sb.ref === sp) {
+				return sb;
+			}
+		}
+	}
+}
+
+Champion.prototype.buySpell = function(sp) {
+	if(this.recruitment.playerId > -1) {
+		var p = player[this.recruitment.playerId];
+		var pk = this.findPocketItem(ITEM_COINAGE);
+		if(this.consumePocketItem(pk, p.fairyDetails.spell.cost)) {
+			this.addSpellToSpellBook(sp);
+			this.spellUp--;
+	        p.sleep();
+	    } else {
+	        p.message(TEXT_PAUPER, COLOUR[COLOUR_GREEN], false, 0);
+	    }
+	}
+}
+
+//mainly used for finding coins
+Champion.prototype.findPocketItem = function(i) {
+	for (ip = 0; ip < this.pocket.length; ip++) {
+		if (this.pocket[ip].id === i) {
+			return ip;
+		}
+	}
+	return null;
+}
+
+//used for arrows and coins
+Champion.prototype.consumePocketItem = function(pk, q) {
+	var it = this.pocket[pk];
+	if(typeof it !== "undefined") {
+		if(typeof q === "undefined") {
+			q = 1;
+		}
+		if(it.quantity - q >= 0) {
+			it.setPocketItem(it.id, it.quantity - q);
+			return true;
+		}
+	}
+	return false;
 }
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
@@ -281,12 +331,20 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 Champion.prototype.toString = function() {
 	sb = "";
 	for (cl = 0; cl < COLOUR_MAX; cl++) {
+		sb = sb + "[";
 		for (i = 0; i < SPELL_MAX; i++) {
-			sb = sb + "[" + cl + "]" + "[" + i + "]:";
-			sb = sb + this.spellBook[cl][i].learnt;
-			if(i < 7) {
+			if(this.spellBook[cl][i].learnt) {
+				sb = sb + "1";
+			} else {
+				sb = sb + "0";
+			}
+			if(i < SPELL_MAX - 1) {
 				sb = sb + ", ";
 			}
+		}
+		sb = sb + "]";
+		if(cl < COLOUR_MAX - 1) {
+			sb = sb + ", ";
 		}
 	}
 	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', spellBook:[' + sb + '], stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
@@ -355,6 +413,5 @@ function initChampions() {
 		monster[TOWER_CHAMPIONS][ch] = new Monster(ch + monster[TOWER_MOD0].length, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
 		champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch], slot);
 		PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
-		var ul = champion[ch].getUnlearntSpellsByColour(1);
 	}
 }

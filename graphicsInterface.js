@@ -139,8 +139,8 @@ function grabUISprites(spriteSheetIMG) {
 function drawUI(p) {
 	if (redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
 		if (typeof gfxUI !== "undefined" && gfxUI !== null) {
-			ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 2) * scale, 94 * scale, 90 * scale);
-			ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 2) * scale, 95 * scale, 90 * scale);
+			ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 91 * scale);
+			ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 91 * scale);
 			switch (p.uiLeftPanel.mode) {
 				case UI_LEFT_PANEL_MODE_STATS:
 					{
@@ -184,7 +184,7 @@ function drawUI(p) {
 
 function spellBook(p) {
 
-	ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
+	ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 226 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT], p.ScreenX + 257 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].height * scale);
@@ -192,8 +192,8 @@ function spellBook(p) {
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 
-	writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 78), COLOUR[COLOUR_PINK]);
-	writeFontImage("0" + champion[p.champion[0]].stat.sp + "/0" + champion[p.champion[0]].stat.spMax, p.ScreenX + 280, (p.ScreenY + 78), COLOUR[COLOUR_GREEN]);
+	writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
+	writeFontImage("0" + champion[p.champion[0]].stat.sp + "/0" + champion[p.champion[0]].stat.spMax, p.ScreenX + 280, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
 
 }
 
@@ -214,8 +214,8 @@ function leftUI(p) {
 	for (c = 0; c < p.champion.length; c++) {
 		var c2 = c1[c];
 		var cid = p.champion[c2];
-		var	ch = p.getChampion(c2);
-		if(ch !== null) {
+		var ch = p.getChampion(c2);
+		if (ch !== null) {
 			if (c === 0) {
 				if (p.uiLeftPanel.champs[c] === true) {
 					ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
@@ -246,13 +246,13 @@ function leftUI(p) {
 					ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
 				}
 			}
-		}else{
-                    if (p === player[1]){
-                        ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_RED].width * scale, gfxUI[UI_GFX_SHIELD_RED].height * scale);   
-                    }else{
-                        ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-                    }					
-                }
+		} else {
+			if (p === player[1]) {
+				ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_RED].width * scale, gfxUI[UI_GFX_SHIELD_RED].height * scale);
+			} else {
+				ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
+			}
+		}
 	}
 }
 
@@ -262,7 +262,7 @@ function leftUIStats(p) {
 		for (c = 0; c < p.champion.length; c++) {
 			var c1 = ch[c];
 			var champ = p.getChampion(c1);
-			if(champ !== null) {
+			if (champ !== null) {
 				var rgb = getClassColour(champ.colour);
 				var hp = Math.floor(21 * champ.stat.hp / champ.stat.hpMax);
 				if (hp < 0) {
@@ -274,7 +274,7 @@ function leftUIStats(p) {
 		}
 	} else {
 		var champ = p.getChampion(p.championLeader);
-		if(champ !== null) {
+		if (champ !== null) {
 			var rgb;
 			var hp = Math.floor(35 * champ.stat.hp / champ.stat.hpMax);
 			var vit = Math.floor(35 * champ.stat.vit / champ.stat.vitMax);
@@ -411,7 +411,7 @@ function rightUI(p) {
 		var ca = [0, 1, 3, 2];
 		var c1 = ca[c];
 		var ch = p.getChampion(c1);
-		if(ch !== null) {
+		if (ch !== null) {
 			var a = ch.prof;
 			var b = ch.colour;
 			if (!ch.monster.dead && ch.recruitment.attached) {
@@ -432,7 +432,7 @@ function rightUI(p) {
 			}
 		}
 	}
-	if(!p.attacking) {
+	if (!p.attacking) {
 		ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
 		if (p.pocket.id > 0) {
 			writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
@@ -481,13 +481,13 @@ function drawPocketUI(p) {
 							break;
 					}
 				}
-                                if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES){                                    
-                                    ctx.drawImage(flipImageVert(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);                                    
-                                }else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES){
-                                    ctx.drawImage(flipImageVert(flipImage(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]))), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-                                }else{
-                                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-                                }				
+				if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES) {
+					ctx.drawImage(flipImageVert(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+				} else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES) {
+					ctx.drawImage(flipImageVert(flipImage(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]))), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+				} else {
+					ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+				}
 			} else {
 				ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
 			}
@@ -508,12 +508,9 @@ function drawPocketUI(p) {
 		}
 	}
 
-	ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 226) * scale, (p.ScreenY + 54) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
-	var ac = "" + chp.getArmourClass();
-	if (ac >= 0) {
-		ac = "+" + ac;
-	}
-	writeFontImage(TEXT_ARMOUR + ":", p.ScreenX / scale + 233, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+	ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 54) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
+	var ac = getArmourNotation(chp.getArmourClass());
+	writeFontImage(TEXT_ARMOUR + ":", p.ScreenX / scale + 234, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
 	writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), COLOUR[COLOUR_WHITE]);
 
 	var c1 = p.getOrderedChampionIds();
@@ -532,8 +529,8 @@ function drawPocketUI(p) {
 			case 1:
 			case 2:
 			case 3:
-				if(ch !== null) {
-					if(ch.recruitment.attached) {
+				if (ch !== null) {
+					if (ch.recruitment.attached) {
 						ctx.drawImage(gfxUI[g][ch.colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
 					}
 					if (chp.recruitment.recruited && c === p.uiRightPanel.activePocket) {
@@ -557,7 +554,7 @@ function drawPocketUI(p) {
 							writeFontImage(qty, ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
 						}
 					}
-					if(!p.attacking) {
+					if (!p.attacking) {
 						ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
 						if (p.pocket.id > 0) {
 							writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
@@ -583,11 +580,18 @@ function drawPocketUI(p) {
 }
 
 function highliteMovementArrow(p, m) {
-	if(p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
+	if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
 		var c = m + UI_CLICK_ROTATE_LEFT;
 		var g = m + UI_GFX_MOVEMENT_ROTATE_LEFT;
-		var x = (p.ScreenX + uiClickArea[c].x);
-		var y = (p.ScreenY + uiClickArea[c].y);
+		switch(m) {
+			case 0: x = 228; y = 59; break;
+			case 1: x = 239; y = 59; break;
+			case 2: x = 254; y = 59; break;
+			case 3: x = 226; y = 71; break;
+			case 4: x = 238; y = 73; break;
+			case 5: x = 257; y = 71; break;
+			default: break;
+		}
 		ctx.drawImage(gfxUI[g], x * scale, y * scale, gfxUI[g].width * scale, gfxUI[g].height * scale);
 		setTimeout(function() {
 			if (p === player[0]) {
@@ -601,37 +605,37 @@ function highliteMovementArrow(p, m) {
 
 function drawStatsPage(p) {
 	var ch = p.getChampion(p.championLeader);
-	if(ch !== null) {
-		ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
-		writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 16), COLOUR[COLOUR_YELLOW]);
-		writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 16), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage("0" + ch.level.toString(), p.ScreenX + 297, (p.ScreenY + 16), COLOUR[COLOUR_WHITE]);
+	if (ch !== null) {
+		ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+		writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
+		writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage("0" + ch.level.toString(), p.ScreenX + 297, (p.ScreenY + 15), COLOUR[COLOUR_WHITE]);
 
-		writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 24), COLOUR[COLOUR_BLUE_DARK]);
-		writeFontImage(ch.stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 24), COLOUR[COLOUR_YELLOW]);
-		writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 24), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 24), COLOUR[COLOUR_BLUE_DARK]);
-		writeFontImage(ch.stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 24), COLOUR[COLOUR_YELLOW]);
+		writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);
+		writeFontImage(ch.stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 23), COLOUR[COLOUR_YELLOW]);
+		writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 23), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);
+		writeFontImage(ch.stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 23), COLOUR[COLOUR_YELLOW]);
 
-		writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 32), COLOUR[COLOUR_BLUE_DARK]);
-		writeFontImage(ch.stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 32), COLOUR[COLOUR_YELLOW]);
-		writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 32), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 32), COLOUR[COLOUR_BLUE_DARK]);
-		writeFontImage(ch.stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 32), COLOUR[COLOUR_YELLOW]);
+		writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 31), COLOUR[COLOUR_BLUE_DARK]);
+		writeFontImage(ch.stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 31), COLOUR[COLOUR_YELLOW]);
+		writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 31), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 31), COLOUR[COLOUR_BLUE_DARK]);
+		writeFontImage(ch.stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 31), COLOUR[COLOUR_YELLOW]);
 
-		writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 40), COLOUR[COLOUR_BLACK]);
-		writeFontImage(ch.stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 40), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-		writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 40), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage(ch.stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 40), COLOUR[COLOUR_GREEN]);
+		writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 39), COLOUR[COLOUR_BLACK]);
+		writeFontImage(ch.stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 39), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+		writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 39), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage(ch.stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 39), COLOUR[COLOUR_GREEN]);
 
-		writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 48), COLOUR[COLOUR_BLACK]);
-		writeFontImage(ch.stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 48), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-		writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 48), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 48), COLOUR[COLOUR_GREEN]);
+		writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 47), COLOUR[COLOUR_BLACK]);
+		writeFontImage(ch.stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+		writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_GREY_DARKEST]);
+		writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 47), COLOUR[COLOUR_GREEN]);
 
-		writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 56), COLOUR[COLOUR_YELLOW]);
+		writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
 		var t = foodBar(ch.food, 62);
-		ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 65) * scale, t.width * scale, t.height * scale);
+		ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
 	}
 }
 
@@ -697,16 +701,16 @@ function uiClickAreas() {
 	var UCA = [];
 
 	UCA.push({
-		x: 2,
+		x: 0,
 		y: 0,
-		width: 47,
+		width: 50,
 		height: 44
 	}); //CHAMP 1
 	UCA.push({
-		x: 52,
-		y: 6,
-		width: 41,
-		height: 32
+		x: 51,
+		y: 0,
+		width: 43,
+		height: 44
 	}); //STATS GRAPH
 	UCA.push({
 		x: 0,
@@ -753,64 +757,64 @@ function uiClickAreas() {
 		height: 22
 	}); //CHARACTER STATS
 	UCA.push({
-		x: 290,
-		y: 23,
-		width: 14,
-		height: 14
+		x: 289,
+		y: 22,
+		width: 16,
+		height: 16
 	}); //INTERACT
 	UCA.push({
-		x: 306,
-		y: 24,
-		width: 14,
-		height: 12
+		x: 305,
+		y: 22,
+		width: 16,
+		height: 16
 	}); //OPEN POCKETS
 	UCA.push({
-		x: 228,
-		y: 49,
-		width: 10,
-		height: 11
+		x: 226,
+		y: 47,
+		width: 13,
+		height: 13
 	}); //ROTATE LEFT
 	UCA.push({
 		x: 239,
-		y: 49,
+		y: 47,
 		width: 16,
-		height: 11
+		height: 13
 	}); //MOVE FORWARD
 	UCA.push({
-		x: 254,
-		y: 49,
-		width: 10,
-		height: 11
+		x: 255,
+		y: 47,
+		width: 13,
+		height: 13
 	}); //ROTATE RIGHT
 	UCA.push({
 		x: 226,
-		y: 61,
-		width: 11,
-		height: 13
+		y: 60,
+		width: 13,
+		height: 14
 	}); //MOVE LEFT
 	UCA.push({
-		x: 238,
-		y: 63,
-		width: 18,
-		height: 11
+		x: 239,
+		y: 60,
+		width: 16,
+		height: 14
 	}); //MOVE BACKWARDS
 	UCA.push({
-		x: 257,
-		y: 61,
-		width: 11,
-		height: 13
+		x: 255,
+		y: 60,
+		width: 13,
+		height: 14
 	}); //MOVE RIGHT
 	UCA.push({
 		x: 269,
-		y: 47,
+		y: 45,
 		width: 17,
-		height: 13
+		height: 16
 	}); //ATTACK
 	UCA.push({
 		x: 269,
-		y: 62,
+		y: 61,
 		width: 17,
-		height: 13
+		height: 15
 	}); //DEFEND
 
 	UCA.push({
@@ -889,37 +893,37 @@ function uiClickAreas() {
 		x: 225,
 		y: 63,
 		width: 16,
-		height: 16
+		height: 15
 	}); //POCKET CHARACTER 0
 	UCA.push({
 		x: 241,
 		y: 63,
 		width: 16,
-		height: 16
+		height: 15
 	}); //POCKET CHARACTER 1
 	UCA.push({
 		x: 257,
 		y: 63,
 		width: 16,
-		height: 16
+		height: 15
 	}); //POCKET CHARACTER 2
 	UCA.push({
 		x: 273,
 		y: 63,
 		width: 16,
-		height: 16
+		height: 15
 	}); //POCKET CHARACTER 3
 	UCA.push({
 		x: 289,
 		y: 63,
 		width: 16,
-		height: 16
+		height: 15
 	}); //POCKET HAND
 	UCA.push({
-		x: 304,
+		x: 305,
 		y: 63,
 		width: 16,
-		height: 16
+		height: 15
 	}); //POCKET BACK
 
 	UCA.push({
@@ -935,17 +939,17 @@ function uiClickAreas() {
 		height: 16
 	}); //SAVE BUTTON
 	UCA.push({
-		x: 57,
-		y: 17,
+		x: 56,
+		y: 16,
 		width: 16,
 		height: 16
 	}); //SLEEP BUTTON
 	UCA.push({
 		x: 73,
-		y: 17,
+		y: 16,
 		width: 16,
 		height: 16
-	}); //BACK BUTTON
+	}); //LEFT BACK BUTTON
 	UCA.push({
 		x: 58,
 		y: 34,
@@ -962,37 +966,37 @@ function uiClickAreas() {
 		x: 289,
 		y: 46,
 		width: 16,
-		height: 16
+		height: 14
 	}); //Character Front Left Icon
 	UCA.push({
 		x: 305,
 		y: 46,
 		width: 16,
-		height: 16
+		height: 14
 	}); //Character Front Right Icon
 	UCA.push({
 		x: 289,
 		y: 61,
 		width: 16,
-		height: 16
+		height: 14
 	}); //Character Back Left Icon
 	UCA.push({
 		x: 305,
 		y: 61,
 		width: 16,
-		height: 16
+		height: 14
 	}); //Character Back Right Icon
 	UCA.push({
 		x: 225,
 		y: 0,
 		width: 95,
-		height: 101
+		height: 86
 	}); //Character Stats Exit
 	UCA.push({
-		x: 256,
-		y: 0,
-		width: 34,
-		height: 10
+		x: 255,
+		y: -1,
+		width: 35,
+		height: 8
 	}); //Spell Book Exit
 	UCA.push({
 		x: 0,
@@ -1055,56 +1059,56 @@ function uiClickAreas() {
 		height: 63
 	}); //Portal - Wooden Door       
 	UCA.push({
-		x: 114,
-		y: 53,
+		x: 113,
+		y: 52,
 		width: 15,
-		height: 13
+		height: 15
 	}); //Fairy - Serpent Spell
 	UCA.push({
 		x: 129,
-		y: 53,
+		y: 52,
 		width: 15,
-		height: 13
+		height: 15
 	}); //Fairy - Chaos Spell  
-        UCA.push({
+	UCA.push({
 		x: 145,
-		y: 53,
+		y: 52,
 		width: 15,
-		height: 13
+		height: 15
 	}); //Fairy - Dragon Spell  
-        UCA.push({
+	UCA.push({
 		x: 161,
-		y: 53,
+		y: 52,
 		width: 15,
-		height: 13
+		height: 15
 	}); //Fairy - Moon Spell  
-        UCA.push({
+	UCA.push({
 		x: 192,
-		y: 53,
+		y: 52,
 		width: 15,
-		height: 13
+		height: 15
 	}); //Fairy - Back Button   
-        UCA.push({
+	UCA.push({
 		x: 136,
-		y: 13,
-		width: 81,
-		height: 8
+		y: 12,
+		width: 85,
+		height: 10
 	}); //Fairy - Text Area 1 
-        UCA.push({
+	UCA.push({
 		x: 136,
-		y: 23,
-		width: 81,
-		height: 8
+		y: 22,
+		width: 85,
+		height: 10
 	}); //Fairy - Text Area 2 
-    return UCA;
+	return UCA;
 
 }
 
 function uiClickInArea(x, y, ui, p) {
 	if (x >= (p.ScreenX + uiClickArea[ui].x) * scale && x < (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width) * scale && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y < (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height) * scale) {
-		if (ui !== UI_CLICK_VIEWPORT) {                    
-			ctx.fillStyle = 'rgb(255, 0, 255)';
-			ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
+		if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA) {
+			//ctx.fillStyle = 'rgb(255, 255, 196)';
+			//ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
 		}
 		return true;
 	}
@@ -1175,13 +1179,13 @@ function coverViewPort(p) {
 }
 
 function gotoFairyMode(p, m) {
-	if(p.uiCenterPanel.mode !== m) {
+	if (p.uiCenterPanel.mode !== m) {
 		var ch = p.fairyDetails.champ;
-		if (m === UI_CENTER_PANEL_FAIRY ) {
+		if (m === UI_CENTER_PANEL_FAIRY) {
 			p.message(ch.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 0);
-		} else if(m === UI_CENTER_PANEL_FAIRY_SERPENT || m === UI_CENTER_PANEL_FAIRY_CHAOS || m === UI_CENTER_PANEL_FAIRY_DRAGON || m === UI_CENTER_PANEL_FAIRY_MOON) {
-			p.message("SELECT THY NEW SPELL, "+ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
-		} else if(m === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
+		} else if (m === UI_CENTER_PANEL_FAIRY_SERPENT || m === UI_CENTER_PANEL_FAIRY_CHAOS || m === UI_CENTER_PANEL_FAIRY_DRAGON || m === UI_CENTER_PANEL_FAIRY_MOON) {
+			p.message("SELECT THY NEW SPELL, " + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+		} else if (m === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
 
 		}
 		p.uiCenterPanel.mode = m;
@@ -1191,120 +1195,125 @@ function gotoFairyMode(p, m) {
 
 function showFairy(c, p) {
 
-    //ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 6 * scale);
-    coverViewPort(p);        
+	//ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 6 * scale);
+	coverViewPort(p);
 
-        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY ){
-            //ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
-            //p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 3000);
-            //writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
-            p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
-            for (x = 0; x < 5; x++) {
-                if (x < 4) {
-                        p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
-                } else {
-                        p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);                
-                }
-            }
-        }else{            	
-            //writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
-        }
-        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT ){            
-            showFairySpellScreen(0,p,c);
-        }
-        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_CHAOS ){            
-            showFairySpellScreen(1,p,c);
-        }
-        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_DRAGON ){            
-            showFairySpellScreen(2,p,c);
-        }
-        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON ){            
-            showFairySpellScreen(3,p,c);
-        }
-        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SPELLDETAILS ){            
-            showFairySpellDetailsScreen(p.fairyDetails.spell,p,c);
-        }
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY) {
+		//ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
+		//p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 3000);
+		//writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+		p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
+		for (x = 0; x < 5; x++) {
+			if (x < 4) {
+				p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+			} else {
+				p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+			}
+		}
+	} else {
+		//writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+	}
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT) {
+		showFairySpellScreen(0, p, c);
+	}
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_CHAOS) {
+		showFairySpellScreen(1, p, c);
+	}
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_DRAGON) {
+		showFairySpellScreen(2, p, c);
+	}
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON) {
+		showFairySpellScreen(3, p, c);
+	}
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
+		showFairySpellDetailsScreen(p.fairyDetails.spell, p, c);
+	}
 
 }
 
-function showFairySpellScreen(spellClass,p,c){
-    
-    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass+1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass+1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass+1].height * scale);
-            
-    var mySpells = c.getUnlearntSpellsByColour(spellClass);
-    var spellColour = null;
+function showFairySpellScreen(spellClass, p, c) {
 
-    switch (spellClass){
+	p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass + 1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].height * scale);
 
-        case 0:{spellColour = COLOUR[COLOUR_GREEN];};break
-        case 1:{spellColour = COLOUR[COLOUR_YELLOW];};break
-        case 2:{spellColour = COLOUR[COLOUR_RED];};break
-        case 3:{spellColour = COLOUR[COLOUR_BLUE];};break                    
+	var mySpells = c.getUnlearntSpellsByColour(spellClass);
+	var spellColour = null;
 
-    }
+	switch (spellClass) {
 
-    writeFontImage(mySpells[0].ref.name, 43, 12, spellColour,FONT_ALIGNMENT_LEFT, p.Portal);
-    writeFontImage(mySpells[1].ref.name, 43, 22, spellColour,FONT_ALIGNMENT_LEFT, p.Portal);
-    
-    for (x = 0; x < 5; x++) {
-        if (x < 4) {
-            if (x === spellClass){
-                p.Portal.drawImage(gfxUI[80 + x],17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
-            }                        
-        } else {
-                p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);                
-        }
-    }
-    
+		case 0:
+			{
+				spellColour = COLOUR[COLOUR_GREEN];
+			};
+			break
+		case 1:
+			{
+				spellColour = COLOUR[COLOUR_YELLOW];
+			};
+			break
+		case 2:
+			{
+				spellColour = COLOUR[COLOUR_RED];
+			};
+			break
+		case 3:
+			{
+				spellColour = COLOUR[COLOUR_BLUE];
+			};
+			break
+
+	}
+	writeFontImage(mySpells[0].name, 43, 12, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
+	writeFontImage(mySpells[1].name, 43, 22, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
+	p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 }
 
-function showFairySpellDetailsScreen(spell,p,c){
-            
-    var spellColour = [];
-    var spellClass = spell.ref.colour;
+function showFairySpellDetailsScreen(spell, p, c) {
 
-    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass+1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass+1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass+1].height * scale);
+	var spellColour = [];
+	var spellClass = spell.colour;
 
-    switch (spellClass){
+	p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass + 1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].height * scale);
 
-        case 0:{spellColour = COLOUR[COLOUR_GREEN];};break
-        case 1:{spellColour = COLOUR[COLOUR_YELLOW];};break
-        case 2:{spellColour = COLOUR[COLOUR_RED];};break
-        case 3:{spellColour = COLOUR[COLOUR_BLUE];};break                    
+	switch (spellClass) {
 
-    }
+		case 0:
+			{
+				spellColour = COLOUR[COLOUR_GREEN];
+			};
+			break
+		case 1:
+			{
+				spellColour = COLOUR[COLOUR_YELLOW];
+			};
+			break
+		case 2:
+			{
+				spellColour = COLOUR[COLOUR_RED];
+			};
+			break
+		case 3:
+			{
+				spellColour = COLOUR[COLOUR_BLUE];
+			};
+			break
 
-    writeFontImage(spell.ref.name, 43, 12, spellColour,FONT_ALIGNMENT_LEFT, p.Portal);
-    writeFontImage("LEVEL "+spell.ref.level, 43, 23, COLOUR[COLOUR_GREY_LIGHT],FONT_ALIGNMENT_LEFT, p.Portal);
-    writeFontImage(spell.ref.cost + " GOLD", 43, 31, COLOUR[COLOUR_GREY_LIGHT],FONT_ALIGNMENT_LEFT, p.Portal);
-    p.message(spell.ref.description, COLOUR[COLOUR_GREEN], false, 0);
-    
-    for (x = 0; x < 5; x++) {
-        if (x < 4) {
-            if (x === spellClass){
-                p.Portal.drawImage(gfxUI[80 + x],17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
-            }                        
-        } else {
-                p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);                
-        }
-    }
-    
-    writeFontImage("OK ?", 43, 55, COLOUR[COLOUR_RED],FONT_ALIGNMENT_LEFT, p.Portal);
-    
-}
+	}
 
-function buySpell(p){
-    
-    if (p.fairyDetails.champ.findPocketItem(ITEM_COINAGE).quantity >= p.fairyDetails.spell.ref.cost){
-        
-        p.message("", COLOUR[COLOUR_BLACK], false, 0);
-        p.fairyDetails.next++;
-        p.fairyDetails.champ = null;
-        p.uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
-        p.sleep();
-        
-    }else{
-        p.message(TEXT_PAUPER, COLOUR[COLOUR_GREEN], false, 0);
-    }
-    
+	writeFontImage(spell.name, 43, 12, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
+	writeFontImage("LEVEL " + spell.level, 43, 23, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
+	writeFontImage(spell.cost + " GOLD", 43, 31, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
+	p.message(spell.description, COLOUR[COLOUR_GREEN], false, 0);
+
+	for (x = 0; x < 5; x++) {
+		if (x < 4) {
+			if (x === spellClass) {
+				p.Portal.drawImage(gfxUI[80 + x], 17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+			}
+		} else {
+			p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+		}
+	}
+
+	writeFontImage("OK ?", 43, 55, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
+
 }

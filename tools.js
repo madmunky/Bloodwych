@@ -69,6 +69,17 @@ function convertBase(num) {
 	return this;
 }
 
+function getArmourNotation(num, size) {
+	var s = "0" + Math.abs(num);
+	s = s.substr(s.length - 2);
+	if(num >= 0) {
+		s = "+" + s;
+	} else {
+		s = "-" + s;
+	}
+	return s;
+}
+
 function seededRandom(seed) {
 	max = 1.0;
 	min = 0.0;

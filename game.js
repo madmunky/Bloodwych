@@ -66,19 +66,8 @@ function timerAction() {
 		}
 		if (timerMaster - pl.timerChampionStats >= tm) {
 			pl.timerChampionStats = timerMaster;
-			if(pl.sleeping && pl.fairyDetails.next > -1) {
-				if (pl.fairyDetails.champ === null) {
-					var nc = 0;
-					for (c = 0; c < pl.champion.length; c++) {
-						var ch = pl.getChampion(c);
-						if (ch.spellUp > 0 && pl.fairyDetails.next <= nc) {
-							pl.fairyDetails.champ = ch;
-							gotoFairyMode(pl, UI_CENTER_PANEL_FAIRY);
-							break;
-						}
-						nc++;
-					}
-				}
+			if(pl.sleeping) {
+				pl.checkChampionUp();
 			}
 			for (c = 0; c < pl.champion.length; c++) {
 				var ch = pl.getChampion(c);

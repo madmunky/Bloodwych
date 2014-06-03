@@ -169,7 +169,7 @@ Item.prototype.getArmourClass = function() {
 }
 
 Item.prototype.setPocketItem = function(id, q) {
-	if (typeof id === "undefined" || id === 0) {
+	if (typeof id === "undefined" || id === 0 || (typeof q !== "undefined" && q <= 0)) {
 		id = 0;
 		q = 0;
 	} else if (typeof q === "undefined") {
@@ -239,15 +239,14 @@ function initItems(t) {
 		}
 
 		//TESTING
-		/*
-		item[t.id][item[t.id].length] = new Item(ITEM_CRYSTAL_GLOVES, 1, {
+		/*item[t.id][item[t.id].length] = new Item(ITEM_CRYSTAL_PLATE, 1, {
 			tower: t.id,
 			floor: 3,
 			x: 12,
 			y: 22,
 			square: 0
 		});
-		item[t.id][item[t.id].length] = new Item(ITEM_MITHRIL_GLOVES, 1, {
+		item[t.id][item[t.id].length] = new Item(ITEM_WAR_SHIELD, 1, {
 			tower: t.id,
 			floor: 3,
 			x: 12,

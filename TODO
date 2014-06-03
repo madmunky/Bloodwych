@@ -4,31 +4,26 @@
 
 JORG
 -----
-* COD Fix Big monster 'edge of screen'
-* COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
-* COD Get tower switching for 1 player
-* COD Fairy timer
-* COD Font fade update (permanent message)
+COD Spell projectiles and effects
+COD Fix Big monster 'edge of screen'
+COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
+COD Get tower switching for 1 player
+COD Fix attacking through wood
+COD Fix death screen as I did with asleep
+BUG	Avoid clicking at wall bottom of shelf to trigger same effect as putting item into shelf.
 
 CHRIS
 ------
-* GFX Big monster drawing fixes
-* UI  Communication Text Array
-* UI  Finish Spell Book
-* UI  Change drawImage cords for UI images to use the uiClickInArea values
-* UI  Make Fairy Screens
-* UI  Make Start Screen
-* UI  Make Champion select start screen
-* UI  Find Amour Palette's
-
+GFX Big monster drawing fixes
+UI  Communication Text Array
+UI  Finish Spell Book
+UI  Make Start Screen
+UI  Make Champion select start screen
+UI  Find Amour Palette's
 
 QUESTIONS FOR CHRIS
 -------------------
+What are the dungeon codes for mindrock, formwall, firepath and concealed shelf?
 
 QUESTIONS FOR JORG
 ------------------
-1. Need to try link a text to a screen (fairy)
-2. I have all the spell descriptions but not sure how to add them to your spell object
-	In initSpells(), extend new Spell with the proper parameters: new Spell(id, name, description, prof, level, cost);
-3. need a function to return the next two spells available for a champ
-4. Need to work out how we are going to store all this text I have found :)

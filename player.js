@@ -27,9 +27,9 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.timerChampionStats = 0;
 	this.fairyDetails = {
 		champ: null,
-		spell: null,
-		next: -1
+		spell: null
 	};
+	this.nextChampionUp = 0;
 	this.uiRightPanel = {
 		activePocket: 0,
 		mode: UI_RIGHT_PANEL_MAIN
@@ -460,19 +460,61 @@ Player.prototype.exchangeChampionPosition = function(ct, c) {
 	}
 }
 
-Player.prototype.checkAllChampionsWhoGainSpell = function() {
+Player.prototype.getChampionsForUp = function() {
 	var chs = new Array();
+	var c1 = this.getOrderedChampionIds();
 	for (c = 0; c < this.champion.length; c++) {
-		var ch = this.getChampion(c);
-		if (ch !== null && !ch.monster.dead && ch.recruitment.attached && ch.recruitment.playerId > -1 && ch.spellUp > 0) {
-			chs.push(ch);
+		var ch = this.getChampion(c1[c]);
+		if (ch !== null && !ch.monster.dead && ch.recruitment.attached && ch.recruitment.playerId > -1) {
+			if (ch.levelUp > 0) {
+				chs.push({
+					champ: ch,
+					up: 'level'
+				});
+			}
+			if (ch.spellUp > 0) {
+				chs.push({
+					champ: ch,
+					up: 'spell'
+				});
+			}
 		}
 	}
 	return chs;
 }
 
+Player.prototype.checkChampionUp = function() {
+	if (this.nextChampionUp > -1 && this.fairyDetails.champ === null) {
+		var nc = 0;
+		cs = this.getChampionsForUp();
+		for (c in cs) {
+			if(this.nextChampionUp <= nc) {
+				var ch = cs[c].champ;
+				var up = cs[c].up;
+				if (up === 'spell') {
+					if (ch.spellUp > 0) {
+						this.fairyDetails.champ = ch;
+						gotoFairyMode(this, UI_CENTER_PANEL_FAIRY);
+						return true;
+					}
+				} else if (up === 'level') {
+					if (ch.levelUp > 0) {
+						ch.gainLevel();
+						return true;
+					}
+				}
+			}
+			nc++;
+		}
+	}
+	return false;
+}
+
 Player.prototype.sleep = function() {
 	this.sleeping = true;
+	this.message();
+	this.fairyDetails.champ = null;
+	this.uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
 	this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 	this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 	this.attack(false);
@@ -483,6 +525,8 @@ Player.prototype.sleep = function() {
 
 Player.prototype.wakeUp = function() {
 	this.sleeping = false;
+	this.message();
+	this.fairyDetails.champ = null;
 	redrawUI(this.id);
 }
 
@@ -593,7 +637,6 @@ Player.prototype.gainChampionXp = function(xp, ch) {
 				if (ch.xp2 >= getXpForLevel(ch.level)) {
 					ch.xp2 = 0;
 					ch.levelUp++;
-					ch.checkGainLevel();
 				}
 			}
 		}
@@ -706,11 +749,7 @@ Player.prototype.getActivePocketChampion = function() {
 }
 
 Player.prototype.consumeItemInHand = function() {
-	if (this.pocket.quantity <= 1) {
-		this.pocket.setPocketItem();
-	} else {
-		this.pocket.quantity--;
-	}
+	this.pocket.setPocketItem(this.pocket, this.pocket.quantity - 1);
 }
 
 Player.prototype.useItemInHand = function() {
@@ -937,6 +976,12 @@ Player.prototype.getObject = function(f, x, y, d) {
 
 
 Player.prototype.message = function(txt, col, wait, delay) {
+	if(typeof txt === "undefined") {
+		txt = '';
+	}
+	if(typeof col === "undefined") {
+		col = COLOUR[COLOUR_GREEN];
+	}
 	if (typeof delay === "undefined") {
 		delay = 3000;
 	}
@@ -944,7 +989,12 @@ Player.prototype.message = function(txt, col, wait, delay) {
 	if (typeof wait === "undefined") {
 		wait = false;
 	}
-	if (this.messageTimeout === 0 || !wait) {
+	if(txt === '') {
+		ctx.clearRect(0, (this.ScreenY - 9) * scale, 320 * scale, 8 * scale);
+		if(this.messageTimeout !== 0){
+			clearTimeout(this.messageTimeout);
+		}
+	} else if (this.messageTimeout === 0 || !wait) {
 		fadeFont(this, txt, 50, delay, 0, this.ScreenY, col);
 	} else {
 		setTimeout(function() {

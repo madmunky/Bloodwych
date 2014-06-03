@@ -36,6 +36,7 @@ function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, 
 	        if (alpha > 1) {
 			    (function(fontString, locationX, locationY, paletteTo, alignment) {
 			    	clearInterval(p.messageTimeout);
+			    	p.messageTimeout = 0;
 			    	if(delay > 0) {
 				    	var alpha = 1.0;
 					    p.messageTimeout = setTimeout(function() {
