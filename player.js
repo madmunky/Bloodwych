@@ -16,7 +16,6 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.pocket = newPocketItem();
 	this.dead = false;
 	this.sleeping = false;
-	this.canShowFairyTimer = false;
 	this.lastX = 0;
 	this.lastY = 0;
 	this.lastFloor = 0;
@@ -26,7 +25,11 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.towerSwitches = new Array();
 	this.messageTimeout = 0;
 	this.timerChampionStats = 0;
-        this.fairyDetails = {champ: null,spell:null};
+	this.fairyDetails = {
+		champ: null,
+		spell: null,
+		next: -1
+	};
 	this.uiRightPanel = {
 		activePocket: 0,
 		mode: UI_RIGHT_PANEL_MAIN
@@ -35,10 +38,10 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 		champs: new Array(false, false, false, false),
 		mode: UI_LEFT_PANEL_MODE_STATS
 	};
-        this.uiCenterPanel = {
-            mode: UI_CENTER_PANEL_VIEWPORT
-        };
-        
+	this.uiCenterPanel = {
+		mode: UI_CENTER_PANEL_VIEWPORT
+	};
+
 	this.communication = [];
 
 	this.PlayerCanvas.width = 128 * scale;
@@ -228,7 +231,7 @@ Player.prototype.setMovementData = function() {
 
 Player.prototype.rotate = function(r) {
 	if (!this.dead && !this.sleeping) {
-		if(r === -1) {
+		if (r === -1) {
 			highliteMovementArrow(this, 0);
 		} else {
 			highliteMovementArrow(this, 2);
@@ -244,7 +247,7 @@ Player.prototype.rotateTo = function(d) {
 
 Player.prototype.move = function(d) {
 	if (!this.dead && !this.sleeping) {
-		m = [ 1, 5, 4, 3 ];
+		m = [1, 5, 4, 3];
 		highliteMovementArrow(this, m[d]);
 		this.moving = d;
 		this.lastX = this.x;
@@ -399,7 +402,7 @@ Player.prototype.getAliveChampionCount = function() {
 	var cnt = 0;
 	for (c = 0; c < this.champion.length; c++) {
 		var ch = this.getChampion(c);
-		if(ch !== null) {
+		if (ch !== null) {
 			var dd = ch.monster.dead;
 			if (!dd) {
 				cnt++;
@@ -468,6 +471,21 @@ Player.prototype.checkAllChampionsWhoGainSpell = function() {
 	return chs;
 }
 
+Player.prototype.sleep = function() {
+	this.sleeping = true;
+	this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
+	this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+	this.attack(false);
+	coverViewPort(this);
+	writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
+	writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
+}
+
+Player.prototype.wakeUp = function() {
+	this.sleeping = false;
+	redrawUI(this.id);
+}
+
 //check if all champions are dead
 //also assign a new champion as leader. used when the leader dies
 Player.prototype.checkDead = function() {
@@ -534,7 +552,7 @@ Player.prototype.getChampion = function(loc) {
 Player.prototype.getChampionPosition = function(id) {
 	for (c = 0; c < this.champion.length; c++) {
 		var ch = this.getChampion(c);
-		if(ch.id === id) {
+		if (ch.id === id) {
 			return c;
 		}
 	}
@@ -564,7 +582,7 @@ Player.prototype.gainChampionXp = function(xp, ch) {
 	}
 
 	function gainChampionXp1() {
-		if(ch !== null) {
+		if (ch !== null) {
 			ch.xp += xp;
 			if (ch.xp > 255) {
 				ch.xp = ch.xp % 256;
@@ -591,7 +609,7 @@ Player.prototype.alertDamagedPlayer = function() {
 			toggleChampUI(ch, this, true);
 		}
 	}
-	this.sleeping = false;
+	this.wakeUp();
 }
 
 Player.prototype.resetChampUI = function() {
@@ -667,14 +685,14 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 
 Player.prototype.drawItem = function(it, distance, offset) {
 	var iGfx = itemRef[it.id].gfxD[distance];
-	if(typeof iGfx !== "undefined") {
-		if(this.getObject(this.floor, it.location.x, it.location.y, 2) === 'shelf') {
+	if (typeof iGfx !== "undefined") {
+		if (this.getObject(this.floor, it.location.x, it.location.y, 2) === 'shelf') {
 			var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
-	   		var offy = 60 - Math.floor(iGfx.height) - offset.y;
+			var offy = 60 - Math.floor(iGfx.height) - offset.y;
 		} else {
-		    var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
-	   		var offy = 77 - Math.floor(iGfx.height) - offset.y;
-	    }
+			var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
+			var offy = 77 - Math.floor(iGfx.height) - offset.y;
+		}
 		this.Portal.drawImage(iGfx, offx * scale, offy * scale, iGfx.width * scale, iGfx.height * scale);
 	}
 }
@@ -759,10 +777,10 @@ Player.prototype.exchangeItemWithHand = function(s) {
 				it.setPocketItem(itH.id, itH.quantity + qty);
 				itH.setPocketItem(temp.id, temp.quantity);
 			} else {
-				if((s === POCKET_LEFT_HAND || s === POCKET_RIGHT_HAND) && it.id === 0) {
-					if(itH.type === ITEM_TYPE_GLOVES) {
+				if ((s === POCKET_LEFT_HAND || s === POCKET_RIGHT_HAND) && it.id === 0) {
+					if (itH.type === ITEM_TYPE_GLOVES) {
 						this.exchangeItemWithHand(POCKET_GLOVES);
-					} else if(itH.id === 0) {
+					} else if (itH.id === 0) {
 						var it = ch.pocket[POCKET_GLOVES];
 					}
 				}
@@ -826,9 +844,9 @@ Player.prototype.actionItem = function(s) {
 			}
 		}
 		if (typeof it !== "undefined") {
-			for(c = 0; c < this.champion.length; c++) {
+			for (c = 0; c < this.champion.length; c++) {
 				var ch = this.getChampion(c);
-				if(ch !== null && ch.id === it[0].id - ITEM_BLODWYN_RIP && !ch.recruitment.attached) {
+				if (ch !== null && ch.id === it[0].id - ITEM_BLODWYN_RIP && !ch.recruitment.attached) {
 					ch.recruitment.attached = true;
 					return true;
 				}
@@ -848,16 +866,16 @@ Player.prototype.actionItem = function(s) {
 Player.prototype.getItemsInRange = function(pos2) {
 	var itemsInRange = [];
 	var pos = -1;
-	for(i = item[towerThis].length - 1; i >= 0; i--) {
+	for (i = item[towerThis].length - 1; i >= 0; i--) {
 		var it = item[towerThis][i];
 		if (this.floor === it.location.floor) {
 			pos = coordinatesToPos(it.location.x, it.location.y, this.x, this.y, this.d);
 			sq = (6 + it.location.square - this.d) % 4;
 			sq2 = (sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) ? 0 : 1;
-			if(pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
+			if (pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 				//check shelf
 				var sh = false;
-				if(this.getObject(it.location.floor, it.location.x, it.location.y, 2) === 'shelf') {
+				if (this.getObject(it.location.floor, it.location.x, it.location.y, 2) === 'shelf') {
 					sh = true;
 				}
 				itemsInRange.unshift({
@@ -874,7 +892,7 @@ Player.prototype.getItemsInRange = function(pos2) {
 }
 
 Player.prototype.castSpell = function(s, c) {
-	if(c.sp >= spell[s].cost) {
+	if (c.sp >= spell[s].cost) {
 		castSpell(s, c.monster);
 		c.sp -= spell[s].cost;
 	}
@@ -887,10 +905,10 @@ Player.prototype.getObjectOnPos = function(pos, d) {
 
 //if (this.getBinaryView(pos18, 12, 4) === '2' && this.getBinaryView(pos18, ((5 + d - this.d) % 4) * 2) === '1') {
 Player.prototype.getObject = function(f, x, y, d) {
-	if(x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
+	if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
 		var hex = tower[towerThis].floor[f].Map[y][x];
-		if(getHexToBinaryPosition(hex, 12, 4) === '1') { //wall
-			if (typeof d ==="undefined" || (this.d + d) % 4 === parseInt(getHexToBinaryPosition(hex, 10, 2))) {
+		if (getHexToBinaryPosition(hex, 12, 4) === '1') { //wall
+			if (typeof d === "undefined" || (this.d + d) % 4 === parseInt(getHexToBinaryPosition(hex, 10, 2))) {
 				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco
 					if (getHexToBinaryPosition(hex, 6, 2) === '0') { //shelf
 						return 'shelf';
@@ -902,14 +920,14 @@ Player.prototype.getObject = function(f, x, y, d) {
 				}
 			}
 			return 'wall';
-		} else if(getHexToBinaryPosition(hex, 12, 4) === '2') { //wood
-			if(getHexToBinaryPosition(hex, ((7 - d - this.d) % 4) * 2) === '1') {
+		} else if (getHexToBinaryPosition(hex, 12, 4) === '2') { //wood
+			if (getHexToBinaryPosition(hex, ((7 - d - this.d) % 4) * 2) === '1') {
 				return 'wood-door';
 			} else if (getHexToBinaryPosition(hex, ((7 - d - this.d) % 4) * 2 + 1, 1) === '1') {
 				return 'wood';
 			}
-		} else if(getHexToBinaryPosition(hex, 12, 4) === '5') { //door
-			if (typeof d ==="undefined" || (this.d + d) % 2 === parseInt(getHexToBinaryPosition(hex, 5, 1))) {
+		} else if (getHexToBinaryPosition(hex, 12, 4) === '5') { //door
+			if (typeof d === "undefined" || (this.d + d) % 2 === parseInt(getHexToBinaryPosition(hex, 5, 1))) {
 				return 'door';
 			}
 		}
@@ -919,7 +937,7 @@ Player.prototype.getObject = function(f, x, y, d) {
 
 
 Player.prototype.message = function(txt, col, wait, delay) {
-	if(typeof delay === "undefined") {
+	if (typeof delay === "undefined") {
 		delay = 3000;
 	}
 	var self = this;

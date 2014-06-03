@@ -138,212 +138,212 @@ function touchXY(e) {
 
 function processCanvasInput(x, y) {
 
-	for (p = 0; p < player.length; p++) {
+	for (pid = 0; pid < player.length; pid++) {
+		var p = player[pid];
 		var successfulClick = false;
 
-		if (!player[p].sleeping && !player[p].dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, player[p])) {
-			successfulClick = checkViewPortal(player[p], x, y);
+		if (!p.sleeping && !p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
+			successfulClick = checkViewPortal(p, x, y);
 		}
 
-		if (player[p].sleeping && player[p].fairyDetails.champ === null && uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, player[p])) {
-			player[p].sleeping = false;
+		if (p.sleeping && p.fairyDetails.champ === null && uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, p)) {
+			p.wakeUp();
 		}
                 
-                if (player[p].sleeping && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, player[p])) {
-                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY_SERPENT;                        
+                if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY){
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
+                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SERPENT);
                     }
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_CHAOS_SPELL, player[p])) {
-                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY_CHAOS;
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_CHAOS_SPELL, p)) {
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_CHAOS);
                     }
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_DRAGON_SPELL, player[p])) {
-                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY_DRAGON;
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_DRAGON_SPELL, p)) {
+                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_DRAGON);
                     }
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_MOON_SPELL, player[p])) {
-                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY_MOON;
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_MOON_SPELL, p)) {
+                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_MOON);
                     }
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, player[p])) {
-                        player[p].fairyDetails.champ = null;
-                        player[p].canShowFairyTimer = -1;
-                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+                    	p.message("", COLOUR[COLOUR_BLACK], false, 0);
+                    	p.fairyDetails.next++;
+                        p.fairyDetails.champ = null;
+                        p.uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
+                        p.sleep();
                     }
-			successfulClick = checkViewPortal(player[p], x, y);
+			successfulClick = checkViewPortal(p, x, y);
 		}
-                if (player[p].sleeping && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, player[p])) {
+                if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT){
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
                         //show buy spell screen                       
                     } 
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, player[p])) {
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
                         //show buy spell screen                       
                     } 
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, player[p])) {
-                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY;
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
                     }
                 }
-                if (player[p].sleeping && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_CHAOS){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, player[p])) {
+                if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_CHAOS){
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
                         //show buy spell screen                       
                     } 
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, player[p])) {
-                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY;
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
                     }
                 }
-                if (player[p].sleeping && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_DRAGON){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, player[p])) {
+                if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_DRAGON){
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
                         //show buy spell screen                       
                     } 
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, player[p])) {
-                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY;
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
                     }
                 }
-                if (player[p].sleeping && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, player[p])) {
+                if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON){
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
                         //show buy spell screen                       
                     } 
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, player[p])) {
-                        player[p].uiCenterPanel.mode = UI_CENTER_PANEL_FAIRY;
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
                     }
                 }
 
-		//if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, player[p])) {
-		//	player[p].action();
+		//if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, p)) {
+		//	p.action();
 		//	successfulClick = true;
 		//}
 
-		if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
+		if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
 
-			if (uiClickInArea(x, y, UI_CLICK_OPEN_POCKETS, player[p])) {
-				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_POCKETS;
-				player[p].uiRightPanel.activePocket = 0;
+			if (uiClickInArea(x, y, UI_CLICK_OPEN_POCKETS, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_POCKETS;
+				p.uiRightPanel.activePocket = 0;
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_INTERACT, player[p])) {
-				player[p].action();
+			} else if (uiClickInArea(x, y, UI_CLICK_INTERACT, p)) {
+				p.action();
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, player[p])) {
-				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_SPELLBOOK;
+			} else if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_SPELLBOOK;
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_CHARACTER_STATS, player[p])) {
-				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_STATS;
+			} else if (uiClickInArea(x, y, UI_CLICK_CHARACTER_STATS, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_STATS;
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_LEFT, player[p])) {
-				player[p].rotate(-1);
-			} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_RIGHT, player[p])) {
-				player[p].rotate(1);
-			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_FORWARD, player[p])) {
-				player[p].move(DIRECTION_NORTH);
-			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_BACKWARDS, player[p])) {
-				player[p].move(DIRECTION_SOUTH);
-			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_LEFT, player[p])) {
-				player[p].move(DIRECTION_WEST);
-			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_RIGHT, player[p])) {
-				player[p].move(DIRECTION_EAST);
-			} else if (uiClickInArea(x, y, UI_CLICK_ATTACK, player[p])) {
-				player[p].attacking = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_DEFEND, player[p])) {
-				//player[p].attacking = false;
-				player[p].attack(false);
-			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, player[p])) {
-				player[p].exchangeChampionPosition(player[p].championHighlite, 0);
+			} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_LEFT, p)) {
+				p.rotate(-1);
+			} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_RIGHT, p)) {
+				p.rotate(1);
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_FORWARD, p)) {
+				p.move(DIRECTION_NORTH);
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_BACKWARDS, p)) {
+				p.move(DIRECTION_SOUTH);
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_LEFT, p)) {
+				p.move(DIRECTION_WEST);
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_RIGHT, p)) {
+				p.move(DIRECTION_EAST);
+			} else if (uiClickInArea(x, y, UI_CLICK_ATTACK, p)) {
+				p.attacking = true;
+			} else if (uiClickInArea(x, y, UI_CLICK_DEFEND, p)) {
+				//p.attacking = false;
+				p.attack(false);
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, p)) {
+				p.exchangeChampionPosition(p.championHighlite, 0);
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_RIGHT, player[p])) {
-				player[p].exchangeChampionPosition(player[p].championHighlite, 1);
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_RIGHT, p)) {
+				p.exchangeChampionPosition(p.championHighlite, 1);
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_LEFT, player[p])) {
-				player[p].exchangeChampionPosition(player[p].championHighlite, 3);
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_LEFT, p)) {
+				p.exchangeChampionPosition(p.championHighlite, 3);
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_RIGHT, player[p])) {
-				player[p].exchangeChampionPosition(player[p].championHighlite, 2);
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_RIGHT, p)) {
+				p.exchangeChampionPosition(p.championHighlite, 2);
 				successfulClick = true;
 			}
 
-		} else if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
+		} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
 			for (s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
-				if (uiClickInArea(x, y, s, player[p])) {
-					player[p].exchangeItemWithHand(s - UI_CLICK_POCKET_SLOT_1);
+				if (uiClickInArea(x, y, s, p)) {
+					p.exchangeItemWithHand(s - UI_CLICK_POCKET_SLOT_1);
 					successfulClick = true;
 					break;
 				}
 			}
 			for (cid = UI_CLICK_POCKET_CHARACTER_0; cid <= UI_CLICK_POCKET_CHARACTER_3; cid++) {
-				if (uiClickInArea(x, y, cid, player[p])) {
+				if (uiClickInArea(x, y, cid, p)) {
 					var ap = cid - UI_CLICK_POCKET_CHARACTER_0;
-					var c = player[p].getOrderedChampionIds();
-					var ch = player[p].getChampion(c[ap]);
+					var c = p.getOrderedChampionIds();
+					var ch = p.getChampion(c[ap]);
 					if (ch !== null && ch.recruitment.attached) {
-						player[p].uiRightPanel.activePocket = ap;
+						p.uiRightPanel.activePocket = ap;
 						successfulClick = true;
 					}
 					break;
 				}
 			}
-			if (uiClickInArea(x, y, UI_CLICK_POCKET_HAND, player[p])) {
-				player[p].useItemInHand();
+			if (uiClickInArea(x, y, UI_CLICK_POCKET_HAND, p)) {
+				p.useItemInHand();
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, player[p])) {
-				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+			} else if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				successfulClick = true;
 			}
 
-		} else if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
-			if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, player[p])) {
-				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+		} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
+			if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				successfulClick = true;
 			}
-		} else if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
-			if (uiClickInArea(x, y, UI_CLICK_CLOSE_SPELLBOOK, player[p])) {
-				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+		} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
+			if (uiClickInArea(x, y, UI_CLICK_CLOSE_SPELLBOOK, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 				successfulClick = true;
 			}
 		}
-		if (player[p].uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
+		if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
 
-			if (uiClickInArea(x, y, UI_CLICK_CHAMP1, player[p])) {
-				toggleChampUI(0, player[p]);
+			if (uiClickInArea(x, y, UI_CLICK_CHAMP1, p)) {
+				toggleChampUI(0, p);
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP2, player[p])) {
-				toggleChampUI(1, player[p]);
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP2, p)) {
+				toggleChampUI(1, p);
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP3, player[p])) {
-				toggleChampUI(2, player[p]);
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP3, p)) {
+				toggleChampUI(2, p);
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP4, player[p])) {
-				toggleChampUI(3, player[p]);
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP4, p)) {
+				toggleChampUI(3, p);
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_STATS_BOX, player[p])) {
-				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_COMMAND;
+			} else if (uiClickInArea(x, y, UI_CLICK_STATS_BOX, p)) {
+				p.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_COMMAND;
 				successfulClick = true;
 			}
 
-		} else if (player[p].uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
+		} else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
 
-			if (uiClickInArea(x, y, UI_CLICK_BACK, player[p])) {
-				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
+			if (uiClickInArea(x, y, UI_CLICK_BACK, p)) {
+				p.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, p)) {
 				alert('PAUSED');
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_SAVE, player[p])) {
+			} else if (uiClickInArea(x, y, UI_CLICK_SAVE, p)) {
 				alert('SAVE GAME');
 				successfulClick = true;
-			} else if (uiClickInArea(x, y, UI_CLICK_SLEEP, player[p])) {
-				player[p].sleeping = true;
-				player[p].canShowFairyTimer = false;
-				player[p].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
-				player[p].uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-				player[p].attack(false);
+			} else if (uiClickInArea(x, y, UI_CLICK_SLEEP, p)) {
+				p.fairyDetails.next = 0;
+				p.sleep();
 				successfulClick = true;
 			}
-			//            if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, player[p])) {
+			//            if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, p)) {
 			//                alert('TOGGLE UP');
 			//                successfulClick = true;
 			//            }
-			//            if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, player[p])) {
+			//            if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, p)) {
 			//                alert('TOGGLE DOWN');
 			//                successfulClick = true;
 			//            }
 		}
 		if (successfulClick) {
-			redrawUI(p);
+			redrawUI(p.id);
 		}
 	}
 }

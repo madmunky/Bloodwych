@@ -7,8 +7,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 		attached: false,
 		playerId: 0,
 		position: 0,
-		attackTimer: 0,
-		canShowFairyTimer: false
+		attackTimer: 0
 	};
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -207,8 +206,6 @@ Champion.prototype.restoreStats = function() {
 	if(typeof p !== "undefined") {
 		if (alertPlayer) {
 			p.alertDamagedPlayer();
-		} else {
-			this.recruitment.canShowFairyTimer = true;
 		}
 		redrawUI(p.id);
 	}

@@ -1174,15 +1174,30 @@ function coverViewPort(p) {
 
 }
 
+function gotoFairyMode(p, m) {
+	if(p.uiCenterPanel.mode !== m) {
+		var ch = p.fairyDetails.champ;
+		if (m === UI_CENTER_PANEL_FAIRY ) {
+			p.message(ch.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 0);
+		} else if(m === UI_CENTER_PANEL_FAIRY_SERPENT || m === UI_CENTER_PANEL_FAIRY_CHAOS || m === UI_CENTER_PANEL_FAIRY_DRAGON || m === UI_CENTER_PANEL_FAIRY_MOON) {
+			p.message("SELECT THY NEW SPELL, "+ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+		} else if(m === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
+
+		}
+		p.uiCenterPanel.mode = m;
+		showFairy(ch, p);
+	}
+}
+
 function showFairy(c, p) {
 
-    ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 6 * scale);
+    //ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 6 * scale);
     coverViewPort(p);        
 
         if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY ){
-            ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
+            //ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
             //p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 3000);
-            writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+            //writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
             p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
             for (x = 0; x < 5; x++) {
                 if (x < 4) {
@@ -1192,7 +1207,7 @@ function showFairy(c, p) {
                 }
             }
         }else{            	
-            writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+            //writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
         }
         if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT ){            
             showFairySpellScreen(0,p,c);

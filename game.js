@@ -59,14 +59,29 @@ function timerAction() {
 	}
 
 	for (p = 0; p < player.length; p++) {
+		var pl = player[p];
 		var tm = 100;
-		if (player[p].sleeping) {
+		if (pl.sleeping) {
 			tm = 50;
 		}
-		if (timerMaster - player[p].timerChampionStats >= tm) {
-			player[p].timerChampionStats = timerMaster;
-			for (c = 0; c < player[p].champion.length; c++) {
-				var ch = player[p].getChampion(c);
+		if (timerMaster - pl.timerChampionStats >= tm) {
+			pl.timerChampionStats = timerMaster;
+			if(pl.sleeping && pl.fairyDetails.next > -1) {
+				if (pl.fairyDetails.champ === null) {
+					var nc = 0;
+					for (c = 0; c < pl.champion.length; c++) {
+						var ch = pl.getChampion(c);
+						if (ch.spellUp > 0 && pl.fairyDetails.next <= nc) {
+							pl.fairyDetails.champ = ch;
+							gotoFairyMode(pl, UI_CENTER_PANEL_FAIRY);
+							break;
+						}
+						nc++;
+					}
+				}
+			}
+			for (c = 0; c < pl.champion.length; c++) {
+				var ch = pl.getChampion(c);
 				if (ch !== null) {
 					ch.restoreStats();
 				}
