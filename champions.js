@@ -210,8 +210,8 @@ Champion.prototype.restoreStats = function() {
 
 
 
-Champion.prototype.getNextSpells = function(ch, prof) {
-
+Champion.prototype.getNextSpells = function(prof) {
+	
 }
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
