@@ -1259,9 +1259,36 @@ function showFairySpellScreen(spellClass,p,c){
 }
 
 function showFairySpellDetailsScreen(spell,p,c){
+            
+    var spellColour = [];
+    var spellClass = spell.ref.colour;
+
+    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass+1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass+1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass+1].height * scale);
+
+    switch (spellClass){
+
+        case 0:{spellColour = COLOUR[COLOUR_GREEN];};break
+        case 1:{spellColour = COLOUR[COLOUR_YELLOW];};break
+        case 2:{spellColour = COLOUR[COLOUR_RED];};break
+        case 3:{spellColour = COLOUR[COLOUR_BLUE];};break                    
+
+    }
+
+    writeFontImage(spell.ref.name, 43, 12, spellColour,FONT_ALIGNMENT_LEFT, p.Portal);
+    writeFontImage("LEVEL "+spell.ref.level, 43, 23, COLOUR[COLOUR_GREY_LIGHT],FONT_ALIGNMENT_LEFT, p.Portal);
+    writeFontImage(spell.ref.cost + " GOLD", 43, 31, COLOUR[COLOUR_GREY_LIGHT],FONT_ALIGNMENT_LEFT, p.Portal);
     
     
+    for (x = 0; x < 5; x++) {
+        if (x < 4) {
+            if (x === spellClass){
+                p.Portal.drawImage(gfxUI[80 + x],17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+            }                        
+        } else {
+                p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);                
+        }
+    }
     
-    
+    writeFontImage("OK ?", 43, 55, COLOUR[COLOUR_RED],FONT_ALIGNMENT_LEFT, p.Portal);
     
 }

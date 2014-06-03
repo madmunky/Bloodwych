@@ -174,44 +174,73 @@ function processCanvasInput(x, y) {
 		}
                 if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT){
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
-                        //show buy spell screen                       
+                        //show buy spell screen    
+                        p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(0)[0];
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
                     } 
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
-                        //show buy spell screen                       
+                        //show buy spell screen  
+                        p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(0)[1];
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
                     } 
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
                     }
                 }
                 if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_CHAOS){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
-                        //show buy spell screen                       
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
+                        //show buy spell screen    
+                        p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(1)[0];
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+                    } 
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
+                        //show buy spell screen  
+                        p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(1)[1];
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
                     } 
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
                     }
                 }
                 if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_DRAGON){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
-                        //show buy spell screen                       
+                   if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
+                        //show buy spell screen    
+                        p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(2)[0];
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+                    } 
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
+                        //show buy spell screen  
+                        p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(2)[1];
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
                     } 
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
                     }
                 }
                 if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON){
-                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
-                        //show buy spell screen                       
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
+                        //show buy spell screen    
+                        p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(3)[0];
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+                    } 
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
+                        //show buy spell screen  
+                        p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(3)[1];
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
                     } 
                     if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-                    	gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
                     }
                 }
-
-		//if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, p)) {
-		//	p.action();
-		//	successfulClick = true;
-		//}
+                
+                if (p.sleeping && p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SPELLDETAILS){
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
+                        //show buy spell screen
+                    }
+                    if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+                        gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+                    }
+                }
 
 		if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
 
