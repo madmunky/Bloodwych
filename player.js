@@ -298,9 +298,9 @@ Player.prototype.attack = function(attack, target) {
 					att.monster.attacking = true;
 					att.doDamageTo(def, pwr, aExh, dExh);
 					if (def instanceof Champion) {
-						PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
+						PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
 					} else if (def instanceof Monster) {
-						PrintLog('CHAMPION ' + getChampionName(att.id) + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+						PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
 						self.gainChampionXp(pwr, att);
 					}
 					if (def.dead) {

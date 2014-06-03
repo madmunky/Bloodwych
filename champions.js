@@ -208,6 +208,12 @@ Champion.prototype.restoreStats = function() {
 	}
 }
 
+
+
+Champion.prototype.getNextSpells = function(ch, prof) {
+
+}
+
 Champion.prototype.writeAttackPoints = function(pwr, def) {
 	if (typeof pwr !== "undefined" && this.recruitment.recruited) {
 		var self = this;
@@ -266,80 +272,6 @@ Champion.prototype.toString = function() {
 	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', pocket:[' + this.pocket + '], stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
 }
 
-function getChampionName(id, first) {
-	var name = "UNKNOWN";
-	if (typeof first === "undefined") first = true;
-	switch (id) {
-		case CHA_BLODWYN:
-			if (first) name = "BLODWYN";
-			else name = "STONEMAIDEN";
-			break;
-		case CHA_ASTROTH:
-			if (first) name = "ASTROTH";
-			else name = "SLAEMWORT";
-			break;
-		case CHA_SIR_EDWARD:
-			if (first) name = "SIR EDWARD";
-			else name = "LION";
-			break;
-		case CHA_ULRICH:
-			if (first) name = "ULRICH";
-			else name = "STERNAXE";
-			break;
-		case CHA_MURLOCK:
-			if (first) name = "MURLOCK";
-			else name = "DARKENHEART";
-			break;
-		case CHA_ZOTHEN:
-			if (first) name = "ZOTHEN";
-			else name = "RUNECASTER";
-			break;
-		case CHA_MEGRIM:
-			if (first) name = "MEGRIM";
-			else name = "OF MOONWYCH";
-			break;
-		case CHA_ZASTAPH:
-			if (first) name = "ZASTAPH";
-			else name = "MANTRIC";
-			break;
-		case CHA_ELEANOR:
-			if (first) name = "ELEANOR";
-			else name = "OF AVALON";
-			break;
-		case CHA_BALDRICK:
-			if (first) name = "BALDRICK";
-			else name = "THE DUNG";
-			break;
-		case CHA_SETHRA:
-			if (first) name = "SETHRA";
-			else name = "BHOAGHAIL";
-			break;
-		case CHA_HENGIST:
-			if (first) name = "HENGIST";
-			else name = "MELDANASH";
-			break;
-		case CHA_ROSANNE:
-			if (first) name = "ROSANNE";
-			else name = "SWIFTHAND";
-			break;
-		case CHA_ELFRIC:
-			if (first) name = "ELFRIC";
-			else name = "FALAENDOR";
-			break;
-		case CHA_MR_FLAY:
-			if (first) name = "MR. FLAY";
-			else name = "SEPULCRAST";
-			break;
-		case CHA_THAI_CHANG:
-			if (first) name = "THAI CHANG";
-			else name = "OF YINN";
-			break;
-		default:
-			break;
-	}
-	return name;
-}
-
 function getChampionClass(id) {
 	return id % 4;
 }
@@ -378,6 +310,9 @@ function initChampions() {
 		var vitMax = parseInt(hex2dec(md.substr(16, 2)));
 		var sp = parseInt(hex2dec(md.substr(18, 2)));
 		var spMax = parseInt(hex2dec(md.substr(20, 2)));
+		if(ch === CHA_MEGRIM) {
+			alert(hex2dec(md.substr(18, 2)));
+		}
 		var ac = parseInt(hex2dec(md.substr(22, 2)));
 		var stat = {
 			str: str,
@@ -401,7 +336,7 @@ function initChampions() {
 		spellBin = spellBin + hex2bin(md.substr(28, 2));
 		spellBin = spellBin + hex2bin(md.substr(30, 2));
 		monster[TOWER_CHAMPIONS][ch] = new Monster(ch + monster[TOWER_MOD0].length, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
-		champion[ch] = new Champion(ch, getChampionName(ch, true), getChampionName(ch, false), getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch], slot);
+		champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch], slot);
 		PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
 	}
 }

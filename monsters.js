@@ -32,7 +32,7 @@ Monster.prototype.toString = function() {
 	var torso = "null";
 	var bodyId = "null";
 	if (this.champId !== -1) {
-		cha = ', champion:' + getChampionName(this.champId) + '(' + this.champId + ')';
+		cha = ', champion:' + TEXT_CHAMPION_NAME[this.champId] + '(' + this.champId + ')';
 	}
 	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.ref.id + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', hp:' + this.hp + ', teamId:' + this.teamId + cha + ']';
 }
@@ -212,7 +212,7 @@ Monster.prototype.attack = function(attack, target) {
 			att.attacking = true;
 			att.doDamageTo(def, pwr, dExh);
 			if (def instanceof Champion) {
-				PrintLog('MONSTER #' + att.id + ' HITS CHAMPION ' + getChampionName(def.id) + ' FOR ' + pwr + '!');
+				PrintLog('MONSTER #' + att.id + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
 			} else if (def instanceof Monster) {
 				PrintLog('MONSTER #' + att.id + ' HITS HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
 			}
@@ -479,7 +479,7 @@ function initMonsters(t) {
 				square = 0;
 			}
 			monster[t.id][i] = new Monster(i, level, type, form, t.id, floor, x, y, 0, square, teamId);
-			PrintLog('Loaded monster: ' + monster[t.id][i]);
+			//PrintLog('Loaded monster: ' + monster[t.id][i]);
 		}
 	}
 

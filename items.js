@@ -233,7 +233,7 @@ function initItems(t) {
 					y: xy.y,
 					square: dr[dir]
 				});
-				PrintLog('Loaded item: ' + item[t.id][max]);
+				//PrintLog('Loaded item: ' + item[t.id][max]);
 			}
 			i = i + 3 + n * 2;
 		}
