@@ -1517,7 +1517,11 @@ function colourSpellPage(dr,ch,img){
     
     for (x = 0; x < 4; x++){
             if (ch.spellBook[page][x].learnt){
-                pal.push(getClassColour(ch.spellBook[page][x].ref.colour,true));
+                if (!ch.spellBook[page][x].ref === ch.selectedSpell){
+                    pal.push(getClassColour(ch.spellBook[page][x].ref.colour,true));    
+                }else{
+                    pal.push(COLOUR[COLOUR_WHITE]);
+                }                
             }else{
                 pal.push(COLOUR[COLOUR_GREY_DARKEST]);
             }
