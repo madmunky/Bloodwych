@@ -242,8 +242,13 @@ function processCanvasInput(pid, x, y) {
 				p.fairyDetails.champ.buySpell(p.fairyDetails.spell);
 				return pid;
 			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
-				return pid;
+				switch (p.fairyDetails.spell.colour){                            
+                                    case 0:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SERPENT);}break;
+                                    case 1:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_CHAOS);}break;
+                                    case 2:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_DRAGON);}break;
+                                    case 3:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_MOON);}break;                            
+                                }
+                                return pid;
 			}
 		}
 	}
