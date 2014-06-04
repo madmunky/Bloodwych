@@ -374,6 +374,9 @@ Champion.prototype.selectSpell = function(id){
     if (this.spellBook[this.spellBookPage][id].learnt){    
         this.selectedSpell = this.spellBook[this.spellBookPage][id].ref;
     }
+    else{
+        this.selectedSpell = null;
+    }
     
 }
 

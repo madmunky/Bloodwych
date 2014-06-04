@@ -194,7 +194,7 @@ function spellBook(p) {
             var col = getClassColour(ch.spellBook[ch.spellBookPage][x].ref.colour,true);
             
             if (!ch.spellBook[ch.spellBookPage][x].learnt){
-                col = COLOUR[COLOUR_GREY_DARK];
+                col = COLOUR[COLOUR_GREY_DARKEST];
             }
             if (ch.selectedSpell === ch.spellBook[ch.spellBookPage][x].ref){
                 col = COLOUR[COLOUR_WHITE];
@@ -211,17 +211,17 @@ function spellBook(p) {
         
         if (ch.selectedSpell === null){
 
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 226 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 225 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].height * scale);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT], p.ScreenX + 257 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].height * scale);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
         }else{
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 226 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-            writeFontImage(ch.selectedSpell.name, p.ScreenX + 242, (p.ScreenY + 64), COLOUR[COLOUR_PINK]);
-            writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71.5), COLOUR[COLOUR_YELLOW]);
-            //writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71.5), COLOUR[COLOUR_RED]);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 225 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            writeFontImage(ch.selectedSpell.name, p.ScreenX + 242, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
+            writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+            //writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_RED]);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
         }
         
