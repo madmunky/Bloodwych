@@ -376,6 +376,14 @@ function processCanvasInput(pid, x, y) {
                     ch.selectSpell(7);
                     return pid;
 		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_1, p)) {
+                    //ch.selectSpell(7);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_2, p)) {
+                    //ch.selectSpell(7);
+                    return pid;
+		}
 	}
 	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
 

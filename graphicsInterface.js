@@ -1273,6 +1273,18 @@ function uiClickAreas() {
 		width: 34,
 		height: 8
 	}); //Spell Book - Spell 8  
+        UCA.push({
+		x: 225,
+		y: 62,
+		width: 16,
+		height: 16
+	}); //Spell Book - Spell Fire 1 
+        UCA.push({
+		x: 305,
+		y: 62,
+		width: 16,
+		height: 16
+	}); //Spell Book - Spell Fire 2 
 	return UCA;
 
 }
@@ -1500,7 +1512,7 @@ function colourSpellPage(dr,ch,img){
     if (dr){
         var page = (ch.spellBookPage + 1) % 4;        
     }else{
-        var page = ch.spellBookPage 
+        var page = ch.spellBookPage; 
     }
     
     for (x = 0; x < 4; x++){
