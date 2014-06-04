@@ -75,6 +75,7 @@ function getSpellLevel(c, i) {
 "BLAZE",		"VIVIFY",
 "MINDROCK"		"DISRUPT"
 */
+
 function getSpellPageAndRow(c, i) {
 	var sp = [
 		[0, 1, 2, 1, 0, 2, 3, 3],
@@ -109,12 +110,44 @@ function getSpellBookPage(p) {
 	});
 }
 
-function castSpell(s, src) {
-	var f = src.f;
+function castSpell(s, src, int) {
+	if(typeof int === "undefined") {
+		int = 0;
+	}
+	var pow = Math.floor((Math.random() * int / 2) + (int / 2));
+	if(pow > 63) {
+		pow = 63;
+	}
+	var f = src.floor;
 	var x = src.x;
 	var y = src.y;
 	var d = src.d;
 	switch (s) {
+		//serpent
+		case SPELL_FORMWALL:
+			if(src.getBinaryView(15, 0, 16) === '0000') {
+				src.setBinaryView(15, 12, 4, '7');
+				src.setBinaryView(15, 6, 2, '3');
+				src.setBinaryView(15, 0, 6, dec2hex(pow));
+				var xy = posToCoordinates(15, x, y, d);
+				setDungeonSpell(towerThis, f, xy.x, xy.y);
+			}
+			break;
+		//moon
+		case SPELL_MINDROCK:
+			if(src.getBinaryView(15, 0, 16) === '0000') {
+				src.setBinaryView(15, 12, 4, '7');
+				src.setBinaryView(15, 6, 2, '2');
+				src.setBinaryView(15, 0, 6, dec2hex(pow));
+			}
+			break;
+		//dragon
+		case SPELL_DISPELL:
+			if(src.getBinaryView(15, 12, 4) === '7') {
+				src.setBinaryView(15, 0, 16, '0000');
+			}
+			break;
+		//chaos
 		case SPELL_VIVIFY:
 			if (getMonsterAt(f, x, y) === null) {
 				for (i = item[towerThis].length - 1; i >= 0; i--) {
@@ -153,5 +186,27 @@ function castSpell(s, src) {
 			break;
 		default:
 			break;
+	}
+}
+
+function setDungeonSpell(t, f, x, y) {
+	var max = dungeonSpellList.length;
+	dungeonSpellList[max] = { tower: t, floor: f, x: x, y: y };
+}
+
+function updateDungeonSpells() {
+	for(s = 0; s < dungeonSpellList.length; s++) {
+		var ds = dungeonSpellList[s];
+		if(ds.tower === towerThis) {
+			var hex = tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x];
+			var tm = parseInt(hex2dec(getHexToBinaryPosition(hex, 0, 6)) - 1);
+			if(tm > 0) {
+				tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x] = setHexToBinaryPosition(hex, 0, 6, dec2hex(tm));
+			} else {
+				tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x] = setHexToBinaryPosition(hex, 0, 16, '0000');
+				dungeonSpellList.splice(s, 1);
+				s--;
+			}
+		}
 	}
 }

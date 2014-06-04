@@ -1035,6 +1035,8 @@ var ITEM_EMPTY = 0,
 
 //spells
 var spell = new Array();
+var dungeonSpellTimer = 0;
+var dungeonSpellList = new Array();
 var SPELL_MAX = 8;
 
 //Serpent spells

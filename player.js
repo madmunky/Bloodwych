@@ -61,7 +61,10 @@ Player.prototype.canMoveToPos = function(pos) {
 	//Check other player
 	var view = this.getView();
 	var hex = view[pos];
-	if (getHexToBinaryPosition(hex, 8) == '1') {
+	if (getHexToBinaryPosition(hex, 8) == '1') { //wall
+		return false;
+	}
+	if (getHexToBinaryPosition(hex, 12, 4) === '7' && getHexToBinaryPosition(hex, 6, 2) === '3') { //formwall
 		return false;
 	}
 	var xy = getOffsetByRotation((this.d + this.moving) % 4);
@@ -939,9 +942,9 @@ Player.prototype.getItemsInRange = function(pos2) {
 }
 
 Player.prototype.castSpell = function(s, c) {
-	if (c.sp >= spell[s].cost) {
-		castSpell(s, c.monster);
-		c.sp -= spell[s].cost;
+	if (c.stat.sp >= 0) {
+		castSpell(s, c.monster, c.stat.int);
+		//c.sp -= spell[s].cost;
 	}
 }
 
@@ -1013,13 +1016,13 @@ Player.prototype.message = function(txt, col, wait, delay) {
 
 Player.prototype.testMode = function(id) {
 	if (debug) {
-		//var xy = posToCoordinates(15, this.x, this.y, this.d);
-		//var hex = tower[towerThis].floor[this.floor].Map[xy.y][xy.x];
+		var xy = posToCoordinates(15, this.x, this.y, this.d);
+		var hex = tower[towerThis].floor[this.floor].Map[xy.y][xy.x];
 		//tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(hex, 8, 8, '0'); //REMOVE OBJECT
 		//tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = toggleObject(hex, '3'); //TOGGLE PILLAR
 		//tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(hex, 10, 2, '' + ((parseInt(getHexToBinaryPosition(hex, 10, 2)) + 1) % 4)); //ROTATE WALL
 		//tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
-		try {
+		/*try {
 			var view = this.getView();
 			for (i = 0; i < 17; i++) {
 				var t = view[i].substring(2, 4);
@@ -1029,7 +1032,8 @@ Player.prototype.testMode = function(id) {
 			}
 		} catch (e) {
 			PrintLog(e.toString());
-		};
+		};*/
+		this.castSpell(SPELL_MINDROCK, this.getChampion(0));
 	}
 }
 

@@ -70,10 +70,12 @@ function doKeyDown(e) {
 			player[0].rotate(1);
 			break; // E KEY
 		case KEY_R:
-			player[0].toggleFrontObject();
+			//player[0].toggleFrontObject();
+			player[0].castSpell(SPELL_FORMWALL, player[0].getChampion(player[0].championLeader));
 			break; //R Key
 		case KEY_F:
-			player[0].testMode();
+			//player[0].testMode();
+			player[0].castSpell(SPELL_DISPELL, player[0].getChampion(player[0].championLeader));
 			break; // F cheat
 		case KEY_PLUS:
 			testPalette = testPalette + 1;
@@ -242,13 +244,8 @@ function processCanvasInput(pid, x, y) {
 				p.fairyDetails.champ.buySpell(p.fairyDetails.spell);
 				return pid;
 			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-				switch (p.fairyDetails.spell.colour){                            
-                                    case 0:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SERPENT);}break;
-                                    case 1:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_CHAOS);}break;
-                                    case 2:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_DRAGON);}break;
-                                    case 3:{gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_MOON);}break;                            
-                                }
-                                return pid;
+				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+				return pid;
 			}
 		}
 	}

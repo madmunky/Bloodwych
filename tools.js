@@ -17,6 +17,7 @@ function setHexToBinaryPosition(s, index, length, to) {
 		to = '' + (1 - from);
 	}
 	to = hex2bin(to, length);
+	to = to.substr(to.length - length);
 	bin = bin.substr(0, index) + to + bin.substr(index + to.length);
 	var ret = bin2hex(bin);
 	return ret;
@@ -29,7 +30,7 @@ function getHexToBinaryPosition(s, index, length) {
 		length = 1;
 	}
 	var bin = hex2bin(s);
-	var bin = bin.substr(index, length);
+	bin = bin.substr(index, length);
 	var ret = bin2hex(bin);
 	return ret;
 }

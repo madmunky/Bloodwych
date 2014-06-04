@@ -85,4 +85,8 @@ function timerAction() {
 			}
 		}
 	}
+	if (timerMaster - dungeonSpellTimer >= 50) {
+		dungeonSpellTimer = timerMaster;
+		updateDungeonSpells();
+	}
 }
