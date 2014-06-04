@@ -70,12 +70,12 @@ function doKeyDown(e) {
 			player[0].rotate(1);
 			break; // E KEY
 		case KEY_R:
-			//player[0].toggleFrontObject();
-			player[0].castSpell(SPELL_FORMWALL, player[0].getChampion(player[0].championLeader));
+			player[0].toggleFrontObject();
+			//player[0].castSpell(SPELL_FORMWALL, player[0].getChampion(player[0].championLeader));
 			break; //R Key
 		case KEY_F:
-			//player[0].testMode();
-			player[0].castSpell(SPELL_DISPELL, player[0].getChampion(player[0].championLeader));
+			player[0].testMode();
+			//player[0].castSpell(SPELL_DISPELL, player[0].getChampion(player[0].championLeader));
 			break; // F cheat
 		case KEY_PLUS:
 			testPalette = testPalette + 1;
@@ -157,7 +157,7 @@ function processCanvasInput(pid, x, y) {
 			return checkClickInViewPortal(p, x, y);
 		}
 	} else {
-		if(uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, p) && (p.fairyDetails.champ === null || !uiClickInArea(x, y, UI_CLICK_VIEWPORT, p))) {
+		if (uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, p) && (p.fairyDetails.champ === null || !uiClickInArea(x, y, UI_CLICK_VIEWPORT, p))) {
 			p.wakeUp();
 			return pid;
 		} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY) {
@@ -329,60 +329,56 @@ function processCanvasInput(pid, x, y) {
 			return pid;
 		}
 	} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
-		
-                var ch = champion[p.champion[p.championLeader]];
-                
-                if (uiClickInArea(x, y, UI_CLICK_CLOSE_SPELLBOOK, p)) {
-                    p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-                    return pid;
+
+		var ch = champion[p.champion[p.championLeader]];
+
+		if (uiClickInArea(x, y, UI_CLICK_CLOSE_SPELLBOOK, p)) {
+			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_TURNPAGE_BACK, p)) {
-                    changeSpellBookPage(p, false);
-                    //return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_TURNPAGE_BACK, p)) {
+			changeSpellBookPage(p, false);
+			//return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_TURNPAGE_FORWARD, p)) {
-                    changeSpellBookPage(p, true);
-                    //return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_TURNPAGE_FORWARD, p)) {
+			changeSpellBookPage(p, true);
+			//return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_0, p)) {
-                    ch.selectSpell(0);
-                    return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_0, p)) {
+			ch.selectSpell(0);
+			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_1, p)) {
-                    ch.selectSpell(1);
-                    return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_1, p)) {
+			ch.selectSpell(1);
+			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_2, p)) {
-                    ch.selectSpell(2);
-                    return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_2, p)) {
+			ch.selectSpell(2);
+			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_3, p)) {
-                    ch.selectSpell(3);
-                    return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_3, p)) {
+			ch.selectSpell(3);
+			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_4, p)) {
-                    ch.selectSpell(4);
-                    return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_4, p)) {
+			ch.selectSpell(4);
+			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_5, p)) {
-                    ch.selectSpell(5);
-                    return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_5, p)) {
+			ch.selectSpell(5);
+			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_6, p)) {
-                    ch.selectSpell(6);
-                    return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_6, p)) {
+			ch.selectSpell(6);
+			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_7, p)) {
-                    ch.selectSpell(7);
-                    return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_7, p)) {
+			ch.selectSpell(7);
+			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_1, p)) {
-                    //ch.selectSpell(7);
-                    return pid;
-		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_2, p)) {
-                    //ch.selectSpell(7);
-                    return pid;
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_1, p) || uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_2, p)) {
+			p.castSpell(ch.selectedSpell.id, ch);
+			return pid;
 		}
 	}
 	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {

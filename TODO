@@ -4,13 +4,15 @@
 
 JORG
 -----
+COD More spells!
+COD Spell cost % and other spell rpg stuff
 COD Spell projectiles and effects
 COD Fix Big monster 'edge of screen'
 COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
 COD Get tower switching for 1 player
 COD Fix death screen as I did with asleep
-COD Monsters walk though spell walls
-UI Spell Book turn page animation
+COD Stack keys/coins on same location in dungeon
+COD Disallow casting formwall and mindwall on monsters
 
 CHRIS
 ------
@@ -21,10 +23,11 @@ UI  Make Start Screen
 UI  Make Champion select start screen
 UI  Find Amour Palette's
 UI  Read Scroll
+UI  Add text at fairy for when champ already learned all spells
 
 QUESTIONS FOR CHRIS
 -------------------
-
+The spell points seem wrong compared to steem. E.g. Zothen has 43 sp in ours, and 21 in original. Anything we missed?
 
 QUESTIONS FOR JORG
 ------------------

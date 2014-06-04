@@ -70,14 +70,19 @@ function convertBase(num) {
 	return this;
 }
 
-function getArmourNotation(num, size) {
-	var s = "0" + Math.abs(num);
-	s = s.substr(s.length - 2);
+function getArmourNotation(num) {
+	var s = getSpellNotation(num);
 	if(num >= 0) {
 		s = "+" + s;
 	} else {
 		s = "-" + s;
 	}
+	return s;
+}
+
+function getSpellNotation(num) {
+	var s = "0" + Math.abs(num);
+	s = s.substr(s.length - 2);
 	return s;
 }
 

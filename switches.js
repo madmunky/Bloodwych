@@ -64,7 +64,7 @@ function floorActionType(trig, p) {
 			if(getMonsterAt(p.floor, p.x + 1, p.y) === null) {
 				tower[towerThis].floor[p.floor].Map[p.y][p.x + 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x + 1], 7, 1, '1');
 			}
-			castSpell(SPELL_VIVIFY, { f: p.floor, x: p.x + 2, y: p.y, d: 1 });
+			castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x + 1, y: p.y, d: 1 });
 			break;
 		case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:
 			if(getMonsterAt(p.floor, p.x - 1, p.y) === null) {

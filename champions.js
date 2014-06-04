@@ -28,9 +28,11 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 		var spl = getSpellBookPage(pg);
 		for (rw = 0; rw < SPELL_MAX; rw++) {
 			this.spellBook[pg][rw] = new Array();
-			this.spellBook[pg][rw].castSuccessful = 0;
-			this.spellBook[pg][rw].learnt = false;
+			this.spellBook[pg][rw].castSuccessful = 1; //cast % = 1.0 - (level / (castSuccessful + cost + intelligence / 10))
+			this.spellBook[pg][rw].learnt = true;
 			this.spellBook[pg][rw].ref = spl[rw];
+			this.spellBook[pg][rw].id = spl[rw].id + spl[rw].colour * 8;
+			this.spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
 			if (spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
 				this.addSpellToSpellBook(spl[rw]);
 			}
@@ -244,6 +246,17 @@ Champion.prototype.getSpellInBook = function(sp) {
 	}
 }
 
+Champion.prototype.getSpellInBookById = function(id) {
+	for(pg = 0; pg < COLOUR_MAX; pg++) {
+		for(rw = 0; rw < SPELL_MAX; rw++) {
+			var sb = this.spellBook[pg][rw];
+			if(sb.id === id) {
+				return sb;
+			}
+		}
+	}
+}
+
 Champion.prototype.buySpell = function(sp) {
 	if(this.recruitment.playerId > -1) {
 		var p = player[this.recruitment.playerId];
@@ -355,7 +368,7 @@ Champion.prototype.toString = function() {
 Champion.prototype.selectSpell = function(id){
     
     if (this.spellBook[this.spellBookPage][id].learnt){    
-        this.selectedSpell = this.spellBook[this.spellBookPage][id].ref;
+        this.selectedSpell = this.spellBook[this.spellBookPage][id];
     }
     else{
         this.selectedSpell = null;

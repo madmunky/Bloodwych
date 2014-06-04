@@ -942,10 +942,12 @@ Player.prototype.getItemsInRange = function(pos2) {
 	return itemsInRange;
 }
 
-Player.prototype.castSpell = function(s, c) {
-	if (c.stat.sp >= 0) {
-		castSpell(s, c.monster, c.stat.int);
-		//c.sp -= spell[s].cost;
+Player.prototype.castSpell = function(id, c) {
+	var sp = c.getSpellInBookById(id);
+	if (c.stat.sp - sp.cost >= 0) {
+		castSpell(id, c.monster, c.stat.int);
+		c.selectedSpell = null;
+		c.stat.sp -= sp.cost;
 	}
 }
 

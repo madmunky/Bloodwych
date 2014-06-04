@@ -97,6 +97,12 @@ function getSpellPageAndRow(c, i) {
 	};
 }
 
+function getSpellById(id) {
+	var cl = Math.floor(id / 8);
+	var s = s % 8;
+	return spell[cl][s];
+}
+
 function getSpellBookPage(p) {
 	var sb = new Array();
 	for (cl = 0; cl < COLOUR_MAX; cl++) {
@@ -151,16 +157,19 @@ function castSpell(s, src, int) {
 			break;
 		//chaos
 		case SPELL_VIVIFY:
-			if (getMonsterAt(f, x, y) === null) {
+			var o = getOffsetByRotation(d);
+			var x1 = x + o.x;
+			var y1 = y + o.y;
+			if (getMonsterAt(f, x1, y1) === null) {
 				for (i = item[towerThis].length - 1; i >= 0; i--) {
 					var it = item[towerThis][i];
-					if (it.id >= ITEM_BLODWYN_RIP && it.id <= ITEM_THAI_CHANG_RIP && it.location.tower === towerThis && it.location.floor === f && it.location.x === x && it.location.y === y) {
+					if (it.id >= ITEM_BLODWYN_RIP && it.id <= ITEM_THAI_CHANG_RIP && it.location.tower === towerThis && it.location.floor === f && it.location.x === x1 && it.location.y === y1) {
 						var ch = it.id - ITEM_BLODWYN_RIP;
 						item[towerThis].splice(i, 1);
 						champion[ch].stat.hp = 0;
 						champion[ch].monster.floor = f;
-						champion[ch].monster.x = x;
-						champion[ch].monster.y = y;
+						champion[ch].monster.x = x1;
+						champion[ch].monster.y = y1;
 						champion[ch].monster.d = (d + 2) % 4;
 						champion[ch].monster.hp = 0;
 						champion[ch].monster.dead = false;
@@ -173,8 +182,8 @@ function castSpell(s, src, int) {
 								p.championLeader = 0;
 								p.tower = towerThis;
 								p.floor = f;
-								p.x = x;
-								p.y = y
+								p.x = x1;
+								p.y = y1;
 								p.d = (d + 2) % 4;
 								p.dead = false;
 								p.updateChampions();
