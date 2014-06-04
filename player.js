@@ -25,6 +25,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.towerSwitches = new Array();
 	this.messageTimeout = 0;
 	this.timerChampionStats = 0;
+	this.timerSpellBookTurn = 0;
 	this.fairyDetails = {
 		champ: null,
 		spell: null

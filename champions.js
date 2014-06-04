@@ -352,23 +352,6 @@ Champion.prototype.toString = function() {
 	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', spellBook:[' + sb + '], stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
 }
 
-Champion.prototype.changeSpellBookPage = function(dr) {
-    
-    if (dr){
-        this.spellBookPage++;
-        if (this.spellBookPage > 3){
-            this.spellBookPage = 0;
-        }
-    }
-    else{
-        this.spellBookPage--;
-        if (this.spellBookPage < 0){
-            this.spellBookPage = 3;
-        }
-    }
-    
-}
-
 Champion.prototype.selectSpell = function(id){
     
     if (this.spellBook[this.spellBookPage][id].learnt){    

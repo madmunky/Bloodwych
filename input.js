@@ -337,12 +337,12 @@ function processCanvasInput(pid, x, y) {
                     return pid;
 		}
                 if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_TURNPAGE_BACK, p)) {
-                    ch.changeSpellBookPage(false);
-                    return pid;
+                    changeSpellBookPage(p, false);
+                    //return pid;
 		}
                 if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_TURNPAGE_FORWARD, p)) {
-                    ch.changeSpellBookPage(true);
-                    return pid;
+                    changeSpellBookPage(p, true);
+                    //return pid;
 		}
                 if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_0, p)) {
                     ch.selectSpell(0);
