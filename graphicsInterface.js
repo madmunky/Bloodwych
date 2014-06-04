@@ -219,9 +219,9 @@ function spellBook(p) {
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
         }else{
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 226 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-            writeFontImage(ch.selectedSpell.name, p.ScreenX + 242.5, (p.ScreenY + 64), COLOUR[COLOUR_PINK]);
-            writeFontImage("COST", p.ScreenX + 242.5, (p.ScreenY + 71.5), COLOUR[COLOUR_YELLOW]);
-            writeFontImage("COST", p.ScreenX + 242.5, (p.ScreenY + 71.5), COLOUR[COLOUR_RED]);
+            writeFontImage(ch.selectedSpell.name, p.ScreenX + 242, (p.ScreenY + 64), COLOUR[COLOUR_PINK]);
+            writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71.5), COLOUR[COLOUR_YELLOW]);
+            //writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71.5), COLOUR[COLOUR_RED]);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
         }
         
