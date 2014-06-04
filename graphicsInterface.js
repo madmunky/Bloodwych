@@ -211,18 +211,18 @@ function spellBook(p) {
         
         if (ch.selectedSpell === null){
 
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 225 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].height * scale);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT], p.ScreenX + 257 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].height * scale);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
         }else{
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 225 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
             writeFontImage(ch.selectedSpell.name, p.ScreenX + 242, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
             writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
             //writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_RED]);
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
         }
         
         writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
@@ -1135,16 +1135,16 @@ function uiClickAreas() {
 		height: 10
 	}); //Fairy - Text Area 2 
         UCA.push({
-		x: 228,
-		y: 0,
-		width: 24,
-		height: 7
+		x: 226,
+		y: -1,
+		width: 30,
+		height: 8
 	}); //Spell Book - Turn Page Back 
         UCA.push({
-		x: 293,
-		y: 0,
-		width: 24,
-		height: 7
+		x: 290,
+		y: -1,
+		width: 30,
+		height: 8
 	}); //Spell Book - Turn Page Forward
         UCA.push({
 		x: 232,
@@ -1160,13 +1160,13 @@ function uiClickAreas() {
 	}); //Spell Book - Spell 2
         UCA.push({
 		x: 232,
-		y: 31,
+		y: 30,
 		width: 34,
 		height: 8
 	}); //Spell Book - Spell 3  
         UCA.push({
 		x: 232,
-		y: 40,
+		y: 38,
 		width: 34,
 		height: 8
 	}); //Spell Book - Spell 4  
@@ -1184,13 +1184,13 @@ function uiClickAreas() {
 	}); //Spell Book - Spell 6
         UCA.push({
 		x: 280,
-		y: 31,
+		y: 30,
 		width: 34,
 		height: 8
 	}); //Spell Book - Spell 7  
         UCA.push({
 		x: 280,
-		y: 40,
+		y: 38,
 		width: 34,
 		height: 8
 	}); //Spell Book - Spell 8  

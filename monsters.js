@@ -101,6 +101,10 @@ Monster.prototype.canMove = function() {
 				if (getHexToBinaryPosition(hexNext, 7, 1) === '1') {
 					return 0;
 				}
+			case '7':
+				if(getHexToBinaryPosition(hexNext, 6, 2) === '3') {
+					return 0;
+				}
 		}
 
 		//Check other player
