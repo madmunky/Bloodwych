@@ -217,3 +217,68 @@ function fontCharacterToIndex(c) {
 
 
 }
+
+function writeSpellFont(fontString, locationX, locationY, paletteTo, alignment,myContent) {
+try{
+    if (typeof(font[0]) !== 'undefined'){
+    if (typeof alignment === "undefined") {
+    	alignment = FONT_ALIGNMENT_LEFT;
+    }
+    if (typeof myContent === 'undefined'){
+        myContent = ctx;
+    }
+
+	fontString = ("" + fontString).toUpperCase();
+
+	var chars = fontString.split('');
+
+	var can = document.createElement('canvas');
+	can.width = chars.length * 8;
+	can.height = 8;
+	var fontContent = can.getContext("2d");
+
+	for (var x = 0; x < chars.length; x++) {
+                var letterCode = chars[x].charCodeAt(0);
+                if (letterCode >= 65 && letterCode <= 90){
+                    letterCode = letterCode - 7;
+                }
+                
+		if (letterCode >= 0) {
+			fontContent.drawImage(font[letterCode], (x * 8), 0);
+		}
+	}
+
+	fontContent.save();
+	// pull the entire image into an array of pixel data
+	var imageData = fontContent.getImageData(0, 0, can.width, can.height);
+
+	for (var i = 0; i < imageData.data.length; i += 4) {
+		// is this pixel the old rgb?
+		if (imageData.data[i] === ITEM_PALETTE_DEFAULT[0][0] &&
+			imageData.data[i + 1] === ITEM_PALETTE_DEFAULT[0][1] &&
+			imageData.data[i + 2] === ITEM_PALETTE_DEFAULT[0][2]
+		) {
+			// change to your new rgb
+			imageData.data[i] = paletteTo[0];
+			imageData.data[i + 1] = paletteTo[1];
+			imageData.data[i + 2] = paletteTo[2];
+		}
+	}
+
+	// put the altered data back on the canvas  
+	fontContent.putImageData(imageData, 0, 0);
+	// put the re-colored image back on the image
+
+	fontContent.save();
+	if(alignment === FONT_ALIGNMENT_RIGHT) {
+		xo = - can.width;
+	} else if(alignment === FONT_ALIGNMENT_CENTER) {
+		xo = - Math.floor(can.width / 2);
+	} else { //FONT_ALIGNMENT_LEFT
+		xo = 0;
+	}
+	myContent.drawImage(can, (xo + locationX) * scale, locationY * scale, can.width * scale, can.height * scale);
+	can = null;
+    }
+    }catch(e){"Write font error: " +e.toString();};
+}

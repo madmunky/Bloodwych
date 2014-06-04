@@ -185,15 +185,48 @@ function drawUI(p) {
 function spellBook(p) {
 
 	ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 226 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT], p.ScreenX + 257 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 
-	writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
-	writeFontImage("0" + champion[p.champion[0]].stat.sp + "/0" + champion[p.champion[0]].stat.spMax, p.ScreenX + 280, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
+        
+        var ch = champion[p.champion[p.championLeader]];
+        
+        for (x = 0;x < 8; x++ ){            
+            var sym = ch.spellBook[ch.spellBookPage][x].ref.symbols;
+            var col = getClassColour(ch.spellBook[ch.spellBookPage][x].ref.colour,true);
+            
+            if (!ch.spellBook[ch.spellBookPage][x].learnt){
+                col = COLOUR[COLOUR_GREY_DARK];
+            }
+            if (ch.selectedSpell === ch.spellBook[ch.spellBookPage][x].ref){
+                col = COLOUR[COLOUR_WHITE];
+            }
+            
+            if (x < 4){                
+                writeSpellFont(sym.substring(0,3),p.ScreenX + 234,(p.ScreenY + 15) + (x*8),col);
+                writeSpellFont(sym.substring(3,4),p.ScreenX + 258,(p.ScreenY + 14) + (x*8),col);
+            }else{
+                writeSpellFont(sym.substring(0,1),p.ScreenX + 282,(p.ScreenY + 14) + ((x-4)*8),col);
+                writeSpellFont(sym.substring(1,4),p.ScreenX + 290,(p.ScreenY + 15) + ((x-4)*8),col);
+            }
+        }
+        
+        if (ch.selectedSpell === null){
+
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 226 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT], p.ScreenX + 257 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+        }else{
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 226 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            writeFontImage(ch.selectedSpell.name, p.ScreenX + 242.5, (p.ScreenY + 64), COLOUR[COLOUR_PINK]);
+            writeFontImage("COST", p.ScreenX + 242.5, (p.ScreenY + 71.5), COLOUR[COLOUR_YELLOW]);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.colour], p.ScreenX + 305 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+        }
+        
+        writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
+        writeFontImage("0" + champion[p.champion[0]].stat.sp + "/0" + champion[p.champion[0]].stat.spMax, p.ScreenX + 280, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
+	
 
 }
 
@@ -1100,6 +1133,66 @@ function uiClickAreas() {
 		width: 85,
 		height: 10
 	}); //Fairy - Text Area 2 
+        UCA.push({
+		x: 228,
+		y: 0,
+		width: 24,
+		height: 7
+	}); //Spell Book - Turn Page Back 
+        UCA.push({
+		x: 293,
+		y: 0,
+		width: 24,
+		height: 7
+	}); //Spell Book - Turn Page Forward
+        UCA.push({
+		x: 232,
+		y: 14,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 1  
+        UCA.push({
+		x: 232,
+		y: 22,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 2
+        UCA.push({
+		x: 232,
+		y: 31,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 3  
+        UCA.push({
+		x: 232,
+		y: 40,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 4  
+        UCA.push({
+		x: 280,
+		y: 14,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 5  
+        UCA.push({
+		x: 280,
+		y: 22,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 6
+        UCA.push({
+		x: 280,
+		y: 31,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 7  
+        UCA.push({
+		x: 280,
+		y: 40,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 8  
 	return UCA;
 
 }
@@ -1107,8 +1200,8 @@ function uiClickAreas() {
 function uiClickInArea(x, y, ui, p) {
 	if (x >= (p.ScreenX + uiClickArea[ui].x) * scale && x < (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width) * scale && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y < (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height) * scale) {
 		if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA) {
-			//ctx.fillStyle = 'rgb(255, 255, 196)';
-			//ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
+			ctx.fillStyle = 'rgb(255, 255, 196)';
+			ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
 		}
 		return true;
 	}

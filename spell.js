@@ -1,8 +1,9 @@
-function Spell(colour, id, name, description, level) {
+function Spell(colour, id, name, description, symbols, level) {
 	this.colour = colour;
 	this.id = id;
 	this.name = name;
 	this.description = description;
+        this.symbols = symbols;
 	this.level = level;
 	this.cost = this.level * 5;
 	var pr = getSpellPageAndRow(colour, id);
@@ -18,11 +19,12 @@ function initSpells() {
 	for (cl = 0; cl < COLOUR_MAX; cl++) {
 		spell[cl] = new Array();
 		for (id = 0; id < SPELL_MAX; id++) {
-			var l = [0, 1, 1, 2, 2, 3]
+			var l = [0, 1, 1, 2, 2, 3];
 			var name = TEXT_SPELL_NAME[id + cl * SPELL_MAX];
 			var description = TEXT_SPELL_DESCRIPTION[id + cl * SPELL_MAX];
+                        var symbols = TEXT_SPELL_BOOK[id + cl * SPELL_MAX];
 			var level = getSpellLevel(cl, id);
-			spell[cl][id] = new Spell(cl, id, name, description, level);
+			spell[cl][id] = new Spell(cl, id, name, description, symbols, level);
 			PrintLog('Loaded spell: ' + spell[cl][id]);
 		}
 	}

@@ -23,6 +23,7 @@ function testing(p){
 //    
 //    ctx.drawImage(itemRef[x].gfxD[y],(p.PortalX + 60),(p.PortalY + 201),itemRef[x].gfxD[y].width * scale,itemRef[x].gfxD[y].height * scale);
 //    
+//writeSpellFont(spell[0][0].symbols,0,0,COLOUR[COLOUR_GREEN]);
 }
 
 function testSummon(){
