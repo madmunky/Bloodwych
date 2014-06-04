@@ -74,7 +74,7 @@ Player.prototype.canMoveToPos = function(pos) {
 
 	//Check wooden walls and doors
 	if (objThis == '2' || objNext == '2') {
-		if (!this.canMoveToPosByWood(pos)) {
+		if (!this.canMoveToPosByWood(pos, this.moving)) {
 			return false;
 		}
 	}
@@ -93,15 +93,18 @@ Player.prototype.canMoveToPos = function(pos) {
 	return true;
 }
 
-Player.prototype.canMoveToPosByWood = function(pos) {
+Player.prototype.canMoveToPosByWood = function(pos, mov) {
 	var view = this.getView();
 	var hex = this.getView()[pos];
+	if(typeof mov === "undefined") {
+		var mov = 0;
+	}
 	//Check the space the player is standing on
-	if (getHexToBinaryPosition(view[18], 12, 4) == '2' && getHexToBinaryPosition(view[18], ((7 - ((this.d + this.moving) % 4)) % 4) * 2 + 1, 1) == '1') {
+	if (getHexToBinaryPosition(view[18], 12, 4) == '2' && getHexToBinaryPosition(view[18], ((7 - ((this.d + mov) % 4)) % 4) * 2 + 1, 1) == '1') {
 		return false;
 	}
 	//Check the space the player is moving to
-	if (getHexToBinaryPosition(hex, 12, 4) == '2' && getHexToBinaryPosition(hex, ((5 - ((this.d + this.moving) % 4)) % 4) * 2 + 1, 1) == '1') {
+	if (getHexToBinaryPosition(hex, 12, 4) == '2' && getHexToBinaryPosition(hex, ((5 - ((this.d + mov) % 4)) % 4) * 2 + 1, 1) == '1') {
 		return false;
 	}
 	return true;
@@ -267,7 +270,7 @@ Player.prototype.move = function(d) {
 }
 
 Player.prototype.tryAttack = function() {
-	if (!this.dead && !this.sleeping) {
+	if (!this.dead && !this.sleeping && this.canMoveToPosByWood(15)) {
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
@@ -282,8 +285,9 @@ Player.prototype.tryAttack = function() {
 			this.attack(true, mon);
 			return true;
 		}
-		this.attack(false);
 	}
+	this.attack(false);
+	return false;
 }
 
 Player.prototype.attack = function(attack, target) {
@@ -433,19 +437,23 @@ Player.prototype.updateChampions = function() {
 }
 
 Player.prototype.exchangeChampionPosition = function(ct, c) {
+	var ch = this.getChampion(c);
 	if (ct === c) {
 		this.championLeader = c;
 		this.championHighlite = -1;
 	} else if (ct === -1) {
-		if (!this.getChampion(c).monster.dead) {
+		if (ch !== null && !ch.monster.dead) {
 			this.championHighlite = c;
 		}
 	} else {
 		if (this.attacking) {
-			clearTimeout(this.getChampion(c).recruitment.attackTimer);
-			clearTimeout(this.getChampion(ct).recruitment.attackTimer);
-			this.getChampion(c).monster.attacking = false;
-			this.getChampion(ct).monster.attacking = false;
+			var cht = this.getChampion(ct);
+			if (cht !== null) {
+				clearTimeout(ch.recruitment.attackTimer);
+				clearTimeout(cht.recruitment.attackTimer);
+				ch.monster.attacking = false;
+				cht.monster.attacking = false;
+			}
 		}
 		if (this.championLeader === c) {
 			this.championLeader = ct;
@@ -749,7 +757,7 @@ Player.prototype.getActivePocketChampion = function() {
 }
 
 Player.prototype.consumeItemInHand = function() {
-	this.pocket.setPocketItem(this.pocket, this.pocket.quantity - 1);
+	this.pocket.setPocketItem(this.pocket.id, this.pocket.quantity - 1);
 }
 
 Player.prototype.useItemInHand = function() {
@@ -995,7 +1003,7 @@ Player.prototype.message = function(txt, col, wait, delay) {
 			clearTimeout(this.messageTimeout);
 		}
 	} else if (this.messageTimeout === 0 || !wait) {
-		fadeFont(this, txt, 50, delay, 0, this.ScreenY, col);
+		fadeFont(this, txt, 30, delay, 0, this.ScreenY, col);
 	} else {
 		setTimeout(function() {
 			self.message(txt, col, wait);
@@ -1025,37 +1033,18 @@ Player.prototype.testMode = function(id) {
 	}
 }
 
-function initPlayersQuickStart() {
-	for (p = 0; p < player.length; p++) {
-		for (i = 0; i < 4; i++) {
-			player[p].recruitChampion(i + p * 8);
-		}
-		/*player[p].getChampion(0).pocket[4].setPocketItem(80);
-		player[p].getChampion(0).pocket[8].setPocketItem(80);
-		player[p].getChampion(0).pocket[9].setPocketItem(81);
-		player[p].getChampion(1).pocket[4].setPocketItem(81);
-		player[p].getChampion(1).pocket[8].setPocketItem(82);
-		player[p].getChampion(1).pocket[9].setPocketItem(82);
-		player[p].getChampion(2).pocket[4].setPocketItem(83);
-		player[p].getChampion(2).pocket[8].setPocketItem(83);
-		player[p].getChampion(2).pocket[9].setPocketItem(84);
-		player[p].getChampion(3).pocket[4].setPocketItem(84);
-		player[p].getChampion(3).pocket[8].setPocketItem(85);
-		player[p].getChampion(3).pocket[9].setPocketItem(86);*/
-	}
-	/*
-	player[1].getChampion(1).monster.dead = true;
-	player[1].getChampion(2).monster.dead = true;
-	player[1].getChampion(3).monster.dead = true;
-	player[1].getChampion(3).recruitment.attached = false;*/
-}
-
-function initPlayersStart(c1, c2) {
-	var ch = [c1, c2];
-	for (p = 0; p < player.length; p++) {
-		player[p].recruitChampion(ch[p]);
+function initPlayersStart(ch1, ch2) {
+	if(typeof ch1 === "number" && typeof ch2 === "number") {
+		player[0].recruitChampion(ch1);
+		player[1].recruitChampion(ch2);
 		for (i = 1; i < 4; i++) {
-			player[p].recruitChampion();
+			player[0].recruitChampion();
+			player[1].recruitChampion();
+		}
+	} else {
+		for (i = 0; i < 4; i++) {
+			player[0].recruitChampion(ch1[i]);
+			player[1].recruitChampion(ch2[i]);
 		}
 	}
 }

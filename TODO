@@ -8,9 +8,7 @@ COD Spell projectiles and effects
 COD Fix Big monster 'edge of screen'
 COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
 COD Get tower switching for 1 player
-COD Fix attacking through wood
 COD Fix death screen as I did with asleep
-BUG	Avoid clicking at wall bottom of shelf to trigger same effect as putting item into shelf.
 
 CHRIS
 ------
@@ -24,6 +22,8 @@ UI  Find Amour Palette's
 QUESTIONS FOR CHRIS
 -------------------
 What are the dungeon codes for mindrock, formwall, firepath and concealed shelf?
+We need to map the 4 symbols of each spell to their corresponding character in the font list. First symbol will then be 0. I believe there are around 26 characters?
+What happens if i drop keys or coins on the floor/shelf, on top of other keys/coins? Do they merge?
 
 QUESTIONS FOR JORG
 ------------------

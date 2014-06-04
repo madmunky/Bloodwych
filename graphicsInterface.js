@@ -584,15 +584,15 @@ function highliteMovementArrow(p, m) {
 		var c = m + UI_CLICK_ROTATE_LEFT;
 		var g = m + UI_GFX_MOVEMENT_ROTATE_LEFT;
 		switch(m) {
-			case 0: x = 228; y = 59; break;
-			case 1: x = 239; y = 59; break;
-			case 2: x = 254; y = 59; break;
-			case 3: x = 226; y = 71; break;
-			case 4: x = 238; y = 73; break;
-			case 5: x = 257; y = 71; break;
+			case 0: x = 228; y = 49; break;
+			case 1: x = 239; y = 49; break;
+			case 2: x = 254; y = 49; break;
+			case 3: x = 226; y = 61; break;
+			case 4: x = 238; y = 63; break;
+			case 5: x = 257; y = 61; break;
 			default: break;
 		}
-		ctx.drawImage(gfxUI[g], x * scale, y * scale, gfxUI[g].width * scale, gfxUI[g].height * scale);
+		ctx.drawImage(gfxUI[g], (p.ScreenX + x) * scale, (p.ScreenY + y) * scale, gfxUI[g].width * scale, gfxUI[g].height * scale);
 		setTimeout(function() {
 			if (p === player[0]) {
 				ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].width * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].height * scale);

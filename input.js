@@ -470,9 +470,7 @@ function checkClickInViewPortal(p, x, y) {
 				}
 			} else if (o15 === 'wall') {
 				return p.id;
-			}
-
-			if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_BACK, p)) {
+			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_BACK, p)) {
 				if (p.actionItem(3)) {
 					return p.id;
 				}
