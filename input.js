@@ -329,9 +329,52 @@ function processCanvasInput(pid, x, y) {
 			return pid;
 		}
 	} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
-		if (uiClickInArea(x, y, UI_CLICK_CLOSE_SPELLBOOK, p)) {
-			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-			return pid;
+		
+                var ch = champion[p.champion[p.championLeader]];
+                
+                if (uiClickInArea(x, y, UI_CLICK_CLOSE_SPELLBOOK, p)) {
+                    p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_TURNPAGE_BACK, p)) {
+                    ch.changeSpellBookPage(false);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_TURNPAGE_FORWARD, p)) {
+                    ch.changeSpellBookPage(true);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_0, p)) {
+                    ch.selectSpell(0);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_1, p)) {
+                    ch.selectSpell(1);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_2, p)) {
+                    ch.selectSpell(2);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_3, p)) {
+                    ch.selectSpell(3);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_4, p)) {
+                    ch.selectSpell(4);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_5, p)) {
+                    ch.selectSpell(5);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_6, p)) {
+                    ch.selectSpell(6);
+                    return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_7, p)) {
+                    ch.selectSpell(7);
+                    return pid;
 		}
 	}
 	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {

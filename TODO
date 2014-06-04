@@ -9,6 +9,8 @@ COD Fix Big monster 'edge of screen'
 COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
 COD Get tower switching for 1 player
 COD Fix death screen as I did with asleep
+COD Monsters walk though spell walls
+UI Spell Book turn page animation
 
 CHRIS
 ------
@@ -18,12 +20,11 @@ UI  Finish Spell Book
 UI  Make Start Screen
 UI  Make Champion select start screen
 UI  Find Amour Palette's
+UI  Read Scroll
 
 QUESTIONS FOR CHRIS
 -------------------
-What are the dungeon codes for mindrock, formwall, firepath and concealed shelf?
-We need to map the 4 symbols of each spell to their corresponding character in the font list. First symbol will then be 0. I believe there are around 26 characters?
-What happens if i drop keys or coins on the floor/shelf, on top of other keys/coins? Do they merge?
+
 
 QUESTIONS FOR JORG
 ------------------
