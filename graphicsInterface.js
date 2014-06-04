@@ -270,7 +270,11 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop) {
 	(function(p, ui, dr, stop) {
 		p.timerSpellBookTurn = setTimeout(function() {
 			spellBook(p, ui, dr);
-			ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK + ui], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
+                        if (dr){
+                            ctx.drawImage(colourSpellPage(true,champion[p.champion[p.championLeader]],gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
+                        }else{
+                            ctx.drawImage(colourSpellPage(false,champion[p.champion[p.championLeader]],gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
+                        }			
 			if(stop) {
 				var ch = p.getChampion(p.championLeader);
 				p.timerSpellBookTurn = 0;
@@ -397,7 +401,9 @@ function getClassColour(c, palette) {
 
 	var red = 255,
 		grn = 255,
-		blu = 255;
+		blu = 255,
+                aph = 255;
+        
 	switch (c) {
 		case CLASS_COLOUR_SERP:
 			red = COLOUR[COLOUR_GREEN][0];
@@ -423,7 +429,7 @@ function getClassColour(c, palette) {
 			break;
 	}
 	if (palette) {
-		return new Array(red, grn, blu);
+		return new Array(red, grn, blu,aph);
 	}
 	return {
 		r: red,
@@ -1483,4 +1489,28 @@ function showFairySpellDetailsScreen(spell, p, c) {
 
 	writeFontImage("OK ?", 43, 55, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
 
+}
+
+function colourSpellPage(dr,ch,img){
+    
+    //dr = Direction - False = Backwards 
+    var pal = [];
+    var page = null;
+    
+    if (dr){
+        var page = (ch.spellBookPage + 1) % 4;        
+    }else{
+        var page = ch.spellBookPage 
+    }
+    
+    for (x = 0; x < 4; x++){
+            if (ch.spellBook[page][x].learnt){
+                pal.push(getClassColour(ch.spellBook[page][x].ref.colour,true));
+            }else{
+                pal.push(COLOUR[COLOUR_GREY_DARKEST]);
+            }
+    }
+    
+    return recolourSprite(img,MON_PALETTE_DEFAULT,pal);
+    
 }
