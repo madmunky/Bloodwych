@@ -1,20 +1,12 @@
 function grabFont() {
 	//Grab the font characters from an image and store it in an array.
-        
-        //if (gfx['misc']['font'].width > 0){
-        
-	fontImage = gfx['misc']['font'];
-
+	var fontImage = gfx['misc']['font'];
 	var myFont = [];
 
 	for (x = 0; x < 94; x++) {
-		myFont.push(grabImageAt(fontImage, x * 8, 0, 8, 8, false, 1));
+		myFont.push(grabImageAt(fontImage, x * 8, 0, 8, 7, false,1));
 	}
-	return myFont;
-        
-//    }else{
-//        alert('Font not loaded');
-//    }
+	return myFont;        
 
 }
 
