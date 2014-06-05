@@ -947,7 +947,12 @@ Player.prototype.castSpell = function(id, c) {
 	if (c.stat.sp - sp.cost >= 0) {
 		castSpell(id, c.monster, 6); //TODO: spell power
 		c.selectedSpell = null;
+		c.castSuccessful++;
 		c.stat.sp -= sp.cost;
+		c.stat.vit -= sp.cost;
+		if(c.stat.vit < 0) {
+			c.stat.vit = 0;
+		}
 	}
 }
 

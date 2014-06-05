@@ -88,6 +88,9 @@ function switchTower(id, po) {
 
 function canMove(f, x, y, d, to) {
 	xy = getOffsetByRotation((d + to) % 4);
+	if(typeof tower[towerThis].floor[f].Map[y + xy.y] === "undefined" || typeof tower[towerThis].floor[f].Map[y + xy.y][x + xy.x] === "undefined") { //edge of floor
+		return false;
+	}
 	hex18 = tower[towerThis].floor[f].Map[y][x];
 	hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
 	if (getHexToBinaryPosition(hex15, 8) == '1') { //other player

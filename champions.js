@@ -14,14 +14,18 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.level = level;
 	this.prof = prof;
 	this.colour = colour;
-        this.spellBookPage = 0;
-        this.selectedSpell = null;
+	this.spellBookPage = 0;
+	this.selectedSpell = null;
+	this.activeSpell = {
+		id: -1,
+		timer: 0
+	};
 	this.stat = stat;
 	this.food = 200;
 	this.xp = 0;
 	this.xp2 = 0;
-	this.spellUp = 1;
-	this.levelUp = 1;
+	this.spellUp = 0;
+	this.levelUp = 0;
 	this.monster = monster;
 	for (pg = 0; pg < COLOUR_MAX; pg++) {
 		this.spellBook[pg] = new Array();
@@ -79,8 +83,8 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			this.monster.die();
 		}
 		if (this.recruitment.recruited && this.recruitment.attached) {
-			if(self.recruitment.playerId > -1) {
-				if(!player[self.recruitment.playerId].attacking) {
+			if (self.recruitment.playerId > -1) {
+				if (!player[self.recruitment.playerId].attacking) {
 					self.writeAttackPoints(dmg, true);
 				}
 				player[self.recruitment.playerId].alertDamagedPlayer();
@@ -157,7 +161,7 @@ Champion.prototype.gainLevel = function() {
 			this.stat.spMax += Math.floor(Math.random() * stat[prof].sp) + 1;
 			this.level++;
 		}
-		if(this.recruitment.recruited) {
+		if (this.recruitment.recruited) {
 			var p = this.recruitment.playerId;
 			player[p].message(this.firstName + TEXT_GAINED_LEVEL, COLOUR[COLOUR_RED]);
 		}
@@ -171,7 +175,7 @@ Champion.prototype.checkGainSpell = function() {
 
 Champion.prototype.restoreStats = function() {
 	var alertPlayer = false;
-	if(this.recruitment.playerId > -1) {
+	if (this.recruitment.playerId > -1) {
 		var p = player[this.recruitment.playerId];
 	}
 	if (this !== null) {
@@ -188,7 +192,7 @@ Champion.prototype.restoreStats = function() {
 			if (this.stat.sp > this.stat.spMax) {
 				this.stat.sp = this.stat.spMax;
 			}
-			if(this.recruitment.recruited && this.id !== CHA_MR_FLAY) {
+			if (this.recruitment.recruited && this.id !== CHA_MR_FLAY) {
 				if (this.food > 0) {
 					this.food--;
 				} else {
@@ -207,7 +211,7 @@ Champion.prototype.restoreStats = function() {
 			}
 		}
 	}
-	if(typeof p !== "undefined") {
+	if (typeof p !== "undefined") {
 		if (alertPlayer) {
 			p.alertDamagedPlayer();
 		}
@@ -221,10 +225,10 @@ Champion.prototype.addSpellToSpellBook = function(sp) {
 
 Champion.prototype.getUnlearntSpellsByColour = function(cl) {
 	var sb = new Array();
-	for(pg = 0; pg < COLOUR_MAX; pg++) {
-		for(rw = 0; rw < SPELL_MAX; rw++) {
+	for (pg = 0; pg < COLOUR_MAX; pg++) {
+		for (rw = 0; rw < SPELL_MAX; rw++) {
 			var sp = this.spellBook[pg][rw];
-			if(!sp.learnt && sp.ref.colour === cl) {
+			if (!sp.learnt && sp.ref.colour === cl) {
 				sb.push(sp.ref);
 			}
 		}
@@ -236,10 +240,10 @@ Champion.prototype.getUnlearntSpellsByColour = function(cl) {
 }
 
 Champion.prototype.getSpellInBook = function(sp) {
-	for(pg = 0; pg < COLOUR_MAX; pg++) {
-		for(rw = 0; rw < SPELL_MAX; rw++) {
+	for (pg = 0; pg < COLOUR_MAX; pg++) {
+		for (rw = 0; rw < SPELL_MAX; rw++) {
 			var sb = this.spellBook[pg][rw];
-			if(sb.ref === sp) {
+			if (sb.ref === sp) {
 				return sb;
 			}
 		}
@@ -247,10 +251,10 @@ Champion.prototype.getSpellInBook = function(sp) {
 }
 
 Champion.prototype.getSpellInBookById = function(id) {
-	for(pg = 0; pg < COLOUR_MAX; pg++) {
-		for(rw = 0; rw < SPELL_MAX; rw++) {
+	for (pg = 0; pg < COLOUR_MAX; pg++) {
+		for (rw = 0; rw < SPELL_MAX; rw++) {
 			var sb = this.spellBook[pg][rw];
-			if(sb.id === id) {
+			if (sb.id === id) {
 				return sb;
 			}
 		}
@@ -258,16 +262,16 @@ Champion.prototype.getSpellInBookById = function(id) {
 }
 
 Champion.prototype.buySpell = function(sp) {
-	if(this.recruitment.playerId > -1) {
+	if (this.recruitment.playerId > -1) {
 		var p = player[this.recruitment.playerId];
 		var pk = this.findPocketItem(ITEM_COINAGE);
-		if(this.consumePocketItem(pk, p.fairyDetails.spell.cost)) {
+		if (this.consumePocketItem(pk, p.fairyDetails.spell.cost)) {
 			this.addSpellToSpellBook(sp);
 			this.spellUp--;
-	        p.sleep();
-	    } else {
-	        p.message(TEXT_PAUPER, COLOUR[COLOUR_GREEN], false, 0);
-	    }
+			p.sleep();
+		} else {
+			p.message(TEXT_PAUPER, COLOUR[COLOUR_GREEN], false, 0);
+		}
 	}
 }
 
@@ -284,11 +288,11 @@ Champion.prototype.findPocketItem = function(i) {
 //used for arrows and coins
 Champion.prototype.consumePocketItem = function(pk, q) {
 	var it = this.pocket[pk];
-	if(typeof it !== "undefined") {
-		if(typeof q === "undefined") {
+	if (typeof it !== "undefined") {
+		if (typeof q === "undefined") {
 			q = 1;
 		}
-		if(it.quantity - q >= 0) {
+		if (it.quantity - q >= 0) {
 			it.setPocketItem(it.id, it.quantity - q);
 			return true;
 		}
@@ -302,7 +306,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		var p = player[this.recruitment.playerId];
 		var x = 0,
 			y = 0;
-			w = 96;
+		w = 96;
 		switch (this.recruitment.position) {
 			case 0:
 				x = 96;
@@ -335,7 +339,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		}
 		(function(p, x, y, w) {
 			setTimeout(function() {
-				if(p.messageTimeout === 0 || self.recruitment.position === 0) {
+				if (p.messageTimeout === 0 || self.recruitment.position === 0) {
 					ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
 				}
 			}, 1500);
@@ -348,32 +352,56 @@ Champion.prototype.toString = function() {
 	for (cl = 0; cl < COLOUR_MAX; cl++) {
 		sb = sb + "[";
 		for (i = 0; i < SPELL_MAX; i++) {
-			if(this.spellBook[cl][i].learnt) {
+			if (this.spellBook[cl][i].learnt) {
 				sb = sb + "1";
 			} else {
 				sb = sb + "0";
 			}
-			if(i < SPELL_MAX - 1) {
+			if (i < SPELL_MAX - 1) {
 				sb = sb + ", ";
 			}
 		}
 		sb = sb + "]";
-		if(cl < COLOUR_MAX - 1) {
+		if (cl < COLOUR_MAX - 1) {
 			sb = sb + ", ";
 		}
 	}
 	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', spellBook:[' + sb + '], stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
 }
 
-Champion.prototype.selectSpell = function(id){
-    
-    if (this.spellBook[this.spellBookPage][id].learnt){    
-        this.selectedSpell = this.spellBook[this.spellBookPage][id];
-    }
-    else{
-        this.selectedSpell = null;
-    }
-    
+Champion.prototype.activateSpell = function(s, pow) {
+	this.activeSpell.id = s;
+	this.activeSpell.timer = pow * 5;
+	if(this.recruitment.playerId > -1) {
+		redrawUI(this.recruitment.playerId);
+	}
+}
+
+Champion.prototype.checkActiveSpell = function() {
+	if(this.activeSpell.id > -1) {
+		this.activeSpell.timer--;
+		/*switch(this.activeSpell.id) {
+			case SPELL_ARMOUR:
+			case SPELL_COMPASS:
+			case SPELL_LEVITATE:
+			case SPELL_WARPOWER:
+			case SPELL_ANTIMAGE:
+			case SPELL_TRUEVIEW:
+		}*/
+		if(this.activeSpell.timer === 0) {
+			this.activeSpell.id = -1;
+		}
+	}
+}
+
+Champion.prototype.selectSpell = function(id) {
+
+	if (this.spellBook[this.spellBookPage][id].learnt) {
+		this.selectedSpell = this.spellBook[this.spellBookPage][id];
+	} else {
+		this.selectedSpell = null;
+	}
+
 }
 
 function getChampionClass(id) {

@@ -320,6 +320,10 @@ function leftUI(p) {
 				} else {
 					ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
 					ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][cid], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][cid].width * scale, gfxUI[UI_GFX_PORTRAITS][cid].height * scale);
+					if(ch.activeSpell.id > -1) {
+						var sp = getSpellById(ch.activeSpell.id);
+						drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
+					}
 				}
 			} else {
 				var t;
@@ -1145,25 +1149,25 @@ function uiClickAreas() {
 	}); //Portal - Door
 	UCA.push({
 		x: 110,
-		y: 71,
+		y: 70,
 		width: 45,
-		height: 7
+		height: 8
 	}); //Portal - Item Close Left
 	UCA.push({
 		x: 165,
-		y: 71,
+		y: 70,
 		width: 45,
-		height: 7
+		height: 8
 	}); //Portal - Item Close Right
 	UCA.push({
 		x: 120,
-		y: 62,
+		y: 61,
 		width: 35,
 		height: 9
 	}); //Portal - Item Back Left
 	UCA.push({
 		x: 165,
-		y: 62,
+		y: 61,
 		width: 35,
 		height: 9
 	}); //Portal - Item Back Right

@@ -491,7 +491,7 @@ function indexToCoordinates(ix) {
 
 function getItemDistanceByPos(pos, sq, sh) {
 	if (pos <= 4) {
-		return DISTANCE_DISTANT;
+		//return DISTANCE_DISTANT;
 	} else if (pos <= 9) {
 		return DISTANCE_DISTANT;
 	} else if (pos <= 12) {

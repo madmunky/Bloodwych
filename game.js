@@ -76,6 +76,15 @@ function timerAction() {
 				}
 			}
 		}
+		if(timerMaster - activeSpellTimer >= 10) {
+			activeSpellTimer = timerMaster;
+			for (c = 0; c < pl.champion.length; c++) {
+				var ch = pl.getChampion(c);
+				if (ch !== null) {
+					ch.checkActiveSpell();
+				}
+			}
+		}
 	}
 	if (timerMaster - timerChampionStats >= 100) {
 		timerChampionStats = timerMaster;

@@ -871,7 +871,7 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
 		"MINDROCK",
 		"WYCHWIND"
 	],
-	/*TEXT_SPELL_BOOK = [
+	TEXT_SPELL_BOOK = [
 		"MARY",
         "ZEDN",
         "ISCR",
@@ -881,14 +881,14 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
         "NISH",
         "ACOU",
 
-        "LELA",
-        "COZZ",
-        "RRAG",
-        "WHYA",
-		"EWAN",
-        "PETH",
-        "ESQX"
-        "IDFI",
+        "ANEE",
+        "HADA",
+        "RAWU",
+        "APWH",
+        "OWTE",
+        "PLEO",
+        "ILLH",
+        "ITHO",
 
         "TNER",
         "ITWE",
@@ -899,53 +899,15 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
         "DDUN",
         "FLIN",
 
-        "ANEE",
-        "HADA",
-        "RAWU",
-        "APWH",
-        "OWTE",
-        "PLEO",
-        "ILLH",
-        "ITHO"
-    ],*/
-
-	TEXT_SPELL_BOOK = [
-		"MARY",
-		"HADA",
-		"LITT",
-		"LELA",
-		"ANEE",
-		"ITWE",
-		"RRAG",
-		"UDDU",
-
-		"TNER",
+        "LELA",
+        "COZZ",
+        "RRAG",
+        "WHYA",
 		"EWAN",
-		"ZEDN",
-		"OWTE",
-		"COZZ",
-		"ITWE",
-		"RAWU",
-		"DDUN",
-
-		"WHYA",
-		"MIST",
-		"ILLH",
-		"AVIN",
-		"TOTY",
-		"PETH",
-		"ISCR",
-		"APWH",
-
-		"ITHO",
-		"UGHT",
-		"IDFI",
-		"NISH",
-		"ACOU",
-		"PLEO",
-		"FLIN",
-		"ESQX"
-	],
+        "PETH",
+        "ESQX",
+        "IDFI"
+    ],
 	TEXT_SPELL_DESCRIPTION = [
 		"WEAR THIS SPELL WITH PRIDE",
 		"A FROZEN LIFE MAY WELL BE A SHORT ONE",
@@ -1129,6 +1091,7 @@ var ITEM_EMPTY = 0,
 var spell = new Array();
 var dungeonSpellTimer = 0;
 var dungeonSpellList = new Array();
+var activeSpellTimer = 0;
 var SPELL_MAX = 8;
 
 //Serpent spells
