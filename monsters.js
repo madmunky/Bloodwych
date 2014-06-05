@@ -1,5 +1,5 @@
 function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, champId) {
-	this.id = id;
+	//this.id = id;
 	this.level = level;
 	this.type = type;
 	this.ref = monsterRef[form];
@@ -57,7 +57,7 @@ Monster.prototype.canInteract = function() {
 		}
 		var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
 
-		if (mon.champId > -1) {
+		if (mon.type === MON_TYPE_MAGICAL || this.type === MON_TYPE_MAGICAL || mon.champId > -1) {
 			//attack champion
 			this.attack(true, mon);
 			return 2;
@@ -143,18 +143,18 @@ Monster.prototype.assembleTeamWith = function(m) {
 Monster.prototype.canMoveByWood = function() {
 	var hexThis = this.getBinaryView(18, 0, 16);
 	var hexNext = this.getBinaryView(15, 0, 16);
-	//Check the space the player is standing on
+	//Check the space the monster is standing on
 	if (getHexToBinaryPosition(hexThis, 12, 4) == '2' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2 + 1, 1) == '1') {
-		if (this.isAgressive() && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
+		if (this.isAgressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1, '0');
 			return 3;
 		}
 		return 0;
 	}
-	//Check the space the player is moving to
+	//Check the space the monster is moving to
 	if (getHexToBinaryPosition(hexNext, 12, 4) == '2' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2 + 1, 1) == '1') {
-		if (this.isAgressive() && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
+		if (this.isAgressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1, '0');
 			return 3;
@@ -246,7 +246,7 @@ Monster.prototype.doDamageTo = function(def, dmg, dExh) {
 
 Monster.prototype.followPlayer = function() {
 	//Move to player
-	if (this.champId === -1) {
+	if (this.champId === -1 && this.type !== MON_TYPE_MAGICAL) {
 		var rnd = Math.floor(Math.random() * 2);
 		if (!player[0].dead && (player.length === 1 || Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y))) {
 			//player 1 is closer
@@ -426,7 +426,7 @@ Monster.prototype.die = function() {
 			if(!ch.recruitment.recruited || !ch.recruitment.attached) {
 				dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, sq);
 			}
-		} else {
+		} else if(this.type !== MON_TYPE_MAGICAL) {
 			if(Math.floor(Math.random() * 2) === 1) {
 				var it = Math.floor(Math.random() * ITEM_WATER + 1);
 				var qt = 1;
@@ -483,7 +483,7 @@ function initMonsters(t) {
 				square = 0;
 			}
 			monster[t.id][i] = new Monster(i, level, type, form, t.id, floor, x, y, 0, square, teamId);
-			//PrintLog('Loaded monster: ' + monster[t.id][i]);
+			PrintLog('Loaded monster: ' + monster[t.id][i]);
 		}
 	}
 

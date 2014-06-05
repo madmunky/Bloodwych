@@ -118,11 +118,11 @@ function getSpellBookPage(p) {
 	});
 }
 
-function castSpell(s, src, int) {
-	if(typeof int === "undefined") {
-		int = 0;
+function castSpell(s, src, pw) {
+	if(typeof pw === "undefined") {
+		pw = 0;
 	}
-	var pow = Math.floor((Math.random() * int / 2) + (int / 2));
+	var pow = Math.floor((Math.random() * pw / 2) + (pw / 2));
 	if(pow > 63) {
 		pow = 63;
 	}
@@ -130,8 +130,17 @@ function castSpell(s, src, int) {
 	var x = src.x;
 	var y = src.y;
 	var d = src.d;
+	var o = getOffsetByRotation(d);
+	var x1 = x + o.x;
+	var y1 = y + o.y;
 	switch (s) {
 		//serpent
+		case SPELL_ARMOUR: break;
+		case SPELL_PARALYZE: break;
+		case SPELL_COMPASS: break;
+		case SPELL_LEVITATE: break;
+		case SPELL_WARPOWER: break;
+		case SPELL_ARC_BOLT: break;
 		case SPELL_FORMWALL:
 			if(src.getBinaryView(15, 0, 16) === '0000') {
 				src.setBinaryView(15, 12, 4, '7');
@@ -141,25 +150,17 @@ function castSpell(s, src, int) {
 				setDungeonSpell(towerThis, f, xy.x, xy.y);
 			}
 			break;
-		//moon
-		case SPELL_MINDROCK:
-			if(src.getBinaryView(15, 0, 16) === '0000') {
-				src.setBinaryView(15, 12, 4, '7');
-				src.setBinaryView(15, 6, 2, '2');
-				src.setBinaryView(15, 0, 6, dec2hex(pow));
-			}
-			break;
-		//dragon
-		case SPELL_DISPELL:
-			if(src.getBinaryView(15, 12, 4) === '7') {
-				src.setBinaryView(15, 0, 16, '0000');
-			}
-			break;
+
 		//chaos
+		case SPELL_DEFLECT: break;
+		case SPELL_TERROR: break;
+		case SPELL_ANTIMAGE: break;
+		case SPELL_SPELLTAP: break;
+		case SPELL_ALCHEMY: break;
+		case SPELL_SUMMON:
+			monster[towerThis][monster[towerThis].length] = new Monster(null, pow / 8, MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
+			break;
 		case SPELL_VIVIFY:
-			var o = getOffsetByRotation(d);
-			var x1 = x + o.x;
-			var y1 = y + o.y;
 			if (getMonsterAt(f, x1, y1) === null) {
 				for (i = item[towerThis].length - 1; i >= 0; i--) {
 					var it = item[towerThis][i];
@@ -195,6 +196,44 @@ function castSpell(s, src, int) {
 				}
 			}
 			break;
+		SPELL_DISRUPT: break;
+
+		//dragon
+		case SPELL_MISSILE: break;
+		case SPELL_MAGELOCK:
+			if (src.getBinaryView(18, 12, 4) === '2' && src.getBinaryView(18, ((5 + 2 - d) % 4) * 2) === '1') {
+				src.setBinaryView(18, 11, 1);
+			} else if (src.getBinaryView(15, 12, 4) === '2' && src.getBinaryView(15, ((5 + 0 - d) % 4) * 2) === '1') {
+				src.setBinaryView(15, 11, 1);
+			}
+		break;
+		case SPELL_VITALISE: break;
+		case SPELL_DISPELL:
+			if(src.getBinaryView(15, 12, 4) === '7') {
+				src.setBinaryView(15, 0, 16, '0000');
+			}
+			break;
+
+		case SPELL_FIREBALL: break;
+		case SPELL_FIREPATH: break;
+		case SPELL_RECHARGE: break;
+		case SPELL_BLAZE: break;
+
+		//moon
+		case SPELL_BEGUILE: break;
+		case SPELL_CONFUSE: break;
+		case SPELL_CONCEAL: break;
+		case SPELL_TRUEVIEW: break;
+		case SPELL_VANISH: break;
+		case SPELL_ILLUSION: break;
+		case SPELL_MINDROCK:
+			if(src.getBinaryView(15, 0, 16) === '0000') {
+				src.setBinaryView(15, 12, 4, '7');
+				src.setBinaryView(15, 6, 2, '2');
+				src.setBinaryView(15, 0, 6, dec2hex(pow));
+			}
+			break;
+		case SPELL_WYCHWIND: break;
 		default:
 			break;
 	}

@@ -77,11 +77,17 @@ function timerAction() {
 			}
 		}
 	}
-	if (timerChampionStats >= 100) {
+	if (timerMaster - timerChampionStats >= 100) {
 		timerChampionStats = timerMaster;
 		for (ch = 0; ch < champion.length; ch++) {
 			if (!champion[ch].recruitment.recruited) {
 				champion[ch].restoreStats();
+			}
+		}
+		for (m = 0; m < monster[towerThis].length; m++) {
+			if(monster[towerThis][m].dead) {
+				monster[towerThis].splice(m, 1);
+				m--;
 			}
 		}
 	}

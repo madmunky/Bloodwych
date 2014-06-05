@@ -425,7 +425,7 @@ function initChampions() {
 			vit: vit,
 			vitMax: vit,
 			sp: sp,
-			spMax: sp,
+			spMax: spMax,
 			ac: ac
 		};
 		var spellBin = hex2bin(md.substr(24, 2));
