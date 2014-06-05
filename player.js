@@ -500,7 +500,7 @@ Player.prototype.checkChampionUp = function() {
 		var nc = 0;
 		cs = this.getChampionsForUp();
 		for (c in cs) {
-			if(this.nextChampionUp <= nc) {
+			if (this.nextChampionUp <= nc) {
 				var ch = cs[c].champ;
 				var up = cs[c].up;
 				if (up === 'spell') {
@@ -952,7 +952,7 @@ Player.prototype.castSpell = function(id, c) {
 }
 
 Player.prototype.getObjectOnPos = function(pos, d) {
-	if(typeof d === "undefined") {
+	if (typeof d === "undefined") {
 		d = 2;
 	}
 	var xy = posToCoordinates(pos, this.x, this.y, this.d);
@@ -983,7 +983,7 @@ Player.prototype.getObject = function(f, x, y, d) {
 				return 'wood';
 			}
 		} else if (getHexToBinaryPosition(hex, 12, 4) === '3') { //misc
-			if(getHexToBinaryPosition(hex, 6, 2) === '1') { //pillar
+			if (getHexToBinaryPosition(hex, 6, 2) === '1') { //pillar
 				return 'pillar';
 			} else {
 				return 'bed';
@@ -1001,10 +1001,10 @@ Player.prototype.getObject = function(f, x, y, d) {
 
 
 Player.prototype.message = function(txt, col, wait, delay) {
-	if(typeof txt === "undefined") {
+	if (typeof txt === "undefined") {
 		txt = '';
 	}
-	if(typeof col === "undefined") {
+	if (typeof col === "undefined") {
 		col = COLOUR[COLOUR_GREEN];
 	}
 	if (typeof delay === "undefined") {
@@ -1014,9 +1014,9 @@ Player.prototype.message = function(txt, col, wait, delay) {
 	if (typeof wait === "undefined") {
 		wait = false;
 	}
-	if(txt === '') {
+	if (txt === '') {
 		ctx.clearRect(0, (this.ScreenY - 9) * scale, 320 * scale, 8 * scale);
-		if(this.messageTimeout !== 0){
+		if (this.messageTimeout !== 0) {
 			clearTimeout(this.messageTimeout);
 		}
 	} else if (this.messageTimeout === 0 || !wait) {
@@ -1052,17 +1052,20 @@ Player.prototype.testMode = function(id) {
 }
 
 function initPlayersStart(ch1, ch2) {
-	if(typeof ch1 === "number" && typeof ch2 === "number") {
-		player[0].recruitChampion(ch1);
-		player[1].recruitChampion(ch2);
-		for (i = 1; i < 4; i++) {
-			player[0].recruitChampion();
-			player[1].recruitChampion();
+	if (typeof ch1 === "number" && typeof ch2 === "number") {
+		ch = [ch1, ch2];
+		for (p = 0; p < player.length; p++) {
+			player[p].recruitChampion(ch[p]);
+			for (i = 1; i < 4; i++) {
+				player[p].recruitChampion();
+			}
 		}
 	} else {
-		for (i = 0; i < 4; i++) {
-			player[0].recruitChampion(ch1[i]);
-			player[1].recruitChampion(ch2[i]);
+		for (p = 0; p < player.length; p++) {
+			for (i = 0; i < 4; i++) {
+				ch = [ch1[i], ch2[i]];
+				player[p].recruitChampion(ch[p]);
+			}
 		}
 	}
 }
