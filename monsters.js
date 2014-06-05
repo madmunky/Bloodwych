@@ -533,17 +533,18 @@ function initMonsterGfx() {
 
 	for (i = 0; i < 6; i++) {
 		monsterBigPalette[i] = new Array();
-		//var t = monsterPaletteMetaData;
 		for (j = 0; j < 8; j++) { //palettes
 			var k = 431;
 			var b = monsterPaletteMetaData[i][j];
 			monsterBigPalette[i][j] = [COLOUR[monsterPaletteData[k + b][0]], COLOUR[monsterPaletteData[k + b][1]], COLOUR[monsterPaletteData[k + b][2]], COLOUR[monsterPaletteData[k + b][3]]];
 			//PrintLog("Loading Big Monster Palette: " + i.toString() + " - " + j.toString());
 		}
+		var b = monsterPaletteMetaData[i][0];
+		monsterBigPalette[i][8] = [COLOUR[monsterPaletteData[430 + b][0]], COLOUR[monsterPaletteData[430 + b][1]], COLOUR[monsterPaletteData[430 + b][2]], COLOUR[monsterPaletteData[430 + b][3]]];
 	}
 
 	for (id = 0; id <= MON_FORM_BEHEMOTH; id++) {
-		if (id >= MON_FORM_SUMMON) {
+		if (id >= MON_FORM_ILLUSION) {
 			if (id === MON_FORM_BEHEMOTH) {
 				createMonsterRef(id, 0, grabMonster(id, 0));
 			} else {

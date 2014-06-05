@@ -152,6 +152,7 @@ function debugTextPrint(p) {
         //debugText(hex2bin(hex));
         //debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
         debugText(p, hex2bin(getHexToBinaryPosition(p.getView()[15], 0, 16)));
+        debugText(p, canMove(p.floor, p.x, p.y, p.d, 0));
         for(c = 0; c < p.champion.length; c++) {
             var ch = p.getChampion(c);
             if(ch !== null) {
@@ -167,10 +168,6 @@ function debugTextPrint(p) {
         for (i in mon) {
             debugText(p, 'Monster:' + mon[i].monster + ' - MonsterPos:' + mon[i].position + ' - MonsterOffset:' + getMonsterGfxOffset(15, 0).x + ', ' + getMonsterGfxOffset(12, 0).x + ', ' + getMonsterGfxOffset(9, 0).x);
         }*/
-        var it = p.getItemsInRange();
-        for(i in it) {
-            debugText(p, 'Item:' + it[i].item + ' - ItemPos:' + it[i].position);
-        }
     }
 }
 

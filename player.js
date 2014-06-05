@@ -58,18 +58,18 @@ Player.prototype.getViewPortal = function() {
 	this.Portal = this.PlayerCanvas.getContext("2d");
 }
 
-Player.prototype.canMoveToPos = function(pos) {
-	//Check other player
-	var view = this.getView();
+Player.prototype.canMoveToPos = function(d) {
+	return canMove(this.floor, this.x, this.y, this.d, d);
+	/*var view = this.getView();
 	var hex = view[pos];
-	if (getHexToBinaryPosition(hex, 8) == '1') { //wall
+	if (getHexToBinaryPosition(hex, 8) == '1') { //other player
 		return false;
 	}
 	if (getHexToBinaryPosition(hex, 12, 4) === '7' && getHexToBinaryPosition(hex, 6, 2) === '3') { //formwall
 		return false;
 	}
 	var xy = getOffsetByRotation((this.d + this.moving) % 4);
-	if (getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y) !== null) {
+	if (getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y) !== null) { //monster
 		return false;
 	}
 
@@ -94,11 +94,12 @@ Player.prototype.canMoveToPos = function(pos) {
 				return false;
 			}
 	}
-	return true;
+	return true;*/
 }
 
-Player.prototype.canMoveToPosByWood = function(pos, mov) {
-	var view = this.getView();
+Player.prototype.canMoveToPosByWood = function(d) {
+	return canMoveByWood(this.floor, this.x, this.y, this.d, d);
+	/*var view = this.getView();
 	var hex = this.getView()[pos];
 	if(typeof mov === "undefined") {
 		var mov = 0;
@@ -111,7 +112,7 @@ Player.prototype.canMoveToPosByWood = function(pos, mov) {
 	if (getHexToBinaryPosition(hex, 12, 4) == '2' && getHexToBinaryPosition(hex, ((5 - ((this.d + mov) % 4)) % 4) * 2 + 1, 1) == '1') {
 		return false;
 	}
-	return true;
+	return true;*/
 }
 
 Player.prototype.changeUpFloor = function() {
@@ -260,8 +261,7 @@ Player.prototype.move = function(d) {
 		this.lastX = this.x;
 		this.lastY = this.y;
 		this.attack(false);
-		var viewIndex = [15, 16, 19, 17];
-		if (this.canMoveToPos(viewIndex[d])) {
+		if (this.canMoveToPos(d)) {
 			xy = getOffsetByRotation((this.d + d) % 4);
 			this.x = this.x + xy.x;
 			this.y = this.y + xy.y;
@@ -274,7 +274,7 @@ Player.prototype.move = function(d) {
 }
 
 Player.prototype.tryAttack = function() {
-	if (!this.dead && !this.sleeping && this.canMoveToPosByWood(15)) {
+	if (!this.dead && !this.sleeping && this.canMoveToPosByWood(0)) {
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
@@ -722,7 +722,7 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 	//var loc = characterSpriteLocation();
 	var p = this;
 
-	if (form >= MON_FORM_SUMMON) {
+	if (form >= MON_FORM_ILLUSION) {
 		if (form <= MON_FORM_BEHOLDER) {
 			var dis = [0, 1, 2, 3, 4, 5];
 		} else if (form === MON_FORM_DRAGON_SMALL) {
@@ -945,13 +945,16 @@ Player.prototype.getItemsInRange = function(pos2) {
 Player.prototype.castSpell = function(id, c) {
 	var sp = c.getSpellInBookById(id);
 	if (c.stat.sp - sp.cost >= 0) {
-		castSpell(id, c.monster, c.stat.int);
+		castSpell(id, c.monster, 6); //TODO: spell power
 		c.selectedSpell = null;
 		c.stat.sp -= sp.cost;
 	}
 }
 
 Player.prototype.getObjectOnPos = function(pos, d) {
+	if(typeof d === "undefined") {
+		d = 2;
+	}
 	var xy = posToCoordinates(pos, this.x, this.y, this.d);
 	return this.getObject(this.floor, xy.x, xy.y, d);
 }
@@ -979,6 +982,14 @@ Player.prototype.getObject = function(f, x, y, d) {
 			} else if (getHexToBinaryPosition(hex, ((7 - d - this.d) % 4) * 2 + 1, 1) === '1') {
 				return 'wood';
 			}
+		} else if (getHexToBinaryPosition(hex, 12, 4) === '3') { //misc
+			if(getHexToBinaryPosition(hex, 6, 2) === '1') { //pillar
+				return 'pillar';
+			} else {
+				return 'bed';
+			}
+		} else if (getHexToBinaryPosition(hex, 12, 4) === '4') { //stairs
+			return 'stairs';
 		} else if (getHexToBinaryPosition(hex, 12, 4) === '5') { //door
 			if (typeof d === "undefined" || (this.d + d) % 2 === parseInt(getHexToBinaryPosition(hex, 5, 1))) {
 				return 'door';

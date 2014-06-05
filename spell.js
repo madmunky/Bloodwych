@@ -158,10 +158,13 @@ function castSpell(s, src, pw) {
 		case SPELL_SPELLTAP: break;
 		case SPELL_ALCHEMY: break;
 		case SPELL_SUMMON:
-			monster[towerThis][monster[towerThis].length] = new Monster(null, pow / 8, MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
+			if(canMove(f, x, y, d, 0)) {
+				var max = monster[towerThis].length;
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 10), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
+			}
 			break;
 		case SPELL_VIVIFY:
-			if (getMonsterAt(f, x1, y1) === null) {
+			if (canMove(f, x, y, d, 0) && getMonsterAt(f, x1, y1) === null) {
 				for (i = item[towerThis].length - 1; i >= 0; i--) {
 					var it = item[towerThis][i];
 					if (it.id >= ITEM_BLODWYN_RIP && it.id <= ITEM_THAI_CHANG_RIP && it.location.tower === towerThis && it.location.floor === f && it.location.x === x1 && it.location.y === y1) {
@@ -225,7 +228,13 @@ function castSpell(s, src, pw) {
 		case SPELL_CONCEAL: break;
 		case SPELL_TRUEVIEW: break;
 		case SPELL_VANISH: break;
-		case SPELL_ILLUSION: break;
+		case SPELL_ILLUSION:
+		if(canMove(f, x, y, d, 0)) {
+			var max = monster[towerThis].length;
+			monster[towerThis][max] = new Monster(null, Math.floor(pow / 10), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
+			monster[towerThis][max].hp = 0;
+		}
+		break;
 		case SPELL_MINDROCK:
 			if(src.getBinaryView(15, 0, 16) === '0000') {
 				src.setBinaryView(15, 12, 4, '7');

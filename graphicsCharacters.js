@@ -673,7 +673,7 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
 
 function grabMonster(form, level) {
     switch(form) {
-       case MON_FORM_SUMMON:{ //SUMMON
+       case MON_FORM_ILLUSION: case MON_FORM_SUMMON:{ //SUMMON
         var spriteSheetIMG = gfx['character']['summon'];
         var ImageArray = [],
             BODYPART = [],
@@ -1175,7 +1175,14 @@ function grabMonster(form, level) {
         for(var j = 0; j < ImageArray[i].length; j++) {
             for(var k = 0; k < ImageArray[i][j].length; k++) {
                 if (form < 107){
-                    ImageArray[i][j][k] = recolourSprite(ImageArray[i][j][k], MON_PALETTE_DEFAULT, monsterBigPalette[form - 101][level]);
+                    if(form === MON_FORM_ILLUSION) {
+                        var pal = 0;
+                        var lvl = 8;
+                    } else {
+                        var pal = form - MON_FORM_SUMMON;
+                        var lvl = level;
+                    }
+                    ImageArray[i][j][k] = recolourSprite(ImageArray[i][j][k], MON_PALETTE_DEFAULT, monsterBigPalette[pal][lvl]);
                 }
             }
         }

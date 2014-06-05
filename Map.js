@@ -85,3 +85,56 @@ function switchTower(id, po) {
 	player[0].message("WELCOME THEE TRAVELLER, TO MADMUNKY AND ", COLOUR[COLOUR_YELLOW], true);
 	player[0].message("     WISHBONE'S REMAKE OF BLOODWYCH     ", COLOUR[COLOUR_YELLOW], true);
 }
+
+function canMove(f, x, y, d, to) {
+	xy = getOffsetByRotation((d + to) % 4);
+	hex18 = tower[towerThis].floor[f].Map[y][x];
+	hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
+	if (getHexToBinaryPosition(hex15, 8) == '1') { //other player
+		return false;
+	}
+	if (getHexToBinaryPosition(hex15, 12, 4) === '7' && getHexToBinaryPosition(hex15, 6, 2) === '3') { //formwall
+		return false;
+	}
+	if (getMonsterAt(f, x + xy.x, y + xy.y) !== null) { //monster
+		return false;
+	}
+
+	var objThis = getHexToBinaryPosition(hex18, 12, 4);
+	var objNext = getHexToBinaryPosition(hex15, 12, 4);
+
+	//Check wooden walls and doors
+	if (objThis == '2' || objNext == '2') {
+		if (!canMoveByWood(f, x, y, d, to)) {
+			return false;
+		}
+	}
+
+	//Check other objects
+	switch (objNext) {
+		case '1':
+			return false; //Wall
+		case '3':
+			return false; //Misc
+		case '5': //Doors
+			if (getHexToBinaryPosition(hex15, 7, 1) == '1') {
+				return false;
+			}
+	}
+	return true;
+}
+
+function canMoveByWood(f, x, y, d, to) {
+	xy = getOffsetByRotation((d + to) % 4);
+	hex18 = tower[towerThis].floor[f].Map[y][x];
+	hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
+	//Check the space the player is standing on
+	if (getHexToBinaryPosition(hex18, 12, 4) == '2' && getHexToBinaryPosition(hex18, ((7 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
+		return false;
+	}
+	//Check the space the player is moving to
+	if (getHexToBinaryPosition(hex15, 12, 4) == '2' && getHexToBinaryPosition(hex15, ((5 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
+		return false;
+	}
+	return true;
+}
