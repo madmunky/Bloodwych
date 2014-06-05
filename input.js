@@ -257,7 +257,12 @@ function processCanvasInput(pid, x, y) {
 			p.uiRightPanel.activePocket = 0;
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_INTERACT, p)) {
-			p.action();
+                        var ch = champion[p.champion[p.championLeader]];
+                        if (ch.selectedSpell === null){
+                            p.action();
+                        }else{
+                            p.castSpell(ch.selectedSpell.id, ch);
+                        }
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, p)) {
 			p.uiRightPanel.mode = UI_RIGHT_PANEL_SPELLBOOK;
