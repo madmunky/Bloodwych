@@ -50,7 +50,7 @@ function timerAction() {
 		monsterAttackSequence = 0;
 		mon = getMonstersInTower(towerThis);
 		for (m in mon) {
-			mon[m].move();
+                    mon[m].move();
 		}
 	}
 	if (timerMaster - timerMonsterAttack >= 3) {
