@@ -977,7 +977,7 @@ Player.prototype.getObject = function(f, x, y, d) {
 						return 'switch';
 					} else if (getHexToBinaryPosition(hex, 6, 2) === '3') { //Crystal Gem
 						return 'gem';
-					}
+					} 
 				}
 			}
 			return 'wall';
@@ -1074,3 +1074,24 @@ function initPlayersStart(ch1, ch2) {
 		}
 	}
 }
+
+function showScroll(p){
+    
+        var pos = 15,
+                d = 2;
+	var xy = posToCoordinates(pos, p.x, p.y, p.d);
+        var f = p.floor,
+                x = xy.x,
+                y = xy.y;
+        
+        if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
+            var hex = tower[towerThis].floor[f].Map[y][x], 
+                    A = parseInt(hex.substring(0,1),16),
+                    B = parseInt(hex.substring(1,2),16),
+                    scrollRef = Math.floor((((A*16)+B)/4)-4)-1;
+            
+            p.message(SCROLL_TEXT[scrollRef],COLOUR[COLOUR_BLUE_DARK]);
+            
+        }	
+}
+
