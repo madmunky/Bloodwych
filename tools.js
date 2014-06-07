@@ -334,7 +334,7 @@ function flipImageVert(image) {
 	//flipcontext.translate(image.width, 0);
 	flipcontext.scale(1, -1);
 
-	flipcontext.drawImage(image, 0, (image.height * -1) + 2, image.width, image.height);
+	flipcontext.drawImage(image, 0, (image.height * -1), image.width, image.height);
 	flipcontext.save();
 
 	return can;
@@ -353,4 +353,14 @@ function swapElement(array, indexA, indexB) {
 
 function mathSign(n) {
 	return n ? n < 0 ? -1 : 1 : 0;
+}
+
+function doubleDigits(v) {
+    
+    if (v < 10){
+        return "0" + v.toString();
+    }else{
+        return v.toString();
+    }    
+    
 }

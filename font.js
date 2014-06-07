@@ -3,7 +3,7 @@ function grabFont() {
 	var fontImage = gfx['misc']['font'];
 	var myFont = [];
 
-	for (x = 0; x < 94; x++) {
+	for (x = 0; x < 95; x++) {
 		myFont.push(grabImageAt(fontImage, x * 8, 0, 8, 7, false,1));
 	}
 	return myFont;        

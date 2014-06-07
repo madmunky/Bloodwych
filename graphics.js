@@ -636,7 +636,7 @@ function recolourSprite(img, paletteFrom, paletteTo) {
 
 function recolourSpriteArray(img, paletteFrom, paletteTo) {
 
-	var newArray = []
+	var newArray = [];
 
 	for (x = 0; x < img.length; x++) {
 

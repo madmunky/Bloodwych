@@ -222,13 +222,19 @@ function spellBook(p, ui, dr) {
 	} else {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 		writeFontImage(ch.selectedSpell.ref.name, p.ScreenX + 242, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
-		writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
-		//writeFontImage("COST", p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_RED]);
+		writeFontImage("COST " + doubleDigits(ch.selectedSpell.ref.cost), p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+                writeFontImage("CAST % ", p.ScreenX + 98, (p.ScreenY + 79), COLOUR[COLOUR_YELLOW]);
+                var t = foodBar(ch.food, 62,COLOUR[COLOUR_RED]);
+                ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
+                t = recolourUiGfx(font[94],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_RED]);
+                ctx.drawImage(t, (p.ScreenX + 274) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);                
+                t = flipImageVert(t);
+                ctx.drawImage(t, (p.ScreenX + 298) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);                
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 	}
 
 	writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
-	writeFontImage(getSpellNotation(p.getChampion(p.championLeader).stat.sp) + "/" + getSpellNotation(p.getChampion(p.championLeader).stat.spMax), p.ScreenX + 280, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
+	writeFontImage(getSpellNotation(p.getChampion(p.championLeader).stat.sp) + "/" + getSpellNotation(p.getChampion(p.championLeader).stat.spMax), p.ScreenX + 282, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
 
 
 }
@@ -585,9 +591,9 @@ function drawPocketUI(p) {
 					}
 				}
 				if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES) {
-					ctx.drawImage(flipImageVert(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+					ctx.drawImage(flipImageVert(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
 				} else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES) {
-					ctx.drawImage(flipImageVert(flipImage(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]))), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+					ctx.drawImage(flipImageVert(flipImage(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]))), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
 				} else {
 					ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
 				}
@@ -597,13 +603,10 @@ function drawPocketUI(p) {
 
 			if (pocket.getType() === ITEM_TYPE_STACKABLE) {
 				var qty = pocket.quantity;
-				if (qty < 10) {
-					qty = "0" + qty;
-				}
 				if (pocketId < 3) {
-					writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
+					writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
 				} else {
-					writeFontImage(qty, ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 31) + (y * 16)), COLOUR[COLOUR_GREEN]);
+					writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 31) + (y * 16)), COLOUR[COLOUR_GREEN]);
 				}
 
 			}
@@ -648,13 +651,10 @@ function drawPocketUI(p) {
 					ctx.drawImage(itemRef[p.pocket.id].gfx, ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, itemRef[p.pocket.id].gfx.width * scale, itemRef[p.pocket.id].gfx.height * scale);
 					if (p.pocket.getType() === ITEM_TYPE_STACKABLE) {
 						var qty = p.pocket.quantity;
-						if (qty < 10) {
-							qty = "0" + qty;
-						}
 						if (p.pocket.id < 3) {
-							writeFontImage(qty, ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+							writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
 						} else {
-							writeFontImage(qty, ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
+							writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
 						}
 					}
 					if (!p.attacking) {
@@ -731,7 +731,7 @@ function drawStatsPage(p) {
 		ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
 		writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
 		writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage("0" + ch.level.toString(), p.ScreenX + 297, (p.ScreenY + 15), COLOUR[COLOUR_WHITE]);
+		writeFontImage(doubleDigits(ch.level), p.ScreenX + 297, (p.ScreenY + 15), COLOUR[COLOUR_WHITE]);
 
 		writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);
 		writeFontImage(ch.stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 23), COLOUR[COLOUR_YELLOW]);
@@ -756,7 +756,7 @@ function drawStatsPage(p) {
 		writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 47), COLOUR[COLOUR_GREEN]);
 
 		writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-		var t = foodBar(ch.food, 62);
+		var t = foodBar(ch.food, 62,COLOUR[COLOUR_RED_DARK]);
 		ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
 	}
 }
@@ -1294,6 +1294,18 @@ function uiClickAreas() {
 		width: 16,
 		height: 16
 	}); //Spell Book - Spell Fire 2 
+        UCA.push({
+		x: 273,
+		y: 70,
+		width: 8,
+		height: 8
+	}); //Spell Book - Spell Cost Up
+        UCA.push({
+		x: 297,
+		y: 70,
+		width: 8,
+		height: 8
+	}); //Spell Book - Spell Cost Down
 	return UCA;
 
 }
@@ -1348,14 +1360,14 @@ function recolourUiGfx(img, colourFrom, colourTo) {
 	return can;
 }
 
-function foodBar(foodVal, width) {
+function foodBar(foodVal, width,colour) {
 	var can = document.createElement('canvas');
 	can.width = width;
 	can.height = 5;
 	var canContent = can.getContext("2d");
 	var t = Math.floor(foodVal / 200.0 * (width - 12));
 	canContent.drawImage(gfxUI[UI_GFX_FOOD_POINTER], 0, 1);
-	canContent.fillStyle = 'rgb(' + COLOUR[COLOUR_RED_DARK][0] + ',' + COLOUR[COLOUR_RED_DARK][1] + ',' + COLOUR[COLOUR_RED_DARK][2] + ')';
+	canContent.fillStyle = 'rgb(' + colour[0] + ',' + colour[1] + ',' + colour[2] + ')';
 	canContent.fillRect(6, 0, t, 5);
 	canContent.drawImage(flipImage(gfxUI[UI_GFX_FOOD_POINTER]), width - 4, 1);
 	canContent.save();

@@ -385,6 +385,14 @@ function processCanvasInput(pid, x, y) {
 			p.castSpell(ch.selectedSpell.id, ch);
 			return pid;
 		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_COST_UP, p)) {
+			
+			return pid;
+		}
+                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_COST_DOWN, p)) {
+			
+			return pid;
+		}
 	}
 	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
 
