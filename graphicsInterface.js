@@ -1546,7 +1546,8 @@ function colourSpellPage(dr,ch,img){
 }
 
 function showScroll(p){
-        
+       try{
+           
         var pos = 15,
                 d = 2;
 	var xy = posToCoordinates(pos, p.x, p.y, p.d);
@@ -1579,4 +1580,5 @@ function showScroll(p){
                 l++;
             }
         }	
+        } catch(e) {p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;redrawUI(p.id);};
 }

@@ -981,8 +981,11 @@ Player.prototype.getObject = function(f, x, y, d) {
 				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco
 					if (getHexToBinaryPosition(hex, 6, 2) === '0') { //shelf
 						return 'shelf';
-                                        } else if (getHexToBinaryPosition(hex, 6, 2) === '1') { //Crystal Gem
-						return 'scroll'; 
+                                        } else if (getHexToBinaryPosition(hex, 6, 2) === '1') { //Scroll
+                                                var col = parseInt(getHexToBinaryPosition(hex, 0, 6),16);
+                                                if (col > 4){
+                                                    return 'scroll';     
+                                                }						
 					} else if (getHexToBinaryPosition(hex, 6, 2) === '2') { //Switch
 						return 'switch';
 					} else if (getHexToBinaryPosition(hex, 6, 2) === '3') { //Crystal Gem
