@@ -333,6 +333,11 @@ function processCanvasInput(pid, x, y) {
 			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 			return pid;
 		}
+        } else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+		if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, p)) {
+			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+			return pid;
+		}
 	} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
 
 		var ch = champion[p.champion[p.championLeader]];
