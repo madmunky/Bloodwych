@@ -1560,11 +1560,23 @@ function showScroll(p){
                     B = parseInt(hex.substring(1,2),16),
                     scrollRef = Math.floor((((A*16)+B)/4)-4)-1;
             
+            switch (towerThis){
+                case 0:{scrollRef = scrollRef+0;}break;
+                case 1:{scrollRef = scrollRef+21;}break;
+                case 2:{scrollRef = scrollRef+33;}break;
+                case 3:{scrollRef = scrollRef+41;}break;
+                case 4:{scrollRef = scrollRef+49;}break;
+                case 5:{scrollRef = scrollRef+59;}break;
+            }
+            
             ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
             
             //Scroll page can hold 7 Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
+            var l = (7 - scrollData[scrollRef].length)/2;
+            
             for (x=0;x < scrollData[scrollRef].length;x++){
-                writeFontImage(scrollData[scrollRef][x], p.ScreenX + 278, (p.ScreenY + 15)+(x*8), COLOUR[COLOUR_BLACK],FONT_ALIGNMENT_CENTER);
+                writeFontImage(scrollData[scrollRef][x], p.ScreenX + 278, (p.ScreenY + 15)+(l*8), COLOUR[COLOUR_BLACK],FONT_ALIGNMENT_CENTER);
+                l++;
             }
         }	
 }
