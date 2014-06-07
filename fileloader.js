@@ -40,6 +40,9 @@ function getFileData(file_name, callback, t, type, length) {
 				case "itemData":
 					t.itemData = callback(this.response, length);
 					break;
+                                case "scrollData":
+					scrollData = callback(this.response);
+					break;
 				default:
 					break;
 			}
@@ -131,3 +134,36 @@ function readSimpleDataHex(evt, length) {
 	}
 	return Data;
 }
+
+function readScrollData(evt) {
+	var uInt8Array = new Uint8Array(evt);
+	var Data = [];
+        var Scroll = [];
+        var Line = [];
+        
+	for (x = 0; x < uInt8Array.length; x++) {
+		//Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
+		//var tmp = '';
+                
+                if (uInt8Array[x] === 255){
+                    Scroll.push(Line.join(""));
+                    Data.push(Scroll);
+                    Scroll = [];
+                    Line = [];
+                    x++;
+                }
+                if (uInt8Array[x] === 252){
+                    if (Line.length > 0){
+                        Scroll.push(Line.join(""));
+                    }                    
+                    Line = [];
+                    x = x+3;                    
+                }
+                
+                Line.push(String.fromCharCode(uInt8Array[x]));
+	}
+	return Data;
+}
+
+
+

@@ -165,6 +165,9 @@ function drawUI(p) {
 				case UI_RIGHT_PANEL_STATS:
 					drawStatsPage(p);
 					break;
+                                case UI_RIGHT_PANEL_SCROLL:
+					showScroll(p);
+					break;
 				default:
 					break;
 			}
@@ -1540,4 +1543,28 @@ function colourSpellPage(dr,ch,img){
     
     return recolourSprite(img,MON_PALETTE_DEFAULT,pal);
     
+}
+
+function showScroll(p){
+        
+        var pos = 15,
+                d = 2;
+	var xy = posToCoordinates(pos, p.x, p.y, p.d);
+        var f = p.floor,
+                x = xy.x,
+                y = xy.y;
+        
+        if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
+            var hex = tower[towerThis].floor[f].Map[y][x], 
+                    A = parseInt(hex.substring(0,1),16),
+                    B = parseInt(hex.substring(1,2),16),
+                    scrollRef = Math.floor((((A*16)+B)/4)-4)-1;
+            
+            ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+            
+            //Scroll page can hold 7 Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
+            for (x=0;x < scrollData[scrollRef].length;x++){
+                writeFontImage(scrollData[scrollRef][x], p.ScreenX + 278, (p.ScreenY + 15)+(x*8), COLOUR[COLOUR_BLACK],FONT_ALIGNMENT_CENTER);
+            }
+        }	
 }

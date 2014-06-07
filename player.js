@@ -239,13 +239,17 @@ Player.prototype.setMovementData = function() {
 
 Player.prototype.rotate = function(r) {
 	if (!this.dead && !this.sleeping) {
-		if (r === -1) {
-			highliteMovementArrow(this, 0);
-		} else {
-			highliteMovementArrow(this, 2);
-		}
-		this.d = (4 + this.d + r) % 4;
-		this.doEvent(false);
+            if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL){
+                this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+                redrawUI(this.id);
+            }
+            if (r === -1) {
+                    highliteMovementArrow(this, 0);
+            } else {
+                    highliteMovementArrow(this, 2);
+            }
+            this.d = (4 + this.d + r) % 4;
+            this.doEvent(false);
 	}
 }
 
@@ -255,6 +259,10 @@ Player.prototype.rotateTo = function(d) {
 
 Player.prototype.move = function(d) {
 	if (!this.dead && !this.sleeping) {
+            if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL){
+                this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+                redrawUI(this.id);
+            }
 		m = [1, 5, 4, 3];
 		highliteMovementArrow(this, m[d]);
 		this.moving = d;
@@ -973,6 +981,8 @@ Player.prototype.getObject = function(f, x, y, d) {
 				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco
 					if (getHexToBinaryPosition(hex, 6, 2) === '0') { //shelf
 						return 'shelf';
+                                        } else if (getHexToBinaryPosition(hex, 6, 2) === '1') { //Crystal Gem
+						return 'scroll'; 
 					} else if (getHexToBinaryPosition(hex, 6, 2) === '2') { //Switch
 						return 'switch';
 					} else if (getHexToBinaryPosition(hex, 6, 2) === '3') { //Crystal Gem
@@ -1075,23 +1085,5 @@ function initPlayersStart(ch1, ch2) {
 	}
 }
 
-function showScroll(p){
-    
-        var pos = 15,
-                d = 2;
-	var xy = posToCoordinates(pos, p.x, p.y, p.d);
-        var f = p.floor,
-                x = xy.x,
-                y = xy.y;
-        
-        if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
-            var hex = tower[towerThis].floor[f].Map[y][x], 
-                    A = parseInt(hex.substring(0,1),16),
-                    B = parseInt(hex.substring(1,2),16),
-                    scrollRef = Math.floor((((A*16)+B)/4)-4)-1;
-            
-            p.message(SCROLL_TEXT[scrollRef],COLOUR[COLOUR_BLUE_DARK]);
-            
-        }	
-}
+
 

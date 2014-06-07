@@ -124,6 +124,7 @@ function loadTowerData(t, start) {
 		getFileData('data/palette.monsters', readSimpleData, null, "monsterPalette", 4);
 		getFileData('data/palette_meta.monsters', readSimpleData, null, "monsterPaletteMeta", 8);
 		getFileData('data/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
+                getFileData('data/scroll.data', readScrollData, t, "scrollData");
 	}
 
 	getFileData('data/' + TOWER_NAME[id] + '.MAP', readMapData, t, "floor");

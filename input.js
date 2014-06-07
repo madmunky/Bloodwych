@@ -540,6 +540,12 @@ function checkClickInViewPortal(p, x, y) {
 					return p.id;
 				}
 			}
+                        if (o15 === 'scroll') {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
+					p.uiRightPanel.mode = UI_RIGHT_PANEL_SCROLL;
+					return p.id;
+				}
+			}
 			break;
 		case UI_CENTER_PANEL_SLEEPING:
 			break;
