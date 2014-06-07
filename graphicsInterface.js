@@ -1312,11 +1312,13 @@ function uiClickAreas() {
 
 function uiClickInArea(x, y, ui, p) {
 	if (x >= (p.ScreenX + uiClickArea[ui].x) * scale && x < (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width) * scale && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y < (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height) * scale) {
-		if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA) {
-			ctx.fillStyle = 'rgb(255, 255, 196)';
-			ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
-		}
-		return true;
+            if (debug){
+                if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA) {
+                            ctx.fillStyle = 'rgb(255, 255, 196)';
+                            ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
+                    }
+            }        
+            return true;
 	}
 	return false;
 }
@@ -1361,6 +1363,11 @@ function recolourUiGfx(img, colourFrom, colourTo) {
 }
 
 function foodBar(foodVal, width,colour) {
+    
+    if (typeof colour === "undefined") {
+        colour = COLOUR[COLOUR_RED_DARK];
+    }
+    
 	var can = document.createElement('canvas');
 	can.width = width;
 	can.height = 5;
