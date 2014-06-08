@@ -452,10 +452,13 @@ function getClassColour(c, palette) {
 }
 
 function commandUI(p) {
-
+	ch = p.getChampion(p.championLeader);
 	ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].height * scale);
-
+	if(ch.activeSpell.id > -1) {
+		var sp = getSpellById(ch.activeSpell.id);
+		drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
+	}
 	ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
@@ -648,13 +651,13 @@ function drawPocketUI(p) {
 			case 4:
 				{
 					//pid = itemID(p.pocket.id);
-					ctx.drawImage(itemRef[p.pocket.id].gfx, ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, itemRef[p.pocket.id].gfx.width * scale, itemRef[p.pocket.id].gfx.height * scale);
+					ctx.drawImage(itemRef[p.pocket.id].gfx, ((p.ScreenX + 226) + (c * 16)) * scale, (p.ScreenY + 63) * scale, itemRef[p.pocket.id].gfx.width * scale, itemRef[p.pocket.id].gfx.height * scale);
 					if (p.pocket.getType() === ITEM_TYPE_STACKABLE) {
 						var qty = p.pocket.quantity;
 						if (p.pocket.id < 3) {
-							writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+							writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
 						} else {
-							writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
+							writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
 						}
 					}
 					if (!p.attacking) {
