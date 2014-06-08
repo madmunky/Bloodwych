@@ -158,7 +158,7 @@ function initData() {
 		initItems(tower[i]);
 	}
 	font = grabFont();
-	initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
+	//initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
 	//initPlayersStart(0, 3);
 	initTowerSwitches();
 	switchTower(0);

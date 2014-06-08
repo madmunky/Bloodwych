@@ -145,7 +145,9 @@ function touchXY(e) {
 		if (p > 0) {
 			redrawUI(p - 1);
 		}
-	}
+	}else{
+            
+        }
 }
 
 function processCanvasInput(pid, x, y) {

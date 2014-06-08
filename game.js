@@ -15,7 +15,7 @@ Game.prototype = {
 
 	// Update the game model
 	update: function() {
-		timerMaster++;
+                timerMaster++;
 		timerAction();
 	},
 

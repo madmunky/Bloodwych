@@ -176,3 +176,21 @@ function debugText(p, txt) {
         $('section.debug.player' + p.id + ' p', debugWindow.document).append('P' + (p.id + 1) + ': ' + txt + '<br/>');
     }
 }
+
+function godMode(){
+    
+    for (c in champion){        
+        champion[c].stat.ac = 99;
+        champion[c].stat.agi = 99;
+        champion[c].stat.cha = 99;
+        champion[c].stat.hp = 99;
+        champion[c].stat.hpMax = 99;
+        champion[c].stat.sp = 99;
+        champion[c].stat.spMax = 99;
+        champion[c].stat.str = 99;
+        champion[c].stat.vit = 99;
+        champion[c].stat.vitMax = 99;        
+        champion[c].level = 99;
+    }
+    
+}

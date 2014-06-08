@@ -11,7 +11,14 @@ Renderer.prototype = {
 	},
 
 	update: function() {
-		updatePlayerViewScreen();
+            
+            if (STARTSCREEN){
+                configCanvas();
+                startScreen();
+            }else{
+                updatePlayerViewScreen();
+            }
+		
 	},
 
 	invalid: {

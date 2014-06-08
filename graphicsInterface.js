@@ -1604,3 +1604,20 @@ function showScroll(p){
         }	
         } catch(e) {p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;redrawUI(p.id);};
 }
+
+function startScreen(){
+    
+    writeFontImage("Bloodwych HTML", 160, 20, COLOUR[COLOUR_RED],FONT_ALIGNMENT_CENTER);
+    writeFontImage("F1   START ONE PLAYER GAME", 20, 55, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT);
+    writeFontImage("F2   START TWO PLAYER GAME", 20, 70, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT);
+    writeFontImage("F3   QUICKSTART ONE PLAYER GAME", 20, 95, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT);
+    writeFontImage("F4   QUICKSTART TWO PLAYER GAME", 20, 110, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT);
+    writeFontImage("MIRRORSOFT 1989", 160, 180, COLOUR[COLOUR_GREY_DARK],FONT_ALIGNMENT_CENTER);
+    
+}
+
+function startGame(){
+    
+    
+    
+}

@@ -71,7 +71,7 @@ try{
 
 	var can = document.createElement('canvas');
 	can.width = chars.length * 8;
-	can.height = 8;
+	can.height = 7;
 	var fontContent = can.getContext("2d");
 
 	for (var x = 0; x < chars.length; x++) {

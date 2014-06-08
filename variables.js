@@ -4,6 +4,8 @@ var player = new Array();
 var tower = new Array();
 
 //Setup some global Varibles for needed
+var STARTSCREEN = false;
+var STARTGAME = false;
 var scale = 3;
 var debug = true;
 var debugHigh = false;
