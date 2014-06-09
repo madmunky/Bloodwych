@@ -61,59 +61,10 @@ Player.prototype.getViewPortal = function() {
 
 Player.prototype.canMoveToPos = function(d) {
 	return canMove(this.floor, this.x, this.y, this.d, d);
-	/*var view = this.getView();
-	var hex = view[pos];
-	if (getHexToBinaryPosition(hex, 8) == '1') { //other player
-		return false;
-	}
-	if (getHexToBinaryPosition(hex, 12, 4) === '7' && getHexToBinaryPosition(hex, 6, 2) === '3') { //formwall
-		return false;
-	}
-	var xy = getOffsetByRotation((this.d + this.moving) % 4);
-	if (getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y) !== null) { //monster
-		return false;
-	}
-
-	var objThis = getHexToBinaryPosition(view[18], 12, 4);
-	var objNext = getHexToBinaryPosition(hex, 12, 4);
-
-	//Check wooden walls and doors
-	if (objThis == '2' || objNext == '2') {
-		if (!this.canMoveToPosByWood(pos, this.moving)) {
-			return false;
-		}
-	}
-
-	//Check other objects
-	switch (objNext) {
-		case '1':
-			return false; //Wall
-		case '3':
-			return false; //Misc
-		case '5': //Doors
-			if (getHexToBinaryPosition(hex, 7, 1) == '1') {
-				return false;
-			}
-	}
-	return true;*/
 }
 
 Player.prototype.canMoveToPosByWood = function(d) {
 	return canMoveByWood(this.floor, this.x, this.y, this.d, d);
-	/*var view = this.getView();
-	var hex = this.getView()[pos];
-	if(typeof mov === "undefined") {
-		var mov = 0;
-	}
-	//Check the space the player is standing on
-	if (getHexToBinaryPosition(view[18], 12, 4) == '2' && getHexToBinaryPosition(view[18], ((7 - ((this.d + mov) % 4)) % 4) * 2 + 1, 1) == '1') {
-		return false;
-	}
-	//Check the space the player is moving to
-	if (getHexToBinaryPosition(hex, 12, 4) == '2' && getHexToBinaryPosition(hex, ((5 - ((this.d + mov) % 4)) % 4) * 2 + 1, 1) == '1') {
-		return false;
-	}
-	return true;*/
 }
 
 Player.prototype.changeUpFloor = function() {

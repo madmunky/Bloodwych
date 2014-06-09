@@ -48,10 +48,9 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 }
 
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
-	var self = this;
 	if (this.recruitment.recruited) {
-		self.writeAttackPoints(dmg);
-		redrawUI(self.recruitment.playerId);
+		this.writeAttackPoints(dmg);
+		redrawUI(this.recruitment.playerId);
 	}
 	if (typeof aExh !== "undefined") {
 		this.stat.vit -= aExh;
@@ -74,7 +73,6 @@ Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
 
 //Damage is 'safe' when champ doesn't get killed by it (e.g. by low vitality)
 Champion.prototype.getDamage = function(dmg, safe) {
-	var self = this;
 	this.stat.hp -= dmg;
 	if (typeof safe !== "undefined" && safe) {
 		if (this.stat.hp <= 0) {
@@ -86,14 +84,14 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			this.monster.die();
 		}
 		if (this.recruitment.recruited && this.recruitment.attached) {
-			if (self.recruitment.playerId > -1) {
-				if (!player[self.recruitment.playerId].attacking) {
-					self.writeAttackPoints(dmg, true);
+			if (this.recruitment.playerId > -1) {
+				if (!player[this.recruitment.playerId].attacking) {
+					this.writeAttackPoints(dmg, true);
 				}
-				player[self.recruitment.playerId].alertDamagedPlayer();
-				player[self.recruitment.playerId].checkDead();
-				player[self.recruitment.playerId].updateChampions();
-				redrawUI(self.recruitment.playerId);
+				player[this.recruitment.playerId].alertDamagedPlayer();
+				player[this.recruitment.playerId].checkDead();
+				player[this.recruitment.playerId].updateChampions();
+				redrawUI(this.recruitment.playerId);
 			}
 		}
 	}

@@ -135,7 +135,7 @@ function doKeyDown(e) {
 }
 
 function checkClickEvents() {
-	$('body').on('click', 'canvas#game-port', function(e) {
+	$('body').on('click touchstart', 'canvas#game-port', function(e) {
 		if (typeof player !== "undefined") {
 			var x = e.pageX - canvas.offsetLeft;
 			var y = e.pageY - canvas.offsetTop;
