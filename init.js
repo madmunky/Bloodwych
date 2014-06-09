@@ -1,4 +1,4 @@
-var loadingIntervalTimer = 0;
+//var loadingIntervalTimer = 0;
 
 function initGame() {
 
@@ -16,33 +16,27 @@ function initGame() {
 			updateLoadingScreen("Loading Tower Data", 50);
 		} else if (newvalue === 2) {
 			initData();
-                        
+
 			if (typeof game === "undefined") {
 				//Run();
-                                startScreen();
-			}else{
-                            updateLoadingScreen("Starting Game", 100);    
-                        }
-			
+				startScreen();
+			} else {
+				updateLoadingScreen("Starting Game", 100);
+			}
 		}
 	});
 	updateLoadingScreen("Loading Graphics", 0);
 }
 
 function updateLoadingScreen(msg, percent) {
-	refreshLoadingScreen(msg, percent);
-	clearInterval(loadingIntervalTimer);
-	loadingIntervalTimer = setTimeout(function() {
-		refreshLoadingScreen(msg, percent);
-	}, 10);
-}
-
-function refreshLoadingScreen(msg, percent) {
-	//ctx.clearRect(0, 0, 795, 20);
 	clearCanvas();
 	ctx.font = "normal 11px verdana, sans-serif";
 	ctx.fillStyle = "#FFF";
 	ctx.fillText(percent + "% - " + msg + "...", 0, 15);
+	//clearInterval(loadingIntervalTimer);
+	//loadingIntervalTimer = setTimeout(function() {
+	//	refreshLoadingScreen(msg, percent);
+	//}, 10);
 }
 
 function loadGfxData() {
@@ -128,7 +122,7 @@ function loadTowerData(t, start) {
 		getFileData('data/palette.monsters', readSimpleData, null, "monsterPalette", 4);
 		getFileData('data/palette_meta.monsters', readSimpleData, null, "monsterPaletteMeta", 8);
 		getFileData('data/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
-                getFileData('data/scroll.data', readScrollData, t, "scrollData");
+		getFileData('data/scroll.data', readScrollData, t, "scrollData");
 	}
 
 	getFileData('data/' + TOWER_NAME[id] + '.MAP', readMapData, t, "floor");
@@ -146,45 +140,47 @@ function initData() {
 	gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 19, 13);
 	gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
 	gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
-        
-        gfxUI = grabUISprites(gfx['misc']['uistuff']);
-        itemsGfxD = initItemsGfxD();
-        font = grabFont();	
-        uiClickArea = uiClickAreas();
-        
+
+	gfxUI = grabUISprites(gfx['misc']['uistuff']);
+	itemsGfxD = initItemsGfxD();
+	font = grabFont();
+	uiClickArea = uiClickAreas();
+
 	initMonsterGfx();
 	for (var i = 0; i < 6; i++) {
 		initMonsters(tower[i]);
 	}
-        
+
 	initSpells();
 	initItemRefs();
 	for (var i = 0; i < 6; i++) {
 		initItems(tower[i]);
 	}
-	
+
 	//initPlayersStart(0, 3);
-	initTowerSwitches();	
+	initTowerSwitches();
 	initChampions();
 
 }
 
-function startGame(singlePlayer,quickStart){
-       
-    if (singlePlayer){
-        player[0] = new Player(0, 0, 49);        
-    }else{
-        player[0] = new Player(0, 0, 10);
-        player[1] = new Player(1, 0, 114);    
-    }
-    
-    if (quickStart){
-        initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
-    }  
-    
-    godMode();	
-    switchTower(0);
-    clearCanvas();
-    STARTGAME = true;
-    Run();
+function startGame(singlePlayer, quickStart) {
+
+	if (singlePlayer) {
+		player[0] = new Player(0, 0, 49);
+	} else {
+		player[0] = new Player(0, 0, 10);
+		player[1] = new Player(1, 0, 114);
+	}
+
+	if (quickStart) {
+		initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
+	} else {
+		initPlayersStart(0, 4);
+	}
+
+	godMode();
+	switchTower(0);
+	clearCanvas();
+	gameStarted = true;
+	Run();
 }
