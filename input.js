@@ -145,9 +145,9 @@ function touchXY(e) {
 		if (p > 0) {
 			redrawUI(p - 1);
 		}
-	}else{
-            
-        }
+	} else {
+
+	}
 }
 
 function processCanvasInput(pid, x, y) {
@@ -259,12 +259,12 @@ function processCanvasInput(pid, x, y) {
 			p.uiRightPanel.activePocket = 0;
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_INTERACT, p)) {
-                        var ch = champion[p.champion[p.championLeader]];
-                        if (ch.selectedSpell === null){
-                            p.action();
-                        }else{
-                            p.castSpell(ch.selectedSpell.id, ch);
-                        }
+			var ch = champion[p.champion[p.championLeader]];
+			if (ch.selectedSpell === null) {
+				p.action();
+			} else {
+				p.castSpell(ch.selectedSpell, ch);
+			}
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, p)) {
 			p.uiRightPanel.mode = UI_RIGHT_PANEL_SPELLBOOK;
@@ -335,7 +335,7 @@ function processCanvasInput(pid, x, y) {
 			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 			return pid;
 		}
-        } else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+	} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
 		if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, p)) {
 			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 			return pid;
@@ -389,15 +389,17 @@ function processCanvasInput(pid, x, y) {
 			return pid;
 		}
 		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_1, p) || uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_2, p)) {
-			p.castSpell(ch.selectedSpell.id, ch);
+			if (ch.selectedSpell !== null) {
+				p.castSpell(ch.selectedSpell, ch);
+				return pid;
+			}
+		}
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_COST_UP, p)) {
+			ch.setSpellCost(true);
 			return pid;
 		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_COST_UP, p)) {
-			
-			return pid;
-		}
-                if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_COST_DOWN, p)) {
-			
+		if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_COST_DOWN, p)) {
+			ch.setSpellCost(false);
 			return pid;
 		}
 	}
@@ -555,13 +557,13 @@ function checkClickInViewPortal(p, x, y) {
 					return p.id;
 				}
 			}
-                        if (o15 === 'scroll') {
+			if (o15 === 'scroll') {
 				if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
-					if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL){
-                                            p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-                                        }else{
-                                            p.uiRightPanel.mode = UI_RIGHT_PANEL_SCROLL;
-                                        }
+					if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+						p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+					} else {
+						p.uiRightPanel.mode = UI_RIGHT_PANEL_SCROLL;
+					}
 					return p.id;
 				}
 			}

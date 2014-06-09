@@ -591,6 +591,15 @@ function drawRect(x, y, w, h, c, p) {
 	cx.strokeRect(x * scale + off, y * scale + off, w * scale, h * scale);
 }
 
+function drawFillRect(x, y, w, h, c, p) {
+	var cx = ctx;
+	if (typeof p !== "undefined") {
+		cx = p.Portal;
+	}
+	cx.fillStyle = 'rgba(' + c + ')';
+	cx.fillRect(x * scale, y * scale, w * scale, h * scale);
+}
+
 function recolourSprite(img, paletteFrom, paletteTo) {
 	var c = document.createElement('canvas');
 	var ctx1 = c.getContext("2d");

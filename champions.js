@@ -24,6 +24,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.food = 200;
 	this.xp = 0;
 	this.xp2 = 0;
+	this.spellFatigue = 1.0;
 	this.spellUp = 0;
 	this.levelUp = 0;
 	this.monster = monster;
@@ -32,12 +33,13 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 		var spl = getSpellBookPage(pg);
 		for (rw = 0; rw < SPELL_MAX; rw++) {
 			this.spellBook[pg][rw] = new Array();
-			this.spellBook[pg][rw].castSuccessful = 1; //cast % = 1.0 - (level / (castSuccessful + cost + intelligence / 10))
 			this.spellBook[pg][rw].learnt = true;
+			this.spellBook[pg][rw].castSuccessful = 0;
 			this.spellBook[pg][rw].ref = spl[rw];
 			this.spellBook[pg][rw].id = spl[rw].id + spl[rw].colour * 8;
 			this.spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
 			if (spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
+				this.spellBook[pg][rw].castSuccessful = 5;
 				this.addSpellToSpellBook(spl[rw]);
 			}
 		}
@@ -151,16 +153,16 @@ Champion.prototype.gainLevel = function() {
 			vit: 8,
 			sp: 5
 		}
-		for (l = 0; l < this.levelUp; l++) {
-			this.stat.str += Math.floor(Math.random() * stat[prof].str) + 1;
-			this.stat.agi += Math.floor(Math.random() * stat[prof].agi) + 1;
-			this.stat.int += Math.floor(Math.random() * stat[prof].int) + 1;
-			this.stat.cha += Math.floor(Math.random() * stat[prof].cha) + 1;
-			this.stat.hpMax += Math.floor(Math.random() * stat[prof].hp) + 1;
-			this.stat.vitMax += Math.floor(Math.random() * stat[prof].vit) + 1;
-			this.stat.spMax += Math.floor(Math.random() * stat[prof].sp) + 1;
-			this.level++;
-		}
+		//for (l = 0; l < this.levelUp; l++) {
+		this.stat.str += Math.floor(Math.random() * stat[prof].str) + 1;
+		this.stat.agi += Math.floor(Math.random() * stat[prof].agi) + 1;
+		this.stat.int += Math.floor(Math.random() * stat[prof].int) + 1;
+		this.stat.cha += Math.floor(Math.random() * stat[prof].cha) + 1;
+		this.stat.hpMax += Math.floor(Math.random() * stat[prof].hp) + 1;
+		this.stat.vitMax += Math.floor(Math.random() * stat[prof].vit) + 1;
+		this.stat.spMax += Math.floor(Math.random() * stat[prof].sp) + 1;
+		this.level++;
+		//}
 		if (this.recruitment.recruited) {
 			var p = this.recruitment.playerId;
 			player[p].message(this.firstName + TEXT_GAINED_LEVEL, COLOUR[COLOUR_RED]);
@@ -372,13 +374,23 @@ Champion.prototype.toString = function() {
 Champion.prototype.activateSpell = function(s, pow) {
 	this.activeSpell.id = s;
 	this.activeSpell.timer = pow * 5;
-	if(this.recruitment.playerId > -1) {
+	if (this.recruitment.playerId > -1) {
 		redrawUI(this.recruitment.playerId);
 	}
 }
 
-Champion.prototype.checkActiveSpell = function() {
-	if(this.activeSpell.id > -1) {
+Champion.prototype.checkSpell = function() {
+	this.spellFatigue += 0.1;
+	if (this.spellFatigue > 1.0) {
+		this.spellFatigue = 1.0;
+	}
+	var p = this.recruitment.playerId;
+	if (p > -1) {
+		if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
+			redrawUI(p);
+		}
+	}
+	if (this.activeSpell.id > -1) {
 		this.activeSpell.timer--;
 		/*switch(this.activeSpell.id) {
 			case SPELL_ARMOUR:
@@ -388,20 +400,59 @@ Champion.prototype.checkActiveSpell = function() {
 			case SPELL_ANTIMAGE:
 			case SPELL_TRUEVIEW:
 		}*/
-		if(this.activeSpell.timer === 0) {
+		if (this.activeSpell.timer === 0) {
 			this.activeSpell.id = -1;
 		}
 	}
 }
 
 Champion.prototype.selectSpell = function(id) {
-
 	if (this.spellBook[this.spellBookPage][id].learnt) {
 		this.selectedSpell = this.spellBook[this.spellBookPage][id];
+		while (this.getSpellCastChance() >= 1.0 && this.selectedSpell.cost > 1.0) {
+			this.setSpellCost(false);
+		}
 	} else {
 		this.selectedSpell = null;
 	}
+	if (this.recruitment.playerId > -1) {
+		player[this.recruitment.playerId].showSpellText = false;
+	}
+}
 
+Champion.prototype.setSpellCost = function(ud) {
+	p = this.recruitment.playerId;
+	if (p > -1) {
+		if (ud) {
+			var to = Math.ceil(this.selectedSpell.cost * (1.1 + 0.1 * this.selectedSpell.ref.level));
+			if (to < 100) {
+				this.selectedSpell.cost = to;
+				p.showSpellText = false;
+			}
+		} else {
+			var to = Math.floor(this.selectedSpell.cost / (1.1 + 0.1 * this.selectedSpell.ref.level));
+			if (to >= 1) {
+				this.selectedSpell.cost = to;
+				p.showSpellText = false;
+			}
+		}
+	}
+}
+
+Champion.prototype.getSpellCastChance = function() {
+	var res = this.getSpellPower();
+	//PrintLog("COST: " + res + " f:" + this.spellFatigue);
+	if (res > 1.0) {
+		return 1.0;
+	} else if (res < 0.0) {
+		return 0.0;
+	}
+	return res;
+}
+
+Champion.prototype.getSpellPower = function() {
+	var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue + (this.level - 1) * 0.1;
+	return res;
 }
 
 function getChampionClass(id) {

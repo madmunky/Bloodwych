@@ -26,6 +26,7 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.messageTimeout = 0;
 	this.timerChampionStats = 0;
 	this.timerSpellBookTurn = 0;
+	this.showSpellText = false;
 	this.fairyDetails = {
 		champ: null,
 		spell: null
@@ -239,17 +240,17 @@ Player.prototype.setMovementData = function() {
 
 Player.prototype.rotate = function(r) {
 	if (!this.dead && !this.sleeping) {
-            if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL){
-                this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-                redrawUI(this.id);
-            }
-            if (r === -1) {
-                    highliteMovementArrow(this, 0);
-            } else {
-                    highliteMovementArrow(this, 2);
-            }
-            this.d = (4 + this.d + r) % 4;
-            this.doEvent(false);
+		if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+			this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+			redrawUI(this.id);
+		}
+		if (r === -1) {
+			highliteMovementArrow(this, 0);
+		} else {
+			highliteMovementArrow(this, 2);
+		}
+		this.d = (4 + this.d + r) % 4;
+		this.doEvent(false);
 	}
 }
 
@@ -259,10 +260,10 @@ Player.prototype.rotateTo = function(d) {
 
 Player.prototype.move = function(d) {
 	if (!this.dead && !this.sleeping) {
-            if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL){
-                this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-                redrawUI(this.id);
-            }
+		if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+			this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+			redrawUI(this.id);
+		}
 		m = [1, 5, 4, 3];
 		highliteMovementArrow(this, m[d]);
 		this.moving = d;
@@ -950,17 +951,30 @@ Player.prototype.getItemsInRange = function(pos2) {
 	return itemsInRange;
 }
 
-Player.prototype.castSpell = function(id, c) {
-	var sp = c.getSpellInBookById(id);
-	if (c.stat.sp - sp.cost >= 0) {
-		castSpell(id, c.monster, 6); //TODO: spell power
+Player.prototype.castSpell = function(sb, c, s) {
+	if (typeof s === "undefined") {
+		var s = false;
+	}
+	if (c.stat.sp - sb.cost >= 0) {
+		if (Math.random() < c.getSpellCastChance()) {
+			castSpell(sb.id, c.monster, c.getSpellPower() * 6); //TODO: spell power
+			sb.castSuccessful++;
+			if (!s) {
+				this.showSpellText = false;
+				writeSpellInfoFont(this);
+			}
+		} else if (!s) {
+			writeSpellInfoFont(this, TEXT_SPELL_FAILED, COLOUR[COLOUR_GREY_LIGHT]);
+		}
 		c.selectedSpell = null;
-		c.castSuccessful++;
-		c.stat.sp -= sp.cost;
-		c.stat.vit -= sp.cost;
-		if(c.stat.vit < 0) {
+		c.spellFatigue = c.spellFatigue - 0.75;
+		c.stat.sp -= sb.cost;
+		c.stat.vit -= sb.cost;
+		if (c.stat.vit < 0) {
 			c.stat.vit = 0;
 		}
+	} else if (!s) {
+		writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, COLOUR[COLOUR_RED]);
 	}
 }
 
@@ -981,16 +995,16 @@ Player.prototype.getObject = function(f, x, y, d) {
 				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco
 					if (getHexToBinaryPosition(hex, 6, 2) === '0') { //shelf
 						return 'shelf';
-                                        } else if (getHexToBinaryPosition(hex, 6, 2) === '1') { //Scroll
-                                                var col = parseInt(getHexToBinaryPosition(hex, 0, 6),16);
-                                                if (col > 4){
-                                                    return 'scroll';     
-                                                }						
+					} else if (getHexToBinaryPosition(hex, 6, 2) === '1') { //Scroll
+						var col = parseInt(getHexToBinaryPosition(hex, 0, 6), 16);
+						if (col > 4) {
+							return 'scroll';
+						}
 					} else if (getHexToBinaryPosition(hex, 6, 2) === '2') { //Switch
 						return 'switch';
 					} else if (getHexToBinaryPosition(hex, 6, 2) === '3') { //Crystal Gem
 						return 'gem';
-					} 
+					}
 				}
 			}
 			return 'wall';
@@ -1065,7 +1079,7 @@ Player.prototype.testMode = function(id) {
 		} catch (e) {
 			PrintLog(e.toString());
 		};*/
-		this.castSpell(SPELL_MINDROCK, this.getChampion(0));
+		//this.castSpell(SPELL_MINDROCK, this.getChampion(0));
 	}
 }
 
@@ -1087,6 +1101,3 @@ function initPlayersStart(ch1, ch2) {
 		}
 	}
 }
-
-
-

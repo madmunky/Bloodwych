@@ -4,116 +4,131 @@ function grabFont() {
 	var myFont = [];
 
 	for (x = 0; x < 95; x++) {
-		myFont.push(grabImageAt(fontImage, x * 8, 0, 8, 7, false,1));
+		myFont.push(grabImageAt(fontImage, x * 8, 0, 8, 7, false, 1));
 	}
-	return myFont;        
+	return myFont;
 
 }
 
-function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, alignment,myContent) {
-        if (typeof myContent === 'undefined'){
-        myContent = ctx;
-        }
+function fadeFont(p, fontString, speed, delay, locationX, locationY, paletteTo, alignment, myContent) {
+	if (typeof myContent === 'undefined') {
+		myContent = ctx;
+	}
 	(function(fontString, locationX, locationY, paletteTo, alignment) {
 		var alpha = 0.0;
 		clearInterval(p.messageTimeout);
 		clearTimeout(p.messageTimeout);
-	    p.messageTimeout = setInterval(function () {
-	    	myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
-	    	myContent.save();
-	    	myContent.globalAlpha = alpha;
-	        writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
-	        myContent.restore();
-	        alpha = alpha + 0.1;
-	        if (alpha > 1) {
-			    (function(fontString, locationX, locationY, paletteTo, alignment) {
-			    	clearInterval(p.messageTimeout);
-			    	p.messageTimeout = 0;
-			    	if(delay > 0) {
-				    	var alpha = 1.0;
-					    p.messageTimeout = setTimeout(function() {
-					    	(function(fontString, locationX, locationY, paletteTo, alignment, alpha) {
-							    p.messageTimeout = setInterval(function () {
-							    	myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+		p.messageTimeout = setInterval(function() {
+			myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+			myContent.save();
+			myContent.globalAlpha = alpha;
+			writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
+			myContent.restore();
+			alpha = alpha + 0.1;
+			if (alpha > 1) {
+				(function(fontString, locationX, locationY, paletteTo, alignment) {
+					clearInterval(p.messageTimeout);
+					p.messageTimeout = 0;
+					if (delay > 0) {
+						var alpha = 1.0;
+						p.messageTimeout = setTimeout(function() {
+							(function(fontString, locationX, locationY, paletteTo, alignment, alpha) {
+								p.messageTimeout = setInterval(function() {
+									myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
 									myContent.save();
 									myContent.globalAlpha = alpha;
-							        writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
-							        myContent.restore();
-							        alpha = alpha - 0.1;
-							        if (alpha < 0) {
-							            myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
-							            clearInterval(p.messageTimeout);
-							            p.messageTimeout = 0;
-							        }
-							    }, speed);
+									writeFontImage(fontString, locationX + 2, locationY - 9, paletteTo, alignment);
+									myContent.restore();
+									alpha = alpha - 0.1;
+									if (alpha < 0) {
+										myContent.clearRect(locationX * scale, (locationY - 9) * scale, 320 * scale, 8 * scale);
+										clearInterval(p.messageTimeout);
+										p.messageTimeout = 0;
+									}
+								}, speed);
 							})(fontString, locationX, locationY, paletteTo, alignment, alpha);
-					    }, delay);
+						}, delay);
 					}
 				})(fontString, locationX, locationY, paletteTo, alignment);
-	        }
-	    }, speed);
+			}
+		}, speed);
 	})(fontString, locationX, locationY, paletteTo, alignment);
 }
 
-function writeFontImage(fontString, locationX, locationY, paletteTo, alignment,myContent) {
-try{
-    if (typeof(font[0]) !== 'undefined'){
-    if (typeof alignment === "undefined") {
-    	alignment = FONT_ALIGNMENT_LEFT;
-    }
-    if (typeof myContent === 'undefined'){
-        myContent = ctx;
-    }
+function writeFontImage(fontString, locationX, locationY, paletteTo, alignment, myContent) {
+	try {
+		if (typeof(font[0]) !== 'undefined') {
+			if (typeof alignment === "undefined") {
+				alignment = FONT_ALIGNMENT_LEFT;
+			}
+			if (typeof myContent === 'undefined') {
+				myContent = ctx;
+			}
 
-	fontString = ("" + fontString).toUpperCase();
+			fontString = ("" + fontString).toUpperCase();
 
-	var chars = fontString.split('');
+			var chars = fontString.split('');
 
-	var can = document.createElement('canvas');
-	can.width = chars.length * 8;
-	can.height = 7;
-	var fontContent = can.getContext("2d");
+			var can = document.createElement('canvas');
+			can.width = chars.length * 8;
+			can.height = 7;
+			var fontContent = can.getContext("2d");
 
-	for (var x = 0; x < chars.length; x++) {
-		var chr = fontCharacterToIndex(chars[x]);
-		if (chr >= 0) {
-			fontContent.drawImage(font[chr], (x * 8), 0);
+			for (var x = 0; x < chars.length; x++) {
+				var chr = fontCharacterToIndex(chars[x]);
+				if (chr >= 0) {
+					fontContent.drawImage(font[chr], (x * 8), 0);
+				}
+			}
+
+			fontContent.save();
+			// pull the entire image into an array of pixel data
+			var imageData = fontContent.getImageData(0, 0, can.width, can.height);
+
+			for (var i = 0; i < imageData.data.length; i += 4) {
+				// is this pixel the old rgb?
+				if (imageData.data[i] === ITEM_PALETTE_DEFAULT[0][0] &&
+					imageData.data[i + 1] === ITEM_PALETTE_DEFAULT[0][1] &&
+					imageData.data[i + 2] === ITEM_PALETTE_DEFAULT[0][2]
+				) {
+					// change to your new rgb
+					imageData.data[i] = paletteTo[0];
+					imageData.data[i + 1] = paletteTo[1];
+					imageData.data[i + 2] = paletteTo[2];
+				}
+			}
+
+			// put the altered data back on the canvas  
+			fontContent.putImageData(imageData, 0, 0);
+			// put the re-colored image back on the image
+
+			fontContent.save();
+			if (alignment === FONT_ALIGNMENT_RIGHT) {
+				xo = -can.width;
+			} else if (alignment === FONT_ALIGNMENT_CENTER) {
+				xo = -Math.floor(can.width / 2);
+			} else { //FONT_ALIGNMENT_LEFT
+				xo = 0;
+			}
+			myContent.drawImage(can, (xo + locationX) * scale, locationY * scale, can.width * scale, can.height * scale);
+			can = null;
 		}
+	} catch (e) {
+		"Write font error: " + e.toString()
+	};
+}
+
+function writeSpellInfoFont(p, t, c) {
+	if (typeof t === "undefined") {
+		var t = "";
 	}
-
-	fontContent.save();
-	// pull the entire image into an array of pixel data
-	var imageData = fontContent.getImageData(0, 0, can.width, can.height);
-
-	for (var i = 0; i < imageData.data.length; i += 4) {
-		// is this pixel the old rgb?
-		if (imageData.data[i] === ITEM_PALETTE_DEFAULT[0][0] &&
-			imageData.data[i + 1] === ITEM_PALETTE_DEFAULT[0][1] &&
-			imageData.data[i + 2] === ITEM_PALETTE_DEFAULT[0][2]
-		) {
-			// change to your new rgb
-			imageData.data[i] = paletteTo[0];
-			imageData.data[i + 1] = paletteTo[1];
-			imageData.data[i + 2] = paletteTo[2];
-		}
+	if (typeof c === "undefined") {
+		var c = COLOUR[COLOUR_GREEN];
 	}
-
-	// put the altered data back on the canvas  
-	fontContent.putImageData(imageData, 0, 0);
-	// put the re-colored image back on the image
-
-	fontContent.save();
-	if(alignment === FONT_ALIGNMENT_RIGHT) {
-		xo = - can.width;
-	} else if(alignment === FONT_ALIGNMENT_CENTER) {
-		xo = - Math.floor(can.width / 2);
-	} else { //FONT_ALIGNMENT_LEFT
-		xo = 0;
-	}
-	myContent.drawImage(can, (xo + locationX) * scale, locationY * scale, can.width * scale, can.height * scale);
-	can = null;
-    }
-    }catch(e){"Write font error: " +e.toString()};
+	var ch = champion[p.champion[p.championLeader]];
+	ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 88 - 10) * scale, 128 * scale, 8 * scale);
+	writeFontImage(t, p.ScreenX + 96 + 2, (p.ScreenY + 79), c);
+	p.showSpellText = true;
 }
 
 function fontCharacterToIndex(c) {
@@ -210,67 +225,69 @@ function fontCharacterToIndex(c) {
 
 }
 
-function writeSpellFont(fontString, locationX, locationY, paletteTo, alignment,myContent) {
-try{
-    if (typeof(font[0]) !== 'undefined'){
-    if (typeof alignment === "undefined") {
-    	alignment = FONT_ALIGNMENT_LEFT;
-    }
-    if (typeof myContent === 'undefined'){
-        myContent = ctx;
-    }
+function writeSpellFont(fontString, locationX, locationY, paletteTo, alignment, myContent) {
+	try {
+		if (typeof(font[0]) !== 'undefined') {
+			if (typeof alignment === "undefined") {
+				alignment = FONT_ALIGNMENT_LEFT;
+			}
+			if (typeof myContent === 'undefined') {
+				myContent = ctx;
+			}
 
-	fontString = ("" + fontString).toUpperCase();
+			fontString = ("" + fontString).toUpperCase();
 
-	var chars = fontString.split('');
+			var chars = fontString.split('');
 
-	var can = document.createElement('canvas');
-	can.width = chars.length * 8;
-	can.height = 8;
-	var fontContent = can.getContext("2d");
+			var can = document.createElement('canvas');
+			can.width = chars.length * 8;
+			can.height = 8;
+			var fontContent = can.getContext("2d");
 
-	for (var x = 0; x < chars.length; x++) {
-                var letterCode = chars[x].charCodeAt(0);
-                if (letterCode >= 65 && letterCode <= 90){
-                    letterCode = letterCode - 7;
-                }
-                
-		if (letterCode >= 0) {
-			fontContent.drawImage(font[letterCode], (x * 8), 0);
+			for (var x = 0; x < chars.length; x++) {
+				var letterCode = chars[x].charCodeAt(0);
+				if (letterCode >= 65 && letterCode <= 90) {
+					letterCode = letterCode - 7;
+				}
+
+				if (letterCode >= 0) {
+					fontContent.drawImage(font[letterCode], (x * 8), 0);
+				}
+			}
+
+			fontContent.save();
+			// pull the entire image into an array of pixel data
+			var imageData = fontContent.getImageData(0, 0, can.width, can.height);
+
+			for (var i = 0; i < imageData.data.length; i += 4) {
+				// is this pixel the old rgb?
+				if (imageData.data[i] === ITEM_PALETTE_DEFAULT[0][0] &&
+					imageData.data[i + 1] === ITEM_PALETTE_DEFAULT[0][1] &&
+					imageData.data[i + 2] === ITEM_PALETTE_DEFAULT[0][2]
+				) {
+					// change to your new rgb
+					imageData.data[i] = paletteTo[0];
+					imageData.data[i + 1] = paletteTo[1];
+					imageData.data[i + 2] = paletteTo[2];
+				}
+			}
+
+			// put the altered data back on the canvas  
+			fontContent.putImageData(imageData, 0, 0);
+			// put the re-colored image back on the image
+
+			fontContent.save();
+			if (alignment === FONT_ALIGNMENT_RIGHT) {
+				xo = -can.width;
+			} else if (alignment === FONT_ALIGNMENT_CENTER) {
+				xo = -Math.floor(can.width / 2);
+			} else { //FONT_ALIGNMENT_LEFT
+				xo = 0;
+			}
+			myContent.drawImage(can, (xo + locationX) * scale, locationY * scale, can.width * scale, can.height * scale);
+			can = null;
 		}
-	}
-
-	fontContent.save();
-	// pull the entire image into an array of pixel data
-	var imageData = fontContent.getImageData(0, 0, can.width, can.height);
-
-	for (var i = 0; i < imageData.data.length; i += 4) {
-		// is this pixel the old rgb?
-		if (imageData.data[i] === ITEM_PALETTE_DEFAULT[0][0] &&
-			imageData.data[i + 1] === ITEM_PALETTE_DEFAULT[0][1] &&
-			imageData.data[i + 2] === ITEM_PALETTE_DEFAULT[0][2]
-		) {
-			// change to your new rgb
-			imageData.data[i] = paletteTo[0];
-			imageData.data[i + 1] = paletteTo[1];
-			imageData.data[i + 2] = paletteTo[2];
-		}
-	}
-
-	// put the altered data back on the canvas  
-	fontContent.putImageData(imageData, 0, 0);
-	// put the re-colored image back on the image
-
-	fontContent.save();
-	if(alignment === FONT_ALIGNMENT_RIGHT) {
-		xo = - can.width;
-	} else if(alignment === FONT_ALIGNMENT_CENTER) {
-		xo = - Math.floor(can.width / 2);
-	} else { //FONT_ALIGNMENT_LEFT
-		xo = 0;
-	}
-	myContent.drawImage(can, (xo + locationX) * scale, locationY * scale, can.width * scale, can.height * scale);
-	can = null;
-    }
-    }catch(e){"Write font error: " +e.toString();};
+	} catch (e) {
+		"Write font error: " + e.toString();
+	};
 }

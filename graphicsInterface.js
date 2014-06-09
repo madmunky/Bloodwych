@@ -165,7 +165,7 @@ function drawUI(p) {
 				case UI_RIGHT_PANEL_STATS:
 					drawStatsPage(p);
 					break;
-                                case UI_RIGHT_PANEL_SCROLL:
+				case UI_RIGHT_PANEL_SCROLL:
 					showScroll(p);
 					break;
 				default:
@@ -183,12 +183,12 @@ function spellBook(p, ui, dr) {
 
 	for (x = 0; x < 8; x++) {
 		var pg = ch.spellBookPage;
-		if(typeof dr !== "undefined" && typeof ui !== "undefined") {
-			if(x >= 4 && dr && ui <= 3) {
+		if (typeof dr !== "undefined" && typeof ui !== "undefined") {
+			if (x >= 4 && dr && ui <= 3) {
 				pg = (pg + 1) % 4;
-			} else if(x < 4 && !dr && ui >= 1) {
+			} else if (x < 4 && !dr && ui >= 1) {
 				pg = (pg + 3) % 4;
-			} else if(x >= 4 && !dr && ui >= 4) {
+			} else if (x >= 4 && !dr && ui >= 4) {
 				pg = (pg + 3) % 4;
 			}
 		}
@@ -222,26 +222,30 @@ function spellBook(p, ui, dr) {
 	} else {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 		writeFontImage(ch.selectedSpell.ref.name, p.ScreenX + 242, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
-		writeFontImage("COST " + doubleDigits(ch.selectedSpell.ref.cost), p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
-                writeFontImage("CAST % ", p.ScreenX + 98, (p.ScreenY + 79), COLOUR[COLOUR_YELLOW]);
-                var t = foodBar(ch.food, 62,COLOUR[COLOUR_RED]);
-                ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
-                t = recolourUiGfx(font[94],COLOUR[COLOUR_GREEN],COLOUR[COLOUR_RED]);
-                ctx.drawImage(t, (p.ScreenX + 274) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);                
-                t = flipImageVert(t);
-                ctx.drawImage(t, (p.ScreenX + 298) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);                
+		writeFontImage("COST " + doubleDigits(ch.selectedSpell.cost), p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+		t = recolourUiGfx(font[94], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED]);
+		ctx.drawImage(t, (p.ScreenX + 274) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
+		t = flipImageVert(t);
+		ctx.drawImage(t, (p.ScreenX + 298) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+		if (!p.showSpellText) {
+			var ch = champion[p.champion[p.championLeader]];
+			ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 88 - 10) * scale, 128 * scale, 8 * scale);
+			writeFontImage("CAST % ", p.ScreenX + 96 + 2, (p.ScreenY + 79), COLOUR[COLOUR_YELLOW]);
+			var cst = ch.getSpellCastChance();
+			var t = showStatusBar(cst, 1.0, 62, COLOUR[COLOUR_RED]);
+			//drawFillRect((p.ScreenX + 154), (p.ScreenY + 80), t.width, t.height, COLOUR[COLOUR_BLACK]);
+			ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
+		}
 	}
 
 	writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
 	writeFontImage(getSpellNotation(p.getChampion(p.championLeader).stat.sp) + "/" + getSpellNotation(p.getChampion(p.championLeader).stat.spMax), p.ScreenX + 282, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
-
-
 }
 
 function changeSpellBookPage(p, dr) {
 	if (p.timerSpellBookTurn === 0) {
-		if(dr) {
+		if (dr) {
 			drawSpellBookPageTurn(p, 4, dr, 200);
 			drawSpellBookPageTurn(p, 3, dr, 400);
 			drawSpellBookPageTurn(p, 2, dr, 600);
@@ -250,7 +254,7 @@ function changeSpellBookPage(p, dr) {
 			drawSpellBookPageTurn(p, 1, dr, 200);
 			drawSpellBookPageTurn(p, 2, dr, 400);
 			drawSpellBookPageTurn(p, 3, dr, 600);
-			drawSpellBookPageTurn(p, 4, dr, 800, true);			
+			drawSpellBookPageTurn(p, 4, dr, 800, true);
 		}
 
 		/*spellBook(p)
@@ -273,26 +277,30 @@ function changeSpellBookPage(p, dr) {
 }
 
 function drawSpellBookPageTurn(p, ui, dr, timer, stop) {
-	if(typeof stop === "undefined") {
+	if (typeof stop === "undefined") {
 		stop = false;
 	}
 	(function(p, ui, dr, stop) {
 		p.timerSpellBookTurn = setTimeout(function() {
 			spellBook(p, ui, dr);
-                        if (dr){
-                            ctx.drawImage(colourSpellPage(true,champion[p.champion[p.championLeader]],gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
-                        }else{
-                            ctx.drawImage(colourSpellPage(false,champion[p.champion[p.championLeader]],gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
-                        }			
-			if(stop) {
-				var ch = p.getChampion(p.championLeader);
-				p.timerSpellBookTurn = 0;
-				if (dr) {
-					ch.spellBookPage = (ch.spellBookPage + 1) % 4;
-				} else {
-					ch.spellBookPage = (ch.spellBookPage + 3) % 4;
-				}
-				redrawUI(p.id);
+			if (dr) {
+				ctx.drawImage(colourSpellPage(true, champion[p.champion[p.championLeader]], gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
+			} else {
+				ctx.drawImage(colourSpellPage(false, champion[p.champion[p.championLeader]], gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
+			}
+			if (stop) {
+				(function(p, dr) {
+					p.timerSpellBookTurn = setTimeout(function() {
+						var ch = p.getChampion(p.championLeader);
+						p.timerSpellBookTurn = 0;
+						if (dr) {
+							ch.spellBookPage = (ch.spellBookPage + 1) % 4;
+						} else {
+							ch.spellBookPage = (ch.spellBookPage + 3) % 4;
+						}
+						redrawUI(p.id);
+					}, 100);
+				})(p, dr);
 			}
 		}, timer);
 	})(p, ui, dr, stop);
@@ -329,7 +337,7 @@ function leftUI(p) {
 				} else {
 					ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
 					ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][cid], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][cid].width * scale, gfxUI[UI_GFX_PORTRAITS][cid].height * scale);
-					if(ch.activeSpell.id > -1) {
+					if (ch.activeSpell.id > -1) {
 						var sp = getSpellById(ch.activeSpell.id);
 						drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
 					}
@@ -415,8 +423,8 @@ function getClassColour(c, palette) {
 	var red = 255,
 		grn = 255,
 		blu = 255,
-                aph = 255;
-        
+		aph = 255;
+
 	switch (c) {
 		case CLASS_COLOUR_SERP:
 			red = COLOUR[COLOUR_GREEN][0];
@@ -442,7 +450,7 @@ function getClassColour(c, palette) {
 			break;
 	}
 	if (palette) {
-		return new Array(red, grn, blu,aph);
+		return new Array(red, grn, blu, aph);
 	}
 	return {
 		r: red,
@@ -455,7 +463,7 @@ function commandUI(p) {
 	ch = p.getChampion(p.championLeader);
 	ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].height * scale);
-	if(ch.activeSpell.id > -1) {
+	if (ch.activeSpell.id > -1) {
 		var sp = getSpellById(ch.activeSpell.id);
 		drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
 	}
@@ -495,8 +503,8 @@ function commandUI(p) {
 
 function rightUI(p) {
 
-        var ch = champion[p.champion[p.championLeader]];
-        
+	var ch = champion[p.champion[p.championLeader]];
+
 	if (p === player[0]) {
 		ctx.drawImage(gfxUI[UI_GFX_NAME_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_BLUE].width * scale, gfxUI[UI_GFX_NAME_BLUE].height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].width * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].height * scale);
@@ -511,13 +519,13 @@ function rightUI(p) {
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SCROLL].width * scale, gfxUI[UI_GFX_ICON_SCROLL].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_POCKETBOX], p.ScreenX + 288 * scale, (p.ScreenY + 21) * scale, gfxUI[UI_GFX_POCKETBOX].width * scale, gfxUI[UI_GFX_POCKETBOX].height * scale);
 
-        if (ch.selectedSpell === null){
-            ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_OPENDOOR].width * scale, gfxUI[UI_GFX_ICON_OPENDOOR].height * scale);            
-        }else{
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-        }	
-	
-        ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
+	if (ch.selectedSpell === null) {
+		ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_OPENDOOR].width * scale, gfxUI[UI_GFX_ICON_OPENDOOR].height * scale);
+	} else {
+		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+	}
+
+	ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
 
 	for (c = 0; c < p.champion.length; c++) {
 		var ca = [0, 1, 3, 2];
@@ -665,7 +673,7 @@ function drawPocketUI(p) {
 						if (p.pocket.id > 0) {
 							writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
 							if (p.pocket.type === ITEM_TYPE_FOOD) {
-								var t = foodBar(chp.food, 69);
+								var t = showStatusBar(chp.food, 200, 69);
 								ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
 							}
 						}
@@ -759,7 +767,7 @@ function drawStatsPage(p) {
 		writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 47), COLOUR[COLOUR_GREEN]);
 
 		writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-		var t = foodBar(ch.food, 62,COLOUR[COLOUR_RED_DARK]);
+		var t = showStatusBar(ch.food, 200, 62, COLOUR[COLOUR_RED_DARK]);
 		ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
 	}
 }
@@ -1285,25 +1293,25 @@ function uiClickAreas() {
 		width: 34,
 		height: 8
 	}); //Spell Book - Spell 8  
-        UCA.push({
+	UCA.push({
 		x: 225,
 		y: 62,
 		width: 16,
 		height: 16
 	}); //Spell Book - Spell Fire 1 
-        UCA.push({
+	UCA.push({
 		x: 305,
 		y: 62,
 		width: 16,
 		height: 16
 	}); //Spell Book - Spell Fire 2 
-        UCA.push({
+	UCA.push({
 		x: 273,
 		y: 70,
 		width: 8,
 		height: 8
 	}); //Spell Book - Spell Cost Up
-        UCA.push({
+	UCA.push({
 		x: 297,
 		y: 70,
 		width: 8,
@@ -1315,13 +1323,13 @@ function uiClickAreas() {
 
 function uiClickInArea(x, y, ui, p) {
 	if (x >= (p.ScreenX + uiClickArea[ui].x) * scale && x < (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width) * scale && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y < (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height) * scale) {
-            if (debug){
-                if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA) {
-                            ctx.fillStyle = 'rgb(255, 255, 196)';
-                            ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
-                    }
-            }        
-            return true;
+		if (debug) {
+			if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA) {
+				ctx.fillStyle = 'rgb(255, 255, 196)';
+				ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
+			}
+		}
+		return true;
 	}
 	return false;
 }
@@ -1365,17 +1373,17 @@ function recolourUiGfx(img, colourFrom, colourTo) {
 	return can;
 }
 
-function foodBar(foodVal, width,colour) {
-    
-    if (typeof colour === "undefined") {
-        colour = COLOUR[COLOUR_RED_DARK];
-    }
-    
+function showStatusBar(thisVal, maxVal, width, colour) {
+
+	if (typeof colour === "undefined") {
+		colour = COLOUR[COLOUR_RED_DARK];
+	}
+
 	var can = document.createElement('canvas');
 	can.width = width;
 	can.height = 5;
 	var canContent = can.getContext("2d");
-	var t = Math.floor(foodVal / 200.0 * (width - 12));
+	var t = Math.floor(thisVal / maxVal * (width - 12));
 	canContent.drawImage(gfxUI[UI_GFX_FOOD_POINTER], 0, 1);
 	canContent.fillStyle = 'rgb(' + colour[0] + ',' + colour[1] + ',' + colour[2] + ')';
 	canContent.fillRect(6, 0, t, 5);
@@ -1478,9 +1486,9 @@ function showFairySpellScreen(spellClass, p, c) {
 			break
 
 	}
-	if(mySpells.length > 0) {
+	if (mySpells.length > 0) {
 		writeFontImage(mySpells[0].name, 43, 12, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
-		if(mySpells.length > 1) {
+		if (mySpells.length > 1) {
 			writeFontImage(mySpells[1].name, 43, 22, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
 		}
 	}
@@ -1538,86 +1546,113 @@ function showFairySpellDetailsScreen(spell, p, c) {
 
 }
 
-function colourSpellPage(dr,ch,img){
-    
-    //dr = Direction - False = Backwards 
-    var pal = [];
-    var page = null;
-    
-    if (dr){
-        var page = (ch.spellBookPage + 1) % 4;        
-    }else{
-        var page = ch.spellBookPage; 
-    }
-    
-    for (x = 0; x < 4; x++){
-            if (ch.spellBook[page][x].learnt){
-                if (ch.spellBook[page][x] === ch.selectedSpell){
-                    pal.push(COLOUR[COLOUR_WHITE]);   
-                }else{
-                    pal.push(getClassColour(ch.spellBook[page][x].ref.colour,true)); 
-                    
-                }                
-            }else{
-                pal.push(COLOUR[COLOUR_GREY_DARKEST]);
-            }
-    }
-    
-    return recolourSprite(img,MON_PALETTE_DEFAULT,pal);
-    
+function colourSpellPage(dr, ch, img) {
+
+	//dr = Direction - False = Backwards 
+	var pal = [];
+	var page = null;
+
+	if (dr) {
+		var page = (ch.spellBookPage + 1) % 4;
+	} else {
+		var page = ch.spellBookPage;
+	}
+
+	for (x = 0; x < 4; x++) {
+		if (ch.spellBook[page][x].learnt) {
+			if (ch.spellBook[page][x] === ch.selectedSpell) {
+				pal.push(COLOUR[COLOUR_WHITE]);
+			} else {
+				pal.push(getClassColour(ch.spellBook[page][x].ref.colour, true));
+
+			}
+		} else {
+			pal.push(COLOUR[COLOUR_GREY_DARKEST]);
+		}
+	}
+
+	return recolourSprite(img, MON_PALETTE_DEFAULT, pal);
+
 }
 
-function showScroll(p){
-       try{
-           
-        var pos = 15,
-                d = 2;
-	var xy = posToCoordinates(pos, p.x, p.y, p.d);
-        var f = p.floor,
-                x = xy.x,
-                y = xy.y;
-        
-        if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
-            var hex = tower[towerThis].floor[f].Map[y][x], 
-                    A = parseInt(hex.substring(0,1),16),
-                    B = parseInt(hex.substring(1,2),16),
-                    scrollRef = Math.floor((((A*16)+B)/4)-4)-1;
-            
-            switch (towerThis){
-                case 0:{scrollRef = scrollRef+0;}break;
-                case 1:{scrollRef = scrollRef+21;}break;
-                case 2:{scrollRef = scrollRef+33;}break;
-                case 3:{scrollRef = scrollRef+41;}break;
-                case 4:{scrollRef = scrollRef+49;}break;
-                case 5:{scrollRef = scrollRef+59;}break;
-            }
-            
-            ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
-            
-            //Scroll page can hold 7 Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
-            var l = (7 - scrollData[scrollRef].length)/2;
-            
-            for (x=0;x < scrollData[scrollRef].length;x++){
-                writeFontImage(scrollData[scrollRef][x], p.ScreenX + 278, (p.ScreenY + 15)+(l*8), COLOUR[COLOUR_BLACK],FONT_ALIGNMENT_CENTER);
-                l++;
-            }
-        }	
-        } catch(e) {p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;redrawUI(p.id);};
+function showScroll(p) {
+	try {
+
+		var pos = 15,
+			d = 2;
+		var xy = posToCoordinates(pos, p.x, p.y, p.d);
+		var f = p.floor,
+			x = xy.x,
+			y = xy.y;
+
+		if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
+			var hex = tower[towerThis].floor[f].Map[y][x],
+				A = parseInt(hex.substring(0, 1), 16),
+				B = parseInt(hex.substring(1, 2), 16),
+				scrollRef = Math.floor((((A * 16) + B) / 4) - 4) - 1;
+
+			switch (towerThis) {
+				case 0:
+					{
+						scrollRef = scrollRef + 0;
+					}
+					break;
+				case 1:
+					{
+						scrollRef = scrollRef + 21;
+					}
+					break;
+				case 2:
+					{
+						scrollRef = scrollRef + 33;
+					}
+					break;
+				case 3:
+					{
+						scrollRef = scrollRef + 41;
+					}
+					break;
+				case 4:
+					{
+						scrollRef = scrollRef + 49;
+					}
+					break;
+				case 5:
+					{
+						scrollRef = scrollRef + 59;
+					}
+					break;
+			}
+
+			ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+
+			//Scroll page can hold 7 Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
+			var l = (7 - scrollData[scrollRef].length) / 2;
+
+			for (x = 0; x < scrollData[scrollRef].length; x++) {
+				writeFontImage(scrollData[scrollRef][x], p.ScreenX + 278, (p.ScreenY + 15) + (l * 8), COLOUR[COLOUR_BLACK], FONT_ALIGNMENT_CENTER);
+				l++;
+			}
+		}
+	} catch (e) {
+		p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+		redrawUI(p.id);
+	};
 }
 
-function startScreen(){
-    
-    writeFontImage("Bloodwych HTML", 160, 20, COLOUR[COLOUR_RED],FONT_ALIGNMENT_CENTER);
-    writeFontImage("F1   START ONE PLAYER GAME", 20, 55, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT);
-    writeFontImage("F2   START TWO PLAYER GAME", 20, 70, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT);
-    writeFontImage("F3   QUICKSTART ONE PLAYER GAME", 20, 95, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT);
-    writeFontImage("F4   QUICKSTART TWO PLAYER GAME", 20, 110, COLOUR[COLOUR_GREEN],FONT_ALIGNMENT_LEFT);
-    writeFontImage("MIRRORSOFT 1989", 160, 180, COLOUR[COLOUR_GREY_DARK],FONT_ALIGNMENT_CENTER);
-    
+function startScreen() {
+
+	writeFontImage("Bloodwych HTML", 160, 20, COLOUR[COLOUR_RED], FONT_ALIGNMENT_CENTER);
+	writeFontImage("F1   START ONE PLAYER GAME", 20, 55, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	writeFontImage("F2   START TWO PLAYER GAME", 20, 70, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	writeFontImage("F3   QUICKSTART ONE PLAYER GAME", 20, 95, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	writeFontImage("F4   QUICKSTART TWO PLAYER GAME", 20, 110, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	writeFontImage("MIRRORSOFT 1989", 160, 180, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_CENTER);
+
 }
 
-function startGame(){
-    
-    
-    
+function startGame() {
+
+
+
 }
