@@ -2,7 +2,14 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	//this.id = id;
 	this.level = level;
 	this.type = type;
-	this.ref = monsterRef[form];
+	var clr = 0;
+	if(form >= MON_FORM_ILLUSION && form < MON_FORM_BEHEMOTH) {
+		clr = Math.floor(level / 2.5);
+		if(clr > 7) {
+			clr = 7;
+		}
+	}
+	this.ref = monsterRef[form][clr];
 	this.teamId = teamId;
 	this.tower = tower;
 	this.floor = floor;
@@ -489,15 +496,15 @@ function initMonsters(t) {
 
 	//TESTING!!! REMOVE AFTER
 	if (t.id === TOWER_MOD0) {
-		/*var testType = 107;
+		/*var testType = 101;
 		var max = monster[t.id].length;
-		monster[t.id][max] = new Monster(max, 0, 0, 104, t.id, 3, 12, 18, 2, CHAR_FRONT_SOLO, 0);
+		monster[t.id][max] = new Monster(max, 0, 3, testType, t.id, 3, 12, 18, 2, CHAR_FRONT_SOLO, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 3, 0, 102, t.id, 3, 14, 18, 2, CHAR_FRONT_LEFT, 999);
+		monster[t.id][max] = new Monster(max, 3, 3, testType, t.id, 3, 14, 19, 2, CHAR_FRONT_LEFT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 6, 0, 102, t.id, 3, 14, 18, 2, CHAR_FRONT_RIGHT, -999);
+		monster[t.id][max] = new Monster(max, 6, 3, testType, t.id, 3, 14, 18, 2, CHAR_FRONT_RIGHT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 9, 0, 105, t.id, 3, 13, 20, 0, CHAR_FRONT_SOLO, 0);
+		monster[t.id][max] = new Monster(max, 9, 3, testType, t.id, 3, 13, 20, 0, CHAR_FRONT_SOLO, 0);
 		max++;*/
 		//                monster[t.id][max] = new Monster(max, 12, 0, testType, t.id, 3, 12, 18, 3, CHAR_FRONT_LEFT, 0);
 		//		max++;
@@ -579,12 +586,17 @@ function initMonsterGfx() {
 //Read out the items here
 
 function createMonsterRef(id, level, gfx) {
-	if (typeof monsterRef[id] === "undefined" || typeof monsterRef[id].gfx === "undefined") {
-		monsterRef[id] = {
-			id: id,
-			level: level,
-			gfx: gfx
-		};
+	if (typeof monsterRef[id] === "undefined") {
+		monsterRef[id] = new Array();
+	}
+	if (typeof monsterRef[id][level] === "undefined" || typeof monsterRef[id][level].gfx === "undefined") {
+		if(typeof gfx !== "undefined") {
+			monsterRef[id][level] = {
+				id: id,
+				level: level,
+				gfx: gfx
+			};
+		}
 	}
 }
 

@@ -957,7 +957,8 @@ Player.prototype.castSpell = function(sb, c, s) {
 	}
 	if (c.stat.sp - sb.cost >= 0) {
 		if (Math.random() < c.getSpellCastChance()) {
-			castSpell(sb.id, c.monster, c.getSpellPower() * 6); //TODO: spell power
+			PrintLog('SPELLPOWER: ' + c.getSpellPower() * 8);
+			castSpell(sb.id, c.monster, c.getSpellPower() * 8); //TODO: spell power
 			sb.castSuccessful++;
 			if (!s) {
 				this.showSpellText = false;

@@ -179,7 +179,8 @@ function castSpell(s, src, pw) {
 		case SPELL_SUMMON:
 			if (canMove(f, x, y, d, 0)) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 10), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
+				alert(pow);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
 			}
 			break;
 		case SPELL_VIVIFY:

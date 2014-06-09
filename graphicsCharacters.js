@@ -1174,7 +1174,7 @@ function grabMonster(form, level) {
     for(var i = 0; i < ImageArray.length; i++) {
         for(var j = 0; j < ImageArray[i].length; j++) {
             for(var k = 0; k < ImageArray[i][j].length; k++) {
-                if (form < 107){
+                if (form < MON_FORM_BEHEMOTH){
                     if(form === MON_FORM_ILLUSION) {
                         var pal = 0;
                         var lvl = 8;

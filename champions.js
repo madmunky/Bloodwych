@@ -33,7 +33,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 		var spl = getSpellBookPage(pg);
 		for (rw = 0; rw < SPELL_MAX; rw++) {
 			this.spellBook[pg][rw] = new Array();
-			this.spellBook[pg][rw].learnt = true;
+			this.spellBook[pg][rw].learnt = false;
 			this.spellBook[pg][rw].castSuccessful = 0;
 			this.spellBook[pg][rw].ref = spl[rw];
 			this.spellBook[pg][rw].id = spl[rw].id + spl[rw].colour * 8;

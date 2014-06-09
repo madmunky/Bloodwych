@@ -47,8 +47,7 @@ function calculateAttack(att, def) {
 				attack += from.getWeaponPower(1);
 			}
 			//attack += from.getWeaponPower(1);
-			attack += Math.round(from.stat.str / 8);
-			attack += Math.round(from.stat.agi / 32);
+			attack = attack * Math.floor(Math.round(from.stat.str / 16) + Math.round(from.stat.agi / 32));
 			attExhaustion = Math.floor(Math.random() * 2) + 1;
 			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
 		} else {
@@ -99,7 +98,7 @@ function calculateAttack(att, def) {
 					if(to.champId > -1) { //champion
 						to = champion[to.champId];
 						tmon = to.monster;
-						defense += 15 + Math.round(to.stat.agi / 4);
+						defense += 20 + Math.round(to.stat.agi / 4);
 						defense -= to.getArmourClass();
 						defExhaustion = Math.floor(Math.random() * 2) + 1;
 					} else { //monster
