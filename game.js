@@ -37,6 +37,7 @@ Game.prototype = {
 }
 
 function timerAction() {
+	cutpurseTrueview = (Math.floor(Math.random() * 10) === 0);
 	if (timerMaster - timerChampionAttack >= 20) {
 		timerChampionAttack = timerMaster;
 		for (p = 0; p < player.length; p++) {

@@ -12,7 +12,7 @@ COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shi
 COD Get tower switching for 1 player
 COD Fix death screen as I did with asleep
 COD Stack keys/coins on same location in dungeon
-COD Disallow casting formwall and mindwall on monsters
+BUG Sometimes top-left combat (e.g. Hengist) attack info stays there
 
 CHRIS
 ------
@@ -22,6 +22,7 @@ UI  Make Start Screen
 UI  Make Champion select start screen
 UI  Find Amour Palette's
 UI  Add text at fairy for when champ already learned all spells
+BUG On tablets, buttons are sometimes not coloured
 
 QUESTIONS FOR CHRIS
 -------------------

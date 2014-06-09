@@ -979,6 +979,21 @@ Player.prototype.castSpell = function(sb, c, s) {
 	}
 }
 
+//gets active spell from any champion, when spell id matches
+Player.prototype.getActiveSpellById = function(id) {
+	for (c = 0; c < this.champion.length; c++) {
+		var ch = this.getChampion(c);
+		if (id === ch.activeSpell.id) {
+			return ch.activeSpell;
+		}
+	}
+	return {
+		id: -1,
+		power: 0,
+		timer: 0
+	};
+}
+
 Player.prototype.getObjectOnPos = function(pos, d) {
 	if (typeof d === "undefined") {
 		d = 2;

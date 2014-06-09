@@ -139,18 +139,18 @@ function castSpell(s, src, pw) {
 	switch (s) {
 		//serpent
 		case SPELL_ARMOUR:
-			ch.activateSpell(s, pow * 5);
+			ch.activateSpell(s, pow, pow * 5);
 			break;
 		case SPELL_PARALYZE:
 			break;
 		case SPELL_COMPASS:
-			ch.activateSpell(s, pow * 10);
+			ch.activateSpell(s, pow, pow * 10);
 			break;
 		case SPELL_LEVITATE:
-			ch.activateSpell(s, pow * 10);
+			ch.activateSpell(s, pow, pow * 10);
 			break;
 		case SPELL_WARPOWER:
-			ch.activateSpell(s, pow * 5);
+			ch.activateSpell(s, pow, pow * 5);
 			break;
 		case SPELL_ARC_BOLT:
 			break;
@@ -170,7 +170,7 @@ function castSpell(s, src, pw) {
 		case SPELL_TERROR:
 			break;
 		case SPELL_ANTIMAGE:
-			ch.activateSpell(s, pow * 5);
+			ch.activateSpell(s, pow, pow * 5);
 			break;
 		case SPELL_SPELLTAP:
 			break;
@@ -252,13 +252,16 @@ function castSpell(s, src, pw) {
 		case SPELL_BEGUILE:
 			break;
 		case SPELL_CONFUSE:
+			var m = getMonsterAt(f, x1, y1);
+			if(m.)
 			break;
 		case SPELL_CONCEAL:
 			break;
 		case SPELL_TRUEVIEW:
-			ch.activateSpell(s, pow * 5);
+			ch.activateSpell(s, pow, pow * 5);
 			break;
 		case SPELL_VANISH:
+			ch.activateSpell(s, pow, pow * 5);
 			break;
 		case SPELL_ILLUSION:
 			if (canMove(f, x, y, d, 0)) {

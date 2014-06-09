@@ -5,7 +5,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.recruitment = {
 		recruited: false,
 		attached: false,
-		playerId: 0,
+		playerId: -1,
 		position: 0,
 		attackTimer: 0
 	};
@@ -18,7 +18,8 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.selectedSpell = null;
 	this.activeSpell = {
 		id: -1,
-		timer: 0
+		timer: 0,
+		power: 0
 	};
 	this.stat = stat;
 	this.food = 200;
@@ -371,9 +372,10 @@ Champion.prototype.toString = function() {
 	return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', spellBook:[' + sb + '], stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
 }
 
-Champion.prototype.activateSpell = function(s, pow) {
+Champion.prototype.activateSpell = function(s, pow, tim) {
 	this.activeSpell.id = s;
-	this.activeSpell.timer = pow * 5;
+	this.activeSpell.timer = tim;
+	this.activeSpell.power = pow;
 	if (this.recruitment.playerId > -1) {
 		redrawUI(this.recruitment.playerId);
 	}
@@ -402,8 +404,21 @@ Champion.prototype.checkSpell = function() {
 		}*/
 		if (this.activeSpell.timer === 0) {
 			this.activeSpell.id = -1;
+			this.activeSpell.power = 0;
 		}
 	}
+}
+
+//gets active spell, when spell id matches
+Champion.prototype.getActiveSpellById = function(id) {
+	if (id === this.activeSpell.id) {
+		return this.activeSpell;
+	}
+	return {
+		id: -1,
+		power: 0,
+		timer: 0
+	};
 }
 
 Champion.prototype.selectSpell = function(id) {

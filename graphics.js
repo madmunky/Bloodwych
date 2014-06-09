@@ -309,7 +309,7 @@ function drawPlayersView(p) {
 	} else {
 		p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
-		var il = (p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && Math.floor(Math.random() * 10) === 0);
+		var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getChampion(p.championLeader).getActiveSpellById(SPELL_TRUEVIEW).timer > 0);
 
 		for (x = 0; x < 19; x++) {
 			var view = p.getView()
@@ -484,7 +484,20 @@ function drawMonsterOnPos(p, pos) {
 	if (pos > -1 && pos <= 15) {
 		var monPos = p.getMonstersInRange(pos);
 		for (i in monPos) {
-			p.drawMonster(monPos[i].monster, monPos[i].distance, monPos[i].gfxCoord);
+			var van = false;
+			var ch1 = p.getChampion(p.championLeader);
+			if(monPos[i].monster.champId > -1) {
+				var ch2 = champion[monPos[i].monster.champId];
+				if(ch2.recruitment.playerId > -1) {
+					var p2 = player[ch2.recruitment.playerId];
+					if(p2.getActiveSpellById(SPELL_VANISH).timer > 0) {
+						van = true;
+					}
+				}
+			}
+			if(!van || (van && ch1.prof === PROFESSION_CUTPURSE && cutpurseTrueview) || ch1.getActiveSpellById(SPELL_TRUEVIEW).timer > 0) {
+				p.drawMonster(monPos[i].monster, monPos[i].distance, monPos[i].gfxCoord);
+			}
 		}
 	}
 }
