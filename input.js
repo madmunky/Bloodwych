@@ -30,7 +30,9 @@ function doKeyDown(e) {
 				break;
 		}
 	}
-	switch (e.keyCode) {
+        
+        if (STARTGAME){
+            switch (e.keyCode) {
 		case KEY_L: // THE L KEY
 			switchTower((towerThis + 1) % TOWER_NAME.length);
 			break;
@@ -106,6 +108,15 @@ function doKeyDown(e) {
 		default:
 			break;
 	}
+        }else{
+            switch (e.keyCode) {
+                 case KEY_1:{startGame(true,true);};break
+                 case KEY_2:{startGame(true,true);};break
+                 case KEY_3:{startGame(true,true);};break
+                 case KEY_4:{startGame(false,true);}break;
+             }
+        }
+	
 }
 
 function checkClickEvents() {

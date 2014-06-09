@@ -34,7 +34,7 @@ section.debug {
     overflow-y: auto;
 }
 canvas {
-    background: url(../images/loading.png) center center no-repeat;
+    /*background: url(../images/loading.png) center center no-repeat;*/
     border: 0px solid #444;
     clear: both;
     //float: left;

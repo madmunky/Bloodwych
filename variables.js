@@ -4,7 +4,6 @@ var player = new Array();
 var tower = new Array();
 
 //Setup some global Varibles for needed
-var STARTSCREEN = false;
 var STARTGAME = false;
 var scale = 3;
 var debug = true;
@@ -762,6 +761,10 @@ var KEYPAD_4 = 100,
 	KEY_E = 69,
 	KEY_R = 82,
 	KEY_F = 70,
+        KEY_1 = 49,
+        KEY_2 = 50,
+        KEY_3 = 51,
+        KEY_4 = 52,
 	KEY_5 = 53,
 	KEY_6 = 54,
 	KEY_7 = 55,

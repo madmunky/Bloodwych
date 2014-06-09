@@ -1,4 +1,4 @@
-function Player(id, PortX, PortY, ScreenX, ScreenY) {
+function Player(id, ScreenX, ScreenY) {
 	this.id = id;
 	this.champion = new Array();
 	this.championLeader = 0;
@@ -7,8 +7,8 @@ function Player(id, PortX, PortY, ScreenX, ScreenY) {
 	this.y = 0; //posY;
 	this.floor = 0; //floor;
 	this.d = 0; //d;
-	this.PortalX = PortX;
-	this.PortalY = PortY;
+	this.PortalX = (ScreenX + 96) * scale;
+	this.PortalY = (ScreenY + 2) * scale;
 	this.PlayerCanvas = document.createElement('canvas');
 	this.Portal = null;
 	this.ScreenX = ScreenX;

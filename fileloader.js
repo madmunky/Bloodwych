@@ -142,9 +142,7 @@ function readScrollData(evt) {
         var Line = [];
         
 	for (x = 0; x < uInt8Array.length; x++) {
-		//Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
-		//var tmp = '';
-                
+		
                 if (uInt8Array[x] === 255){
                     Scroll.push(Line.join(""));
                     Data.push(Scroll);

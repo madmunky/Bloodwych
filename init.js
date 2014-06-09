@@ -16,10 +16,14 @@ function initGame() {
 			updateLoadingScreen("Loading Tower Data", 50);
 		} else if (newvalue === 2) {
 			initData();
+                        
 			if (typeof game === "undefined") {
-				Run();
-			}
-			updateLoadingScreen("Starting Game", 100);
+				//Run();
+                                startScreen();
+			}else{
+                            updateLoadingScreen("Starting Game", 100);    
+                        }
+			
 		}
 	});
 	updateLoadingScreen("Loading Graphics", 0);
@@ -142,32 +146,49 @@ function initData() {
 	gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 19, 13);
 	gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
 	gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
-
+        
+        gfxUI = grabUISprites(gfx['misc']['uistuff']);
+        itemsGfxD = initItemsGfxD();
+        font = grabFont();	
+        uiClickArea = uiClickAreas();
+        
 	initMonsterGfx();
 	for (var i = 0; i < 6; i++) {
 		initMonsters(tower[i]);
 	}
+        
 	initSpells();
-	initChampions();
-	godMode();
-	player[0] = new Player(0, 96 * scale, 12 * scale, 0 * scale, 10);
-	player[1] = new Player(1, 96 * scale, 116 * scale, 0 * scale, 114);
-	gfxUI = grabUISprites(gfx['misc']['uistuff']);
-	itemsGfxD = initItemsGfxD();
 	initItemRefs();
 	for (var i = 0; i < 6; i++) {
 		initItems(tower[i]);
 	}
-	font = grabFont();
-	initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
+	
 	//initPlayersStart(0, 3);
-	initTowerSwitches();
-	switchTower(0);
-	uiClickArea = uiClickAreas();
-        
-        for (p in player){
-            redrawUI[p.id];
-        }
+	initTowerSwitches();	
+	
 
-	//}
+}
+
+function startGame(singlePlayer,quickStart){
+       
+    
+    initChampions();
+    
+    if (singlePlayer){
+        player[0] = new Player(0, 0, 49);        
+    }else{
+        player[0] = new Player(0, 0, 10);
+        player[1] = new Player(1, 0, 114);    
+    }
+    
+    if (quickStart){
+        initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
+    }  
+    
+    
+    godMode();	
+    switchTower(0);
+    clearCanvas();
+    STARTGAME = true;
+    Run();
 }

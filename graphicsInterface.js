@@ -171,8 +171,14 @@ function drawUI(p) {
 				default:
 					break;
 			}
-
-			myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
+                        
+                        if (player.length > 1){
+                            myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
+                        }else{
+                            myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY + 96]);
+                            myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY - 20]);
+                        }
+			
 		}
 	}
 }
@@ -1641,7 +1647,14 @@ function showScroll(p) {
 }
 
 function startScreen() {
-
+    
+        canvas.addEventListener('keydown', doKeyDown, true);
+        checkClickEvents();
+        canvas.focus();
+    
+        configCanvas();
+        clearCanvas();
+        
 	writeFontImage("Bloodwych HTML", 160, 20, COLOUR[COLOUR_RED], FONT_ALIGNMENT_CENTER);
 	writeFontImage("F1   START ONE PLAYER GAME", 20, 55, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
 	writeFontImage("F2   START TWO PLAYER GAME", 20, 70, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
@@ -1651,8 +1664,3 @@ function startScreen() {
 
 }
 
-function startGame() {
-
-
-
-}

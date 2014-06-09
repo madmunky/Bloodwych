@@ -253,7 +253,7 @@ function castSpell(s, src, pw) {
 			break;
 		case SPELL_CONFUSE:
 			var m = getMonsterAt(f, x1, y1);
-			if(m.)
+			if(m)
 			break;
 		case SPELL_CONCEAL:
 			break;

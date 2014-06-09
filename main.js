@@ -41,9 +41,7 @@ Run = function() {
 		run();
 		
 		$(function() {
-			canvas.addEventListener('keydown', doKeyDown, true);
-			checkClickEvents();
-			canvas.focus();
+
 		});
 	}
 }();
