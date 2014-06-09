@@ -165,15 +165,12 @@ function initData() {
 	
 	//initPlayersStart(0, 3);
 	initTowerSwitches();	
-	
+	initChampions();
 
 }
 
 function startGame(singlePlayer,quickStart){
        
-    
-    initChampions();
-    
     if (singlePlayer){
         player[0] = new Player(0, 0, 49);        
     }else{
@@ -184,7 +181,6 @@ function startGame(singlePlayer,quickStart){
     if (quickStart){
         initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
     }  
-    
     
     godMode();	
     switchTower(0);
