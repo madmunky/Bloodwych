@@ -10,13 +10,13 @@ function calculateAttack(att, def) {
 	}
 
 	for (a = 0; a < 2; a++) {
-	    var attack = 0;
-		var crit = 1;
-		var hit = 1.0;
-		var defense = 0;
-		var defChance = 1;
-		var attExhaustion = 0;
-		var defExhaustion = 0;
+	    var attack = 0; //attack points
+		var crit = 1; //chance for a critical strike (2x hit)
+		var hit = 1.0; //chance for attacker for a successful hit
+		var defense = 0; //defense points
+		var defChance = 1; //chance that defender can succesfully defend
+		var attExhaustion = 0; //attack exhaustion points. used to decrease vitality of attacker
+		var defExhaustion = 0; //defense exhaustion points. used to decrease vitality of defender
 		var fromDir = 0;
 		var from;
 		var to;
@@ -33,23 +33,22 @@ function calculateAttack(att, def) {
         	if(fmon.dead) {
         		continue;
         	}
-			if(Math.floor(Math.random() * 20) >= 19) {
+			if(Math.floor(Math.random() * 20) >= 19) { //critical strike chance is 5%
 				crit = 2;
 			}
         	fromDir = fmon.d;
-        	if(from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === ITEM_DAGGER || from.pocket[0].id === ITEM_STEALTH_BLADE) && att.d === def.d) {
+        	if(from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === ITEM_DAGGER || from.pocket[0].id === ITEM_STEALTH_BLADE) && att.d === def.d) { //cutpurses can cut through 50% of the defense
         		defChance = 0.5;
 			}
-			var wp = from.getWeaponPower(0);
+			var wp = from.getWeaponPower(0); //weapon attack power
 			if(wp > 0) {
 				attack += wp;
 			} else {
-				attack += from.getWeaponPower(1);
+				attack += from.getWeaponPower(1); //if no weapon in right hand, check left hand
 			}
-			//attack += from.getWeaponPower(1);
-			attack = attack * Math.floor(Math.round(from.stat.str / 16) + Math.round(from.stat.agi / 32));
-			attExhaustion = Math.floor(Math.random() * 2) + 1;
-			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75);
+			attack = attack * Math.floor(Math.round(from.stat.str / 16) + Math.round(from.stat.agi / 32)); //add strength and agility to attack points
+			attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
+			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
 		} else {
 			from = mon[a];
 			fmon = from;
@@ -67,7 +66,6 @@ function calculateAttack(att, def) {
 			for (d = 0; d < 2; d++) {
 				ch[0] = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
 				ch[1] = champion[def.champion[(4 + fromDir - def.d + d) % 4]];
-				//tmon = to1[d].monster;
 				if(typeof ch[0] !== "undefined" && !ch[0].monster.dead) {
 					ch1.push(ch[0]);
 				} else if(typeof ch[1] !== "undefined" && !ch[1].monster.dead) {

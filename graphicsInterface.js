@@ -559,8 +559,8 @@ function rightUI(p) {
 		}
 	}
 	if (!p.attacking) {
-		ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
 		if (p.pocket.id > 0) {
+			ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
 			writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
 		}
 	}
@@ -675,8 +675,8 @@ function drawPocketUI(p) {
 						}
 					}
 					if (!p.attacking) {
-						ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
 						if (p.pocket.id > 0) {
+							ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
 							writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
 							if (p.pocket.type === ITEM_TYPE_FOOD) {
 								var t = showStatusBar(chp.food, 200, 69);

@@ -63,14 +63,15 @@ Monster.prototype.canInteract = function() {
 			}
 		}
 		var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
-
-		if (mon.type === MON_TYPE_MAGICAL || this.type === MON_TYPE_MAGICAL || mon.champId > -1) {
-			//attack champion
-			this.attack(true, mon);
-			return 2;
-		} else if (this.teamId === 0 && this.square > CHAR_FRONT_SOLO) {
-			//interact with other monster, only monsters without a team can team up
-			return this.assembleTeamWith(mon);
+		if(mon !== null) {
+			if (mon.type === MON_TYPE_MAGICAL || this.type === MON_TYPE_MAGICAL || mon.champId > -1) {
+				//attack champion
+				this.attack(true, mon);
+				return 2;
+			} else if (this.teamId === 0 && this.square > CHAR_FRONT_SOLO) {
+				//interact with other monster, only monsters without a team can team up
+				return this.assembleTeamWith(mon);
+			}
 		}
 	} else if (this.champId > -1) { //champion
 
@@ -98,22 +99,6 @@ Monster.prototype.canMove = function() {
 			}
 		}
 
-		//Check other objects
-		switch (objNext) {
-			case '1':
-				return 0; //Wall
-			case '3':
-				return 0; //Misc
-			case '5': //Doors
-				if (getHexToBinaryPosition(hexNext, 7, 1) === '1') {
-					return 0;
-				}
-			case '7':
-				if(getHexToBinaryPosition(hexNext, 6, 2) === '3') {
-					return 0;
-				}
-		}
-
 		//Check other player
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
 			return 2;
@@ -123,6 +108,26 @@ Monster.prototype.canMove = function() {
 		var xy = getOffsetByRotation(this.d);
 		if (getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y) !== null) {
 			return 2;
+		}
+
+		//Check other objects
+		switch (objNext) {
+			case '1':
+				return 0; //Wall
+			case '3':
+				return 0; //Bed/pillar
+			case '5':
+				if (getHexToBinaryPosition(hexNext, 7, 1) === '1') { //solid closed door
+					return 0;
+				}
+			case '6':
+				if (getHexToBinaryPosition(hexNext, 6, 2) === '1') { //pit
+					return 0;
+				}
+			case '7':
+				if(getHexToBinaryPosition(hexNext, 6, 2) === '3') { //formwall
+					return 0;
+				}
 		}
 	}
 	return 1;

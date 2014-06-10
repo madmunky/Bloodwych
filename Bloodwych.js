@@ -181,18 +181,18 @@ function debugText(p, txt) {
 function godMode() {
 	for (c in champion) {
 		var ch = champion[c];
+		ch.level = 99;
 		ch.stat.ac = 99;
+		ch.stat.str = 99;
 		ch.stat.agi = 99;
 		ch.stat.int = 99;
 		ch.stat.cha = 99;
-		ch.stat.hp = 99;
-		ch.stat.hpMax = 99;
-		ch.stat.sp = 99;
-		ch.stat.spMax = 99;
-		ch.stat.str = 99;
-		ch.stat.vit = 99;
-		ch.stat.vitMax = 99;
-		ch.level = 99;
+		ch.stat.hp = 255;
+		ch.stat.hpMax = 255;
+		ch.stat.sp = 255;
+		ch.stat.spMax = 255;
+		ch.stat.vit = 255;
+		ch.stat.vitMax = 255;
 		for (pg = 0; pg < COLOUR_MAX; pg++) {
 			for (rw = 0; rw < SPELL_MAX; rw++) {
 				ch.spellBook[pg][rw].learnt = true;

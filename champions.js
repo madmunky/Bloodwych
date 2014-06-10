@@ -303,7 +303,7 @@ Champion.prototype.consumePocketItem = function(pk, q) {
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
 	if (typeof pwr !== "undefined" && this.recruitment.recruited) {
-		var self = this;
+		//var self = this;
 		var p = player[this.recruitment.playerId];
 		var x = 0,
 			y = 0;
@@ -340,9 +340,9 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		}
 		(function(p, x, y, w) {
 			setTimeout(function() {
-				if (p.messageTimeout === 0 || self.recruitment.position === 0) {
+				//if (p.messageTimeout === 0 || self.recruitment.position === 0) {
 					ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
-				}
+				//}
 			}, 1500);
 		})(p, x, y, w);
 	}
@@ -371,6 +371,7 @@ Champion.prototype.toString = function() {
 }
 
 Champion.prototype.activateSpell = function(s, pow, tim) {
+	this.expireSpell();
 	this.activeSpell.id = s;
 	this.activeSpell.timer = tim;
 	this.activeSpell.power = pow;
@@ -384,27 +385,34 @@ Champion.prototype.checkSpell = function() {
 	if (this.spellFatigue > 1.0) {
 		this.spellFatigue = 1.0;
 	}
+	if (this.activeSpell.id > -1) {
+		this.activeSpell.timer--;
+		if (this.activeSpell.timer === 0) {
+			this.expireSpell();
+		}
+	}
 	var p = this.recruitment.playerId;
 	if (p > -1) {
 		if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
 			redrawUI(p);
 		}
 	}
-	if (this.activeSpell.id > -1) {
-		this.activeSpell.timer--;
-		/*switch(this.activeSpell.id) {
-			case SPELL_ARMOUR:
-			case SPELL_COMPASS:
-			case SPELL_LEVITATE:
-			case SPELL_WARPOWER:
-			case SPELL_ANTIMAGE:
-			case SPELL_TRUEVIEW:
-		}*/
-		if (this.activeSpell.timer === 0) {
-			this.activeSpell.id = -1;
-			this.activeSpell.power = 0;
-		}
+}
+
+Champion.prototype.expireSpell = function() {
+	var p = this.recruitment.playerId;
+	this.activeSpell.timer = 0;
+	switch(this.activeSpell.id) {
+		case SPELL_ARMOUR: break;
+		case SPELL_COMPASS: break;
+		case SPELL_LEVITATE: player[p].doPit(); break;
+		case SPELL_WARPOWER: break;
+		case SPELL_ANTIMAGE: break;
+		case SPELL_TRUEVIEW: break;
+		default: break;
 	}
+	this.activeSpell.id = -1;
+	this.activeSpell.power = 0;
 }
 
 //gets active spell, when spell id matches

@@ -1,5 +1,5 @@
-function Projectile(type, level, tower, floor, x, y, d) {
-	this.level = level;
+function Projectile(type, power, tower, floor, x, y, d) {
+	this.power = power;
 	this.type = type;
 	this.tower = tower;
 	this.floor = floor;
@@ -8,12 +8,13 @@ function Projectile(type, level, tower, floor, x, y, d) {
 	this.d = d;
 }
 
-function newProjectile(type, level, floor, x, y, d) {
+function newProjectile(type, power, floor, x, y, d) {
 	var pmax = projectile.length;
-	projectile[pmax] = new Projectile(type, level, towerThis, floor, x, y, d);
+	projectile[pmax] = new Projectile(type, power, towerThis, floor, x, y, d);
 }
 
 function moveProjectile(id) {
+	
 }
 
 function deleteProjectile(id) {

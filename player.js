@@ -339,11 +339,15 @@ Player.prototype.doEvent = function(mr) {
 };
 
 Player.prototype.doPit = function() {
-	floor = this.floor - 1;
-	fOff = getTowerFloorOffset(this.floor, floor);
-	x = this.x + fOff.x;
-	y = this.y + fOff.y;
-	this.setPlayerPosition(floor, x, y);
+	if (parseInt(this.getView()[18].substring(1, 2), 16) % 4 === 1 && this.getActiveSpellById(SPELL_LEVITATE).timer === 0) {
+		floor = this.floor - 1;
+		fOff = getTowerFloorOffset(this.floor, floor);
+		x = this.x + fOff.x;
+		y = this.y + fOff.y;
+		this.setPlayerPosition(floor, x, y);
+		return true;
+	}
+	return false;
 }
 
 Player.prototype.doStairs = function() {
@@ -624,7 +628,9 @@ Player.prototype.alertDamagedPlayer = function() {
 			toggleChampUI(ch, this, true);
 		}
 	}
-	this.wakeUp();
+	if(this.sleeping) {
+		this.wakeUp();
+	}
 }
 
 Player.prototype.resetChampUI = function() {
@@ -1017,6 +1023,7 @@ Player.prototype.message = function(txt, col, wait, delay) {
 		ctx.clearRect(0, (this.ScreenY - 9) * scale, 320 * scale, 8 * scale);
 		if (this.messageTimeout !== 0) {
 			clearTimeout(this.messageTimeout);
+			this.messageTimeout = 0;
 		}
 	} else if (this.messageTimeout === 0 || !wait) {
 		fadeFont(this, txt, 30, delay, 0, this.ScreenY, col);

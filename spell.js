@@ -179,7 +179,6 @@ function castSpell(s, src, pw) {
 		case SPELL_SUMMON:
 			if (canMove(f, x, y, d, 0)) {
 				var max = monster[towerThis].length;
-				alert(pow);
 				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
 			}
 			break;
@@ -252,8 +251,19 @@ function castSpell(s, src, pw) {
 		case SPELL_BEGUILE:
 			break;
 		case SPELL_CONFUSE:
-			var m = getMonsterAt(f, x1, y1);
-			if(m)
+			var mon = getMonstersInTower(towerThis);
+			var dr = Math.floor(Math.random() * 4);
+			for (m in mon) {
+				if (mon[m].floor === f && mon[m].x === x1 && mon[m].y === y1) {
+					mon[m].d = dr;
+					if(mon[m].champId > -1) {
+						var cht = champion[mon[m].champId];
+						if(cht.recruitment.playerId > -1) {
+							player[cht.recruitment.playerId].d = dr;
+						}
+					}
+				}
+			}
 			break;
 		case SPELL_CONCEAL:
 			break;
