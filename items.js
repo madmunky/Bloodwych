@@ -2,48 +2,8 @@ function Item(id, quantity, location) {
 	this.id = id;
 	this.quantity = quantity;
 	this.location = location;
-	this.type = this.getType();
+	this.type = getItemType(id);
 	this.itemRef = itemRef[id];
-}
-
-Item.prototype.getType = function() {
-	var id = this.id;
-	if (id === ITEM_EMPTY) {
-		return ITEM_TYPE_EMPTY;
-	} else if (id <= ITEM_ELF_ARROWS) {
-		return ITEM_TYPE_STACKABLE;
-	} else if (id <= ITEM_NEGG_RED) {
-		return ITEM_TYPE_FOOD;
-	} else if (id <= ITEM_MOON_ELIXIR) {
-		return ITEM_TYPE_POTION;
-	} else if (id <= ITEM_CRYSTAL_PLATE) {
-		return ITEM_TYPE_ARMOUR;
-	} else if (id <= ITEM_WAR_SHIELD) {
-		return ITEM_TYPE_SHIELD;
-	} else if (id <= ITEM_CRYSTAL_GLOVES) {
-		return ITEM_TYPE_GLOVES;
-	} else if (id <= ITEM_POWER_STAFF) {
-		return ITEM_TYPE_WEAPON;
-	} else if (id <= ITEM_THAI_CHANG_RIP) {
-		return ITEM_TYPE_RIP;
-	} else if (id <= ITEM_CHROMATIC_KEY) {
-		return ITEM_TYPE_KEY;
-	} else if (id <= ITEM_HEAL_WAND) {
-		return ITEM_TYPE_WAND;
-	} else if (id <= ITEM_CROSS_BOW) {
-		return ITEM_TYPE_BOW;
-	} else if (id <= ITEM_PERMIT) {
-		return ITEM_TYPE_SCROLL;
-	} else if (id <= ITEM_MOON_CRYSTAL) {
-		return ITEM_TYPE_CRYSTAL;
-	} else if (id <= ITEM_TAN_GEM) {
-		return ITEM_TYPE_GEM;
-	} else if (id <= ITEM_MOON_RING) {
-		return ITEM_TYPE_RING;
-	} else if (id <= ITEM_BOOK_OF_SKULLS) {
-		return ITEM_TYPE_BOOK;
-	}
-	return -1;
 }
 
 Item.prototype.getWeaponPower = function() {
@@ -182,7 +142,7 @@ Item.prototype.setPocketItem = function(id, q) {
 	this.location.x = 0;
 	this.location.y = 0;
 	this.location.square = 0;
-	this.type = this.getType();
+	this.type = getItemType(id);
 	this.itemRef = itemRef[id];
 }
 
@@ -259,6 +219,45 @@ function initItems(t) {
 	};
 }
 
+function getItemType(id) {
+	if (id === ITEM_EMPTY) {
+		return ITEM_TYPE_EMPTY;
+	} else if (id <= ITEM_ELF_ARROWS) {
+		return ITEM_TYPE_STACKABLE;
+	} else if (id <= ITEM_NEGG_RED) {
+		return ITEM_TYPE_FOOD;
+	} else if (id <= ITEM_MOON_ELIXIR) {
+		return ITEM_TYPE_POTION;
+	} else if (id <= ITEM_CRYSTAL_PLATE) {
+		return ITEM_TYPE_ARMOUR;
+	} else if (id <= ITEM_WAR_SHIELD) {
+		return ITEM_TYPE_SHIELD;
+	} else if (id <= ITEM_CRYSTAL_GLOVES) {
+		return ITEM_TYPE_GLOVES;
+	} else if (id <= ITEM_POWER_STAFF) {
+		return ITEM_TYPE_WEAPON;
+	} else if (id <= ITEM_THAI_CHANG_RIP) {
+		return ITEM_TYPE_RIP;
+	} else if (id <= ITEM_CHROMATIC_KEY) {
+		return ITEM_TYPE_KEY;
+	} else if (id <= ITEM_HEAL_WAND) {
+		return ITEM_TYPE_WAND;
+	} else if (id <= ITEM_CROSS_BOW) {
+		return ITEM_TYPE_BOW;
+	} else if (id <= ITEM_PERMIT) {
+		return ITEM_TYPE_SCROLL;
+	} else if (id <= ITEM_MOON_CRYSTAL) {
+		return ITEM_TYPE_CRYSTAL;
+	} else if (id <= ITEM_TAN_GEM) {
+		return ITEM_TYPE_GEM;
+	} else if (id <= ITEM_MOON_RING) {
+		return ITEM_TYPE_RING;
+	} else if (id <= ITEM_BOOK_OF_SKULLS) {
+		return ITEM_TYPE_BOOK;
+	}
+	return -1;
+}
+
 function newPocketItem(id, q) {
 	if (typeof id === "undefined" || id === 0) {
 		id = 0;
@@ -278,6 +277,18 @@ function newPocketItem(id, q) {
 //new dungeon item
 
 function dropItem(id, q, f, x, y, s) {
+	if(getItemType(id) === ITEM_TYPE_STACKABLE) {
+		for (i = item[towerThis].length - 1; i >= 0; i--) {
+			var it = item[towerThis][i];
+			if (it.id === id) {
+				if(it.location.floor === f && it.location.x === x && it.location.y === y && it.location.square === s) {
+					q += it.quantity;
+					item[towerThis].splice(i, 1);
+					break;
+				}
+			}
+		}
+	}
 	var it = new Item(id, q, {
 		tower: towerThis,
 		floor: f,

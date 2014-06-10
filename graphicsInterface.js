@@ -607,9 +607,9 @@ function drawPocketUI(p) {
 							break;
 					}
 				}
-				if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES) {
+				if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
 					ctx.drawImage(flipImageVert(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-				} else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].getType() === ITEM_TYPE_GLOVES) {
+				} else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
 					ctx.drawImage(flipImageVert(flipImage(recolourUiGfx(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]))), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
 				} else {
 					ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
@@ -618,7 +618,7 @@ function drawPocketUI(p) {
 				ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
 			}
 
-			if (pocket.getType() === ITEM_TYPE_STACKABLE) {
+			if (pocket.type === ITEM_TYPE_STACKABLE) {
 				var qty = pocket.quantity;
 				if (pocketId < 3) {
 					writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
@@ -666,7 +666,7 @@ function drawPocketUI(p) {
 				{
 					//pid = itemID(p.pocket.id);
 					ctx.drawImage(itemRef[p.pocket.id].gfx, ((p.ScreenX + 226) + (c * 16)) * scale, (p.ScreenY + 63) * scale, itemRef[p.pocket.id].gfx.width * scale, itemRef[p.pocket.id].gfx.height * scale);
-					if (p.pocket.getType() === ITEM_TYPE_STACKABLE) {
+					if (p.pocket.type === ITEM_TYPE_STACKABLE) {
 						var qty = p.pocket.quantity;
 						if (p.pocket.id < 3) {
 							writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);

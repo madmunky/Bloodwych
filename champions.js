@@ -409,6 +409,7 @@ Champion.prototype.expireSpell = function() {
 		case SPELL_WARPOWER: break;
 		case SPELL_ANTIMAGE: break;
 		case SPELL_TRUEVIEW: break;
+		case SPELL_VANISH: break;
 		default: break;
 	}
 	this.activeSpell.id = -1;
