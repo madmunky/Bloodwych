@@ -1,7 +1,7 @@
 //var loadingIntervalTimer = 0;
 
 function initGame() {
-
+	$('canvas').attr('data-game-status', 'loading');
 	loadGfxData();
 	watch(gfxLoaded, "done", function(prop, action, newvalue, oldvalue) {
 		tower[towerThis] = new Tower(towerThis, true);
@@ -30,7 +30,7 @@ function initGame() {
 
 function updateLoadingScreen(msg, percent) {
 	clearCanvas();
-	ctx.font = "normal 11px verdana, sans-serif";
+	ctx.font = "normal 14px \"Bookman Old Style\", verdana, sans-serif";
 	ctx.fillStyle = "#FFF";
 	ctx.fillText(percent + "% - " + msg + "...", 0, 15);
 	//clearInterval(loadingIntervalTimer);
@@ -178,7 +178,7 @@ function startGame(singlePlayer, quickStart) {
 		initPlayersStart(0, 4);
 	}
 
-	godMode();
+	//godMode();
 	switchTower(0);
 	clearCanvas();
 	gameStarted = true;

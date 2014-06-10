@@ -50,7 +50,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
 	if (this.recruitment.recruited) {
 		this.writeAttackPoints(dmg);
-		redrawUI(this.recruitment.playerId);
+		redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
 	}
 	if (typeof aExh !== "undefined") {
 		this.stat.vit -= aExh;
@@ -91,7 +91,7 @@ Champion.prototype.getDamage = function(dmg, safe) {
 				player[this.recruitment.playerId].alertDamagedPlayer();
 				player[this.recruitment.playerId].checkDead();
 				player[this.recruitment.playerId].updateChampions();
-				redrawUI(this.recruitment.playerId);
+				redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
 			}
 		}
 	}
@@ -216,7 +216,7 @@ Champion.prototype.restoreStats = function() {
 		if (alertPlayer) {
 			p.alertDamagedPlayer();
 		}
-		redrawUI(p.id);
+		redrawUI(p.id, UI_REDRAW_STATS);
 	}
 }
 
@@ -393,8 +393,8 @@ Champion.prototype.checkSpell = function() {
 	}
 	var p = this.recruitment.playerId;
 	if (p > -1) {
-		if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
-			redrawUI(p);
+		if (player[p].uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK && player[p].selectedSpell !== null) {
+			redrawUI(p, UI_REDRAW_SPELLBOOK);
 		}
 	}
 }
@@ -473,7 +473,7 @@ Champion.prototype.getSpellCastChance = function() {
 }
 
 Champion.prototype.getSpellPower = function() {
-	var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue + (this.level - 1) * 0.1;
+	var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue; /* + (this.level - 1) * 0.1;*/
 	return res;
 }
 

@@ -136,54 +136,7 @@ function grabUISprites(spriteSheetIMG) {
 
 }
 
-function drawUI(p) {
-	if (redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
-		if (typeof gfxUI !== "undefined" && gfxUI !== null) {
-			ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 91 * scale);
-			ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 91 * scale);
-			switch (p.uiLeftPanel.mode) {
-				case UI_LEFT_PANEL_MODE_STATS:
-					leftUI(p);
-					break;
-				case UI_LEFT_PANEL_MODE_COMMAND:
-					commandUI(p);
-					break;
-				default:
-					break;
-			}
-
-			switch (p.uiRightPanel.mode) {
-				case UI_RIGHT_PANEL_MAIN:
-					rightUI(p);
-					break;
-				case UI_RIGHT_PANEL_POCKETS:
-					drawPocketUI(p);
-					break;
-				case UI_RIGHT_PANEL_SPELLBOOK:
-					spellBook(p);
-					break;
-				case UI_RIGHT_PANEL_STATS:
-					drawStatsPage(p);
-					break;
-				case UI_RIGHT_PANEL_SCROLL:
-					showScroll(p);
-					break;
-				default:
-					break;
-			}
-                        
-                        if (player.length > 1){
-                            myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
-                        }else{
-                            myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY + 96]);
-                            myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY - 20]);
-                        }
-			
-		}
-	}
-}
-
-function spellBook(p, ui, dr) {
+function drawSpellBook(p, ui, dr) {
 	ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
 	var ch = champion[p.champion[p.championLeader]];
 
@@ -262,23 +215,6 @@ function changeSpellBookPage(p, dr) {
 			drawSpellBookPageTurn(p, 3, dr, 600);
 			drawSpellBookPageTurn(p, 4, dr, 800, true);
 		}
-
-		/*spellBook(p)
-		ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK + 1], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
-		p.timerSpellBookTurn = setTimeout(function() {
-			spellBook(p)
-			ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK + 2], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
-			p.timerSpellBookTurn = setTimeout(function() {
-				spellBook(p)
-				ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK + 3], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
-				p.timerSpellBookTurn = setTimeout(function() {
-					spellBook(p)
-					ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK + 4], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
-					p.timerSpellBookTurn = 0;
-					redrawUI(p.id);
-				}, 200);
-			}, 200);
-		}, 200);*/
 	}
 }
 
@@ -288,7 +224,7 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop) {
 	}
 	(function(p, ui, dr, stop) {
 		p.timerSpellBookTurn = setTimeout(function() {
-			spellBook(p, ui, dr);
+			drawSpellBook(p, ui, dr);
 			if (dr) {
 				ctx.drawImage(colourSpellPage(true, champion[p.champion[p.championLeader]], gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
 			} else {
@@ -304,7 +240,7 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop) {
 						} else {
 							ch.spellBookPage = (ch.spellBookPage + 3) % 4;
 						}
-						redrawUI(p.id);
+						redrawUI(p.id, UI_REDRAW_SPELLBOOK);
 					}, 100);
 				})(p, dr);
 			}
@@ -312,9 +248,92 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop) {
 	})(p, ui, dr, stop);
 }
 
-function redrawUI(p) {
+function drawUI(p) {
+	if (redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
+		if (typeof gfxUI !== "undefined" && gfxUI !== null) {
+
+			/*if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS || p.redrawLeftRightUiFlag === UI_REDRAW_COMMAND) {
+				ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
+			}
+			if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS || p.redrawLeftRightUiFlag === UI_REDRAW_POCKETS || p.redrawLeftRightUiFlag === UI_REDRAW_SPELLBOOK) {
+				ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+			}*/
+
+			if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
+					ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
+					leftUI(p);
+				}
+			} else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_COMMAND) {
+					ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
+					commandUI(p);
+				}
+			}
+
+			if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
+					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+					rightUI(p);
+				}
+			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_POCKETS) {
+					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+					drawPocketUI(p);
+				}
+			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_SPELLBOOK) {
+					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+					drawSpellBook(p);
+				}
+			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
+					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+					drawStatsPage(p);
+				}
+			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
+					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+					drawScroll(p);
+				}
+			}
+			if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL) {
+				if (player.length > 1) {
+					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
+				} else {
+					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY + 96]);
+					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY - 20]);
+				}
+			}
+			p.redrawLeftRightUiFlag = -1;
+		}
+	}
+}
+
+function redrawUI(p, lr) {
 	if (redrawPlayerUiFlag === 0 || (redrawPlayerUiFlag & (p + 1)) !== (p + 1)) {
 		redrawPlayerUiFlag = redrawPlayerUiFlag + (p + 1);
+	}
+	if (typeof lr === "undefined") {
+		lr = 0;
+	}
+	if (p === 2) {
+		if (player[0].redrawLeftRightUiFlag > -1 && player[0].redrawLeftRightUiFlag !== lr) {
+			player[0].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+		} else {
+			player[0].redrawLeftRightUiFlag = lr;
+		}
+		if (player[1].redrawLeftRightUiFlag > -1 && player[1].redrawLeftRightUiFlag !== lr) {
+			player[1].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+		} else {
+			player[1].redrawLeftRightUiFlag = lr;
+		}
+	} else {
+		if (player[p].redrawLeftRightUiFlag > -1 && player[p].redrawLeftRightUiFlag !== lr) {
+			player[p].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+		} else {
+			player[p].redrawLeftRightUiFlag = lr;
+		}
 	}
 }
 
@@ -675,8 +694,8 @@ function drawPocketUI(p) {
 						}
 					}
 					if (!p.attacking) {
+						ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
 						if (p.pocket.id > 0) {
-							ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
 							writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
 							if (p.pocket.type === ITEM_TYPE_FOOD) {
 								var t = showStatusBar(chp.food, 200, 69);
@@ -1323,16 +1342,46 @@ function uiClickAreas() {
 		width: 8,
 		height: 8
 	}); //Spell Book - Spell Cost Down
+	UCA.push({
+		x: 0,
+		y: 46,
+		width: 320,
+		height: 16
+	}); //Start Screen - 1. Start One Player Game
+	UCA.push({
+		x: 0,
+		y: 62,
+		width: 320,
+		height: 16
+	}); //Start Screen - 2. Start Two Player Game
+	UCA.push({
+		x: 0,
+		y: 86,
+		width: 320,
+		height: 16
+	}); //Start Screen - 3. Quickstart One Player Game
+	UCA.push({
+		x: 0,
+		y: 102,
+		width: 320,
+		height: 16
+	}); //Start Screen - 4. Quickstart Two Player Game
 	return UCA;
 
 }
 
 function uiClickInArea(x, y, ui, p) {
-	if (x >= (p.ScreenX + uiClickArea[ui].x) * scale && x < (p.ScreenX + uiClickArea[ui].x + uiClickArea[ui].width) * scale && y >= (p.ScreenY + uiClickArea[ui].y) * scale && y < (p.ScreenY + uiClickArea[ui].y + uiClickArea[ui].height) * scale) {
+	var px = 0;
+	var py = 0;
+	if (typeof p !== "undefined") {
+		px = p.ScreenX;
+		py = p.ScreenY;
+	}
+	if (x >= (px + uiClickArea[ui].x) * scale && x < (px + uiClickArea[ui].x + uiClickArea[ui].width) * scale && y >= (py + uiClickArea[ui].y) * scale && y < (py + uiClickArea[ui].y + uiClickArea[ui].height) * scale) {
 		if (debug) {
 			if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA) {
-				ctx.fillStyle = 'rgb(255, 255, 196)';
-				ctx.fillRect((p.ScreenX + uiClickArea[ui].x) * scale, (p.ScreenY + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
+				ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
+				ctx.fillRect((px + uiClickArea[ui].x) * scale, (py + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
 			}
 		}
 		return true;
@@ -1581,7 +1630,7 @@ function colourSpellPage(dr, ch, img) {
 
 }
 
-function showScroll(p) {
+function drawScroll(p) {
 	try {
 
 		var pos = 15,
@@ -1642,25 +1691,25 @@ function showScroll(p) {
 		}
 	} catch (e) {
 		p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-		redrawUI(p.id);
+		redrawUI(p.id, UI_REDRAW_SCROLL);
 	};
 }
 
 function startScreen() {
-    
-        canvas.addEventListener('keydown', doKeyDown, true);
-        checkClickEvents();
-        canvas.focus();
-    
-        configCanvas();
-        clearCanvas();
-        
-	writeFontImage("Bloodwych HTML", 160, 20, COLOUR[COLOUR_RED], FONT_ALIGNMENT_CENTER);
-	writeFontImage(" 1   START ONE PLAYER GAME", 20, 55, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-	writeFontImage(" 2   START TWO PLAYER GAME", 20, 70, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-	writeFontImage(" 3   QUICKSTART ONE PLAYER GAME", 20, 95, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-	writeFontImage(" 4   QUICKSTART TWO PLAYER GAME", 20, 110, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-	writeFontImage("MIRRORSOFT 1989", 160, 180, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_CENTER);
+	$('canvas').attr('data-game-status', 'menu');
+	canvas.addEventListener('keydown', doKeyDown, true);
+	checkClickEvents();
+	canvas.focus();
+
+	configCanvas();
+	clearCanvas();
+
+	writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
+	writeFontImage(" 1   START ONE PLAYER GAME", 34, 50, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	writeFontImage(" 2   START TWO PLAYER GAME", 34, 66, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	writeFontImage(" 3   QUICKSTART ONE PLAYER GAME", 34, 90, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	writeFontImage(" 4   QUICKSTART TWO PLAYER GAME", 34, 106, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
+	writeFontImage("RECREATED BY MADMUNKY AND WISHBONE 2014", 10, 194, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
 
 }
-

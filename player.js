@@ -26,6 +26,7 @@ function Player(id, ScreenX, ScreenY) {
 	this.messageTimeout = 0;
 	this.timerChampionStats = 0;
 	this.timerSpellBookTurn = 0;
+	this.redrawLeftRightUiFlag = -1;
 	this.showSpellText = false;
 	this.fairyDetails = {
 		champ: null,
@@ -191,10 +192,6 @@ Player.prototype.setMovementData = function() {
 
 Player.prototype.rotate = function(r) {
 	if (!this.dead && !this.sleeping) {
-		if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
-			this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-			redrawUI(this.id);
-		}
 		if (r === -1) {
 			highliteMovementArrow(this, 0);
 		} else {
@@ -211,10 +208,6 @@ Player.prototype.rotateTo = function(d) {
 
 Player.prototype.move = function(d) {
 	if (!this.dead && !this.sleeping) {
-		if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
-			this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-			redrawUI(this.id);
-		}
 		m = [1, 5, 4, 3];
 		highliteMovementArrow(this, m[d]);
 		this.moving = d;
@@ -321,7 +314,10 @@ Player.prototype.getView = function() {
 //mr = true : player moves
 //mr = false: player rotates
 Player.prototype.doEvent = function(mr) {
-	//this.setMovementData();
+	if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+		this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+		redrawUI(this.id, UI_REDRAW_RIGHT);
+	}
 	this.updateChampions();
 	var view = this.getView();
 	switch (parseInt(view[18].substring(3, 4), 16)) {
@@ -497,6 +493,7 @@ Player.prototype.sleep = function() {
 	coverViewPort(this);
 	writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
 	writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
+	redrawUI(this.id);
 }
 
 Player.prototype.wakeUp = function() {
@@ -940,7 +937,7 @@ Player.prototype.castSpell = function(sb, c, s) {
 Player.prototype.getActiveSpellById = function(id) {
 	for (c = 0; c < this.champion.length; c++) {
 		var ch = this.getChampion(c);
-		if (id === ch.activeSpell.id) {
+		if (ch !== null && id === ch.activeSpell.id) {
 			return ch.activeSpell;
 		}
 	}

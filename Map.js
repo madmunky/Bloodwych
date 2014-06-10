@@ -40,7 +40,7 @@ function getTowerFloorOffset(floor1, floor2) {
 
 function switchTower(id, po) {
 	ctx.clearRect(0, 0, 795, 400);
-	$('canvas').removeClass('active');
+	$('canvas').attr('data-game-status', 'loading');
 	towerLast = towerThis;
 	towerThis = id;
 	if (typeof po === "undefined") {
@@ -81,7 +81,7 @@ function switchTower(id, po) {
 	for(p = 0; p < player.length; p++) {
 		player[p].updateChampions();
 	}
-	$('canvas').addClass('active');
+	$('canvas').attr('data-game-status', 'started');
 	player[0].message("WELCOME THEE TRAVELLER, TO MADMUNKY AND ", COLOUR[COLOUR_YELLOW], true);
 	player[0].message("     WISHBONE'S REMAKE OF BLOODWYCH     ", COLOUR[COLOUR_YELLOW], true);
 }
