@@ -568,7 +568,7 @@ function mouseXY(e) {
 		mouseX = e.offsetX;
 		mouseY = e.offsetY;
 
-		if (player.length > 0) {
+		if (player.length > 1) {
 			if (mouseY > canvas.height / 2) {
 				if (canvas.style.cursor === "url('./images/misc/cursor1.png'),auto") {} else {
 					canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
