@@ -1,3 +1,6 @@
+html {
+	height: 620px;
+}
 body {
 	font: 12px"Bookman Old Style", verdana, sans-serif;
 	background-color: #000;
@@ -23,6 +26,7 @@ section.info {
 	width: 100%;
 	float: left;
 	margin-top: 20px;
+	display: none;
 }
 div.canvas-wrapper {
 	background-color: #000;
