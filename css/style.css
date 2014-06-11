@@ -1,6 +1,6 @@
 body {
 	font: 12px"Bookman Old Style", verdana, sans-serif;
-	background-color: #202830;
+	background-color: #000;
 	color: #fff;
 	overflow: hidden;
 	margin: 0;
@@ -9,7 +9,7 @@ img.gfx {
 	display: none;
 }
 div.content {
-	width: 1000px;
+	width: 980px;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -25,7 +25,6 @@ section.info {
 	margin-top: 20px;
 }
 div.canvas-wrapper {
-	margin: 10px;
 	background-color: #000;
 	width: 980px;
 	height: 620px;
@@ -36,6 +35,8 @@ canvas {
 	background-image: none;
 	width: 960px;
 	height: 600px;
+	outline: none;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 canvas[data-game-status="loading"] {
 	background: #000 url(../images/loading.png) center center no-repeat;
