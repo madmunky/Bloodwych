@@ -323,10 +323,12 @@ function redrawUI(p, lr) {
 		} else {
 			player[0].redrawLeftRightUiFlag = lr;
 		}
-		if (player[1].redrawLeftRightUiFlag > -1 && player[1].redrawLeftRightUiFlag !== lr) {
-			player[1].redrawLeftRightUiFlag = UI_REDRAW_ALL;
-		} else {
-			player[1].redrawLeftRightUiFlag = lr;
+		if(player.length > 1) {
+			if (player[1].redrawLeftRightUiFlag > -1 && player[1].redrawLeftRightUiFlag !== lr) {
+				player[1].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+			} else {
+				player[1].redrawLeftRightUiFlag = lr;
+			}
 		}
 	} else {
 		if (player[p].redrawLeftRightUiFlag > -1 && player[p].redrawLeftRightUiFlag !== lr) {
