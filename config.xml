@@ -4,6 +4,9 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "uk.co.bloodwych"
+        height    = "200"
+        width     = "200"
+        viewmodes = "windowed floating"
         version   = "0.5.0">
 
     <name>Bloodwych HTML</name>
