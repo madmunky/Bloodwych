@@ -4,9 +4,6 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "uk.co.bloodwych"
-        height    = "200"
-        width     = "200"
-        viewmodes = "windowed floating"
         version   = "0.5.0">
 
     <name>Bloodwych HTML</name>
@@ -42,6 +39,7 @@
     <preference name="disable-cursor"             value="false" />          <!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
     <preference name="android-minSdkVersion"      value="7" />              <!-- android: MIN SDK version supported on the target device. MAX version is blank by default. -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
+    <preference name="EnableViewportScale"        value="true" />
 
     <!-- Plugins -->
 
