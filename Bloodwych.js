@@ -38,7 +38,7 @@ function updatePlayerViewScreen() {
 }
 
 function setViewportScale() {
-	scale = $( window ).height() / 200;
+	scale = 2;//$( window ).height() / 200;
 	canvas.width = 320 * scale;
 	canvas.height = 200 * scale;
 	if(typeof player !== "undefined") {
