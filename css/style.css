@@ -3,7 +3,8 @@ body {
 	background-color: #000;
 	color: #fff;
 	margin: 0;
-	width: 100%;
+	width: 960px;
+	height: 600px;
 }
 img.gfx {
 	display: none;

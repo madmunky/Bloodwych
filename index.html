@@ -67,7 +67,8 @@
 	<script type="text/javascript">
 	var canvas = document.getElementById("game-port");
 	var ctx = canvas.getContext("2d");
-	setViewportScale();
+	canvas.width = 320 * scale;
+	canvas.height = 200 * scale;
 	//canvas.addEventListener("touchstart", touchDown, false);
 	canvas.addEventListener("mousemove", mouseXY, false);;
 	</script>
