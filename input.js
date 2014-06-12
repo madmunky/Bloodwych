@@ -574,7 +574,7 @@ function mouseXY(e) {
                     }else{
                         cursorType = cursorBlue;
                     }
-                    if (!currentColour === cursorType){
+                    if (currentColour !== cursorType){
                         if (cursorType === cursorRed){
                             canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
                         }else{
