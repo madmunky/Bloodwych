@@ -53,6 +53,7 @@ function Player(id, ScreenX, ScreenY) {
 	this.PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
+        this.PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 }
 

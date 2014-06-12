@@ -38,7 +38,7 @@ function updatePlayerViewScreen() {
 }
 
 function setViewportScale() {
-	scale = 2;//$( window ).height() / 200;
+	scale = 3;//$( window ).height() / 200;
 	canvas.width = 320 * scale;
 	canvas.height = 200 * scale;
 	/*if(typeof player !== "undefined") {
@@ -70,6 +70,7 @@ function configCanvas() {
 	ctx.webkitImageSmoothingEnabled = false;
 	ctx.mozImageSmoothingEnabled = false;
 	ctx.oImageSmoothingEnabled = false;
+        ctx.msImageSmoothingEnabled = false;
 	ctx.font = "bold 20px Calibri";
 }
 

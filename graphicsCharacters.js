@@ -327,23 +327,23 @@ function grabCharacter(form, part, dir, dist) {
             var d = [0, 2, 3, 1];
             var mini = recolourSprite(characterGfx[IMAGE_CHA_MINI][miniId][dist - 4][d[dir]], MON_PALETTE_DEFAULT, tmpPalette);
 
-            var height = mini.height,
-                width = mini.width;
-
-            var can = document.createElement('canvas');
-            can.width = width;
-            can.height = height;
-            var charContext = can.getContext("2d");
-            //var charImageObj = new Image();
-            //charImageObj.width = width;
-            //charImageObj.height = height;
-
-            charContext.drawImage(mini, 0, 0, mini.width, mini.height);
-
-            charContext.save();
-            //charImageObj.src = can.toDataURL();
-            delete mini;
-            return can;
+//            var height = mini.height,
+//                width = mini.width;
+//
+//            var can = document.createElement('canvas');
+//            can.width = width;
+//            can.height = height;
+//            var charContext = can.getContext("2d");
+//            //var charImageObj = new Image();
+//            //charImageObj.width = width;
+//            //charImageObj.height = height;
+//
+//            charContext.drawImage(mini, 0, 0, mini.width, mini.height);
+//
+//            charContext.save();
+//            //charImageObj.src = can.toDataURL();
+//            delete mini;
+            return mini;
         }
     } else if (dist < 4 && part !== IMAGE_CHA_MINI) {
         if (typeof monsterPalette[form] !== "undefined") {
