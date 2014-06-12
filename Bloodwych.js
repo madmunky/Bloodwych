@@ -41,7 +41,7 @@ function setViewportScale() {
 	scale = 2;//$( window ).height() / 200;
 	canvas.width = 320 * scale;
 	canvas.height = 200 * scale;
-	if(typeof player !== "undefined") {
+	/*if(typeof player !== "undefined") {
 		for(p = 0; p < player.length; p++) {
 			player[p].PortalX = (player[p].ScreenX + 96) * scale;
 			player[p].PortalY = (player[p].ScreenY + 2) * scale;
@@ -56,7 +56,7 @@ function setViewportScale() {
 			player[p].PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 		}
 	}
-	redrawUI(2);
+	redrawUI(2);*/
 }
 
 function myDIx(canvas, img, PosAry) {

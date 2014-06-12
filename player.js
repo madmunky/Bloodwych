@@ -47,13 +47,13 @@ function Player(id, ScreenX, ScreenY) {
 
 	this.communication = [];
 
-	/*this.PlayerCanvas.width = 128 * scale;
+	this.PlayerCanvas.width = 128 * scale;
 	this.PlayerCanvas.height = 76 * scale;
 	this.PlayerCanvas.getContext("2d").imageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
-	this.PlayerCanvas.getContext("2d").font = "bold 20px Calibri";*/
+	this.PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 }
 
 Player.prototype.getViewPortal = function() {
