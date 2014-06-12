@@ -1,5 +1,4 @@
 html {
-	height: 100%;
 	overflow: hidden;
 }
 body {
@@ -34,7 +33,6 @@ canvas {
 	background-color: #000;
 	background-image: none;
 	/*width: 960px;*/
-	height: 100%;
 	outline: none;
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
