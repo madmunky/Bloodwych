@@ -2,6 +2,7 @@
 var gfx = [];
 var player = new Array();
 var tower = new Array();
+var cursorType = 0;
 
 //Setup some global Varibles for needed
 var gameStarted = false;
@@ -43,6 +44,9 @@ var gfxLoaded = {
 	max: 0,
 	done: 0
 };
+
+var cursorBlue = 0,
+        cursorRed = 1;
 
 //COLOURS AND PALETTES
 var COLOUR_MAX = 4,

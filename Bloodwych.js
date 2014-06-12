@@ -13,7 +13,8 @@ $(function() {
 			debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
 		}
 	}
-
+        
+        canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
 });
 
 function updatePlayerViewScreen() {

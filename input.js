@@ -567,24 +567,22 @@ function mouseXY(e) {
 	if (e.offsetX) {
 		mouseX = e.offsetX;
 		mouseY = e.offsetY;
-
-		if (player.length > 1) {
-			if (mouseY > canvas.height / 2) {
-				if (canvas.style.cursor === "url('./images/misc/cursor1.png'),auto") {} else {
-					canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
-				}
-			} else {
-				if (canvas.style.cursor === "url('./images/misc/cursor0.png'),auto") {} else {
-					canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
-				}
-			}
-		} else {
-			canvas.style.cursor = "url('./images/misc/cursor0.png'),auto"
+                var currentColour = cursorType;    
+		if (player.length > 1) {                    
+                    if (mouseY > canvas.height / 2) {
+                        cursorType = cursorRed;
+                    }else{
+                        cursorType = cursorBlue;
+                    }
+                    if (!currentColour === cursorType){
+                        if (cursorType === cursorRed){
+                            canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+                        }else{
+                            canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+                        }                        
+                    }			
 		}
-
-
-
-	}
+            }
 
 }
 
