@@ -38,15 +38,13 @@ function updatePlayerViewScreen() {
 }
 
 function setViewportScale() {
-	scale = 3;//$( window ).height() / 200;
+	scale = 2;//$( window ).height() / 200;
 	canvas.width = 320 * scale;
 	canvas.height = 200 * scale;
 	/*if(typeof player !== "undefined") {
 		for(p = 0; p < player.length; p++) {
 			player[p].PortalX = (player[p].ScreenX + 96) * scale;
 			player[p].PortalY = (player[p].ScreenY + 2) * scale;
-			player[p].PlayerCanvas.width = 128 * scale;
-			player[p].PlayerCanvas.height = 76 * scale;
 			player[p].PlayerCanvas.width = 128 * scale;
 			player[p].PlayerCanvas.height = 76 * scale;
 			player[p].PlayerCanvas.getContext("2d").imageSmoothingEnabled = false;
