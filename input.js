@@ -137,8 +137,8 @@ function doKeyDown(e) {
 function checkClickEvents() {
 	$('body').on('tap', 'canvas#game-port', function(e) {
 		var t = $(this);
-		var x = e.pageX - canvas.offsetLeft;
-		var y = e.pageY - canvas.offsetTop;
+		var x = Math.floor((e.pageX  - canvas.offsetLeft) / scale);
+		var y = Math.floor((e.pageY - canvas.offsetTop) / scale);
 		if (t.attr('data-game-status') === 'started') {
 			var p = 0;
 			for (pid = 0; pid < player.length; pid++) {

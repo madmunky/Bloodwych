@@ -6,7 +6,7 @@ var tower = new Array();
 //Setup some global Varibles for needed
 var gameStarted = false;
 var scale = 3;
-var debug = false;
+var debug = true;
 var debugHigh = false;
 var debugWindow;
 var game;
