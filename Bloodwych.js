@@ -38,9 +38,13 @@ function updatePlayerViewScreen() {
 	redrawPlayerUiFlag = 0;
 }
 
-function setViewportScale() {
+function setViewportScale(sp) {
 	//canvas.width = canvas.width;
-	scale = $( window ).height() / 200;
+	if(typeof sp !== "undefined" && sp) {
+		scale = $( window ).width() / 320;
+	} else {
+		scale = $( window ).height() / 200;
+	}
 	canvas.width = 320 * scale;
 	canvas.height = 200 * scale;
 	if(typeof player !== "undefined") {
@@ -53,6 +57,7 @@ function setViewportScale() {
 			player[p].PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
+    		player[p].PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 		}
 		redrawUI(2);
@@ -70,7 +75,7 @@ function configCanvas() {
 	ctx.webkitImageSmoothingEnabled = false;
 	ctx.mozImageSmoothingEnabled = false;
 	ctx.oImageSmoothingEnabled = false;
-        ctx.msImageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
 	ctx.font = "bold 20px Calibri";
 }
 

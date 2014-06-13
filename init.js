@@ -166,7 +166,7 @@ function initData() {
 function startGame(singlePlayer, quickStart) {
 
 	if (singlePlayer) {
-		player[0] = new Player(0, 0, 49);
+		player[0] = new Player(0, 0, 30);
 	} else {
 		player[0] = new Player(0, 0, 10);
 		player[1] = new Player(1, 0, 114);
@@ -181,7 +181,7 @@ function startGame(singlePlayer, quickStart) {
 	//godMode();
 	switchTower(0);
 	clearCanvas();
-	//setViewportScale();
+	setViewportScale(singlePlayer);
 	gameStarted = true;
 	Run();
 }
