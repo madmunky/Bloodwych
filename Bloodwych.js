@@ -49,8 +49,6 @@ function setViewportScale() {
 			player[p].PortalY = (player[p].ScreenY + 2) * scale;
 			player[p].PlayerCanvas.width = 128 * scale;
 			player[p].PlayerCanvas.height = 76 * scale;
-			player[p].PlayerCanvas.width = 128 * scale;
-			player[p].PlayerCanvas.height = 76 * scale;
 			player[p].PlayerCanvas.getContext("2d").imageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
