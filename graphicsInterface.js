@@ -318,14 +318,12 @@ function redrawUI(p, lr) {
 		lr = 0;
 	}
 	if (p === 2) {
-		if(typeof player[0] !== "undefined") {
-			if (player[0].redrawLeftRightUiFlag > -1 && player[0].redrawLeftRightUiFlag !== lr) {
-				player[0].redrawLeftRightUiFlag = UI_REDRAW_ALL;
-			} else {
-				player[0].redrawLeftRightUiFlag = lr;
-			}
+		if (player[0].redrawLeftRightUiFlag > -1 && player[0].redrawLeftRightUiFlag !== lr) {
+			player[0].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+		} else {
+			player[0].redrawLeftRightUiFlag = lr;
 		}
-		if(typeof player[1] !== "undefined") {
+		if(player.length > 1) {
 			if (player[1].redrawLeftRightUiFlag > -1 && player[1].redrawLeftRightUiFlag !== lr) {
 				player[1].redrawLeftRightUiFlag = UI_REDRAW_ALL;
 			} else {
@@ -333,12 +331,10 @@ function redrawUI(p, lr) {
 			}
 		}
 	} else {
-		if(typeof player[p] !== "undefined") {
-			if (player[p].redrawLeftRightUiFlag > -1 && player[p].redrawLeftRightUiFlag !== lr) {
-				player[p].redrawLeftRightUiFlag = UI_REDRAW_ALL;
-			} else {
-				player[p].redrawLeftRightUiFlag = lr;
-			}
+		if (player[p].redrawLeftRightUiFlag > -1 && player[p].redrawLeftRightUiFlag !== lr) {
+			player[p].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+		} else {
+			player[p].redrawLeftRightUiFlag = lr;
 		}
 	}
 }
