@@ -180,7 +180,8 @@ function startGame(singlePlayer, quickStart) {
 
 	//godMode();
 	switchTower(0);
-	clearCanvas();
+	//clearCanvas();
+	setViewportScale();
 	gameStarted = true;
 	Run();
 }

@@ -38,6 +38,29 @@ function updatePlayerViewScreen() {
 	redrawPlayerUiFlag = 0;
 }
 
+function setViewportScale() {
+	//canvas.width = canvas.width;
+	scale = $( window ).height() / 200;
+	canvas.width = 320 * scale;
+	canvas.height = 200 * scale;
+	if(typeof player !== "undefined") {
+		for(p = 0; p < player.length; p++) {
+			player[p].PortalX = (player[p].ScreenX + 96) * scale;
+			player[p].PortalY = (player[p].ScreenY + 2) * scale;
+			player[p].PlayerCanvas.width = 128 * scale;
+			player[p].PlayerCanvas.height = 76 * scale;
+			player[p].PlayerCanvas.width = 128 * scale;
+			player[p].PlayerCanvas.height = 76 * scale;
+			player[p].PlayerCanvas.getContext("2d").imageSmoothingEnabled = false;
+			player[p].PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
+			player[p].PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
+			player[p].PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
+			player[p].PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
+		}
+	}
+	redrawUI(2);
+}
+
 function myDIx(canvas, img, PosAry) {
 	if (typeof canvas.drawImage !== "undefined" && typeof img !== "undefined" && img !== null) {
 		canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] * scale), (PosAry[5] * scale), PosAry[2] * scale, PosAry[3] * scale);
