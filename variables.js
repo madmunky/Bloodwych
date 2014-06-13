@@ -6,8 +6,9 @@ var cursorType = 0;
 
 //Setup some global Varibles for needed
 var gameStarted = false;
-var scale = 3;
-var debug = false;
+var scale = 1;
+var scaleReal = 3;
+var debug = true;
 var debugHigh = false;
 var debugWindow;
 var game;

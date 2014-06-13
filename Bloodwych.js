@@ -41,12 +41,16 @@ function updatePlayerViewScreen() {
 function setViewportScale(sp) {
 	//canvas.width = canvas.width;
 	if(typeof sp !== "undefined" && sp) {
-		scale = $( window ).width() / 320;
+		scaleReal = $( window ).width() / 320;
 	} else {
-		scale = $( window ).height() / 200;
+		scaleReal = $( window ).height() / 200;
 	}
+	scale = Math.floor(scaleReal);
 	canvas.width = 320 * scale;
 	canvas.height = 200 * scale;
+	$('html').css('zoom', scaleReal / scale);
+	$('html').css('-moz-transform', 'scale(' + (scaleReal / scale) + ')');
+	ctx.scale(1, 1);
 	if(typeof player !== "undefined") {
 		for(p = 0; p < player.length; p++) {
 			player[p].PortalX = (player[p].ScreenX + 96) * scale;

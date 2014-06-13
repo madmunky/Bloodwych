@@ -1383,7 +1383,7 @@ function uiClickInArea(x, y, ui, p) {
 		px = p.ScreenX;
 		py = p.ScreenY;
 	}
-	if (x >= (px + uiClickArea[ui].x) * 1 && x < (px + uiClickArea[ui].x + uiClickArea[ui].width) * 1 && y >= (py + uiClickArea[ui].y) * 1 && y < (py + uiClickArea[ui].y + uiClickArea[ui].height) * 1) {
+	if (x >= (px + uiClickArea[ui].x) * (scaleReal / scale) && x < (px + uiClickArea[ui].x + uiClickArea[ui].width) * (scaleReal / scale) && y >= (py + uiClickArea[ui].y) * (scaleReal / scale) && y < (py + uiClickArea[ui].y + uiClickArea[ui].height) * (scaleReal / scale)) {
 		if (debug) {
 			if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA) {
 				ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
