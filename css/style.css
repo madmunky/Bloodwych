@@ -35,4 +35,5 @@ canvas {
 }
 canvas[data-game-status="loading"] {
 	background: #000 url(../images/loading.png) center center no-repeat;
+	background-size: 100%;
 }
