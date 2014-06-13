@@ -1,3 +1,7 @@
+html {
+	height: 620px;
+	width: 980px;
+}
 body {
 	font: 12px"Bookman Old Style", verdana, sans-serif;
 	background-color: #000;
@@ -34,8 +38,8 @@ canvas {
 	margin: 10px;
 	background-color: #000;
 	background-image: none;
-	/*width: 960px;
-	height: 600px;*/
+	width: 960px;
+	height: 600px;
 	outline: none;
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
