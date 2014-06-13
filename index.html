@@ -75,15 +75,15 @@
 		e.preventDefault();
 	}
 	$(document).ready(function() {
+		function hideNetbeansGlassPane() {
+			$('#netbeans_glasspane').remove();
+		}
 		$( window ).resize(function() {
 			setViewportScale();
 		});
 		setViewportScale();
 		setTimeout(hideNetbeansGlassPane, 5000);
 	});
-	function hideNetbeansGlassPane() {
-		$('#netbeans_glasspane').remove();
-	}
 	</script>
 
 </body>

@@ -57,8 +57,8 @@ function setViewportScale() {
 			player[p].PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 		}
+		redrawUI(2);
 	}
-	redrawUI(2);
 }
 
 function myDIx(canvas, img, PosAry) {
