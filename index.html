@@ -66,22 +66,22 @@
 	<script src="init.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	var canvas = document.getElementById("game-port");
+	canvas.width = 320 * 2;
+	canvas.height = 200 * 2;
 	var ctx = canvas.getContext("2d");
-	canvas.width = 320 * scale;
-	canvas.height = 200 * scale;
 	//canvas.addEventListener("touchstart", touchDown, false);
-	canvas.addEventListener("mousemove", mouseXY, false);;
+	canvas.addEventListener("mousemove", mouseXY, false);
 	</script>
 	<script>
 	document.ontouchstart = function(e) {
 		e.preventDefault();
 	}
 	$(document).ready(function() {
+		function hideNetbeansGlassPane() {
+			$('#netbeans_glasspane').remove();
+		}
 		setTimeout(hideNetbeansGlassPane, 5000);
 	});
-	function hideNetbeansGlassPane() {
-		$('#netbeans_glasspane').remove();
-	}
 	</script>
 
 </body>
