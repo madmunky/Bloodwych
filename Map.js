@@ -83,7 +83,8 @@ function switchTower(id, po) {
 	}
 	$('canvas').attr('data-game-status', 'started');
 	player[0].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
-	player[0].message("    BLOODWYCH - REALISED BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
+	player[0].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
+	player[0].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
 }
 
 function canMove(f, x, y, d, to) {
