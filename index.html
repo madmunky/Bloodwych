@@ -28,20 +28,7 @@
 		<div class="canvas-wrapper">
 			<canvas id="game-port" width="960" height="600" tabindex="1"></canvas>
 		</div>
-		<section class="info">
-			<div style="float:left">
-				<b>Player 1 Key:</b>
-				<br>Q, W, E, A, S, D, Spacebar opens doors, R toggles objects
-				<p>Change Floor: T, G</p>
-				<p>Change Tower: L</p>
-			</div>
-			<div style="float:right">
-				<b>Player 2 Key:</b>
-				<br>Numpad 7, 8, 9, 4, 5, 6, 0 opens doors, + toggles objects
-			</div>
-		</section>
 	</div>
-
 
 	<script src="variables.js" type="text/javascript"></script>
 	<script src="testing.js" type="text/javascript"></script>
@@ -68,9 +55,6 @@
 	<script type="text/javascript">
 	var canvas = document.getElementById("game-port");
 	var ctx = canvas.getContext("2d");
-	//canvas.width = 320 * scale;
-	//canvas.height = 200 * scale;
-	//canvas.addEventListener("touchstart", touchDown, false);
 	canvas.addEventListener("mousemove", mouseXY, false);;
 	</script>
 	<script>
@@ -81,9 +65,6 @@
 		function hideNetbeansGlassPane() {
 			$('#netbeans_glasspane').remove();
 		}
-		//$( window ).resize(function() {
-		//	setViewportScale();
-		//});
 		setViewportScale();
 		setTimeout(hideNetbeansGlassPane, 5000);
 	});
