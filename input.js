@@ -135,10 +135,11 @@ function doKeyDown(e) {
 }
 
 function checkClickEvents() {
-	$('body').on('tap', 'canvas#game-port', function(e) {
-		var t = $(this);
-		var x = Math.floor((e.pageX  - canvas.offsetLeft) / scale);
-		var y = Math.floor((e.pageY - canvas.offsetTop) / scale);
+	$(document).on('tap', 'html', function(e) {
+		var t = $(this).find('canvas');
+		var x = (e.pageX - (canvas.offsetLeft * scaleReal)) / (scale * scaleReal);
+		var y = (e.pageY - (canvas.offsetTop * scaleReal)) / (scale * scaleReal);
+		PrintLog(x + ' ' + y + ' - ' + t.offset().left);
 		if (t.attr('data-game-status') === 'started') {
 			var p = 0;
 			for (pid = 0; pid < player.length; pid++) {

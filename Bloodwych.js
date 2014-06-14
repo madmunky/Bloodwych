@@ -13,8 +13,8 @@ $(function() {
 			debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
 		}
 	}
-        
-        canvas.style.cursor = "url('images/misc/cursor0.png'),auto";
+
+	canvas.style.cursor = "url('images/misc/cursor0.png'),auto";
 });
 
 function updatePlayerViewScreen() {
@@ -39,20 +39,20 @@ function updatePlayerViewScreen() {
 }
 
 function setViewportScale(sp) {
-	//canvas.width = canvas.width;
-	if(typeof sp !== "undefined" && sp) {
-		scaleReal = $( window ).width() / 320;
+	var zoom = 2;
+	if (typeof sp !== "undefined" && sp) {
+		scaleReal = $(window).width() / (320 / zoom);
 	} else {
-		scaleReal = $( window ).height() / 200;
+		scaleReal = $(window).height() / (200 / zoom);
 	}
 	scale = Math.floor(scaleReal);
+	scaleReal = scaleReal / scale / zoom;
 	canvas.width = 320 * scale;
 	canvas.height = 200 * scale;
-	$('html').css('zoom', scaleReal / scale);
-	$('html').css('-moz-transform', 'scale(' + (scaleReal / scale) + ')');
-	ctx.scale(1, 1);
-	if(typeof player !== "undefined") {
-		for(p = 0; p < player.length; p++) {
+	$('html').css('zoom', scaleReal);
+	$('html').css('-moz-transform', 'scale(' + scaleReal + ')');
+	if (typeof player !== "undefined") {
+		for (p = 0; p < player.length; p++) {
 			player[p].PortalX = (player[p].ScreenX + 96) * scale;
 			player[p].PortalY = (player[p].ScreenY + 2) * scale;
 			player[p].PlayerCanvas.width = 128 * scale;
@@ -61,7 +61,7 @@ function setViewportScale(sp) {
 			player[p].PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
-    		player[p].PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
+			player[p].PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 		}
 		redrawUI(2);
@@ -79,12 +79,12 @@ function configCanvas() {
 	ctx.webkitImageSmoothingEnabled = false;
 	ctx.mozImageSmoothingEnabled = false;
 	ctx.oImageSmoothingEnabled = false;
-    ctx.msImageSmoothingEnabled = false;
+	ctx.msImageSmoothingEnabled = false;
 	ctx.font = "bold 20px Calibri";
 }
 
 function clearCanvas() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	//canvas.width = canvas.width;
 }
 

@@ -1,7 +1,7 @@
 html {
 	zoom: 3;
 	-moz-transform: scale(3);
-	-moz-transform-origin: 0 0
+	-moz-transform-origin: 0 0;
 }
 body {
 	font: 12px"Bookman Old Style", verdana, sans-serif;
@@ -15,7 +15,6 @@ img.gfx {
 }
 div.content {
 	width: 100%;
-	margin: 0 auto;
 	text-align: center;
 }
 div.logo {
@@ -30,11 +29,12 @@ section.info {
 	margin-top: 20px;
 	display: none;
 }
+div.canvas-wrapper {
+	position: relative;
+}
 canvas {
 	background-color: #000;
 	background-image: none;
-	/*width: 960px;
-	height: 600px;*/
 	outline: none;
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
