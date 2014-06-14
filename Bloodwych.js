@@ -16,7 +16,6 @@ $(function() {
 	canvas.style.cursor = "url('images/misc/cursor0.png'),auto";
 
     document.addEventListener("deviceready", onDeviceReady, false);
-
     // PhoneGap is loaded and it is now safe to make calls PhoneGap methods
     //
     function onDeviceReady() {
@@ -32,7 +31,6 @@ $(function() {
 		    	alert("closed the menu");
 		    	mobileMenuOpen = false;
 			    player[0].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
-			    }
 		    } else {
 		    	alert("opened the menu");
 		    	mobileMenuOpen = true;
