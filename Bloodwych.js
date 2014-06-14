@@ -13,8 +13,34 @@ $(function() {
 			debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
 		}
 	}
-
 	canvas.style.cursor = "url('images/misc/cursor0.png'),auto";
+
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // PhoneGap is loaded and it is now safe to make calls PhoneGap methods
+    //
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("menubutton", onMenu, false);
+    }
+
+    // Handle the menu button
+    //
+    function onMenu() {
+    	if(typeof player[0] !== "undefined") {
+	    	if(mobileMenuOpen) {
+		    	alert("closed the menu");
+		    	mobileMenuOpen = false;
+			    player[0].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
+			    }
+		    } else {
+		    	alert("opened the menu");
+		    	mobileMenuOpen = true;
+		    	player[0].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_COMMAND;
+		    }
+		    redrawUI(0, UI_REDRAW_LEFT);
+		}
+    }
 });
 
 function updatePlayerViewScreen() {
@@ -39,11 +65,15 @@ function updatePlayerViewScreen() {
 }
 
 function setViewportScale(sp) {
-	var zoom = 2;
-	if (typeof sp !== "undefined" && sp) {
-		scaleReal = $(window).width() / (320 / zoom);
-	} else {
-		scaleReal = $(window).height() / (200 / zoom);
+	var zoom = 1;
+	scaleReal = 3;
+	if(isMobile) {
+		zoom = 2;
+		if (typeof sp !== "undefined" && sp) {
+			scaleReal = $(window).width() / (320 / zoom);
+		} else {
+			scaleReal = $(window).height() / (200 / zoom);
+		}
 	}
 	scale = Math.floor(scaleReal);
 	scaleReal = scaleReal / scale / zoom;

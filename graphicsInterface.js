@@ -1380,7 +1380,7 @@ function uiClickInArea(x, y, ui, p) {
 	var px = 0;
 	var py = 0;
 	if (typeof p !== "undefined") {
-		px = 0;//$('canvas').position().left;
+		px = p.ScreenX;
 		py = p.ScreenY;
 	}
 	if (x >= (px + uiClickArea[ui].x) * 1 && x < (px + uiClickArea[ui].x + uiClickArea[ui].width) * 1 && y >= (py + uiClickArea[ui].y) * 1 && y < (py + uiClickArea[ui].y + uiClickArea[ui].height) * 1) {

@@ -3,6 +3,7 @@ var gfx = [];
 var player = new Array();
 var tower = new Array();
 var cursorType = 0;
+var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
 //Setup some global Varibles for needed
 var gameStarted = false;
@@ -30,6 +31,9 @@ var font;
 var uiClickArea = [];
 var itemsGfxD = [];
 var redrawPlayerUiFlag = 0;
+
+//mobile settings
+var mobileMenuOpen = false;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 //When a file is called, we increase 'count'

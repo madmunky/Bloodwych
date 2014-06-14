@@ -139,7 +139,6 @@ function checkClickEvents() {
 		var t = $(this).find('canvas');
 		var x = (e.pageX - (canvas.offsetLeft * scaleReal)) / (scale * scaleReal);
 		var y = (e.pageY - (canvas.offsetTop * scaleReal)) / (scale * scaleReal);
-		PrintLog(x + ' ' + y + ' - ' + t.offset().left);
 		if (t.attr('data-game-status') === 'started') {
 			var p = 0;
 			for (pid = 0; pid < player.length; pid++) {
@@ -155,32 +154,6 @@ function checkClickEvents() {
 		}
 	});
 }
-
-/*function touchDown() {
-	touchXY();
-}
-
-function touchXY(e) {
-	if (!e)
-		var e = event;
-	e.preventDefault();
-
-	if (typeof player !== "undefined") {
-		var x = e.targetTouches[0].pageX - canvas.offsetLeft;
-		var y = e.targetTouches[0].pageY - canvas.offsetTop;
-		var xy;
-		viewportTouch(x, y, xy);
-		var p = 0;
-		for (pid = 0; pid < player.length; pid++) {
-			p += processCanvasInput(pid, x, y) + 1;
-		}
-		if (p > 0) {
-			redrawUI(p - 1);
-		}
-	} else {
-
-	}
-}*/
 
 function processCanvasInput(pid, x, y) {
 
