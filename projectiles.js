@@ -1,7 +1,8 @@
-function Projectile(id, type, palette, power, tower, floor, x, y, d, m) {
+function Projectile(id, type, palette, s, power, tower, floor, x, y, d, m) {
 	this.id = id;
 	this.type = type;
 	this.palette = palette;
+	this.spell = getSpellById(s);
 	this.power = power;
 	this.tower = tower;
 	this.floor = floor;
@@ -9,40 +10,64 @@ function Projectile(id, type, palette, power, tower, floor, x, y, d, m) {
 	this.y = y;
 	this.d = d;
 	this.monster = m;
-	this.dead = 0;
+	if(s > -1) {
+		this.dead = 0;
+	} else {
+		this.dead = 1;
+	}
+	this.timer = timerMaster;
 }
 
 Projectile.prototype.moveProjectile = function() {
 	if(this.dead === 0) {
-		var xy = getOffsetByRotation(this.d);
 		var ob = getObject(this.floor, this.x, this.y, this.d);
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
-		if(obNext <= OBJECT_MISC && ob !== OBJECT_MISC && ob !== OBJECT_CHARACTER && ob !== OBJECT_STAIRS && ob !== OBJECT_DOOR) {
-			this.x += xy.x;
-			this.y += xy.y;
-		} else {
-			if(ob === OBJECT_CHARACTER) {
-				var mon = getMonsterAt(this.floor, this.x, this.y);
-				if(mon !== null) {
-					if(typeof this.monster !== "undefined") {
-						for(p = 0; p < player.length; p++) {
-							if (this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
-								this.attack(player[p]);
-								this.dead = 1;
-								return false;
-							}
+		var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
+		if(this.spell.id === SPELL_ARC_BOLT) {
+			if(obNext > OBJECT_MISC && !msc) {
+				var dNew = Math.floor(Math.random() * 2) * 2 + 1;
+				obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
+				if(obNext > OBJECT_MISC) {
+					dNew = 4 - dNew;
+					obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
+					if(obNext > OBJECT_MISC) {
+						dNew = 2;
+						obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
+						if(obNext > OBJECT_MISC) {
+							return true;
 						}
-						this.attack(mon);
 					}
 				}
+				this.d = (this.d + dNew) % 4;
 			}
-			this.dead = 1;
+		}
+		var mon = getMonsterAt(this.floor, this.x, this.y);
+		if((obNext >= OBJECT_WOOD && obNext <= OBJECT_GEM) || msc || mon !== null) {
+			if(typeof this.monster !== "undefined") {
+				if(mon !== null) {
+					for(p = 0; p < player.length; p++) {
+						if (this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
+							this.attack(player[p]);
+							this.dead = 2;
+							return false;
+						}
+					}
+					this.attack(mon);
+				}
+			}
+			this.dead = 2;
 			return false;
 		}
 	} else if(this.dead === 1) {
 		this.dead = 2;
 		return false;
+	} else if(this.dead === 2) {
+		this.dead = 3;
+		return false;
 	}
+	var xy = getOffsetByRotation(this.d);
+	this.x += xy.x;
+	this.y += xy.y;
 	return true;
 }
 
@@ -67,12 +92,12 @@ Projectile.prototype.attack = function(target) {
 	}
 }
 
-function newProjectile(type, palette, power, f, x, y, d, m) {
+function newProjectile(type, palette, s, power, f, x, y, d, m) {
 	if(typeof tower[towerThis].floor[f].Map[y] === "undefined" || typeof tower[towerThis].floor[f].Map[y][x] === "undefined") {
 		return false;
 	}
 	var pmax = projectile[towerThis].length;
-	projectile[towerThis][pmax] = new Projectile(pmax, type, palette, power, towerThis, f, x, y, d, m);
+	projectile[towerThis][pmax] = new Projectile(pmax, type, palette, s, power, towerThis, f, x, y, d, m);
 	return true;
 }
 
@@ -95,7 +120,7 @@ function getProjectileGfxOffset(pos) {
 	var offx = xy.x * 4;
 	var offy = -xy.y * 4;
 	var x = Math.round(offx * (190.0 / (offy + 6)));
-	var y = Math.round(51 - 200.0 / (offy + 6));
+	var y = Math.round(45 - 0.0 / (offy + 6));
 	return {
 		x: x,
 		y: y

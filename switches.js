@@ -76,6 +76,7 @@ function floorActionType(trig, p) {
 					champ.monster.dead = false;
 					redrawUI(p.id);
 				}
+				newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_CHAOS_BIG, -1, 0, p.floor, p.x, p.y, p.d, null);
 			}
 			break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:

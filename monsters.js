@@ -453,6 +453,7 @@ Monster.prototype.die = function() {
 				}
 				dropItem(it, qt, this.floor, this.x, this.y, sq);
 			}
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, -1, 0, this.floor, this.x, this.y, 0, null);
 		}
 	}
 }

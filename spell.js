@@ -9,6 +9,7 @@ function Spell(colour, id, name, description, symbols, level) {
 	var pr = getSpellPageAndRow(colour, id);
 	this.page = pr.page;
 	this.row = pr.row;
+	this.power = getSpellPower(id);
 }
 
 Spell.prototype.toString = function() {
@@ -98,9 +99,14 @@ function getSpellPageAndRow(c, i) {
 }
 
 function getSpellById(id) {
-	var cl = Math.floor(id / 8);
-	var s = id % 8;
-	return spell[cl][s];
+	if(id > -1) {
+		var cl = Math.floor(id / 8);
+		var s = id % 8;
+		if(typeof spell[cl] !== "undefined" && typeof spell[cl][s] !=="undefined") {
+			return spell[cl][s];
+		}
+	}
+	return null;
 }
 
 function getSpellBookPage(p) {
@@ -118,14 +124,88 @@ function getSpellBookPage(p) {
 	});
 }
 
-function castSpell(s, src, pw) {
-	if (typeof pw === "undefined") {
-		pw = 0;
+function getSpellPower(id) {
+	switch (id) {
+		case SPELL_ARMOUR:
+			return 1;
+		case SPELL_PARALYZE:
+			return 1;
+		case SPELL_COMPASS:
+			return 2;
+		case SPELL_LEVITATE:
+			return 2;
+		case SPELL_WARPOWER:
+			return 1;
+		case SPELL_ARC_BOLT:
+			return 2;
+		case SPELL_FORMWALL:
+			return 1;
+
+			//chaos
+		case SPELL_DEFLECT:
+			return 1;
+		case SPELL_TERROR:
+			return 1;
+		case SPELL_ANTIMAGE:
+			return 1;
+		case SPELL_SPELLTAP:
+			return 1;
+		case SPELL_ALCHEMY:
+			return 1;
+		case SPELL_SUMMON:
+			return 1;
+		case SPELL_VIVIFY:
+			return 1;
+		case SPELL_DISRUPT:
+			return 4;
+
+			//dragon
+		case SPELL_MISSILE:
+			return 2;
+		case SPELL_MAGELOCK:
+			return 1;
+		case SPELL_VITALISE:
+			return 1;
+		case SPELL_DISPELL:
+			return 1;
+		case SPELL_FIREBALL:
+			return 2;
+		case SPELL_FIREPATH:
+			return 2;
+		case SPELL_RECHARGE:
+			return 1;
+		case SPELL_BLAZE:
+			return 2;
+
+			//moon
+		case SPELL_BEGUILE:
+			return 2;
+		case SPELL_CONFUSE:
+			return 1;
+		case SPELL_CONCEAL:
+			return 1;
+		case SPELL_TRUEVIEW:
+			return 1;
+		case SPELL_VANISH:
+			return 1;
+		case SPELL_ILLUSION:
+			return 1;
+		case SPELL_MINDROCK:
+			return 1;
+		case SPELL_WYCHWIND:
+			return 1;
+		default:
+			return 0;
 	}
+}
+
+function castSpell(s, src, pw) {
+	var sp = getSpellById(s);
 	var pow = Math.floor((Math.random() * pw / 2) + (pw / 2));
 	if (pow > 63) {
 		pow = 63;
 	}
+	pow = pow * sp.power;
 	var f = src.floor;
 	var x = src.x;
 	var y = src.y;
@@ -139,20 +219,21 @@ function castSpell(s, src, pw) {
 	switch (s) {
 		//serpent
 		case SPELL_ARMOUR:
-			ch.activateSpell(s, pow, pow * 5);
+			ch.activateSpell(s, pow);
 			break;
 		case SPELL_PARALYZE:
 			break;
 		case SPELL_COMPASS:
-			ch.activateSpell(s, pow, pow * 10);
+			ch.activateSpell(s, pow);
 			break;
 		case SPELL_LEVITATE:
-			ch.activateSpell(s, pow, pow * 10);
+			ch.activateSpell(s, pow);
 			break;
 		case SPELL_WARPOWER:
-			ch.activateSpell(s, pow, pow * 5);
+			ch.activateSpell(s, pow);
 			break;
 		case SPELL_ARC_BOLT:
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_SERPENT_BIG, s, pow, f, x1, y1, d, src);
 			break;
 		case SPELL_FORMWALL:
 			if (src.getBinaryView(15, 0, 16) === '0000') {
@@ -170,20 +251,20 @@ function castSpell(s, src, pw) {
 		case SPELL_TERROR:
 			break;
 		case SPELL_ANTIMAGE:
-			ch.activateSpell(s, pow, pow * 5);
+			ch.activateSpell(s, pow);
 			break;
 		case SPELL_SPELLTAP:
 			break;
 		case SPELL_ALCHEMY:
 			break;
 		case SPELL_SUMMON:
-			if (canMove(f, x, y, d, 0)) {
+			if (canMove(f, x, y, d, 0) === 0) {
 				var max = monster[towerThis].length;
 				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
 			}
 			break;
 		case SPELL_VIVIFY:
-			if (canMove(f, x, y, d, 0) && getMonsterAt(f, x1, y1) === null) {
+			if (canMove(f, x, y, d, 0) === 0 && getMonsterAt(f, x1, y1) === null) {
 				for (i = item[towerThis].length - 1; i >= 0; i--) {
 					var it = item[towerThis][i];
 					if (it.id >= ITEM_BLODWYN_RIP && it.id <= ITEM_THAI_CHANG_RIP && it.location.tower === towerThis && it.location.floor === f && it.location.x === x1 && it.location.y === y1) {
@@ -213,16 +294,18 @@ function castSpell(s, src, pw) {
 								redrawUI(p.id);
 							}
 						}
+						newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_CHAOS_BIG, -1, 0, f, x1, y1, 0, null);
 						return;
 					}
 				}
 			}
 			break;
-			SPELL_DISRUPT: break;
+		case SPELL_DISRUPT:
+			break;
 
 			//dragon
 		case SPELL_MISSILE:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, pow * 2, f, x1, y1, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, s, pow, f, x1, y1, d, src);
 			break;
 		case SPELL_MAGELOCK:
 			if (src.getBinaryView(18, 12, 4) === '2' && src.getBinaryView(18, ((5 + 2 - d) % 4) * 2) === '1') {
@@ -240,7 +323,7 @@ function castSpell(s, src, pw) {
 			break;
 
 		case SPELL_FIREBALL:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, pow * 2, f, x1, y1, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x1, y1, d, src);
 			break;
 		case SPELL_FIREPATH:
 			break;
@@ -258,9 +341,9 @@ function castSpell(s, src, pw) {
 			for (m in mon) {
 				if (mon[m].floor === f && mon[m].x === x1 && mon[m].y === y1) {
 					mon[m].d = dr;
-					if(mon[m].champId > -1) {
+					if (mon[m].champId > -1) {
 						var cht = champion[mon[m].champId];
-						if(cht.recruitment.playerId > -1) {
+						if (cht.recruitment.playerId > -1) {
 							player[cht.recruitment.playerId].d = dr;
 						}
 					}
@@ -270,15 +353,15 @@ function castSpell(s, src, pw) {
 		case SPELL_CONCEAL:
 			break;
 		case SPELL_TRUEVIEW:
-			ch.activateSpell(s, pow, pow * 5);
+			ch.activateSpell(s, pow);
 			break;
 		case SPELL_VANISH:
-			ch.activateSpell(s, pow, pow * 5);
+			ch.activateSpell(s, pow);
 			break;
 		case SPELL_ILLUSION:
-			if (canMove(f, x, y, d, 0)) {
+			if (canMove(f, x, y, d, 0) === 0) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 10), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
 				monster[towerThis][max].hp = 0;
 			}
 			break;
@@ -290,16 +373,16 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_WYCHWIND:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 1, f, x + xy.x - xy.y, y + xy.y - xy.x, d, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 1, f, x + xy.x, y + xy.y, d, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 1, f, x + xy.x + xy.y, y + xy.y + xy.x, d, src);
-			
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 1, f, x - xy.x + xy.y, y - xy.y + xy.x, (d + 2) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 1, f, x - xy.x, y - xy.y, (d + 2) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 1, f, x - xy.x - xy.y, y - xy.y - xy.x, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.x - xy.y, y + xy.y - xy.x, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.x, y + xy.y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.x + xy.y, y + xy.y + xy.x, d, src);
 
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 1, f, x + xy.y, y + xy.x, (d + 3) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 1, f, x - xy.y, y - xy.x, (d + 1) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.x + xy.y, y - xy.y + xy.x, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.x, y - xy.y, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.x - xy.y, y - xy.y - xy.x, (d + 2) % 4, src);
+
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.y, y + xy.x, (d + 3) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.y, y - xy.x, (d + 1) % 4, src);
 			break;
 		default:
 			break;

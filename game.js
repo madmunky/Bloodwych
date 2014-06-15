@@ -100,21 +100,24 @@ function timerAction() {
 				m--;
 			}
 		}
-	}
-	if (timerMaster - dungeonSpellTimer >= 50) {
-		dungeonSpellTimer = timerMaster;
-		updateDungeonSpells();
-	}
-	if (timerMaster - projectileTimer >= 3) {
-		projectileTimer = timerMaster;
 		for (p = 0; p < projectile[towerThis].length; p++) {
-			projectile[towerThis][p].moveProjectile();
-		}
-		for (p = 0; p < projectile[towerThis].length; p++) {
-			if (projectile[towerThis][p].dead === 2) {
+			if (projectile[towerThis][p].dead >= 3) {
 				projectile[towerThis].splice(p, 1);
 				p--;
 			}
 		}
 	}
+	if (timerMaster - dungeonSpellTimer >= 50) {
+		dungeonSpellTimer = timerMaster;
+		updateDungeonSpells();
+	}
+	//if (timerMaster - projectileTimer >= 3) {
+		//projectileTimer = timerMaster;
+		for (p = 0; p < projectile[towerThis].length; p++) {
+			if(timerMaster - projectile[towerThis][p].timer >= 2) {
+				projectile[towerThis][p].timer = timerMaster;
+				projectile[towerThis][p].moveProjectile();
+			}
+		}
+	//}
 }

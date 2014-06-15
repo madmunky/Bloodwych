@@ -618,7 +618,7 @@ function checkClickInViewPortal(p, x, y) {
 				}
 			} else if (o15 === OBJECT_WOOD || o18 === OBJECT_WOOD) {
 				return p.id;
-			} else if (o15 === OBJECT_WOOD_DOOR || o18 === OBJECT_WOOD_DOOR) {
+			} else if (o15 === OBJECT_WOOD_DOOR || o18 === OBJECT_WOOD_DOOR || o15 === OBJECT_WOOD_DOOR_OPEN || o18 === OBJECT_WOOD_DOOR_OPEN) {
 				if (uiClickInArea(x, y, UI_CLICK_PORTAL_WOODEN_DOOR, p)) {
 					p.action();
 					return p.id;
@@ -635,7 +635,7 @@ function checkClickInViewPortal(p, x, y) {
 				}
 			}
 
-			if (o15 === OBJECT_DOOR) {
+			if (o15 === OBJECT_DOOR || o15 === OBJECT_DOOR_OPEN) {
 				if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, p)) {
 					p.action();
 					return p.id;

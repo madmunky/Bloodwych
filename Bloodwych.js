@@ -210,7 +210,8 @@ function debugTextPrint(p) {
 		//debugText(hex2bin(hex));
 		//debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
 		debugText(p, hex2bin(getHexToBinaryPosition(p.getView()[15], 0, 16)));
-		debugText(p, canMove(p.floor, p.x, p.y, p.d, 0));
+		var xy = getOffsetByRotation(p.d);
+		debugText(p, getObject(p.floor, p.x + xy.x, p.y + xy.y, p.d, 2));
 		for (c = 0; c < p.champion.length; c++) {
 			var ch = p.getChampion(c);
 			if (ch !== null) {

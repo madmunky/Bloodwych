@@ -514,10 +514,19 @@ function drawItemsOnPos(p, pos) {
 }
 
 function drawProjectileOnPos(p, pos) {
-	if (pos > -1 && pos <= 15) {
+	if ((pos > -1 && pos <= 15) || pos === 18) {
 		var prPos = p.getProjectilesInRange(pos);
 		for (i in prPos) {
-			p.drawProjectile(prPos[i].projectile, prPos[i].distance, prPos[i].gfxCoord);
+			if(prPos[i].position !== 18) {
+				p.drawProjectile(prPos[i].projectile, prPos[i].distance, prPos[i].gfxCoord);
+			} else {
+				if(prPos[i].projectile.type === DUNGEON_PROJECTILE_ARROW || prPos[i].projectile.dead <= 1) {
+					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[1][0] + ', ' + prPos[i].projectile.palette[1][1] + ', ' + prPos[i].projectile.palette[1][2] + ')';
+				} else {
+					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[2][0] + ', ' + prPos[i].projectile.palette[2][1] + ', ' + prPos[i].projectile.palette[2][2] + ')';
+				}
+				p.Portal.fillRect(0, 0, 128 * scale, 76 * scale);
+			}
 		}
 	}
 }
