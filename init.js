@@ -5,6 +5,7 @@ function initGame() {
 	loadGfxData();
 	watch(gfxLoaded, "done", function(prop, action, newvalue, oldvalue) {
 		tower[towerThis] = new Tower(towerThis, true);
+		projectile[towerThis] = new Array();
 		updateLoadingScreen("Loading File Data", 30);
 	});
 
@@ -12,6 +13,7 @@ function initGame() {
 		if (newvalue === 1) {
 			for (var i = 1; i < 6; i++) {
 				tower[i] = new Tower(i);
+				projectile[i] = new Array();
 			}
 			updateLoadingScreen("Loading Tower Data", 50);
 		} else if (newvalue === 2) {

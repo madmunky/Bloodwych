@@ -88,44 +88,45 @@ function switchTower(id, po) {
 }
 
 function canMove(f, x, y, d, to) {
+	if(typeof to === "undefined") {
+		to = 0;
+	}
 	xy = getOffsetByRotation((d + to) % 4);
 	if(typeof tower[towerThis].floor[f].Map[y + xy.y] === "undefined" || typeof tower[towerThis].floor[f].Map[y + xy.y][x + xy.x] === "undefined") { //edge of floor
-		return false;
-	}
-	hex18 = tower[towerThis].floor[f].Map[y][x];
-	hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
-	if (getHexToBinaryPosition(hex15, 8) == '1') { //other player
-		return false;
-	}
-	if (getHexToBinaryPosition(hex15, 12, 4) === '7' && getHexToBinaryPosition(hex15, 6, 2) === '3') { //formwall
-		return false;
-	}
-	if (getMonsterAt(f, x + xy.x, y + xy.y) !== null) { //monster
-		return false;
+		return OBJECT_WALL;
 	}
 
+	hex18 = tower[towerThis].floor[f].Map[y][x];
+	hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
 	var objThis = getHexToBinaryPosition(hex18, 12, 4);
 	var objNext = getHexToBinaryPosition(hex15, 12, 4);
+
+	if(objNext == '1') {
+		return OBJECT_WALL;
+	} else if (objNext === '7' && getHexToBinaryPosition(hex15, 6, 2) === '3') { //formwall
+		return OBJECT_WALL;
+	}
 
 	//Check wooden walls and doors
 	if (objThis == '2' || objNext == '2') {
 		if (!canMoveByWood(f, x, y, d, to)) {
-			return false;
+			return OBJECT_WOOD;
 		}
 	}
 
-	//Check other objects
-	switch (objNext) {
-		case '1':
-			return false; //Wall
-		case '3':
-			return false; //Misc
-		case '5': //Doors
-			if (getHexToBinaryPosition(hex15, 7, 1) == '1') {
-				return false;
-			}
+	if (getHexToBinaryPosition(hex15, 8) == '1') { //other player
+		return OBJECT_CHARACTER;
+	} else if (getMonsterAt(f, x + xy.x, y + xy.y) !== null) { //monster
+		return OBJECT_CHARACTER;
 	}
-	return true;
+
+	//Check other objects
+	if(objNext == '3') {
+		return OBJECT_MISC; //Misc
+	} else if(objNext == '5' && getHexToBinaryPosition(hex15, 7, 1) == '1') {
+		return OBJECT_MISC;
+	}
+	return OBJECT_NONE;
 }
 
 function canMoveByWood(f, x, y, d, to) {
@@ -142,3 +143,52 @@ function canMoveByWood(f, x, y, d, to) {
 	}
 	return true;
 }
+
+function getObject(f, x, y, d, to) {
+	if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
+		var hex = tower[towerThis].floor[f].Map[y][x];
+		if (getHexToBinaryPosition(hex, 12, 4) === '1') { //wall
+			if (typeof to === "undefined" || (d + to) % 4 === parseInt(getHexToBinaryPosition(hex, 10, 2))) {
+				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco
+					if (getHexToBinaryPosition(hex, 6, 2) === '0') { //shelf
+						return OBJECT_SHELF;
+					} else if (getHexToBinaryPosition(hex, 6, 2) === '1') { //Scroll
+						var col = parseInt(getHexToBinaryPosition(hex, 0, 6), 16);
+						if (col > 4) {
+							return OBJECT_SCROLL;
+						}
+					} else if (getHexToBinaryPosition(hex, 6, 2) === '2') { //Switch
+						return OBJECT_SWITCH;
+					} else if (getHexToBinaryPosition(hex, 6, 2) === '3') { //Crystal Gem
+						return OBJECT_GEM;
+					}
+				}
+			}
+			return OBJECT_WALL;
+		} else if (getHexToBinaryPosition(hex, 12, 4) === '2') { //wood
+			if (getHexToBinaryPosition(hex, ((7 - to - d) % 4) * 2) === '1') {
+				return OBJECT_WOOD_DOOR;
+			} else if (getHexToBinaryPosition(hex, ((7 - to - d) % 4) * 2 + 1, 1) === '1') {
+				return OBJECT_WOOD;
+			}
+		} else if (getHexToBinaryPosition(hex, 8) == '1') { //other player
+			return OBJECT_CHARACTER;
+		} else if (getMonsterAt(f, x, y) !== null) { //monster
+			return OBJECT_CHARACTER;
+		} else if (getHexToBinaryPosition(hex, 12, 4) === '3') { //misc
+			//if (getHexToBinaryPosition(hex, 6, 2) === '1') { //pillar
+			return OBJECT_MISC;
+			//} else {
+				//return 'bed';
+			//}
+		} else if (getHexToBinaryPosition(hex, 12, 4) === '4') { //stairs
+			return OBJECT_STAIRS;
+		} else if (getHexToBinaryPosition(hex, 12, 4) === '5') { //door
+			if (typeof to === "undefined" || (d + to) % 2 === parseInt(getHexToBinaryPosition(hex, 5, 1))) {
+				return OBJECT_DOOR;
+			}
+		}
+	}
+	return OBJECT_NONE;
+}
+

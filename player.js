@@ -61,11 +61,11 @@ Player.prototype.getViewPortal = function() {
 	this.Portal = this.PlayerCanvas.getContext("2d");
 }
 
-Player.prototype.canMoveToPos = function(d) {
-	return canMove(this.floor, this.x, this.y, this.d, d);
+Player.prototype.canMove = function(d) {
+	return canMove(this.floor, this.x, this.y, this.d, d) === 0;
 }
 
-Player.prototype.canMoveToPosByWood = function(d) {
+Player.prototype.canMoveByWood = function(d) {
 	return canMoveByWood(this.floor, this.x, this.y, this.d, d);
 }
 
@@ -215,7 +215,7 @@ Player.prototype.move = function(d) {
 		this.lastX = this.x;
 		this.lastY = this.y;
 		this.attack(false);
-		if (this.canMoveToPos(d)) {
+		if (this.canMove(d)) {
 			xy = getOffsetByRotation((this.d + d) % 4);
 			this.x = this.x + xy.x;
 			this.y = this.y + xy.y;
@@ -228,7 +228,7 @@ Player.prototype.move = function(d) {
 }
 
 Player.prototype.tryAttack = function() {
-	if (!this.dead && !this.sleeping && this.canMoveToPosByWood(0)) {
+	if (!this.dead && !this.sleeping && this.canMoveByWood(0)) {
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
@@ -270,7 +270,6 @@ Player.prototype.attack = function(attack, target) {
 						self.gainChampionXp(pwr, att);
 					}
 					if (def.dead) {
-						//self.attack(false);
 						self.gainChampionXp(128);
 					}
 				}, att.recruitment.position * 400);
@@ -546,9 +545,8 @@ Player.prototype.recruitChampion = function(id) {
 		} else {
 			this.champion[len] = id;
 			champion[id].recruitment = {
-				recruited: true,
-				attached: true,
 				playerId: this.id,
+				attached: true,
 				position: len,
 				attackTimer: 0
 			};
@@ -705,7 +703,7 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 Player.prototype.drawItem = function(it, distance, offset) {
 	var iGfx = itemRef[it.id].gfxD[distance];
 	if (typeof iGfx !== "undefined") {
-		if (this.getObject(this.floor, it.location.x, it.location.y, 2) === 'shelf') {
+		if (getObject(this.floor, it.location.x, it.location.y, this.d, 2) === OBJECT_SHELF) {
 			var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
 			var offy = 60 - Math.floor(iGfx.height) - offset.y;
 		} else {
@@ -713,6 +711,15 @@ Player.prototype.drawItem = function(it, distance, offset) {
 			var offy = 77 - Math.floor(iGfx.height) - offset.y;
 		}
 		this.Portal.drawImage(iGfx, offx * scale, offy * scale, iGfx.width * scale, iGfx.height * scale);
+	}
+}
+
+Player.prototype.drawProjectile = function(pr, distance, offset) {
+	var pGfx = itemsGfxD[pr.type][distance];
+	if (typeof pGfx !== "undefined") {
+		var offx = 64 - Math.floor(pGfx.width * 0.5) + offset.x;
+		var offy = 77 - Math.floor(pGfx.height) - offset.y;
+		this.Portal.drawImage(recolourSprite(pGfx, DUN_ITEM_PALETTE_DEFAULT, pr.palette), offx * scale, offy * scale, pGfx.width * scale, pGfx.height * scale);
 	}
 }
 
@@ -890,7 +897,7 @@ Player.prototype.getItemsInRange = function(pos2) {
 			if (pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 				//check shelf
 				var sh = false;
-				if (this.getObject(it.location.floor, it.location.x, it.location.y, 2) === 'shelf') {
+				if (getObject(it.location.floor, it.location.x, it.location.y, this.d, 2) === OBJECT_SHELF) {
 					sh = true;
 				}
 				itemsInRange.unshift({
@@ -949,59 +956,33 @@ Player.prototype.getActiveSpellById = function(id) {
 	};
 }
 
+Player.prototype.getProjectilesInRange = function(pos2) {
+	var projectilesInRange = [];
+	var pos = -1;
+	for (i = 0; i < projectile[towerThis].length; i++) {
+		var pr = projectile[towerThis][i];
+		if (this.floor === pr.floor) {
+			pos = coordinatesToPos(pr.x, pr.y, this.x, this.y, this.d);
+			if (pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
+				projectilesInRange.push({
+					projectile: pr,
+					position: pos,
+					distance: getProjectileDistanceByPos(pos),
+					gfxCoord: getProjectileGfxOffset(pos)
+				});
+			}
+		}
+	}
+	return projectilesInRange;
+}
+
 Player.prototype.getObjectOnPos = function(pos, d) {
 	if (typeof d === "undefined") {
 		d = 2;
 	}
 	var xy = posToCoordinates(pos, this.x, this.y, this.d);
-	return this.getObject(this.floor, xy.x, xy.y, d);
+	return getObject(this.floor, xy.x, xy.y, this.d, d);
 }
-
-//if (this.getBinaryView(pos18, 12, 4) === '2' && this.getBinaryView(pos18, ((5 + d - this.d) % 4) * 2) === '1') {
-Player.prototype.getObject = function(f, x, y, d) {
-	if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
-		var hex = tower[towerThis].floor[f].Map[y][x];
-		if (getHexToBinaryPosition(hex, 12, 4) === '1') { //wall
-			if (typeof d === "undefined" || (this.d + d) % 4 === parseInt(getHexToBinaryPosition(hex, 10, 2))) {
-				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco
-					if (getHexToBinaryPosition(hex, 6, 2) === '0') { //shelf
-						return 'shelf';
-					} else if (getHexToBinaryPosition(hex, 6, 2) === '1') { //Scroll
-						var col = parseInt(getHexToBinaryPosition(hex, 0, 6), 16);
-						if (col > 4) {
-							return 'scroll';
-						}
-					} else if (getHexToBinaryPosition(hex, 6, 2) === '2') { //Switch
-						return 'switch';
-					} else if (getHexToBinaryPosition(hex, 6, 2) === '3') { //Crystal Gem
-						return 'gem';
-					}
-				}
-			}
-			return 'wall';
-		} else if (getHexToBinaryPosition(hex, 12, 4) === '2') { //wood
-			if (getHexToBinaryPosition(hex, ((7 - d - this.d) % 4) * 2) === '1') {
-				return 'wood-door';
-			} else if (getHexToBinaryPosition(hex, ((7 - d - this.d) % 4) * 2 + 1, 1) === '1') {
-				return 'wood';
-			}
-		} else if (getHexToBinaryPosition(hex, 12, 4) === '3') { //misc
-			if (getHexToBinaryPosition(hex, 6, 2) === '1') { //pillar
-				return 'pillar';
-			} else {
-				return 'bed';
-			}
-		} else if (getHexToBinaryPosition(hex, 12, 4) === '4') { //stairs
-			return 'stairs';
-		} else if (getHexToBinaryPosition(hex, 12, 4) === '5') { //door
-			if (typeof d === "undefined" || (this.d + d) % 2 === parseInt(getHexToBinaryPosition(hex, 5, 1))) {
-				return 'door';
-			}
-		}
-	}
-	return '';
-}
-
 
 Player.prototype.message = function(txt, col, wait, delay) {
 	if (typeof txt === "undefined") {

@@ -3,9 +3,8 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.pocket = pocketData;
 	this.id = id;
 	this.recruitment = {
-		recruited: false,
-		attached: false,
 		playerId: -1,
+		attached: false,
 		position: 0,
 		attackTimer: 0
 	};
@@ -48,7 +47,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 }
 
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
-	if (this.recruitment.recruited) {
+	if (this.recruitment.playerId > -1) {
 		this.writeAttackPoints(dmg);
 		redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
 	}
@@ -83,16 +82,14 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			this.stat.hp = -1;
 			this.monster.die();
 		}
-		if (this.recruitment.recruited && this.recruitment.attached) {
-			if (this.recruitment.playerId > -1) {
-				if (!player[this.recruitment.playerId].attacking) {
-					this.writeAttackPoints(dmg, true);
-				}
-				player[this.recruitment.playerId].alertDamagedPlayer();
-				player[this.recruitment.playerId].checkDead();
-				player[this.recruitment.playerId].updateChampions();
-				redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
+		if (this.recruitment.playerId > -1 && this.recruitment.attached) {
+			if (!player[this.recruitment.playerId].attacking) {
+				this.writeAttackPoints(dmg, true);
 			}
+			player[this.recruitment.playerId].alertDamagedPlayer();
+			player[this.recruitment.playerId].checkDead();
+			player[this.recruitment.playerId].updateChampions();
+			redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
 		}
 	}
 }
@@ -162,8 +159,8 @@ Champion.prototype.gainLevel = function() {
 		this.stat.spMax += Math.floor(Math.random() * stat[prof].sp) + 1;
 		this.level++;
 		//}
-		if (this.recruitment.recruited) {
-			var p = this.recruitment.playerId;
+		var p = this.recruitment.playerId;
+		if (p > -1) {
 			player[p].message(this.firstName + TEXT_GAINED_LEVEL, COLOUR[COLOUR_RED]);
 		}
 		this.levelUp--;
@@ -193,7 +190,7 @@ Champion.prototype.restoreStats = function() {
 			if (this.stat.sp > this.stat.spMax) {
 				this.stat.sp = this.stat.spMax;
 			}
-			if (this.recruitment.recruited && this.id !== CHA_MR_FLAY) {
+			if (this.recruitment.playerId > -1 && this.id !== CHA_MR_FLAY) {
 				if (this.food > 0) {
 					this.food--;
 				} else {
@@ -302,7 +299,7 @@ Champion.prototype.consumePocketItem = function(pk, q) {
 }
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
-	if (typeof pwr !== "undefined" && this.recruitment.recruited) {
+	if (typeof pwr !== "undefined" && this.recruitment.playerId > -1) {
 		//var self = this;
 		var p = player[this.recruitment.playerId];
 		var x = 0,
@@ -473,7 +470,8 @@ Champion.prototype.getSpellCastChance = function() {
 }
 
 Champion.prototype.getSpellPower = function() {
-	var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue; /* + (this.level - 1) * 0.1;*/
+	var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 + (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue; /* + (this.level - 1) * 0.1;*/
+	PrintLog('pcast:' + this.selectedSpell.castSuccessful + ' scost:' + this.selectedSpell.cost + ' pint:' + this.stat.int + ' slvl:' + this.selectedSpell.ref.level + ' fat:' + this.spellFatigue + ' = res:' + res)
 	return res;
 }
 

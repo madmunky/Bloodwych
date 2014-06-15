@@ -49,6 +49,14 @@ function calculateAttack(att, def) {
 			attack = attack * Math.floor(Math.round(from.stat.str / 16) + Math.round(from.stat.agi / 32)); //add strength and agility to attack points
 			attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
 			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
+		} else if(att instanceof Projectile) {
+			if(a === 0) {
+				from = att.monster;
+				fmon = from;
+				attack += att.power;
+			} else {
+				continue;
+			}
 		} else {
 			from = mon[a];
 			fmon = from;

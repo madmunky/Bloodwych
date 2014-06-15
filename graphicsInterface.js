@@ -681,7 +681,7 @@ function drawPocketUI(p) {
 					if (ch.recruitment.attached) {
 						ctx.drawImage(gfxUI[g][ch.colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
 					}
-					if (chp.recruitment.recruited && c === p.uiRightPanel.activePocket) {
+					if (chp.recruitment.playerId > -1 && c === p.uiRightPanel.activePocket) {
 						drawRect(((p.ScreenX + 225) + (c * 16)), ((p.ScreenY + 63)), 15, 14, COLOUR[COLOUR_YELLOW]);
 						//ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
 					}

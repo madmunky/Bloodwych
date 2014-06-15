@@ -85,11 +85,17 @@ Monster.prototype.canMove = function() {
 	var sq = this.getSquareByDir();
 
 	if (this.teamId > 0 || sq === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
-		var hexThis = this.getBinaryView(18, 0, 16);
+		var ob = canMove(this.floor, this.x, this.y, this.d);
+		if(ob === 3 && this.canOpenDoor()) {
+			return 5;
+		}
+		return ob;
+	}
+
+/*		var hexThis = this.getBinaryView(18, 0, 16);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		var objThis = getHexToBinaryPosition(hexThis, 12, 4);
 		var objNext = getHexToBinaryPosition(hexNext, 12, 4);
-
 
 		//Check wooden walls and doors
 		if (objThis === '2' || objNext === '2') {
@@ -130,7 +136,8 @@ Monster.prototype.canMove = function() {
 				}
 		}
 	}
-	return 1;
+	return 1;*/
+	return 0;
 }
 
 Monster.prototype.assembleTeamWith = function(m) {
@@ -152,7 +159,7 @@ Monster.prototype.assembleTeamWith = function(m) {
 	return -1;
 }
 
-Monster.prototype.canMoveByWood = function() {
+Monster.prototype.canOpenDoor = function() {
 	var hexThis = this.getBinaryView(18, 0, 16);
 	var hexNext = this.getBinaryView(15, 0, 16);
 	//Check the space the monster is standing on
@@ -160,28 +167,26 @@ Monster.prototype.canMoveByWood = function() {
 		if (this.isAgressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1, '0');
-			return 3;
+			return true;
 		}
-		return 0;
 	}
 	//Check the space the monster is moving to
 	if (getHexToBinaryPosition(hexNext, 12, 4) == '2' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2 + 1, 1) == '1') {
 		if (this.isAgressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1, '0');
-			return 3;
+			return true;
 		}
-		return 0;
 	}
-	return 1;
+	return false;
 }
 
 Monster.prototype.move = function() {
-	if (!this.dead && this.teamId >= 0 && !this.isRecruited()) {
+	if (!this.dead && this.teamId >= 0 && this.isRecruitedBy() === null) {
 		this.attack(false);
 		var canMove = this.canMove();
-		if (canMove === 2 && this.canInteract() > -1) return;
-		if (canMove === 1) {
+		if (canMove === 1 && this.canInteract() > -1) return;
+		if (canMove === 0) {
 			xy = getOffsetByRotation(this.d);
 			if (this.teamId > 0 || this.square === CHAR_FRONT_SOLO) {
 				if (this.followPlayer()) return;
@@ -206,7 +211,7 @@ Monster.prototype.move = function() {
 				}
 				this.square = this.getSquareByDirNext();
 			}
-		} else if (canMove != 3) {
+		} else if (canMove !== 5) {
 			if (this.followPlayer()) {
 				return;
 			} else {
@@ -402,11 +407,12 @@ Monster.prototype.getChampion = function() {
 	return null;
 }
 
-Monster.prototype.isRecruited = function() {
-	if (this.getChampion() !== null && this.champId > -1) {
-		return this.getChampion().recruitment.recruited;
+Monster.prototype.isRecruitedBy = function() {
+	var ch = this.getChampion();
+	if (ch !== null && ch.recruitment.playerId > -1) {
+		return player[ch.recruitment.playerId];
 	}
-	return false;
+	return null;
 }
 
 Monster.prototype.isAgressive = function() {
@@ -435,7 +441,7 @@ Monster.prototype.die = function() {
 		}
 		if (this.champId > -1) {
 			var ch = champion[this.champId];
-			if(!ch.recruitment.recruited || !ch.recruitment.attached) {
+			if(this.isRecruitedBy() === null || !ch.recruitment.attached) {
 				dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, sq);
 			}
 		} else if(this.type !== MON_TYPE_MAGICAL) {

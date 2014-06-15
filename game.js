@@ -15,7 +15,7 @@ Game.prototype = {
 
 	// Update the game model
 	update: function() {
-                timerMaster++;
+		timerMaster++;
 		timerAction();
 	},
 
@@ -51,7 +51,7 @@ function timerAction() {
 		monsterAttackSequence = 0;
 		mon = getMonstersInTower(towerThis);
 		for (m in mon) {
-                    mon[m].move();
+			mon[m].move();
 		}
 	}
 	if (timerMaster - timerMonsterAttack >= 3) {
@@ -67,7 +67,7 @@ function timerAction() {
 		}
 		if (timerMaster - pl.timerChampionStats >= tm) {
 			pl.timerChampionStats = timerMaster;
-			if(pl.sleeping) {
+			if (pl.sleeping) {
 				pl.checkChampionUp();
 			}
 			for (c = 0; c < pl.champion.length; c++) {
@@ -77,7 +77,7 @@ function timerAction() {
 				}
 			}
 		}
-		if(timerMaster - activeSpellTimer >= 10) {
+		if (timerMaster - activeSpellTimer >= 10) {
 			activeSpellTimer = timerMaster;
 			for (c = 0; c < pl.champion.length; c++) {
 				var ch = pl.getChampion(c);
@@ -90,12 +90,12 @@ function timerAction() {
 	if (timerMaster - timerChampionStats >= 100) {
 		timerChampionStats = timerMaster;
 		for (ch = 0; ch < champion.length; ch++) {
-			if (!champion[ch].recruitment.recruited) {
+			if (!champion[ch].recruitment.playerId > -1) {
 				champion[ch].restoreStats();
 			}
 		}
 		for (m = 0; m < monster[towerThis].length; m++) {
-			if(monster[towerThis][m].dead) {
+			if (monster[towerThis][m].dead) {
 				monster[towerThis].splice(m, 1);
 				m--;
 			}
@@ -104,5 +104,13 @@ function timerAction() {
 	if (timerMaster - dungeonSpellTimer >= 50) {
 		dungeonSpellTimer = timerMaster;
 		updateDungeonSpells();
+	}
+	if (timerMaster - projectileTimer >= 3) {
+		projectileTimer = timerMaster;
+		for (p = 0; p < projectile[towerThis].length; p++) {
+			if (!projectile[towerThis][p].moveProjectile()) {
+				p--;
+			}
+		}
 	}
 }

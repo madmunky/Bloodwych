@@ -317,11 +317,12 @@ function drawPlayersView(p) {
 			if (BlockType === '2') {
 				drawWoodenObject(p, x);
 			} else {
-				if (p.getObjectOnPos(x, 2) !== 'shelf') { //draw items not on shelf first
+				if (p.getObjectOnPos(x, 2) !== OBJECT_SHELF) { //draw items not on shelf first
 					drawItemsOnPos(p, x);
 				}
 				if(BlockType === '1' || BlockType === '7') { //draw monsters before drawing walls
 					drawMonsterOnPos(p, x);
+					drawProjectileOnPos(p, x);
 				}
 				if(!(BlockType === '7' && getHexToBinaryPosition(view[x], 6, 2) === '2' && il)) {
 					switch (x) {
@@ -467,11 +468,12 @@ function drawPlayersView(p) {
 							break;
 					}
 				}
-				if (p.getObjectOnPos(x, 2) === 'shelf') { //draw items on shelf last
+				if (p.getObjectOnPos(x, 2) === OBJECT_SHELF) { //draw items on shelf last
 					drawItemsOnPos(p, x);
 				}
 				if(BlockType !== '1' && BlockType !== '7') { //draw monsters after drawing anything else than walls
 					drawMonsterOnPos(p, x);
+					drawProjectileOnPos(p, x);
 				}
 			}
 		}
@@ -507,6 +509,15 @@ function drawItemsOnPos(p, pos) {
 		var itPos = p.getItemsInRange(pos);
 		for (i in itPos) {
 			p.drawItem(itPos[i].item, itPos[i].distance, itPos[i].gfxCoord);
+		}
+	}
+}
+
+function drawProjectileOnPos(p, pos) {
+	if (pos > -1 && pos <= 15) {
+		var prPos = p.getProjectilesInRange(pos);
+		for (i in prPos) {
+			p.drawProjectile(prPos[i].projectile, prPos[i].distance, prPos[i].gfxCoord);
 		}
 	}
 }
@@ -577,6 +588,7 @@ function drawWoodenObject(p, x) {
 	if (!inFront) {
 		drawItemsOnPos(p, x);
 		drawMonsterOnPos(p, x);
+		drawProjectileOnPos(p, x);
 	}
 	if (BlockSides[x][1] > -1) {
 		myDIx(p.Portal, bin2type(s[(p.d + 1) % 4]), gfxPos[BlockSides[x][1]]);
@@ -587,6 +599,7 @@ function drawWoodenObject(p, x) {
 	if (inFront) {
 		drawItemsOnPos(p, x);
 		drawMonsterOnPos(p, x);
+		drawProjectileOnPos(p, x);
 	}
 	if (BlockSides[x][2] > -1) {
 		myDIx(p.Portal, bin2type(s[(p.d + 2) % 4]), gfxPos[BlockSides[x][2]]);

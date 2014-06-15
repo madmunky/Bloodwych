@@ -130,9 +130,9 @@ function castSpell(s, src, pw) {
 	var x = src.x;
 	var y = src.y;
 	var d = src.d;
-	var o = getOffsetByRotation(d);
-	var x1 = x + o.x;
-	var y1 = y + o.y;
+	var xy = getOffsetByRotation(d);
+	var x1 = x + xy.x;
+	var y1 = y + xy.y;
 	if (src.champId > -1) {
 		var ch = champion[src.champId];
 	}
@@ -196,7 +196,7 @@ function castSpell(s, src, pw) {
 						champion[c].monster.d = (d + 2) % 4;
 						champion[c].monster.hp = 0;
 						champion[c].monster.dead = false;
-						if (champion[c].recruitment.recruited && !champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
+						if (!champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
 							var p = player[champion[c].recruitment.playerId];
 							if (p.dead) {
 								champion[c].recruitment.attached = true;
@@ -222,6 +222,7 @@ function castSpell(s, src, pw) {
 
 			//dragon
 		case SPELL_MISSILE:
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, pow * 10, f, x1, y1, d, src);
 			break;
 		case SPELL_MAGELOCK:
 			if (src.getBinaryView(18, 12, 4) === '2' && src.getBinaryView(18, ((5 + 2 - d) % 4) * 2) === '1') {
@@ -239,6 +240,7 @@ function castSpell(s, src, pw) {
 			break;
 
 		case SPELL_FIREBALL:
+			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_DRAGON, pow * 10, f, x1, y1, d, src);
 			break;
 		case SPELL_FIREPATH:
 			break;
@@ -288,6 +290,16 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_WYCHWIND:
+			/*newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x + xy.x, y + xy.y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x + xy.y, y - xy.x, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, d, src);
+			
+			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.x, y - xy.y, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, (d + 2) % 4, src);
+
+			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, (d + 1) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, (d + 3) % 4, src);*/
 			break;
 		default:
 			break;

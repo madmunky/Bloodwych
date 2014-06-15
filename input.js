@@ -574,7 +574,7 @@ function checkClickInViewPortal(p, x, y) {
 			}
 			var o15 = p.getObjectOnPos(15, 2);
 			var o18 = p.getObjectOnPos(18, 0);
-			if (o15 === 'shelf') {
+			if (o15 === OBJECT_SHELF) {
 				if (uiClickInArea(x, y, UI_CLICK_PORTAL_SHELF_TOP, p)) {
 					if (p.actionItem(3)) {
 						return p.id;
@@ -584,19 +584,19 @@ function checkClickInViewPortal(p, x, y) {
 						return p.id;
 					}
 				}
-			} else if (o15 === 'switch') {
+			} else if (o15 === OBJECT_SWITCH) {
 				if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
 					p.action();
 					return p.id;
 				}
-			} else if (o15 === 'wood' || o18 === 'wood') {
+			} else if (o15 === OBJECT_WOOD || o18 === OBJECT_WOOD) {
 				return p.id;
-			} else if (o15 === 'wood-door' || o18 === 'wood-door') {
+			} else if (o15 === OBJECT_WOOD_DOOR || o18 === OBJECT_WOOD_DOOR) {
 				if (uiClickInArea(x, y, UI_CLICK_PORTAL_WOODEN_DOOR, p)) {
 					p.action();
 					return p.id;
 				}
-			} else if (o15 === 'wall') {
+			} else if (o15 === OBJECT_WALL) {
 				return p.id;
 			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_ITEM_LEFT_BACK, p)) {
 				if (p.actionItem(3)) {
@@ -608,13 +608,13 @@ function checkClickInViewPortal(p, x, y) {
 				}
 			}
 
-			if (o15 === 'door') {
+			if (o15 === OBJECT_DOOR) {
 				if (uiClickInArea(x, y, UI_CLICK_PORTAL_DOOR, p)) {
 					p.action();
 					return p.id;
 				}
 			}
-			if (o15 === 'scroll') {
+			if (o15 === OBJECT_SCROLL) {
 				if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
 					if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
 						p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
