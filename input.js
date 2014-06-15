@@ -558,7 +558,7 @@ function mouseXY(e) {
 		}
                 if (typeof player !== 'undefined'){
                     for (p in player){
-                        checkCommunicationArea(p,mouseX,mouseY);
+                        checkCommunicationArea(player[p],mouseX,mouseY);
                     }
                 }
             }
@@ -566,9 +566,23 @@ function mouseXY(e) {
 }
 
 function checkCommunicationArea(p,x,y){
-    if (p.uiLeftPanel === UI_LEFT_PANEL_MODE_COMMAND){
+    if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND){
         if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA, p)){
-            
+            if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)){
+                p.communication.highlighted = 0;
+            }
+            if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)){
+                p.communication.highlighted = 1;
+            }
+            if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)){
+                p.communication.highlighted = 2;
+            }
+            if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)){
+                p.communication.highlighted = 3;
+            }
+        }
+        else{
+            p.communication.highlighted = null;
         }
     }
 }
