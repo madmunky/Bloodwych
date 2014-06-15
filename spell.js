@@ -301,8 +301,8 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_DISRUPT:
+                        newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISTRUPT_BIG, s, pow, f, x1, y1, d, src);
 			break;
-
 			//dragon
 		case SPELL_MISSILE:
 			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, s, pow, f, x1, y1, d, src);
@@ -326,10 +326,12 @@ function castSpell(s, src, pw) {
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x1, y1, d, src);
 			break;
 		case SPELL_FIREPATH:
+                        newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, s, pow, f, x1, y1, d, src);
 			break;
 		case SPELL_RECHARGE:
 			break;
 		case SPELL_BLAZE:
+                        newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x1, y1, d, src);
 			break;
 
 			//moon
