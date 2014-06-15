@@ -719,7 +719,11 @@ Player.prototype.drawItem = function(it, distance, offset) {
 }
 
 Player.prototype.drawProjectile = function(pr, distance, offset) {
-	var pGfx = itemsGfxD[pr.type][distance];
+	if(pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead === 0) {
+		var pGfx = itemsGfxD[pr.type][distance];
+	} else {
+		var pGfx = itemsGfxD[DUNGEON_PROJECTILE_EXPLODE][distance];
+	}
 	if (typeof pGfx !== "undefined") {
 		var offx = 64 - Math.floor(pGfx.width * 0.5) + offset.x;
 		var offy = 77 - Math.floor(pGfx.height) - offset.y;
@@ -965,7 +969,7 @@ Player.prototype.getProjectilesInRange = function(pos2) {
 	var pos = -1;
 	for (i = 0; i < projectile[towerThis].length; i++) {
 		var pr = projectile[towerThis][i];
-		if (this.floor === pr.floor) {
+		if (this.floor === pr.floor && pr.dead < 2) {
 			pos = coordinatesToPos(pr.x, pr.y, this.x, this.y, this.d);
 			if (pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 				projectilesInRange.push({

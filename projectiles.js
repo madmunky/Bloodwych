@@ -9,39 +9,41 @@ function Projectile(id, type, palette, power, tower, floor, x, y, d, m) {
 	this.y = y;
 	this.d = d;
 	this.monster = m;
+	this.dead = 0;
 }
 
 Projectile.prototype.moveProjectile = function() {
-	var xy = getOffsetByRotation(this.d);
-	var ob = getObject(this.floor, this.x, this.y, this.d);
-	var obNext = canMove(this.floor, this.x, this.y, this.d);
-	if(obNext <= OBJECT_MISC && ob !== OBJECT_MISC && ob !== OBJECT_CHARACTER && ob !== OBJECT_STAIRS && ob !== OBJECT_DOOR) {
-		this.x += xy.x;
-		this.y += xy.y;
-	} else {
-		if(ob === OBJECT_CHARACTER) {
-			var mon = getMonsterAt(this.floor, this.x, this.y);
-			if(mon !== null) {
-				if(typeof this.monster !== "undefined") {
-					for(p = 0; p < player.length; p++) {
-						if (this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
-							this.attack(player[p]);
-							this.deleteProjectile();
-							return false;
+	if(this.dead === 0) {
+		var xy = getOffsetByRotation(this.d);
+		var ob = getObject(this.floor, this.x, this.y, this.d);
+		var obNext = canMove(this.floor, this.x, this.y, this.d);
+		if(obNext <= OBJECT_MISC && ob !== OBJECT_MISC && ob !== OBJECT_CHARACTER && ob !== OBJECT_STAIRS && ob !== OBJECT_DOOR) {
+			this.x += xy.x;
+			this.y += xy.y;
+		} else {
+			if(ob === OBJECT_CHARACTER) {
+				var mon = getMonsterAt(this.floor, this.x, this.y);
+				if(mon !== null) {
+					if(typeof this.monster !== "undefined") {
+						for(p = 0; p < player.length; p++) {
+							if (this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
+								this.attack(player[p]);
+								this.dead = 1;
+								return false;
+							}
 						}
+						this.attack(mon);
 					}
-					this.attack(mon);
 				}
 			}
+			this.dead = 1;
+			return false;
 		}
-		this.deleteProjectile();
+	} else if(this.dead === 1) {
+		this.dead = 2;
 		return false;
 	}
 	return true;
-}
-
-Projectile.prototype.deleteProjectile = function() {
-	projectile[towerThis].splice(this.id, 1);
 }
 
 Projectile.prototype.attack = function(target) {

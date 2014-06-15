@@ -240,7 +240,7 @@ function castSpell(s, src, pw) {
 			break;
 
 		case SPELL_FIREBALL:
-			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_DRAGON, pow * 10, f, x1, y1, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, pow * 10, f, x1, y1, d, src);
 			break;
 		case SPELL_FIREPATH:
 			break;
@@ -290,16 +290,16 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_WYCHWIND:
-			/*newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x + xy.x, y + xy.y, d, src);
-			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x + xy.y, y - xy.x, d, src);
-			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 5, f, x + xy.x - xy.y, y + xy.y - xy.x, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 5, f, x + xy.x, y + xy.y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 5, f, x + xy.x + xy.y, y + xy.y + xy.x, d, src);
 			
-			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.x, y - xy.y, (d + 2) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, (d + 2) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 5, f, x - xy.x + xy.y, y - xy.y + xy.x, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 5, f, x - xy.x, y - xy.y, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 5, f, x - xy.x - xy.y, y - xy.y - xy.x, (d + 2) % 4, src);
 
-			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, (d + 1) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BALL, PALETTE_MOON, pow * 5, f, x - xy.y, y + xy.x, (d + 3) % 4, src);*/
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 5, f, x + xy.y, y + xy.x, (d + 3) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, pow * 5, f, x - xy.y, y - xy.x, (d + 1) % 4, src);
 			break;
 		default:
 			break;
