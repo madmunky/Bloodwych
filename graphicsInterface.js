@@ -1355,31 +1355,31 @@ function uiClickAreas() {
 	}); //Start Screen - 4. Quickstart Two Player Game
         UCA.push({
 		x: 0,
-		y: 57,
+		y: 47,
 		width: 95,
 		height: 31
 	}); //Communication Area
         UCA.push({
 		x: 1,
-		y: 57,
+		y: 47,
 		width: 93,
 		height: 7
 	}); //Communication First Row
         UCA.push({
 		x: 1,
-		y: 65,
+		y: 55,
 		width: 93,
 		height: 7
 	}); //Communication Second Row
         UCA.push({
 		x: 1,
-		y: 73,
+		y: 63,
 		width: 93,
 		height: 7
 	}); //Communication Third Row
         UCA.push({
 		x: 1,
-		y: 81,
+		y: 71,
 		width: 93,
 		height: 7
 	}); //Communication Forth Row
@@ -1731,7 +1731,7 @@ function startScreen() {
 
 }
 
-function drawCommunicationBox(p){
+function drawCommunicationBox(p,row){
     
     //We meed the commincation box to be drawn on its own and not with the UI as this will be updated more offern
     //we can do a check on the player.communication.highlighted and see if it matches the current x/y then redraw if needed to hightligh the new word
@@ -1739,33 +1739,77 @@ function drawCommunicationBox(p){
     //ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
     ////ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
     
-    switch (p.communication.mode){
+    //Check if we actually need to redraw...
+    
+    if (p.communication.highlighted !== row){
         
-        case COMMUNICATION_PAGE_MAIN:{
-                ctx.fillStyle = "#606060";
-                ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 47) * scale, 93 * scale, 7 * scale);
-                writeFontImage(TEXT_COMMUNICATION.MAIN[0], (p.ScreenX + 2), (p.ScreenY + 47), COLOUR[COLOUR_YELLOW]);
-                ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 55) * scale, 59 * scale, 7 * scale);
-                writeFontImage(TEXT_COMMUNICATION.MAIN[1], (p.ScreenX + 2), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-                ctx.fillRect((p.ScreenX + 61) * scale, (p.ScreenY + 55) * scale, 33 * scale, 7 * scale);
-                writeFontImage(TEXT_COMMUNICATION.MAIN[2], (p.ScreenX + 64), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-                ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 63) * scale, 34 * scale, 7 * scale);
-                writeFontImage(TEXT_COMMUNICATION.MAIN[3], (p.ScreenX + 2), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
-                ctx.fillRect((p.ScreenX + 36) * scale, (p.ScreenY + 63) * scale, 58 * scale, 7 * scale);
-                writeFontImage(TEXT_COMMUNICATION.MAIN[4], (p.ScreenX + 40), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
-                ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 71) * scale, 58 * scale, 7 * scale);
-                writeFontImage(TEXT_COMMUNICATION.MAIN[5], (p.ScreenX + 2), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
-                ctx.fillRect((p.ScreenX + 60) * scale, (p.ScreenY + 71) * scale, 34 * scale, 7 * scale);
-                writeFontImage(TEXT_COMMUNICATION.MAIN[6], (p.ScreenX + 64), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
-            };break
-        case COMMUNICATION_PAGE_COMMUNICATE_0:{};break
-        case COMMUNICATION_PAGE_COMMUNICATE_1:{};break
-        case COMMUNICATION_PAGE_IDENTIFY:{};break
-        case COMMUNICATION_PAGE_INQUITY:{};break
-        case COMMUNICATION_PAGE_TRADING:{};break
-        case COMMUNICATION_PAGE_SMALLTALK:{};break
-        case COMMUNICATION_PAGE_NAMES:{};break
-        
+        switch (p.communication.mode){
+
+            case COMMUNICATION_PAGE_MAIN:{
+                    
+                    for (r = 0;r < 4;r++){
+                        ctx.fillStyle= "#606060";
+                        var myColour = COLOUR[COLOUR_YELLOW];
+                        
+                        if (r === row){
+                            ctx.fillStyle = "#2020E0";
+                            myColour = COLOUR[COLOUR_WHITE];
+                        }
+                        
+                        switch (r){
+                            
+                            case 0:{
+                                    ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 47) * scale, 93 * scale, 7 * scale);
+                                    writeFontImage(TEXT_COMMUNICATION.MAIN[r], (p.ScreenX + 2), (p.ScreenY + 47), myColour);
+                            }break;
+                            case 1:{
+                                    ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 55) * scale, 59 * scale, 7 * scale);
+                                    writeFontImage(TEXT_COMMUNICATION.MAIN[r], (p.ScreenX + 2), (p.ScreenY + 55), myColour);
+                                    ctx.fillRect((p.ScreenX + 61) * scale, (p.ScreenY + 55) * scale, 33 * scale, 7 * scale);
+                                    writeFontImage(TEXT_COMMUNICATION.MAIN[r+1], (p.ScreenX + 64), (p.ScreenY + 55), myColour);
+                            }break;
+                            case 2:{
+                                    ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 63) * scale, 34 * scale, 7 * scale);
+                                    writeFontImage(TEXT_COMMUNICATION.MAIN[r+1], (p.ScreenX + 2), (p.ScreenY + 63), myColour);
+                                     ctx.fillRect((p.ScreenX + 36) * scale, (p.ScreenY + 63) * scale, 58 * scale, 7 * scale);
+                                    writeFontImage(TEXT_COMMUNICATION.MAIN[r+2], (p.ScreenX + 40), (p.ScreenY + 63), myColour);
+                            }break;
+                            case 3:{
+                                    ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 71) * scale, 58 * scale, 7 * scale);
+                                    writeFontImage(TEXT_COMMUNICATION.MAIN[r+2], (p.ScreenX + 2), (p.ScreenY + 71), myColour); 
+                                    ctx.fillRect((p.ScreenX + 60) * scale, (p.ScreenY + 71) * scale, 34 * scale, 7 * scale);
+                                    writeFontImage(TEXT_COMMUNICATION.MAIN[r+3], (p.ScreenX + 64), (p.ScreenY + 71), myColour);
+                            }break;
+                            
+                        }
+                        
+                    }
+//                    ctx.fillStyle = "#606060";
+//                    ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 47) * scale, 93 * scale, 7 * scale);
+//                    writeFontImage(TEXT_COMMUNICATION.MAIN[0], (p.ScreenX + 2), (p.ScreenY + 47), COLOUR[COLOUR_YELLOW]);
+//                    ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 55) * scale, 59 * scale, 7 * scale);
+//                    writeFontImage(TEXT_COMMUNICATION.MAIN[1], (p.ScreenX + 2), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+//                    ctx.fillRect((p.ScreenX + 61) * scale, (p.ScreenY + 55) * scale, 33 * scale, 7 * scale);
+//                    writeFontImage(TEXT_COMMUNICATION.MAIN[2], (p.ScreenX + 64), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+//                    ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 63) * scale, 34 * scale, 7 * scale);
+//                    writeFontImage(TEXT_COMMUNICATION.MAIN[3], (p.ScreenX + 2), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
+//                    ctx.fillRect((p.ScreenX + 36) * scale, (p.ScreenY + 63) * scale, 58 * scale, 7 * scale);
+//                    writeFontImage(TEXT_COMMUNICATION.MAIN[4], (p.ScreenX + 40), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
+//                    ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 71) * scale, 58 * scale, 7 * scale);
+//                    writeFontImage(TEXT_COMMUNICATION.MAIN[5], (p.ScreenX + 2), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+//                    ctx.fillRect((p.ScreenX + 60) * scale, (p.ScreenY + 71) * scale, 34 * scale, 7 * scale);
+//                    writeFontImage(TEXT_COMMUNICATION.MAIN[6], (p.ScreenX + 64), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+                };break
+            case COMMUNICATION_PAGE_COMMUNICATE_0:{};break
+            case COMMUNICATION_PAGE_COMMUNICATE_1:{};break
+            case COMMUNICATION_PAGE_IDENTIFY:{};break
+            case COMMUNICATION_PAGE_INQUITY:{};break
+            case COMMUNICATION_PAGE_TRADING:{};break
+            case COMMUNICATION_PAGE_SMALLTALK:{};break
+            case COMMUNICATION_PAGE_NAMES:{};break
+
+        }
+        p.communication.highlighted = row;
     }
 
     

@@ -558,7 +558,7 @@ function mouseXY(e) {
 		}
                 if (typeof player !== 'undefined'){
                     for (p in player){
-                        checkCommunicationArea(player[p],mouseX,mouseY);
+                        checkCommunicationArea(player[p],mouseX / (scale * scaleReal),mouseY / (scale * scaleReal));
                     }
                 }
             }
@@ -569,22 +569,25 @@ function checkCommunicationArea(p,x,y){
     if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND){
         if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA, p)){
             if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)){
-                p.communication.highlighted = 0;
+                drawCommunicationBox(p,0);    
             }
             if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)){
-                p.communication.highlighted = 1;
+                drawCommunicationBox(p,1);    
             }
             if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)){
-                p.communication.highlighted = 2;
+                drawCommunicationBox(p,2);    
             }
             if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)){
-                p.communication.highlighted = 3;
+                drawCommunicationBox(p,3);    
             }
+            console.log("Hovering Row - " +p.communication.highlighted);
         }
         else{
-            p.communication.highlighted = null;
+            drawCommunicationBox(p,null);    
         }
+        
     }
+    
 }
 
 function checkClickInViewPortal(p, x, y) {
