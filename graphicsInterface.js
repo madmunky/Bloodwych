@@ -1353,6 +1353,36 @@ function uiClickAreas() {
 		width: 320,
 		height: 16
 	}); //Start Screen - 4. Quickstart Two Player Game
+        UCA.push({
+		x: 0,
+		y: 57,
+		width: 95,
+		height: 31
+	}); //Communication Area
+        UCA.push({
+		x: 1,
+		y: 57,
+		width: 93,
+		height: 7
+	}); //Communication First Row
+        UCA.push({
+		x: 1,
+		y: 65,
+		width: 93,
+		height: 7
+	}); //Communication Second Row
+        UCA.push({
+		x: 1,
+		y: 73,
+		width: 93,
+		height: 7
+	}); //Communication Third Row
+        UCA.push({
+		x: 1,
+		y: 81,
+		width: 93,
+		height: 7
+	}); //Communication Forth Row
 	return UCA;
 
 }

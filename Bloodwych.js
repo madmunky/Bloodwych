@@ -48,7 +48,6 @@ function updatePlayerViewScreen() {
 		}
 	}
 
-	//clearCanvas();
 	configCanvas();
 	debugText(player[0], "FPS: " + fps.getFPS());
 

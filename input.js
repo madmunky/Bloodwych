@@ -556,8 +556,21 @@ function mouseXY(e) {
                         }                        
                     }			
 		}
+                if (typeof player !== 'undefined'){
+                    for (p in player){
+                        checkCommunicationArea(p,mouseX,mouseY);
+                    }
+                }
             }
 
+}
+
+function checkCommunicationArea(p,x,y){
+    if (p.uiLeftPanel === UI_LEFT_PANEL_MODE_COMMAND){
+        if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA, p)){
+            
+        }
+    }
 }
 
 function checkClickInViewPortal(p, x, y) {
