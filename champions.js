@@ -470,7 +470,8 @@ Champion.prototype.getSpellCastChance = function() {
 }
 
 Champion.prototype.getSpellPower = function() {
-	var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 + (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue; /* + (this.level - 1) * 0.1;*/
+	var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue + (this.level - 1) * 0.1;
+	//var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue; /* + (this.level - 1) * 0.1;*/
 	PrintLog('pcast:' + this.selectedSpell.castSuccessful + ' scost:' + this.selectedSpell.cost + ' pint:' + this.stat.int + ' slvl:' + this.selectedSpell.ref.level + ' fat:' + this.spellFatigue + ' = res:' + res)
 	return res;
 }
