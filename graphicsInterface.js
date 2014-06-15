@@ -503,33 +503,14 @@ function commandUI(p) {
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
 	ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 
-	//ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
-	//ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
-
-	ctx.fillStyle = "#606060";
-
+        ctx.fillStyle = "#606060";
 	ctx.fillRect((p.ScreenX + 50) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
 	ctx.fillRect((p.ScreenX + 52) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
 	ctx.fillRect((p.ScreenX + 93) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
 	ctx.fillRect((p.ScreenX + 91) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
-
-	ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 47) * scale, 93 * scale, 7 * scale);
-	writeFontImage(TEXT_COMMUNICATE, (p.ScreenX + 2), (p.ScreenY + 47), COLOUR[COLOUR_YELLOW]);
-	ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 55) * scale, 59 * scale, 7 * scale);
-	writeFontImage(TEXT_COMMEND, (p.ScreenX + 2), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-	ctx.fillRect((p.ScreenX + 62) * scale, (p.ScreenY + 55) * scale, 32 * scale, 7 * scale);
-	writeFontImage(TEXT_VIEW, (p.ScreenX + 64), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-	ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 63) * scale, 34 * scale, 7 * scale);
-	writeFontImage(TEXT_WAIT, (p.ScreenX + 2), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
-	ctx.fillRect((p.ScreenX + 37) * scale, (p.ScreenY + 63) * scale, 57 * scale, 7 * scale);
-	writeFontImage(TEXT_CORRECT, (p.ScreenX + 40), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
-	ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 71) * scale, 58 * scale, 7 * scale);
-	writeFontImage(TEXT_DISMISS, (p.ScreenX + 2), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
-	ctx.fillRect((p.ScreenX + 61) * scale, (p.ScreenY + 71) * scale, 33 * scale, 7 * scale);
-	writeFontImage(TEXT_CALL, (p.ScreenX + 64), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
-
+	
 	ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
-
+        drawCommunicationBox(p);
 }
 
 function rightUI(p) {
@@ -1718,4 +1699,44 @@ function startScreen() {
 	writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
 	writeFontImage("RECREATED BY MAD BONE PRODUCTIONS 2014", 10, 194, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
 
+}
+
+function drawCommunicationBox(p){
+    
+    //We meed the commincation box to be drawn on its own and not with the UI as this will be updated more offern
+    //we can do a check on the player.communication.highlighted and see if it matches the current x/y then redraw if needed to hightligh the new word
+    
+    //ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
+    ////ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
+    
+    switch (p.communication.mode){
+        
+        case COMMUNICATION_PAGE_MAIN:{
+                ctx.fillStyle = "#606060";
+                ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 47) * scale, 93 * scale, 7 * scale);
+                writeFontImage(TEXT_COMMUNICATION.MAIN[0], (p.ScreenX + 2), (p.ScreenY + 47), COLOUR[COLOUR_YELLOW]);
+                ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 55) * scale, 59 * scale, 7 * scale);
+                writeFontImage(TEXT_COMMUNICATION.MAIN[1], (p.ScreenX + 2), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+                ctx.fillRect((p.ScreenX + 61) * scale, (p.ScreenY + 55) * scale, 33 * scale, 7 * scale);
+                writeFontImage(TEXT_COMMUNICATION.MAIN[2], (p.ScreenX + 64), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+                ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 63) * scale, 34 * scale, 7 * scale);
+                writeFontImage(TEXT_COMMUNICATION.MAIN[3], (p.ScreenX + 2), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
+                ctx.fillRect((p.ScreenX + 36) * scale, (p.ScreenY + 63) * scale, 58 * scale, 7 * scale);
+                writeFontImage(TEXT_COMMUNICATION.MAIN[4], (p.ScreenX + 40), (p.ScreenY + 63), COLOUR[COLOUR_YELLOW]);
+                ctx.fillRect((p.ScreenX + 1) * scale, (p.ScreenY + 71) * scale, 58 * scale, 7 * scale);
+                writeFontImage(TEXT_COMMUNICATION.MAIN[5], (p.ScreenX + 2), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+                ctx.fillRect((p.ScreenX + 60) * scale, (p.ScreenY + 71) * scale, 34 * scale, 7 * scale);
+                writeFontImage(TEXT_COMMUNICATION.MAIN[6], (p.ScreenX + 64), (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+            };break
+        case COMMUNICATION_PAGE_COMMUNICATE_0:{};break
+        case COMMUNICATION_PAGE_COMMUNICATE_1:{};break
+        case COMMUNICATION_PAGE_IDENTIFY:{};break
+        case COMMUNICATION_PAGE_INQUITY:{};break
+        case COMMUNICATION_PAGE_TRADING:{};break
+        case COMMUNICATION_PAGE_SMALLTALK:{};break
+        case COMMUNICATION_PAGE_NAMES:{};break
+        
+    }
+
+    
 }

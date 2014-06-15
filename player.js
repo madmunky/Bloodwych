@@ -45,7 +45,11 @@ function Player(id, ScreenX, ScreenY) {
 		mode: UI_CENTER_PANEL_VIEWPORT
 	};
 
-	this.communication = [];
+	this.communication = {
+            mode: COMMUNICATION_PAGE_MAIN,
+            highlighted:null,
+            action:null
+        };
 
 	this.PlayerCanvas.width = 128 * scale;
 	this.PlayerCanvas.height = 76 * scale;
@@ -53,21 +57,21 @@ function Player(id, ScreenX, ScreenY) {
 	this.PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
-    this.PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
+        this.PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 }
 
 Player.prototype.getViewPortal = function() {
 	this.Portal = this.PlayerCanvas.getContext("2d");
-}
+};
 
 Player.prototype.canMove = function(d) {
 	return canMove(this.floor, this.x, this.y, this.d, d) === 0;
-}
+};
 
 Player.prototype.canMoveByWood = function(d) {
 	return canMoveByWood(this.floor, this.x, this.y, this.d, d);
-}
+};
 
 Player.prototype.changeUpFloor = function() {
 
@@ -137,13 +141,13 @@ Player.prototype.action = function() {
 		return true;
 	}
 	return false;
-}
+};
 
 Player.prototype.toggleFrontObject = function() {
 	if (debug) {
 		this.setBinaryView(15, 12, 1);
 	}
-}
+};
 Player.prototype.checkWoodenDoor = function(pos18) {
 	if (pos18 === 18) {
 		d = 2;
@@ -161,7 +165,7 @@ Player.prototype.checkWoodenDoor = function(pos18) {
 			this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
 		}
 	}
-}
+};
 
 //Sets a binary index on a hexadecimal string to a certain binary flag
 //'to' will be a binary string, e.g. '1010'
@@ -169,7 +173,7 @@ Player.prototype.setBinaryView = function(pos18, index, length, to) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
 	tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length, to);
 	//this.updateView();
-}
+};
 
 Player.prototype.getBinaryView = function(pos18, index, length) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
@@ -178,7 +182,7 @@ Player.prototype.getBinaryView = function(pos18, index, length) {
 	} catch (e) {
 		return '0001';
 	}
-}
+};
 
 Player.prototype.setMovementData = function() {
 	tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
@@ -189,7 +193,7 @@ Player.prototype.setMovementData = function() {
 		this.lastFloor = this.floor;
 		this.lastTower = towerThis;
 	}
-}
+};
 
 Player.prototype.rotate = function(r) {
 	if (!this.dead && !this.sleeping) {
@@ -201,11 +205,11 @@ Player.prototype.rotate = function(r) {
 		this.d = (4 + this.d + r) % 4;
 		this.doEvent(false);
 	}
-}
+};
 
 Player.prototype.rotateTo = function(d) {
 	this.d = (d + 4) % 4;
-}
+};
 
 Player.prototype.move = function(d) {
 	if (!this.dead && !this.sleeping) {
@@ -225,7 +229,7 @@ Player.prototype.move = function(d) {
 			this.doEvent(false);
 		}
 	}
-}
+};
 
 Player.prototype.tryAttack = function() {
 	if (!this.dead && !this.sleeping && this.canMoveByWood(0)) {
@@ -246,7 +250,7 @@ Player.prototype.tryAttack = function() {
 	}
 	this.attack(false);
 	return false;
-}
+};
 
 Player.prototype.attack = function(attack, target) {
 	if (attack) {
@@ -289,7 +293,7 @@ Player.prototype.attack = function(attack, target) {
 		}
 		this.attacking = false;
 	}
-}
+};
 
 Player.prototype.getView = function() {
 	//This function takes the map file and stores the 20 positions required 
@@ -309,7 +313,7 @@ Player.prototype.getView = function() {
 		view.push(newView);
 	}
 	return view;
-}
+};
 
 //mr = true : player moves
 //mr = false: player rotates
@@ -344,7 +348,7 @@ Player.prototype.doPit = function() {
 		return true;
 	}
 	return false;
-}
+};
 
 Player.prototype.doStairs = function() {
 	var ud = parseInt(this.getBinaryView(18, 7), 10);
@@ -355,7 +359,7 @@ Player.prototype.doStairs = function() {
 	var x = this.x + fOff.x + off.x * 2;
 	var y = this.y + fOff.y + off.y * 2;
 	this.setPlayerPosition(floor, x, y, d);
-}
+};
 
 Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 	this.floor = floor;
@@ -364,7 +368,7 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 	if (typeof d !== "undefined") this.d = d;
 	this.setMovementData();
 	//this.updateView();
-}
+};
 
 Player.prototype.getAliveChampionCount = function() {
 	var cnt = 0;
