@@ -1740,6 +1740,9 @@ function drawCommunicationBox(p,row){
     ////ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);    
     
     //Check if we actually need to redraw...
+    if (typeof row === "undefined"){
+        row === null;
+    }
     
     if (p.communication.highlighted !== row){
         
