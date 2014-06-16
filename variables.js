@@ -51,7 +51,7 @@ var gfxLoaded = {
 };
 
 var cursorBlue = 0,
-        cursorRed = 1;
+	cursorRed = 1;
 
 //COLOURS AND PALETTES
 var COLOUR_MAX = 4,
@@ -367,14 +367,14 @@ var PALETTE_SERPENT = new Array(COLOUR[COLOUR_WHITE], COLOUR[COLOUR_WHITE], COLO
 	PALETTE_DEAD = new Array(COLOUR[COLOUR_BLACK], COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREY_DARKEST]),
 	PALETTE_SELECTED = new Array(COLOUR[COLOUR_BLACK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_MEDIUM]),
 	PALETTE_BRONZE = new Array(COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK]),
-	
+
 	//grey blue red black
 	//2 1 0 3
 	PALETTE_SERPENT_BIG = new Array(COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_GREY_DARK]),
 	PALETTE_CHAOS_BIG = new Array(COLOUR[COLOUR_PINK], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BROWN]),
 	PALETTE_DRAGON_BIG = new Array(COLOUR[COLOUR_RED], COLOUR[COLOUR_PINK], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_RED_DARK]),
 	PALETTE_MOON_BIG = new Array(COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_DARK]);
-        PALETTE_DISTRUPT_BIG = new Array(COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK]);
+PALETTE_DISTRUPT_BIG = new Array(COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK]);
 
 var MON_PALETTE_DEFAULT = [COLOUR[COLOUR_BLACK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_RED]],
 	SHIELD_PALETTE_DEFAULT = new Array([255, 0, 255, 255], COLOUR[COLOUR_RED], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLUE]),
@@ -773,11 +773,11 @@ var UI_CLICK_CHAMP1 = 0,
 	UI_CLICK_START_TWO_PLAYER = 81,
 	UI_CLICK_START_QUICK_ONE_PLAYER = 82,
 	UI_CLICK_START_QUICK_TWO_PLAYER = 83,
-        UI_CLICK_COMMUNICATION_AREA = 84,
-        UI_CLICK_COMMUNICATION_AREA_FIRST_ROW = 85,
-        UI_CLICK_COMMUNICATION_AREA_SECOND_ROW = 86,
-        UI_CLICK_COMMUNICATION_AREA_THIRD_ROW = 87,
-        UI_CLICK_COMMUNICATION_AREA_FORTH_ROW = 88;
+	UI_CLICK_COMMUNICATION_AREA = 84,
+	UI_CLICK_COMMUNICATION_AREA_FIRST_ROW = 85,
+	UI_CLICK_COMMUNICATION_AREA_SECOND_ROW = 86,
+	UI_CLICK_COMMUNICATION_AREA_THIRD_ROW = 87,
+	UI_CLICK_COMMUNICATION_AREA_FORTH_ROW = 88;
 
 var UI_REDRAW_ALL = 0,
 	UI_REDRAW_LEFT = 1,
@@ -812,10 +812,10 @@ var KEYPAD_4 = 100,
 	KEY_E = 69,
 	KEY_R = 82,
 	KEY_F = 70,
-        KEY_1 = 49,
-        KEY_2 = 50,
-        KEY_3 = 51,
-        KEY_4 = 52,
+	KEY_1 = 49,
+	KEY_2 = 50,
+	KEY_3 = 51,
+	KEY_4 = 52,
 	KEY_5 = 53,
 	KEY_6 = 54,
 	KEY_7 = 55,
@@ -995,66 +995,252 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
 		"REAL ENOUGH TO HURT!",
 		"FOR THOSE WHO THINK THEY LOVE WALLS",
 		"JUST BLOW THEM AWAY"
-	],
-        TEXT_COMMUNICATION = [[
-                                {text: "COMMUNICATE", row:0,width:93,left:true},
-                                {text: "COMMEND", row:1,width:59,left:true},
-                                {text: "VIEW", row:1,width:33,left:false},
-                                {text: "WAIT", row:2,width:35,left:true},
-                                {text: "CORRECT", row:2,width:57,left:false},
-                                {text: "DISMISS", row:3,width:59,left:true},
-                                {text: "CALL", row:3,width:33,left:false}
-                                ],
-                              [
-                                {text: "RECRUIT", row:0,width:93,left:true},
-                                {text: "IDENTIFY", row:1,width:93,left:true},
-                                {text: "INQUIRY", row:2,width:93,left:true},
-                                {text: "WHEREABOUTS", row:3,width:93,left:true}
-                              ],
-                              [
-                                  {text: "TRADING", row:0,width:93,left:true},
-                                  {text: "SMALLTALK", row:1,width:93,left:true},
-                                  {text: "YES", row:2,width:43,left:true},
-                                  {text: "NO", row:2,width:49,left:false},
-                                  {text: "BRIBE", row:3,width:43,left:true},
-                                  {text: "THREAT", row:3,width:49,left:false}
-                              ],
-                              [
-                                  {text: "WHO GOES?", row:0,width:93,left:true},
-                                  {text: "THY TRADE?", row:1,width:93,left:true},
-                                  {text: "NAME SELF", row:2,width:93,left:true},
-                                  {text: "REVEAL SELF", row:3,width:93,left:true}
-                              ],
-                              [
-                                  {text: "FOLK LORE", row:0,width:93,left:true},
-                                  {text: "MAGIC ITEMS", row:1,width:93,left:true},
-                                  {text: "OBJECTS", row:2,width:93,left:true},
-                                  {text: "PERSONS", row:3,width:93,left:true}
-                              ],
-                              [
-                                  {text: "OFFER", row:0,width:93,left:true},
-                                  {text: "PURCHASE", row:1,width:93,left:true},
-                                  {text: "EXCHANGE", row:2,width:93,left:true},
-                                  {text: "SELL", row:3,width:93,left:true}
-                              ],
-                              [
-                                  {text: "PRAISE", row:0,width:93,left:true},
-                                  {text: "CURSE", row:1,width:93,left:true},
-                                  {text: "BOAST", row:2,width:93,left:true},
-                                  {text: "RETORT", row:3,width:93,left:true}
-                              ]
-                         ],
+	];
+var scrollData = null;
 
-	scrollData = null;
-
+//communication
 var COMMUNICATION_PAGE_MAIN = 0,
-        COMMUNICATION_PAGE_COMMUNICATE_0 = 1,
-        COMMUNICATION_PAGE_COMMUNICATE_1 = 2,
-        COMMUNICATION_PAGE_IDENTIFY = 3,
-        COMMUNICATION_PAGE_INQUIRY = 4,
-        COMMUNICATION_PAGE_TRADING = 5,
-        COMMUNICATION_PAGE_SMALLTALK = 6,
-        COMMUNICATION_PAGE_NAMES = 7;
+	COMMUNICATION_PAGE_COMMUNICATE_0 = 1,
+	COMMUNICATION_PAGE_COMMUNICATE_1 = 2,
+	COMMUNICATION_PAGE_IDENTIFY = 3,
+	COMMUNICATION_PAGE_INQUIRY = 4,
+	COMMUNICATION_PAGE_TRADING = 5,
+	COMMUNICATION_PAGE_SMALLTALK = 6,
+	COMMUNICATION_PAGE_NAMES = 7;
+
+var TEXT_COMMUNICATION = [
+	[{
+		text: "COMMUNICATE",
+		row: 0,
+		width: 93,
+		left: true,
+		to: COMMUNICATION_PAGE_COMMUNICATE_0
+	}, {
+		text: "COMMEND",
+		row: 1,
+		width: 59,
+		left: true,
+		to: COMMUNICATION_PAGE_NAMES
+	}, {
+		text: "VIEW",
+		row: 1,
+		width: 33,
+		left: false,
+		to: COMMUNICATION_PAGE_NAMES
+	}, {
+		text: "WAIT",
+		row: 2,
+		width: 35,
+		left: true,
+		to: COMMUNICATION_PAGE_NAMES
+	}, {
+		text: "CORRECT",
+		row: 2,
+		width: 57,
+		left: false,
+		to: COMMUNICATION_PAGE_NAMES,
+		back: null
+	}, {
+		text: "DISMISS",
+		row: 3,
+		width: 59,
+		left: true,
+		to: COMMUNICATION_PAGE_NAMES
+	}, {
+		text: "CALL",
+		row: 3,
+		width: 33,
+		left: false,
+		to: COMMUNICATION_PAGE_NAMES
+	}],
+	[{
+		text: "RECRUIT",
+		row: 0,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "IDENTIFY",
+		row: 1,
+		width: 93,
+		left: true,
+		to: COMMUNICATION_PAGE_IDENTIFY
+	}, {
+		text: "INQUIRY",
+		row: 2,
+		width: 93,
+		left: true,
+		to: COMMUNICATION_PAGE_INQUIRY
+	}, {
+		text: "WHEREABOUTS",
+		row: 3,
+		width: 93,
+		left: true,
+		to: null
+	}],
+	[{
+		text: "TRADING",
+		row: 0,
+		width: 93,
+		left: true,
+		to: COMMUNICATION_PAGE_TRADING
+	}, {
+		text: "SMALLTALK",
+		row: 1,
+		width: 93,
+		left: true,
+		to: COMMUNICATION_PAGE_SMALLTALK
+	}, {
+		text: "YES",
+		row: 2,
+		width: 43,
+		left: true,
+		to: null
+	}, {
+		text: "NO",
+		row: 2,
+		width: 49,
+		left: false,
+		to: null
+	}, {
+		text: "BRIBE",
+		row: 3,
+		width: 43,
+		left: true,
+		to: null
+	}, {
+		text: "THREAT",
+		row: 3,
+		width: 49,
+		left: false,
+		to: null
+	}],
+	[{
+		text: "WHO GOES?",
+		row: 0,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "THY TRADE?",
+		row: 1,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "NAME SELF",
+		row: 2,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "REVEAL SELF",
+		row: 3,
+		width: 93,
+		left: true,
+		to: null
+	}],
+	[{
+		text: "FOLK LORE",
+		row: 0,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "MAGIC ITEMS",
+		row: 1,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "OBJECTS",
+		row: 2,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "PERSONS",
+		row: 3,
+		width: 93,
+		left: true,
+		to: null
+	}],
+	[{
+		text: "OFFER",
+		row: 0,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "PURCHASE",
+		row: 1,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "EXCHANGE",
+		row: 2,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "SELL",
+		row: 3,
+		width: 93,
+		left: true,
+		to: null
+	}],
+	[{
+		text: "PRAISE",
+		row: 0,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "CURSE",
+		row: 1,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "BOAST",
+		row: 2,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "RETORT",
+		row: 3,
+		width: 93,
+		left: true,
+		to: null
+	}],
+	[{
+		text: "",
+		row: 0,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "",
+		row: 1,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "",
+		row: 2,
+		width: 93,
+		left: true,
+		to: null
+	}, {
+		text: "",
+		row: 3,
+		width: 93,
+		left: true,
+		to: null
+	}]
+];
 
 //Dungeon Items
 var DUNGEON_ITEM_POTION = 0,

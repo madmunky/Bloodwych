@@ -266,7 +266,7 @@ function processCanvasInput(pid, x, y) {
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_INTERACT, p)) {
 			var ch = champion[p.champion[p.championLeader]];
-			if(ch.activeSpell.id > -1) {
+			if (ch.activeSpell.id > -1) {
 				ch.expireSpell();
 			} else if (ch.selectedSpell === null) {
 				p.action();
@@ -436,8 +436,8 @@ function processCanvasInput(pid, x, y) {
 		}
 	}
 	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
-            
-                if (uiClickInArea(x, y, UI_CLICK_CHAMP1, p)) {
+
+		if (uiClickInArea(x, y, UI_CLICK_CHAMP1, p)) {
 			toggleChampUI(0, p);
 			redrawUI(p.id, UI_REDRAW_LEFT);
 			//return pid;
@@ -460,9 +460,9 @@ function processCanvasInput(pid, x, y) {
 		}
 
 	} else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
-                
+
 		if (uiClickInArea(x, y, UI_CLICK_BACK, p)) {
-                        checkBackButton(p);
+			checkBackButton(p);
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, p)) {
 			alert('PAUSED');
@@ -478,26 +478,26 @@ function processCanvasInput(pid, x, y) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
 			return pid;
 		}
-                if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1){
-                    	if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, p)) {
-                            var t = p.communication.mode + 1;
-                            if (t > 2){
-                                t = 1;
-                            }                            
-		            p.communication.mode = t;
-                            return pid;
-                        }
-                        if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, p)) {
-                            var t = p.communication.mode - 1;
-                            if (t < 1){
-                                t = 2;
-                            }                            
-		            p.communication.mode = t;
-                            return pid;
-                        }
-                }
-                
-                checkCommunicationArea(p,x,y,false);
+		if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1) {
+			if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, p)) {
+				var t = p.communication.mode + 1;
+				if (t > 2) {
+					t = 1;
+				}
+				p.communication.mode = t;
+				return pid;
+			}
+			if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, p)) {
+				var t = p.communication.mode - 1;
+				if (t < 1) {
+					t = 2;
+				}
+				p.communication.mode = t;
+				return pid;
+			}
+		}
+
+		checkCommunicationArea(p, x, y, false);
 	}
 	if (p.sleeping) {
 		p.wakeUp();
@@ -552,79 +552,76 @@ function mouseXY(e) {
 	if (e.offsetX) {
 		mouseX = e.offsetX;
 		mouseY = e.offsetY;
-                var currentColour = cursorType;    
-		if (player.length > 1) {                    
-                    if (mouseY > canvas.height / 2) {
-                        cursorType = cursorRed;
-                    }else{
-                        cursorType = cursorBlue;
-                    }
-                    if (currentColour !== cursorType){
-                        if (cursorType === cursorRed){
-                            canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
-                        }else{
-                            canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
-                        }                        
-                    }			
+		var currentColour = cursorType;
+		if (player.length > 1) {
+			if (mouseY > canvas.height / 2) {
+				cursorType = cursorRed;
+			} else {
+				cursorType = cursorBlue;
+			}
+			if (currentColour !== cursorType) {
+				if (cursorType === cursorRed) {
+					canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+				} else {
+					canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+				}
+			}
 		}
-                if (typeof player !== 'undefined'){
-                    for (p in player){
-                        checkCommunicationArea(player[p],mouseX / (scale * scaleReal),mouseY / (scale * scaleReal),true);
-                    }
-                }
-            }
+		if (typeof player !== 'undefined') {
+			for (p in player) {
+				checkCommunicationArea(player[p], mouseX / (scale * scaleReal), mouseY / (scale * scaleReal), true);
+			}
+		}
+	}
 
 }
 
-function leftOrRight(p,x,row){
-    
-    if (TEXT_COMMUNICATION[p.communication.mode][row].width <= x) {
-        return false;
-    }
-    
-    return true;   
-    
+function leftOrRight(p, x, row) {
+
+	if (TEXT_COMMUNICATION[p.communication.mode][row].width <= x) {
+		return false;
+	}
+
+	return true;
+
 }
 
-function checkBackButton(p){
-    
-    switch (p.communication.mode){
-        
-        case COMMUNICATION_PAGE_MAIN: {
-                p.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
-		p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
-        }break;
-        case COMMUNICATION_PAGE_COMMUNICATE_0: {
-                p.communication.mode = COMMUNICATION_PAGE_MAIN;
-        }break;
-        case COMMUNICATION_PAGE_COMMUNICATE_1: {
-                p.communication.mode = COMMUNICATION_PAGE_MAIN;
-        }break;
-        case COMMUNICATION_PAGE_IDENTIFY: {
-               p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0; 
-        }break;
-        case COMMUNICATION_PAGE_INQUIRY: {
-                p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0; 
-        }break;
-        case COMMUNICATION_PAGE_TRADING: {
-                p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_1; 
-        }break;
-        case COMMUNICATION_PAGE_SMALLTALK: {
-                p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_1; 
-        }break;
-        case COMMUNICATION_PAGE_NAMES: {
-                p.communication.mode = COMMUNICATION_PAGE_MAIN;
-        }break;
-    }
-    
-    			
-    
-    
+function checkBackButton(p) {
+	switch (p.communication.mode) {
+		case COMMUNICATION_PAGE_MAIN:
+			p.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
+			p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
+			break;
+		case COMMUNICATION_PAGE_COMMUNICATE_0:
+			p.communication.mode = COMMUNICATION_PAGE_MAIN;
+			break;
+		case COMMUNICATION_PAGE_COMMUNICATE_1:
+			p.communication.mode = COMMUNICATION_PAGE_MAIN;
+			break;
+		case COMMUNICATION_PAGE_IDENTIFY:
+			p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
+			break;
+		case COMMUNICATION_PAGE_INQUIRY:
+			p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
+			break;
+		case COMMUNICATION_PAGE_TRADING:
+			p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_1;
+			break;
+		case COMMUNICATION_PAGE_SMALLTALK:
+			p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_1;
+			break;
+		case COMMUNICATION_PAGE_NAMES:
+			p.communication.mode = COMMUNICATION_PAGE_MAIN;
+			break;
+	}
 }
 
-function doCommuncation(p,item){
-    
-    switch (p.communication.mode){
+function doCommunication(p, item) {
+	if (TEXT_COMMUNICATION[p.communication.mode][item].to !== null) {
+		p.communication.mode = TEXT_COMMUNICATION[p.communication.mode][item].to;
+	}
+
+	/*switch (p.communication.mode){
         
         case COMMUNICATION_PAGE_MAIN:{
                 switch (item){                    
@@ -696,153 +693,169 @@ function doCommuncation(p,item){
                 }    
         };break
         
-    }
-    
-    drawCommunicationBox(p,item,true);
-    
+    }*/
+
+	drawCommunicationBox(p, item, true);
+
 }
 
-function checkCommunicationArea(p,x,y,hover){
-    if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND){
-        if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA, p)){
-            if (p.communication.mode === COMMUNICATION_PAGE_MAIN){
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)){
-                    if (hover){
-                        drawCommunicationBox(p,0);
-                    }else{
-                        doCommuncation(p,0);
-                    }                    
-                }
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)){
-                   if (leftOrRight(p,x,1)){
-                       if (hover){
-                         drawCommunicationBox(p,1);    
-                        }else{
-                         doCommuncation(p,1);  
-                        }
-                    }else{
-                        if (hover){
-                         drawCommunicationBox(p,2);    
-                        }else{
-                         doCommuncation(p,2);  
-                        }  
-                    }    
-                }
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)){
-                    if (leftOrRight(p,x,3)){
-                        if (hover){
-                         drawCommunicationBox(p,3);    
-                        }else{
-                         doCommuncation(p,3);  
-                        }    
-                    }else{
-                        if (hover){
-                         drawCommunicationBox(p,4);    
-                        }else{
-                         doCommuncation(p,4);  
-                        }  
-                    }   
-                }
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)){
-                    if (leftOrRight(p,x,5)){
-                        if (hover){
-                         drawCommunicationBox(p,5);    
-                        }else{
-                         doCommuncation(p,5);  
-                        }    
-                    }else{
-                        if (hover){
-                         drawCommunicationBox(p,6);    
-                        }else{
-                         doCommuncation(p,6);  
-                        }  
-                    }    
-                }
-            }
-            else if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1){
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)){
-                    if (hover){
-                         drawCommunicationBox(p,0);    
-                        }else{
-                         doCommuncation(p,0);  
-                        }
-                }
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)){
-                    if (hover){
-                         drawCommunicationBox(p,1);    
-                        }else{
-                         doCommuncation(p,1);  
-                        }
-                }
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)){
-                    if (leftOrRight(p,x,2)){
-                        if (hover){
-                         drawCommunicationBox(p,2);    
-                        }else{
-                         doCommuncation(p,2);  
-                        }    
-                    }else{
-                        if (hover){
-                         drawCommunicationBox(p,3);    
-                        }else{
-                         doCommuncation(p,3);  
-                        } 
-                    }   
-                }
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)){
-                    if (leftOrRight(p,x,4)){
-                        if (hover){
-                         drawCommunicationBox(p,4);    
-                        }else{
-                         doCommuncation(p,4);  
-                        }    
-                    }else{
-                        if (hover){
-                         drawCommunicationBox(p,5);    
-                        }else{
-                         doCommuncation(p,5);  
-                        }  
-                    }    
-                }
-            }
-            else if (p.communication.mode === COMMUNICATION_PAGE_NAMES || p.communication.mode === COMMUNICATION_PAGE_SMALLTALK || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_TRADING || p.communication.mode === COMMUNICATION_PAGE_IDENTIFY || p.communication.mode === COMMUNICATION_PAGE_INQUIRY){
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)){
-                   if (hover){
-                         drawCommunicationBox(p,0);    
-                        }else{
-                         doCommuncation(p,0);  
-                        }                    
-                }
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)){
-                   if (hover){
-                         drawCommunicationBox(p,1);    
-                        }else{
-                         doCommuncation(p,1);  
-                        }      
-                }
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)){
-                   if (hover){
-                         drawCommunicationBox(p,2);    
-                        }else{
-                         doCommuncation(p,2);  
-                        }     
-                }
-                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)){
-                   if (hover){
-                         drawCommunicationBox(p,3);    
-                        }else{
-                         doCommuncation(p,3);  
-                        }      
-                }
-            }            
-            console.log("Hovering Row - " +p.communication.highlighted);
-        }
-        else{
-            drawCommunicationBox(p,null);    
-        }
-        
-    }
-    
+function checkCommunicationArea(p, x, y, hover) {
+	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
+		if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA, p)) {
+			for(i = 0; i < TEXT_COMMUNICATION[p.communication.mode].length; i++) {
+				var com = TEXT_COMMUNICATION[p.communication.mode][i];
+				if(com.left) {
+					x1 = p.ScreenX;
+				} else {
+					x1 = p.ScreenX + 93 - com.width;
+				}
+				y1 = p.ScreenY + com.row * 8 + 47;
+				if (x >= x1 && y >= y1 && x < x1 + com.width && y < y1 + 8) {
+					if (hover) {
+						drawCommunicationBox(p, i);
+						return;
+					} else {
+						doCommunication(p, i);
+						return;
+					}
+				}
+			}
+
+			/*if (p.communication.mode === COMMUNICATION_PAGE_MAIN) {
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)) {
+					if (hover) {
+						drawCommunicationBox(p, 0);
+					} else {
+						doCommunication(p, 0);
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)) {
+					if (leftOrRight(p, x, 1)) {
+						if (hover) {
+							drawCommunicationBox(p, 1);
+						} else {
+							doCommunication(p, 1);
+						}
+					} else {
+						if (hover) {
+							drawCommunicationBox(p, 2);
+						} else {
+							doCommunication(p, 2);
+						}
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)) {
+					if (leftOrRight(p, x, 3)) {
+						if (hover) {
+							drawCommunicationBox(p, 3);
+						} else {
+							doCommunication(p, 3);
+						}
+					} else {
+						if (hover) {
+							drawCommunicationBox(p, 4);
+						} else {
+							doCommunication(p, 4);
+						}
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)) {
+					if (leftOrRight(p, x, 5)) {
+						if (hover) {
+							drawCommunicationBox(p, 5);
+						} else {
+							doCommunication(p, 5);
+						}
+					} else {
+						if (hover) {
+							drawCommunicationBox(p, 6);
+						} else {
+							doCommunication(p, 6);
+						}
+					}
+				}
+			} else if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1) {
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)) {
+					if (hover) {
+						drawCommunicationBox(p, 0);
+					} else {
+						doCommunication(p, 0);
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)) {
+					if (hover) {
+						drawCommunicationBox(p, 1);
+					} else {
+						doCommunication(p, 1);
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)) {
+					if (leftOrRight(p, x, 2)) {
+						if (hover) {
+							drawCommunicationBox(p, 2);
+						} else {
+							doCommunication(p, 2);
+						}
+					} else {
+						if (hover) {
+							drawCommunicationBox(p, 3);
+						} else {
+							doCommunication(p, 3);
+						}
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)) {
+					if (leftOrRight(p, x, 4)) {
+						if (hover) {
+							drawCommunicationBox(p, 4);
+						} else {
+							doCommunication(p, 4);
+						}
+					} else {
+						if (hover) {
+							drawCommunicationBox(p, 5);
+						} else {
+							doCommunication(p, 5);
+						}
+					}
+				}
+			} else if (p.communication.mode === COMMUNICATION_PAGE_NAMES || p.communication.mode === COMMUNICATION_PAGE_SMALLTALK || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_TRADING || p.communication.mode === COMMUNICATION_PAGE_IDENTIFY || p.communication.mode === COMMUNICATION_PAGE_INQUIRY) {
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)) {
+					if (hover) {
+						drawCommunicationBox(p, 0);
+					} else {
+						doCommunication(p, 0);
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)) {
+					if (hover) {
+						drawCommunicationBox(p, 1);
+					} else {
+						doCommunication(p, 1);
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)) {
+					if (hover) {
+						drawCommunicationBox(p, 2);
+					} else {
+						doCommunication(p, 2);
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)) {
+					if (hover) {
+						drawCommunicationBox(p, 3);
+					} else {
+						doCommunication(p, 3);
+					}
+				}
+			}*/
+			console.log("Hovering Row - " + p.communication.highlighted);
+		} else {
+			drawCommunicationBox(p, null);
+		}
+
+	}
+
 }
 
 function checkClickInViewPortal(p, x, y) {

@@ -580,7 +580,7 @@ Player.prototype.getChampionPosition = function(id) {
 }
 
 //gets champions. champion 0 is the leader
-Player.prototype.getOrderedChampionIds = function(loc) {
+Player.prototype.getOrderedChampionIds = function() {
 	var ch = new Array();
 	ch.push(this.championLeader);
 	for (c = 0; c < this.champion.length; c++) {

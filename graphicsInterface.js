@@ -318,14 +318,14 @@ function redrawUI(p, lr) {
 		lr = 0;
 	}
 	if (p === 2) {
-		if(typeof player[0] !== "undefined") {
+		if (typeof player[0] !== "undefined") {
 			if (player[0].redrawLeftRightUiFlag > -1 && player[0].redrawLeftRightUiFlag !== lr) {
 				player[0].redrawLeftRightUiFlag = UI_REDRAW_ALL;
 			} else {
 				player[0].redrawLeftRightUiFlag = lr;
 			}
 		}
-		if(typeof player[1] !== "undefined") {
+		if (typeof player[1] !== "undefined") {
 			if (player[1].redrawLeftRightUiFlag > -1 && player[1].redrawLeftRightUiFlag !== lr) {
 				player[1].redrawLeftRightUiFlag = UI_REDRAW_ALL;
 			} else {
@@ -333,7 +333,7 @@ function redrawUI(p, lr) {
 			}
 		}
 	} else {
-		if(typeof player[p] !== "undefined") {
+		if (typeof player[p] !== "undefined") {
 			if (player[p].redrawLeftRightUiFlag > -1 && player[p].redrawLeftRightUiFlag !== lr) {
 				player[p].redrawLeftRightUiFlag = UI_REDRAW_ALL;
 			} else {
@@ -503,14 +503,14 @@ function commandUI(p) {
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
 	ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 
-        ctx.fillStyle = "#606060";
+	ctx.fillStyle = "#606060";
 	ctx.fillRect((p.ScreenX + 50) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
 	ctx.fillRect((p.ScreenX + 52) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
 	ctx.fillRect((p.ScreenX + 93) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
 	ctx.fillRect((p.ScreenX + 91) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
-	
+
 	ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
-        drawCommunicationBox(p);
+	drawCommunicationBox(p);
 }
 
 function rightUI(p) {
@@ -1353,31 +1353,31 @@ function uiClickAreas() {
 		width: 320,
 		height: 16
 	}); //Start Screen - 4. Quickstart Two Player Game
-        UCA.push({
+	UCA.push({
 		x: 0,
 		y: 47,
 		width: 95,
 		height: 31
 	}); //Communication Area
-        UCA.push({
+	UCA.push({
 		x: 1,
 		y: 47,
 		width: 93,
 		height: 7
 	}); //Communication First Row
-        UCA.push({
+	UCA.push({
 		x: 1,
 		y: 55,
 		width: 93,
 		height: 7
 	}); //Communication Second Row
-        UCA.push({
+	UCA.push({
 		x: 1,
 		y: 63,
 		width: 93,
 		height: 7
 	}); //Communication Third Row
-        UCA.push({
+	UCA.push({
 		x: 1,
 		y: 71,
 		width: 93,
@@ -1731,88 +1731,102 @@ function startScreen() {
 
 }
 
-function drawCommunicationBox(p,item,forced){
-    
-    //We meed the commincation box to be drawn on its own and not with the UI as this will be updated more offern
-    //we can do a check on the player.communication.highlighted and see if it matches the current x/y then redraw if needed to hightligh the new word
-    
-  
-    
-    //Check if we actually need to redraw...
-    if (typeof item === "undefined"){
-        item === null;
-    }
-    if (typeof forced === "undefined"){
-        forced === false;
-    }
-    
-    if (p.communication.highlighted !== item || forced){
-        
-        if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1){
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);  
-        }
-        else{
-            ctx.clearRect((p.ScreenX + 57)*scale, (p.ScreenY+32)*scale, 30 * scale, 14 * scale);
-        }
-        
-        if (p.communication.mode !== COMMUNICATION_PAGE_NAMES){
-        
-            var myPage = p.communication.mode;
-        
-            for (r = 0;r < TEXT_COMMUNICATION[myPage].length;r++){
-                            ctx.fillStyle= "#606060";
-                            var myColour = COLOUR[COLOUR_YELLOW];
+function drawCommunicationBox(p, item, forced) {
 
-                            if (r === item){
-                                ctx.fillStyle = "#2020E0";
-                                myColour = COLOUR[COLOUR_WHITE];
-                            }
+	//We meed the commincation box to be drawn on its own and not with the UI as this will be updated more offern
+	//we can do a check on the player.communication.highlighted and see if it matches the current x/y then redraw if needed to hightligh the new word
 
-                            if (TEXT_COMMUNICATION[myPage][r].left){                            
-                                var x = (p.ScreenX + 1),
-                                    y = (p.ScreenY + 47) + (TEXT_COMMUNICATION[myPage][r].row * 8),
-                                    t = TEXT_COMMUNICATION[myPage][r].width;
-                                ctx.fillRect(x * scale, y * scale, t * scale, 7 * scale);
-                                writeFontImage(TEXT_COMMUNICATION[myPage][r].text, (x + 1), y, myColour);
-                            }else{
-                                var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION[myPage][r-1].width + 1),
-                                    y = (p.ScreenY + 47) + (TEXT_COMMUNICATION[myPage][r].row * 8),
-                                    t = TEXT_COMMUNICATION[myPage][r].width;
-                                ctx.fillRect(x * scale, y * scale, t * scale, 7 * scale);
-                                writeFontImage(TEXT_COMMUNICATION[myPage][r].text, (x + t)+2, y, myColour,FONT_ALIGNMENT_RIGHT);
-                            }
 
-                        }
-        }else{
-            var partyNames = [];
-            
-            for (x = 0;x<4;x++){
-                if (p.champion[x] !== p.championLeader){
-                    partyNames.push(champion[p.champion[x]].firstName);
-                }                
-            }
-            
-            for (row = 0;row<4;row++){
-                ctx.fillStyle= "#606060";
-                var myColour = COLOUR[COLOUR_YELLOW];
 
-                if (row === item){
-                    ctx.fillStyle = "#2020E0";
-                    myColour = COLOUR[COLOUR_WHITE];
-                }
+	//Check if we actually need to redraw...
+	if (typeof item === "undefined") {
+		item === null;
+	}
+	if (typeof forced === "undefined") {
+		forced === false;
+	}
 
-                var x = (p.ScreenX + 1),
-                    y = (p.ScreenY + 47) + (row * 8),
-                    t = 93;
-                ctx.fillRect(x * scale, y * scale, t * scale, 7 * scale);
-                if (partyNames.length > 0 && row < 3){
-                    writeFontImage(partyNames[row], (x + 1), y, myColour);
-                }                
-            }
-        }
-        p.communication.highlighted = item;
-    }
+	if (p.communication.highlighted !== item || forced) {
 
-    
+		if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1) {
+			ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP], (p.ScreenX + 57) * scale, (p.ScreenY + 32) * scale, gfxUI[UI_GFX_ICON_SCROLL_UP].width * scale, gfxUI[UI_GFX_ICON_SCROLL_UP].height * scale);
+			ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN], (p.ScreenX + 72) * scale, (p.ScreenY + 32) * scale, gfxUI[UI_GFX_ICON_SCROLL_DOWN].width * scale, gfxUI[UI_GFX_ICON_SCROLL_DOWN].height * scale);
+		} else {
+			ctx.clearRect((p.ScreenX + 57) * scale, (p.ScreenY + 32) * scale, 30 * scale, 14 * scale);
+		}
+
+		//if (p.communication.mode !== COMMUNICATION_PAGE_NAMES) {
+
+			var myPage = p.communication.mode;
+			var c1 = p.getOrderedChampionIds();
+			for (r = 0; r < TEXT_COMMUNICATION[myPage].length; r++) {
+				ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARK][0] + ', ' + COLOUR[COLOUR_GREY_DARK][1] + ', ' + COLOUR[COLOUR_GREY_DARK][2] + ')';
+				var myColour = COLOUR[COLOUR_YELLOW];
+
+				if (r === item) {
+					ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_BLUE_DARK][0] + ', ' + COLOUR[COLOUR_BLUE_DARK][1] + ', ' + COLOUR[COLOUR_BLUE_DARK][2] + ')';
+					myColour = COLOUR[COLOUR_WHITE];
+				}
+
+				if (TEXT_COMMUNICATION[myPage][r].left) {
+					var x = (p.ScreenX + 1);
+					var al = FONT_ALIGNMENT_LEFT;
+					var t = 1;
+				} else {
+					var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION[myPage][r - 1].width + 1);
+					var al = FONT_ALIGNMENT_RIGHT;
+					var t = TEXT_COMMUNICATION[myPage][r].width + 2;
+				}
+				var y = (p.ScreenY + 47) + (TEXT_COMMUNICATION[myPage][r].row * 8);
+				ctx.fillRect(x * scale, y * scale, TEXT_COMMUNICATION[myPage][r].width * scale, 7 * scale);
+				if(myPage === COMMUNICATION_PAGE_NAMES) {
+					var c2 = c1[r + 1];
+					var cid = p.champion[c2];
+					var ch = p.getChampion(c2);
+					if (ch !== null) {
+						writeFontImage(ch.firstName, (x + 1), y, myColour, al);
+					}
+				} else {
+					writeFontImage(TEXT_COMMUNICATION[myPage][r].text, (x + t), y, myColour, al);
+				}
+				/*} else {
+					var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION[myPage][r - 1].width + 1),
+						y = (p.ScreenY + 47) + (TEXT_COMMUNICATION[myPage][r].row * 8),
+						t = TEXT_COMMUNICATION[myPage][r].width;
+					ctx.fillRect(x * scale, y * scale, t * scale, 7 * scale);
+					writeFontImage(TEXT_COMMUNICATION[myPage][r].text, (x + t) + 2, y, myColour, FONT_ALIGNMENT_RIGHT);
+				}*/
+
+			}
+		/*} else {
+			var partyNames = [];
+
+			for (c = 0; c < this.champion.length; c++) {
+				if (p.champion[c] !== p.championLeader && p.getChampion(p) !== null) {
+					partyNames.push(champion[p.champion[c]].firstName);
+				}
+			}
+
+			for (row = 0; row < 4; row++) {
+				ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARK][0] + ', ' + COLOUR[COLOUR_GREY_DARK][1] + ', ' + COLOUR[COLOUR_GREY_DARK][2] + ')';
+				var myColour = COLOUR[COLOUR_YELLOW];
+
+				if (row === item) {
+					ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_BLUE_DARK][0] + ', ' + COLOUR[COLOUR_BLUE_DARK][1] + ', ' + COLOUR[COLOUR_BLUE_DARK][2] + ')';
+					myColour = COLOUR[COLOUR_WHITE];
+				}
+
+				var x = (p.ScreenX + 1),
+					y = (p.ScreenY + 47) + (row * 8),
+					t = 93;
+				ctx.fillRect(x * scale, y * scale, t * scale, 7 * scale);
+				if (partyNames.length > 0 && row < 3) {
+					writeFontImage(partyNames[row], (x + 1), y, myColour);
+				}
+			}
+		}*/
+		p.communication.highlighted = item;
+	}
+
+
 }
