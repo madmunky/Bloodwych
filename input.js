@@ -436,8 +436,8 @@ function processCanvasInput(pid, x, y) {
 		}
 	}
 	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
-
-		if (uiClickInArea(x, y, UI_CLICK_CHAMP1, p)) {
+            
+                if (uiClickInArea(x, y, UI_CLICK_CHAMP1, p)) {
 			toggleChampUI(0, p);
 			redrawUI(p.id, UI_REDRAW_LEFT);
 			//return pid;
@@ -460,10 +460,9 @@ function processCanvasInput(pid, x, y) {
 		}
 
 	} else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
-
+                
 		if (uiClickInArea(x, y, UI_CLICK_BACK, p)) {
-			p.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
-			p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
+                        checkBackButton(p);
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, p)) {
 			alert('PAUSED');
@@ -479,14 +478,26 @@ function processCanvasInput(pid, x, y) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
 			return pid;
 		}
-		//            if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, p)) {
-		//                alert('TOGGLE UP');
-		//                return pid;
-		//            }
-		//            if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, p)) {
-		//                alert('TOGGLE DOWN');
-		//                return pid;
-		//            }
+                if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1){
+                    	if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, p)) {
+                            var t = p.communication.mode + 1;
+                            if (t > 2){
+                                t = 1;
+                            }                            
+		            p.communication.mode = t;
+                            return pid;
+                        }
+                        if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, p)) {
+                            var t = p.communication.mode - 1;
+                            if (t < 1){
+                                t = 2;
+                            }                            
+		            p.communication.mode = t;
+                            return pid;
+                        }
+                }
+                
+                checkCommunicationArea(p,x,y,false);
 	}
 	if (p.sleeping) {
 		p.wakeUp();
@@ -558,28 +569,272 @@ function mouseXY(e) {
 		}
                 if (typeof player !== 'undefined'){
                     for (p in player){
-                        checkCommunicationArea(player[p],mouseX / (scale * scaleReal),mouseY / (scale * scaleReal));
+                        checkCommunicationArea(player[p],mouseX / (scale * scaleReal),mouseY / (scale * scaleReal),true);
                     }
                 }
             }
 
 }
 
-function checkCommunicationArea(p,x,y){
+function leftOrRight(p,x,row){
+    
+    if (TEXT_COMMUNICATION[p.communication.mode][row].width <= x) {
+        return false;
+    }
+    
+    return true;   
+    
+}
+
+function checkBackButton(p){
+    
+    switch (p.communication.mode){
+        
+        case COMMUNICATION_PAGE_MAIN: {
+                p.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
+		p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
+        }break;
+        case COMMUNICATION_PAGE_COMMUNICATE_0: {
+                p.communication.mode = COMMUNICATION_PAGE_MAIN;
+        }break;
+        case COMMUNICATION_PAGE_COMMUNICATE_1: {
+                p.communication.mode = COMMUNICATION_PAGE_MAIN;
+        }break;
+        case COMMUNICATION_PAGE_IDENTIFY: {
+               p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0; 
+        }break;
+        case COMMUNICATION_PAGE_INQUIRY: {
+                p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0; 
+        }break;
+        case COMMUNICATION_PAGE_TRADING: {
+                p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_1; 
+        }break;
+        case COMMUNICATION_PAGE_SMALLTALK: {
+                p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_1; 
+        }break;
+        case COMMUNICATION_PAGE_NAMES: {
+                p.communication.mode = COMMUNICATION_PAGE_MAIN;
+        }break;
+    }
+    
+    			
+    
+    
+}
+
+function doCommuncation(p,item){
+    
+    switch (p.communication.mode){
+        
+        case COMMUNICATION_PAGE_MAIN:{
+                switch (item){                    
+                    case 0:{p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;}break
+                    case 1:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "COMMEND";}break
+                    case 2:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "VIEW";}break
+                    case 3:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "WAIT";}break
+                    case 4:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "CORRECT";}break
+                    case 5:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "DISMISS";}break
+                    case 6:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "CALL";}break                    
+                }
+        };break
+        case COMMUNICATION_PAGE_COMMUNICATE_0:{
+             switch (item){                    
+                    case 0:{p.communcation.action = "RECRUIT";}break
+                    case 1:{p.communication.mode = COMMUNICATION_PAGE_IDENTIFY;}break
+                    case 2:{p.communication.mode = COMMUNICATION_PAGE_INQUIRY;}break
+                    case 3:{p.communcation.action = "WHEREABOUTS";}break   
+                }   
+        };break
+        case COMMUNICATION_PAGE_COMMUNICATE_1:{
+                switch (item){                    
+                    case 0:{p.communication.mode = COMMUNICATION_PAGE_TRADING;}break
+                    case 1:{p.communication.mode = COMMUNICATION_PAGE_SMALLTALK;}break
+                    case 2:{p.communcation.action = "YES";}break
+                    case 3:{p.communcation.action = "NO";}break
+                    case 4:{p.communcation.action = "BRIBE";}break   
+                    case 5:{p.communcation.action = "THREAT";}break      
+                }   
+        };break
+        case COMMUNICATION_PAGE_IDENTIFY:{
+               switch (item){                    
+                    case 0:{p.communcation.action = "WHO GOES?";}break
+                    case 1:{p.communcation.action = "THY TRADE?";}break
+                    case 2:{p.communcation.action = "NAME SELF";}break
+                    case 3:{p.communcation.action = "REVEAL SELF";}break    
+                }    
+        };break
+        case COMMUNICATION_PAGE_INQUIRY:{
+                switch (item){                    
+                    case 0:{p.communcation.action = "FOLK LORE";}break
+                    case 1:{p.communcation.action = "MAGIC ITEMS";}break
+                    case 2:{p.communcation.action = "OBJECTS";}break
+                    case 3:{p.communcation.action = "PERSONS";}break       
+                }   
+        };break
+        case COMMUNICATION_PAGE_TRADING:{
+                switch (item){                    
+                    case 0:{p.communcation.action = "OFFER";}break
+                    case 1:{p.communcation.action = "PURCHASE";}break
+                    case 2:{p.communcation.action = "EXCHANGE";}break
+                    case 3:{p.communcation.action = "SELL";}break    
+                }   
+        };break
+        case COMMUNICATION_PAGE_SMALLTALK:{
+                switch (item){                    
+                    case 0:{p.communcation.action = "PRAISE";}break
+                    case 1:{p.communcation.action = "CURSE";}break
+                    case 2:{p.communcation.action = "BOAST";}break
+                    case 3:{p.communcation.action = "RETORT";}break    
+                }   
+        };break
+        case COMMUNICATION_PAGE_NAMES:{
+                switch (item){                    
+                    case 0:{p.communcation.action = "";}break
+                    case 1:{p.communcation.action = "";}break
+                    case 2:{p.communcation.action = "";}break
+                    case 3:{p.communcation.action = "";}break    
+                }    
+        };break
+        
+    }
+    
+    drawCommunicationBox(p,item,true);
+    
+}
+
+function checkCommunicationArea(p,x,y,hover){
     if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND){
         if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA, p)){
-            if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)){
-                drawCommunicationBox(p,0);    
+            if (p.communication.mode === COMMUNICATION_PAGE_MAIN){
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)){
+                    if (hover){
+                        drawCommunicationBox(p,0);
+                    }else{
+                        doCommuncation(p,0);
+                    }                    
+                }
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)){
+                   if (leftOrRight(p,x,1)){
+                       if (hover){
+                         drawCommunicationBox(p,1);    
+                        }else{
+                         doCommuncation(p,1);  
+                        }
+                    }else{
+                        if (hover){
+                         drawCommunicationBox(p,2);    
+                        }else{
+                         doCommuncation(p,2);  
+                        }  
+                    }    
+                }
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)){
+                    if (leftOrRight(p,x,3)){
+                        if (hover){
+                         drawCommunicationBox(p,3);    
+                        }else{
+                         doCommuncation(p,3);  
+                        }    
+                    }else{
+                        if (hover){
+                         drawCommunicationBox(p,4);    
+                        }else{
+                         doCommuncation(p,4);  
+                        }  
+                    }   
+                }
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)){
+                    if (leftOrRight(p,x,5)){
+                        if (hover){
+                         drawCommunicationBox(p,5);    
+                        }else{
+                         doCommuncation(p,5);  
+                        }    
+                    }else{
+                        if (hover){
+                         drawCommunicationBox(p,6);    
+                        }else{
+                         doCommuncation(p,6);  
+                        }  
+                    }    
+                }
             }
-            if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)){
-                drawCommunicationBox(p,1);    
+            else if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1){
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)){
+                    if (hover){
+                         drawCommunicationBox(p,0);    
+                        }else{
+                         doCommuncation(p,0);  
+                        }
+                }
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)){
+                    if (hover){
+                         drawCommunicationBox(p,1);    
+                        }else{
+                         doCommuncation(p,1);  
+                        }
+                }
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)){
+                    if (leftOrRight(p,x,2)){
+                        if (hover){
+                         drawCommunicationBox(p,2);    
+                        }else{
+                         doCommuncation(p,2);  
+                        }    
+                    }else{
+                        if (hover){
+                         drawCommunicationBox(p,3);    
+                        }else{
+                         doCommuncation(p,3);  
+                        } 
+                    }   
+                }
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)){
+                    if (leftOrRight(p,x,4)){
+                        if (hover){
+                         drawCommunicationBox(p,4);    
+                        }else{
+                         doCommuncation(p,4);  
+                        }    
+                    }else{
+                        if (hover){
+                         drawCommunicationBox(p,5);    
+                        }else{
+                         doCommuncation(p,5);  
+                        }  
+                    }    
+                }
             }
-            if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)){
-                drawCommunicationBox(p,2);    
-            }
-            if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)){
-                drawCommunicationBox(p,3);    
-            }
+            else if (p.communication.mode === COMMUNICATION_PAGE_NAMES || p.communication.mode === COMMUNICATION_PAGE_SMALLTALK || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_TRADING || p.communication.mode === COMMUNICATION_PAGE_IDENTIFY || p.communication.mode === COMMUNICATION_PAGE_INQUIRY){
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FIRST_ROW, p)){
+                   if (hover){
+                         drawCommunicationBox(p,0);    
+                        }else{
+                         doCommuncation(p,0);  
+                        }                    
+                }
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_SECOND_ROW, p)){
+                   if (hover){
+                         drawCommunicationBox(p,1);    
+                        }else{
+                         doCommuncation(p,1);  
+                        }      
+                }
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_THIRD_ROW, p)){
+                   if (hover){
+                         drawCommunicationBox(p,2);    
+                        }else{
+                         doCommuncation(p,2);  
+                        }     
+                }
+                if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA_FORTH_ROW, p)){
+                   if (hover){
+                         drawCommunicationBox(p,3);    
+                        }else{
+                         doCommuncation(p,3);  
+                        }      
+                }
+            }            
             console.log("Hovering Row - " +p.communication.highlighted);
         }
         else{

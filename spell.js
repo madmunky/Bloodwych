@@ -383,8 +383,8 @@ function castSpell(s, src, pw) {
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.x, y - xy.y, (d + 2) % 4, src);
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.x - xy.y, y - xy.y - xy.x, (d + 2) % 4, src);
 
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.y, y + xy.x, (d + 3) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.y, y - xy.x, (d + 1) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.y, y + xy.x, (d + 1) % 4, src);
+                        newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.y, y - xy.x, (d + 3) % 4, src);
 			break;
 		default:
 			break;

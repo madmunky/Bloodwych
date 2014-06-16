@@ -996,14 +996,54 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
 		"FOR THOSE WHO THINK THEY LOVE WALLS",
 		"JUST BLOW THEM AWAY"
 	],
-        TEXT_COMMUNICATION = {MAIN: ["COMMUNICATE","COMMEND","VIEW","WAIT","CORRECT","DISMISS","CALL"],
-                              COMMUNICATE_0: ["RECRUIT","IDENTIFY","INQUIRY","WHEREABOUTS"],
-                              COMMUNICATE_1: ["TRADING","SMALLTALK","YES","NO","BRIBE","THREAT"],
-                              IDENTIFY: ["WHO GOES?","THY TRADE?","NAME SELF","REVEAL SELF"],
-                              INQUIRY: ["FOLK LORE","MAGIC ITEMS","OBJECTS","PERSONS"],
-                              TRADING: ["OFFER","PURCHASE","EXCHANGE","SELL"],
-                              SMALLTALK: ["PRAISE","CURSE","BOAST","RETORT"]
-                         },
+        TEXT_COMMUNICATION = [[
+                                {text: "COMMUNICATE", row:0,width:93,left:true},
+                                {text: "COMMEND", row:1,width:59,left:true},
+                                {text: "VIEW", row:1,width:33,left:false},
+                                {text: "WAIT", row:2,width:35,left:true},
+                                {text: "CORRECT", row:2,width:57,left:false},
+                                {text: "DISMISS", row:3,width:59,left:true},
+                                {text: "CALL", row:3,width:33,left:false}
+                                ],
+                              [
+                                {text: "RECRUIT", row:0,width:93,left:true},
+                                {text: "IDENTIFY", row:1,width:93,left:true},
+                                {text: "INQUIRY", row:2,width:93,left:true},
+                                {text: "WHEREABOUTS", row:3,width:93,left:true}
+                              ],
+                              [
+                                  {text: "TRADING", row:0,width:93,left:true},
+                                  {text: "SMALLTALK", row:1,width:93,left:true},
+                                  {text: "YES", row:2,width:43,left:true},
+                                  {text: "NO", row:2,width:49,left:false},
+                                  {text: "BRIBE", row:3,width:43,left:true},
+                                  {text: "THREAT", row:3,width:49,left:false}
+                              ],
+                              [
+                                  {text: "WHO GOES?", row:0,width:93,left:true},
+                                  {text: "THY TRADE?", row:1,width:93,left:true},
+                                  {text: "NAME SELF", row:2,width:93,left:true},
+                                  {text: "REVEAL SELF", row:3,width:93,left:true}
+                              ],
+                              [
+                                  {text: "FOLK LORE", row:0,width:93,left:true},
+                                  {text: "MAGIC ITEMS", row:1,width:93,left:true},
+                                  {text: "OBJECTS", row:2,width:93,left:true},
+                                  {text: "PERSONS", row:3,width:93,left:true}
+                              ],
+                              [
+                                  {text: "OFFER", row:0,width:93,left:true},
+                                  {text: "PURCHASE", row:1,width:93,left:true},
+                                  {text: "EXCHANGE", row:2,width:93,left:true},
+                                  {text: "SELL", row:3,width:93,left:true}
+                              ],
+                              [
+                                  {text: "PRAISE", row:0,width:93,left:true},
+                                  {text: "CURSE", row:1,width:93,left:true},
+                                  {text: "BOAST", row:2,width:93,left:true},
+                                  {text: "RETORT", row:3,width:93,left:true}
+                              ]
+                         ],
 
 	scrollData = null;
 
@@ -1011,7 +1051,7 @@ var COMMUNICATION_PAGE_MAIN = 0,
         COMMUNICATION_PAGE_COMMUNICATE_0 = 1,
         COMMUNICATION_PAGE_COMMUNICATE_1 = 2,
         COMMUNICATION_PAGE_IDENTIFY = 3,
-        COMMUNICATION_PAGE_INQUITY = 4,
+        COMMUNICATION_PAGE_INQUIRY = 4,
         COMMUNICATION_PAGE_TRADING = 5,
         COMMUNICATION_PAGE_SMALLTALK = 6,
         COMMUNICATION_PAGE_NAMES = 7;
