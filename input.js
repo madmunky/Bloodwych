@@ -629,70 +629,70 @@ function doCommuncation(p,item){
         case COMMUNICATION_PAGE_MAIN:{
                 switch (item){                    
                     case 0:{p.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;}break
-                    case 1:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "COMMEND";}break
-                    case 2:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "VIEW";}break
-                    case 3:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "WAIT";}break
-                    case 4:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "CORRECT";}break
-                    case 5:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "DISMISS";}break
-                    case 6:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communcation.action = "CALL";}break                    
+                    case 1:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communication.action = "COMMEND";}break
+                    case 2:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communication.action = "VIEW";}break
+                    case 3:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communication.action = "WAIT";}break
+                    case 4:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communication.action = "CORRECT";}break
+                    case 5:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communication.action = "DISMISS";}break
+                    case 6:{p.communication.mode = COMMUNICATION_PAGE_NAMES;p.communication.action = "CALL";}break                    
                 }
         };break
         case COMMUNICATION_PAGE_COMMUNICATE_0:{
              switch (item){                    
-                    case 0:{p.communcation.action = "RECRUIT";}break
+                    case 0:{p.communication.action = "RECRUIT";}break
                     case 1:{p.communication.mode = COMMUNICATION_PAGE_IDENTIFY;}break
                     case 2:{p.communication.mode = COMMUNICATION_PAGE_INQUIRY;}break
-                    case 3:{p.communcation.action = "WHEREABOUTS";}break   
+                    case 3:{p.communication.action = "WHEREABOUTS";}break   
                 }   
         };break
         case COMMUNICATION_PAGE_COMMUNICATE_1:{
                 switch (item){                    
                     case 0:{p.communication.mode = COMMUNICATION_PAGE_TRADING;}break
                     case 1:{p.communication.mode = COMMUNICATION_PAGE_SMALLTALK;}break
-                    case 2:{p.communcation.action = "YES";}break
-                    case 3:{p.communcation.action = "NO";}break
-                    case 4:{p.communcation.action = "BRIBE";}break   
-                    case 5:{p.communcation.action = "THREAT";}break      
+                    case 2:{p.communication.action = "YES";}break
+                    case 3:{p.communication.action = "NO";}break
+                    case 4:{p.communication.action = "BRIBE";}break   
+                    case 5:{p.communication.action = "THREAT";}break      
                 }   
         };break
         case COMMUNICATION_PAGE_IDENTIFY:{
                switch (item){                    
-                    case 0:{p.communcation.action = "WHO GOES?";}break
-                    case 1:{p.communcation.action = "THY TRADE?";}break
-                    case 2:{p.communcation.action = "NAME SELF";}break
-                    case 3:{p.communcation.action = "REVEAL SELF";}break    
+                    case 0:{p.communication.action = "WHO GOES?";}break
+                    case 1:{p.communication.action = "THY TRADE?";}break
+                    case 2:{p.communication.action = "NAME SELF";}break
+                    case 3:{p.communication.action = "REVEAL SELF";}break    
                 }    
         };break
         case COMMUNICATION_PAGE_INQUIRY:{
                 switch (item){                    
-                    case 0:{p.communcation.action = "FOLK LORE";}break
-                    case 1:{p.communcation.action = "MAGIC ITEMS";}break
-                    case 2:{p.communcation.action = "OBJECTS";}break
-                    case 3:{p.communcation.action = "PERSONS";}break       
+                    case 0:{p.communication.action = "FOLK LORE";}break
+                    case 1:{p.communication.action = "MAGIC ITEMS";}break
+                    case 2:{p.communication.action = "OBJECTS";}break
+                    case 3:{p.communication.action = "PERSONS";}break       
                 }   
         };break
         case COMMUNICATION_PAGE_TRADING:{
                 switch (item){                    
-                    case 0:{p.communcation.action = "OFFER";}break
-                    case 1:{p.communcation.action = "PURCHASE";}break
-                    case 2:{p.communcation.action = "EXCHANGE";}break
-                    case 3:{p.communcation.action = "SELL";}break    
+                    case 0:{p.communication.action = "OFFER";}break
+                    case 1:{p.communication.action = "PURCHASE";}break
+                    case 2:{p.communication.action = "EXCHANGE";}break
+                    case 3:{p.communication.action = "SELL";}break    
                 }   
         };break
         case COMMUNICATION_PAGE_SMALLTALK:{
                 switch (item){                    
-                    case 0:{p.communcation.action = "PRAISE";}break
-                    case 1:{p.communcation.action = "CURSE";}break
-                    case 2:{p.communcation.action = "BOAST";}break
-                    case 3:{p.communcation.action = "RETORT";}break    
+                    case 0:{p.communication.action = "PRAISE";}break
+                    case 1:{p.communication.action = "CURSE";}break
+                    case 2:{p.communication.action = "BOAST";}break
+                    case 3:{p.communication.action = "RETORT";}break    
                 }   
         };break
         case COMMUNICATION_PAGE_NAMES:{
                 switch (item){                    
-                    case 0:{p.communcation.action = "";}break
-                    case 1:{p.communcation.action = "";}break
-                    case 2:{p.communcation.action = "";}break
-                    case 3:{p.communcation.action = "";}break    
+                    case 0:{p.communication.action = "";}break
+                    case 1:{p.communication.action = "";}break
+                    case 2:{p.communication.action = "";}break
+                    case 3:{p.communication.action = "";}break    
                 }    
         };break
         
