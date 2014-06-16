@@ -1751,7 +1751,10 @@ function drawCommunicationBox(p,item,forced){
         if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1){
             ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP],(p.ScreenX + 57)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].width*scale,gfxUI[UI_GFX_ICON_SCROLL_UP].height*scale);    
             ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN],(p.ScreenX + 72)*scale,(p.ScreenY+32)*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].width*scale,gfxUI[UI_GFX_ICON_SCROLL_DOWN].height*scale);  
-        }        
+        }
+        else{
+            ctx.clearRect((p.ScreenX + 57)*scale, (p.ScreenY+32)*scale, 30 * scale, 14 * scale);
+        }
         
         if (p.communication.mode !== COMMUNICATION_PAGE_NAMES){
         
