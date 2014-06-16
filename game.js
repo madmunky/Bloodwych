@@ -51,7 +51,7 @@ function timerAction() {
 		monsterAttackSequence = 0;
 		mon = getMonstersInTower(towerThis);
 		for (m in mon) {
-			//mon[m].move();
+			mon[m].move();
 		}
 	}
 	if (timerMaster - timerMonsterAttack >= 3) {
@@ -100,7 +100,7 @@ function timerAction() {
 				m--;
 			}
 		}
-		for (p = 0; p < projectile[towerThis].length; p++) {
+		for (var p = 0; p < projectile[towerThis].length; p++) {
 			if (projectile[towerThis][p].dead >= 3) {
 				projectile[towerThis].splice(p, 1);
 				p--;
@@ -113,7 +113,7 @@ function timerAction() {
 	}
 	//if (timerMaster - projectileTimer >= 3) {
 		//projectileTimer = timerMaster;
-		for (p = 0; p < projectile[towerThis].length; p++) {
+		for (var p = 0; p < projectile[towerThis].length; p++) {
 			if(timerMaster - projectile[towerThis][p].timer >= 2) {
 				projectile[towerThis][p].timer = timerMaster;
 				projectile[towerThis][p].moveProjectile();

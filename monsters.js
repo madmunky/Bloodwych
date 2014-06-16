@@ -86,8 +86,8 @@ Monster.prototype.canMove = function() {
 
 	if (this.teamId > 0 || sq === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
 		var ob = canMove(this.floor, this.x, this.y, this.d);
-		if(ob === 3 && this.canOpenDoor()) {
-			return 5;
+		if(ob === OBJECT_WOOD && this.canOpenDoor()) {
+			return OBJECT_WOOD_DOOR;
 		}
 		return ob;
 	}
@@ -137,7 +137,7 @@ Monster.prototype.canMove = function() {
 		}
 	}
 	return 1;*/
-	return 0;
+	return OBJECT_NONE;
 }
 
 Monster.prototype.assembleTeamWith = function(m) {
@@ -185,8 +185,8 @@ Monster.prototype.move = function() {
 	if (!this.dead && this.teamId >= 0 && this.isRecruitedBy() === null) {
 		this.attack(false);
 		var canMove = this.canMove();
-		if (canMove === 1 && this.canInteract() > -1) return;
-		if (canMove === 0) {
+		if (canMove === OBJECT_CHARACTER && this.canInteract() > -1) return;
+		if (canMove === OBJECT_NONE) {
 			xy = getOffsetByRotation(this.d);
 			if (this.teamId > 0 || this.square === CHAR_FRONT_SOLO) {
 				if (this.followPlayer()) return;
@@ -211,7 +211,7 @@ Monster.prototype.move = function() {
 				}
 				this.square = this.getSquareByDirNext();
 			}
-		} else if (canMove !== 5) {
+		} else if (canMove !== OBJECT_WOOD_DOOR) {
 			if (this.followPlayer()) {
 				return;
 			} else {
@@ -508,16 +508,16 @@ function initMonsters(t) {
 
 	//TESTING!!! REMOVE AFTER
 	if (t.id === TOWER_MOD0) {
-		var testType = 102;
+		/*var testType = 102;
 		var max = monster[t.id].length;
-		monster[t.id][max] = new Monster(max, 0, 3, testType, t.id, 3, 12, 18, 2, CHAR_FRONT_SOLO, 0);
+		monster[t.id][max] = new Monster(max, 0, 0, testType, t.id, 3, 12, 18, 2, CHAR_FRONT_SOLO, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 3, 3, testType, t.id, 3, 14, 19, 2, CHAR_FRONT_LEFT, 0);
+		monster[t.id][max] = new Monster(max, 3, 0, testType, t.id, 3, 14, 19, 2, CHAR_FRONT_LEFT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 6, 3, testType, t.id, 3, 14, 18, 2, CHAR_FRONT_RIGHT, 0);
+		monster[t.id][max] = new Monster(max, 6, 0, testType, t.id, 3, 14, 18, 2, CHAR_FRONT_RIGHT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 9, 3, testType, t.id, 3, 13, 20, 0, CHAR_FRONT_SOLO, 0);
-		max++;                
+		monster[t.id][max] = new Monster(max, 9, 0, testType, t.id, 3, 13, 20, 0, CHAR_FRONT_SOLO, 0);
+		max++;*/
 	}
 }
 

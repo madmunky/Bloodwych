@@ -9,7 +9,7 @@ function Spell(colour, id, name, description, symbols, level) {
 	var pr = getSpellPageAndRow(colour, id);
 	this.page = pr.page;
 	this.row = pr.row;
-	this.power = getSpellPower(id);
+	this.power = getSpellPower(id + colour * 8);
 }
 
 Spell.prototype.toString = function() {
@@ -99,10 +99,10 @@ function getSpellPageAndRow(c, i) {
 }
 
 function getSpellById(id) {
-	if(id > -1) {
+	if (id > -1) {
 		var cl = Math.floor(id / 8);
 		var s = id % 8;
-		if(typeof spell[cl] !== "undefined" && typeof spell[cl][s] !=="undefined") {
+		if (typeof spell[cl] !== "undefined" && typeof spell[cl][s] !== "undefined") {
 			return spell[cl][s];
 		}
 	}
@@ -157,7 +157,7 @@ function getSpellPower(id) {
 		case SPELL_VIVIFY:
 			return 1;
 		case SPELL_DISRUPT:
-			return 4;
+			return 16;
 
 			//dragon
 		case SPELL_MISSILE:
@@ -206,6 +206,7 @@ function castSpell(s, src, pw) {
 		pow = 63;
 	}
 	pow = pow * sp.power;
+	PrintLog('SPELLPOWER: ' + pow + ' ' + sp.power);
 	var f = src.floor;
 	var x = src.x;
 	var y = src.y;
@@ -233,7 +234,7 @@ function castSpell(s, src, pw) {
 			ch.activateSpell(s, pow);
 			break;
 		case SPELL_ARC_BOLT:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_SERPENT_BIG, s, pow, f, x1, y1, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_SERPENT_BIG, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_FORMWALL:
 			if (src.getBinaryView(15, 0, 16) === '0000') {
@@ -258,13 +259,13 @@ function castSpell(s, src, pw) {
 		case SPELL_ALCHEMY:
 			break;
 		case SPELL_SUMMON:
-			if (canMove(f, x, y, d, 0) === 0) {
+			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
 				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
 			}
 			break;
 		case SPELL_VIVIFY:
-			if (canMove(f, x, y, d, 0) === 0 && getMonsterAt(f, x1, y1) === null) {
+			if (canMove(f, x, y, d) === OBJECT_NONE && getMonsterAt(f, x1, y1) === null) {
 				for (i = item[towerThis].length - 1; i >= 0; i--) {
 					var it = item[towerThis][i];
 					if (it.id >= ITEM_BLODWYN_RIP && it.id <= ITEM_THAI_CHANG_RIP && it.location.tower === towerThis && it.location.floor === f && it.location.x === x1 && it.location.y === y1) {
@@ -294,18 +295,21 @@ function castSpell(s, src, pw) {
 								redrawUI(p.id);
 							}
 						}
-						newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_CHAOS_BIG, -1, 0, f, x1, y1, 0, null);
+						newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_CHAOS_BIG, -1, 0, f, x, y, 0, null);
 						return;
 					}
 				}
 			}
 			break;
 		case SPELL_DISRUPT:
-                        newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISTRUPT_BIG, s, pow, f, x1, y1, d, src);
+			if(Math.random() > 0.01 * pow) {
+				pow = 1;
+			}
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISTRUPT_BIG, s, pow, f, x, y, d, src);
 			break;
 			//dragon
 		case SPELL_MISSILE:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, s, pow, f, x1, y1, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_MAGELOCK:
 			if (src.getBinaryView(18, 12, 4) === '2' && src.getBinaryView(18, ((5 + 2 - d) % 4) * 2) === '1') {
@@ -323,15 +327,15 @@ function castSpell(s, src, pw) {
 			break;
 
 		case SPELL_FIREBALL:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x1, y1, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_FIREPATH:
-                        newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, s, pow, f, x1, y1, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_RECHARGE:
 			break;
 		case SPELL_BLAZE:
-                        newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x1, y1, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x, y, d, src);
 			break;
 
 			//moon
@@ -361,7 +365,7 @@ function castSpell(s, src, pw) {
 			ch.activateSpell(s, pow);
 			break;
 		case SPELL_ILLUSION:
-			if (canMove(f, x, y, d, 0) === 0) {
+			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
 				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
 				monster[towerThis][max].hp = 0;
@@ -375,16 +379,14 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_WYCHWIND:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.x - xy.y, y + xy.y - xy.x, d, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.x, y + xy.y, d, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.x + xy.y, y + xy.y + xy.x, d, src);
-
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.x + xy.y, y - xy.y + xy.x, (d + 2) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.x, y - xy.y, (d + 2) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.x - xy.y, y - xy.y - xy.x, (d + 2) % 4, src);
-
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.y, y + xy.x, (d + 1) % 4, src);
-                        newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.y, y - xy.x, (d + 3) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.y, y - xy.x, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.y, y + xy.x, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.y, y + xy.x, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x, y, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.y, y - xy.x, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x, y, (d + 1) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x, y, (d + 3) % 4, src);
 			break;
 		default:
 			break;

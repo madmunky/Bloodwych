@@ -119,6 +119,9 @@ function canMove(f, x, y, d, to) {
 	} else if (getMonsterAt(f, x + xy.x, y + xy.y) !== null) { //monster
 		return OBJECT_CHARACTER;
 	}
+	if(getProjectilesAt(f, x + xy.x, y + xy.y).length > 0) {
+		return OBJECT_PROJECTILE;
+	}
 
 	//Check other objects
 	if(objNext == '3') {

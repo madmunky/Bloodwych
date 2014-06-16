@@ -88,7 +88,7 @@ function loadGfxData() {
 	//Floors
 	gfxLoadImage("dungeon", "floor", "pit-down");
 	gfxLoadImage("dungeon", "floor", "pit-up");
-	gfxLoadImage("dungeon", "floor", "switch");
+	gfxLoadImage("dungeon", "floor", "path", 2);
 
 	//Items
 	gfxLoadImage("dungeon", "items2", "");

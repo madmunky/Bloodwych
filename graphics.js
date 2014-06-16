@@ -109,7 +109,7 @@ function getImage(Hex, d, pos, p, pos18) {
 				case '1':
 					return gfx["dungeon"]["floor"]["pit-down"];
 				case '2':
-					return gfx["dungeon"]["floor"]["switch"];
+					return gfx["dungeon"]["floor"]["path"][COLOUR_FLOOR_SWITCH];
 				default:
 					return null;
 			}
@@ -756,6 +756,9 @@ function recolorImage(img, colour, folder, type, item) {
 		} else if (type === "door") { //Doors
 			palletDefault = objectPalette["door"]["default"];
 			pallet = objectPalette["door"][colour];
+		} else if (type === "floor" && item === "path") { //Floor switches
+			palletDefault = objectPalette["floor"]["default"];
+			pallet = objectPalette["floor"][colour];
 		}
 	}
 	for (var i = 0; i < imageData.data.length; i += 4) {

@@ -41,21 +41,30 @@ Projectile.prototype.moveProjectile = function() {
 				this.d = (this.d + dNew) % 4;
 			}
 		}
-		var mon = getMonsterAt(this.floor, this.x, this.y);
-		if((obNext >= OBJECT_WOOD && obNext <= OBJECT_GEM) || msc || mon !== null) {
-			if(typeof this.monster !== "undefined") {
-				if(mon !== null) {
-					for(p = 0; p < player.length; p++) {
-						if (this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
-							this.attack(player[p]);
-							this.dead = 2;
-							return false;
-						}
+		if(typeof this.monster !== "undefined") {
+			var mon = getMonsterAt(this.floor, this.x, this.y);
+			if(mon !== null) {
+				for(var p = 0; p < player.length; p++) {
+					if (this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
+						this.attack(player[p]);
+						this.dead = 2;
+						return false;
 					}
-					this.attack(mon);
 				}
+				this.attack(mon);
+				this.dead = 2;
+				return false;
 			}
+		}
+		if((obNext >= OBJECT_WOOD && obNext <= OBJECT_GEM) || msc) {
 			this.dead = 2;
+			return false;
+		}
+		var pr = getProjectilesAt(this.floor, this.x, this.y);
+		if(pr.length > 1) {
+			for(var p = 0; p < pr.length; p++) {
+				pr[p].dead = 2;
+			}
 			return false;
 		}
 	} else if(this.dead === 1) {
@@ -97,8 +106,25 @@ function newProjectile(type, palette, s, power, f, x, y, d, m) {
 		return false;
 	}
 	var pmax = projectile[towerThis].length;
-	projectile[towerThis][pmax] = new Projectile(pmax, type, palette, s, power, towerThis, f, x, y, d, m);
+	if(s > -1) {
+		var xy = getOffsetByRotation(d);
+		if (canMove(f, x, y, d) !== OBJECT_WALL && canMove(f, x, y, d) !== OBJECT_WOOD) {
+			projectile[towerThis][pmax] = new Projectile(pmax, type, palette, s, power, towerThis, f, x + xy.x, y + xy.y, d, m);
+		}
+	} else {
+		projectile[towerThis][pmax] = new Projectile(pmax, type, palette, s, power, towerThis, f, x, y, d, m);
+	}
 	return true;
+}
+
+function getProjectilesAt(f, x, y) {
+	var pr = new Array();
+	for (p = 0; p < projectile[towerThis].length; p++) {
+		if (projectile[towerThis][p].dead === 0 && projectile[towerThis][p].floor === f && projectile[towerThis][p].x === x && projectile[towerThis][p].y === y) {
+			pr.push(projectile[towerThis][p]);
+		}
+	}
+	return pr;
 }
 
 function getProjectileDistanceByPos(pos) {
