@@ -36,7 +36,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 			this.spellBook[pg][rw].learnt = false;
 			this.spellBook[pg][rw].castSuccessful = 0;
 			this.spellBook[pg][rw].ref = spl[rw];
-			this.spellBook[pg][rw].id = spl[rw].id + spl[rw].colour * 8;
+			this.spellBook[pg][rw].id = spl[rw].index;
 			this.spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
 			if (spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
 				this.spellBook[pg][rw].castSuccessful = 5;

@@ -3,9 +3,9 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	this.level = level;
 	this.type = type;
 	var clr = 0;
-	if(form >= MON_FORM_ILLUSION && form < MON_FORM_BEHEMOTH) {
+	if (form >= MON_FORM_ILLUSION && form < MON_FORM_BEHEMOTH) {
 		clr = Math.floor(level / 2.5);
-		if(clr > 7) {
+		if (clr > 7) {
 			clr = 7;
 		}
 	}
@@ -63,7 +63,7 @@ Monster.prototype.canInteract = function() {
 			}
 		}
 		var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
-		if(mon !== null) {
+		if (mon !== null) {
 			if (mon.type === MON_TYPE_MAGICAL || this.type === MON_TYPE_MAGICAL || mon.champId > -1) {
 				//attack champion
 				this.attack(true, mon);
@@ -86,13 +86,13 @@ Monster.prototype.canMove = function() {
 
 	if (this.teamId > 0 || sq === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
 		var ob = canMove(this.floor, this.x, this.y, this.d);
-		if(ob === OBJECT_WOOD && this.canOpenDoor()) {
+		if (ob === OBJECT_WOOD && this.canOpenDoor()) {
 			return OBJECT_WOOD_DOOR;
 		}
 		return ob;
 	}
 
-/*		var hexThis = this.getBinaryView(18, 0, 16);
+	/*		var hexThis = this.getBinaryView(18, 0, 16);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		var objThis = getHexToBinaryPosition(hexThis, 12, 4);
 		var objNext = getHexToBinaryPosition(hexNext, 12, 4);
@@ -193,6 +193,7 @@ Monster.prototype.move = function() {
 				this.x += xy.x;
 				this.y += xy.y;
 				updateMonsterTeam(this.teamId);
+				this.doEvent();
 				//} else if (this.square === CHAR_FRONT_SOLO) {
 				//if (this.followPlayer()) return;
 				//this.x += xy.x;
@@ -205,6 +206,7 @@ Monster.prototype.move = function() {
 						if (this.followPlayer()) return;
 						this.x += xy.x;
 						this.y += xy.y;
+						this.doEvent();
 						break;
 					default:
 						break;
@@ -219,6 +221,23 @@ Monster.prototype.move = function() {
 				this.rotateTo((this.d + turn + 4) % 4);
 			}
 		}
+	}
+}
+
+Monster.prototype.doEvent = function() {
+	hex18 = tower[towerThis].floor[this.floor].Map[this.y][this.x];
+	switch (getHexToBinaryPosition(hex18, 12, 4)) {
+		case '7':
+			if (getHexToBinaryPosition(hex18, 6, 2) === '1') { //firepath
+				var ds = getDungeonSpell(this.floor, this.x, this.y);
+				if (ds !== null) {
+					var prc = hex2dec(getHexToBinaryPosition(hex18, 0, 6)) / 64.0;
+					ds.projectile.attack(this, prc);
+				}
+			}
+			break;
+		default:
+			break;
 	}
 }
 
@@ -430,25 +449,25 @@ Monster.prototype.getDamage = function(dmg) {
 }
 
 Monster.prototype.die = function() {
-	if(!this.dead) {
+	if (!this.dead) {
 		this.dead = true;
 		this.attacking = false;
 		this.hp = -1;
 		updateMonsterTeam(this.teamId);
 		var sq = this.square;
-		if(sq === -1) {
+		if (sq === -1) {
 			sq = 0;
 		}
 		if (this.champId > -1) {
 			var ch = champion[this.champId];
-			if(this.isRecruitedBy() === null || !ch.recruitment.attached) {
+			if (this.isRecruitedBy() === null || !ch.recruitment.attached) {
 				dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, sq);
 			}
-		} else if(this.type !== MON_TYPE_MAGICAL) {
-			if(Math.floor(Math.random() * 2) === 1) {
+		} else if (this.type !== MON_TYPE_MAGICAL) {
+			if (Math.floor(Math.random() * 2) === 1) {
 				var it = Math.floor(Math.random() * ITEM_WATER + 1);
 				var qt = 1;
-				if(it <= ITEM_ELF_ARROWS) {
+				if (it <= ITEM_ELF_ARROWS) {
 					qt = Math.floor(Math.random() * (this.level + 1) * 3) + 1;
 				}
 				dropItem(it, qt, this.floor, this.x, this.y, sq);
@@ -594,7 +613,7 @@ function createMonsterRef(id, level, gfx) {
 		monsterRef[id] = new Array();
 	}
 	if (typeof monsterRef[id][level] === "undefined" || typeof monsterRef[id][level].gfx === "undefined") {
-		if(typeof gfx !== "undefined") {
+		if (typeof gfx !== "undefined") {
 			monsterRef[id][level] = {
 				id: id,
 				level: level,

@@ -46,10 +46,10 @@ function Player(id, ScreenX, ScreenY) {
 	};
 
 	this.communication = {
-            mode: COMMUNICATION_PAGE_MAIN,
-            highlighted:null,
-            action:null
-        };
+		mode: COMMUNICATION_PAGE_MAIN,
+		highlighted: null,
+		action: null
+	};
 
 	this.PlayerCanvas.width = 128 * scale;
 	this.PlayerCanvas.height = 76 * scale;
@@ -57,7 +57,7 @@ function Player(id, ScreenX, ScreenY) {
 	this.PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
-        this.PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
+	this.PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 }
 
@@ -322,20 +322,33 @@ Player.prototype.doEvent = function(mr) {
 		this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 		redrawUI(this.id, UI_REDRAW_RIGHT);
 	}
+	this.resetChampUI();
 	this.updateChampions();
 	var view = this.getView();
-	switch (parseInt(view[18].substring(3, 4), 16)) {
+	switch (getHexToBinaryPosition(view[18], 12, 4)) {
 
-		case 4:
+		case '4':
 			this.doStairs();
 			break;
-		case 6:
-			if (mr) floorActionType(tower[towerThis].triggers[parseInt(getHexToBinaryPosition(view[18], 0, 5), 16).toString(10)], this);
+		case '6':
+			if (mr) {
+				floorActionType(tower[towerThis].triggers[parseInt(getHexToBinaryPosition(view[18], 0, 5), 16).toString(10)], this);
+			}
+			break;
+		case '7':
+			if (mr) {
+				if (getHexToBinaryPosition(view[18], 6, 2) === '1') { //firepath
+					var ds = getDungeonSpell(this.floor, this.x, this.y);
+					if (ds !== null) {
+						var prc = hex2dec(getHexToBinaryPosition(view[18], 0, 6)) / 64.0;
+						ds.projectile.attack(this, prc);
+					}
+				}
+			}
 			break;
 		default:
 			break;
 	}
-	this.resetChampUI();
 };
 
 Player.prototype.doPit = function() {
@@ -628,7 +641,7 @@ Player.prototype.alertDamagedPlayer = function() {
 			toggleChampUI(ch, this, true);
 		}
 	}
-	if(this.sleeping) {
+	if (this.sleeping) {
 		this.wakeUp();
 	}
 }
@@ -719,7 +732,7 @@ Player.prototype.drawItem = function(it, distance, offset) {
 }
 
 Player.prototype.drawProjectile = function(pr, distance, offset) {
-	if(pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 1) {
+	if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 1) {
 		var pGfx = itemsGfxD[pr.type][distance];
 	} else {
 		var pGfx = itemsGfxD[DUNGEON_PROJECTILE_EXPLODE][distance];

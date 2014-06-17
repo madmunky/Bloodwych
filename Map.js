@@ -206,3 +206,7 @@ function getObject(f, x, y, d, to) {
 	}
 	return OBJECT_NONE;
 }
+
+function setDungeonHex(f, x, y, index, length, to) {
+	tower[towerThis].floor[f].Map[y][x] = setHexToBinaryPosition(tower[towerThis].floor[f].Map[y][x], index, length, to);
+}

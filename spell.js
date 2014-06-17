@@ -1,6 +1,7 @@
 function Spell(colour, id, name, description, symbols, level) {
 	this.colour = colour;
 	this.id = id;
+	this.index = id + colour * 8;
 	this.name = name;
 	this.description = description;
 	this.symbols = symbols;
@@ -9,7 +10,7 @@ function Spell(colour, id, name, description, symbols, level) {
 	var pr = getSpellPageAndRow(colour, id);
 	this.page = pr.page;
 	this.row = pr.row;
-	this.power = getSpellPower(id + colour * 8);
+	this.power = getSpellPower(this.index);
 }
 
 Spell.prototype.toString = function() {
@@ -171,7 +172,7 @@ function getSpellPower(id) {
 		case SPELL_FIREBALL:
 			return 2;
 		case SPELL_FIREPATH:
-			return 2;
+			return 1;
 		case SPELL_RECHARGE:
 			return 1;
 		case SPELL_BLAZE:
@@ -242,7 +243,7 @@ function castSpell(s, src, pw) {
 				src.setBinaryView(15, 6, 2, '3');
 				src.setBinaryView(15, 0, 6, dec2hex(pow));
 				var xy = posToCoordinates(15, x, y, d);
-				setDungeonSpell(towerThis, f, xy.x, xy.y);
+				setDungeonSpell(f, xy.x, xy.y);
 			}
 			break;
 
@@ -305,7 +306,7 @@ function castSpell(s, src, pw) {
 			if(Math.random() > 0.01 * pow) {
 				pow = 1;
 			}
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISTRUPT_BIG, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, s, pow, f, x, y, d, src);
 			break;
 			//dragon
 		case SPELL_MISSILE:
@@ -335,7 +336,7 @@ function castSpell(s, src, pw) {
 		case SPELL_RECHARGE:
 			break;
 		case SPELL_BLAZE:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_BLAZE_BIG, s, pow, f, x, y, d, src);
 			break;
 
 			//moon
@@ -393,20 +394,45 @@ function castSpell(s, src, pw) {
 	}
 }
 
-function setDungeonSpell(t, f, x, y) {
+function setDungeonSpell(f, x, y, proj) {
 	var max = dungeonSpellList.length;
+	if(typeof proj === "undefined") {
+		proj = null;
+	}
 	dungeonSpellList[max] = {
-		tower: t,
+		tower: towerThis,
 		floor: f,
 		x: x,
-		y: y
+		y: y,
+		projectile: proj
 	};
+}
+
+function getDungeonSpell(f, x, y) {
+	for(var d = 0; d < dungeonSpellList.length; d++) {
+		ds = dungeonSpellList[d];
+		if(ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
+			return ds;
+		}
+	}
+	return null;
 }
 
 function updateDungeonSpells() {
 	for (s = 0; s < dungeonSpellList.length; s++) {
 		var ds = dungeonSpellList[s];
 		if (ds.tower === towerThis) {
+			if(ds.projectile !== null && (ds.projectile.spell.index === SPELL_FIREPATH || ds.projectile.spell.index === SPELL_BLAZE)) {
+				for (var p = 0; p < player.length; p++) {
+					if (ds.floor === player[p].floor && ds.x === player[p].x && ds.y === player[p].y) {
+						ds.projectile.attack(player[p]);
+					}
+				}
+				var mon = getMonsterAt(ds.floor, ds.x, ds.y);
+				if (mon !== null) {
+					ds.projectile.attack(mon);
+				}
+			}
 			var hex = tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x];
 			var tm = parseInt(hex2dec(getHexToBinaryPosition(hex, 0, 6)) - 1);
 			if (tm > 0) {

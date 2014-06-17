@@ -1,4 +1,4 @@
-function calculateAttack(att, def) {
+function calculateAttack(att, def, tof) {
 	combat = new Array();
 	if(att instanceof Monster) {
 		var mon = new Array();
@@ -22,6 +22,9 @@ function calculateAttack(att, def) {
 		var to;
 		var fmon;
 		var tmon;
+		if(typeof tof === "undefined") { //force a 'to'
+			var tof = -1;
+		}
 
 		//Attacker calculations
 		if(att instanceof Player) {
@@ -52,12 +55,12 @@ function calculateAttack(att, def) {
 		} else if(att instanceof Projectile) {
 			if(a === 0) {
 				from = att.monster;
-				fmon = from;
+				fmon = null;
 				attack += att.power;
 			} else {
 				continue;
 			}
-		} else {
+		} else { //monster
 			from = mon[a];
 			fmon = from;
         	if(typeof from === "undefined" || from.dead) {
@@ -80,16 +83,22 @@ function calculateAttack(att, def) {
 					ch1.push(ch[1]);
 				}
 			}
-			if(ch1.length > 0) {
-				to = ch1[Math.floor(Math.random() * ch1.length)];
-				tmon = to.monster;
-				defense = 10;
-				if(!to.attacking) {
-					defense += 10 + Math.round(to.stat.agi / 4);
+			if(ch1.length > 0 || tof > -1) {
+				if(tof === -1) {
+					to = ch1[Math.floor(Math.random() * ch1.length)];
+				} else if(typeof champion[def.champion[tof]] !== "undefined" && !champion[def.champion[tof]].dead) {
+					to = champion[def.champion[tof]];
 				}
-				defense -= to.getArmourClass();
-				defense += Math.ceil(to.getActiveSpellById(SPELL_ARMOUR).power / 5);
-				defExhaustion = Math.floor(Math.random() * 2) + 1;
+				if(typeof to !== "undefined") {
+					tmon = to.monster;
+					defense = 10;
+					if(!to.attacking) {
+						defense += 10 + Math.round(to.stat.agi / 4);
+					}
+					defense -= to.getArmourClass();
+					defense += Math.ceil(to.getActiveSpellById(SPELL_ARMOUR).power / 5);
+					defExhaustion = Math.floor(Math.random() * 2) + 1;
+				}
 			}
 		} else if(def instanceof Monster) {
 			var mon = new Array();
@@ -99,21 +108,27 @@ function calculateAttack(att, def) {
 				mon[0] = def;
 			}
 			for (d = 0; d < mon.length; d++) {
-				if(Math.random() < 1.0 / (mon.length - d)) {
-					to = mon[d];
-					tmon = to;
-					if(to.champId > -1) { //champion
-						to = champion[to.champId];
-						tmon = to.monster;
-						defense += 20 + Math.round(to.stat.agi / 4);
-						defense -= to.getArmourClass();
-						defense += Math.ceil(to.getActiveSpellById(SPELL_ARMOUR).power / 5);
-						defExhaustion = Math.floor(Math.random() * 2) + 1;
-					} else { //monster
-						if(!to.attacking) {
-							defense += 10;
+				if(Math.random() < 1.0 / (mon.length - d) || tof > -1) {
+					if(tof === -1) {
+						to = mon[d];
+					} else {
+						to = mon[tof];
+					}
+					if(typeof to !== "undefined") {
+						tmon = to;
+						if(to.champId > -1) { //champion
+							to = champion[to.champId];
+							tmon = to.monster;
+							defense += 20 + Math.round(to.stat.agi / 4);
+							defense -= to.getArmourClass();
+							defense += Math.ceil(to.getActiveSpellById(SPELL_ARMOUR).power / 5);
+							defExhaustion = Math.floor(Math.random() * 2) + 1;
+						} else { //monster
+							if(!to.attacking) {
+								defense += 10;
+							}
+							defense += 10 + to.level * 3;
 						}
-						defense += 10 + to.level * 3;
 					}
 					break;
 				}
@@ -121,7 +136,7 @@ function calculateAttack(att, def) {
 		}
 
 		//Final calculations
-		if(typeof from !== "undefined" && !fmon.dead && typeof to !== "undefined" && !tmon.dead) {
+		if(typeof from !== "undefined" && (fmon === null || !fmon.dead) && typeof to !== "undefined" && !tmon.dead) {
 			var power = Math.floor(Math.random() * 20 * crit + attack - (defChance * defense));
 			if(Math.random() > hit || power < 0) {
 				power = 0;
