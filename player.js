@@ -1090,7 +1090,7 @@ function initPlayersStart(ch1, ch2) {
 	}
 }
 
-Player.prototype.doCommuncation = function(item){
+Player.prototype.doCommunication = function(item){
     
     switch (this.communication.mode){
         
@@ -1175,6 +1175,6 @@ Player.prototype.doCommuncation = function(item){
         };break
         
     };
-    
+    drawCommunicationBox(this, item, true);
     
 };

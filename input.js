@@ -616,13 +616,13 @@ function checkBackButton(p) {
 	}
 }
 
-function doCommunication(p, item) {
-	if (TEXT_COMMUNICATION_COMMANDS[p.communication.mode][item].to !== null) {
-            p.doCommuncation(item);
-		//p.communication.mode = TEXT_COMMUNICATION_COMMANDS[p.communication.mode][item].to;
-	}
-	drawCommunicationBox(p, item, true);
-}
+//function doCommunication(p, item) {
+//	if (TEXT_COMMUNICATION_COMMANDS[p.communication.mode][item].to !== null) {
+//            p.doCommuncation(item);
+//		//p.communication.mode = TEXT_COMMUNICATION_COMMANDS[p.communication.mode][item].to;
+//	}
+//	drawCommunicationBox(p, item, true);
+//}
 
 function checkCommunicationArea(p, x, y, hover) {
 	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
@@ -640,7 +640,7 @@ function checkCommunicationArea(p, x, y, hover) {
 						drawCommunicationBox(p, i);
 						return;
 					} else {
-						doCommunication(p, i);
+						p.doCommunication(i);
 						return;
 					}
 				}
