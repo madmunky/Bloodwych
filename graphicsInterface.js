@@ -1761,7 +1761,7 @@ function drawCommunicationBox(p, item, forced) {
 
 			var myPage = p.communication.mode;
 			var c1 = p.getOrderedChampionIds();
-			for (r = 0; r < TEXT_COMMUNICATION[myPage].length; r++) {
+			for (r = 0; r < TEXT_COMMUNICATION_COMMANDS[myPage].length; r++) {
 				ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARK][0] + ', ' + COLOUR[COLOUR_GREY_DARK][1] + ', ' + COLOUR[COLOUR_GREY_DARK][2] + ')';
 				var myColour = COLOUR[COLOUR_YELLOW];
 
@@ -1770,17 +1770,17 @@ function drawCommunicationBox(p, item, forced) {
 					myColour = COLOUR[COLOUR_WHITE];
 				}
 
-				if (TEXT_COMMUNICATION[myPage][r].left) {
+				if (TEXT_COMMUNICATION_COMMANDS[myPage][r].left) {
 					var x = (p.ScreenX + 1);
 					var al = FONT_ALIGNMENT_LEFT;
 					var t = 1;
 				} else {
-					var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION[myPage][r - 1].width + 1);
+					var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION_COMMANDS[myPage][r - 1].width + 1);
 					var al = FONT_ALIGNMENT_RIGHT;
-					var t = TEXT_COMMUNICATION[myPage][r].width + 2;
+					var t = TEXT_COMMUNICATION_COMMANDS[myPage][r].width + 2;
 				}
-				var y = (p.ScreenY + 47) + (TEXT_COMMUNICATION[myPage][r].row * 8);
-				ctx.fillRect(x * scale, y * scale, TEXT_COMMUNICATION[myPage][r].width * scale, 7 * scale);
+				var y = (p.ScreenY + 47) + (TEXT_COMMUNICATION_COMMANDS[myPage][r].row * 8);
+				ctx.fillRect(x * scale, y * scale, TEXT_COMMUNICATION_COMMANDS[myPage][r].width * scale, 7 * scale);
 				if(myPage === COMMUNICATION_PAGE_NAMES) {
 					var c2 = c1[r + 1];
 					var cid = p.champion[c2];
@@ -1789,14 +1789,14 @@ function drawCommunicationBox(p, item, forced) {
 						writeFontImage(ch.firstName, (x + 1), y, myColour, al);
 					}
 				} else {
-					writeFontImage(TEXT_COMMUNICATION[myPage][r].text, (x + t), y, myColour, al);
+					writeFontImage(TEXT_COMMUNICATION_COMMANDS[myPage][r].text, (x + t), y, myColour, al);
 				}
 				/*} else {
-					var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION[myPage][r - 1].width + 1),
-						y = (p.ScreenY + 47) + (TEXT_COMMUNICATION[myPage][r].row * 8),
-						t = TEXT_COMMUNICATION[myPage][r].width;
+					var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION_COMMANDS[myPage][r - 1].width + 1),
+						y = (p.ScreenY + 47) + (TEXT_COMMUNICATION_COMMANDS[myPage][r].row * 8),
+						t = TEXT_COMMUNICATION_COMMANDS[myPage][r].width;
 					ctx.fillRect(x * scale, y * scale, t * scale, 7 * scale);
-					writeFontImage(TEXT_COMMUNICATION[myPage][r].text, (x + t) + 2, y, myColour, FONT_ALIGNMENT_RIGHT);
+					writeFontImage(TEXT_COMMUNICATION_COMMANDS[myPage][r].text, (x + t) + 2, y, myColour, FONT_ALIGNMENT_RIGHT);
 				}*/
 
 			}
