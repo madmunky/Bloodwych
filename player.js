@@ -46,6 +46,7 @@ function Player(id, ScreenX, ScreenY) {
 	};
 
 	this.communication = {
+		monster: null,
 		mode: COMMUNICATION_PAGE_MAIN,
 		highlighted: null,
 		action: null
@@ -322,6 +323,15 @@ Player.prototype.doEvent = function(mr) {
 	if (this.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
 		this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 		redrawUI(this.id, UI_REDRAW_RIGHT);
+	}
+	if(this.communication.mode > COMMUNICATION_PAGE_MAIN) {
+		if(this.communication.monster !== null) {
+			this.communication.monster.communicating = false;
+			this.communication.monster = null;
+		}
+		this.communication.mode = COMMUNICATION_PAGE_MAIN;
+		this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
+		redrawUI(this.id, UI_REDRAW_LEFT);
 	}
 	this.resetChampUI();
 	this.updateChampions();
@@ -1035,17 +1045,10 @@ Player.prototype.message = function(txt, col, wait, delay) {
 	}
 }
 
-Player.prototype.checkForMonsterInFront = function(){
-    
-    xy = getOffsetByRotation(this.d);
-    mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
-    if(mon !== null) {
-        return mon;
-    }
-    else{
-        return null;
-    }
-    
+Player.prototype.checkForMonsterInFront = function() {
+	xy = getOffsetByRotation(this.d);
+	mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
+	return mon;
 }
 
 Player.prototype.testMode = function(id) {
@@ -1090,91 +1093,235 @@ function initPlayersStart(ch1, ch2) {
 	}
 }
 
-Player.prototype.doCommunication = function(item){
-    
-    switch (this.communication.mode){
-        
-        case COMMUNICATION_PAGE_MAIN:{
-                switch (item){                    
-                    case 0:{
-                            var m = this.checkForMonsterInFront();
-                            if (m !== null){
-                                m.communicating = true;
-                                this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
-                                this.message(TEXT_COMMUNICATION[0][1]);
-                                this.message(TEXT_COMMUNICATION[1][0],COLOUR[COLOUR_RED],true);
-                            }else{
-                                this.message(TEXT_COMMUNICATION[0][0]);
-                            }
-                        }break
-                    case 1:{this.communication.mode = COMMUNICATION_PAGE_NAMES;this.communication.action = "COMMEND";}break
-                    case 2:{this.communication.mode = COMMUNICATION_PAGE_NAMES;this.communication.action = "VIEW";}break
-                    case 3:{this.communication.mode = COMMUNICATION_PAGE_NAMES;this.communication.action = "WAIT";}break
-                    case 4:{this.communication.mode = COMMUNICATION_PAGE_NAMES;this.communication.action = "CORRECT";}break
-                    case 5:{this.communication.mode = COMMUNICATION_PAGE_NAMES;this.communication.action = "DISMISS";}break
-                    case 6:{this.communication.mode = COMMUNICATION_PAGE_NAMES;this.communication.action = "CALL";}break                    
-                }
-        };break
-        case COMMUNICATION_PAGE_COMMUNICATE_0:{
-             switch (item){                    
-                    case COMMUNICATION_RECRUIT:{;}break
-                    case COMMUNICATION_IDENTIFY:{this.communication.mode = COMMUNICATION_PAGE_IDENTIFY;}break
-                    case COMMUNICATION_INQUIRY:{this.communication.mode = COMMUNICATION_PAGE_INQUIRY;}break
-                    case COMMUNICATION_WHEREABOUTS:{;}break   
-                }   
-        };break
-        case COMMUNICATION_PAGE_COMMUNICATE_1:{
-                switch (item){                    
-                    case COMMUNICATION_TRADING:{this.communication.mode = COMMUNICATION_PAGE_TRADING;}break
-                    case COMMUNICATION_SMALLTALK:{this.communication.mode = COMMUNICATION_PAGE_SMALLTALK;}break
-                    case COMMUNICATION_YES:{;}break
-                    case COMMUNICATION_NO:{;}break
-                    case COMMUNICATION_BRIBE:{;}break   
-                    case COMMUNICATION_THREAT:{;}break      
-                }   
-        };break
-        case COMMUNICATION_PAGE_IDENTIFY:{
-               switch (item){                    
-                    case COMMUNICATION_WHO_GOES:{;}break
-                    case COMMUNICATION_THY_TRADE:{;}break
-                    case COMMUNICATION_NAME_SELF:{;}break
-                    case COMMUNICATION_REVEAL_SELF:{;}break    
-                }    
-        };break
-        case COMMUNICATION_PAGE_INQUIRY:{
-                switch (item){                    
-                    case COMMUNICATION_FOLK_LORE:{;}break
-                    case COMMUNICATION_MAGIC_ITEMS:{;}break
-                    case COMMUNICATION_OBJECTS:{;}break
-                    case COMMUNICATION_PERSONS:{;}break       
-                }   
-        };break
-        case COMMUNICATION_PAGE_TRADING:{
-                switch (item){                    
-                    case COMMUNICATION_OFFER:{;}break
-                    case COMMUNICATION_PURCHASE:{;}break
-                    case COMMUNICATION_EXCHANGE:{;}break
-                    case COMMUNICATION_SELL:{;}break    
-                }   
-        };break
-        case COMMUNICATION_PAGE_SMALLTALK:{
-                switch (item){ 
-                    case COMMUNICATION_PRAISE:{;}break
-                    case COMMUNICATION_CURSE:{;}break
-                    case COMMUNICATION_BOAST:{;}break
-                    case COMMUNICATION_RETORT:{;}break                       
-                }   
-        };break
-        case COMMUNICATION_PAGE_NAMES:{
-                switch (item){                    
-                    case 0:{;}break
-                    case 1:{;}break
-                    case 2:{;}break
-                    case 3:{;}break    
-                }    
-        };break
-        
-    };
-    drawCommunicationBox(this, item, true);
-    
+Player.prototype.doCommunication = function(item) {
+
+	switch (this.communication.mode) {
+
+		case COMMUNICATION_PAGE_MAIN:
+			{
+				switch (item) {
+					case 0:
+						{
+							var m = this.checkForMonsterInFront();
+							if (m !== null) {
+								m.communicating = true;
+								m.d = (this.d + 2) % 4;
+								this.communication.monster = m;
+								this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
+								this.message(TEXT_COMMUNICATION[0][1]);
+								this.message(TEXT_COMMUNICATION[1][0], COLOUR[COLOUR_RED], true);
+							} else {
+								this.message(TEXT_COMMUNICATION[0][0]);
+							}
+						}
+						break
+					case 1:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_NAMES;
+							this.communication.action = "COMMEND";
+						}
+						break
+					case 2:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_NAMES;
+							this.communication.action = "VIEW";
+						}
+						break
+					case 3:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_NAMES;
+							this.communication.action = "WAIT";
+						}
+						break
+					case 4:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_NAMES;
+							this.communication.action = "CORRECT";
+						}
+						break
+					case 5:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_NAMES;
+							this.communication.action = "DISMISS";
+						}
+						break
+					case 6:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_NAMES;
+							this.communication.action = "CALL";
+						}
+						break
+				}
+			};
+			break
+		case COMMUNICATION_PAGE_COMMUNICATE_0:
+			{
+				switch (item) {
+					case COMMUNICATION_RECRUIT:
+						{;
+						}
+						break
+					case COMMUNICATION_IDENTIFY:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_IDENTIFY;
+						}
+						break
+					case COMMUNICATION_INQUIRY:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_INQUIRY;
+						}
+						break
+					case COMMUNICATION_WHEREABOUTS:
+						{;
+						}
+						break
+				}
+			};
+			break
+		case COMMUNICATION_PAGE_COMMUNICATE_1:
+			{
+				switch (item) {
+					case COMMUNICATION_TRADING:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_TRADING;
+						}
+						break
+					case COMMUNICATION_SMALLTALK:
+						{
+							this.communication.mode = COMMUNICATION_PAGE_SMALLTALK;
+						}
+						break
+					case COMMUNICATION_YES:
+						{;
+						}
+						break
+					case COMMUNICATION_NO:
+						{;
+						}
+						break
+					case COMMUNICATION_BRIBE:
+						{;
+						}
+						break
+					case COMMUNICATION_THREAT:
+						{;
+						}
+						break
+				}
+			};
+			break
+		case COMMUNICATION_PAGE_IDENTIFY:
+			{
+				switch (item) {
+					case COMMUNICATION_WHO_GOES:
+						{;
+						}
+						break
+					case COMMUNICATION_THY_TRADE:
+						{;
+						}
+						break
+					case COMMUNICATION_NAME_SELF:
+						{;
+						}
+						break
+					case COMMUNICATION_REVEAL_SELF:
+						{;
+						}
+						break
+				}
+			};
+			break
+		case COMMUNICATION_PAGE_INQUIRY:
+			{
+				switch (item) {
+					case COMMUNICATION_FOLK_LORE:
+						{;
+						}
+						break
+					case COMMUNICATION_MAGIC_ITEMS:
+						{;
+						}
+						break
+					case COMMUNICATION_OBJECTS:
+						{;
+						}
+						break
+					case COMMUNICATION_PERSONS:
+						{;
+						}
+						break
+				}
+			};
+			break
+		case COMMUNICATION_PAGE_TRADING:
+			{
+				switch (item) {
+					case COMMUNICATION_OFFER:
+						{;
+						}
+						break
+					case COMMUNICATION_PURCHASE:
+						{;
+						}
+						break
+					case COMMUNICATION_EXCHANGE:
+						{;
+						}
+						break
+					case COMMUNICATION_SELL:
+						{;
+						}
+						break
+				}
+			};
+			break
+		case COMMUNICATION_PAGE_SMALLTALK:
+			{
+				switch (item) {
+					case COMMUNICATION_PRAISE:
+						{;
+						}
+						break
+					case COMMUNICATION_CURSE:
+						{;
+						}
+						break
+					case COMMUNICATION_BOAST:
+						{;
+						}
+						break
+					case COMMUNICATION_RETORT:
+						{;
+						}
+						break
+				}
+			};
+			break
+		case COMMUNICATION_PAGE_NAMES:
+			{
+				switch (item) {
+					case 0:
+						{;
+						}
+						break
+					case 1:
+						{;
+						}
+						break
+					case 2:
+						{;
+						}
+						break
+					case 3:
+						{;
+						}
+						break
+				}
+			};
+			break
+
+	};
+	drawCommunicationBox(this, item, true);
+
 };

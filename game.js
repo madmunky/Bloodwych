@@ -40,7 +40,7 @@ function timerAction() {
 	cutpurseTrueview = (Math.floor(Math.random() * 10) === 0);
 	mon = getMonstersInTower(towerThis);
 	for (m in mon) {
-		if(timerMaster - mon[m].gestureTimer >= 20) {
+		if (timerMaster - mon[m].gestureTimer >= 20) {
 			mon[m].doGesture(CHA_GESTURE_NONE);
 		}
 	}
@@ -57,9 +57,7 @@ function timerAction() {
 		monsterAttackSequence = 0;
 		mon = getMonstersInTower(towerThis);
 		for (m in mon) {
-                    if (!mon[m].communicating){
-                        mon[m].move();
-                    }			
+			mon[m].move();
 		}
 	}
 	if (timerMaster - timerMonsterAttack >= 3) {
@@ -120,12 +118,12 @@ function timerAction() {
 		updateDungeonSpells();
 	}
 	//if (timerMaster - projectileTimer >= 3) {
-		//projectileTimer = timerMaster;
-		for (var p = 0; p < projectile[towerThis].length; p++) {
-			if(timerMaster - projectile[towerThis][p].timer >= 2) {
-				projectile[towerThis][p].timer = timerMaster;
-				projectile[towerThis][p].moveProjectile();
-			}
+	//projectileTimer = timerMaster;
+	for (var p = 0; p < projectile[towerThis].length; p++) {
+		if (timerMaster - projectile[towerThis][p].timer >= 2) {
+			projectile[towerThis][p].timer = timerMaster;
+			projectile[towerThis][p].moveProjectile();
 		}
+	}
 	//}
 }

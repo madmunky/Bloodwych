@@ -54,7 +54,7 @@ Monster.prototype.canInteract = function() {
 	} else if (player.length > 1 && this.floor === player[1].floor && this.x + xy.x === player[1].x && this.y + xy.y === player[1].y) {
 		ply = 1;
 	}
-	if (this.isAgressive()) { //enemy
+	if (this.isAgressive() && !this.communicating) { //enemy
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
@@ -75,9 +75,9 @@ Monster.prototype.canInteract = function() {
 				return this.assembleTeamWith(mon);
 			}
 		}
-	} else if (this.champId > -1) { //champion
+	} else if (this.champId > -1 && !this.communicating) { //champion
 
-	} else { //vendor
+	} else { //vendor and communicating monsters
 		return ply;
 	}
 	return -1;

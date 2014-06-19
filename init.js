@@ -178,7 +178,7 @@ function startGame(singlePlayer, quickStart) {
 		initPlayersStart(0, 4);
 	}
 
-	godMode();
+	//godMode();
 	initTowerSwitches();
 	switchTower(0);
 	clearCanvas();
