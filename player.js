@@ -1158,19 +1158,19 @@ Player.prototype.doCommuncation = function(item){
                 }   
         };break
         case COMMUNICATION_PAGE_SMALLTALK:{
+                switch (item){ 
+                    case COMMUNICATION_PRAISE:{;}break
+                    case COMMUNICATION_CURSE:{;}break
+                    case COMMUNICATION_BOAST:{;}break
+                    case COMMUNICATION_RETORT:{;}break                       
+                }   
+        };break
+        case COMMUNICATION_PAGE_NAMES:{
                 switch (item){                    
                     case 0:{;}break
                     case 1:{;}break
                     case 2:{;}break
                     case 3:{;}break    
-                }   
-        };break
-        case COMMUNICATION_PAGE_NAMES:{
-                switch (item){                    
-                    case COMMUNICATION_PRAISE:{;}break
-                    case COMMUNICATION_CURSE:{;}break
-                    case COMMUNICATION_BOAST:{;}break
-                    case COMMUNICATION_RETORT:{;}break    
                 }    
         };break
         
