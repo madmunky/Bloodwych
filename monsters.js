@@ -17,6 +17,7 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	this.y = y;
 	this.d = d;
 	this.attacking = false;
+        this.communicating = false;
 	this.gesture = CHA_GESTURE_NONE;
 	this.gestureTimer = 0;
 	this.dead = false;
