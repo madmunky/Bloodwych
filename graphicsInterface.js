@@ -205,15 +205,15 @@ function drawSpellBook(p, ui, dr) {
 function changeSpellBookPage(p, dr) {
 	if (p.timerSpellBookTurn === 0) {
 		if (dr) {
-			drawSpellBookPageTurn(p, 4, dr, 200);
-			drawSpellBookPageTurn(p, 3, dr, 400);
-			drawSpellBookPageTurn(p, 2, dr, 600);
-			drawSpellBookPageTurn(p, 1, dr, 800, true);
+			drawSpellBookPageTurn(p, 4, dr, 150);
+			drawSpellBookPageTurn(p, 3, dr, 300);
+			drawSpellBookPageTurn(p, 2, dr, 450);
+			drawSpellBookPageTurn(p, 1, dr, 600, true);
 		} else {
-			drawSpellBookPageTurn(p, 1, dr, 200);
-			drawSpellBookPageTurn(p, 2, dr, 400);
-			drawSpellBookPageTurn(p, 3, dr, 600);
-			drawSpellBookPageTurn(p, 4, dr, 800, true);
+			drawSpellBookPageTurn(p, 1, dr, 150);
+			drawSpellBookPageTurn(p, 2, dr, 300);
+			drawSpellBookPageTurn(p, 3, dr, 450);
+			drawSpellBookPageTurn(p, 4, dr, 600, true);
 		}
 	}
 }
@@ -282,9 +282,11 @@ function drawUI(p) {
 					drawPocketUI(p);
 				}
 			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_SPELLBOOK) {
-					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					drawSpellBook(p);
+				if(p.timerSpellBookTurn === 0) {
+					if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_SPELLBOOK) {
+						ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+						drawSpellBook(p);
+					}
 				}
 			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
 				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {

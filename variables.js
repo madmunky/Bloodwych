@@ -9,7 +9,7 @@ var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
 var gameStarted = false;
 var scale = 3;
 var scaleReal = 3;
-var debug = false;
+var debug = true;
 var debugHigh = false;
 var debugWindow;
 var game;
@@ -1440,6 +1440,9 @@ var SPELL_ARMOUR = 0,
 	SPELL_ILLUSION = 29,
 	SPELL_MINDROCK = 30,
 	SPELL_WYCHWIND = 31;
+
+	//Exceptional spells
+	SPELL_BLAZE_BALL = 32;
 
 //projectiles
 var projectile = new Array();

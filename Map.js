@@ -13,8 +13,7 @@ function Map(Width, Height, xOff, yOff) {
 }
 
 function checkSwitchTower(p, trig) {
-	if(player.length === 1) {
-	} else {
+	if (player.length === 1) {} else {
 		if ((trig[0] == 18 || trig[0] == 38) && parseInt(player[0].getView()[18].substring(3, 4), 16) === 6 && parseInt(player[1].getView()[18].substring(3, 4), 16) === 6) {
 			if (player[1 - p].floor === player[p].floor && player[1 - p].x === trig[2] && player[1 - p].y === trig[3]) {
 				var tw = Math.floor(trig[1] * 0.5);
@@ -58,7 +57,7 @@ function switchTower(id, po) {
 	}*/
 	if (towerLast === TOWER_MOD0 && towerThis === TOWER_MOD0) { //from tower to tower (start of game)
 		player[po].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
-		if(player.length > 1) {
+		if (player.length > 1) {
 			player[1 - po].setPlayerPosition(3, 14, 23, 0); //(3, 14, 23, 0);
 		}
 	} else if (towerThis !== TOWER_MOD0) { //from keep to tower
@@ -78,7 +77,7 @@ function switchTower(id, po) {
 			player[pt].setPlayerPosition(floor, x, y);
 		}
 	}
-	for(p = 0; p < player.length; p++) {
+	for (p = 0; p < player.length; p++) {
 		player[p].updateChampions();
 	}
 	$('canvas').attr('data-game-status', 'started');
@@ -88,11 +87,11 @@ function switchTower(id, po) {
 }
 
 function canMove(f, x, y, d, to) {
-	if(typeof to === "undefined") {
+	if (typeof to === "undefined") {
 		to = 0;
 	}
 	xy = getOffsetByRotation((d + to) % 4);
-	if(typeof tower[towerThis].floor[f].Map[y + xy.y] === "undefined" || typeof tower[towerThis].floor[f].Map[y + xy.y][x + xy.x] === "undefined") { //edge of floor
+	if (typeof tower[towerThis].floor[f].Map[y + xy.y] === "undefined" || typeof tower[towerThis].floor[f].Map[y + xy.y][x + xy.x] === "undefined") { //edge of floor
 		return OBJECT_WALL;
 	}
 
@@ -101,7 +100,7 @@ function canMove(f, x, y, d, to) {
 	var objThis = getHexToBinaryPosition(hex18, 12, 4);
 	var objNext = getHexToBinaryPosition(hex15, 12, 4);
 
-	if(objNext == '1') {
+	if (objNext == '1') {
 		return OBJECT_WALL;
 	} else if (objNext === '7' && getHexToBinaryPosition(hex15, 6, 2) === '3') { //formwall
 		return OBJECT_WALL;
@@ -119,17 +118,38 @@ function canMove(f, x, y, d, to) {
 	} else if (getMonsterAt(f, x + xy.x, y + xy.y) !== null) { //monster
 		return OBJECT_CHARACTER;
 	}
-	if(getProjectilesAt(f, x + xy.x, y + xy.y).length > 0) {
+	if (getProjectilesAt(f, x + xy.x, y + xy.y).length > 0) {
 		return OBJECT_PROJECTILE;
 	}
 
 	//Check other objects
-	if(objNext == '3') {
+	if (objNext == '3') {
 		return OBJECT_MISC; //Misc
-	} else if(objNext == '5' && getHexToBinaryPosition(hex15, 7, 1) == '1') {
+	} else if (objNext == '5' && getHexToBinaryPosition(hex15, 7, 1) == '1') {
 		return OBJECT_DOOR;
 	}
 	return OBJECT_NONE;
+}
+
+//for blaze ball
+
+function canMoveByFirepath(f, x, y, d) {
+	if (typeof d !== "undefined") {
+		xy = getOffsetByRotation(d);
+	} else {
+		xy = {
+			x: 0,
+			y: 0
+		};
+	}
+	if (typeof tower[towerThis].floor[f].Map[y + xy.y] === "undefined" || typeof tower[towerThis].floor[f].Map[y + xy.y][x + xy.x] === "undefined") { //edge of floor
+		return false;
+	}
+	hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
+	if (getHexToBinaryPosition(hex15, 12, 4) === '7' && getHexToBinaryPosition(hex15, 6, 2) === '1') {
+		return true;
+	}
+	return false;
 }
 
 function canMoveByWood(f, x, y, d, to) {
@@ -170,10 +190,10 @@ function getObject(f, x, y, d, to) {
 			}
 			return OBJECT_WALL;
 		} else if (obj === '2') { //wood
-			if(typeof to !== "undefined") {
+			if (typeof to !== "undefined") {
 				//if (getHexToBinaryPosition(hex, ((7 - to - d) % 4) * 2) === '1') {
-				if(getHexToBinaryPosition(hex, ((7 - to - d) % 4) * 2) === '1') {
-					if(getHexToBinaryPosition(hex, ((7 - to - d) % 4) * 2 + 1, 1) == '1') {
+				if (getHexToBinaryPosition(hex, ((7 - to - d) % 4) * 2) === '1') {
+					if (getHexToBinaryPosition(hex, ((7 - to - d) % 4) * 2 + 1, 1) == '1') {
 						return OBJECT_WOOD_DOOR;
 					} else {
 						return OBJECT_WOOD_DOOR_OPEN;
@@ -182,21 +202,21 @@ function getObject(f, x, y, d, to) {
 					return OBJECT_WOOD;
 				}
 			}
-		//} else if (getHexToBinaryPosition(hex, 8) == '1') { //other player
-		//	return OBJECT_CHARACTER;
-		//} else if (getMonsterAt(f, x, y) !== null) { //monster
-		//	return OBJECT_CHARACTER;
+			//} else if (getHexToBinaryPosition(hex, 8) == '1') { //other player
+			//	return OBJECT_CHARACTER;
+			//} else if (getMonsterAt(f, x, y) !== null) { //monster
+			//	return OBJECT_CHARACTER;
 		} else if (obj === '3') { //misc
 			//if (getHexToBinaryPosition(hex, 6, 2) === '1') { //pillar
 			return OBJECT_MISC;
 			//} else {
-				//return 'bed';
+			//return 'bed';
 			//}
 		} else if (obj === '4') { //stairs
 			return OBJECT_STAIRS;
 		} else if (obj === '5') { //door
 			if (typeof to === "undefined" || (d + to) % 2 === parseInt(getHexToBinaryPosition(hex, 5, 1))) {
-				if(getHexToBinaryPosition(hex, 7, 1) == '1') {
+				if (getHexToBinaryPosition(hex, 7, 1) == '1') {
 					return OBJECT_DOOR;
 				} else {
 					return OBJECT_DOOR_OPEN;

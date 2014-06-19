@@ -89,12 +89,34 @@ Projectile.prototype.action = function() {
 			}
 			break;
 		case SPELL_FIREPATH:
-		case SPELL_BLAZE:
 			if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
-				setDungeonHex(this.floor, this.x, this.y, 12, 7, '7');
+				setDungeonHex(this.floor, this.x, this.y, 12, 4, '7');
 				setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
 				setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
 				setDungeonSpell(this.floor, this.x, this.y, this);
+			}
+			break;
+		case SPELL_BLAZE:
+			if(this.palette === PALETTE_BLAZE_BIG) {
+				if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
+					setDungeonHex(this.floor, this.x, this.y, 12, 4, '7');
+					setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
+					setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
+					setDungeonSpell(this.floor, this.x, this.y, this);
+				}
+				if (obNext > OBJECT_NONE) {
+					this.palette = PALETTE_DRAGON_BIG;
+					this.d = (this.d + 2) % 4;
+					return true;
+				}
+			} else {
+				var xy = getOffsetByRotation(this.d);
+				if (canMoveByFirepath(this.floor, this.x, this.y) && !canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
+					this.d = (this.d + 2) % 4;
+					if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
+						return true;
+					}
+				}
 			}
 			break;
 	}
