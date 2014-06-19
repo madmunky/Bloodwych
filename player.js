@@ -277,6 +277,7 @@ Player.prototype.attack = function(attack, target) {
 						}
 					}
 				}, att.recruitment.position * 400);
+				att.monster.doGesture(CHA_GESTURE_ATTACKING);
 			})(combat, com);
 		}
 	} else {
@@ -956,6 +957,7 @@ Player.prototype.castSpell = function(sb, c, s) {
 		if (c.stat.vit < 0) {
 			c.stat.vit = 0;
 		}
+		c.monster.doGesture(CHA_GESTURE_SPELLCASTING);
 	} else if (!s) {
 		writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, COLOUR[COLOUR_RED]);
 	}

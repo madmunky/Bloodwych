@@ -17,7 +17,8 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	this.y = y;
 	this.d = d;
 	this.attacking = false;
-	this.attackTimer = 0;
+	this.gesture = CHA_GESTURE_NONE;
+	this.gestureTimer = 0;
 	this.dead = false;
 	if (square > CHAR_FRONT_SOLO) {
 		this.square = (square + d) % 4;
@@ -205,6 +206,7 @@ Monster.prototype.attack = function(attack, target) {
 			var pwr = combat[com].power;
 			var dExh = combat[com].defExhaustion;
 			att.attacking = true;
+			att.doGesture(CHA_GESTURE_ATTACKING);
 			att.doDamageTo(def, pwr, dExh);
 			if (def instanceof Champion) {
 				PrintLog('MONSTER #' + att.id + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
@@ -239,7 +241,6 @@ Monster.prototype.castSpell = function() {
 	//if (c.stat.sp - sb.cost >= 0) {
 	var sq = this.getSquareByDir();
 	if(this.type === 1 && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
-		this.castSpell();
 		var id = SPELL_MISSILE;
 		if (this.level >= 5 && Math.floor(Math.random() * 2) === 0) {
 			id = SPELL_FIREBALL;
@@ -251,6 +252,7 @@ Monster.prototype.castSpell = function() {
 			id = SPELL_DISRUPT;
 		}
 		castSpell(id, this, Math.floor(this.level * 2 + 4 + getSpellById(id).level * 0.4));
+		this.doGesture(CHA_GESTURE_SPELLCASTING);
 		return true;
 	}
 	//}
@@ -335,6 +337,11 @@ Monster.prototype.followPlayer = function() {
 Monster.prototype.rotateTo = function(d) {
 	this.d = d;
 	updateMonsterTeam(this.teamId);
+}
+
+Monster.prototype.doGesture = function(g) {
+	this.gesture = g;
+	this.gestureTimer = timerMaster;
 }
 
 //	CHAR_FRONT_LEFT = 0,

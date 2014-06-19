@@ -38,6 +38,12 @@ Game.prototype = {
 
 function timerAction() {
 	cutpurseTrueview = (Math.floor(Math.random() * 10) === 0);
+	mon = getMonstersInTower(towerThis);
+	for (m in mon) {
+		if(timerMaster - mon[m].gestureTimer >= 20) {
+			mon[m].doGesture(CHA_GESTURE_NONE);
+		}
+	}
 	if (timerMaster - timerChampionAttack >= 20) {
 		timerChampionAttack = timerMaster;
 		for (p = 0; p < player.length; p++) {
