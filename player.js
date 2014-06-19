@@ -272,9 +272,9 @@ Player.prototype.attack = function(attack, target) {
 					} else if (def instanceof Monster) {
 						PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
 						self.gainChampionXp(pwr, att);
-					}
-					if (def.dead) {
-						self.gainChampionXp(128);
+						if (def.dead) {
+							self.gainChampionXp(128);
+						}
 					}
 				}, att.recruitment.position * 400);
 			})(combat, com);
@@ -940,7 +940,7 @@ Player.prototype.castSpell = function(sb, c, s) {
 	}
 	if (c.stat.sp - sb.cost >= 0) {
 		if (Math.random() < c.getSpellCastChance()) {
-			castSpell(sb.id, c.monster, c.getSpellPower() * 8); //TODO: spell power
+			castSpell(sb.id, c.monster, c.getSpellPower() * 10);
 			sb.castSuccessful++;
 			if (!s) {
 				this.showSpellText = false;

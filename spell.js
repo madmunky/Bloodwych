@@ -202,11 +202,11 @@ function getSpellPower(id) {
 
 function castSpell(s, src, pw) {
 	var sp = getSpellById(s);
-	var pow = Math.floor((Math.random() * pw / 2) + (pw / 2));
+	var pow = (Math.random() * pw / 2) + (pw / 2);
 	if (pow > 63) {
 		pow = 63;
 	}
-	pow = pow * sp.power;
+	pow = Math.ceil(pow * sp.power);
 	PrintLog('SPELLPOWER: ' + pow + ' ' + sp.power);
 	var f = src.floor;
 	var x = src.x;
@@ -262,7 +262,7 @@ function castSpell(s, src, pw) {
 		case SPELL_SUMMON:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x, y, d, (d + 1) % 4, 0);
 			}
 			break;
 		case SPELL_VIVIFY:
@@ -296,7 +296,7 @@ function castSpell(s, src, pw) {
 								redrawUI(p.id);
 							}
 						}
-						newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_CHAOS_BIG, -1, 0, f, x, y, 0, null);
+						newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, -1, 0, f, x, y, 0, null);
 						return;
 					}
 				}
@@ -310,7 +310,7 @@ function castSpell(s, src, pw) {
 			break;
 			//dragon
 		case SPELL_MISSILE:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON_ARROW, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_MAGELOCK:
 			if (src.getBinaryView(18, 12, 4) === '2' && src.getBinaryView(18, ((5 + 2 - d) % 4) * 2) === '1') {
@@ -331,7 +331,7 @@ function castSpell(s, src, pw) {
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_FIREPATH:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON_ARROW, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_RECHARGE:
 			break;
@@ -368,7 +368,7 @@ function castSpell(s, src, pw) {
 		case SPELL_ILLUSION:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, (d + 2) % 4, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x, y, d, (d + 1) % 4, 0);
 				monster[towerThis][max].hp = 0;
 			}
 			break;

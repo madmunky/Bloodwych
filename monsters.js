@@ -91,52 +91,6 @@ Monster.prototype.canMove = function() {
 		}
 		return ob;
 	}
-
-	/*		var hexThis = this.getBinaryView(18, 0, 16);
-		var hexNext = this.getBinaryView(15, 0, 16);
-		var objThis = getHexToBinaryPosition(hexThis, 12, 4);
-		var objNext = getHexToBinaryPosition(hexNext, 12, 4);
-
-		//Check wooden walls and doors
-		if (objThis === '2' || objNext === '2') {
-			var moveByWood = this.canMoveByWood();
-			if (moveByWood !== 1) {
-				return moveByWood;
-			}
-		}
-
-		//Check other player
-		if (getHexToBinaryPosition(hexNext, 8) === '1') {
-			return 2;
-		}
-
-		//Check other monsters
-		var xy = getOffsetByRotation(this.d);
-		if (getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y) !== null) {
-			return 2;
-		}
-
-		//Check other objects
-		switch (objNext) {
-			case '1':
-				return 0; //Wall
-			case '3':
-				return 0; //Bed/pillar
-			case '5':
-				if (getHexToBinaryPosition(hexNext, 7, 1) === '1') { //solid closed door
-					return 0;
-				}
-			case '6':
-				if (getHexToBinaryPosition(hexNext, 6, 2) === '1') { //pit
-					return 0;
-				}
-			case '7':
-				if(getHexToBinaryPosition(hexNext, 6, 2) === '3') { //formwall
-					return 0;
-				}
-		}
-	}
-	return 1;*/
 	return OBJECT_NONE;
 }
 
@@ -184,6 +138,7 @@ Monster.prototype.canOpenDoor = function() {
 Monster.prototype.move = function() {
 	if (!this.dead && this.teamId >= 0 && this.isRecruitedBy() === null) {
 		this.attack(false);
+		if (this.castSpell()) return;
 		var canMove = this.canMove();
 		if (canMove === OBJECT_CHARACTER && this.canInteract() > -1) return;
 		if (canMove === OBJECT_NONE) {
@@ -278,6 +233,28 @@ Monster.prototype.doDamageTo = function(def, dmg, dExh) {
 	} else if (def instanceof Monster) {
 		def.getDamage(dmg);
 	}
+}
+
+Monster.prototype.castSpell = function() {
+	//if (c.stat.sp - sb.cost >= 0) {
+	var sq = this.getSquareByDir();
+	if(this.type === 1 && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
+		this.castSpell();
+		var id = SPELL_MISSILE;
+		if (this.level >= 5 && Math.floor(Math.random() * 2) === 0) {
+			id = SPELL_FIREBALL;
+		}
+		if (this.level >= 10 && Math.floor(Math.random() * 3) === 0) {
+			id = SPELL_ARC_BOLT;
+		}
+		if (this.level >= 15 && Math.floor(Math.random() * 4) === 0) {
+			id = SPELL_DISRUPT;
+		}
+		castSpell(id, this, Math.floor(this.level * 2 + 4 + getSpellById(id).level * 0.4));
+		return true;
+	}
+	//}
+	return false;
 }
 
 Monster.prototype.followPlayer = function() {

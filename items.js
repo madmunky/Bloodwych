@@ -180,7 +180,7 @@ function initItems(t) {
 			var d = Math.floor(dd / 16); //parseInt(hex2dec(getHexToBinaryPosition(dec2hex(dd), 0, 4)));
 			var dir = Math.floor(d / 4);
 			var x = ((dd % 16) * 256 + dx) / 2;
-			var xy = indexToCoordinates(x);
+			var xy = indexToCoordinates(x, t.id);
 			var n = t.itemData[i1 + 2] + 1;
 			for (di = 0; di < n; di++) {
 				var max = item[t.id].length;
@@ -475,10 +475,10 @@ function initItemsGfxD() {
 
 //used for indexed items
 
-function indexToCoordinates(ix) {
+function indexToCoordinates(ix, t) {
 	var xy = new Array();
 	//tower[towerThis].floor[this.floor].Map[xy.y][xy.x]
-	var tw = tower[towerThis];
+	var tw = tower[t];
 	var isnext = 0;
 	var is = 0;
 	for (fl = 0; fl < tw.floor.length; fl++) {

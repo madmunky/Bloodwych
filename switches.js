@@ -33,8 +33,11 @@ function switchAction(r, p) {
 	}
 }
 
-function toggleObject(hex, o) {
-	if (getHexToBinaryPosition(hex, 12, 4) === '0') {
+function toggleObject(hex, o, once) {
+	if(typeof once === "undefined") {
+		var once = false;
+	}
+	if (getHexToBinaryPosition(hex, 12, 4) === '0' || once) {
 		return setHexToBinaryPosition(hex, 12, 4, o);
 	} else {
 		return setHexToBinaryPosition(hex, 12, 4, '0');
@@ -87,12 +90,13 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[p.y][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 1], 7, 1, '1');
 			break;
 		case SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD:
-			checkSwitchTower(p.id, trig);
+			checkSwitchTower(p.id, false, Math.floor(trig[1] * 0.5));
 			break;
 		case SWITCH_FLOOR_TOWER_ENTRANCE:
+			checkSwitchTower(p.id, true, Math.floor(trig[1] * 0.25));
 			break;
 		case SWITCH_FLOOR_REMOVE:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', true);
 			break;
 		case SWITCH_FLOOR_CLOSE_VOID_LOCK_DOOR:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1');
@@ -116,9 +120,10 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = '1306';
 			break;
 		case SWITCH_FLOOR_KEEP_ENTRANCE_SIDEPAD:
-			checkSwitchTower(p.id, trig);
+			checkSwitchTower(p.id, false, 0);
 			break;
 		case SWITCH_FLOOR_KEEP_ENTRANCE_CENTRAL_PAD:
+			checkSwitchTower(p.id, true, 0);
 			break;
 		case SWITCH_FLOOR_FLASH_TELEPORT:
 			break;
@@ -126,25 +131,27 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 10, 2, '' + ((parseInt(getHexToBinaryPosition(tar, 10, 2)) + 1) % 4));
 			break;
 		case SWITCH_FLOOR_TOGGLE_WALL:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '1');
 			break;
 		case SWITCH_FLOOR_SPINNER:
 			break;
 		case SWITCH_FLOOR_CLICK_TELEPORT:
 			break;
 		case SWITCH_FLOOR_TOGGLE_GREEN_PAD:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '6');
 			break;
 		case SWITCH_FLOOR_ROTATE_WOOD_WALL_COUNTER_CLOCKWISE:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = hex2bin(hex2bin(tar).substring(2, 8) + hex2bin(tar).substring(0, 2) + hex2bin(tar).substring(8, 16));
 			break;
 		case SWITCH_FLOOR_TOGGLE_HOLE:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '6');
 			break;
 		case SWITCH_FLOOR_GAME_COMPLETION_PAD:
 			break;
 		case SWITCH_FLOOR_REMOVE_PILLAR_OTHER_EVENT:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');
+			if(player.length === 1) {
+				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', true);
+			}
 			break;
 		default:
 			window.alert("Unhandled Floor Action: " + trig.toString());
@@ -157,11 +164,19 @@ function initTowerSwitches() {
 		for (i = 0; i < 2; i++) { //0: to tower, 1: to keep
 			player[p].towerSwitches[i] = new Array();
 			for (t = 0; t < 5; t++) { //tower
-				player[p].towerSwitches[i][t + 1] = {
-					floor: towerSwitchesData[i][t],
-					x: towerSwitchesData[i][t * 4 + p * 2 + 5],
-					y: towerSwitchesData[i][t * 4 + p * 2 + 6]
-				};
+				if(player.length === 2) {
+					player[p].towerSwitches[i][t + 1] = {
+						floor: towerSwitchesData[i][t],
+						x: towerSwitchesData[i][t * 4 + p * 2 + 5],
+						y: towerSwitchesData[i][t * 4 + p * 2 + 6]
+					};
+				} else {
+					player[0].towerSwitches[i][t + 1] = {
+						floor: towerSwitchesData[i][t],
+						x: Math.floor((towerSwitchesData[i][t * 4 + 0 * 2 + 5] + towerSwitchesData[i][t * 4 + 1 * 2 + 5]) / 2),
+						y: Math.floor((towerSwitchesData[i][t * 4 + 0 * 2 + 6] + towerSwitchesData[i][t * 4 + 1 * 2 + 6]) / 2)
+					};
+				}
 			}
 		}
 	}

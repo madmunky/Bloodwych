@@ -28,7 +28,7 @@ Projectile.prototype.moveProjectile = function() {
 		var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
 		if (typeof this.monster !== "undefined") {
 			for (var p = 0; p < player.length; p++) {
-				if (this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
+				if (!player[p].dead && this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
 					this.attack(player[p]);
 					this.dead = 2;
 					return false;
@@ -147,9 +147,11 @@ Projectile.prototype.attack = function(target, prc) {
 				var ch = att.getChampion();
 				att.doDamageTo(def, pwr, dExh);
 				if (pl !== null && ch !== null) {
-					pl.gainChampionXp(pwr, ch);
-					if (def.dead) {
-						pl.gainChampionXp(128);
+					if (def instanceof Monster) {
+						pl.gainChampionXp(pwr, ch);
+						if (def.dead) {
+							pl.gainChampionXp(128);
+						}
 					}
 				}
 			}
