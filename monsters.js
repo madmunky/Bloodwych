@@ -43,7 +43,7 @@ Monster.prototype.toString = function() {
 	if (this.champId !== -1) {
 		cha = ', champion:' + TEXT_CHAMPION_NAME[this.champId] + '(' + this.champId + ')';
 	}
-	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.ref.id + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', hp:' + this.hp + ', teamId:' + this.teamId + cha + ']';
+	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.ref.id + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', hp:' + this.getHP() + ', teamId:' + this.teamId + cha + ']';
 }
 
 Monster.prototype.canInteract = function() {
@@ -238,6 +238,17 @@ Monster.prototype.doDamageTo = function(def, dmg, dExh) {
 	}
 }
 
+Monster.prototype.getDamage = function(dmg) {
+	this.hp -= dmg;
+	if (this.getHP() < 0) {
+		this.die();
+	}
+}
+
+Monster.prototype.getHP = function() {
+	return this.hp;
+}
+
 Monster.prototype.castSpell = function() {
 	//if (c.stat.sp - sb.cost >= 0) {
 	var sq = this.getSquareByDir();
@@ -424,13 +435,6 @@ Monster.prototype.isAgressive = function() {
 		return false;
 	}
 	return true;
-}
-
-Monster.prototype.getDamage = function(dmg) {
-	this.hp -= dmg;
-	if (this.hp < 0) {
-		this.die();
-	}
 }
 
 Monster.prototype.die = function() {

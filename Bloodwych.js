@@ -240,7 +240,6 @@ function godMode() {
 	for (c in champion) {
 		var ch = champion[c];
 		ch.level = 99;
-		//ch.stat.ac = 99;
 		ch.stat.str = 99;
 		ch.stat.agi = 99;
 		ch.stat.int = 99;

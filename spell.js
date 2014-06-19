@@ -158,7 +158,7 @@ function getSpellPower(id) {
 		case SPELL_VIVIFY:
 			return 1;
 		case SPELL_DISRUPT:
-			return 16;
+			return 6;
 
 			//dragon
 		case SPELL_MISSILE:
@@ -303,9 +303,6 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_DISRUPT:
-			if(Math.random() > 0.01 * pow) {
-				pow = 1;
-			}
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, s, pow, f, x, y, d, src);
 			break;
 			//dragon

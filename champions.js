@@ -74,11 +74,11 @@ Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
 Champion.prototype.getDamage = function(dmg, safe) {
 	this.stat.hp -= dmg;
 	if (typeof safe !== "undefined" && safe) {
-		if (this.stat.hp <= 0) {
+		if (this.getHP() <= 0) {
 			this.stat.hp = 0;
 		}
 	} else {
-		if (this.stat.hp < 0) {
+		if (this.getHP() < 0) {
 			this.stat.hp = -1;
 			this.monster.die();
 		}
@@ -92,6 +92,10 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
 		}
 	}
+}
+
+Champion.prototype.getHP = function() {
+	return this.stat.hp;
 }
 
 Champion.prototype.getWeaponPower = function(s) {
@@ -470,7 +474,7 @@ Champion.prototype.getSpellCastChance = function() {
 }
 
 Champion.prototype.getSpellPower = function() {
-	var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue + (this.level - 1) * 0.1;
+	var res = (this.selectedSpell.castSuccessful * 0.01 - 6.0 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.01 - (this.selectedSpell.ref.level - 1.0) * 0.2) + this.spellFatigue + (this.level - 1) * 0.1;
 	//var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue; /* + (this.level - 1) * 0.1;*/
 	PrintLog('pcast:' + this.selectedSpell.castSuccessful + ' scost:' + this.selectedSpell.cost + ' pint:' + this.stat.int + ' slvl:' + this.selectedSpell.ref.level + ' fat:' + this.spellFatigue + ' = res:' + res)
 	return res;

@@ -141,6 +141,11 @@ Projectile.prototype.attack = function(target, prc) {
 			var att = combat[com].attacker;
 			var def = combat[com].defender;
 			var pwr = Math.floor(combat[com].power * prc);
+			if (this.spell.index === SPELL_DISRUPT) {
+				if(pwr < def.getHP()) {
+					pwr = 1;
+				}
+			}
 			var dExh = Math.floor(combat[com].defExhaustion * prc);
 			if (att !== null) {
 				var pl = att.isRecruitedBy();

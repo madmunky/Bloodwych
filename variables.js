@@ -9,7 +9,7 @@ var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
 var gameStarted = false;
 var scale = 3;
 var scaleReal = 3;
-var debug = false;
+var debug = true;
 var debugHigh = false;
 var debugWindow;
 var game;
