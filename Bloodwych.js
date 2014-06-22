@@ -112,16 +112,8 @@ function configCanvas() {
 
 function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	//canvas.width = canvas.width;
 }
 
-//function drawDashboard() {
-//	myDIx(ctx, gfx["misc"]["dashboard0"], [0, 0, 320, 86, 0, 10]);
-//	myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
-//	myDIx(ctx, gfx["misc"]["dashboard1"], [0, 0, 320, 86, 0, 114]);
-//	writeFontImage(champion[player[0].champion[0]].firstName, 226, 17, COLOUR[COLOUR_YELLOW]);
-//	writeFontImage(champion[player[1].champion[0]].firstName, 226, 121, COLOUR[COLOUR_YELLOW]);
-//}
 
 //Renders the sub-coloured objects. E.g. for locked doors and banners
 
@@ -244,8 +236,8 @@ function godMode() {
 		ch.stat.agi = 99;
 		ch.stat.int = 99;
 		ch.stat.cha = 99;
-		ch.stat.hp = 255;
-		ch.stat.hpMax = 255;
+		ch.stat.hp = 999;
+		ch.stat.hpMax = 999;
 		ch.stat.sp = 255;
 		ch.stat.spMax = 255;
 		ch.stat.vit = 255;

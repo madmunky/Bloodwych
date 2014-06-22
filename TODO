@@ -13,6 +13,11 @@ COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shi
 COD Get tower switching for 1 player
 COD Fix death screen as I did with asleep
 BUG Cast% stays when closing book
+BUG Monsters CAST while communicating
+BUG Yellow flash when hit by a spell draws before wooden object
+BUG Firepath is drawn after Items?
+BUG If a monster is at the bottom of the stairs you shouldnt be able to move down
+BUG Communication on a party will rotate the player member
 
 CHRIS
 ------
@@ -27,5 +32,3 @@ The spell points seem wrong compared to steem. E.g. Zothen has 43 sp in ours, an
 
 QUESTIONS FOR JORG
 ------------------
-
-Should we add monster.message queue of events as we need to time events ie responses and actions

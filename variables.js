@@ -4,6 +4,8 @@ var player = new Array();
 var tower = new Array();
 var cursorType = 0;
 var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+var champSelectGrid = [];
+var players = 0;
 
 //Setup some global Varibles for needed
 var gameStarted = false;
@@ -688,7 +690,11 @@ var UI_GFX_POCKET_EMPTY = 0,
 	UI_GFX_MOVEMENT_ROTATE_RIGHT = 145,
 	UI_GFX_MOVEMENT_MOVE_LEFT = 146,
 	UI_GFX_MOVEMENT_MOVE_BACKWARDS = 147,
-	UI_GFX_MOVEMENT_MOVE_RIGHT = 148;
+	UI_GFX_MOVEMENT_MOVE_RIGHT = 148,
+        UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE = 149,
+        UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_RED = 150,
+        UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES = 151,
+        UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL = 152;
 
 var UI_LEFT_PANEL_MODE_STATS = 0,
 	UI_LEFT_PANEL_MODE_COMMAND = 1;
@@ -708,7 +714,6 @@ var UI_CENTER_PANEL_SLEEPING = 0,
 	UI_CENTER_PANEL_FAIRY_CHAOS = 6,
 	UI_CENTER_PANEL_FAIRY_SPELLDETAILS = 7,
 	UI_CENTER_PANEL_VIEWPORT = 8;
-
 
 var UI_CLICK_CHAMP1 = 0,
 	UI_CLICK_STATS_BOX = 1,
@@ -910,6 +915,7 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
 	TEXT_PAUPER = "I FIND THEE A PAUPER",
 	TEXT_SPELL_FAILED = "SPELL FAILED",
 	TEXT_COST_TOO_HIGH = "COST TOO HIGH",
+        TEXT_SELECT_CHAMPION = "PLEASE SELECT YOUR CHAMPION  ....",
 	TEXT_CHAMPION_NAME = ["BLODWYN", "MURLOCK", "ELEANOR", "ROSANNE", "ASTROTH", "ZOTHEN", "BALDRICK", "ELFRIC", "SIR EDWARD", "MEGRIM", "SETHRA", "MR. FLAY", "ULRICH", "ZASTAPH", "HENGIST", "THAI CHANG"],
 	TEXT_CHAMPION_LASTNAME = ["STONEMAIDEN", "DARKENHEART", "OF AVALON", "SWIFTHAND", "SLAEMWORT", "RUNECASTER", "THE DUNG", "FALAENDOR", "LION", "OF MOONWYCH", "BHOAGHAIL", "SEPULCRAST", "STERNAXE", "MANTRIC", "MELDANASH", "OF YINN"],
         TEXT_TRADE = ["WARRIOR","WIZARD","ADVENTURER","CURPURSE"],
@@ -941,7 +947,7 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
                     "I DO NOT TRADE IN TRINKETS",
                     "I NEED NOT THY TRASH",
                     "MAYBE TRUE BUT THOU SHOULD BE SO LUCKY",
-                    "I TRUST THIS PLEASES THEE",                                     
+                    "I TRUST THIS PLEASES THEE"                                     
                 ]
             ],
 	TEXT_SPELL_NAME = [
@@ -1527,3 +1533,5 @@ var projectileTimer = 0;
 var DUNGEON_PROJECTILE_BIG = 27,
 	DUNGEON_PROJECTILE_EXPLODE = 28,
 	DUNGEON_PROJECTILE_ARROW = 29;
+
+var championSelect = [{champID: -1, chosen: false, mode: UI_RIGHT_PANEL_STATS},{champID: -1, chosen: false, mode: UI_RIGHT_PANEL_STATS}];

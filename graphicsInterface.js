@@ -131,6 +131,11 @@ function grabUISprites(spriteSheetIMG) {
 	ImageArray.push(grabImageAt(spriteSheetIMG, 170, 326, 11, 11, false)); //Move Left
 	ImageArray.push(grabImageAt(spriteSheetIMG, 186, 326, 18, 9, false)); //Move Back
 	ImageArray.push(grabImageAt(spriteSheetIMG, 207, 326, 11, 11, false)); //Move Right
+        
+        ImageArray.push(grabImageAt(spriteSheetIMG, 304, 261, 152, 16, false)); //Character Select Name Blue
+        ImageArray.push(grabImageAt(spriteSheetIMG, 304, 278, 152, 1, false)); //Character Select Name Blue
+        ImageArray.push(grabImageAt(spriteSheetIMG, 304, 295, 48, 20, false)); //Character Select Boxes
+        ImageArray.push(grabImageAt(spriteSheetIMG, 356, 296, 94, 73, false)); //Character Select Scroll
 
 	return ImageArray;
 
@@ -361,10 +366,7 @@ function leftUI(p) {
 			if (c === 0) {
 				if (p.uiLeftPanel.champs[c] === true) {
 					ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
-					var t = drawCharacter(monster[6][cid], 0, 0, p, {
-						x: 0,
-						y: -1
-					}, true, false)
+					var t = drawCharacter(monster[6][cid], 0, 0, p, {x: 0,y: -1}, true, false);
 					ctx.drawImage(t, (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, t.width * scale, t.height * scale);
 					ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 43 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
 				} else {
@@ -750,10 +752,25 @@ function highliteMovementArrow(p, m) {
 	}
 }
 
-function drawStatsPage(p) {
-	var ch = p.getChampion(p.championLeader);
+function drawStatsPage(p,ch,start) {
+    
+    
+    
+    if(typeof ch === 'undefined'){
+        ch = p.getChampion(p.championLeader);
+    }
+    if(typeof start === 'undefined'){
+        start = false;
+    }
+    
+	//var ch = p.getChampion(p.championLeader);
 	if (ch !== null) {
-		ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+                if(start){
+                    ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL].height * scale);
+                }else{
+                    ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);                    
+                }
+		
 		writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
 		writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), COLOUR[COLOUR_GREY_DARKEST]);
 		writeFontImage(doubleDigits(ch.level), p.ScreenX + 297, (p.ScreenY + 15), COLOUR[COLOUR_WHITE]);
@@ -779,10 +796,12 @@ function drawStatsPage(p) {
 		writeFontImage(ch.stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
 		writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_GREY_DARKEST]);
 		writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 47), COLOUR[COLOUR_GREEN]);
-
-		writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-		var t = showStatusBar(ch.food, 200, 62, COLOUR[COLOUR_RED_DARK]);
-		ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
+                
+                if(!start){
+                    writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+                    var t = showStatusBar(ch.food, 200, 62, COLOUR[COLOUR_RED_DARK]);
+                    ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
+                }
 	}
 }
 
@@ -1738,8 +1757,6 @@ function drawCommunicationBox(p, item, forced) {
 	//We meed the commincation box to be drawn on its own and not with the UI as this will be updated more offern
 	//we can do a check on the player.communication.highlighted and see if it matches the current x/y then redraw if needed to hightligh the new word
 
-
-
 	//Check if we actually need to redraw...
 	if (typeof item === "undefined") {
 		item === null;
@@ -1831,4 +1848,106 @@ function drawCommunicationBox(p, item, forced) {
 	}
 
 
+}
+
+function drawQuickStartUI(plys){
+    
+   clearCanvas();   
+   writeFontImage(TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
+    
+   var chN = 0;
+    for (y = 0; y <  4;y++){    
+        for (x = 0;x < 4;x++){
+            
+            var ch = champion[chN];
+            var t = createShield(ch.id, ch.prof, ch.colour);
+            if (championSelect[0].champID !== -1 || championSelect[1].champID !== -1){
+                if (championSelect[0].champID !== -1 && ch.id === championSelect[0].champID) {
+                   showCharacterDetails(ch,0);			
+                } else if (championSelect[1].champID !== -1 && ch.id === championSelect[1].champID) {
+                    ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], (x * 40) * scale, ((y * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_RED].width * scale, gfxUI[UI_GFX_SHIELD_RED].height * scale);
+                    //drawStatsPage(new Array({screenX: 0,screenY: 30}),champion[chN])
+                }else{
+                    ctx.drawImage(t, (x * 40) * scale, ((y * 48) + 15) * scale, t.width * scale, t.height * scale);
+                }                        
+            }else
+            {
+                ctx.drawImage(t, (x * 40) * scale, ((y * 48) + 15) * scale, t.width * scale, t.height * scale);
+            }            
+            
+            if (champSelectGrid.length < champion.length){
+                createCharSelectGrid((x * 40),(y * 48) + 15,t.width,t.height,chN);
+            }            
+            chN++;
+        }        
+    }
+    
+}
+
+function showCharacterDetails(ch,ply){
+    
+     var myY = 50,
+            myX = 0;
+
+    ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], (x * 40) * scale, ((y * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES], 170 * scale, (myY + 54) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], 168 * scale, (myY ) * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][ch.id], 176 * scale, (myY + 7) * scale, gfxUI[UI_GFX_PORTRAITS][ch.id].width * scale, gfxUI[UI_GFX_PORTRAITS][ch.id].height * scale);
+    
+    var a = ch.prof;
+    var b = ch.colour;
+
+    ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][b], 198 * scale, (myY + 56) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+    
+    switch (championSelect[ply].mode){
+        
+        case UI_RIGHT_PANEL_SPELLBOOK:{
+                drawSpellBook({ScreenX: 0,ScreenY: myY + 2},true);
+                //writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);   
+                ctx.drawImage(gfxUI[UI_GFX_SCRIPT], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
+        }break;
+	case UI_RIGHT_PANEL_POCKETS:{
+                drawStatsPage({ScreenX: 0,ScreenY: myY + 2},champion[ch.id],true);
+                writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
+                ctx.drawImage(gfxUI[UI_GFX_ICON_BOOKOFSKULLS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
+        }break;
+	case UI_RIGHT_PANEL_STATS:{
+                drawStatsPage({ScreenX: 0,ScreenY: myY + 2},champion[ch.id],true);
+                writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
+                ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
+        }break;
+        
+    }
+    
+    
+}
+
+function createCharSelectGrid(myX, myY, myWidth, myHeight,cid) {
+	champSelectGrid.push({
+		x: myX,
+		y: myY,
+		width: myWidth,
+                height: myHeight,
+                champID: cid
+	});
+}
+
+function uiChampSelectArea(x,y,pl){
+    
+    	var px = 0;
+	var py = 0;
+    
+    for (ui = 0;ui < champSelectGrid.length;ui++ ){
+        if (x >= (px + champSelectGrid[ui].x) * 1 && x < (px + champSelectGrid[ui].x + champSelectGrid[ui].width) * 1 && y >= (py + champSelectGrid[ui].y) * 1 && y < (py + champSelectGrid[ui].y + champSelectGrid[ui].height) * 1) {
+		if (debug) {
+				ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
+				ctx.fillRect((px + champSelectGrid[ui].x) * scale, (py + champSelectGrid[ui].y) * scale, champSelectGrid[ui].width * scale, champSelectGrid[ui].height * scale);
+		}
+		//return  champSelectGrid[ui];
+                championSelect[pl].champID = champSelectGrid[ui].champID;
+                drawQuickStartUI(players -1);
+	}
+    }
+    
 }

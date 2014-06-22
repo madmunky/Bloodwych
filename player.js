@@ -1095,6 +1095,14 @@ function initPlayersStart(ch1, ch2) {
 
 Player.prototype.doCommunication = function(item) {
 
+    var myColour;
+    
+    if (player[0] === this){
+        myColour = COLOUR[COLOUR_GREEN];
+    }else{
+        myColour = COLOUR[COLOUR_PINK];
+    }
+
 	switch (this.communication.mode) {
 
 		case COMMUNICATION_PAGE_MAIN:
@@ -1108,10 +1116,10 @@ Player.prototype.doCommunication = function(item) {
 								m.d = (this.d + 2) % 4;
 								this.communication.monster = m;
 								this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
-								this.message(TEXT_COMMUNICATION[0][1]);
+								this.message(TEXT_COMMUNICATION[0][1],myColour);
 								this.message(TEXT_COMMUNICATION[1][0], COLOUR[COLOUR_RED], true);
 							} else {
-								this.message(TEXT_COMMUNICATION[0][0]);
+								this.message(TEXT_COMMUNICATION[0][0],myColour);
 							}
 						}
 						break
@@ -1159,7 +1167,7 @@ Player.prototype.doCommunication = function(item) {
 				switch (item) {
 					case COMMUNICATION_RECRUIT:
 						{
-                                                    this.message(TEXT_COMMUNICATION[2][0]);
+                                                    this.message(TEXT_COMMUNICATION[2][0],myColour);
                                                     this.message(TEXT_COMMUNICATION[2][Math.floor(Math.random() * 4) + 2],COLOUR[COLOUR_RED],true);
                                                     
 						}
@@ -1176,7 +1184,7 @@ Player.prototype.doCommunication = function(item) {
 						break
 					case COMMUNICATION_WHEREABOUTS:
 						{;
-                                                    this.message(TEXT_COMMUNICATION[3][0]);
+                                                    this.message(TEXT_COMMUNICATION[3][0],myColour);
                                                     this.message(TEXT_COMMUNICATION[3][Math.floor(Math.random() * 1) + 1],COLOUR[COLOUR_RED],true);
 						}
 						break
@@ -1220,7 +1228,7 @@ Player.prototype.doCommunication = function(item) {
 				switch (item) {
 					case COMMUNICATION_WHO_GOES:
 						{;
-                                                    this.message(TEXT_COMMUNICATION[4][0]);
+                                                    this.message(TEXT_COMMUNICATION[4][0],myColour);
                                                     if (this.communication.monster.champId !== null){
                                                         var ch = champion[this.communication.monster.champId];                                                        
                                                         this.message(TEXT_COMMUNICATION[4][1]+ch.getName(),COLOUR[COLOUR_RED],true);
@@ -1231,7 +1239,7 @@ Player.prototype.doCommunication = function(item) {
 						break
 					case COMMUNICATION_THY_TRADE:
 						{;
-                                                    this.message(TEXT_COMMUNICATION[5][0]);
+                                                    this.message(TEXT_COMMUNICATION[5][0],myColour);
                                                     if (this.communication.monster.champId !== null){
                                                         var ch = champion[this.communication.monster.champId];                                                        
                                                         this.message(TEXT_COMMUNICATION[5][1]+ch.getTrade(),COLOUR[COLOUR_RED],true);
@@ -1274,19 +1282,19 @@ Player.prototype.doCommunication = function(item) {
 				switch (item) {
 					case COMMUNICATION_FOLK_LORE:
 						{
-                                                    this.message(TEXT_COMMUNICATION[9][0]);                                                       
+                                                    this.message(TEXT_COMMUNICATION[9][0],myColour);                                                       
                                                     this.message(TEXT_COMMUNICATION[6][1],COLOUR[COLOUR_RED],true);                                                    
 						}
 						break
 					case COMMUNICATION_MAGIC_ITEMS:
 						{
-                                                    this.message(TEXT_COMMUNICATION[8][0]);                                                       
+                                                    this.message(TEXT_COMMUNICATION[8][0],myColour);                                                       
                                                     this.message(TEXT_COMMUNICATION[8][1],COLOUR[COLOUR_RED],true);  
 						}
 						break
 					case COMMUNICATION_OBJECTS:
 						{
-                                                    this.message(TEXT_COMMUNICATION[7][0]);                                                       
+                                                    this.message(TEXT_COMMUNICATION[7][0],myColour);                                                       
                                                     this.message(TEXT_COMMUNICATION[7][1],COLOUR[COLOUR_RED],true);  
 						}
 						break

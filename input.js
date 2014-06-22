@@ -150,7 +150,7 @@ function checkClickEvents() {
 		} else if (t.attr('data-game-status') === 'menu') {
 			processCanvasInputMenu(x, y);
 		} else if (t.attr('data-game-status') === 'menu-champions') {
-
+                        uiChampSelectArea(x, y,0);
 		}
 	});
 }
@@ -507,10 +507,17 @@ function processCanvasInput(pid, x, y) {
 }
 
 function processCanvasInputMenu(x, y) {
+    
+        var t = $(this).find('canvas');
+    
 	if (uiClickInArea(x, y, UI_CLICK_START_ONE_PLAYER)) {
-		startGame(true, false);
+                $('canvas').attr('data-game-status', 'menu-champions');
+                players = 1;
+                drawQuickStartUI(1);                
 	} else if (uiClickInArea(x, y, UI_CLICK_START_TWO_PLAYER)) {
-		startGame(false, false);
+                $('canvas').attr('data-game-status', 'menu-champions');
+                players = 2;
+                drawQuickStartUI(2);
 	} else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_ONE_PLAYER)) {
 		startGame(true, true);
 	} else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) {
@@ -521,30 +528,10 @@ function processCanvasInputMenu(x, y) {
 function viewportTouch(x, y, xy) {
 
 	for (p = 0; p < player.length; p++) {
-
 		xy = {
 			x: Math.floor((x - player[p].PortalX) / scale / 42.67),
 			y: Math.floor((y - player[p].PortalY) / scale / 38)
 		};
-
-
-		//        if (xy.x >= 0 && xy.x <= 2 && xy.y >= 0 && xy.y <= 2) {
-		//            if (xy.x === 0 && xy.y === 0) { //rotate left
-		//                player[p].rotate(-1);
-		//            } else if (xy.x === 2 && xy.y === 0) { //rotate right
-		//                player[p].rotate(1);
-		//            } else if (xy.x === 1 && xy.y === 0) { //move forward
-		//                player[p].move(DIRECTION_NORTH);
-		//            } else if (xy.x === 0 && xy.y === 1) { //move left
-		//                player[p].move(DIRECTION_WEST);
-		//            } else if (xy.x === 2 && xy.y === 1) { //move right
-		//                player[p].move(DIRECTION_EAST);
-		//            } else if (xy.x === 1 && xy.y === 1) { //move backward
-		//                player[p].move(DIRECTION_SOUTH);
-		//            } else if (xy.y === 2) { //action
-		//                //player[p].action();
-		//            }
-		//        }
 	}
 }
 
@@ -577,13 +564,10 @@ function mouseXY(e) {
 }
 
 function leftOrRight(p, x, row) {
-
 	if (TEXT_COMMUNICATION_COMMANDS[p.communication.mode][row].width <= x) {
 		return false;
 	}
-
 	return true;
-
 }
 
 function checkBackButton(p) {
@@ -615,14 +599,6 @@ function checkBackButton(p) {
 			break;
 	}
 }
-
-//function doCommunication(p, item) {
-//	if (TEXT_COMMUNICATION_COMMANDS[p.communication.mode][item].to !== null) {
-//            p.doCommuncation(item);
-//		//p.communication.mode = TEXT_COMMUNICATION_COMMANDS[p.communication.mode][item].to;
-//	}
-//	drawCommunicationBox(p, item, true);
-//}
 
 function checkCommunicationArea(p, x, y, hover) {
 	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
