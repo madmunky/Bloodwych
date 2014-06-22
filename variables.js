@@ -912,46 +912,36 @@ var TEXT_DOOR_LOCKED = "THE DOOR IS LOCKED",
 	TEXT_COST_TOO_HIGH = "COST TOO HIGH",
 	TEXT_CHAMPION_NAME = ["BLODWYN", "MURLOCK", "ELEANOR", "ROSANNE", "ASTROTH", "ZOTHEN", "BALDRICK", "ELFRIC", "SIR EDWARD", "MEGRIM", "SETHRA", "MR. FLAY", "ULRICH", "ZASTAPH", "HENGIST", "THAI CHANG"],
 	TEXT_CHAMPION_LASTNAME = ["STONEMAIDEN", "DARKENHEART", "OF AVALON", "SWIFTHAND", "SLAEMWORT", "RUNECASTER", "THE DUNG", "FALAENDOR", "LION", "OF MOONWYCH", "BHOAGHAIL", "SEPULCRAST", "STERNAXE", "MANTRIC", "MELDANASH", "OF YINN"],
+        TEXT_TRADE = ["WARRIOR","WIZARD","ADVENTURER","CURPURSE"],
         TEXT_COMMUNICATION = [
-                ["THERE IS NOBODY THERE","GREETINGS"],["WHY DOST BURDEN ME WITH THY COMPANY?"],
-                ["COME JOIN MY MERRY BAND",
-                    "THY PARTY IS FULL",
-                    "WOULDST THOU RIP ME OFF",
-                    "I NEVER TRUST THE UNNATURAL",
-                    "KEEP TALKING AND WE'LL SEE",
-                    "I THINK NOT MY FRIEND",
-                    "MY NAME IS NOT IMPORTANT",
+                ["THERE IS NOBODY THERE","GREETINGS"],
+                ["WHY DOST BURDEN ME WITH THY COMPANY?"],
+                ["COME JOIN MY MERRY BAND","THY PARTY IS FULL","I NEVER TRUST THE UNNATURAL","KEEP TALKING AND WE'LL SEE","I THINK NOT MY FRIEND","I DON'T KEEP COMPANY WITH MAGGOTS","YES"],
+                ["WHERE IS THIS OF WHICH THOU HAST SPOKEN?","LOOK TO THE TOWERS MY FRIEND"],
+                ["WHO ART THOU?","MY NAME IS ","MY NAME IS NOT IMPORTANT"],
+                ["WHAT BE THY BUSINESS?", "I AM A NOBAL ","NONE OF THY BUSINESS I'M SURE"],
+                ["HAST HEARD OF ANY POWERFUL BEINGS?","NEWS IS SCARCE IN THESE PARTS"],
+                ["KNOWEST THOU OF ANY WEAPONS OF NOTE?","WHO CAN SAY WHAT IS OF NOTE?"],
+                ["KNOWEST THOU OF ANY ENCHANTED ITEMS?","I HEAR CRYSTALS ARE WORTH SEEKING"],
+                ["HAST THOU HEARD ANY LEGENDS?"],
+                ["WOULDST THOU RIP ME OFF",                    
                     "I AM ZENDIK THE MASTER OF CREATION",
                     "METHINKS THOU ART TOO GREEDY",
                     "THAT'S VERY POSSIBLE",
                     "I CANNOT BUT AGREE",
                     "THAT SEEMS VERY LIKELY",
                     "I'M NOT ABOUT TO ARGUE WITH THEE",
-                    "I DON'T KEEP COMPANY WITH MAGGOTS",
-                    "LOOK TO THE TOWERS MY FRIEND",
                     "INDEED NOT",
                     "MAKE ME THY OFFER",
                     "PICK ON SOMEONE THY OWN SIZE THOU SLUG",
                     "I AM THY WORST NIGHTMARE",
-                    "NONE OF THY BUSINESS I'M SURE",
-                    "NEWS IS SCARCE IN THESE PARTS",
-                    "I HEAR CRYSTALS ARE WORTH SEEKING",
-                    "WHO CAN SAY WHAT IS OF NOTE?",
                     "I HEAR ZENDIK IS NOT WHOLLY A WORM",
                     "GIVE ME A BREAK",
                     "THY COINAGE IS WORTHLESS TO ME",
                     "I DO NOT TRADE IN TRINKETS",
                     "I NEED NOT THY TRASH",
                     "MAYBE TRUE BUT THOU SHOULD BE SO LUCKY",
-                    "I TRUST THIS PLEASES THEE",
-                    "WHY DOST BURDEN ME WITH THY COMPANY?",
-                    "WHERE IS THIS OF WHICH THOU HAST SPOKEN?",
-                    "COME JOIN MY MERRY BAND",
-                    "HAST THOU HEARD ANY LEGENDS?",
-                    "KNOWEST THOU OF ANY ENCHANTED ITEMS?",
-                    "KNOWEST THOU OF ANY WEAPONS OF NOTE?",
-                    "HAST HEARD OF ANY POWERFUL BEINGS?",
-                    "WHAT BE THY BUSINESS?"
+                    "I TRUST THIS PLEASES THEE",                                     
                 ]
             ],
 	TEXT_SPELL_NAME = [
@@ -1096,7 +1086,14 @@ var COMMUNICATION_RECRUIT = 0,
         COMMUNICATION_PRAISE = 0,
         COMMUNICATION_CURSE = 1,
         COMMUNICATION_BOAST =2 ,
-        COMMUNICATION_RETORT = 3;
+        COMMUNICATION_RETORT = 3,
+        COMMUNICATION_COMMUNICATE = 0,
+        COMMUNICATION_COMMEND = 1,
+        COMMUNICATION_VIEW = 2,
+        COMMUNICATION_WAIT = 3,
+        COMMUNICATION_CORRECT = 4,
+        COMMUNICATION_DISMISS = 5,
+        COMMUNICATION_CALL = 6;
 
 var TEXT_COMMUNICATION_COMMANDS = [
 	[{
@@ -1210,25 +1207,25 @@ var TEXT_COMMUNICATION_COMMANDS = [
 		row: 0,
 		width: 93,
 		left: true,
-		to: null
+		to: COMMUNICATION_PAGE_COMMUNICATE_0
 	}, {
 		text: "THY TRADE?",
 		row: 1,
 		width: 93,
 		left: true,
-		to: null
+		to: COMMUNICATION_PAGE_COMMUNICATE_0
 	}, {
 		text: "NAME SELF",
 		row: 2,
 		width: 93,
 		left: true,
-		to: null
+		to: COMMUNICATION_PAGE_COMMUNICATE_0
 	}, {
 		text: "REVEAL SELF",
 		row: 3,
 		width: 93,
 		left: true,
-		to: null
+		to: COMMUNICATION_PAGE_COMMUNICATE_0
 	}],
 	[{
 		text: "FOLK LORE",

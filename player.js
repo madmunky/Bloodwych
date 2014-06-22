@@ -1100,7 +1100,7 @@ Player.prototype.doCommunication = function(item) {
 		case COMMUNICATION_PAGE_MAIN:
 			{
 				switch (item) {
-					case 0:
+					case COMMUNICATION_COMMUNICATE:
 						{
 							var m = this.checkForMonsterInFront();
 							if (m !== null) {
@@ -1115,37 +1115,37 @@ Player.prototype.doCommunication = function(item) {
 							}
 						}
 						break
-					case 1:
+					case COMMUNICATION_COMMEND:
 						{
 							this.communication.mode = COMMUNICATION_PAGE_NAMES;
 							this.communication.action = "COMMEND";
 						}
 						break
-					case 2:
+					case COMMUNICATION_VIEW:
 						{
 							this.communication.mode = COMMUNICATION_PAGE_NAMES;
 							this.communication.action = "VIEW";
 						}
 						break
-					case 3:
+					case COMMUNICATION_WAIT:
 						{
 							this.communication.mode = COMMUNICATION_PAGE_NAMES;
 							this.communication.action = "WAIT";
 						}
 						break
-					case 4:
+					case COMMUNICATION_CORRECT:
 						{
 							this.communication.mode = COMMUNICATION_PAGE_NAMES;
 							this.communication.action = "CORRECT";
 						}
 						break
-					case 5:
+					case COMMUNICATION_DISMISS:
 						{
 							this.communication.mode = COMMUNICATION_PAGE_NAMES;
 							this.communication.action = "DISMISS";
 						}
 						break
-					case 6:
+					case COMMUNICATION_CALL:
 						{
 							this.communication.mode = COMMUNICATION_PAGE_NAMES;
 							this.communication.action = "CALL";
@@ -1158,7 +1158,10 @@ Player.prototype.doCommunication = function(item) {
 			{
 				switch (item) {
 					case COMMUNICATION_RECRUIT:
-						{;
+						{
+                                                    this.message(TEXT_COMMUNICATION[2][0]);
+                                                    this.message(TEXT_COMMUNICATION[2][Math.floor(Math.random() * 4) + 2],COLOUR[COLOUR_RED],true);
+                                                    
 						}
 						break
 					case COMMUNICATION_IDENTIFY:
@@ -1173,6 +1176,8 @@ Player.prototype.doCommunication = function(item) {
 						break
 					case COMMUNICATION_WHEREABOUTS:
 						{;
+                                                    this.message(TEXT_COMMUNICATION[3][0]);
+                                                    this.message(TEXT_COMMUNICATION[3][Math.floor(Math.random() * 1) + 1],COLOUR[COLOUR_RED],true);
 						}
 						break
 				}
@@ -1215,36 +1220,74 @@ Player.prototype.doCommunication = function(item) {
 				switch (item) {
 					case COMMUNICATION_WHO_GOES:
 						{;
+                                                    this.message(TEXT_COMMUNICATION[4][0]);
+                                                    if (this.communication.monster.champId !== null){
+                                                        var ch = champion[this.communication.monster.champId];                                                        
+                                                        this.message(TEXT_COMMUNICATION[4][1]+ch.getName(),COLOUR[COLOUR_RED],true);
+                                                    }else{
+                                                        this.message(TEXT_COMMUNICATION[4][2],COLOUR[COLOUR_RED],true);
+                                                    }
 						}
 						break
 					case COMMUNICATION_THY_TRADE:
 						{;
+                                                    this.message(TEXT_COMMUNICATION[5][0]);
+                                                    if (this.communication.monster.champId !== null){
+                                                        var ch = champion[this.communication.monster.champId];                                                        
+                                                        this.message(TEXT_COMMUNICATION[5][1]+ch.getTrade(),COLOUR[COLOUR_RED],true);
+                                                    }else{
+                                                        this.message(TEXT_COMMUNICATION[5][2],COLOUR[COLOUR_RED],true);
+                                                    }
 						}
 						break
 					case COMMUNICATION_NAME_SELF:
 						{;
+                                                    
+                                                    var ch = champion[this.championLeader];                                                        
+                                                    this.message(TEXT_COMMUNICATION[4][1]+ch.getName(),COLOUR[COLOUR_GREEN],true);                                                    
+                                                    if (this.communication.monster.champId !== null){
+                                                        ch = champion[this.communication.monster.champId];                                                        
+                                                        this.message(TEXT_COMMUNICATION[4][1]+ch.getName(),COLOUR[COLOUR_RED],true);
+                                                    }else{
+                                                        this.message(TEXT_COMMUNICATION[4][2],COLOUR[COLOUR_RED],true);
+                                                    }
 						}
 						break
 					case COMMUNICATION_REVEAL_SELF:
 						{;
+                                                    var ch = champion[this.championLeader]; 
+                                                    this.message(TEXT_COMMUNICATION[5][1]+ch.getTrade(),COLOUR[COLOUR_GREEN],true);
+                                                    if (this.communication.monster.champId !== null){
+                                                        ch = champion[this.communication.monster.champId];                                                        
+                                                        this.message(TEXT_COMMUNICATION[5][1]+ch.getTrade(),COLOUR[COLOUR_RED],true);
+                                                    }else{
+                                                        this.message(TEXT_COMMUNICATION[5][2],COLOUR[COLOUR_RED],true);
+                                                    }
 						}
 						break
 				}
+                                this.communication.mode = TEXT_COMMUNICATION_COMMANDS[this.communication.mode][item].to;
 			};
 			break
 		case COMMUNICATION_PAGE_INQUIRY:
 			{
 				switch (item) {
 					case COMMUNICATION_FOLK_LORE:
-						{;
+						{
+                                                    this.message(TEXT_COMMUNICATION[9][0]);                                                       
+                                                    this.message(TEXT_COMMUNICATION[6][1],COLOUR[COLOUR_RED],true);                                                    
 						}
 						break
 					case COMMUNICATION_MAGIC_ITEMS:
-						{;
+						{
+                                                    this.message(TEXT_COMMUNICATION[8][0]);                                                       
+                                                    this.message(TEXT_COMMUNICATION[8][1],COLOUR[COLOUR_RED],true);  
 						}
 						break
 					case COMMUNICATION_OBJECTS:
-						{;
+						{
+                                                    this.message(TEXT_COMMUNICATION[7][0]);                                                       
+                                                    this.message(TEXT_COMMUNICATION[7][1],COLOUR[COLOUR_RED],true);  
 						}
 						break
 					case COMMUNICATION_PERSONS:

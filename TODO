@@ -17,12 +17,9 @@ BUG Cast% stays when closing book
 CHRIS
 ------
 GFX Big monster drawing fixes
-UI  Communication Text Array
-UI  Make Start Screen
 UI  Make Champion select start screen
 UI  Find Amour Palette's
 UI  Add text at fairy for when champ already learned all spells
-BUG On tablets, buttons are sometimes not coloured
 
 QUESTIONS FOR CHRIS
 -------------------
@@ -30,3 +27,5 @@ The spell points seem wrong compared to steem. E.g. Zothen has 43 sp in ours, an
 
 QUESTIONS FOR JORG
 ------------------
+
+Should we add monster.message queue of events as we need to time events ie responses and actions

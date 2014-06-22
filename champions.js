@@ -46,6 +46,14 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	}
 }
 
+Champion.prototype.getName = function(){
+    return this.firstName + " " + this.lastName;
+};
+
+Champion.prototype.getTrade = function(){    
+   return TEXT_TRADE[this.prof];    
+};
+
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
 	if (this.recruitment.playerId > -1) {
 		this.writeAttackPoints(dmg);

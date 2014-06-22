@@ -178,16 +178,16 @@ function startGame(singlePlayer, quickStart) {
 		initPlayersStart(0, 4);
 	}
 
-	//godMode();
+	godMode();
 	initTowerSwitches();
 	switchTower(0);
 	clearCanvas();
 	setViewportScale(singlePlayer);
 	gameStarted = true;
 	Run();
-	for(var p = 0; p < player.length; p++) {
-		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
-		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
-		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
-	}
+//	for(var p = 0; p < player.length; p++) {
+//		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
+//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
+//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
+//	}
 }
