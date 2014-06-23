@@ -11,7 +11,7 @@ var players = 0;
 var gameStarted = false;
 var scale = 3;
 var scaleReal = 3;
-var debug = false;
+var debug = true;
 var debugHigh = false;
 var debugWindow;
 var game;
@@ -715,6 +715,10 @@ var UI_CENTER_PANEL_SLEEPING = 0,
 	UI_CENTER_PANEL_FAIRY_SPELLDETAILS = 7,
 	UI_CENTER_PANEL_VIEWPORT = 8;
 
+var UI_CHARACTER_SELECT_SCROLL = 0,
+        UI_CHARACTER_SELECT_POCKET = 1,
+        UI_CHARACTER_SELECT_SPELLBOOK = 2;
+
 var UI_CLICK_CHAMP1 = 0,
 	UI_CLICK_STATS_BOX = 1,
 	UI_CLICK_CHAMP2 = 2,
@@ -803,7 +807,9 @@ var UI_CLICK_CHAMP1 = 0,
 	UI_CLICK_COMMUNICATION_AREA_FIRST_ROW = 85,
 	UI_CLICK_COMMUNICATION_AREA_SECOND_ROW = 86,
 	UI_CLICK_COMMUNICATION_AREA_THIRD_ROW = 87,
-	UI_CLICK_COMMUNICATION_AREA_FORTH_ROW = 88;
+	UI_CLICK_COMMUNICATION_AREA_FORTH_ROW = 88,
+        UI_CLICK_CHAMPION_SELECT_1_PLAYER_ACTION = 89,
+        UI_CLICK_CHAMPION_SELECT_1_START = 90;
 
 var UI_REDRAW_ALL = 0,
 	UI_REDRAW_LEFT = 1,
@@ -1534,4 +1540,4 @@ var DUNGEON_PROJECTILE_BIG = 27,
 	DUNGEON_PROJECTILE_EXPLODE = 28,
 	DUNGEON_PROJECTILE_ARROW = 29;
 
-var championSelect = [{champID: -1, chosen: false, mode: UI_RIGHT_PANEL_STATS},{champID: -1, chosen: false, mode: UI_RIGHT_PANEL_STATS}];
+var championSelect = [{champID: -1, chosen: false, mode: UI_CHARACTER_SELECT_SCROLL},{champID: -1, chosen: false, mode: UI_CHARACTER_SELECT_SCROLL}];

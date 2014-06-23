@@ -163,19 +163,24 @@ function initData() {
 
 }
 
-function startGame(singlePlayer, quickStart) {
+function startGame(singlePlayer, quickStart,p1_cid,p2_cid) {
 
-	if (singlePlayer) {
+	if (singlePlayer && !quickStart) {
 		player[0] = new Player(0, 0, 30);
-	} else {
+                initPlayersStart(p1_cid, 4);
+	} else if (!quickStart) {
 		player[0] = new Player(0, 0, 10);
 		player[1] = new Player(1, 0, 114);
+                initPlayersStart(p1_cid, p2_cid);                
 	}
 
-	if (quickStart) {
+	if (quickStart && !singlePlayer) {
+                player[0] = new Player(0, 0, 10);
+		player[1] = new Player(1, 0, 114);
 		initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
-	} else {
-		initPlayersStart(0, 4);
+	} else if (quickStart && singlePlayer) {
+                player[0] = new Player(0, 0, 30);
+		initPlayersStart([0, 14, 5, 3], 4);
 	}
 
 	godMode();
