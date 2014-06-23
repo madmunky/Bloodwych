@@ -182,8 +182,10 @@ function startGame(singlePlayer, quickStart,p1_cid,p2_cid) {
                 player[0] = new Player(0, 0, 30);
 		initPlayersStart([0, 14, 5, 3], 4);
 	}
-
-	godMode();
+        
+        if (debug){
+            godMode();    
+        }	
 	initTowerSwitches();
 	switchTower(0);
 	clearCanvas();
