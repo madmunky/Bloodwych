@@ -10,18 +10,17 @@ COD Spell cost % and other spell rpg stuff
 COD Spell projectiles and effects
 COD Fix Big monster 'edge of screen'
 COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
-COD Get tower switching for 1 player
 COD Fix death screen as I did with asleep
 BUG Cast% stays when closing book
 BUG Monsters CAST while communicating
 BUG Yellow flash when hit by a spell draws before wooden object
 BUG Firepath is drawn after Items?
 BUG If a monster is at the bottom of the stairs you shouldnt be able to move down
-BUG Communication on a party will rotate the player member
 
 CHRIS
 ------
 GFX Big monster drawing fixes
+UI  Red damage bars with numbers at shields when hit
 UI  Make Champion select start screen
 UI  Find Amour Palette's
 UI  Add text at fairy for when champ already learned all spells

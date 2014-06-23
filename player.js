@@ -1076,19 +1076,29 @@ Player.prototype.testMode = function(id) {
 
 function initPlayersStart(ch1, ch2) {
 	if (typeof ch1 === "number" && typeof ch2 === "number") {
-		ch = [ch1, ch2];
+		c = [ch1, ch2];
 		for (p = 0; p < player.length; p++) {
-			player[p].recruitChampion(ch[p]);
+			player[p].recruitChampion(c[p]);
 			for (i = 1; i < 4; i++) {
 				player[p].recruitChampion();
 			}
+			var ch = champion[c[p]];
+			var f = ch.monster.floor;
+			var x = ch.monster.x;
+			var y = ch.monster.y;
+			var d = ch.monster.d;
+			player[p].setPlayerPosition(f, x, y, d);
 		}
 	} else {
 		for (p = 0; p < player.length; p++) {
 			for (i = 0; i < 4; i++) {
-				ch = [ch1[i], ch2[i]];
-				player[p].recruitChampion(ch[p]);
+				c = [ch1[i], ch2[i]];
+				player[p].recruitChampion(c[p]);
 			}
+		}
+		player[0].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
+		if (player.length > 1) {
+			player[1].setPlayerPosition(3, 14, 23, 0); //(3, 14, 23, 0);
 		}
 	}
 }
@@ -1113,7 +1123,9 @@ Player.prototype.doCommunication = function(item) {
 							var m = this.checkForMonsterInFront();
 							if (m !== null) {
 								m.communicating = true;
-								m.d = (this.d + 2) % 4;
+								if(m.champId === -1 || champion[m.champId].playerId === -1) {
+									m.d = (this.d + 2) % 4;
+								}
 								this.communication.monster = m;
 								this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
 								this.message(TEXT_COMMUNICATION[0][1],myColour);
