@@ -147,7 +147,7 @@ function drawSpellBook(p, ui, dr) {
         var ch;
         var start = false;
         
-        if (typeof p.champion === 'undefined'){
+        if (championSelect[0].champID >= 0){
             ch = champion[championSelect[0].champID];
             start = true;
         }else{
@@ -194,7 +194,10 @@ function drawSpellBook(p, ui, dr) {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-	} else if (ch.selectedSpell !== null) {
+	}else if (ch.selectedSpell !== null && start) {
+                drawFillRect(168, player[0].ScreenY + 79, 155,8, COLOUR[COLOUR_BLUE_DARK]);
+                writeFontImage(ch.selectedSpell.ref.name,170,(player[0].ScreenY + 80),COLOUR[COLOUR_YELLOW]);
+        }else if (ch.selectedSpell !== null) {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 		writeFontImage(ch.selectedSpell.ref.name, p.ScreenX + 242, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
 		writeFontImage("COST " + doubleDigits(ch.selectedSpell.cost), p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
@@ -212,7 +215,10 @@ function drawSpellBook(p, ui, dr) {
 			//drawFillRect((p.ScreenX + 154), (p.ScreenY + 80), t.width, t.height, COLOUR[COLOUR_BLACK]);
 			ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
 		}
-	}
+	}else if (ch.selectedSpell === null && start){
+            drawFillRect(168, player[0].ScreenY + 79, 155,8, COLOUR[COLOUR_BLUE_DARK]);
+            writeFontImage(ch.getName(),170,(player[0].ScreenY + 80),COLOUR[COLOUR_YELLOW]);
+        }
         
         if (!start){
             writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
@@ -240,9 +246,12 @@ function changeSpellBookPage(p, dr) {
 	}
 }
 
-function drawSpellBookPageTurn(p, ui, dr, timer, stop) {
+function drawSpellBookPageTurn(p, ui, dr, timer, stop,full) {
 	if (typeof stop === "undefined") {
 		stop = false;
+	}
+        if (typeof full === "undefined") {
+		full = true;
 	}
 	(function(p, ui, dr, stop) {
 		p.timerSpellBookTurn = setTimeout(function() {
@@ -1953,17 +1962,16 @@ function showCharacterDetails(ch,ply){
         
         case UI_CHARACTER_SELECT_SPELLBOOK:{
                 writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
-                drawSpellBook({ScreenX: 0,ScreenY: myY + 2});
-                //writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);   
+                drawSpellBook(player[0]);  
                 ctx.drawImage(gfxUI[UI_GFX_ICON_UNKNOWN], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
         }break;
 	case UI_CHARACTER_SELECT_POCKET:{
-                drawPocketUI({ScreenX: 0,ScreenY: myY + 2,id: 0},champion[ch.id],true);
+                drawPocketUI(player[0],champion[ch.id],true);
                 writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
                 ctx.drawImage(gfxUI[UI_GFX_ICON_BOOKOFSKULLS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
         }break;
 	case UI_CHARACTER_SELECT_SCROLL:{
-                drawStatsPage({ScreenX: 0,ScreenY: myY + 2},champion[ch.id],true);
+                drawStatsPage(player[0],champion[ch.id],true);
                 writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
                 ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
         }break;
@@ -1996,6 +2004,8 @@ function uiChampSelectArea(x,y,pl){
 		}
 		
                 championSelect[pl].champID = champSelectGrid[ui].champID;
+                player[0] = new Player(0, 0, 50);
+                initPlayersStart(champSelectGrid[ui].champID, 4);
                 drawQuickStartUI(players -1);
 	}
     }

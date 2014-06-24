@@ -192,6 +192,9 @@ function startGame(singlePlayer, quickStart,p1_cid,p2_cid) {
 	setViewportScale(singlePlayer);
 	gameStarted = true;
 	Run();
+        for (pl in championSelect){
+            championSelect[pl].champID = -1;
+        }
 //	for(var p = 0; p < player.length; p++) {
 //		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
 //		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
