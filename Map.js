@@ -108,6 +108,7 @@ function canMove(f, x, y, d, to) {
 	} else if (objNext == '5' && getHexToBinaryPosition(hex15, 7, 1) == '1') {
 		return OBJECT_DOOR;
 	}
+
 	return OBJECT_NONE;
 }
 
@@ -201,6 +202,16 @@ function getObject(f, x, y, d, to) {
 				} else {
 					return OBJECT_DOOR_OPEN;
 				}
+			}
+		} else if(obj == '6') { //path, pits
+			if(getHexToBinaryPosition(hex, 6, 2) === '1') {
+				return OBJECT_PATH;
+			} else if(getHexToBinaryPosition(hex, 6, 2) === '2') {
+				return OBJECT_PIT;
+			}
+		} else if(obj == '7') { //magic
+			if(getHexToBinaryPosition(hex, 6, 2) === '1') {
+				return OBJECT_PATH;
 			}
 		}
 	}

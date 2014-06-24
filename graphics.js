@@ -183,9 +183,9 @@ function getStoneWall(HexCode, d, pos, p, pos18) {
 
 	function getWallDeco() {
 		var xy = posToCoordinates(pos18, p.x, p.y, p.d);
-		var RND4 = Math.floor(xy.x * 1.27 + xy.y * 2.68) % 4; //For random banner faces
-		var RND6 = Math.floor(xy.x * 5.76 + xy.y * 4.82) % 6; //For random switches
-		var RND8 = Math.floor(xy.x * 5.76 + xy.y * 4.42) % 8; //For random banner frames
+		var RND4 = Math.floor(xy.x * 1.3 + xy.y * 3.7 + d * 1.3) % 4; //For random banner faces
+		var RND6 = Math.floor(xy.x * 1.1 + xy.y * 2.3 + d * 5.7) % 6; //For random switch colour
+		var RND8 = Math.floor(xy.x * 1.7 + xy.y * 5.5 + d * 6.3) % 8; //For random banner colour
 		//try {
 		if (getHexToBinaryPosition(HexCode, 8) === '1') { //Wall has something on it
 			if (getHexToBinaryPosition(HexCode, 6, 2) === '0') { //Shelf
@@ -320,7 +320,8 @@ function drawPlayersView(p) {
 			if (BlockType === '2') {
 				drawWoodenObject(p, x);
 			} else {
-				if (p.getObjectOnPos(x, 2) !== OBJECT_SHELF) { //draw items not on shelf first
+				var obj = p.getObjectOnPos(x, 2);
+				if (obj !== OBJECT_SHELF && obj !== OBJECT_PIT && obj !== OBJECT_PATH) { //draw items not on shelf, pit, path first
 					drawItemsOnPos(p, x);
 				}
 				if(BlockType === '1' || spellWall) { //draw monsters before drawing walls
@@ -471,7 +472,7 @@ function drawPlayersView(p) {
 							break;
 					}
 				}
-				if (p.getObjectOnPos(x, 2) === OBJECT_SHELF) { //draw items on shelf last
+				if (obj === OBJECT_SHELF || obj === OBJECT_PIT || obj === OBJECT_PATH) { //draw items on shelf, pit, path last
 					drawItemsOnPos(p, x);
 				}
 				if(BlockType !== '1' && !spellWall) { //draw monsters after drawing anything else than walls

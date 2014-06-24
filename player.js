@@ -254,6 +254,7 @@ Player.prototype.tryAttack = function() {
 };
 
 Player.prototype.attack = function(attack, target) {
+	this.doneCommunication();
 	if (attack) {
 		var self = this;
 		var combat = calculateAttack(this, target);
@@ -324,15 +325,7 @@ Player.prototype.doEvent = function(mr) {
 		this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 		redrawUI(this.id, UI_REDRAW_RIGHT);
 	}
-	if(this.communication.mode > COMMUNICATION_PAGE_MAIN) {
-		if(this.communication.monster !== null) {
-			this.communication.monster.communicating = false;
-			this.communication.monster = null;
-		}
-		this.communication.mode = COMMUNICATION_PAGE_MAIN;
-		this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
-		redrawUI(this.id, UI_REDRAW_LEFT);
-	}
+	this.doneCommunication();
 	this.resetChampUI();
 	this.updateChampions();
 	var view = this.getView();
@@ -949,6 +942,7 @@ Player.prototype.castSpell = function(sb, c, s) {
 	if (typeof s === "undefined") {
 		var s = false;
 	}
+	this.doneCommunication();
 	if (c.stat.sp - sb.cost >= 0) {
 		if (Math.random() < c.getSpellCastChance()) {
 			castSpell(sb.id, c.monster, c.getSpellPower() * 10);
@@ -1074,35 +1068,6 @@ Player.prototype.testMode = function(id) {
 	}
 }
 
-function initPlayersStart(ch1, ch2) {
-	if (typeof ch1 === "number" && typeof ch2 === "number") {
-		c = [ch1, ch2];
-		for (p = 0; p < player.length; p++) {
-			player[p].recruitChampion(c[p]);
-			for (i = 1; i < 4; i++) {
-				player[p].recruitChampion();
-			}
-			var ch = champion[c[p]];
-			var f = ch.monster.floor;
-			var x = ch.monster.x;
-			var y = ch.monster.y;
-			var d = ch.monster.d;
-			player[p].setPlayerPosition(f, x, y, d);
-		}
-	} else {
-		for (p = 0; p < player.length; p++) {
-			for (i = 0; i < 4; i++) {
-				c = [ch1[i], ch2[i]];
-				player[p].recruitChampion(c[p]);
-			}
-		}
-		player[0].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
-		if (player.length > 1) {
-			player[1].setPlayerPosition(3, 14, 23, 0); //(3, 14, 23, 0);
-		}
-	}
-}
-
 Player.prototype.doCommunication = function(item) {
 
     var myColour;
@@ -1123,8 +1088,8 @@ Player.prototype.doCommunication = function(item) {
 							var m = this.checkForMonsterInFront();
 							if (m !== null) {
 								m.communicating = true;
-								if(m.champId === -1 || champion[m.champId].playerId === -1) {
-									m.d = (this.d + 2) % 4;
+								if(m.champId === -1 || m.isRecruitedBy() === null) {
+									m.rotateTo((this.d + 2) % 4);
 								}
 								this.communication.monster = m;
 								this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
@@ -1388,3 +1353,44 @@ Player.prototype.doCommunication = function(item) {
 	drawCommunicationBox(this, item, true);
 
 };
+
+Player.prototype.doneCommunication = function() {
+	if(this.communication.mode > COMMUNICATION_PAGE_MAIN) {
+		if(this.communication.monster !== null) {
+			this.communication.monster.communicating = false;
+			this.communication.monster = null;
+		}
+		this.communication.mode = COMMUNICATION_PAGE_MAIN;
+		this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_COMMAND;
+		redrawUI(this.id, UI_REDRAW_LEFT);
+	}
+}
+
+function initPlayersStart(ch1, ch2) {
+	if (typeof ch1 === "number" && typeof ch2 === "number") {
+		c = [ch1, ch2];
+		for (p = 0; p < player.length; p++) {
+			player[p].recruitChampion(c[p]);
+			for (i = 1; i < 4; i++) {
+				player[p].recruitChampion();
+			}
+			var ch = champion[c[p]];
+			var f = ch.monster.floor;
+			var x = ch.monster.x;
+			var y = ch.monster.y;
+			var d = ch.monster.d;
+			player[p].setPlayerPosition(f, x, y, d);
+		}
+	} else {
+		for (p = 0; p < player.length; p++) {
+			for (i = 0; i < 4; i++) {
+				c = [ch1[i], ch2[i]];
+				player[p].recruitChampion(c[p]);
+			}
+		}
+		player[0].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
+		if (player.length > 1) {
+			player[1].setPlayerPosition(3, 14, 23, 0); //(3, 14, 23, 0);
+		}
+	}
+}

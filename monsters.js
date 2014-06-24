@@ -151,10 +151,6 @@ Monster.prototype.move = function() {
 				this.y += xy.y;
 				updateMonsterTeam(this.teamId);
 				this.doEvent();
-				//} else if (this.square === CHAR_FRONT_SOLO) {
-				//if (this.followPlayer()) return;
-				//this.x += xy.x;
-				//this.y += xy.y;
 			} else {
 				var sq = this.getSquareByDir();
 				switch (sq) {
@@ -250,24 +246,24 @@ Monster.prototype.getHP = function() {
 }
 
 Monster.prototype.castSpell = function() {
-	//if (c.stat.sp - sb.cost >= 0) {
-	var sq = this.getSquareByDir();
-	if(this.type === 1 && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
-		var id = SPELL_MISSILE;
-		if (this.level >= 5 && Math.floor(Math.random() * 2) === 0) {
-			id = SPELL_FIREBALL;
+	if(!this.communicating) {
+		var sq = this.getSquareByDir();
+		if(this.type === 1 && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
+			var id = SPELL_MISSILE;
+			if (this.level >= 5 && Math.floor(Math.random() * 2) === 0) {
+				id = SPELL_FIREBALL;
+			}
+			if (this.level >= 10 && Math.floor(Math.random() * 3) === 0) {
+				id = SPELL_ARC_BOLT;
+			}
+			if (this.level >= 15 && Math.floor(Math.random() * 4) === 0) {
+				id = SPELL_DISRUPT;
+			}
+			castSpell(id, this, Math.floor(this.level * 2 + 4 + getSpellById(id).level * 0.4));
+			this.doGesture(CHA_GESTURE_SPELLCASTING);
+			return true;
 		}
-		if (this.level >= 10 && Math.floor(Math.random() * 3) === 0) {
-			id = SPELL_ARC_BOLT;
-		}
-		if (this.level >= 15 && Math.floor(Math.random() * 4) === 0) {
-			id = SPELL_DISRUPT;
-		}
-		castSpell(id, this, Math.floor(this.level * 2 + 4 + getSpellById(id).level * 0.4));
-		this.doGesture(CHA_GESTURE_SPELLCASTING);
-		return true;
 	}
-	//}
 	return false;
 }
 

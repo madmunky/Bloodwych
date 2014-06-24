@@ -166,7 +166,7 @@ function getSpellPower(id) {
 		case SPELL_MAGELOCK:
 			return 1;
 		case SPELL_VITALISE:
-			return 1;
+			return 0.5;
 		case SPELL_DISPELL:
 			return 1;
 		case SPELL_FIREBALL:
@@ -317,13 +317,13 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_VITALISE:
+			ch.addVit(pow);
 			break;
 		case SPELL_DISPELL:
 			if (src.getBinaryView(15, 12, 4) === '7') {
 				src.setBinaryView(15, 0, 16, '0000');
 			}
 			break;
-
 		case SPELL_FIREBALL:
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x, y, d, src);
 			break;

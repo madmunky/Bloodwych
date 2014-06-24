@@ -60,17 +60,11 @@ Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
 		redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
 	}
 	if (typeof aExh !== "undefined") {
-		this.stat.vit -= aExh;
-		if (this.stat.vit <= 0) {
-			this.stat.vit = 0;
-		}
+		this.addVit(-aExh);
 	}
 	if (def instanceof Champion) {
 		if (typeof dExh !== "undefined") {
-			def.stat.vit -= dExh;
-			if (def.stat.vit <= 0) {
-				def.stat.vit = 0;
-			}
+			def.addVit(-dExh);
 		}
 		def.getDamage(dmg);
 	} else if (def instanceof Monster) {
@@ -80,14 +74,9 @@ Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
 
 //Damage is 'safe' when champ doesn't get killed by it (e.g. by low vitality)
 Champion.prototype.getDamage = function(dmg, safe) {
-	this.stat.hp -= dmg;
-	if (typeof safe !== "undefined" && safe) {
-		if (this.getHP() <= 0) {
-			this.stat.hp = 0;
-		}
-	} else {
+	this.addHP(-dmg, safe);
+	if (typeof safe === "undefined" || !safe) {
 		if (this.getHP() < 0) {
-			this.stat.hp = -1;
 			this.monster.die();
 		}
 		if (this.recruitment.playerId > -1 && this.recruitment.attached) {
@@ -104,6 +93,45 @@ Champion.prototype.getDamage = function(dmg, safe) {
 
 Champion.prototype.getHP = function() {
 	return this.stat.hp;
+}
+
+Champion.prototype.addHP = function(hp, safe) {
+	this.stat.hp += hp;
+	if(this.getHP() < 0) {
+		if (typeof safe !== "undefined" && safe) {
+			this.stat.hp = 0;
+		} else {
+			this.stat.hp = -1;
+		}
+	} else if(this.getHP() > this.stat.hpMax) {
+		this.stat.hp = this.stat.hpMax;
+	}
+}
+
+Champion.prototype.getVit = function() {
+	return this.stat.vit;
+}
+
+Champion.prototype.addVit = function(vit) {
+	this.stat.vit += vit;
+	if(this.getVit() < 0) {
+		this.stat.vit = 0;
+	} else if(this.getVit() > this.stat.vitMax) {
+		this.stat.vit = this.stat.vitMax;
+	}
+}
+
+Champion.prototype.getSP = function() {
+	return this.stat.sp;
+}
+
+Champion.prototype.addSP = function(sp) {
+	this.stat.sp += sp;
+	if(this.getSP() < 0) {
+		this.stat.sp = 0;
+	} else if(this.getSP() > this.stat.spMax) {
+		this.stat.sp = this.stat.spMax;
+	}
 }
 
 Champion.prototype.getWeaponPower = function(s) {
@@ -179,10 +207,6 @@ Champion.prototype.gainLevel = function() {
 	}
 }
 
-Champion.prototype.checkGainSpell = function() {
-
-}
-
 Champion.prototype.restoreStats = function() {
 	var alertPlayer = false;
 	if (this.recruitment.playerId > -1) {
@@ -190,26 +214,14 @@ Champion.prototype.restoreStats = function() {
 	}
 	if (this !== null) {
 		if (!this.monster.dead) {
-			this.stat.hp = this.stat.hp + Math.floor((Math.random() * (this.stat.str / 16)) + this.stat.str / 16);
-			if (this.stat.hp > this.stat.hpMax) {
-				this.stat.hp = this.stat.hpMax;
-			}
-			this.stat.vit = this.stat.vit + Math.floor((Math.random() * (this.stat.agi / 12)) + this.stat.agi / 12);
-			if (this.stat.vit > this.stat.vitMax) {
-				this.stat.vit = this.stat.vitMax;
-			}
-			this.stat.sp = this.stat.sp + Math.floor((Math.random() * (this.stat.int / 12)) + this.stat.int / 12);
-			if (this.stat.sp > this.stat.spMax) {
-				this.stat.sp = this.stat.spMax;
-			}
+			this.addHP(Math.floor((Math.random() * (this.stat.str / 16)) + 1));
+			this.addVit(Math.floor((Math.random() * (this.stat.agi / 16)) + 1));
+			this.addSP(Math.floor((Math.random() * (this.stat.int / 16)) + 1));
 			if (this.recruitment.playerId > -1 && this.id !== CHA_MR_FLAY) {
 				if (this.food > 0) {
 					this.food--;
 				} else {
-					this.stat.vit -= Math.floor(Math.random() * 9) + 3;
-					if (this.stat.vit < 0) {
-						this.stat.vit = 0;
-					}
+					this.addVit(-Math.floor(Math.random() * 9) + 3)
 				}
 			}
 			if (this.stat.vitMax * 0.15 > this.stat.vit) {

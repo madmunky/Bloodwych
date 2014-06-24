@@ -163,42 +163,44 @@ function initData() {
 
 }
 
-function startGame(singlePlayer, quickStart,p1_cid,p2_cid) {
-
+function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
+	if(typeof god === "undefined") {
+		god = false;
+	}
 	if (singlePlayer && !quickStart) {
 		player[0] = new Player(0, 0, 30);
-                initPlayersStart(p1_cid, 4);
+		initPlayersStart(p1_cid, 4);
 	} else if (!quickStart) {
 		player[0] = new Player(0, 0, 10);
 		player[1] = new Player(1, 0, 114);
-                initPlayersStart(p1_cid, p2_cid);                
+		initPlayersStart(p1_cid, p2_cid);
 	}
 
 	if (quickStart && !singlePlayer) {
-                player[0] = new Player(0, 0, 10);
+		player[0] = new Player(0, 0, 10);
 		player[1] = new Player(1, 0, 114);
 		initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
 	} else if (quickStart && singlePlayer) {
-                player[0] = new Player(0, 0, 30);
+		player[0] = new Player(0, 0, 30);
 		initPlayersStart([0, 14, 5, 3], 4);
 	}
-        
-        if (debug){
-            godMode();    
-        }	
+
+	if (god) {
+		godMode();
+	}
 	initTowerSwitches();
 	switchTower(0);
 	clearCanvas();
 	setViewportScale(singlePlayer);
 	gameStarted = true;
 	Run();
-        for (pl in championSelect){
-            champion[championSelect[pl].champID].selectedSpell = null;
-            championSelect[pl].champID = -1;
-        }
-//	for(var p = 0; p < player.length; p++) {
-//		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
-//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
-//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
-//	}
+	for (pl in championSelect) {
+		champion[championSelect[pl].champID].selectedSpell = null;
+		championSelect[pl].champID = -1;
+	}
+	//	for(var p = 0; p < player.length; p++) {
+	//		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
+	//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
+	//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
+	//	}
 }
