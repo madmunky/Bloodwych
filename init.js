@@ -193,6 +193,7 @@ function startGame(singlePlayer, quickStart,p1_cid,p2_cid) {
 	gameStarted = true;
 	Run();
         for (pl in championSelect){
+            champion[championSelect[pl].champID].selectedSpell = null;
             championSelect[pl].champID = -1;
         }
 //	for(var p = 0; p < player.length; p++) {
