@@ -1945,6 +1945,17 @@ function drawQuickStartUI(plys){
         }        
     }
     
+    if (championSelect[0].champID === -1){
+        var myY = 50,
+            myX = 0;
+    
+        ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], 168 * scale, (myY ) * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL], (myX + 226) * scale, (myY - 1) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL].height * scale);
+        
+    }
+    
+    
 }
 
 function showCharacterDetails(ch,ply){
