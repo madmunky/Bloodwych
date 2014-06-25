@@ -38,7 +38,23 @@ function Player(id, ScreenX, ScreenY) {
 		mode: UI_RIGHT_PANEL_MAIN
 	};
 	this.uiLeftPanel = {
-		champs: new Array(false, false, false, false),
+		champs: new Array({
+			opened: false,
+			damage: 0,
+			damageTimer: 0
+		}, {
+			opened: false,
+			damage: 0,
+			damageTimer: 0
+		}, {
+			opened: false,
+			damage: 0,
+			damageTimer: 0
+		}, {
+			opened: false,
+			damage: 0,
+			damageTimer: 0
+		}),
 		mode: UI_LEFT_PANEL_MODE_STATS
 	};
 	this.uiCenterPanel = {
@@ -652,7 +668,7 @@ Player.prototype.alertDamagedPlayer = function() {
 
 Player.prototype.resetChampUI = function() {
 	for (ch = 0; ch < this.champion.length; ch++) {
-		if (this.uiLeftPanel.champs[ch] === true) {
+		if (this.uiLeftPanel.champs[ch].opened === true) {
 			toggleChampUI(ch, this, false);
 			redrawUI(this.id);
 		}
@@ -1045,6 +1061,20 @@ Player.prototype.checkForMonsterInFront = function() {
 	return mon;
 }
 
+Player.prototype.startDrawHitDamage = function(cid, dmg) {
+	if(dmg > 0) {
+		var c1 = this.getOrderedChampionIds();
+		for (c = 0; c < this.champion.length; c++) {
+			var c2 = c1[c];
+			var ch = this.getChampion(c2);
+			if (ch !== null && ch.id === cid && this.uiLeftPanel.champs[c].opened) {
+				this.uiLeftPanel.champs[c].damageTimer = timerMaster;
+				this.uiLeftPanel.champs[c].damage = dmg;
+			}
+		}
+	}
+}
+
 Player.prototype.testMode = function(id) {
 	if (debug) {
 		var xy = posToCoordinates(15, this.x, this.y, this.d);
@@ -1070,13 +1100,13 @@ Player.prototype.testMode = function(id) {
 
 Player.prototype.doCommunication = function(item) {
 
-    var myColour;
-    
-    if (player[0] === this){
-        myColour = COLOUR[COLOUR_GREEN];
-    }else{
-        myColour = COLOUR[COLOUR_PINK];
-    }
+	var myColour;
+
+	if (player[0] === this) {
+		myColour = COLOUR[COLOUR_GREEN];
+	} else {
+		myColour = COLOUR[COLOUR_PINK];
+	}
 
 	switch (this.communication.mode) {
 
@@ -1088,15 +1118,15 @@ Player.prototype.doCommunication = function(item) {
 							var m = this.checkForMonsterInFront();
 							if (m !== null) {
 								m.communicating = true;
-								if(m.champId === -1 || m.isRecruitedBy() === null) {
+								if (m.champId === -1 || m.isRecruitedBy() === null) {
 									m.rotateTo((this.d + 2) % 4);
 								}
 								this.communication.monster = m;
 								this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
-								this.message(TEXT_COMMUNICATION[0][1],myColour);
+								this.message(TEXT_COMMUNICATION[0][1], myColour);
 								this.message(TEXT_COMMUNICATION[1][0], COLOUR[COLOUR_RED], true);
 							} else {
-								this.message(TEXT_COMMUNICATION[0][0],myColour);
+								this.message(TEXT_COMMUNICATION[0][0], myColour);
 							}
 						}
 						break
@@ -1144,9 +1174,9 @@ Player.prototype.doCommunication = function(item) {
 				switch (item) {
 					case COMMUNICATION_RECRUIT:
 						{
-                                                    this.message(TEXT_COMMUNICATION[2][0],myColour);
-                                                    this.message(TEXT_COMMUNICATION[2][Math.floor(Math.random() * 4) + 2],COLOUR[COLOUR_RED],true);
-                                                    
+							this.message(TEXT_COMMUNICATION[2][0], myColour);
+							this.message(TEXT_COMMUNICATION[2][Math.floor(Math.random() * 4) + 2], COLOUR[COLOUR_RED], true);
+
 						}
 						break
 					case COMMUNICATION_IDENTIFY:
@@ -1161,8 +1191,8 @@ Player.prototype.doCommunication = function(item) {
 						break
 					case COMMUNICATION_WHEREABOUTS:
 						{;
-                                                    this.message(TEXT_COMMUNICATION[3][0],myColour);
-                                                    this.message(TEXT_COMMUNICATION[3][Math.floor(Math.random() * 1) + 1],COLOUR[COLOUR_RED],true);
+							this.message(TEXT_COMMUNICATION[3][0], myColour);
+							this.message(TEXT_COMMUNICATION[3][Math.floor(Math.random() * 1) + 1], COLOUR[COLOUR_RED], true);
 						}
 						break
 				}
@@ -1205,53 +1235,53 @@ Player.prototype.doCommunication = function(item) {
 				switch (item) {
 					case COMMUNICATION_WHO_GOES:
 						{;
-                                                    this.message(TEXT_COMMUNICATION[4][0],myColour);
-                                                    if (this.communication.monster.champId !== null){
-                                                        var ch = champion[this.communication.monster.champId];                                                        
-                                                        this.message(TEXT_COMMUNICATION[4][1]+ch.getName(),COLOUR[COLOUR_RED],true);
-                                                    }else{
-                                                        this.message(TEXT_COMMUNICATION[4][2],COLOUR[COLOUR_RED],true);
-                                                    }
+							this.message(TEXT_COMMUNICATION[4][0], myColour);
+							if (this.communication.monster.champId !== null) {
+								var ch = champion[this.communication.monster.champId];
+								this.message(TEXT_COMMUNICATION[4][1] + ch.getName(), COLOUR[COLOUR_RED], true);
+							} else {
+								this.message(TEXT_COMMUNICATION[4][2], COLOUR[COLOUR_RED], true);
+							}
 						}
 						break
 					case COMMUNICATION_THY_TRADE:
 						{;
-                                                    this.message(TEXT_COMMUNICATION[5][0],myColour);
-                                                    if (this.communication.monster.champId !== null){
-                                                        var ch = champion[this.communication.monster.champId];                                                        
-                                                        this.message(TEXT_COMMUNICATION[5][1]+ch.getTrade(),COLOUR[COLOUR_RED],true);
-                                                    }else{
-                                                        this.message(TEXT_COMMUNICATION[5][2],COLOUR[COLOUR_RED],true);
-                                                    }
+							this.message(TEXT_COMMUNICATION[5][0], myColour);
+							if (this.communication.monster.champId !== null) {
+								var ch = champion[this.communication.monster.champId];
+								this.message(TEXT_COMMUNICATION[5][1] + ch.getTrade(), COLOUR[COLOUR_RED], true);
+							} else {
+								this.message(TEXT_COMMUNICATION[5][2], COLOUR[COLOUR_RED], true);
+							}
 						}
 						break
 					case COMMUNICATION_NAME_SELF:
 						{;
-                                                    
-                                                    var ch = champion[this.championLeader];                                                        
-                                                    this.message(TEXT_COMMUNICATION[4][1]+ch.getName(),COLOUR[COLOUR_GREEN],true);                                                    
-                                                    if (this.communication.monster.champId !== null){
-                                                        ch = champion[this.communication.monster.champId];                                                        
-                                                        this.message(TEXT_COMMUNICATION[4][1]+ch.getName(),COLOUR[COLOUR_RED],true);
-                                                    }else{
-                                                        this.message(TEXT_COMMUNICATION[4][2],COLOUR[COLOUR_RED],true);
-                                                    }
+
+							var ch = champion[this.championLeader];
+							this.message(TEXT_COMMUNICATION[4][1] + ch.getName(), COLOUR[COLOUR_GREEN], true);
+							if (this.communication.monster.champId !== null) {
+								ch = champion[this.communication.monster.champId];
+								this.message(TEXT_COMMUNICATION[4][1] + ch.getName(), COLOUR[COLOUR_RED], true);
+							} else {
+								this.message(TEXT_COMMUNICATION[4][2], COLOUR[COLOUR_RED], true);
+							}
 						}
 						break
 					case COMMUNICATION_REVEAL_SELF:
 						{;
-                                                    var ch = champion[this.championLeader]; 
-                                                    this.message(TEXT_COMMUNICATION[5][1]+ch.getTrade(),COLOUR[COLOUR_GREEN],true);
-                                                    if (this.communication.monster.champId !== null){
-                                                        ch = champion[this.communication.monster.champId];                                                        
-                                                        this.message(TEXT_COMMUNICATION[5][1]+ch.getTrade(),COLOUR[COLOUR_RED],true);
-                                                    }else{
-                                                        this.message(TEXT_COMMUNICATION[5][2],COLOUR[COLOUR_RED],true);
-                                                    }
+							var ch = champion[this.championLeader];
+							this.message(TEXT_COMMUNICATION[5][1] + ch.getTrade(), COLOUR[COLOUR_GREEN], true);
+							if (this.communication.monster.champId !== null) {
+								ch = champion[this.communication.monster.champId];
+								this.message(TEXT_COMMUNICATION[5][1] + ch.getTrade(), COLOUR[COLOUR_RED], true);
+							} else {
+								this.message(TEXT_COMMUNICATION[5][2], COLOUR[COLOUR_RED], true);
+							}
 						}
 						break
 				}
-                                this.communication.mode = TEXT_COMMUNICATION_COMMANDS[this.communication.mode][item].to;
+				this.communication.mode = TEXT_COMMUNICATION_COMMANDS[this.communication.mode][item].to;
 			};
 			break
 		case COMMUNICATION_PAGE_INQUIRY:
@@ -1259,20 +1289,20 @@ Player.prototype.doCommunication = function(item) {
 				switch (item) {
 					case COMMUNICATION_FOLK_LORE:
 						{
-                                                    this.message(TEXT_COMMUNICATION[9][0],myColour);                                                       
-                                                    this.message(TEXT_COMMUNICATION[6][1],COLOUR[COLOUR_RED],true);                                                    
+							this.message(TEXT_COMMUNICATION[9][0], myColour);
+							this.message(TEXT_COMMUNICATION[6][1], COLOUR[COLOUR_RED], true);
 						}
 						break
 					case COMMUNICATION_MAGIC_ITEMS:
 						{
-                                                    this.message(TEXT_COMMUNICATION[8][0],myColour);                                                       
-                                                    this.message(TEXT_COMMUNICATION[8][1],COLOUR[COLOUR_RED],true);  
+							this.message(TEXT_COMMUNICATION[8][0], myColour);
+							this.message(TEXT_COMMUNICATION[8][1], COLOUR[COLOUR_RED], true);
 						}
 						break
 					case COMMUNICATION_OBJECTS:
 						{
-                                                    this.message(TEXT_COMMUNICATION[7][0],myColour);                                                       
-                                                    this.message(TEXT_COMMUNICATION[7][1],COLOUR[COLOUR_RED],true);  
+							this.message(TEXT_COMMUNICATION[7][0], myColour);
+							this.message(TEXT_COMMUNICATION[7][1], COLOUR[COLOUR_RED], true);
 						}
 						break
 					case COMMUNICATION_PERSONS:
@@ -1355,8 +1385,8 @@ Player.prototype.doCommunication = function(item) {
 };
 
 Player.prototype.doneCommunication = function() {
-	if(this.communication.mode > COMMUNICATION_PAGE_MAIN) {
-		if(this.communication.monster !== null) {
+	if (this.communication.mode > COMMUNICATION_PAGE_MAIN) {
+		if (this.communication.monster !== null) {
 			this.communication.monster.communicating = false;
 			this.communication.monster = null;
 		}

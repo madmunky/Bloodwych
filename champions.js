@@ -46,12 +46,12 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	}
 }
 
-Champion.prototype.getName = function(){
-    return this.firstName + " " + this.lastName;
+Champion.prototype.getName = function() {
+	return this.firstName + " " + this.lastName;
 };
 
-Champion.prototype.getTrade = function(){    
-   return TEXT_TRADE[this.prof];    
+Champion.prototype.getTrade = function() {
+	return TEXT_TRADE[this.prof];
 };
 
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
@@ -86,8 +86,8 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			player[this.recruitment.playerId].alertDamagedPlayer();
 			player[this.recruitment.playerId].checkDead();
 			player[this.recruitment.playerId].updateChampions();
+			player[this.recruitment.playerId].startDrawHitDamage(this.id, dmg);
 			redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
-                        drawHitDamage(player[this.recruitment.playerId],this.id,dmg);
 		}
 	}
 }
@@ -98,13 +98,13 @@ Champion.prototype.getHP = function() {
 
 Champion.prototype.addHP = function(hp, safe) {
 	this.stat.hp += hp;
-	if(this.getHP() < 0) {
+	if (this.getHP() < 0) {
 		if (typeof safe !== "undefined" && safe) {
 			this.stat.hp = 0;
 		} else {
 			this.stat.hp = -1;
 		}
-	} else if(this.getHP() > this.stat.hpMax) {
+	} else if (this.getHP() > this.stat.hpMax) {
 		this.stat.hp = this.stat.hpMax;
 	}
 }
@@ -115,9 +115,9 @@ Champion.prototype.getVit = function() {
 
 Champion.prototype.addVit = function(vit) {
 	this.stat.vit += vit;
-	if(this.getVit() < 0) {
+	if (this.getVit() < 0) {
 		this.stat.vit = 0;
-	} else if(this.getVit() > this.stat.vitMax) {
+	} else if (this.getVit() > this.stat.vitMax) {
 		this.stat.vit = this.stat.vitMax;
 	}
 }
@@ -128,9 +128,9 @@ Champion.prototype.getSP = function() {
 
 Champion.prototype.addSP = function(sp) {
 	this.stat.sp += sp;
-	if(this.getSP() < 0) {
+	if (this.getSP() < 0) {
 		this.stat.sp = 0;
-	} else if(this.getSP() > this.stat.spMax) {
+	} else if (this.getSP() > this.stat.spMax) {
 		this.stat.sp = this.stat.spMax;
 	}
 }
@@ -363,7 +363,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		(function(p, x, y, w) {
 			setTimeout(function() {
 				//if (p.messageTimeout === 0 || self.recruitment.position === 0) {
-					ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
+				ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
 				//}
 			}, 1500);
 		})(p, x, y, w);
@@ -424,15 +424,24 @@ Champion.prototype.checkSpell = function() {
 Champion.prototype.expireSpell = function() {
 	var p = this.recruitment.playerId;
 	this.activeSpell.timer = 0;
-	switch(this.activeSpell.id) {
-		case SPELL_ARMOUR: break;
-		case SPELL_COMPASS: break;
-		case SPELL_LEVITATE: player[p].doPit(); break;
-		case SPELL_WARPOWER: break;
-		case SPELL_ANTIMAGE: break;
-		case SPELL_TRUEVIEW: break;
-		case SPELL_VANISH: break;
-		default: break;
+	switch (this.activeSpell.id) {
+		case SPELL_ARMOUR:
+			break;
+		case SPELL_COMPASS:
+			break;
+		case SPELL_LEVITATE:
+			player[p].doPit();
+			break;
+		case SPELL_WARPOWER:
+			break;
+		case SPELL_ANTIMAGE:
+			break;
+		case SPELL_TRUEVIEW:
+			break;
+		case SPELL_VANISH:
+			break;
+		default:
+			break;
 	}
 	this.activeSpell.id = -1;
 	this.activeSpell.power = 0;

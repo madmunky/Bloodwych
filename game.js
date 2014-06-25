@@ -117,13 +117,21 @@ function timerAction() {
 		dungeonSpellTimer = timerMaster;
 		updateDungeonSpells();
 	}
-	//if (timerMaster - projectileTimer >= 3) {
-	//projectileTimer = timerMaster;
 	for (var p = 0; p < projectile[towerThis].length; p++) {
 		if (timerMaster - projectile[towerThis][p].timer >= 2) {
 			projectile[towerThis][p].timer = timerMaster;
 			projectile[towerThis][p].moveProjectile();
 		}
 	}
-	//}
+	for (p = 0; p < player.length; p++) {
+		for (c = 0; c < player[p].champion.length; c++) {
+			if(player[p].uiLeftPanel.champs[c].damage > 0) {
+				if(timerMaster - player[p].uiLeftPanel.champs[c].damageTimer >= 20) {
+					player[p].uiLeftPanel.champs[c].damageTimer = 0;
+					player[p].uiLeftPanel.champs[c].damage = 0;
+					redrawUI(p, UI_REDRAW_STATS);
+				}
+			}
+		}
+	}
 }
