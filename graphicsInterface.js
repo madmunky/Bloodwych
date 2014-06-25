@@ -2037,3 +2037,28 @@ function uiChampSelectArea(x,y,pl){
     
     
 }
+
+function drawHitDamage(p,myCh,hitPt) {
+
+	var c1 = p.getOrderedChampionIds();
+    for (c = 0; c < p.champion.length; c++) {
+        var c2 = c1[c];
+        var ch = p.getChampion(c2);
+        if (ch !== null) {
+            if (c === 0) {
+                if (p.uiLeftPanel.champs[c] === true) {
+                    if (ch.id === myCh) {
+                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                    }
+                }
+            } else {
+                
+                    if (p.uiLeftPanel.champs[c] === true) {
+                        if (ch.id === myCh) {
+                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                    }
+                    }
+                }
+            }
+        }
+    }

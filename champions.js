@@ -87,6 +87,7 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			player[this.recruitment.playerId].checkDead();
 			player[this.recruitment.playerId].updateChampions();
 			redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
+                        drawHitDamage(player[this.recruitment.playerId],this.id,dmg);
 		}
 	}
 }
