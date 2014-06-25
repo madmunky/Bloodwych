@@ -271,7 +271,12 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop,full) {
 						} else {
 							ch.spellBookPage = (ch.spellBookPage + 3) % 4;
 						}
-						redrawUI(p.id, UI_REDRAW_SPELLBOOK);
+                                                if (championSelect[0].champID > -1){
+                                                    drawSpellBook(p)
+                                                }else{
+                                                    redrawUI(p.id, UI_REDRAW_SPELLBOOK);
+                                                }
+						
 					}, 100);
 				})(p, dr);
 			}

@@ -22,11 +22,9 @@ GFX Add duration spell icons on the door/spell icon, when active (e.g. armour, t
 GFX Red damage bars with numbers at shields when hit
 GFX Find Armour Palettes
 GFX Get ~ fixed in stats (LEVEL ~ 01 ... we should use 2 chars for that)
-UI  Make Champion select start screen
+WIP  Make Champion select start screen
 UI  Add text at fairy for when champ already learned all spells
-BUG Very first mouse click after game starts doesn't do anything
 BUG Champion select screen should start with empty scroll, panel and blue (red) bar at right side
-BUG Line 198 in init.js - fix error where 'championSelect[pl].champID' can be -1 when selecting quick start game - gives error 'undefined'
 
 QUESTIONS FOR CHRIS
 -------------------

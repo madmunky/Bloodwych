@@ -450,7 +450,7 @@ function processCanvasInput(pid, x, y) {
 
 function processCanvasInputMenu(x, y) {
 
-	var t = $(this).find('canvas');
+	//var t = $(this).find('canvas');
 
 	if (uiClickInArea(x, y, UI_CLICK_START_ONE_PLAYER)) {
 		$('canvas').attr('data-game-status', 'menu-champions');
@@ -674,7 +674,7 @@ function spellBookAreas(x, y, p, ch) {
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_0, p)) {
 		ch.selectSpell(0);
 		if (championSelect[0].champID === -1) {
-			// p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
+			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
 		} else {
 			drawSpellBook(p);
 		}
