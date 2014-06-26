@@ -1573,9 +1573,9 @@ function gotoFairyMode(p, m) {
 	if (p.uiCenterPanel.mode !== m) {
 		var ch = p.fairyDetails.champ;
 		if (m === UI_CENTER_PANEL_FAIRY) {
-			p.message(ch.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 0);
+			p.message(ch.firstName + TEXT_MAY_BUY_SPELL, COLOUR[COLOUR_GREEN], false, 0);
 		} else if (m === UI_CENTER_PANEL_FAIRY_SERPENT || m === UI_CENTER_PANEL_FAIRY_CHAOS || m === UI_CENTER_PANEL_FAIRY_DRAGON || m === UI_CENTER_PANEL_FAIRY_MOON) {
-			p.message("SELECT THY NEW SPELL, " + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+                   
 		} else if (m === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
 
 		}
@@ -1654,11 +1654,14 @@ function showFairySpellScreen(spellClass, p, c) {
 
 	}
 	if (mySpells.length > 0) {
+                p.message(TEXT_SELECT_SPELL + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
 		writeFontImage(mySpells[0].name, 43, 12, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
 		if (mySpells.length > 1) {
 			writeFontImage(mySpells[1].name, 43, 22, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
 		}
-	}
+	}else{
+            p.message(TEXT_ALL_I_HAVE + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+        }
 	p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 }
 
