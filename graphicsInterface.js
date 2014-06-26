@@ -274,7 +274,7 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop, full) {
 							ch.spellBookPage = (ch.spellBookPage + 3) % 4;
 						}
 						if (championSelect[0].champID > -1) {
-							drawSpellBook(p)
+							drawSpellBook(p);
 						} else {
 							redrawUI(p.id, UI_REDRAW_SPELLBOOK);
 						}
@@ -565,21 +565,24 @@ function drawActiveSpell(id,p){
     
     var spellImage;
     
-    switch (id){
-        
+    switch (id){        
         case SPELL_ARMOUR:{spellImage = UI_GFX_ICON_SPELL_ARMOUR;}break;
-        case SPELL_COMPASS:{spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;}break;
+        case SPELL_COMPASS:{
+                switch (p.d){
+                    case DIRECTION_NORTH: {spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;}break;
+                    case DIRECTION_EAST: {spellImage = UI_GFX_ICON_SPELL_COMPASS_EAST;}break;
+                    case DIRECTION_SOUTH: {spellImage = UI_GFX_ICON_SPELL_COMPASS_SOUTH;}break;
+                    case DIRECTION_WEST: {spellImage = UI_GFX_ICON_SPELL_COMPASS_WEST;}break;
+                }                
+            }break;
         case SPELL_LEVITATE:{spellImage = UI_GFX_ICON_SPELL_LEVITATE;}break;
         case SPELL_WARPOWER:{spellImage = UI_GFX_ICON_SPELL_WARPOWER;}break;
         case SPELL_DEFLECT:{spellImage = UI_GFX_ICON_SPELL_DEFLECT;}break;
         case SPELL_VANISH:{spellImage = UI_GFX_ICON_SPELL_VANISH;}break;
         case SPELL_ANTIMAGE:{spellImage = UI_GFX_ICON_SPELL_ANTIMAGE;}break;
-        case SPELL_TRUEVIEW:{spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;}break;
-            
-    }
-    
-    ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
-    
+        case SPELL_TRUEVIEW:{spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;}break;            
+    }    
+    ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);    
 }
 
 function rightUI(p) {
