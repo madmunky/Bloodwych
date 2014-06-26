@@ -387,3 +387,14 @@ function isCyclic (obj) {
   return detect(obj);
 }
 
+function dropClasses(o) {
+
+    for (var p in o) {
+        if (o[p] instanceof jQuery || o[p] instanceof HTMLElement) {
+            o[p] = null;
+        }    
+        else if (typeof o[p] === 'object' )
+            dropClasses(o[p]);
+    }
+    return o;
+};

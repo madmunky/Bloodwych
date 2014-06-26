@@ -1,8 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 function gameState(saveName) {
     this.gameData = [];
     this.fileName = saveName;
@@ -16,20 +11,22 @@ gameState.prototype.load = function() {
 
 gameState.prototype.save = function() {
     
-    //var myTower = jQuery.extend(true, {}, tower);
-    //var myChampion = jQuery.extend(true, {}, champion);
-    //var myMonsters = jQuery.extend(true, {}, monster);
+    var myTower = jQuery.extend(true, {}, tower);
+        myTower = JSON.parse(JSON.stringify(dropClasses(myTower)));
+    var myChampion = jQuery.extend(true, {}, champion);
+        myChampion = JSON.parse(JSON.stringify(dropClasses(myChampion)));
+    var myMonsters = jQuery.extend(true, {}, monster);
+        myMonsters = JSON.parse(JSON.stringify(dropClasses(myMonsters)));
+    
     
     this.gameData = {
-       // player1: player[0],
-        //player2: player[1],
-        myTower:tower
-       // myChampion:myChampion,
-        //myMonsters:myMonsters
+        myTower:myTower,
+        myChampion:myChampion,
+        myMonsters:myMonsters
     //    myItems:item
     };
     this.gameData.myTower[towerThis].floor[player[0].floor].Map[player[0].y][player[0].x] = setHexToBinaryPosition(this.gameData.myTower[towerThis].floor[player[0].floor].Map[player[0].y][player[0].x], 8, 1, '0');
-     
+    
     localStorage.setItem(this.fileName,JSON.stringify(this.gameData));
 };
 

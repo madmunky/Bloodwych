@@ -18,13 +18,12 @@ BUG If a monster is at the bottom of the stairs you shouldnt be able to move dow
 CHRIS
 ------
 GFX Big monster drawing fixes
-GFX Add duration spell icons on the door/spell icon, when active (e.g. armour, trueview, levitate)
 GFX Find Armour Palettes
 WIP Make Champion select start screen
 
 QUESTIONS FOR CHRIS
 -------------------
-The spell points seem wrong compared to steem. E.g. Zothen has 43 sp in ours, and 21 in original, and Megrim has 0 spell points. Anything we missed?
+The spell points seem wrong compared to steem. E.g. Zothen has 43 sp in ours, and 21 in original, and Megrim has 0 spell points. Anything we missed? - Not sure about this maybe we need to rip the ingame stats instead
 
 QUESTIONS FOR JORG
 ------------------
