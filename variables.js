@@ -7,6 +7,8 @@ var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
 var champSelectGrid = [];
 var players = 0;
 
+var saveGame = new gameState('saveGame0');
+
 //Setup some global Varibles for needed
 var gameStarted = false;
 var scale = 3;

@@ -85,10 +85,10 @@ function doKeyDown(e) {
 				testPalette = testPalette - 1;
 				break;
 			case KEY_6:
-				testDirection = (testDirection + 3) % 4;
+				saveGame.load();
 				break;
-			case KEY_5:
-				testDirection = (testDirection + 1) % 4;
+			case KEY_5:				
+                                saveGame.save();
 				break;
 			case KEY_7:
 				testDistance = (testDistance + 1) % 3;
