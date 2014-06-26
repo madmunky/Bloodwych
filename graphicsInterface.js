@@ -561,6 +561,27 @@ function commandUI(p) {
 	drawCommunicationBox(p);
 }
 
+function drawActiveSpell(id,p){
+    
+    var spellImage;
+    
+    switch (id){
+        
+        case SPELL_ARMOUR:{spellImage = UI_GFX_ICON_SPELL_ARMOUR;}break;
+        case SPELL_COMPASS:{spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;}break;
+        case SPELL_LEVITATE:{spellImage = UI_GFX_ICON_SPELL_LEVITATE;}break;
+        case SPELL_WARPOWER:{spellImage = UI_GFX_ICON_SPELL_WARPOWER;}break;
+        case SPELL_DEFLECT:{spellImage = UI_GFX_ICON_SPELL_DEFLECT;}break;
+        case SPELL_VANISH:{spellImage = UI_GFX_ICON_SPELL_VANISH;}break;
+        case SPELL_ANTIMAGE:{spellImage = UI_GFX_ICON_SPELL_ANTIMAGE;}break;
+        case SPELL_TRUEVIEW:{spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;}break;
+            
+    }
+    
+    ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
+    
+}
+
 function rightUI(p) {
 
 	var ch = champion[p.champion[p.championLeader]];
@@ -579,11 +600,17 @@ function rightUI(p) {
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SCROLL].width * scale, gfxUI[UI_GFX_ICON_SCROLL].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_POCKETBOX], p.ScreenX + 288 * scale, (p.ScreenY + 21) * scale, gfxUI[UI_GFX_POCKETBOX].width * scale, gfxUI[UI_GFX_POCKETBOX].height * scale);
 
-	if (ch.selectedSpell === null) {
+        if (ch.activeSpell.id !== -1){
+            drawActiveSpell(ch.activeSpell.id,p);
+        }else{
+            if (ch.selectedSpell === null) {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_OPENDOOR].width * scale, gfxUI[UI_GFX_ICON_OPENDOOR].height * scale);
-	} else {
-		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-	}
+            } else {
+                ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            }
+        }
+
+	
 
 	ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
 

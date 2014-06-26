@@ -746,7 +746,8 @@ function spellBookAreas(x, y, p, ch) {
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_1, p) || uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_FIRE_2, p)) {
 		if (ch.selectedSpell !== null) {
 			p.castSpell(ch.selectedSpell, ch);
-			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
+			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+                        p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
 			return pid;
 		}
 	}
