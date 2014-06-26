@@ -137,6 +137,8 @@ function grabUISprites(spriteSheetIMG) {
 	ImageArray.push(grabImageAt(spriteSheetIMG, 304, 295, 48, 20, false)); //Character Select Boxes
 	ImageArray.push(grabImageAt(spriteSheetIMG, 356, 296, 94, 73, false)); //Character Select Scroll
 
+        ImageArray.push(grabImageAt(spriteSheetIMG, 308, 319, 14, 3, false)); //Script Wave
+
 	return ImageArray;
 
 }
@@ -834,7 +836,8 @@ function drawStatsPage(p, ch, start) {
 		}
 
 		writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
-		writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), COLOUR[COLOUR_GREY_DARKEST]);
+                ctx.drawImage(gfxUI[UI_GFX_SCROLL_WAVE], (p.ScreenX + 282) * scale, (p.ScreenY + 17) * scale, gfxUI[UI_GFX_SCROLL_WAVE].width * scale, gfxUI[UI_GFX_SCROLL_WAVE].height * scale);
+		//writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), COLOUR[COLOUR_GREY_DARKEST]);
 		writeFontImage(doubleDigits(ch.level), p.ScreenX + 297, (p.ScreenY + 15), COLOUR[COLOUR_WHITE]);
 
 		writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);

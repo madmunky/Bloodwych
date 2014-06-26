@@ -20,10 +20,7 @@ CHRIS
 GFX Big monster drawing fixes
 GFX Add duration spell icons on the door/spell icon, when active (e.g. armour, trueview, levitate)
 GFX Find Armour Palettes
-GFX Get ~ fixed in stats (LEVEL ~ 01 ... we should use 2 chars for that)
 WIP Make Champion select start screen
-UI  Add text at fairy for when champ already learned all spells
-BUG Champion select screen should start with empty scroll, panel and blue (red) bar at right side
 
 QUESTIONS FOR CHRIS
 -------------------
