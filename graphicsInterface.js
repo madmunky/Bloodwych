@@ -137,7 +137,7 @@ function grabUISprites(spriteSheetIMG) {
 	ImageArray.push(grabImageAt(spriteSheetIMG, 304, 295, 48, 20, false)); //Character Select Boxes
 	ImageArray.push(grabImageAt(spriteSheetIMG, 356, 296, 94, 73, false)); //Character Select Scroll
 
-        ImageArray.push(grabImageAt(spriteSheetIMG, 308, 319, 14, 3, false)); //Script Wave
+	ImageArray.push(grabImageAt(spriteSheetIMG, 308, 319, 14, 3, false)); //Script Wave
 
 	return ImageArray;
 
@@ -314,6 +314,9 @@ function drawUI(p) {
 					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
 					rightUI(p);
 				}
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_ACTIVESPELL) {
+					drawActiveSpell(p);
+				}
 			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
 				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_POCKETS) {
 					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
@@ -405,7 +408,7 @@ function leftUI(p) {
 					}, true, false);
 					ctx.drawImage(t, (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, t.width * scale, t.height * scale);
 					ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 43 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
-					if(p.uiLeftPanel.champs[c].damage > 0) {
+					if (p.uiLeftPanel.champs[c].damage > 0) {
 						ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + 13) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
 						writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + 28, p.ScreenY + 10, COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_CENTER);
 					}
@@ -429,7 +432,7 @@ function leftUI(p) {
 						y: 0
 					}, true, false);
 					ctx.drawImage(t, ((c - 1) * 32 * scale) + (p.ScreenX * scale) - 49 * scale, (p.ScreenY + 45) * scale - 37 * scale, t.width * scale, t.height * scale);
-					if(p.uiLeftPanel.champs[c].damage > 0) {
+					if (p.uiLeftPanel.champs[c].damage > 0) {
 						ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + (c - 1) * 32 + 1) * scale, (p.ScreenY + 53) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
 						writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + ((c - 1) * 32 + 16), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_CENTER);
 					}
@@ -539,7 +542,7 @@ function getClassColour(c, palette) {
 }
 
 function commandUI(p) {
-	ch = p.getChampion(p.championLeader);
+	var ch = p.getChampion(p.championLeader);
 	ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].height * scale);
 	if (ch.activeSpell.id > -1) {
@@ -561,28 +564,77 @@ function commandUI(p) {
 	drawCommunicationBox(p);
 }
 
-function drawActiveSpell(id,p){
-    
-    var spellImage;
-    
-    switch (id){        
-        case SPELL_ARMOUR:{spellImage = UI_GFX_ICON_SPELL_ARMOUR;}break;
-        case SPELL_COMPASS:{
-                switch (p.d){
-                    case DIRECTION_NORTH: {spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;}break;
-                    case DIRECTION_EAST: {spellImage = UI_GFX_ICON_SPELL_COMPASS_EAST;}break;
-                    case DIRECTION_SOUTH: {spellImage = UI_GFX_ICON_SPELL_COMPASS_SOUTH;}break;
-                    case DIRECTION_WEST: {spellImage = UI_GFX_ICON_SPELL_COMPASS_WEST;}break;
-                }                
-            }break;
-        case SPELL_LEVITATE:{spellImage = UI_GFX_ICON_SPELL_LEVITATE;}break;
-        case SPELL_WARPOWER:{spellImage = UI_GFX_ICON_SPELL_WARPOWER;}break;
-        case SPELL_DEFLECT:{spellImage = UI_GFX_ICON_SPELL_DEFLECT;}break;
-        case SPELL_VANISH:{spellImage = UI_GFX_ICON_SPELL_VANISH;}break;
-        case SPELL_ANTIMAGE:{spellImage = UI_GFX_ICON_SPELL_ANTIMAGE;}break;
-        case SPELL_TRUEVIEW:{spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;}break;            
-    }    
-    ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);    
+function drawActiveSpell(p) {
+	var ch = p.getChampion(p.championLeader);
+	var id = ch.activeSpell.id;
+	if (id !== -1) {
+		var spellImage;
+
+		switch (id) {
+			case SPELL_ARMOUR:
+				{
+					spellImage = UI_GFX_ICON_SPELL_ARMOUR;
+				}
+				break;
+			case SPELL_COMPASS:
+				{
+					switch (p.d) {
+						case DIRECTION_NORTH:
+							{
+								spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;
+							}
+							break;
+						case DIRECTION_EAST:
+							{
+								spellImage = UI_GFX_ICON_SPELL_COMPASS_EAST;
+							}
+							break;
+						case DIRECTION_SOUTH:
+							{
+								spellImage = UI_GFX_ICON_SPELL_COMPASS_SOUTH;
+							}
+							break;
+						case DIRECTION_WEST:
+							{
+								spellImage = UI_GFX_ICON_SPELL_COMPASS_WEST;
+							}
+							break;
+					}
+				}
+				break;
+			case SPELL_LEVITATE:
+				{
+					spellImage = UI_GFX_ICON_SPELL_LEVITATE;
+				}
+				break;
+			case SPELL_WARPOWER:
+				{
+					spellImage = UI_GFX_ICON_SPELL_WARPOWER;
+				}
+				break;
+			case SPELL_DEFLECT:
+				{
+					spellImage = UI_GFX_ICON_SPELL_DEFLECT;
+				}
+				break;
+			case SPELL_VANISH:
+				{
+					spellImage = UI_GFX_ICON_SPELL_VANISH;
+				}
+				break;
+			case SPELL_ANTIMAGE:
+				{
+					spellImage = UI_GFX_ICON_SPELL_ANTIMAGE;
+				}
+				break;
+			case SPELL_TRUEVIEW:
+				{
+					spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;
+				}
+				break;
+		}
+		ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
+	}
 }
 
 function rightUI(p) {
@@ -603,17 +655,17 @@ function rightUI(p) {
 	ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SCROLL].width * scale, gfxUI[UI_GFX_ICON_SCROLL].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_POCKETBOX], p.ScreenX + 288 * scale, (p.ScreenY + 21) * scale, gfxUI[UI_GFX_POCKETBOX].width * scale, gfxUI[UI_GFX_POCKETBOX].height * scale);
 
-        if (ch.activeSpell.id !== -1){
-            drawActiveSpell(ch.activeSpell.id,p);
-        }else{
-            if (ch.selectedSpell === null) {
-		ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_OPENDOOR].width * scale, gfxUI[UI_GFX_ICON_OPENDOOR].height * scale);
-            } else {
-                ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-            }
-        }
+	if (ch.activeSpell.id !== -1) {
+		//drawActiveSpell(ch.activeSpell.id,p);
+	} else {
+		if (ch.selectedSpell === null) {
+			ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_OPENDOOR].width * scale, gfxUI[UI_GFX_ICON_OPENDOOR].height * scale);
+		} else {
+			ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+		}
+	}
 
-	
+
 
 	ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
 
@@ -866,7 +918,7 @@ function drawStatsPage(p, ch, start) {
 		}
 
 		writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
-                ctx.drawImage(gfxUI[UI_GFX_SCROLL_WAVE], (p.ScreenX + 282) * scale, (p.ScreenY + 17) * scale, gfxUI[UI_GFX_SCROLL_WAVE].width * scale, gfxUI[UI_GFX_SCROLL_WAVE].height * scale);
+		ctx.drawImage(gfxUI[UI_GFX_SCROLL_WAVE], (p.ScreenX + 282) * scale, (p.ScreenY + 17) * scale, gfxUI[UI_GFX_SCROLL_WAVE].width * scale, gfxUI[UI_GFX_SCROLL_WAVE].height * scale);
 		//writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), COLOUR[COLOUR_GREY_DARKEST]);
 		writeFontImage(doubleDigits(ch.level), p.ScreenX + 297, (p.ScreenY + 15), COLOUR[COLOUR_WHITE]);
 
@@ -1608,7 +1660,7 @@ function gotoFairyMode(p, m) {
 		if (m === UI_CENTER_PANEL_FAIRY) {
 			p.message(ch.firstName + TEXT_MAY_BUY_SPELL, COLOUR[COLOUR_GREEN], false, 0);
 		} else if (m === UI_CENTER_PANEL_FAIRY_SERPENT || m === UI_CENTER_PANEL_FAIRY_CHAOS || m === UI_CENTER_PANEL_FAIRY_DRAGON || m === UI_CENTER_PANEL_FAIRY_MOON) {
-                   
+
 		} else if (m === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
 
 		}
@@ -1687,14 +1739,14 @@ function showFairySpellScreen(spellClass, p, c) {
 
 	}
 	if (mySpells.length > 0) {
-                p.message(TEXT_SELECT_SPELL + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+		p.message(TEXT_SELECT_SPELL + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
 		writeFontImage(mySpells[0].name, 43, 12, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
 		if (mySpells.length > 1) {
 			writeFontImage(mySpells[1].name, 43, 22, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
 		}
-	}else{
-            p.message(TEXT_ALL_I_HAVE + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
-        }
+	} else {
+		p.message(TEXT_ALL_I_HAVE + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+	}
 	p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 }
 

@@ -10,7 +10,7 @@ COD Spell cost % and other spell rpg stuff
 COD Spell projectiles and effects (todo: arrows)
 COD Fix Big monster 'edge of screen'
 COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
-COD Fix death screen as I did with asleep
+UI  Fix death screen as I did with asleep
 BUG Cast% stays when closing book
 BUG Yellow flash when hit by a spell draws before wooden object
 BUG If a monster is at the bottom of the stairs you shouldnt be able to move down
@@ -19,7 +19,7 @@ CHRIS
 ------
 GFX Big monster drawing fixes
 GFX Find Armour Palettes
-WIP Make Champion select start screen
+UI  Make Champion select start screen (WIP)
 
 QUESTIONS FOR CHRIS
 -------------------
