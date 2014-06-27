@@ -219,10 +219,12 @@ Player.prototype.rotate = function(r) {
 		} else {
 			highliteMovementArrow(this, 2);
 		}
-		this.d = (4 + this.d + r) % 4;                
-                if (champion[this.championLeader].activeSpell.id === SPELL_COMPASS){
-                       redrawUI(this.id, UI_REDRAW_RIGHT); 
-                }
+		this.d = (4 + this.d + r) % 4;  
+                if (this.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN){
+                    if (champion[this.championLeader].activeSpell.id === SPELL_COMPASS){
+                       drawActiveSpell(champion[this.championLeader].activeSpell.id,this); 
+                    }
+                }                
 		this.doEvent(false);
 	}
 };
