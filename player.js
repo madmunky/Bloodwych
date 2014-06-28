@@ -1122,8 +1122,6 @@ Player.prototype.doCommunication = function(text) {
 						this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
 						this.communication.charisma = champion[this.championLeader].stat.cha;
 						this.doCommunicationQuestionAnswer(1);
-						//this.message(TEXT_COMMUNICATION[0][1], myColour);
-						//this.message(TEXT_COMMUNICATION[1][0], COLOUR[COLOUR_RED], true);
 					} else {
 						this.doCommunicationQuestionAnswer(0);
 					}
@@ -1154,343 +1152,67 @@ Player.prototype.doCommunication = function(text) {
 					break;
 			}
 			break;
-			default:
+		default:
 			this.doCommunicationQuestionAnswer(this.communication.mode, text);
 			if (typeof TEXT_COMMUNICATION_COMMANDS[this.communication.mode] !== 'undefined' && typeof TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text] !== 'undefined' && TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text].to !== null) {
 				this.communication.mode = TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text].to;
 			}
 			break;
-			/*case COMMUNICATION_PAGE_COMMUNICATE_0:
-				switch (item) {
-					case COMMUNICATION_IDENTIFY:
-							this.communication.mode = COMMUNICATION_PAGE_IDENTIFY;
-						break;
-					case COMMUNICATION_INQUIRY:
-
-							this.communication.mode = COMMUNICATION_PAGE_INQUIRY;
-
-						break;
-				}
-			break;
-		case COMMUNICATION_PAGE_COMMUNICATE_1:
-				switch (item) {
-					case COMMUNICATION_TRADING:
-							this.communication.mode = COMMUNICATION_PAGE_TRADING;
-						break;
-					case COMMUNICATION_SMALLTALK:
-							this.communication.mode = COMMUNICATION_PAGE_SMALLTALK;
-						break;
-				}
-			break;
-		*/
-
 	}
-
-	/*switch (this.communication.mode) {
-
-		case COMMUNICATION_PAGE_MAIN:
-			{
-				switch (item) {
-					case COMMUNICATION_COMMUNICATE:
-						{
-							var m = this.checkForMonsterInFront();
-							if (m !== null) {
-								m.communicating = true;
-								if (m.champId === -1 || m.isRecruitedBy() === null) {
-									m.rotateTo((this.d + 2) % 4);
-								}
-								this.communication.monster = m;
-								this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
-								this.message(TEXT_COMMUNICATION[0][1], myColour);
-								this.message(TEXT_COMMUNICATION[1][0], COLOUR[COLOUR_RED], true);
-							} else {
-								this.message(TEXT_COMMUNICATION[0][0], myColour);
-							}
-						}
-						break
-					case COMMUNICATION_COMMEND:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_NAMES;
-							this.communication.action = "COMMEND";
-						}
-						break
-					case COMMUNICATION_VIEW:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_NAMES;
-							this.communication.action = "VIEW";
-						}
-						break
-					case COMMUNICATION_WAIT:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_NAMES;
-							this.communication.action = "WAIT";
-						}
-						break
-					case COMMUNICATION_CORRECT:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_NAMES;
-							this.communication.action = "CORRECT";
-						}
-						break
-					case COMMUNICATION_DISMISS:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_NAMES;
-							this.communication.action = "DISMISS";
-						}
-						break
-					case COMMUNICATION_CALL:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_NAMES;
-							this.communication.action = "CALL";
-						}
-						break
-				}
-			};
-			break
-		case COMMUNICATION_PAGE_COMMUNICATE_0:
-			{
-				switch (item) {
-					case COMMUNICATION_RECRUIT:
-						{
-							this.message(TEXT_COMMUNICATION[2][0], myColour);
-							this.message(TEXT_COMMUNICATION[2][Math.floor(Math.random() * 4) + 2], COLOUR[COLOUR_RED], true);
-
-						}
-						break
-					case COMMUNICATION_IDENTIFY:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_IDENTIFY;
-						}
-						break
-					case COMMUNICATION_INQUIRY:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_INQUIRY;
-						}
-						break
-					case COMMUNICATION_WHEREABOUTS:
-						{;
-							this.message(TEXT_COMMUNICATION[3][0], myColour);
-							this.message(TEXT_COMMUNICATION[3][Math.floor(Math.random() * 1) + 1], COLOUR[COLOUR_RED], true);
-						}
-						break
-				}
-			};
-			break
-		case COMMUNICATION_PAGE_COMMUNICATE_1:
-			{
-				switch (item) {
-					case COMMUNICATION_TRADING:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_TRADING;
-						}
-						break
-					case COMMUNICATION_SMALLTALK:
-						{
-							this.communication.mode = COMMUNICATION_PAGE_SMALLTALK;
-						}
-						break
-					case COMMUNICATION_YES:
-						{;
-						}
-						break
-					case COMMUNICATION_NO:
-						{;
-						}
-						break
-					case COMMUNICATION_BRIBE:
-						{;
-						}
-						break
-					case COMMUNICATION_THREAT:
-						{;
-						}
-						break
-				}
-			};
-			break
-		case COMMUNICATION_PAGE_IDENTIFY:
-			{
-				switch (item) {
-					case COMMUNICATION_WHO_GOES:
-						{;
-							this.message(TEXT_COMMUNICATION[4][0], myColour);
-							if (this.communication.monster.champId !== null) {
-								var ch = champion[this.communication.monster.champId];
-								this.message(TEXT_COMMUNICATION[4][1] + ch.getName(), COLOUR[COLOUR_RED], true);
-							} else {
-								this.message(TEXT_COMMUNICATION[4][2], COLOUR[COLOUR_RED], true);
-							}
-						}
-						break
-					case COMMUNICATION_THY_TRADE:
-						{;
-							this.message(TEXT_COMMUNICATION[5][0], myColour);
-							if (this.communication.monster.champId !== null) {
-								var ch = champion[this.communication.monster.champId];
-								this.message(TEXT_COMMUNICATION[5][1] + ch.getTrade(), COLOUR[COLOUR_RED], true);
-							} else {
-								this.message(TEXT_COMMUNICATION[5][2], COLOUR[COLOUR_RED], true);
-							}
-						}
-						break
-					case COMMUNICATION_NAME_SELF:
-						{;
-
-							var ch = champion[this.championLeader];
-							this.message(TEXT_COMMUNICATION[4][1] + ch.getName(), COLOUR[COLOUR_GREEN], true);
-							if (this.communication.monster.champId !== null) {
-								ch = champion[this.communication.monster.champId];
-								this.message(TEXT_COMMUNICATION[4][1] + ch.getName(), COLOUR[COLOUR_RED], true);
-							} else {
-								this.message(TEXT_COMMUNICATION[4][2], COLOUR[COLOUR_RED], true);
-							}
-						}
-						break
-					case COMMUNICATION_REVEAL_SELF:
-						{;
-							var ch = champion[this.championLeader];
-							this.message(TEXT_COMMUNICATION[5][1] + ch.getTrade(), COLOUR[COLOUR_GREEN], true);
-							if (this.communication.monster.champId !== null) {
-								ch = champion[this.communication.monster.champId];
-								this.message(TEXT_COMMUNICATION[5][1] + ch.getTrade(), COLOUR[COLOUR_RED], true);
-							} else {
-								this.message(TEXT_COMMUNICATION[5][2], COLOUR[COLOUR_RED], true);
-							}
-						}
-						break
-				}
-				this.communication.mode = TEXT_COMMUNICATION_COMMANDS[this.communication.mode][item].to;
-			};
-			break
-		case COMMUNICATION_PAGE_INQUIRY:
-			{
-				switch (item) {
-					case COMMUNICATION_FOLK_LORE:
-						{
-							this.message(TEXT_COMMUNICATION[9][0], myColour);
-							this.message(TEXT_COMMUNICATION[6][1], COLOUR[COLOUR_RED], true);
-						}
-						break
-					case COMMUNICATION_MAGIC_ITEMS:
-						{
-							this.message(TEXT_COMMUNICATION[8][0], myColour);
-							this.message(TEXT_COMMUNICATION[8][1], COLOUR[COLOUR_RED], true);
-						}
-						break
-					case COMMUNICATION_OBJECTS:
-						{
-							this.message(TEXT_COMMUNICATION[7][0], myColour);
-							this.message(TEXT_COMMUNICATION[7][1], COLOUR[COLOUR_RED], true);
-						}
-						break
-					case COMMUNICATION_PERSONS:
-						{;
-						}
-						break
-				}
-			};
-			break
-		case COMMUNICATION_PAGE_TRADING:
-			{
-				switch (item) {
-					case COMMUNICATION_OFFER:
-						{;
-						}
-						break
-					case COMMUNICATION_PURCHASE:
-						{;
-						}
-						break
-					case COMMUNICATION_EXCHANGE:
-						{;
-						}
-						break
-					case COMMUNICATION_SELL:
-						{;
-						}
-						break
-				}
-			};
-			break
-		case COMMUNICATION_PAGE_SMALLTALK:
-			{
-				switch (item) {
-					case COMMUNICATION_PRAISE:
-						{;
-						}
-						break
-					case COMMUNICATION_CURSE:
-						{;
-						}
-						break
-					case COMMUNICATION_BOAST:
-						{;
-						}
-						break
-					case COMMUNICATION_RETORT:
-						{;
-						}
-						break
-				}
-			};
-			break
-		case COMMUNICATION_PAGE_NAMES:
-			{
-				switch (item) {
-					case 0:
-						{;
-						}
-						break
-					case 1:
-						{;
-						}
-						break
-					case 2:
-						{;
-						}
-						break
-					case 3:
-						{;
-						}
-						break
-				}
-			};
-			break
-
-	};*/
 	drawCommunicationBox(this, text, true);
 
 };
 
 Player.prototype.doCommunicationQuestionAnswer = function(mode, text) {
 	var c = this.getCommunication(mode, text);
-	if(typeof c !== 'undefined') {
+	if (typeof c !== 'undefined') {
 		var myColour = COLOUR[COLOUR_GREEN];
 		if (this.id === 1) {
 			myColour = COLOUR[COLOUR_PINK];
 		}
-		this.message(c.question, myColour);
+		var q = Math.floor(Math.random() * c.question.length);
+		this.message(c.question[q], myColour);
 		var mon = this.communication.monster;
 		if (mon.champId === -1 || mon.isRecruitedBy() === null) {
-			if(c.answer.length > 0) {
-				//choose the answer
-				if(mode === COMMUNICATION_PAGE_IDENTIFY) {
-					if(text === COMMUNICATION_WHO_GOES || text === COMMUNICATION_NAME_SELF) {
-						if(mon.form === 64) {
-							//zendik
-						}
-					}
-				}
-				var a = Math.floor(Math.random() * c.answer.length); //now random. needs to be based on charisma and other things
+			if (c.answer.length > 0) {
+				var a = this.getCommunicationAnswer(c.answer, mode, text);
 				this.communication.answer = c.answer[a];
 				this.communication.answerTimer = timerMaster;
 			}
-		} else if(player.length > 1 && mon.isRecruitedBy() === player[1 - this.id]){ //other player
+		} else if (player.length > 1 && mon.isRecruitedBy() === player[1 - this.id]) { //other player
 			p1 = player[1 - this.id];
-			p1.message(c.question, COLOUR[COLOUR_RED]);
+			p1.message(c.question[q], COLOUR[COLOUR_RED]);
 		}
 		this.communication.charisma += 5;
 	}
+}
+
+Player.prototype.getCommunicationAnswer = function(answer, mode, text) {
+	var a = Math.floor(Math.random() * answer.length); //now random. needs to be based on charisma and other things
+	if (mode === COMMUNICATION_PAGE_IDENTIFY) {
+		if (text === COMMUNICATION_WHO_GOES || text === COMMUNICATION_NAME_SELF) {
+			if (mon.champId > -1) { //champions
+				a = 0;
+			} else if (mon.form === 64) { //zendik
+				a = 2;
+			} else { //monsters
+				a = 1;
+			}
+		} else if (text === COMMUNICATION_THY_TRADE) {
+			if (mon.champId > -1) { //champions
+				a = 1;
+			} else {
+				a = 0;
+			}
+		} else if (text === COMMUNICATION_REVEAL_SELF) {
+			if (mon.champId > -1) { //champions
+				a = 0;
+			} else {
+				a = Math.floor(Math.random() * (answer.length - 1)) + 1;
+			}
+		}
+	}
+	return a;
 }
 
 Player.prototype.doneCommunication = function() {
@@ -1512,52 +1234,81 @@ Player.prototype.getCommunication = function(mode, text) {
 		if ((typeof TEXT_COMMUNICATION[q][1] !== 'undefined' && TEXT_COMMUNICATION[q][1] !== null) || typeof text === 'undefined') {
 			if ((typeof text !== 'undefined' && TEXT_COMMUNICATION[q][1] === mode && TEXT_COMMUNICATION[q][2] === text) || (typeof text === 'undefined' && q === mode)) {
 				var qa = {
-					question: null,
+					question: [],
 					answer: []
 				};
-				var suf = '';
-				if (typeof TEXT_COMMUNICATION[q][5] !== 'undefined') {
-					switch(TEXT_COMMUNICATION[q][5]) {
-						case 'name':
-						suf = champion[this.championLeader].getName();
-						break;
-						case 'prof':
-						suf = champion[this.championLeader].getTrade();
-						break;
-						case 'item':
-						if(this.pocket.id > 0) {
-							suf = itemRef[this.pocket.id].name;
-						}
-						break;
-					}
-				}
-				qa.question = TEXT_COMMUNICATION[q][0] + suf;
+				var qs = 0;
+				var ql = 0;
 				if (typeof TEXT_COMMUNICATION[q][3] !== 'undefined' && TEXT_COMMUNICATION[q][3] !== null) {
-					var as = 1;
-					if (typeof TEXT_COMMUNICATION[q][4] !== 'undefined' && TEXT_COMMUNICATION[q][4]) {
-						as = 0;
+					qs = TEXT_COMMUNICATION[q][3];
+				}
+				if (typeof TEXT_COMMUNICATION[q][4] !== 'undefined' && TEXT_COMMUNICATION[q][4] !== null) {
+					ql = TEXT_COMMUNICATION[q][4];
+				}
+				for (var q1 = 0; q1 < ql; q1++) {
+					var que = '';
+					if(typeof TEXT_COMMUNICATION[q + q1 + qs][0] === 'string') {
+						que = TEXT_COMMUNICATION[q + q1 + qs][0];
+					} else {
+						for(var w = 0; w < TEXT_COMMUNICATION[q + q1 + qs][0].length; w++) {
+							var w1 = Math.floor(Math.random() * TEXT_COMMUNICATION[q + q1 + qs][0][w].length);
+							que += TEXT_COMMUNICATION[q + q1 + qs][0][w][w1];
+						}
 					}
-					for (var a = 0; a < TEXT_COMMUNICATION[q][3]; a++) {
-						var ans = TEXT_COMMUNICATION[q + a + as][0];
-						var suf = '';
-						if (typeof TEXT_COMMUNICATION[q + a + as][5] !== 'undefined') {
-							switch(TEXT_COMMUNICATION[q + a + as][5]) {
-								case 'name':
-								if (this.communication.monster.champId !== null) {
+					var suf = '';
+					if (typeof TEXT_COMMUNICATION[q][7] !== 'undefined') {
+						switch (TEXT_COMMUNICATION[q][7]) {
+							case 'name':
+								suf = champion[this.championLeader].getName();
+								break;
+							case 'prof':
+								suf = champion[this.championLeader].getTrade();
+								break;
+							case 'item':
+								if (this.pocket.id > 0) {
+									suf = itemRef[this.pocket.id].name;
+								}
+								break;
+						}
+					}
+					qa.question[q1] = que + suf;
+				}
+				var as = 0;
+				var al = 0;
+				if (typeof TEXT_COMMUNICATION[q][5] !== 'undefined' && TEXT_COMMUNICATION[q][5] !== null) {
+					as = TEXT_COMMUNICATION[q][5];
+				}
+				if (typeof TEXT_COMMUNICATION[q][6] !== 'undefined' && TEXT_COMMUNICATION[q][6] !== null) {
+					al = TEXT_COMMUNICATION[q][6];
+				}
+				for (var a1 = 0; a1 < al; a1++) {
+					var ans = '';
+					if(typeof TEXT_COMMUNICATION[q + a1 + as][0] === 'string') {
+						ans = TEXT_COMMUNICATION[q + a1 + as][0];
+					} else {
+						for(var w = 0; w < TEXT_COMMUNICATION[q + a1 + as][0].length; w++) {
+							var w1 = Math.floor(Math.random() * TEXT_COMMUNICATION[q + a1 + as][0][w].length);
+							ans += TEXT_COMMUNICATION[q + a1 + as][0][w][w1];
+						}
+					}
+					var suf = '';
+					if (typeof TEXT_COMMUNICATION[q + a1 + as][7] !== 'undefined') {
+						switch (TEXT_COMMUNICATION[q + a1 + as][7]) {
+							case 'name':
+								if (this.communication.monster.champId > -1) {
 									suf = champion[this.communication.monster.champId].getName();
 								}
 								break;
-								case 'prof':
-								if (this.communication.monster.champId !== null) {
+							case 'prof':
+								if (this.communication.monster.champId > -1) {
 									suf = champion[this.communication.monster.champId].getTrade();
 								}
 								break;
-								case 'item':
+							case 'item':
 								//item trading from monsters
-							}
 						}
-						qa.answer[a] = ans + suf;
 					}
+					qa.answer[a1] = ans + suf;
 				}
 				return qa;
 			}

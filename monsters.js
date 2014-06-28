@@ -54,7 +54,7 @@ Monster.prototype.canInteract = function() {
 	} else if (player.length > 1 && this.floor === player[1].floor && this.x + xy.x === player[1].x && this.y + xy.y === player[1].y) {
 		ply = 1;
 	}
-	if (this.isAgressive() && !this.communicating) { //enemy
+	if (this.isAggressive() && !this.communicating) { //enemy
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
@@ -120,7 +120,7 @@ Monster.prototype.canOpenDoor = function() {
 	var hexNext = this.getBinaryView(15, 0, 16);
 	//Check the space the monster is standing on
 	if (getHexToBinaryPosition(hexThis, 12, 4) == '2' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2 + 1, 1) == '1') {
-		if (this.isAgressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
+		if (this.isAggressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1, '0');
 			return true;
@@ -128,7 +128,7 @@ Monster.prototype.canOpenDoor = function() {
 	}
 	//Check the space the monster is moving to
 	if (getHexToBinaryPosition(hexNext, 12, 4) == '2' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2 + 1, 1) == '1') {
-		if (this.isAgressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
+		if (this.isAggressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1, '0');
 			return true;
@@ -426,7 +426,7 @@ Monster.prototype.isRecruitedBy = function() {
 	return null;
 }
 
-Monster.prototype.isAgressive = function() {
+Monster.prototype.isAggressive = function() {
 	if (this.champId > -1 || this.ref.id === 21 || this.ref.id === 22) {
 		return false;
 	}
