@@ -155,7 +155,11 @@ function checkClickEvents() {
 				for (s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
 					if (uiClickInArea(x, y, s, player[currentPlayer])) {
 						var it = champion[championSelect[currentPlayer].champID].pocket[(s - UI_CLICK_POCKET_SLOT_1)];
-						drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+                                                if (currentPlayer === 0){
+                                                    drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+                                                }else{
+                                                    drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+                                                }						
 						writeFontImage(it.itemRef.name, 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
 					}
 				}
@@ -695,7 +699,7 @@ function spellBookAreas(x, y, p, ch) {
 	}
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_0, p)) {
 		ch.selectSpell(0);
-		if (championSelect[0].champID === -1) {
+		if (championSelect[currentPlayer].champID === -1) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
 		} else {
 			drawSpellBook(p);
@@ -704,7 +708,7 @@ function spellBookAreas(x, y, p, ch) {
 	}
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_1, p)) {
 		ch.selectSpell(1);
-		if (championSelect[0].champID === -1) {
+		if (championSelect[currentPlayer].champID === -1) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
 		} else {
 			drawSpellBook(p);
@@ -713,7 +717,7 @@ function spellBookAreas(x, y, p, ch) {
 	}
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_2, p)) {
 		ch.selectSpell(2);
-		if (championSelect[0].champID === -1) {
+		if (championSelect[currentPlayer].champID === -1) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
 		} else {
 			drawSpellBook(p);
@@ -722,7 +726,7 @@ function spellBookAreas(x, y, p, ch) {
 	}
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_3, p)) {
 		ch.selectSpell(3);
-		if (championSelect[0].champID === -1) {
+		if (championSelect[currentPlayer].champID === -1) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
 		} else {
 			drawSpellBook(p);
@@ -731,7 +735,7 @@ function spellBookAreas(x, y, p, ch) {
 	}
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_4, p)) {
 		ch.selectSpell(4);
-		if (championSelect[0].champID === -1) {
+		if (championSelect[currentPlayer].champID === -1) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
 		} else {
 			drawSpellBook(p);
@@ -740,7 +744,7 @@ function spellBookAreas(x, y, p, ch) {
 	}
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_5, p)) {
 		ch.selectSpell(5);
-		if (championSelect[0].champID === -1) {
+		if (championSelect[currentPlayer].champID === -1) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
 		} else {
 			drawSpellBook(p);
@@ -749,7 +753,7 @@ function spellBookAreas(x, y, p, ch) {
 	}
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_6, p)) {
 		ch.selectSpell(6);
-		if (championSelect[0].champID === -1) {
+		if (championSelect[currentPlayer].champID === -1) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
 		} else {
 			drawSpellBook(p);
@@ -758,7 +762,7 @@ function spellBookAreas(x, y, p, ch) {
 	}
 	if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_SPELL_7, p)) {
 		ch.selectSpell(7);
-		if (championSelect[0].champID === -1) {
+		if (championSelect[currentPlayer].champID === -1) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_SPELLBOOK;
 		} else {
 			drawSpellBook(p);

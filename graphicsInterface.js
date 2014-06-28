@@ -149,8 +149,8 @@ function drawSpellBook(p, ui, dr) {
 	var ch;
 	var start = false;
 
-	if (championSelect[0].champID >= 0) {
-		ch = champion[championSelect[0].champID];
+	if (championSelect[currentPlayer].champID >= 0) {
+		ch = champion[championSelect[currentPlayer].champID];
 		start = true;
 	} else {
 		ch = champion[p.champion[p.championLeader]];
@@ -197,7 +197,11 @@ function drawSpellBook(p, ui, dr) {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 	} else if (ch.selectedSpell !== null && start) {
-		drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+            if (currentPlayer === 0){
+                drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+            }else{
+                drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+            }		
 		writeFontImage(ch.selectedSpell.ref.name, 170, (player[0].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
 	} else if (ch.selectedSpell !== null) {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
@@ -218,8 +222,12 @@ function drawSpellBook(p, ui, dr) {
 			ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
 		}
 	} else if (ch.selectedSpell === null && start) {
-		drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
-		writeFontImage(ch.getName(), 170, (player[0].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
+            if (currentPlayer === 0){
+                drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+            }else{
+                drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);		
+            }
+		writeFontImage(ch.getName(), 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
 	}
 
 	if (!start) {
@@ -227,7 +235,7 @@ function drawSpellBook(p, ui, dr) {
 		writeFontImage(getSpellNotation(p.getChampion(p.championLeader).stat.sp) + "/" + getSpellNotation(p.getChampion(p.championLeader).stat.spMax), p.ScreenX + 282, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
 	} else {
 		writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
-		writeFontImage(getSpellNotation(champion[championSelect[0].champID].stat.sp) + "/" + getSpellNotation(champion[championSelect[0].champID].stat.spMax), p.ScreenX + 282, (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+		writeFontImage(getSpellNotation(champion[championSelect[currentPlayer].champID].stat.sp) + "/" + getSpellNotation(champion[championSelect[currentPlayer].champID].stat.spMax), p.ScreenX + 282, (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
 	}
 
 }
@@ -2144,18 +2152,20 @@ function uiChampSelectArea(x, y, pl) {
                             championSelect[pl].champID = champSelectGrid[ui].champID;
                             if (players === 1){
                                 player[0] = new Player(0, 0, 50);
+                                player[0].recruitChampion(champSelectGrid[ui].champID);
                                 drawQuickStartUI(pl);
                             }else{
                                 if (currentPlayer === 0){
                                     player[0] = new Player(0, 0, 50);
-                                    //initPlayersStart(champSelectGrid[ui].champID, 4);
+                                    player[0].recruitChampion(champSelectGrid[ui].champID);
                                     drawQuickStartUI(pl);
                                 }else{
                                     player[1] = new Player(0, 0, 50);
-                                    //initPlayersStart(champSelectGrid[ui].champID, 4);
+                                    player[1].recruitChampion(champSelectGrid[ui].champID);
                                     drawQuickStartUI(pl);
                                 }
                             }
+                            
                         }
 		}
 	}
