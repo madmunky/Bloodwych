@@ -149,18 +149,18 @@ function checkClickEvents() {
 		} else if (t.attr('data-game-status') === 'menu') {
 			processCanvasInputMenu(x, y);
 		} else if (t.attr('data-game-status') === 'menu-champions') {
-			uiChampSelectArea(x, y, 0);
+			uiChampSelectArea(x, y, currentPlayer);
 
-			if (championSelect[0].mode === UI_CHARACTER_SELECT_POCKET) {
+			if (championSelect[currentPlayer].mode === UI_CHARACTER_SELECT_POCKET) {
 				for (s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
-					if (uiClickInArea(x, y, s, player[0])) {
-						var it = champion[championSelect[0].champID].pocket[(s - UI_CLICK_POCKET_SLOT_1)];
-						drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
-						writeFontImage(it.itemRef.name, 170, (player[0].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
+					if (uiClickInArea(x, y, s, player[currentPlayer])) {
+						var it = champion[championSelect[currentPlayer].champID].pocket[(s - UI_CLICK_POCKET_SLOT_1)];
+						drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+						writeFontImage(it.itemRef.name, 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
 					}
 				}
-			} else if (championSelect[0].mode === UI_CHARACTER_SELECT_SPELLBOOK) {
-				spellBookAreas(x, y, player[0]);
+			} else if (championSelect[currentPlayer].mode === UI_CHARACTER_SELECT_SPELLBOOK) {
+				spellBookAreas(x, y, player[currentPlayer]);
 			}
 
 		}
@@ -455,11 +455,11 @@ function processCanvasInputMenu(x, y) {
 	if (uiClickInArea(x, y, UI_CLICK_START_ONE_PLAYER)) {
 		$('canvas').attr('data-game-status', 'menu-champions');
 		players = 1;
-		drawQuickStartUI(1);
+		drawQuickStartUI(0);
 	} else if (uiClickInArea(x, y, UI_CLICK_START_TWO_PLAYER)) {
 		$('canvas').attr('data-game-status', 'menu-champions');
 		players = 2;
-		drawQuickStartUI(2);
+		drawQuickStartUI(0);
 	} else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_ONE_PLAYER)) {
 		startGame(true, true);
 	} else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) {
@@ -483,6 +483,27 @@ function mouseXY(e) {
 		mouseY = e.offsetY;
 		var currentColour = cursorType;
 		if (player.length > 1) {
+                    if ($('canvas').attr('data-game-status') === 'menu-champions'){
+                        if (currentPlayer === 0){
+                            cursorType = cursorBlue;
+                            if (currentColour !== cursorType) {
+				if (cursorType === cursorRed) {
+					canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+				} else {
+					canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+				}
+                            }
+                        }else{
+                            cursorType = cursorRed;
+                            if (currentColour !== cursorType) {
+				if (cursorType === cursorRed) {
+					canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+				} else {
+					canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+				}
+                            }
+                        }                            
+                    }else{
 			if (mouseY > canvas.height / 2) {
 				cursorType = cursorRed;
 			} else {
@@ -495,6 +516,7 @@ function mouseXY(e) {
 					canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
 				}
 			}
+                    }
 		}
 		if (typeof player !== 'undefined') {
 			for (p in player) {

@@ -6,6 +6,7 @@ var cursorType = 0;
 var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 var champSelectGrid = [];
 var players = 0;
+var currentPlayer = 0;
 
 var saveGame = new gameState('saveGame0');
 
