@@ -1190,13 +1190,14 @@ Player.prototype.doCommunicationQuestionAnswer = function(mode, text) {
 Player.prototype.getCommunicationAnswer = function(answer, mode, text) {
 	var a = Math.floor(Math.random() * answer.length); //now random. needs to be based on charisma and other things
 	if (mode === COMMUNICATION_PAGE_IDENTIFY) {
+		var mon = this.communication.monster;
 		if (text === COMMUNICATION_WHO_GOES || text === COMMUNICATION_NAME_SELF) {
 			if (mon.champId > -1) { //champions
 				a = 0;
 			} else if (mon.form === 64) { //zendik
-				a = 2;
+				a = 3;
 			} else { //monsters
-				a = 1;
+				a = Math.floor(Math.random() * 2) + 1;
 			}
 		} else if (text === COMMUNICATION_THY_TRADE) {
 			if (mon.champId > -1) { //champions
@@ -1259,10 +1260,10 @@ Player.prototype.getCommunication = function(mode, text) {
 					if (typeof TEXT_COMMUNICATION[q][7] !== 'undefined') {
 						switch (TEXT_COMMUNICATION[q][7]) {
 							case 'name':
-								suf = champion[this.championLeader].getName();
+								suf = this.getChampion(this.championLeader).getName();
 								break;
 							case 'prof':
-								suf = champion[this.championLeader].getTrade();
+								suf = this.getChampion(this.championLeader).getTrade();
 								break;
 							case 'item':
 								if (this.pocket.id > 0) {
