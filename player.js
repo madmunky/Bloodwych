@@ -64,6 +64,7 @@ function Player(id, ScreenX, ScreenY) {
 	this.communication = {
 		monster: null,
 		mode: COMMUNICATION_PAGE_MAIN,
+		text: 0,
 		highlighted: null,
 		action: null,
 		answer: null,
@@ -1121,9 +1122,9 @@ Player.prototype.doCommunication = function(text) {
 						this.communication.monster = m;
 						this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
 						this.communication.charisma = champion[this.championLeader].stat.cha;
-						this.doCommunicationQuestionAnswer(1);
+						this.determineCommunicationQuestionAnswer(1);
 					} else {
-						this.doCommunicationQuestionAnswer(0);
+						this.determineCommunicationQuestionAnswer(0);
 					}
 					break;
 				case COMMUNICATION_COMMEND:
@@ -1153,17 +1154,33 @@ Player.prototype.doCommunication = function(text) {
 			}
 			break;
 		default:
-			this.doCommunicationQuestionAnswer(this.communication.mode, text);
+			this.determineCommunicationQuestionAnswer(this.communication.mode, text);
 			if (typeof TEXT_COMMUNICATION_COMMANDS[this.communication.mode] !== 'undefined' && typeof TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text] !== 'undefined' && TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text].to !== null) {
 				this.communication.mode = TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text].to;
 			}
 			break;
 	}
+	this.communication.text = text;
 	drawCommunicationBox(this, text, true);
 
 };
 
-Player.prototype.doCommunicationQuestionAnswer = function(mode, text) {
+Player.prototype.doCommunicationAnswer = function() {
+	this.message(this.communication.answer, COLOUR[COLOUR_RED]);
+	var mon = this.communication.monster;
+	if (this.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0) {
+		if (this.communication.text === COMMUNICATION_RECRUIT) {
+			if(mon.champId > -1) {
+				//this.recruitChampion(mon.champId);
+				//this.doneCommunication();
+			}
+		}
+	}
+	this.communication.answerTimer = 0;
+	this.communication.answer = null;
+}
+
+Player.prototype.determineCommunicationQuestionAnswer = function(mode, text) {
 	var c = this.getCommunication(mode, text);
 	if (typeof c !== 'undefined') {
 		var myColour = COLOUR[COLOUR_GREEN];
@@ -1175,7 +1192,7 @@ Player.prototype.doCommunicationQuestionAnswer = function(mode, text) {
 		var mon = this.communication.monster;
 		if (mon.champId === -1 || mon.isRecruitedBy() === null) {
 			if (c.answer.length > 0) {
-				var a = this.getCommunicationAnswer(c.answer, mode, text);
+				var a = this.filterCommunicationAnswer(c.answer, mode, text);
 				this.communication.answer = c.answer[a];
 				this.communication.answerTimer = timerMaster;
 			}
@@ -1187,7 +1204,7 @@ Player.prototype.doCommunicationQuestionAnswer = function(mode, text) {
 	}
 }
 
-Player.prototype.getCommunicationAnswer = function(answer, mode, text) {
+Player.prototype.filterCommunicationAnswer = function(answer, mode, text) {
 	var a = Math.floor(Math.random() * answer.length); //now random. needs to be based on charisma and other things
 	if (mode === COMMUNICATION_PAGE_IDENTIFY) {
 		var mon = this.communication.monster;

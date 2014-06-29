@@ -93,9 +93,7 @@ function timerAction() {
 			}
 		}
 		if (pl.communication.answer !== null && timerMaster - pl.communication.answerTimer >= 40) {
-			pl.message(pl.communication.answer, COLOUR[COLOUR_RED]);
-			pl.communication.answerTimer = 0;
-			pl.communication.answer = null;
+			pl.doCommunicationAnswer();
 		}
 	}
 	if (timerMaster - timerChampionStats >= 100) {
