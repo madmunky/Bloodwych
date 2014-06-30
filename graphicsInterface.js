@@ -197,11 +197,11 @@ function drawSpellBook(p, ui, dr) {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 	} else if (ch.selectedSpell !== null && start) {
-            if (currentPlayer === 0){
-                drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
-            }else{
-                drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
-            }		
+		if (currentPlayer === 0) {
+			drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+		} else {
+			drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+		}
 		writeFontImage(ch.selectedSpell.ref.name, 170, (player[0].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
 	} else if (ch.selectedSpell !== null) {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
@@ -222,11 +222,11 @@ function drawSpellBook(p, ui, dr) {
 			ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
 		}
 	} else if (ch.selectedSpell === null && start) {
-            if (currentPlayer === 0){
-                drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
-            }else{
-                drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);		
-            }
+		if (currentPlayer === 0) {
+			drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+		} else {
+			drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+		}
 		writeFontImage(ch.getName(), 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
 	}
 
@@ -2031,20 +2031,19 @@ function drawQuickStartUI(pl) {
 		for (row = 0; row < 4; row++) {
 			var ch = champion[chN];
 			var t = createShield(ch.id, ch.prof, ch.colour);
-                        if (players === 2 && currentPlayer === 1 && ch.id === championSelect[0].champID){
-                            ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-                        }else{
-                            if (championSelect[pl].champID !== -1) {
-                                    if (championSelect[pl].champID !== -1 && ch.id === championSelect[pl].champID) {
-                                            showCharacterDetails(ch, pl);
-                                    } else {
-                                            ctx.drawImage(t, (col * 40) * scale, ((row * 48) + 15) * scale, t.width * scale, t.height * scale);
-                                    }			
-                            }
-                            else {
-                                    ctx.drawImage(t, (col * 40) * scale, ((row * 48) + 15) * scale, t.width * scale, t.height * scale);
-                            }
-                        }
+			if (players === 2 && currentPlayer === 1 && ch.id === championSelect[0].champID) {
+				ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
+			} else {
+				if (championSelect[pl].champID !== -1) {
+					if (championSelect[pl].champID !== -1 && ch.id === championSelect[pl].champID) {
+						showCharacterDetails(ch, pl);
+					} else {
+						ctx.drawImage(t, (col * 40) * scale, ((row * 48) + 15) * scale, t.width * scale, t.height * scale);
+					}
+				} else {
+					ctx.drawImage(t, (col * 40) * scale, ((row * 48) + 15) * scale, t.width * scale, t.height * scale);
+				}
+			}
 
 			if (champSelectGrid.length < champion.length) {
 				createCharSelectGrid((col * 40), (row * 48) + 15, t.width, t.height, chN);
@@ -2054,14 +2053,14 @@ function drawQuickStartUI(pl) {
 	}
 
 
-        
-        var imageColour;
-        
-        if (pl === 0){
-            imageColour = UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE;
-        }else{
-            imageColour = UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_RED;
-        }
+
+	var imageColour;
+
+	if (pl === 0) {
+		imageColour = UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE;
+	} else {
+		imageColour = UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_RED;
+	}
 	if (championSelect[pl].champID === -1) {
 		var myY = 50,
 			myX = 0;
@@ -2083,12 +2082,12 @@ function showCharacterDetails(ch, pl) {
 	var b = ch.colour;
 
 	ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][b], 198 * scale, (myY + 57) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-        if (pl === 0){
-            ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-            ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].height * scale);
-	}else{
-            ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-            ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_RED], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].height * scale);
+	if (pl === 0) {
+		ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
+		ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].height * scale);
+	} else {
+		ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
+		ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_RED], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].height * scale);
 	}
 	ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES], 170 * scale, (myY + 54) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], 168 * scale, (myY) * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
@@ -2145,28 +2144,25 @@ function uiChampSelectArea(x, y, pl) {
 				ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
 				ctx.fillRect((px + champSelectGrid[ui].x) * scale, (py + champSelectGrid[ui].y) * scale, champSelectGrid[ui].width * scale, champSelectGrid[ui].height * scale);
 			}
-                        
-                        if (players === 2 && currentPlayer === 1 && champSelectGrid[ui].champID === championSelect[0].champID){
-                            //championSelect[pl].champID = champSelectGrid[ui].champID;
-                        }else{
-                            championSelect[pl].champID = champSelectGrid[ui].champID;
-                            if (players === 1){
-                                player[0] = new Player(0, 0, 50);
-                                player[0].recruitChampion(champSelectGrid[ui].champID);
-                                drawQuickStartUI(pl);
-                            }else{
-                                if (currentPlayer === 0){
-                                    player[0] = new Player(0, 0, 50);
-                                    player[0].recruitChampion(champSelectGrid[ui].champID);
-                                    drawQuickStartUI(pl);
-                                }else{
-                                    player[1] = new Player(0, 0, 50);
-                                    player[1].recruitChampion(champSelectGrid[ui].champID);
-                                    drawQuickStartUI(pl);
-                                }
-                            }
-                            
-                        }
+
+			if (players === 2 && currentPlayer === 1 && champSelectGrid[ui].champID === championSelect[0].champID) {
+				//championSelect[pl].champID = champSelectGrid[ui].champID;
+			} else {
+				championSelect[pl].champID = champSelectGrid[ui].champID;
+				if (players === 1) {
+					player[0] = new Player(0, 0, 50);
+					player[0].champion[0] = champSelectGrid[ui].champID;
+				} else {
+					if (currentPlayer === 0) {
+						player[0] = new Player(0, 0, 50);
+						player[0].champion[0] = champSelectGrid[ui].champID;
+					} else {
+						player[1] = new Player(0, 0, 50);
+						player[1].champion[0] = champSelectGrid[ui].champID;
+					}
+				}
+				drawQuickStartUI(pl);
+			}
 		}
 	}
 
@@ -2175,15 +2171,15 @@ function uiChampSelectArea(x, y, pl) {
 		championSelect[pl].mode = t;
 		drawQuickStartUI(pl);
 	} else if (uiClickInArea(x, y, UI_CLICK_CHAMPION_SELECT_1_START)) {
-                if (players === 2 && currentPlayer === 0){
-                    currentPlayer = 1;
-                    drawQuickStartUI(1);
-                }else if (players === 2 && currentPlayer === 1){
-                    startGame(false, false, championSelect[0].champID,championSelect[1].champID);
-                }else{
-                    startGame(true, false, championSelect[0].champID);
-                }
-		
+		if (players === 2 && currentPlayer === 0) {
+			currentPlayer = 1;
+			drawQuickStartUI(1);
+		} else if (players === 2 && currentPlayer === 1) {
+			startGame(false, false, championSelect[0].champID, championSelect[1].champID);
+		} else {
+			startGame(true, false, championSelect[0].champID);
+		}
+
 	}
 }
 

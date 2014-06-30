@@ -585,22 +585,34 @@ Player.prototype.checkDead = function() {
 }
 
 Player.prototype.recruitChampion = function(id) {
-	var len = this.champion.length;
-	if (len < 4) {
+	for(c = 0; c < 4; c++) {
 		if (typeof id === "undefined") {
-			this.champion[len] = -1;
-		} else {
-			this.champion[len] = id;
+			if(typeof this.champion[c] === 'undefined') {
+				this.champion[c] = -1;
+				return true;
+			}
+		} else if (typeof this.champion[c] === 'undefined' || this.champion[c] === -1) {
+			this.champion[c] = id;
 			champion[id].recruitment = {
 				playerId: this.id,
 				attached: true,
-				position: len,
+				position: c,
 				attackTimer: 0
 			};
 			return true;
 		}
 	}
 	return false;
+}
+
+Player.prototype.getChampionLength = function() {
+	var l = 0;
+	for(c = 0; c < 4; c++) {
+		if(typeof this.champion[c] !== 'undefined' && this.champion[c] !== -1) {
+			l++;
+		}
+	}
+	return l;
 }
 
 //loc = location number (0-3)
@@ -1166,14 +1178,15 @@ Player.prototype.doCommunication = function(text) {
 };
 
 Player.prototype.doCommunicationAnswer = function() {
-	this.message(this.communication.answer, COLOUR[COLOUR_RED]);
+	var ans = this.communication.answer;
+	this.message(ans, COLOUR[COLOUR_RED]);
 	var mon = this.communication.monster;
 	if (this.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0) {
-		if (this.communication.text === COMMUNICATION_RECRUIT) {
-			if(mon.champId > -1) {
-				//this.recruitChampion(mon.champId);
-				//this.doneCommunication();
-			}
+		if (this.communication.text === COMMUNICATION_RECRUIT && ans === 'YES') {
+			this.recruitChampion(mon.champId);
+			this.doneCommunication();
+			this.updateChampions();
+			redrawUI(this.id);
 		}
 	}
 	this.communication.answerTimer = 0;
@@ -1193,7 +1206,8 @@ Player.prototype.determineCommunicationQuestionAnswer = function(mode, text) {
 		if (mon.champId === -1 || mon.isRecruitedBy() === null) {
 			if (c.answer.length > 0) {
 				var a = this.filterCommunicationAnswer(c.answer, mode, text);
-				this.communication.answer = c.answer[a];
+				var ans = a[Math.floor(Math.random() * a.length)];
+				this.communication.answer = c.answer[ans];
 				this.communication.answerTimer = timerMaster;
 			}
 		} else if (player.length > 1 && mon.isRecruitedBy() === player[1 - this.id]) { //other player
@@ -1205,32 +1219,47 @@ Player.prototype.determineCommunicationQuestionAnswer = function(mode, text) {
 }
 
 Player.prototype.filterCommunicationAnswer = function(answer, mode, text) {
-	var a = Math.floor(Math.random() * answer.length); //now random. needs to be based on charisma and other things
-	if (mode === COMMUNICATION_PAGE_IDENTIFY) {
-		var mon = this.communication.monster;
+	var ans = new Array();
+	for(a = 0; a < answer.length; a++) {
+		ans.push(a);
+	}
+	var mon = this.communication.monster;
+	if(mode === COMMUNICATION_PAGE_COMMUNICATE_0) {
+		if (text === COMMUNICATION_RECRUIT) {
+			if (mon.champId > -1) { //champions
+				if(this.getChampionLength() >= 4) {
+					ans = [1, 4];
+				} else {
+					ans = [1, 2, 3];
+				}
+			} else { //monsters
+				ans = [0, 1];
+			}
+		}
+	} else if (mode === COMMUNICATION_PAGE_IDENTIFY) {
 		if (text === COMMUNICATION_WHO_GOES || text === COMMUNICATION_NAME_SELF) {
 			if (mon.champId > -1) { //champions
-				a = 0;
+				ans = [0];
 			} else if (mon.form === 64) { //zendik
-				a = 3;
+				ans = [3];
 			} else { //monsters
-				a = Math.floor(Math.random() * 2) + 1;
+				ans = [1, 2];
 			}
 		} else if (text === COMMUNICATION_THY_TRADE) {
 			if (mon.champId > -1) { //champions
-				a = 1;
+				ans = [1];
 			} else {
-				a = 0;
+				ans = [0];
 			}
 		} else if (text === COMMUNICATION_REVEAL_SELF) {
 			if (mon.champId > -1) { //champions
-				a = 0;
+				ans = [0];
 			} else {
-				a = Math.floor(Math.random() * (answer.length - 1)) + 1;
+				ans = [1, 2, 3, 4];
 			}
 		}
 	}
-	return a;
+	return ans;
 }
 
 Player.prototype.doneCommunication = function() {
@@ -1335,14 +1364,14 @@ Player.prototype.getCommunication = function(mode, text) {
 }
 
 function initPlayersStart(ch1, ch2) {
-	if (typeof ch1 === "number" && typeof ch2 === "number") {
+	if (typeof ch1 === "number") {
 		c = [ch1, ch2];
 		for (p = 0; p < player.length; p++) {
 			player[p].recruitChampion(c[p]);
 			for (i = 1; i < 4; i++) {
 				player[p].recruitChampion();
 			}
-			var ch = champion[c[p]];
+			var ch = player[p].getChampion(0);
 			var f = ch.monster.floor;
 			var x = ch.monster.x;
 			var y = ch.monster.y;

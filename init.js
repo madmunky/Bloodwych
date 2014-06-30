@@ -169,7 +169,7 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 	}
 	if (singlePlayer && !quickStart) {
 		player[0] = new Player(0, 0, 30);
-		initPlayersStart(p1_cid, 4);
+		initPlayersStart(p1_cid, null);
 	} else if (!quickStart) {
 		player[0] = new Player(0, 0, 10);
 		player[1] = new Player(1, 0, 114);
