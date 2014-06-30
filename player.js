@@ -1203,18 +1203,20 @@ Player.prototype.determineCommunicationQuestionAnswer = function(mode, text) {
 		var q = Math.floor(Math.random() * c.question.length);
 		this.message(c.question[q], myColour);
 		var mon = this.communication.monster;
-		if (mon.champId === -1 || mon.isRecruitedBy() === null) {
-			if (c.answer.length > 0) {
-				var a = this.filterCommunicationAnswer(c.answer, mode, text);
-				var ans = a[Math.floor(Math.random() * a.length)];
-				this.communication.answer = c.answer[ans];
-				this.communication.answerTimer = timerMaster;
+		if(mon !== null) {
+			if (mon.champId === -1 || mon.isRecruitedBy() === null) {
+				if (c.answer.length > 0) {
+					var a = this.filterCommunicationAnswer(c.answer, mode, text);
+					var ans = a[Math.floor(Math.random() * a.length)];
+					this.communication.answer = c.answer[ans];
+					this.communication.answerTimer = timerMaster;
+				}
+			} else if (player.length > 1 && mon.isRecruitedBy() === player[1 - this.id]) { //other player
+				p1 = player[1 - this.id];
+				p1.message(c.question[q], COLOUR[COLOUR_RED]);
 			}
-		} else if (player.length > 1 && mon.isRecruitedBy() === player[1 - this.id]) { //other player
-			p1 = player[1 - this.id];
-			p1.message(c.question[q], COLOUR[COLOUR_RED]);
+			this.communication.charisma += 5;
 		}
-		this.communication.charisma += 5;
 	}
 }
 
@@ -1285,7 +1287,7 @@ Player.prototype.getCommunication = function(mode, text) {
 					answer: []
 				};
 				var qs = 0;
-				var ql = 0;
+				var ql = 1;
 				if (typeof TEXT_COMMUNICATION[q][3] !== 'undefined' && TEXT_COMMUNICATION[q][3] !== null) {
 					qs = TEXT_COMMUNICATION[q][3];
 				}
