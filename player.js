@@ -605,6 +605,33 @@ Player.prototype.recruitChampion = function(id) {
 	return false;
 }
 
+Player.prototype.dismissChampion = function(c) {
+	if (typeof this.champion[c] !== 'undefined' && this.champion[c] !== -1) {
+		var xy = getOffsetByRotation(this.d);
+		var x1 = this.x + xy.x;
+		var y1 = this.y + xy.y;
+		if (canMove(this.floor, this.x, this.y, this.d) === OBJECT_NONE && getMonsterAt(this.floor, x1, y1) === null) {
+			var ch = this.getChampion(c);
+			var s = [3, 2, 2, 3];
+			ch.monster.x = x1;
+			ch.monster.y = y1;
+			ch.monster.square = (this.d + 3) % 4; //(s[this.d] + ch.monster.square) % 4;
+			ch.recruitment = {
+				playerId: -1,
+				attached: false,
+				position: 0,
+				attackTimer: 0
+			};
+			this.champion[c] = -1;
+			//this.champion.splice(c, 1);
+			//this.recruitChampion();
+			//this.exchangeChampionPosition();
+			return true;
+		}
+	}
+	return false;
+}
+
 Player.prototype.getChampionLength = function() {
 	var l = 0;
 	for(c = 0; c < 4; c++) {
@@ -639,7 +666,7 @@ Player.prototype.getOrderedChampionIds = function() {
 	var ch = new Array();
 	ch.push(this.championLeader);
 	for (c = 0; c < this.champion.length; c++) {
-		if (c !== this.championLeader) {
+		if (c !== this.championLeader && this.champion[c] > -1) {
 			ch.push(c);
 		}
 	}
@@ -1134,7 +1161,7 @@ Player.prototype.doCommunication = function(text) {
 						this.communication.monster = m;
 						this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
 						this.communication.charisma = champion[this.championLeader].stat.cha;
-						this.determineCommunicationQuestionAnswer(1);
+						this.determineCommunicationQuestionAnswer(2);
 					} else {
 						this.determineCommunicationQuestionAnswer(0);
 					}
@@ -1142,27 +1169,45 @@ Player.prototype.doCommunication = function(text) {
 				case COMMUNICATION_COMMEND:
 					this.communication.mode = COMMUNICATION_PAGE_NAMES;
 					this.communication.action = "COMMEND";
+					this.determineCommunicationQuestionAnswer(1, this.communication.action);
 					break;
 				case COMMUNICATION_VIEW:
 					this.communication.mode = COMMUNICATION_PAGE_NAMES;
 					this.communication.action = "VIEW";
+					this.determineCommunicationQuestionAnswer(1, this.communication.action);
 					break;
 				case COMMUNICATION_WAIT:
 					this.communication.mode = COMMUNICATION_PAGE_NAMES;
 					this.communication.action = "WAIT";
+					this.determineCommunicationQuestionAnswer(1, this.communication.action);
 					break;
 				case COMMUNICATION_CORRECT:
 					this.communication.mode = COMMUNICATION_PAGE_NAMES;
 					this.communication.action = "CORRECT";
+					this.determineCommunicationQuestionAnswer(1, this.communication.action);
 					break;
 				case COMMUNICATION_DISMISS:
 					this.communication.mode = COMMUNICATION_PAGE_NAMES;
 					this.communication.action = "DISMISS";
+					this.determineCommunicationQuestionAnswer(1, this.communication.action);
 					break;
 				case COMMUNICATION_CALL:
 					this.communication.mode = COMMUNICATION_PAGE_NAMES;
 					this.communication.action = "CALL";
 					break;
+			}
+			break;
+		case COMMUNICATION_PAGE_NAMES:
+			switch(this.communication.action) {
+				case 'DISMISS':
+				if(text < this.getChampionLength() - 1) {
+					var c1 = this.getOrderedChampionIds();
+					var c2 = c1[text + 1];
+					this.dismissChampion(c2);
+					this.communication.mode = COMMUNICATION_PAGE_MAIN;
+					this.communication.action = "";
+					redrawUI(this.id);
+				}
 			}
 			break;
 		default:
@@ -1280,8 +1325,8 @@ Player.prototype.doneCommunication = function() {
 
 Player.prototype.getCommunication = function(mode, text) {
 	for (var q = 0; q < TEXT_COMMUNICATION.length; q++) {
-		if ((typeof TEXT_COMMUNICATION[q][1] !== 'undefined' && TEXT_COMMUNICATION[q][1] !== null) || typeof text === 'undefined') {
-			if ((typeof text !== 'undefined' && TEXT_COMMUNICATION[q][1] === mode && TEXT_COMMUNICATION[q][2] === text) || (typeof text === 'undefined' && q === mode)) {
+		if ((typeof TEXT_COMMUNICATION[q][1] !== 'undefined' && TEXT_COMMUNICATION[q][1] !== null) || typeof text !== 'number') {
+			if ((typeof text === 'number' && TEXT_COMMUNICATION[q][1] === mode && TEXT_COMMUNICATION[q][2] === text) || (typeof text !== 'number' && q === mode)) {
 				var qa = {
 					question: [],
 					answer: []
@@ -1305,6 +1350,9 @@ Player.prototype.getCommunication = function(mode, text) {
 						}
 					}
 					var suf = '';
+					if(typeof text === 'string') {
+						suf = text;
+					}
 					if (typeof TEXT_COMMUNICATION[q][7] !== 'undefined') {
 						switch (TEXT_COMMUNICATION[q][7]) {
 							case 'name':
