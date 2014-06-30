@@ -1,16 +1,16 @@
 function calculateAttack(att, def, tof) {
 	combat = new Array();
-	if(att instanceof Monster) {
+	if (att instanceof Monster) {
 		var mon = new Array();
-		if(att.teamId != 0) {
+		if (att.teamId != 0) {
 			mon = getMonsterTeam(att.teamId);
 		} else {
 			mon[0] = att;
 		}
 	}
 
-	for (a = 0; a < 2; a++) {
-	    var attack = 0; //attack points
+	for (a = 0; a < 4; a++) {
+		var attack = 0; //attack points
 		var crit = 1; //chance for a critical strike (2x hit)
 		var hit = 1.0; //chance for attacker for a successful hit
 		var defense = 0; //defense points
@@ -22,38 +22,45 @@ function calculateAttack(att, def, tof) {
 		var to;
 		var fmon;
 		var tmon;
-		if(typeof tof === "undefined") { //force a 'to'
+		if (typeof tof === "undefined") { //force a 'to'
 			var tof = -1;
 		}
 
 		//Attacker calculations
-		if(att instanceof Player) {
-        	from = att.getChampion(a);
-        	if(typeof from === "undefined" || from === null || !from.recruitment.attached) {
-        		continue;
-        	}
-	        fmon = from.monster;
-        	if(fmon.dead) {
-        		continue;
-        	}
-			if(Math.floor(Math.random() * 20) >= 19) { //critical strike chance is 5%
-				crit = 2;
+		if (att instanceof Player) {
+			from = att.getChampion(a);
+			if (typeof from === "undefined" || from === null || !from.recruitment.attached) {
+				continue;
 			}
-        	fromDir = fmon.d;
-        	if(from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === ITEM_DAGGER || from.pocket[0].id === ITEM_STEALTH_BLADE) && att.d === def.d) { //cutpurses can cut through 50% of the defense
-        		defChance = 0.5;
+			fmon = from.monster;
+			if (fmon.dead) {
+				continue;
 			}
-			var wp = from.getWeaponPower(0); //weapon attack power
-			if(wp > 0) {
-				attack += wp;
-			} else {
-				attack += from.getWeaponPower(1); //if no weapon in right hand, check left hand
+			if(from.selectedSpell === null && from.getBowPower() === 0) {
+				if (a >= 2 || typeof def === 'undefined') {
+					continue;
+				}
 			}
-			attack = attack * Math.floor(Math.round(from.stat.str / 16) + Math.round(from.stat.agi / 32)); //add strength and agility to attack points
-			attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
-			hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
-		} else if(att instanceof Projectile) {
-			if(a === 0) {
+			if(typeof def !== 'undefined') {
+				if (Math.floor(Math.random() * 20) >= 19) { //critical strike chance is 5%
+					crit = 2;
+				}
+				fromDir = fmon.d;
+				if (from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === ITEM_DAGGER || from.pocket[0].id === ITEM_STEALTH_BLADE) && att.d === def.d) { //cutpurses can cut through 50% of the defense
+					defChance = 0.5;
+				}
+				var wp = from.getWeaponPower(POCKET_LEFT_HAND); //weapon attack power
+				if (wp > 0) {
+					attack += wp;
+				} else {
+					attack += from.getWeaponPower(POCKET_RIGHT_HAND); //if no weapon in right hand, check left hand
+				}
+				attack = attack * (1.0 + from.stat.str / 16.0 + from.stat.agi / 32.0); //add strength and agility to attack points
+				attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
+				hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
+			}
+		} else if (att instanceof Projectile) {
+			if (a === 0) {
 				from = att.monster;
 				fmon = null;
 				attack += att.power;
@@ -63,68 +70,68 @@ function calculateAttack(att, def, tof) {
 		} else { //monster
 			from = mon[a];
 			fmon = from;
-        	if(typeof from === "undefined" || from.dead) {
-        		continue;
-        	}
-        	fromDir = from.d;
+			if (typeof from === "undefined" || from.dead) {
+				continue;
+			}
+			fromDir = from.d;
 			attack += 4 + from.level * 4;
 		}
 
 		//Defender calculations
-		if(def instanceof Player) {
+		if (def instanceof Player) {
 			var ch = [];
 			var ch1 = [];
 			for (d = 0; d < 2; d++) {
 				ch[0] = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
 				ch[1] = champion[def.champion[(4 + fromDir - def.d + d) % 4]];
-				if(typeof ch[0] !== "undefined" && !ch[0].monster.dead) {
+				if (typeof ch[0] !== "undefined" && !ch[0].monster.dead) {
 					ch1.push(ch[0]);
-				} else if(typeof ch[1] !== "undefined" && !ch[1].monster.dead) {
+				} else if (typeof ch[1] !== "undefined" && !ch[1].monster.dead) {
 					ch1.push(ch[1]);
 				}
 			}
-			if(ch1.length > 0 || tof > -1) {
-				if(tof === -1) {
+			if (ch1.length > 0 || tof > -1) {
+				if (tof === -1) {
 					to = ch1[Math.floor(Math.random() * ch1.length)];
-				} else if(typeof champion[def.champion[tof]] !== "undefined" && !champion[def.champion[tof]].dead) {
+				} else if (typeof champion[def.champion[tof]] !== "undefined" && !champion[def.champion[tof]].dead) {
 					to = champion[def.champion[tof]];
 				}
-				if(typeof to !== "undefined") {
+				if (typeof to !== "undefined") {
 					tmon = to.monster;
 					defense = 10;
-					if(!to.attacking) {
-						defense += 10 + Math.round(to.stat.agi / 4);
+					if (!to.attacking) {
+						defense += 10 + to.stat.agi / 4.0;
 					}
 					defense -= to.getArmourClass();
-					defense += Math.ceil(to.getActiveSpellById(SPELL_ARMOUR).power / 5);
+					defense += to.getActiveSpellById(SPELL_ARMOUR).power / 5.0;
 					defExhaustion = Math.floor(Math.random() * 2) + 1;
 				}
 			}
-		} else if(def instanceof Monster) {
+		} else if (def instanceof Monster) {
 			var mon = new Array();
-			if(def.teamId != 0) {
+			if (def.teamId != 0) {
 				mon = getMonsterTeam(def.teamId);
 			} else {
 				mon[0] = def;
 			}
 			for (d = 0; d < mon.length; d++) {
-				if(Math.random() < 1.0 / (mon.length - d) || tof > -1) {
-					if(tof === -1) {
+				if (Math.random() < 1.0 / (mon.length - d) || tof > -1) {
+					if (tof === -1) {
 						to = mon[d];
 					} else {
 						to = mon[tof];
 					}
-					if(typeof to !== "undefined") {
+					if (typeof to !== "undefined") {
 						tmon = to;
-						if(to.champId > -1) { //champion
+						if (to.champId > -1) { //champion
 							to = champion[to.champId];
 							tmon = to.monster;
-							defense += 20 + Math.round(to.stat.agi / 4);
+							defense += 20 + to.stat.agi / 4.0;
 							defense -= to.getArmourClass();
-							defense += Math.ceil(to.getActiveSpellById(SPELL_ARMOUR).power / 5);
+							defense += to.getActiveSpellById(SPELL_ARMOUR).power / 5.0;
 							defExhaustion = Math.floor(Math.random() * 2) + 1;
 						} else { //monster
-							if(!to.attacking) {
+							if (!to.attacking) {
 								defense += 10;
 							}
 							defense += 10 + to.level * 3;
@@ -133,12 +140,15 @@ function calculateAttack(att, def, tof) {
 					break;
 				}
 			}
+		} else if (typeof def === 'undefined') {
+			to = null;
+			tmon = null;
 		}
 
 		//Final calculations
-		if(typeof from !== "undefined" && (fmon === null || !fmon.dead) && typeof to !== "undefined" && !tmon.dead) {
+		if (typeof from !== "undefined" && (fmon === null || !fmon.dead) && typeof to !== 'undefined' && (tmon === null || !tmon.dead)) {
 			var power = Math.floor(Math.random() * 20 * crit + attack - (defChance * defense));
-			if(Math.random() > hit || power < 0) {
+			if (Math.random() > hit || power < 0) {
 				power = 0;
 			}
 			combat.push({
@@ -154,24 +164,24 @@ function calculateAttack(att, def, tof) {
 }
 
 function getXpForLevel(lvl) {
-	switch(lvl) {
+	switch (lvl) {
 		case 1:
-		return 11;
+			return 11;
 		default:
-		return lvl * 10;
+			return lvl * 10;
 	}
 	return 0;
 }
 
 function getXpForSpell(lvl, prof) {
-	var fairx = [ 2, 1, 2, 2 ]; //exponent
-	var fairs = [ 0, 0, 1, 1 ]; //starting
+	var fairx = [2, 1, 2, 2]; //exponent
+	var fairs = [0, 0, 1, 1]; //starting
 
-	switch(lvl) {
+	switch (lvl) {
 		case 1:
-		return Math.ceil(11 * fairx[prof] / 2) - (5 * fairs[prof]);
+			return Math.ceil(11 * fairx[prof] / 2) - (5 * fairs[prof]);
 		default:
-		return lvl * 5 * fairx[prof] - 5 * fairs[prof];
+			return lvl * 5 * fairx[prof] - 5 * fairs[prof];
 	}
 	return 0;
 }

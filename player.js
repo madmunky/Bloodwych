@@ -64,9 +64,8 @@ function Player(id, ScreenX, ScreenY) {
 	this.communication = {
 		monster: null,
 		mode: COMMUNICATION_PAGE_MAIN,
-		text: 0,
+		text: null,
 		highlighted: null,
-		action: null,
 		answer: null,
 		answerTimer: 0,
 		charisma: 0
@@ -274,6 +273,13 @@ Player.prototype.tryAttack = function() {
 			this.attack(true, mon);
 			return true;
 		}
+		for(var c = 0; c < 4; c++) {
+			var ch = this.getChampion(c);
+			if(ch.selectedSpell !== null || ch.getBowPower() > 0) {
+				this.attack(true);
+				return true;
+			}
+		}
 	}
 	this.attack(false);
 	return false;
@@ -284,24 +290,32 @@ Player.prototype.attack = function(attack, target) {
 	if (attack) {
 		var self = this;
 		var combat = calculateAttack(this, target);
-		for (com = 0; com < combat.length; com++) {
+		for (var com = 0; com < combat.length; com++) {
 			(function(combat, com) {
 				var att = combat[com].attacker;
 				att.recruitment.attackTimer = setTimeout(function() {
 					att.recruitment.attackTimer = 0;
-					var def = combat[com].defender;
-					var pwr = combat[com].power;
-					var aExh = combat[com].attExhaustion;
-					var dExh = combat[com].defExhaustion;
 					att.monster.attacking = true;
-					att.doDamageTo(def, pwr, aExh, dExh);
-					if (def instanceof Champion) {
-						PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
-					} else if (def instanceof Monster) {
-						PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
-						self.gainChampionXp(pwr, att);
-						if (def.dead) {
-							self.gainChampionXp(128);
+					if(att.selectedSpell !== null) {
+						self.castSpell(att.selectedSpell, att, true);
+						redrawUI(self.id);
+					} else if(att.getBowPower() > 0) {
+						self.shootArrow(att);
+						redrawUI(self.id);
+					} else {
+						var def = combat[com].defender;
+						var pwr = combat[com].power;
+						var aExh = combat[com].attExhaustion;
+						var dExh = combat[com].defExhaustion;
+						att.doDamageTo(def, pwr, aExh, dExh);
+						if (def instanceof Champion) {
+							PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
+						} else if (def instanceof Monster) {
+							PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+							self.gainChampionXp(pwr, att);
+							if (def.dead) {
+								self.gainChampionXp(128);
+							}
 						}
 					}
 				}, att.recruitment.position * 400);
@@ -597,8 +611,28 @@ Player.prototype.recruitChampion = function(id) {
 				playerId: this.id,
 				attached: true,
 				position: c,
-				attackTimer: 0
+				attackTimer: 0,
+				called: false
 			};
+			return true;
+		}
+	}
+	return false;
+}
+
+Player.prototype.waitChampion = function(c) {
+	if (typeof this.champion[c] !== 'undefined' && this.champion[c] !== -1) {
+		var xy = getOffsetByRotation(this.d);
+		var x1 = this.x + xy.x;
+		var y1 = this.y + xy.y;
+		if (canMove(this.floor, this.x, this.y, this.d) === OBJECT_NONE && getMonsterAt(this.floor, x1, y1) === null) {
+			var ch = this.getChampion(c);
+			var s = [3, 0, 1, 2];
+			ch.monster.x = x1;
+			ch.monster.y = y1;
+			ch.monster.square = this.d; //(s[this.d] + ch.monster.square) % 4;
+			ch.recruitment.attached = false;
+			ch.recruitment.attackTimer = 0;
 			return true;
 		}
 	}
@@ -612,7 +646,7 @@ Player.prototype.dismissChampion = function(c) {
 		var y1 = this.y + xy.y;
 		if (canMove(this.floor, this.x, this.y, this.d) === OBJECT_NONE && getMonsterAt(this.floor, x1, y1) === null) {
 			var ch = this.getChampion(c);
-			var s = [3, 2, 2, 3];
+			var s = [3, 0, 1, 2];
 			ch.monster.x = x1;
 			ch.monster.y = y1;
 			ch.monster.square = (this.d + 3) % 4; //(s[this.d] + ch.monster.square) % 4;
@@ -623,9 +657,6 @@ Player.prototype.dismissChampion = function(c) {
 				attackTimer: 0
 			};
 			this.champion[c] = -1;
-			//this.champion.splice(c, 1);
-			//this.recruitChampion();
-			//this.exchangeChampionPosition();
 			return true;
 		}
 	}
@@ -662,15 +693,21 @@ Player.prototype.getChampionPosition = function(id) {
 }
 
 //gets champions. champion 0 is the leader
-Player.prototype.getOrderedChampionIds = function() {
-	var ch = new Array();
-	ch.push(this.championLeader);
+Player.prototype.getOrderedChampionIds = function(all) {
+	if(typeof all === 'undefined') {
+		var all = false;
+	}
+	var c1 = new Array();
+	c1.push(this.championLeader);
 	for (c = 0; c < this.champion.length; c++) {
-		if (c !== this.championLeader && this.champion[c] > -1) {
-			ch.push(c);
+		if (c !== this.championLeader) {
+			var ch = this.getChampion(c);
+			if(ch !== null && (all || ch.recruitment.attached)) {
+				c1.push(c);
+			}
 		}
 	}
-	return ch;
+	return c1;
 }
 
 Player.prototype.gainChampionXp = function(xp, ch) {
@@ -1003,32 +1040,55 @@ Player.prototype.getItemsInRange = function(pos2) {
 	return itemsInRange;
 }
 
-Player.prototype.castSpell = function(sb, c, s) {
+Player.prototype.castSpell = function(sb, ch, s) {
 	if (typeof s === "undefined") {
 		var s = false;
 	}
 	this.doneCommunication();
-	if (c.stat.sp - sb.cost >= 0) {
-		if (Math.random() < c.getSpellCastChance()) {
-			castSpell(sb.id, c.monster, c.getSpellPower() * 10);
+	if (ch.stat.sp - sb.cost >= 0) {
+		if (Math.random() < ch.getSpellCastChance()) {
+			castSpell(sb.id, ch.monster, ch.getSpellPower() * 10);
 			sb.castSuccessful++;
 			if (!s) {
 				this.showSpellText = false;
 				writeSpellInfoFont(this);
+			} else {
+				ch.writeAttackPoints('spell');
 			}
 		} else if (!s) {
 			writeSpellInfoFont(this, TEXT_SPELL_FAILED, COLOUR[COLOUR_GREY_LIGHT]);
+		} else {
+			ch.writeAttackPoints('spell');
 		}
-		c.selectedSpell = null;
-		c.spellFatigue = c.spellFatigue - 0.75;
-		c.stat.sp -= sb.cost;
-		c.stat.vit -= sb.cost;
-		if (c.stat.vit < 0) {
-			c.stat.vit = 0;
+		ch.selectedSpell = null;
+		ch.spellFatigue = ch.spellFatigue - 0.75;
+		ch.stat.sp -= sb.cost;
+		ch.stat.vit -= sb.cost;
+		if (ch.stat.vit < 0) {
+			ch.stat.vit = 0;
 		}
-		c.monster.doGesture(CHA_GESTURE_SPELLCASTING);
+		ch.monster.doGesture(CHA_GESTURE_SPELLCASTING);
 	} else if (!s) {
 		writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, COLOUR[COLOUR_RED]);
+	}
+}
+
+Player.prototype.shootArrow = function(ch) {
+	this.doneCommunication();
+	var pow = ch.getBowPower();
+	if(pow > 0) {
+		if(ch.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || ch.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS) {
+			var arr = ch.pocket[POCKET_LEFT_HAND];
+		} else if(ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS) {
+			var arr = ch.pocket[POCKET_RIGHT_HAND];
+		}
+		var col = PALETTE_BRONZE_ARROW;
+		if(arr.id === ITEM_ELF_ARROWS) {
+			col = PALETTE_GREEN_ARROW;
+		}
+		arr.setPocketItem(arr.id, arr.quantity - 1);
+		newProjectile(DUNGEON_PROJECTILE_ARROW, col, arr.id + 100, pow * (1.0 + ch.stat.str / 32.0 + ch.stat.agi / 16.0), this.floor, this.x, this.y, this.d, ch.monster);
+		ch.writeAttackPoints('shoot');
 	}
 }
 
@@ -1166,48 +1226,44 @@ Player.prototype.doCommunication = function(text) {
 						this.determineCommunicationQuestionAnswer(0);
 					}
 					break;
-				case COMMUNICATION_COMMEND:
-					this.communication.mode = COMMUNICATION_PAGE_NAMES;
-					this.communication.action = "COMMEND";
-					this.determineCommunicationQuestionAnswer(1, this.communication.action);
-					break;
-				case COMMUNICATION_VIEW:
-					this.communication.mode = COMMUNICATION_PAGE_NAMES;
-					this.communication.action = "VIEW";
-					this.determineCommunicationQuestionAnswer(1, this.communication.action);
-					break;
-				case COMMUNICATION_WAIT:
-					this.communication.mode = COMMUNICATION_PAGE_NAMES;
-					this.communication.action = "WAIT";
-					this.determineCommunicationQuestionAnswer(1, this.communication.action);
-					break;
-				case COMMUNICATION_CORRECT:
-					this.communication.mode = COMMUNICATION_PAGE_NAMES;
-					this.communication.action = "CORRECT";
-					this.determineCommunicationQuestionAnswer(1, this.communication.action);
-					break;
-				case COMMUNICATION_DISMISS:
-					this.communication.mode = COMMUNICATION_PAGE_NAMES;
-					this.communication.action = "DISMISS";
-					this.determineCommunicationQuestionAnswer(1, this.communication.action);
-					break;
 				case COMMUNICATION_CALL:
+					for(var c = 0; c < 4; c++) {
+						if(!this.getChampion(c).recruitment.attached && !this.getChampion(c).dead) {
+							this.getChampion(c).recruitment.called = true;
+						}
+					}
+					this.communication.text = text;
+					this.determineCommunicationQuestionAnswer(this.communication.mode, this.communication.text);
+					break;
+				default:
+					this.communication.text = text;
+					this.determineCommunicationQuestionAnswer(this.communication.mode, this.communication.text);
 					this.communication.mode = COMMUNICATION_PAGE_NAMES;
-					this.communication.action = "CALL";
 					break;
 			}
 			break;
 		case COMMUNICATION_PAGE_NAMES:
-			switch(this.communication.action) {
-				case 'DISMISS':
+			switch(this.communication.text) {
+				case COMMUNICATION_WAIT:
+				if(text < this.getChampionLength() - 1) {
+					var c1 = this.getOrderedChampionIds();
+					var c2 = c1[text + 1];
+					this.waitChampion(c2);
+					this.communication.mode = COMMUNICATION_PAGE_MAIN;
+					this.communication.text = null;
+					redrawUI(this.id);
+				}
+				break;
+				case COMMUNICATION_DISMISS:
 				if(text < this.getChampionLength() - 1) {
 					var c1 = this.getOrderedChampionIds();
 					var c2 = c1[text + 1];
 					this.dismissChampion(c2);
 					this.communication.mode = COMMUNICATION_PAGE_MAIN;
-					this.communication.action = "";
+					this.communication.text = null;
 					redrawUI(this.id);
 				}
+				break;
 			}
 			break;
 		default:

@@ -48,6 +48,29 @@ Item.prototype.getWeaponPower = function() {
 	return 0;
 }
 
+Item.prototype.getBowPower = function() {
+	if (this.type === ITEM_TYPE_BOW) {
+		switch (this.id) {
+			case ITEM_LONG_BOW:
+				return 4;
+			case ITEM_FROST_BOW:
+				return 7;
+			case ITEM_CROSS_BOW:
+				return 10;
+		}
+	}
+	return 0;
+}
+
+Item.prototype.getArrowPower = function() {
+	if (this.id === ITEM_ARROWS) {
+		return 1.0;
+	} else if (this.id === ITEM_ELF_ARROWS) {
+		return 1.2;
+	}
+	return 1.0;
+}
+
 Item.prototype.getFoodValue = function() {
 	if (this.type === ITEM_TYPE_FOOD) {
 		if (this.id <= ITEM_CHICKEN) {
@@ -199,14 +222,14 @@ function initItems(t) {
 		}
 
 		//TESTING
-		/*item[t.id][item[t.id].length] = new Item(ITEM_CRYSTAL_PLATE, 1, {
+		/*item[t.id][item[t.id].length] = new Item(ITEM_LONG_BOW, 1, {
 			tower: t.id,
 			floor: 3,
 			x: 12,
 			y: 22,
 			square: 0
 		});
-		item[t.id][item[t.id].length] = new Item(ITEM_WAR_SHIELD, 1, {
+		item[t.id][item[t.id].length] = new Item(ITEM_ELF_ARROWS, 50, {
 			tower: t.id,
 			floor: 3,
 			x: 12,

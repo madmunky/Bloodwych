@@ -6,7 +6,8 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 		playerId: -1,
 		attached: false,
 		position: 0,
-		attackTimer: 0
+		attackTimer: 0,
+		called: false
 	};
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -136,7 +137,20 @@ Champion.prototype.addSP = function(sp) {
 }
 
 Champion.prototype.getWeaponPower = function(s) {
-	return this.pocket[s].getWeaponPower();
+	return Math.ceil(this.pocket[s].getWeaponPower() * 0.5);
+}
+
+Champion.prototype.getBowPower = function() {
+	var bow = 0;
+	var arr = 1.0;
+	if(this.pocket[POCKET_LEFT_HAND].type === ITEM_TYPE_BOW && (this.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS)) {
+		bow = this.pocket[POCKET_LEFT_HAND].getBowPower();
+		arr = this.pocket[POCKET_RIGHT_HAND].getArrowPower();
+	} else if(this.pocket[POCKET_RIGHT_HAND].type === ITEM_TYPE_BOW && (this.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS)) {
+		bow = this.pocket[POCKET_RIGHT_HAND].getBowPower();
+		arr = this.pocket[POCKET_LEFT_HAND].getArrowPower();
+	}
+	return Math.ceil(bow * arr * 0.5);
 }
 
 Champion.prototype.getArmourClass = function() {
@@ -352,10 +366,16 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
 		writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x + 2), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
 		if (typeof def === "undefined" || def === false) {
-			if (pwr > 0) {
-				writeFontImage(TEXT_HITS_FOR + pwr, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
-			} else {
-				writeFontImage(TEXT_MISSES, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+			if (typeof pwr === 'number') {
+				if (pwr > 0) {
+					writeFontImage(TEXT_HITS_FOR + pwr, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+				} else {
+					writeFontImage(TEXT_MISSES, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+				}
+			} else if (pwr === 'spell') {
+				writeFontImage(TEXT_CASTS_SPELL, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+			} else if (pwr === 'shoot') {
+				writeFontImage(TEXT_SHOOTS, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
 			}
 		} else {
 			writeFontImage(TEXT_DEFENDS, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
@@ -559,7 +579,7 @@ function initChampions() {
 			vit: vit,
 			vitMax: vit,
 			sp: sp,
-			spMax: spMax,
+			spMax: sp,
 			ac: ac
 		};
 		var spellBin = hex2bin(md.substr(24, 2));

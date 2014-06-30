@@ -76,7 +76,14 @@ Monster.prototype.canInteract = function() {
 			}
 		}
 	} else if (this.champId > -1 && !this.communicating) { //champion
-
+		var ch = this.getChampion();
+		if(ch !== null && ch.recruitment.called && ch.recruitment.playerId > -1 && ch.recruitment.playerId === ply) {
+			ch.recruitment.attached = true;
+			ch.recruitment.called = false;
+			player[ply].updateChampions();
+			redrawUI(ply);
+			return ply;
+		}
 	} else { //vendor and communicating monsters
 		return ply;
 	}
@@ -138,7 +145,8 @@ Monster.prototype.canOpenDoor = function() {
 }
 
 Monster.prototype.move = function() {
-	if (!this.dead && this.teamId >= 0 && this.isRecruitedBy() === null) {
+	var ch = this.getChampion();
+	if (!this.dead && this.teamId >= 0 && (this.isRecruitedBy() === null || (ch !== null && ch.recruitment.called))) {
 		this.attack(false);
 		if (this.castSpell()) return;
 		var canMove = this.canMove();
@@ -269,7 +277,8 @@ Monster.prototype.castSpell = function() {
 
 Monster.prototype.followPlayer = function() {
 	//Move to player
-	if (this.champId === -1 && this.type !== MON_TYPE_MAGICAL) {
+	var ch = this.getChampion();
+	if ((this.champId === -1 && this.type !== MON_TYPE_MAGICAL) || (ch !== null && ch.recruitment.called)) {
 		var rnd = Math.floor(Math.random() * 2);
 		if (!player[0].dead && (player.length === 1 || Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y))) {
 			//player 1 is closer

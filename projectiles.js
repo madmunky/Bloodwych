@@ -2,7 +2,6 @@ function Projectile(id, type, palette, s, power, tower, floor, x, y, d, m) {
 	this.id = id;
 	this.type = type;
 	this.palette = palette;
-	this.spell = getSpellById(s);
 	this.power = power;
 	this.tower = tower;
 	this.floor = floor;
@@ -10,6 +9,11 @@ function Projectile(id, type, palette, s, power, tower, floor, x, y, d, m) {
 	this.y = y;
 	this.d = d;
 	this.monster = m;
+	if(s >= 100) {
+		this.spell = s - 100;
+	} else {
+		this.spell = getSpellById(s);
+	}
 	if (s > -1) {
 		this.dead = 0;
 	} else {
@@ -19,13 +23,13 @@ function Projectile(id, type, palette, s, power, tower, floor, x, y, d, m) {
 }
 
 Projectile.prototype.moveProjectile = function() {
+	var ob = getObject(this.floor, this.x, this.y, this.d);
+	var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
 	if (this.dead === 0) {
 		if (this.action()) {
 			return true;
 		}
-		var ob = getObject(this.floor, this.x, this.y, this.d);
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
-		var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
 		if (typeof this.monster !== "undefined") {
 			for (var p = 0; p < player.length; p++) {
 				if (!player[p].dead && this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
@@ -56,6 +60,16 @@ Projectile.prototype.moveProjectile = function() {
 		this.dead = 2;
 		return false;
 	} else if (this.dead === 2) {
+		if(typeof this.spell === 'number') { //item
+			if(getMonsterAt(this.floor, this.x, this.y) === null) {
+				if(msc) {
+					var d1 = [ 3, 0, 1, 2 ];
+					dropItem(this.spell, 1, this.floor, this.x, this.y, d1[this.d]);
+				} else {
+					dropItem(this.spell, 1, this.floor, this.x, this.y, this.d);
+				}
+			}
+		}
 		this.dead = 3;
 		return false;
 	}
@@ -66,59 +80,61 @@ Projectile.prototype.moveProjectile = function() {
 }
 
 Projectile.prototype.action = function() {
-	var ob = getObject(this.floor, this.x, this.y, this.d);
-	var obNext = canMove(this.floor, this.x, this.y, this.d);
-	var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
-	switch (this.spell.index) {
-		case SPELL_ARC_BOLT:
-			if (obNext > OBJECT_MISC && !msc) {
-				var dNew = Math.floor(Math.random() * 2) * 2 + 1;
-				obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
-				if (obNext > OBJECT_MISC) {
-					dNew = 4 - dNew;
+	if(typeof this.spell !== 'number') {
+		var ob = getObject(this.floor, this.x, this.y, this.d);
+		var obNext = canMove(this.floor, this.x, this.y, this.d);
+		var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
+		switch (this.spell.index) {
+			case SPELL_ARC_BOLT:
+				if (obNext > OBJECT_MISC && !msc) {
+					var dNew = Math.floor(Math.random() * 2) * 2 + 1;
 					obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
 					if (obNext > OBJECT_MISC) {
-						dNew = 2;
+						dNew = 4 - dNew;
 						obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
 						if (obNext > OBJECT_MISC) {
-							return true;
+							dNew = 2;
+							obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
+							if (obNext > OBJECT_MISC) {
+								return true;
+							}
 						}
 					}
+					this.d = (this.d + dNew) % 4;
 				}
-				this.d = (this.d + dNew) % 4;
-			}
-			break;
-		case SPELL_FIREPATH:
-			if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
-				setDungeonHex(this.floor, this.x, this.y, 12, 4, '7');
-				setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
-				setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
-				setDungeonSpell(this.floor, this.x, this.y, this);
-			}
-			break;
-		case SPELL_BLAZE:
-			if(this.palette === PALETTE_BLAZE_BIG) {
+				break;
+			case SPELL_FIREPATH:
 				if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
 					setDungeonHex(this.floor, this.x, this.y, 12, 4, '7');
 					setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
 					setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
 					setDungeonSpell(this.floor, this.x, this.y, this);
 				}
-				if (obNext > OBJECT_NONE) {
-					this.palette = PALETTE_DRAGON_BIG;
-					this.d = (this.d + 2) % 4;
-					return true;
-				}
-			} else {
-				var xy = getOffsetByRotation(this.d);
-				if (canMoveByFirepath(this.floor, this.x, this.y) && !canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
-					this.d = (this.d + 2) % 4;
-					if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
+				break;
+			case SPELL_BLAZE:
+				if(this.palette === PALETTE_BLAZE_BIG) {
+					if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
+						setDungeonHex(this.floor, this.x, this.y, 12, 4, '7');
+						setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
+						setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
+						setDungeonSpell(this.floor, this.x, this.y, this);
+					}
+					if (obNext > OBJECT_NONE) {
+						this.palette = PALETTE_DRAGON_BIG;
+						this.d = (this.d + 2) % 4;
 						return true;
 					}
+				} else {
+					var xy = getOffsetByRotation(this.d);
+					if (canMoveByFirepath(this.floor, this.x, this.y) && !canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
+						this.d = (this.d + 2) % 4;
+						if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
+							return true;
+						}
+					}
 				}
-			}
-			break;
+				break;
+		}
 	}
 	return false;
 }
@@ -128,7 +144,7 @@ Projectile.prototype.attack = function(target, prc) {
 		var prc = 1.0;
 	}
 	single = false;
-	if (this.spell.index === SPELL_MISSILE) {
+	if (typeof this.spell === 'number' || this.spell.index === SPELL_MISSILE) {
 		single = true;
 	}
 	for (var i = 3; i >= 0; i--) {
@@ -141,7 +157,7 @@ Projectile.prototype.attack = function(target, prc) {
 			var att = combat[com].attacker;
 			var def = combat[com].defender;
 			var pwr = Math.floor(combat[com].power * prc);
-			if (this.spell.index === SPELL_DISRUPT) {
+			if (typeof this.spell !== 'number' && this.spell.index === SPELL_DISRUPT) {
 				if(pwr < def.getHP()) {
 					pwr = 1;
 				}

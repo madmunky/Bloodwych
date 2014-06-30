@@ -419,7 +419,7 @@ function updateDungeonSpells() {
 	for (s = 0; s < dungeonSpellList.length; s++) {
 		var ds = dungeonSpellList[s];
 		if (ds.tower === towerThis) {
-			if(ds.projectile !== null && (ds.projectile.spell.index === SPELL_FIREPATH || ds.projectile.spell.index === SPELL_BLAZE)) {
+			if(ds.projectile !== null && typeof ds.projectile.spell !== 'number' && (ds.projectile.spell.index === SPELL_FIREPATH || ds.projectile.spell.index === SPELL_BLAZE)) {
 				for (var p = 0; p < player.length; p++) {
 					if (ds.floor === player[p].floor && ds.x === player[p].x && ds.y === player[p].y) {
 						ds.projectile.attack(player[p]);

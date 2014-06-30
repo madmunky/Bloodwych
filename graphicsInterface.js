@@ -401,7 +401,7 @@ function leftUI(p) {
 
 	ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 
-	var c1 = p.getOrderedChampionIds();
+	var c1 = p.getOrderedChampionIds(true);
 	for (c = 0; c < p.champion.length; c++) {
 		var c2 = c1[c];
 		var cid = p.champion[c2];
@@ -461,7 +461,7 @@ function leftUI(p) {
 
 function leftUIStats(p) {
 	if (p.uiLeftPanel.champs[0].opened) {
-		var ch = p.getOrderedChampionIds();
+		var ch = p.getOrderedChampionIds(true);
 		for (c = 0; c < p.champion.length; c++) {
 			var c1 = ch[c];
 			var champ = p.getChampion(c1);
@@ -1947,7 +1947,6 @@ function drawCommunicationBox(p, item, forced) {
 		//if (p.communication.mode !== COMMUNICATION_PAGE_NAMES) {
 
 		var myPage = p.communication.mode;
-		var c1 = p.getOrderedChampionIds();
 		for (r = 0; r < TEXT_COMMUNICATION_COMMANDS[myPage].length; r++) {
 			ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARK][0] + ', ' + COLOUR[COLOUR_GREY_DARK][1] + ', ' + COLOUR[COLOUR_GREY_DARK][2] + ')';
 			var myColour = COLOUR[COLOUR_YELLOW];
@@ -1969,6 +1968,7 @@ function drawCommunicationBox(p, item, forced) {
 			var y = (p.ScreenY + 47) + (TEXT_COMMUNICATION_COMMANDS[myPage][r].row * 8);
 			ctx.fillRect(x * scale, y * scale, TEXT_COMMUNICATION_COMMANDS[myPage][r].width * scale, 7 * scale);
 			if (myPage === COMMUNICATION_PAGE_NAMES) {
+				var c1 = p.getOrderedChampionIds();
 				var c2 = c1[r + 1];
 				var cid = p.champion[c2];
 				var ch = p.getChampion(c2);
