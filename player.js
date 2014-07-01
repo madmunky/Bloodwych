@@ -599,7 +599,7 @@ Player.prototype.checkDead = function() {
 }
 
 Player.prototype.recruitChampion = function(id) {
-	for(c = 0; c < 4; c++) {
+	for(var c = 0; c < 4; c++) {
 		if (typeof id === "undefined") {
 			if(typeof this.champion[c] === 'undefined') {
 				this.champion[c] = -1;
@@ -1228,8 +1228,9 @@ Player.prototype.doCommunication = function(text) {
 					break;
 				case COMMUNICATION_CALL:
 					for(var c = 0; c < 4; c++) {
-						if(!this.getChampion(c).recruitment.attached && !this.getChampion(c).dead) {
-							this.getChampion(c).recruitment.called = true;
+						var ch = this.getChampion(c);
+						if(ch !== null && !ch.recruitment.attached && !ch.dead) {
+							ch.recruitment.called = true;
 						}
 					}
 					this.communication.text = text;
@@ -1471,9 +1472,9 @@ Player.prototype.getCommunication = function(mode, text) {
 
 function initPlayersStart(ch1, ch2) {
 	if (typeof ch1 === "number") {
-		c = [ch1, ch2];
-		for (p = 0; p < player.length; p++) {
-			player[p].recruitChampion(c[p]);
+		c1 = [ch1, ch2];
+		for (var p = 0; p < player.length; p++) {
+			player[p].recruitChampion(c1[p]);
 			for (i = 1; i < 4; i++) {
 				player[p].recruitChampion();
 			}
@@ -1487,8 +1488,8 @@ function initPlayersStart(ch1, ch2) {
 	} else {
 		for (p = 0; p < player.length; p++) {
 			for (i = 0; i < 4; i++) {
-				c = [ch1[i], ch2[i]];
-				player[p].recruitChampion(c[p]);
+				c1 = [ch1[i], ch2[i]];
+				player[p].recruitChampion(c1[p]);
 			}
 		}
 		player[0].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
