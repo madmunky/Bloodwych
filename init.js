@@ -164,7 +164,8 @@ function initData() {
 }
 
 function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
-	setTimeout(function() {
+    
+    	//setTimeout(function() {
 		if (typeof god === "undefined") {
 			god = false;
 		}
@@ -191,10 +192,9 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 		}
 		loadGfxData();
 		initTowerSwitches();
-		switchTower(0);
-		clearCanvas();
+		switchTower(0);		
 		gameStarted = true;
-		Run();
+		
 		for (pl in championSelect) {
 			if (championSelect[pl].champID > -1) {
 				champion[championSelect[pl].champID].selectedSpell = null;
@@ -207,5 +207,5 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 		//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
 		//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
 		//	}
-	}, 50);
+                setTimeout(function() {Run();}, 50);
 }

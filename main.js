@@ -19,6 +19,7 @@ Run = function() {
 			rdt = 0;
 
 		function run() {
+                        
 			now = new Date().getTime();
 
 			dt = Math.min(1, (now - last) / 1000);
@@ -39,7 +40,7 @@ Run = function() {
 		game.init && game.init();
 		render.init && render.init();
 		run();
-		
+		clearCanvas();
 		$(function() {
 
 		});
