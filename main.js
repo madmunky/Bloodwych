@@ -40,9 +40,6 @@ Run = function() {
 		game.init && game.init();
 		render.init && render.init();
 		run();
-		clearCanvas();
-		$(function() {
-
-		});
+		setTimeout(function() {clearCanvas();}, 100);
 	}
 }();
