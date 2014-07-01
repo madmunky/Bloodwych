@@ -1221,9 +1221,9 @@ Player.prototype.doCommunication = function(text) {
 						this.communication.monster = m;
 						this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
 						this.communication.charisma = champion[this.championLeader].stat.cha;
-						this.determineCommunicationQuestionAnswer(2);
+						this.determineCommunicationQuestionAnswer(7);
 					} else {
-						this.determineCommunicationQuestionAnswer(0);
+						this.determineCommunicationQuestionAnswer(6);
 					}
 					break;
 				case COMMUNICATION_CALL:
