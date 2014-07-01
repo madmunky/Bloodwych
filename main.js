@@ -39,10 +39,10 @@ Run = function() {
 
 		game.init && game.init();
 		render.init && render.init();
-		
-		setTimeout(function() {
-			clearCanvas();
-			run();
-		}, 100);
+		run();
+//		setTimeout(function() {
+//			clearCanvas();
+//			
+//		}, 100);
 	}
 }();

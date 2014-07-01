@@ -9,6 +9,7 @@ var players = 0;
 var currentPlayer = 0;
 
 var saveGame = new gameState('saveGame0');
+var startGame = true;
 
 //Setup some global Varibles for needed
 var gameStarted = false;

@@ -17,6 +17,10 @@ Game.prototype = {
 	update: function() {
 		timerMaster++;
 		timerAction();
+                if (startGame){
+                    clearCanvas();
+                    startGame = false;
+                }
 	},
 
 	subscribe: function(e, callback, target) {
