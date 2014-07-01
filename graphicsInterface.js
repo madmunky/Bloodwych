@@ -2023,7 +2023,12 @@ function drawCommunicationBox(p, item, forced) {
 function drawQuickStartUI(pl) {
 
 	clearCanvas();
-	writeFontImage(TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
+        if (currentPlayer === 1){
+            writeFontImage("PLAYER 2, "+TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
+        }else{
+            writeFontImage(TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
+        }
+	
 
 	var chN = 0;
 

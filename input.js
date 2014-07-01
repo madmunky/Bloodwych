@@ -486,7 +486,7 @@ function mouseXY(e) {
 		mouseX = e.offsetX;
 		mouseY = e.offsetY;
 		var currentColour = cursorType;
-		if (player.length > 1) {
+		if (player.length > 0) {
                     if ($('canvas').attr('data-game-status') === 'menu-champions'){
                         if (currentPlayer === 0){
                             cursorType = cursorBlue;
