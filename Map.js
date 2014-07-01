@@ -32,7 +32,7 @@ function checkSwitchTower(p, m, id) {
 
 function switchTower(id, po) {
 	//ctx.clearRect(0, 0, 795, 400);
-	$('canvas').attr('data-game-status', 'loading');
+	//$('canvas').attr('data-game-status', 'loading');
 	towerLast = towerThis;
 	towerThis = id;
 	if (typeof po === "undefined") {
@@ -63,7 +63,7 @@ function switchTower(id, po) {
 	for (p = 0; p < player.length; p++) {
 		player[p].updateChampions();
 	}
-	$('canvas').attr('data-game-status', 'started');
+	//$('canvas').attr('data-game-status', 'started');
 }
 
 function canMove(f, x, y, d, to) {

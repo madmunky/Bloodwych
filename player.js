@@ -286,8 +286,8 @@ Player.prototype.tryAttack = function() {
 };
 
 Player.prototype.attack = function(attack, target) {
-	this.doneCommunication();
 	if (attack) {
+		this.doneCommunication();
 		var self = this;
 		var combat = calculateAttack(this, target);
 		for (var com = 0; com < combat.length; com++) {
@@ -301,6 +301,9 @@ Player.prototype.attack = function(attack, target) {
 						redrawUI(self.id);
 					} else if(att.getBowPower() > 0) {
 						self.shootArrow(att);
+						if(typeof target === 'undefined') {
+							self.attack(false);
+						}
 						redrawUI(self.id);
 					} else {
 						var def = combat[com].defender;

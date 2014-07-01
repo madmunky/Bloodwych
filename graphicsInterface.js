@@ -345,7 +345,7 @@ function drawUI(p) {
 			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
 				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
 					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					drawScroll(p);
+					drawWallScroll(p);
 				}
 			}
 			if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL) {
@@ -920,7 +920,7 @@ function drawStatsPage(p, ch, start) {
 	//var ch = p.getChampion(p.championLeader);
 	if (ch !== null) {
 		if (start) {
-			ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL].height * scale);
+			ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
 		} else {
 			ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
 		}
@@ -1838,69 +1838,49 @@ function colourSpellPage(dr, ch, img) {
 
 }
 
-function drawScroll(p) {
+function drawWallScroll(p) {
 	try {
 
-		var pos = 15,
-			d = 2;
+		var pos = 15;
 		var xy = posToCoordinates(pos, p.x, p.y, p.d);
 		var f = p.floor,
 			x = xy.x,
 			y = xy.y;
 
 		if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
-			var hex = tower[towerThis].floor[f].Map[y][x],
+			var off = [0, 21, 33, 41, 49, 59],
+				hex = tower[towerThis].floor[f].Map[y][x],
 				A = parseInt(hex.substring(0, 1), 16),
 				B = parseInt(hex.substring(1, 2), 16),
-				scrollRef = Math.floor((((A * 16) + B) / 4) - 4) - 1;
+				scrollRef = Math.floor((((A * 16) + B) / 4) - 4) - 1 + off[towerThis];
 
-			switch (towerThis) {
-				case 0:
-					{
-						scrollRef = scrollRef + 0;
-					}
-					break;
-				case 1:
-					{
-						scrollRef = scrollRef + 21;
-					}
-					break;
-				case 2:
-					{
-						scrollRef = scrollRef + 33;
-					}
-					break;
-				case 3:
-					{
-						scrollRef = scrollRef + 41;
-					}
-					break;
-				case 4:
-					{
-						scrollRef = scrollRef + 49;
-					}
-					break;
-				case 5:
-					{
-						scrollRef = scrollRef + 59;
-					}
-					break;
-			}
-
-			ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
-
-			//Scroll page can hold 7 Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
-			var l = (7 - scrollData[scrollRef].length) / 2;
-
-			for (x = 0; x < scrollData[scrollRef].length; x++) {
-				writeFontImage(scrollData[scrollRef][x], p.ScreenX + 278, (p.ScreenY + 15) + (l * 8), COLOUR[COLOUR_BLACK], FONT_ALIGNMENT_CENTER);
-				l++;
-			}
+				drawScroll(scrollData[scrollRef], p.ScreenX + 226, p.ScreenY - 1);
 		}
 	} catch (e) {
 		p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
 		redrawUI(p.id, UI_REDRAW_SCROLL);
 	};
+}
+
+function drawScroll(text, x, y, small) {
+	if(typeof small === 'undefined') {
+		var small = false;
+	}
+	if(small) {
+		var rm = 5;
+		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], x * scale, y * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
+	} else {
+		var rm = 7;
+		ctx.drawImage(gfxUI[UI_GFX_SCRIPT], x * scale, y * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+	}
+
+	//Scroll page can hold 7 (or 5 for small scrolls) Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
+	var l = (rm - text.length) / 2;
+
+	for (var r = 0; r < text.length; r++) {
+		writeFontImage(text[r], x + 52, y + 16 + (l * 8), COLOUR[COLOUR_BLACK], FONT_ALIGNMENT_CENTER);
+		l++;
+	}
 }
 
 function startScreen() {
@@ -2023,12 +2003,12 @@ function drawCommunicationBox(p, item, forced) {
 function drawQuickStartUI(pl) {
 
 	clearCanvas();
-        if (currentPlayer === 1){
-            writeFontImage("PLAYER 2, "+TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
-        }else{
-            writeFontImage(TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
-        }
-	
+	if (currentPlayer === 1) {
+		writeFontImage("PLAYER 2, " + TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
+	} else {
+		writeFontImage(TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
+	}
+
 
 	var chN = 0;
 
@@ -2062,17 +2042,17 @@ function drawQuickStartUI(pl) {
 	var imageColour;
 
 	if (pl === 0) {
-		imageColour = UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE;
+		imageColour = UI_GFX_CHARACTER_NAME_BLUE;
 	} else {
-		imageColour = UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_RED;
+		imageColour = UI_GFX_CHARACTER_NAME_RED;
 	}
 	if (championSelect[pl].champID === -1) {
 		var myY = 50,
 			myX = 0;
 
-		ctx.drawImage(gfxUI[imageColour], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].height * scale);
+		ctx.drawImage(gfxUI[imageColour], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], 168 * scale, (myY) * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL], (myX + 226) * scale, (myY - 1) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_SCROLL].height * scale);
+		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], (myX + 226) * scale, (myY - 1) * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
 
 	}
 
@@ -2089,12 +2069,12 @@ function showCharacterDetails(ch, pl) {
 	ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][b], 198 * scale, (myY + 57) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
 	if (pl === 0) {
 		ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].height * scale);
+		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_NAME_BLUE], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].height * scale);
 	} else {
 		ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_RED], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_NAME_BLUE].height * scale);
+		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_NAME_RED], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].height * scale);
 	}
-	ctx.drawImage(gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES], 170 * scale, (myY + 54) * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES].width * scale, gfxUI[UI_GFX_MOVEMENT_MOVE_CHARACTER_BOXES].height * scale);
+	ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOXES], 170 * scale, (myY + 54) * scale, gfxUI[UI_GFX_CHARACTER_BOXES].width * scale, gfxUI[UI_GFX_CHARACTER_BOXES].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], 168 * scale, (myY) * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
 	ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][ch.id], 176 * scale, (myY + 7) * scale, gfxUI[UI_GFX_PORTRAITS][ch.id].width * scale, gfxUI[UI_GFX_PORTRAITS][ch.id].height * scale);
 
@@ -2102,25 +2082,23 @@ function showCharacterDetails(ch, pl) {
 	switch (championSelect[pl].mode) {
 
 		case UI_CHARACTER_SELECT_SPELLBOOK:
-			{
-				writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
-				drawSpellBook(player[pl]);
-				ctx.drawImage(gfxUI[UI_GFX_ICON_UNKNOWN], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
-			}
+			writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
+			drawSpellBook(player[pl]);
+			ctx.drawImage(gfxUI[UI_GFX_ICON_UNKNOWN], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
 			break;
 		case UI_CHARACTER_SELECT_POCKET:
-			{
-				drawPocketUI(player[pl], champion[ch.id], true);
-				writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
-				ctx.drawImage(gfxUI[UI_GFX_ICON_BOOKOFSKULLS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
-			}
+			drawPocketUI(player[pl], champion[ch.id], true);
+			writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
+			ctx.drawImage(gfxUI[UI_GFX_ICON_BOOKOFSKULLS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
 			break;
 		case UI_CHARACTER_SELECT_SCROLL:
-			{
-				drawStatsPage(player[pl], champion[ch.id], true);
-				writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
-				ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
-			}
+			drawStatsPage(player[pl], champion[ch.id], true);
+			writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
+			ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
+			break;
+		case UI_CHARACTER_SELECT_START_GAME:
+			var txt = TEXT_READY_QUEST.split(';');
+			drawScroll(txt, player[pl].ScreenX + 226, player[pl].ScreenY - 1, true);
 			break;
 
 	}
@@ -2179,12 +2157,15 @@ function uiChampSelectArea(x, y, pl) {
 		if (players === 2 && currentPlayer === 0) {
 			currentPlayer = 1;
 			drawQuickStartUI(1);
-		} else if (players === 2 && currentPlayer === 1) {
-			startGame(false, false, championSelect[0].champID, championSelect[1].champID);
 		} else {
-			startGame(true, false, championSelect[0].champID);
+			championSelect[pl].mode = UI_CHARACTER_SELECT_START_GAME;
+			drawQuickStartUI(pl);
+			if (players === 2 && currentPlayer === 1) {
+				startGame(false, false, championSelect[0].champID, championSelect[1].champID);
+			} else {
+				startGame(true, false, championSelect[0].champID);
+			}
 		}
-
 	}
 }
 

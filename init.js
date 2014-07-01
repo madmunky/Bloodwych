@@ -2,11 +2,13 @@
 
 function initGame() {
 	$('canvas').attr('data-game-status', 'loading');
-	loadGfxData();
+	loadGfxUIData();
 	watch(gfxLoaded, "done", function(prop, action, newvalue, oldvalue) {
-		tower[towerThis] = new Tower(towerThis, true);
-		projectile[towerThis] = new Array();
-		updateLoadingScreen("Loading File Data", 30);
+		if (typeof tower[towerThis] === 'undefined') {
+			tower[towerThis] = new Tower(towerThis, true);
+			projectile[towerThis] = new Array();
+			updateLoadingScreen("Loading File Data", 30);
+		}
 	});
 
 	watch(dataLoaded, "done", function(prop, action, newvalue, oldvalue) {
@@ -23,7 +25,7 @@ function initGame() {
 				//Run();
 				startScreen();
 			} else {
-				updateLoadingScreen("Starting Game", 100);
+				//updateLoadingScreen("Starting Game", 100);
 			}
 		}
 	});
@@ -41,12 +43,32 @@ function updateLoadingScreen(msg, percent) {
 	//}, 10);
 }
 
-function loadGfxData() {
+function loadGfxUIData() {
 	//Misc
-	gfxLoadImage("misc", "dashboard0");
-	gfxLoadImage("misc", "dashboard1");
 	gfxLoadImage("misc", "separator");
+	gfxLoadImage("misc", "font", "", null);
+	gfxLoadImage("misc", "uistuff", "", null);
 
+	//Items
+	gfxLoadImage("dungeon", "items2", "");
+
+	//Characters
+	gfxLoadImage("character", "heads", "");
+	gfxLoadImage("character", "arms", "");
+	gfxLoadImage("character", "torsos", "");
+	gfxLoadImage("character", "legs", "");
+	gfxLoadImage("character", "minis", "");
+
+	//Monsters
+	gfxLoadImage("character", "behemoth", "");
+	gfxLoadImage("character", "crab", "");
+	gfxLoadImage("character", "dragon", "");
+	gfxLoadImage("character", "floater", "");
+	gfxLoadImage("character", "nastyfloater", "");
+	gfxLoadImage("character", "summon", "");
+}
+
+function loadGfxData() {
 	//Background
 	gfxLoadImage("dungeon", "background");
 
@@ -89,28 +111,6 @@ function loadGfxData() {
 	gfxLoadImage("dungeon", "floor", "pit-down");
 	gfxLoadImage("dungeon", "floor", "pit-up");
 	gfxLoadImage("dungeon", "floor", "path", 2);
-
-	//Items
-	gfxLoadImage("dungeon", "items2", "");
-
-	//Characters
-	gfxLoadImage("character", "heads", "");
-	gfxLoadImage("character", "arms", "");
-	gfxLoadImage("character", "torsos", "");
-	gfxLoadImage("character", "legs", "");
-	gfxLoadImage("character", "minis", "");
-
-	//Monsters
-	gfxLoadImage("character", "behemoth", "");
-	gfxLoadImage("character", "crab", "");
-	gfxLoadImage("character", "dragon", "");
-	gfxLoadImage("character", "floater", "");
-	gfxLoadImage("character", "nastyfloater", "");
-	gfxLoadImage("character", "summon", "");
-
-	//Misc
-	gfxLoadImage("misc", "font", "", null);
-	gfxLoadImage("misc", "uistuff", "", null);
 }
 
 function loadTowerData(t, start) {
@@ -164,46 +164,48 @@ function initData() {
 }
 
 function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
-	if(typeof god === "undefined") {
-		god = false;
-	}
-	if (singlePlayer && !quickStart) {
-		player[0] = new Player(0, 0, 30);
-		initPlayersStart(p1_cid, null);
-	} else if (!quickStart) {
-		player[0] = new Player(0, 0, 10);
-		player[1] = new Player(1, 0, 114);
-		initPlayersStart(p1_cid, p2_cid);
-	}
+	setTimeout(function() {
+		if (typeof god === "undefined") {
+			god = false;
+		}
+		if (singlePlayer && !quickStart) {
+			player[0] = new Player(0, 0, 30);
+			initPlayersStart(p1_cid, null);
+		} else if (!quickStart) {
+			player[0] = new Player(0, 0, 10);
+			player[1] = new Player(1, 0, 114);
+			initPlayersStart(p1_cid, p2_cid);
+		}
 
-	if (quickStart && !singlePlayer) {
-		player[0] = new Player(0, 0, 10);
-		player[1] = new Player(1, 0, 114);
-		initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
-	} else if (quickStart && singlePlayer) {
-		player[0] = new Player(0, 0, 30);
-		initPlayersStart([0, 14, 5, 3], 4);
-	}
+		if (quickStart && !singlePlayer) {
+			player[0] = new Player(0, 0, 10);
+			player[1] = new Player(1, 0, 114);
+			initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
+		} else if (quickStart && singlePlayer) {
+			player[0] = new Player(0, 0, 30);
+			initPlayersStart([0, 14, 5, 3], 4);
+		}
 
-	if (god) {
-		godMode();
-	}
-	initTowerSwitches();
-	switchTower(0);
-	clearCanvas();
-	setViewportScale(singlePlayer);
-	gameStarted = true;
-	Run();
-	for (pl in championSelect) {
-            if(championSelect[pl].champID > -1){
-		champion[championSelect[pl].champID].selectedSpell = null;
-		championSelect[pl].champID = -1;
-            }
-	}
-        $('canvas').attr('data-game-status', 'started');
-	//	for(var p = 0; p < player.length; p++) {
-	//		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
-	//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
-	//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
-	//	}
+		if (god) {
+			godMode();
+		}
+		loadGfxData();
+		initTowerSwitches();
+		switchTower(0);
+		clearCanvas();
+		gameStarted = true;
+		Run();
+		for (pl in championSelect) {
+			if (championSelect[pl].champID > -1) {
+				champion[championSelect[pl].champID].selectedSpell = null;
+				championSelect[pl].champID = -1;
+			}
+		}
+		$('canvas').attr('data-game-status', 'started');
+		//	for(var p = 0; p < player.length; p++) {
+		//		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
+		//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
+		//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
+		//	}
+	}, 50);
 }

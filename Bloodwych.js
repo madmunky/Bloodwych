@@ -74,8 +74,8 @@ function setViewportScale(sp) {
 	}
 	scale = Math.floor(scaleReal);
 	scaleReal = scaleReal / scale / zoom;
-	canvas.width = 320 * scale;
-	canvas.height = 200 * scale;
+	//canvas.width = 320 * scale;
+	//canvas.height = 200 * scale;
 	$('html').css('zoom', scaleReal);
 	$('html').css('-moz-transform', 'scale(' + scaleReal + ')');
 	if (typeof player !== "undefined") {
@@ -91,7 +91,7 @@ function setViewportScale(sp) {
 			player[p].PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 		}
-		redrawUI(2);
+		//redrawUI(2);
 	}
 }
 
