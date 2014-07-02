@@ -6,10 +6,14 @@
         id        = "uk.co.bloodwych"
         version   = "0.5.0">
 
-    <name>Bloodwych HTML</name>
+    <name>Bloodwych</name>
 
     <description>
-        
+The land of Trazere was once ruled by the powerful and benevolent organization of mages known as Bloodwych. Governed by the Grand Dragon, the Bloodwych supervised over the balance in the land, protecting it from evil and driving it to prosperity. However, the second-in-command of Bloodwych, named Zendick, turned against his group, banished his opponents to the astral plane, and began working on a mad plan - summon the ultimate evil, the Lord of Entropy. The player controls the champion of Trazere, whose ultimate goal is to stop Zendick and restore peace in the country.
+
+Bloodwych is an RPG in the style of Dungeon Master and Eye of the Beholder, being a 3D first-person maze-like game. This game's distinguishing feature is the two-player split screen support, allowing simultaneous playing on one device.
+
+Each player controls a party of four characters. The four basic classes are warrior, mage, adventurer, and thief; however, each class also has sub-classes, which are represented by four different colors. These colors come into play also when the characters learn and combine spells.
     </description>
 
     <author href="http://bloodwych.co.uk/" email="madmunkey@gmail.com">
@@ -24,7 +28,6 @@
     <preference name="permissions"                value="none"/>
 
     <!-- Customize your app and platform with the preference element. -->
-    <preference name="phonegap-version"           value="3.4.0" />          <!-- all: current version of PhoneGap -->
     <preference name="orientation"                value="landscape" />      <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
     <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
