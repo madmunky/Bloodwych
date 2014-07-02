@@ -106,7 +106,7 @@ function writeFontImage(fontString, locationX, locationY, paletteTo, alignment, 
 			if (alignment === FONT_ALIGNMENT_RIGHT) {
 				xo = -can.width;
 			} else if (alignment === FONT_ALIGNMENT_CENTER) {
-				xo = -Math.floor(can.width / 2);
+				xo = -Math.floor(can.width / 16) * 8;
 			} else { //FONT_ALIGNMENT_LEFT
 				xo = 0;
 			}

@@ -1875,10 +1875,14 @@ function drawScroll(text, x, y, small) {
 	}
 
 	//Scroll page can hold 7 (or 5 for small scrolls) Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
-	var l = (rm - text.length) / 2;
+	var l = Math.floor((rm - text.length) / 2);
 
 	for (var r = 0; r < text.length; r++) {
-		writeFontImage(text[r], x + 52, y + 16 + (l * 8), COLOUR[COLOUR_BLACK], FONT_ALIGNMENT_CENTER);
+		var col = COLOUR[COLOUR_BLACK];
+		if(r === 0 && small) {
+			col = COLOUR[COLOUR_YELLOW];
+		}
+		writeFontImage(text[r], x + 48, y + 16 + (l * 8), col, FONT_ALIGNMENT_CENTER);
 		l++;
 	}
 }
@@ -2097,7 +2101,14 @@ function showCharacterDetails(ch, pl) {
 			ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
 			break;
 		case UI_CHARACTER_SELECT_START_GAME:
-			var txt = TEXT_READY_QUEST.split(';');
+			var t = TEXT_PLAYER;
+			if(pl === 1) {
+				t += TEXT_PLURAL + ' ';
+			} else {
+				t += ' ' + (pl + 1) + ' ';
+			}
+			t += ';' + TEXT_READY_QUEST;
+			var txt = t.split(';');
 			drawScroll(txt, player[pl].ScreenX + 226, player[pl].ScreenY - 1, true);
 			break;
 

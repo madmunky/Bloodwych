@@ -7,7 +7,6 @@ JORG
 COD More spells!
 COD Fix RPG on spells
 COD Spell cost % and other spell rpg stuff
-COD Spell projectiles and effects (todo: arrows)
 COD Fix Big monster 'edge of screen'
 COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
 UI  Fix death screen as I did with asleep
@@ -17,6 +16,10 @@ BUG If a monster is at the bottom of the stairs you shouldnt be able to move dow
 
 CHRIS
 ------
+TST Figure out and fix spell points for champs
+COD Pause game
+COD Load/save game
+UI  Finish communication
 GFX Big monster drawing fixes
 GFX Find Armour Palettes
 
