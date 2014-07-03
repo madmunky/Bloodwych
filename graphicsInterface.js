@@ -169,7 +169,7 @@ function drawSpellBook(p, ui, dr) {
 				pg = (pg + 3) % 4;
 			}
 		}
-		var sym = ch.spellBook[pg][x].ref.symbols;
+		var sym = ch.getSpellById(ch.spellBook[pg][x].id).symbols;
 		var col = getClassColour(ch.spellBook[pg][x].ref.colour, true);
 
 		if (!ch.spellBook[pg][x].learnt) {
@@ -684,7 +684,7 @@ function rightUI(p) {
 		if (ch !== null) {
 			var a = ch.prof;
 			var b = ch.colour;
-			if (!ch.monster.dead && ch.recruitment.attached) {
+			if (!monster[TOWER_CHAMPIONS][ch.id].dead && ch.recruitment.attached) {
 				if (c1 === p.championHighlite) {
 					ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][4], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
 				} else {

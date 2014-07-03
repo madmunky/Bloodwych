@@ -3,7 +3,6 @@ function Item(id, quantity, location) {
 	this.quantity = quantity;
 	this.location = location;
 	this.type = getItemType(id);
-	this.itemRef = itemRef[id];
 }
 
 Item.prototype.getWeaponPower = function() {

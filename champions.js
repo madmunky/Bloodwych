@@ -15,7 +15,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.prof = prof;
 	this.colour = colour;
 	this.spellBookPage = 0;
-	this.selectedSpell = null;
+	this.selectedSpellId = null;
 	this.activeSpell = {
 		id: -1,
 		timer: 0,
@@ -28,7 +28,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.spellFatigue = 1.0;
 	this.spellUp = 0;
 	this.levelUp = 0;
-	this.monster = monster;
+	this.monsterId = monster.id;
 	for (pg = 0; pg < COLOUR_MAX; pg++) {
 		this.spellBook[pg] = new Array();
 		var spl = getSpellBookPage(pg);
@@ -36,7 +36,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 			this.spellBook[pg][rw] = new Array();
 			this.spellBook[pg][rw].learnt = false;
 			this.spellBook[pg][rw].castSuccessful = 0;
-			this.spellBook[pg][rw].ref = spl[rw];
+			//this.spellBook[pg][rw].ref = spl[rw];
 			this.spellBook[pg][rw].id = spl[rw].index;
 			this.spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
 			if (spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
@@ -54,6 +54,15 @@ Champion.prototype.getName = function() {
 Champion.prototype.getTrade = function() {
 	return TEXT_TRADE[this.prof];
 };
+
+Champion.prototype.getMonster = function () {
+    for (m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
+        if(monster[TOWER_CHAMPIONS].champId === this.id) {
+        return monster[TOWER_CHAMPIONS];
+        }
+    }
+        return null;
+}
 
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
 	if (this.recruitment.playerId > -1) {
@@ -78,7 +87,7 @@ Champion.prototype.getDamage = function(dmg, safe) {
 	this.addHP(-dmg, safe);
 	if (typeof safe === "undefined" || !safe) {
 		if (this.getHP() < 0) {
-			this.monster.die();
+			monster[this.monsterId].die();
 		}
 		if (this.recruitment.playerId > -1 && this.recruitment.attached) {
 			if (!player[this.recruitment.playerId].attacking) {
@@ -228,7 +237,7 @@ Champion.prototype.restoreStats = function() {
 		var p = player[this.recruitment.playerId];
 	}
 	if (this !== null) {
-		if (!this.monster.dead) {
+		if (!monster[TOWER_CHAMPIONS][this.id].dead) {
 			this.addHP(Math.floor((Math.random() * (this.stat.str / 16)) + 1));
 			this.addVit(Math.floor((Math.random() * (this.stat.agi / 16)) + 1));
 			this.addSP(Math.floor((Math.random() * (this.stat.int / 16)) + 1));
@@ -280,7 +289,7 @@ Champion.prototype.getSpellInBook = function(sp) {
 	for (pg = 0; pg < COLOUR_MAX; pg++) {
 		for (rw = 0; rw < SPELL_MAX; rw++) {
 			var sb = this.spellBook[pg][rw];
-			if (sb.ref === sp) {
+			if (getSpellById(sb.id) === sp) {
 				return sb;
 			}
 		}
