@@ -262,7 +262,7 @@ function castSpell(s, src, pw) {
 		case SPELL_SUMMON:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x, y, d, (d + 1) % 4, 0);
+				monster[towerThis][max] = new Monster(Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x, y, d, (d + 1) % 4, 0);
 			}
 			break;
 		case SPELL_VIVIFY:
@@ -273,12 +273,12 @@ function castSpell(s, src, pw) {
 						var c = it.id - ITEM_BLODWYN_RIP;
 						item[towerThis].splice(i, 1);
 						champion[c].stat.hp = 0;
-						champion[c].monster.floor = f;
-						champion[c].monster.x = x1;
-						champion[c].monster.y = y1;
-						champion[c].monster.d = (d + 2) % 4;
-						champion[c].monster.hp = 0;
-						champion[c].monster.dead = false;
+						champion[c].getMonster().floor = f;
+						champion[c].getMonster().x = x1;
+						champion[c].getMonster().y = y1;
+						champion[c].getMonster().d = (d + 2) % 4;
+						champion[c].getMonster().hp = 0;
+						champion[c].getMonster().dead = false;
 						if (!champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
 							var p = player[champion[c].recruitment.playerId];
 							if (p.dead) {
@@ -365,7 +365,7 @@ function castSpell(s, src, pw) {
 		case SPELL_ILLUSION:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x, y, d, (d + 1) % 4, 0);
+				monster[towerThis][max] = new Monster(Math.floor(pow / 3), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x, y, d, (d + 1) % 4, 0);
 				monster[towerThis][max].hp = 0;
 			}
 			break;

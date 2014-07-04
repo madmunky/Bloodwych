@@ -295,7 +295,7 @@ Player.prototype.attack = function(attack, target) {
 				var att = combat[com].attacker;
 				att.recruitment.attackTimer = setTimeout(function() {
 					att.recruitment.attackTimer = 0;
-					att.monster.attacking = true;
+					att.getMonster().attacking = true;
 					if(att.selectedSpell !== null) {
 						self.castSpell(att.selectedSpell, att, true);
 						redrawUI(self.id);
@@ -322,14 +322,14 @@ Player.prototype.attack = function(attack, target) {
 						}
 					}
 				}, att.recruitment.position * 400);
-				att.monster.doGesture(CHA_GESTURE_ATTACKING);
+				att.getMonster().doGesture(CHA_GESTURE_ATTACKING);
 			})(combat, com);
 		}
 	} else {
 		for (c = 0; c < this.champion.length; c++) {
 			var ch = this.getChampion(c);
 			if (ch !== null) {
-				var m = ch.monster;
+				var m = ch.getMonster();
 				if (ch.recruitment.attackTimer !== 0) {
 					clearTimeout(ch.recruitment.attackTimer);
 					ch.recruitment.attackTimer = 0;
@@ -435,7 +435,7 @@ Player.prototype.getAliveChampionCount = function() {
 	for (c = 0; c < this.champion.length; c++) {
 		var ch = this.getChampion(c);
 		if (ch !== null) {
-			var dd = ch.monster.dead;
+			var dd = ch.getMonster().dead;
 			if (!dd) {
 				cnt++;
 			}
@@ -449,7 +449,7 @@ Player.prototype.updateChampions = function() {
 	for (c = 0; c < this.champion.length; c++) {
 		var ch = this.getChampion(c);
 		if (ch !== null && ch.recruitment.attached) {
-			var m = ch.monster;
+			var m = ch.getMonster();
 			m.tower = towerThis;
 			m.floor = this.floor;
 			m.x = this.x;
@@ -470,7 +470,7 @@ Player.prototype.exchangeChampionPosition = function(ct, c) {
 		this.championLeader = c;
 		this.championHighlite = -1;
 	} else if (ct === -1) {
-		if (ch !== null && !ch.monster.dead) {
+		if (ch !== null && !ch.getMonster().dead) {
 			this.championHighlite = c;
 		}
 	} else {
@@ -479,8 +479,8 @@ Player.prototype.exchangeChampionPosition = function(ct, c) {
 			if (cht !== null) {
 				clearTimeout(ch.recruitment.attackTimer);
 				clearTimeout(cht.recruitment.attackTimer);
-				ch.monster.attacking = false;
-				cht.monster.attacking = false;
+				ch.getMonster().attacking = false;
+				cht.getMonster().attacking = false;
 			}
 		}
 		if (this.championLeader === c) {
@@ -501,7 +501,7 @@ Player.prototype.getChampionsForUp = function() {
 	var c1 = this.getOrderedChampionIds();
 	for (c = 0; c < this.champion.length; c++) {
 		var ch = this.getChampion(c1[c]);
-		if (ch !== null && !ch.monster.dead && ch.recruitment.attached && ch.recruitment.playerId > -1) {
+		if (ch !== null && !ch.getMonster().dead && ch.recruitment.attached && ch.recruitment.playerId > -1) {
 			if (ch.levelUp > 0) {
 				chs.push({
 					champ: ch,
@@ -570,13 +570,13 @@ Player.prototype.wakeUp = function() {
 //check if all champions are dead
 //also assign a new champion as leader. used when the leader dies
 Player.prototype.checkDead = function() {
-	var leader = this.getChampion(this.championLeader).monster;
+	var leader = this.getChampion(this.championLeader).getMonster();
 	var deadNum = 0;
 	if (leader.dead) {
 		for (c = 0; c < this.champion.length; c++) {
 			var ch = this.getChampion(c);
 			if (ch !== null) {
-				var m = ch.monster;
+				var m = ch.getMonster();
 				if (m !== null && !m.dead && ch.recruitment.attached) {
 					this.championLeader = c;
 				} else {
@@ -631,9 +631,9 @@ Player.prototype.waitChampion = function(c) {
 		if (canMove(this.floor, this.x, this.y, this.d) === OBJECT_NONE && getMonsterAt(this.floor, x1, y1) === null) {
 			var ch = this.getChampion(c);
 			var s = [3, 0, 1, 2];
-			ch.monster.x = x1;
-			ch.monster.y = y1;
-			ch.monster.square = this.d; //(s[this.d] + ch.monster.square) % 4;
+			ch.getMonster().x = x1;
+			ch.getMonster().y = y1;
+			ch.getMonster().square = this.d; //(s[this.d] + ch.getMonster().square) % 4;
 			ch.recruitment.attached = false;
 			ch.recruitment.attackTimer = 0;
 			return true;
@@ -650,9 +650,9 @@ Player.prototype.dismissChampion = function(c) {
 		if (canMove(this.floor, this.x, this.y, this.d) === OBJECT_NONE && getMonsterAt(this.floor, x1, y1) === null) {
 			var ch = this.getChampion(c);
 			var s = [3, 0, 1, 2];
-			ch.monster.x = x1;
-			ch.monster.y = y1;
-			ch.monster.square = (this.d + 3) % 4; //(s[this.d] + ch.monster.square) % 4;
+			ch.getMonster().x = x1;
+			ch.getMonster().y = y1;
+			ch.getMonster().square = (this.d + 3) % 4; //(s[this.d] + ch.getMonster().square) % 4;
 			ch.recruitment = {
 				playerId: -1,
 				attached: false,
@@ -744,7 +744,7 @@ Player.prototype.gainChampionXp = function(xp, ch) {
 Player.prototype.alertDamagedPlayer = function() {
 	this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 	for (ch = 0; ch < this.champion.length; ch++) {
-		if (this.getChampion(ch) !== null && this.getChampion(ch).monster.dead && ch > 0) {
+		if (this.getChampion(ch) !== null && this.getChampion(ch).getMonster().dead && ch > 0) {
 			toggleChampUI(ch, this, false);
 		} else {
 			toggleChampUI(ch, this, true);
@@ -1050,7 +1050,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
 	this.doneCommunication();
 	if (ch.stat.sp - sb.cost >= 0) {
 		if (Math.random() < ch.getSpellCastChance()) {
-			castSpell(sb.id, ch.monster, ch.getSpellPower() * 10);
+			castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10);
 			sb.castSuccessful++;
 			if (!s) {
 				this.showSpellText = false;
@@ -1070,7 +1070,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
 		if (ch.stat.vit < 0) {
 			ch.stat.vit = 0;
 		}
-		ch.monster.doGesture(CHA_GESTURE_SPELLCASTING);
+		ch.getMonster().doGesture(CHA_GESTURE_SPELLCASTING);
 	} else if (!s) {
 		writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, COLOUR[COLOUR_RED]);
 	}
@@ -1090,7 +1090,7 @@ Player.prototype.shootArrow = function(ch) {
 			col = PALETTE_GREEN_ARROW;
 		}
 		arr.setPocketItem(arr.id, arr.quantity - 1);
-		newProjectile(DUNGEON_PROJECTILE_ARROW, col, arr.id + 100, pow * (1.0 + ch.stat.str / 32.0 + ch.stat.agi / 16.0), this.floor, this.x, this.y, this.d, ch.monster);
+		newProjectile(DUNGEON_PROJECTILE_ARROW, col, arr.id + 100, pow * (1.0 + ch.stat.str / 32.0 + ch.stat.agi / 16.0), this.floor, this.x, this.y, this.d, ch.getMonster());
 		ch.writeAttackPoints('shoot');
 	}
 }
@@ -1482,10 +1482,10 @@ function initPlayersStart(ch1, ch2) {
 				player[p].recruitChampion();
 			}
 			var ch = player[p].getChampion(0);
-			var f = ch.monster.floor;
-			var x = ch.monster.x;
-			var y = ch.monster.y;
-			var d = ch.monster.d;
+			var f = ch.getMonster().floor;
+			var x = ch.getMonster().x;
+			var y = ch.getMonster().y;
+			var d = ch.getMonster().d;
 			player[p].setPlayerPosition(f, x, y, d);
 		}
 	} else {

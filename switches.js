@@ -74,9 +74,9 @@ function floorActionType(trig, p) {
 			}
 			for(ch = 0; ch < p.champion.length; ch++) {
 				var champ = p.getChampion(ch);
-				if(champ !== null && champ.monster.dead && champ.recruitment.attached) {
+				if(champ !== null && champ.getMonster().dead && champ.recruitment.attached) {
 					champ.stat.hp = 0;
-					champ.monster.dead = false;
+					champ.getMonster().dead = false;
 					redrawUI(p.id);
 				}
 				newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_CHAOS_BIG, -1, 0, p.floor, p.x, p.y, p.d, null);

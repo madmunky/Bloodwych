@@ -1,4 +1,4 @@
-function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, monster, pocketData) {
+function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, pocketData) {
 	this.spellBook = new Array();
 	this.pocket = pocketData;
 	this.id = id;
@@ -15,7 +15,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.prof = prof;
 	this.colour = colour;
 	this.spellBookPage = 0;
-	this.selectedSpellId = null;
+	this.selectedSpell = null;
 	this.activeSpell = {
 		id: -1,
 		timer: 0,
@@ -28,15 +28,14 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.spellFatigue = 1.0;
 	this.spellUp = 0;
 	this.levelUp = 0;
-	this.monsterId = monster.id;
 	for (pg = 0; pg < COLOUR_MAX; pg++) {
-		this.spellBook[pg] = new Array();
+		this.spellBook[pg] = {};
 		var spl = getSpellBookPage(pg);
 		for (rw = 0; rw < SPELL_MAX; rw++) {
-			this.spellBook[pg][rw] = new Array();
+			this.spellBook[pg][rw] = {};
 			this.spellBook[pg][rw].learnt = false;
 			this.spellBook[pg][rw].castSuccessful = 0;
-			//this.spellBook[pg][rw].ref = spl[rw];
+			this.spellBook[pg][rw].ref = spl[rw];
 			this.spellBook[pg][rw].id = spl[rw].index;
 			this.spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
 			if (spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
@@ -55,13 +54,8 @@ Champion.prototype.getTrade = function() {
 	return TEXT_TRADE[this.prof];
 };
 
-Champion.prototype.getMonster = function () {
-    for (m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
-        if(monster[TOWER_CHAMPIONS].champId === this.id) {
-        return monster[TOWER_CHAMPIONS];
-        }
-    }
-        return null;
+Champion.prototype.getMonster = function() {
+	return monster[TOWER_CHAMPIONS][this.id];
 }
 
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
@@ -87,7 +81,7 @@ Champion.prototype.getDamage = function(dmg, safe) {
 	this.addHP(-dmg, safe);
 	if (typeof safe === "undefined" || !safe) {
 		if (this.getHP() < 0) {
-			monster[this.monsterId].die();
+			this.getMonster().die();
 		}
 		if (this.recruitment.playerId > -1 && this.recruitment.attached) {
 			if (!player[this.recruitment.playerId].attacking) {
@@ -152,10 +146,10 @@ Champion.prototype.getWeaponPower = function(s) {
 Champion.prototype.getBowPower = function() {
 	var bow = 0;
 	var arr = 1.0;
-	if(this.pocket[POCKET_LEFT_HAND].type === ITEM_TYPE_BOW && (this.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS)) {
+	if (this.pocket[POCKET_LEFT_HAND].type === ITEM_TYPE_BOW && (this.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS)) {
 		bow = this.pocket[POCKET_LEFT_HAND].getBowPower();
 		arr = this.pocket[POCKET_RIGHT_HAND].getArrowPower();
-	} else if(this.pocket[POCKET_RIGHT_HAND].type === ITEM_TYPE_BOW && (this.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS)) {
+	} else if (this.pocket[POCKET_RIGHT_HAND].type === ITEM_TYPE_BOW && (this.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS)) {
 		bow = this.pocket[POCKET_RIGHT_HAND].getBowPower();
 		arr = this.pocket[POCKET_LEFT_HAND].getArrowPower();
 	}
@@ -599,8 +593,8 @@ function initChampions() {
 		spellBin = spellBin + hex2bin(md.substr(26, 2));
 		spellBin = spellBin + hex2bin(md.substr(28, 2));
 		spellBin = spellBin + hex2bin(md.substr(30, 2));
-		monster[TOWER_CHAMPIONS][ch] = new Monster(ch + monster[TOWER_MOD0].length, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
-		champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, monster[TOWER_CHAMPIONS][ch], slot);
+		monster[TOWER_CHAMPIONS][ch] = new Monster(level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
+		champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, slot);
 		PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
 	}
 }

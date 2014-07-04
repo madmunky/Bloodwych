@@ -1,5 +1,4 @@
-function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, champId) {
-	//this.id = id;
+function Monster(level, type, form, tower, floor, x, y, d, square, teamId, champId) {
 	this.level = level;
 	this.type = type;
 	var clr = 0;
@@ -9,6 +8,8 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 			clr = 7;
 		}
 	}
+	this.colour = clr;
+	this.form = form;
 	this.ref = monsterRef[form][clr];
 	this.teamId = teamId;
 	this.tower = tower;
@@ -17,7 +18,7 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	this.y = y;
 	this.d = d;
 	this.attacking = false;
-        this.communicating = false;
+	this.communicating = false;
 	this.gesture = CHA_GESTURE_NONE;
 	this.gestureTimer = 0;
 	this.dead = false;
@@ -35,6 +36,41 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	}
 	//this.gfx = [];
 }
+
+Monster.prototype.toJSON = function() {
+	return {
+		__type: 'Monster',
+		level: this.level,
+		type: this.type,
+		colour: this.colour,
+		form: this.form,
+		teamId: this.teamId,
+		tower: this.tower,
+		floor: this.floor,
+		x: this.x,
+		y: this.y,
+		d: this.d,
+		attacking: this.attacking,
+		communicating: this.communicating,
+		gesture: this.gesture,
+		gestureTimer: this.gestureTimer,
+		dead: this.dead,
+		square: this.square,
+		champId: this.champId,
+		hp: this.hp
+	}
+}
+
+Monster.revive = function(data) {
+	var m = Monster(data.level, data.type, data.colour, data.form, data.tower, data.floor, data.x, data.y, data.d, data.square, data.teamId, data.champId);
+	m.attacking = data.attacking
+	m.communicating = data.communicating
+	m.gesture = data.gesture
+	m.gestureTimer = data.gestureTimer
+	m.dead = data.dead
+	m.hp = data.hp
+	return m;
+};
 
 Monster.prototype.toString = function() {
 	var cha = "";
@@ -77,7 +113,7 @@ Monster.prototype.canInteract = function() {
 		}
 	} else if (this.champId > -1 && !this.communicating) { //champion
 		var ch = this.getChampion();
-		if(ch !== null && ch.recruitment.called && ch.recruitment.playerId > -1 && ch.recruitment.playerId === ply) {
+		if (ch !== null && ch.recruitment.called && ch.recruitment.playerId > -1 && ch.recruitment.playerId === ply) {
 			ch.recruitment.attached = true;
 			ch.recruitment.called = false;
 			player[ply].updateChampions();
@@ -254,9 +290,9 @@ Monster.prototype.getHP = function() {
 }
 
 Monster.prototype.castSpell = function() {
-	if(!this.communicating) {
+	if (!this.communicating) {
 		var sq = this.getSquareByDir();
-		if(this.type === 1 && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
+		if (this.type === 1 && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
 			var id = SPELL_MISSILE;
 			if (this.level >= 5 && Math.floor(Math.random() * 2) === 0) {
 				id = SPELL_FIREBALL;
@@ -514,7 +550,7 @@ function initMonsters(t) {
 			} else {
 				square = 0;
 			}
-			monster[t.id][i] = new Monster(i, level, type, form, t.id, floor, x, y, 0, square, teamId);
+			monster[t.id][i] = new Monster(level, type, form, t.id, floor, x, y, 0, square, teamId);
 			PrintLog('Loaded monster: ' + monster[t.id][i]);
 		}
 	}
@@ -523,13 +559,13 @@ function initMonsters(t) {
 	if (t.id === TOWER_MOD0) {
 		/*var testType = 102;
 		var max = monster[t.id].length;
-		monster[t.id][max] = new Monster(max, 0, 0, testType, t.id, 3, 12, 18, 2, CHAR_FRONT_SOLO, 0);
+		monster[t.id][max] = new Monster(0, 0, testType, t.id, 3, 12, 18, 2, CHAR_FRONT_SOLO, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 3, 0, testType, t.id, 3, 14, 19, 2, CHAR_FRONT_LEFT, 0);
+		monster[t.id][max] = new Monster(3, 0, testType, t.id, 3, 14, 19, 2, CHAR_FRONT_LEFT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 6, 0, testType, t.id, 3, 14, 18, 2, CHAR_FRONT_RIGHT, 0);
+		monster[t.id][max] = new Monster(6, 0, testType, t.id, 3, 14, 18, 2, CHAR_FRONT_RIGHT, 0);
 		max++;
-		monster[t.id][max] = new Monster(max, 9, 0, testType, t.id, 3, 13, 20, 0, CHAR_FRONT_SOLO, 0);
+		monster[t.id][max] = new Monster(9, 0, testType, t.id, 3, 13, 20, 0, CHAR_FRONT_SOLO, 0);
 		max++;*/
 	}
 }

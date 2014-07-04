@@ -169,7 +169,7 @@ function drawSpellBook(p, ui, dr) {
 				pg = (pg + 3) % 4;
 			}
 		}
-		var sym = ch.getSpellById(ch.spellBook[pg][x].id).symbols;
+		var sym = ch.spellBook[pg][x].ref.symbols;
 		var col = getClassColour(ch.spellBook[pg][x].ref.colour, true);
 
 		if (!ch.spellBook[pg][x].learnt) {
@@ -430,7 +430,7 @@ function leftUI(p) {
 				}
 			} else {
 				var t;
-				if (ch.monster.dead) {
+				if (ch.getMonster() !== null && ch.getMonster().dead) {
 					t = createShield(cid, ch.prof, 4);
 					ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
 				} else if (p.uiLeftPanel.champs[c].opened) {
@@ -1823,7 +1823,7 @@ function colourSpellPage(dr, ch, img) {
 
 	for (x = 0; x < 4; x++) {
 		if (ch.spellBook[page][x].learnt) {
-			if (ch.spellBook[page][x] === ch.selectedSpell) {
+			if (ch.spellBook[page][x] === getSpellById(ch.selectedSpell)) {
 				pal.push(COLOUR[COLOUR_WHITE]);
 			} else {
 				pal.push(getClassColour(ch.spellBook[page][x].ref.colour, true));

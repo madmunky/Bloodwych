@@ -107,12 +107,12 @@ function timerAction() {
 				champion[ch].restoreStats();
 			}
 		}
-//		for (m = 0; m < monster[towerThis].length; m++) {
-//			if (monster[towerThis][m].dead) {
-//				monster[towerThis].splice(m, 1);
-//				m--;
-//			}
-//		}
+		for (m = 0; m < monster[towerThis].length; m++) {
+			if (monster[towerThis][m].dead) {
+				monster[towerThis].splice(m, 1);
+				m--;
+			}
+		}
 		for (var p = 0; p < projectile[towerThis].length; p++) {
 			if (projectile[towerThis][p].dead >= 3) {
 				projectile[towerThis].splice(p, 1);

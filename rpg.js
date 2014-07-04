@@ -32,7 +32,7 @@ function calculateAttack(att, def, tof) {
 			if (typeof from === "undefined" || from === null || !from.recruitment.attached) {
 				continue;
 			}
-			fmon = from.monster;
+			fmon = from.getMonster();
 			if (fmon.dead) {
 				continue;
 			}
@@ -84,9 +84,9 @@ function calculateAttack(att, def, tof) {
 			for (d = 0; d < 2; d++) {
 				ch[0] = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
 				ch[1] = champion[def.champion[(4 + fromDir - def.d + d) % 4]];
-				if (typeof ch[0] !== "undefined" && !ch[0].monster.dead) {
+				if (typeof ch[0] !== "undefined" && !ch[0].getMonster().dead) {
 					ch1.push(ch[0]);
-				} else if (typeof ch[1] !== "undefined" && !ch[1].monster.dead) {
+				} else if (typeof ch[1] !== "undefined" && !ch[1].getMonster().dead) {
 					ch1.push(ch[1]);
 				}
 			}
@@ -97,7 +97,7 @@ function calculateAttack(att, def, tof) {
 					to = champion[def.champion[tof]];
 				}
 				if (typeof to !== "undefined") {
-					tmon = to.monster;
+					tmon = to.getMonster();
 					defense = 10;
 					if (!to.attacking) {
 						defense += 10 + to.stat.agi / 4.0;
@@ -125,7 +125,7 @@ function calculateAttack(att, def, tof) {
 						tmon = to;
 						if (to.champId > -1) { //champion
 							to = champion[to.champId];
-							tmon = to.monster;
+							tmon = to.getMonster();
 							defense += 20 + to.stat.agi / 4.0;
 							defense -= to.getArmourClass();
 							defense += to.getActiveSpellById(SPELL_ARMOUR).power / 5.0;

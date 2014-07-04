@@ -72,7 +72,7 @@ function convertBase(num) {
 
 function getArmourNotation(num) {
 	var s = getSpellNotation(num);
-	if(num >= 0) {
+	if (num >= 0) {
 		s = "+" + s;
 	} else {
 		s = "-" + s;
@@ -356,45 +356,44 @@ function mathSign(n) {
 }
 
 function doubleDigits(v) {
-    
-    if (v < 10){
-        return "0" + v.toString();
-    }else{
-        return v.toString();
-    }    
-    
+
+	if (v < 10) {
+		return "0" + v.toString();
+	} else {
+		return v.toString();
+	}
+
 }
 
-function isCyclic (obj) {
-  var seenObjects = [];
+function isCyclic(obj) {
+	var seenObjects = [];
 
-  function detect (obj) {
-    if (typeof obj === 'object') {
-      if (seenObjects.indexOf(obj) !== -1) {
-        return true;
-      }
-      seenObjects.push(obj);
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key) && detect(obj[key])) {
-          console.log(obj, 'cycle at ' + key);
-          return true;
-        }
-      }
-    }
-    return false;
-  }
+	function detect(obj) {
+		if (typeof obj === 'object') {
+			if (seenObjects.indexOf(obj) !== -1) {
+				return true;
+			}
+			seenObjects.push(obj);
+			for (var key in obj) {
+				if (obj.hasOwnProperty(key) && detect(obj[key])) {
+					console.log(obj, 'cycle at ' + key);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
-  return detect(obj);
+	return detect(obj);
 }
 
 function dropClasses(o) {
 
-    for (var p in o) {
-        if (o[p] instanceof jQuery || o[p] instanceof HTMLElement) {
-            o[p] = null;
-        }    
-        else if (typeof o[p] === 'object' )
-            dropClasses(o[p]);
-    }
-    return o;
+	for (var p in o) {
+		if (o[p] instanceof jQuery || o[p] instanceof HTMLElement) {
+			o[p] = null;
+		} else if (typeof o[p] === 'object')
+			dropClasses(o[p]);
+	}
+	return o;
 };
