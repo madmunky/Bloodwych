@@ -4,21 +4,24 @@ function gameState(saveName) {
 }
 
 gameState.prototype.load = function() {
-	this.gameData = parseObject(localStorage.getItem(this.fileName));
+	this.gameData = JSON.parse(localStorage.getItem(this.fileName));
 
 	tower = this.gameData.tower;
+	//player = this.gameData.player;
 	champion = this.gameData.champion;
 	monster = this.gameData.monster;
 
-	for (c in this.gameData.champion) {
+	for (c in champion) {
+		champion[c] = castObject(champion[c], 'Champion');
 		for (pg = 0; pg < COLOUR_MAX; pg++) {
 			for (rw = 0; rw < SPELL_MAX; rw++) {
 				champion[c].spellBook[pg][rw]["ref"] = getSpellById(champion[c].spellBook[pg][rw].id);
 			}
 		}
 	}
-	for (var t = 0; t < 6; t++) {
+	for (var t = 0; t < 7; t++) {
 		for(var m = 0; m < monster[t].length; m++) {
+			monster[t][m] = castObject(monster[t][m], 'Monster');
 			monster[t][m]["ref"] = monsterRef[monster[t][m].form][monster[t][m].colour];
 		}
 	}
@@ -26,30 +29,17 @@ gameState.prototype.load = function() {
 
 gameState.prototype.save = function() {
 	this.gameData = {
-		//tower: $.extend(true, {}, tower),
+		tower: $.extend(true, {}, tower),
+		//player: $.extend(true, {}, player),
 		champion: $.extend(true, {}, champion),
 		monster: $.extend(true, {}, monster)
 	};
-	for (c in this.gameData.champion) {
-		for (pg = 0; pg < COLOUR_MAX; pg++) {
-			for (rw = 0; rw < SPELL_MAX; rw++) {
-				delete this.gameData.champion[c].spellBook[pg][rw].ref;
-			}
-		}
+	for(p = 0; p < player.length; p++) {
+		this.gameData.tower[towerThis].floor[player[p].floor].Map[player[p].y][player[p].x] = setHexToBinaryPosition(this.gameData.tower[towerThis].floor[player[p].floor].Map[player[p].y][player[p].x], 8, 1, '0');
 	}
-	/*for (var t = 0; t < 7; t++) {
-		for(var m = 0; m < monster[t].length; m++) {
-			delete this.gameData.monster[t][m].ref;
-		}
-	}*/
-	//this.gameData.tower[towerThis].floor[player[0].floor].Map[player[0].y][player[0].x] = setHexToBinaryPosition(this.gameData.tower[towerThis].floor[player[0].floor].Map[player[0].y][player[0].x], 8, 1, '0');
 	localStorage.setItem(this.fileName, JSON.stringify(this.gameData));
 };
 
-function parseObject(stringed) {
-	return JSON.parse(stringed, function(key, value) {
-	  return key === '' && value.hasOwnProperty('__type')
-	    ? Types[value.__type].revive(value)
-	    : this[key];
-	});
+function castObject(ob, to) {
+	return Types[ob.__type].revive(ob);
 }

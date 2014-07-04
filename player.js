@@ -81,6 +81,86 @@ function Player(id, ScreenX, ScreenY) {
 	this.PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 }
 
+Types.Player = Player;
+
+Player.prototype.toJSON = function() {
+	return {
+		__type: 'Player',
+		id: this.id,
+		champion: this.champion,
+		championLeader: this.championLeader,
+		championHighlite: this.championHighlite,
+		x: this.x,
+		y: this.y,
+		floor: this.floor,
+		d: this.d,
+		PortalX: this.PortalX,
+		PortalY: this.PortalY,
+		PlayerCanvas: this.PlayerCanvas,
+		Portal: this.Portal,
+		ScreenX: this.ScreenX,
+		ScreenY: this.ScreenY,
+		pocket: this.pocket,
+		dead: this.dead,
+		sleeping: this.sleeping,
+		lastX: this.lastX,
+		lastY: this.lastY,
+		lastFloor: this.lastFloor,
+		lastTower: this.lastTower,
+		moving: this.moving,
+		attacking: this.attacking,
+		towerSwitches: this.towerSwitches,
+		messageTimeout: this.messageTimeout,
+		timerChampionStats: this.timerChampionStats,
+		timerSpellBookTurn: this.timerSpellBookTurn,
+		redrawLeftRightUiFlag: this.redrawLeftRightUiFlag,
+		showSpellText: this.showSpellText,
+		fairyDetails: this.fairyDetails,
+		nextChampionUp: this.nextChampionUp,
+		uiRightPanel: this.uiRightPanel,
+		uiLeftPanel: this.uiLeftPanel,
+		uiCenterPanel: this.uiCenterPanel,
+		communication: this.communication
+	}
+}
+
+Player.revive = function(data) {
+	var p = new Player(data.id, data.screenX, data.screenY);
+	p.champion = data.champion;
+	p.championLeader = data.championLeader;
+	p.championHighlite = data.championHighlite;
+	p.x = data.x;
+	p.y = data.y;
+	p.floor = data.floor;
+	p.d = data.d;
+	p.PortalX = data.PortalX;
+	p.PortalY = data.PortalY;
+	p.PlayerCanvas = data.PlayerCanvas;
+	p.Portal = data.Portal;
+	p.pocket = data.pocket;
+	p.dead = data.dead;
+	p.sleeping = data.sleeping;
+	p.lastX = data.lastX;
+	p.lastY = data.lastY;
+	p.lastFloor = data.lastFloor;
+	p.lastTower = data.lastTower;
+	p.moving = data.moving;
+	p.attacking = data.attacking;
+	p.towerSwitches = data.towerSwitches;
+	p.messageTimeout = data.messageTimeout;
+	p.timerChampionStats = data.timerChampionStats;
+	p.timerSpellBookTurn = data.timerSpellBookTurn;
+	p.redrawLeftRightUiFlag = data.redrawLeftRightUiFlag;
+	p.showSpellText = data.showSpellText;
+	p.fairyDetails = data.fairyDetails;
+	p.nextChampionUp = data.nextChampionUp;
+	p.uiRightPanel = data.uiRightPanel;
+	p.uiLeftPanel = data.uiLeftPanel;
+	p.uiCenterPanel = data.uiCenterPanel;
+	p.communication = data.communication;
+	return p;
+};
+
 Player.prototype.getViewPortal = function() {
 	this.Portal = this.PlayerCanvas.getContext("2d");
 };

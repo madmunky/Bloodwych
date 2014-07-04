@@ -12,6 +12,7 @@ var saveGame = new gameState('saveGame0');
 var startGame = true;
 
 //Setup some global Varibles for needed
+var Types = {};
 var gameStarted = false;
 var scale = 3;
 var scaleReal = 3;

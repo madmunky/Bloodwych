@@ -1,6 +1,6 @@
-function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, pocketData) {
+function Champion(id, firstName, lastName, prof, colour, level, stat, spellBook, pocket) {
 	this.spellBook = new Array();
-	this.pocket = pocketData;
+	this.pocket = pocket;
 	this.id = id;
 	this.recruitment = {
 		playerId: -1,
@@ -28,23 +28,52 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBin, 
 	this.spellFatigue = 1.0;
 	this.spellUp = 0;
 	this.levelUp = 0;
-	for (pg = 0; pg < COLOUR_MAX; pg++) {
-		this.spellBook[pg] = {};
-		var spl = getSpellBookPage(pg);
-		for (rw = 0; rw < SPELL_MAX; rw++) {
-			this.spellBook[pg][rw] = {};
-			this.spellBook[pg][rw].learnt = false;
-			this.spellBook[pg][rw].castSuccessful = 0;
-			this.spellBook[pg][rw].ref = spl[rw];
-			this.spellBook[pg][rw].id = spl[rw].index;
-			this.spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
-			if (spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
-				this.spellBook[pg][rw].castSuccessful = 5;
-				this.addSpellToSpellBook(spl[rw]);
-			}
-		}
+	this.spellBook = spellBook;
+}
+
+Types.Champion = Champion;
+
+Champion.prototype.toJSON = function() {
+	return {
+		__type: 'Champion',
+		spellBook: this.spellBook,
+		pocket: this.pocket,
+		id: this.id,
+		recruitment: this.recruitment,
+		firstName: this.firstName,
+		lastName: this.lastName,
+		level: this.level,
+		prof: this.prof,
+		colour: this.colour,
+		spellBookPage: this.spellBookPage,
+		selectedSpell: this.selectedSpell,
+		activeSpell: this.activeSpell,
+		stat: this.stat,
+		food: this.food,
+		xp: this.xp,
+		xp2: this.xp2,
+		spellFatigue: this.spellFatigue,
+		spellUp: this.spellUp,
+		levelUp: this.levelUp,
+		spellBook: this.spellBook
 	}
 }
+
+Champion.revive = function(data) {
+	var c = new Champion(data.id, data.firstName, data.lastName, data.prof, data.colour, data.level, data.stat, data.spellBook, data.pocket);
+	c.recruitment = data.recruitment;
+	c.spellBookPage = data.spellBookPage;
+	c.selectedSpell = data.selectedSpell;
+	c.activeSpell = data.activeSpell;
+	c.food = data.food;
+	c.xp = data.xp;
+	c.xp2 = data.xp2;
+	c.spellFatigue = data.spellFatigue;
+	c.spellUp = data.spellUp;
+	c.levelUp = data.levelUp;
+	c.spellBook = data.spellBook;
+	return c;
+};
 
 Champion.prototype.getName = function() {
 	return this.firstName + " " + this.lastName;
@@ -585,16 +614,34 @@ function initChampions() {
 			spMax: sp,
 			ac: ac
 		};
-		var spellBin = hex2bin(md.substr(24, 2));
 		var x = parseInt(hex2dec(md.substr(44, 2)));
 		var y = parseInt(hex2dec(md.substr(46, 2)));
 		var d = parseInt(hex2dec(md.substr(48, 2)));
 		var floor = parseInt(hex2dec(md.substr(52, 2)));
+
+		var spellBin = hex2bin(md.substr(24, 2));
 		spellBin = spellBin + hex2bin(md.substr(26, 2));
 		spellBin = spellBin + hex2bin(md.substr(28, 2));
 		spellBin = spellBin + hex2bin(md.substr(30, 2));
+		var spellBook = {};
+		for (pg = 0; pg < COLOUR_MAX; pg++) {
+			spellBook[pg] = {};
+			var spl = getSpellBookPage(pg);
+			for (rw = 0; rw < SPELL_MAX; rw++) {
+				spellBook[pg][rw] = {};
+				spellBook[pg][rw].learnt = false;
+				spellBook[pg][rw].castSuccessful = 0;
+				spellBook[pg][rw].ref = spl[rw];
+				spellBook[pg][rw].id = spl[rw].index;
+				spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
+				if (spellBin !== null && spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
+					spellBook[pg][rw].castSuccessful = 5;
+					spellBook[pg][rw].learnt = true;
+				}
+			}
+		}
 		monster[TOWER_CHAMPIONS][ch] = new Monster(level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, 0, ch);
-		champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBin, slot);
+		champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBook, slot);
 		PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
 	}
 }

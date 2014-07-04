@@ -37,6 +37,8 @@ function Monster(level, type, form, tower, floor, x, y, d, square, teamId, champ
 	//this.gfx = [];
 }
 
+Types.Monster = Monster;
+
 Monster.prototype.toJSON = function() {
 	return {
 		__type: 'Monster',
@@ -62,13 +64,13 @@ Monster.prototype.toJSON = function() {
 }
 
 Monster.revive = function(data) {
-	var m = Monster(data.level, data.type, data.colour, data.form, data.tower, data.floor, data.x, data.y, data.d, data.square, data.teamId, data.champId);
-	m.attacking = data.attacking
-	m.communicating = data.communicating
-	m.gesture = data.gesture
-	m.gestureTimer = data.gestureTimer
-	m.dead = data.dead
-	m.hp = data.hp
+	var m = new Monster(data.level, data.type, data.form, data.tower, data.floor, data.x, data.y, data.d, data.square, data.teamId, data.champId);
+	m.attacking = data.attacking;
+	m.communicating = data.communicating;
+	m.gesture = data.gesture;
+	m.gestureTimer = data.gestureTimer;
+	m.dead = data.dead;
+	m.hp = data.hp;
 	return m;
 };
 
