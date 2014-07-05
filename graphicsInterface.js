@@ -705,7 +705,7 @@ function rightUI(p) {
 	if (!p.attacking) {
 		if (p.pocket.id > 0) {
 			ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
-			writeFontImage(p.pocket.itemRef.name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
+			writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
 		}
 	}
 
