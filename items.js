@@ -165,7 +165,7 @@ Item.prototype.setPocketItem = function(id, q) {
 	this.location.y = 0;
 	this.location.square = 0;
 	this.type = getItemType(id);
-	this.itemRef = itemRef[id];
+	//this.itemRef = itemRef[id];
 }
 
 Item.prototype.toString = function() {
