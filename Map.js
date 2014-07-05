@@ -13,12 +13,12 @@ function Map(Width, Height, xOff, yOff) {
 }
 
 function checkSwitchTower(p, m, id) {
-	if (m && player.length === 1) {
+	if (typeof player[1] === 'undefined' && m) {
 		if (parseInt(player[0].getView()[18].substring(3, 4), 16) === 6) {
 			//var tw = Math.floor(trig[1] * 0.5);
 			switchTower(id);
 		}
-	} else if(!m && player.length > 1){
+	} else if(typeof player[1] !== 'undefined' && !m){
 		if ((trig[0] == 18 || trig[0] == 38) && parseInt(player[0].getView()[18].substring(3, 4), 16) === 6 && parseInt(player[1].getView()[18].substring(3, 4), 16) === 6) {
 			if (player[1 - p].floor === player[p].floor && player[1 - p].x === trig[2] && player[1 - p].y === trig[3]) {
 				//var tw = Math.floor(trig[1] * 0.5);
@@ -39,12 +39,9 @@ function switchTower(id, po) {
 		var po = 0;
 	}
 	if (towerLast === TOWER_MOD0 && towerThis === TOWER_MOD0) { //from tower to tower (start of game)
-		//player[po].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
-		//if (player.length > 1) {
-		//	player[1 - po].setPlayerPosition(3, 14, 23, 0); //(3, 14, 23, 0);
-		//}
+
 	} else if (towerThis !== TOWER_MOD0) { //from keep to tower
-		for (p = 0; p < player.length; p++) {
+		for (p in player) {
 			var pt = Math.abs(p - po);
 			floor = player[p].towerSwitches[0][towerThis].floor;
 			x = player[p].towerSwitches[0][towerThis].x;
@@ -52,7 +49,7 @@ function switchTower(id, po) {
 			player[pt].setPlayerPosition(floor, x, y);
 		}
 	} else if (towerThis === TOWER_MOD0) { //from tower to keep
-		for (p = 0; p < player.length; p++) {
+		for (p in player) {
 			var pt = Math.abs(p - po);
 			floor = player[p].towerSwitches[1][towerLast].floor;
 			x = player[p].towerSwitches[1][towerLast].x;
@@ -60,7 +57,7 @@ function switchTower(id, po) {
 			player[pt].setPlayerPosition(floor, x, y);
 		}
 	}
-	for (p = 0; p < player.length; p++) {
+	for (p in player) {
 		player[p].updateChampions();
 	}
 	//$('canvas').attr('data-game-status', 'started');

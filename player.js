@@ -9,8 +9,6 @@ function Player(id, ScreenX, ScreenY) {
 	this.d = 0; //d;
 	this.PortalX = (ScreenX + 96) * scale;
 	this.PortalY = (ScreenY + 2) * scale;
-	this.PlayerCanvas = document.createElement('canvas');
-	this.Portal = null;
 	this.ScreenX = ScreenX;
 	this.ScreenY = ScreenY;
 	this.pocket = newPocketItem();
@@ -71,6 +69,7 @@ function Player(id, ScreenX, ScreenY) {
 		charisma: 0
 	};
 
+	this.PlayerCanvas = document.createElement('canvas');
 	this.PlayerCanvas.width = 128 * scale;
 	this.PlayerCanvas.height = 76 * scale;
 	this.PlayerCanvas.getContext("2d").imageSmoothingEnabled = false;
@@ -79,6 +78,8 @@ function Player(id, ScreenX, ScreenY) {
 	this.PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
 	this.PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
+
+	this.Portal = this.PlayerCanvas.getContext("2d");
 }
 
 Types.Player = Player;
@@ -96,8 +97,8 @@ Player.prototype.toJSON = function() {
 		d: this.d,
 		PortalX: this.PortalX,
 		PortalY: this.PortalY,
-		PlayerCanvas: this.PlayerCanvas,
-		Portal: this.Portal,
+		//PlayerCanvas: this.PlayerCanvas,
+		//Portal: this.Portal,
 		ScreenX: this.ScreenX,
 		ScreenY: this.ScreenY,
 		pocket: this.pocket,
@@ -125,7 +126,7 @@ Player.prototype.toJSON = function() {
 }
 
 Player.revive = function(data) {
-	var p = new Player(data.id, data.screenX, data.screenY);
+	var p = new Player(data.id, data.ScreenX, data.ScreenY);
 	p.champion = data.champion;
 	p.championLeader = data.championLeader;
 	p.championHighlite = data.championHighlite;
@@ -135,8 +136,8 @@ Player.revive = function(data) {
 	p.d = data.d;
 	p.PortalX = data.PortalX;
 	p.PortalY = data.PortalY;
-	p.PlayerCanvas = data.PlayerCanvas;
-	p.Portal = data.Portal;
+	//p.PlayerCanvas = data.PlayerCanvas;
+	//p.Portal = data.Portal;
 	p.pocket = data.pocket;
 	p.dead = data.dead;
 	p.sleeping = data.sleeping;
@@ -1396,7 +1397,7 @@ Player.prototype.determineCommunicationQuestionAnswer = function(mode, text) {
 					this.communication.answer = c.answer[ans];
 					this.communication.answerTimer = timerMaster;
 				}
-			} else if (player.length > 1 && mon.isRecruitedBy() === player[1 - this.id]) { //other player
+			} else if (typeof player[1] !== 'undefined' && mon.isRecruitedBy() === player[1 - this.id]) { //other player
 				p1 = player[1 - this.id];
 				p1.message(c.question[q], COLOUR[COLOUR_RED]);
 			}
@@ -1556,7 +1557,7 @@ Player.prototype.getCommunication = function(mode, text) {
 function initPlayersStart(ch1, ch2) {
 	if (typeof ch1 === "number") {
 		c1 = [ch1, ch2];
-		for (var p = 0; p < player.length; p++) {
+		for (p in player) {
 			player[p].recruitChampion(c1[p]);
 			for (i = 1; i < 4; i++) {
 				player[p].recruitChampion();
@@ -1569,14 +1570,14 @@ function initPlayersStart(ch1, ch2) {
 			player[p].setPlayerPosition(f, x, y, d);
 		}
 	} else {
-		for (p = 0; p < player.length; p++) {
+		for (p in player) {
 			for (i = 0; i < 4; i++) {
 				c1 = [ch1[i], ch2[i]];
 				player[p].recruitChampion(c1[p]);
 			}
 		}
 		player[0].setPlayerPosition(3, 12, 23, 0); //(3, 12, 23, 0);
-		if (player.length > 1) {
+		if (typeof player[1] !== 'undefined') {
 			player[1].setPlayerPosition(3, 14, 23, 0); //(3, 14, 23, 0);
 		}
 	}

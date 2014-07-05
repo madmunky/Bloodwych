@@ -349,7 +349,7 @@ function drawUI(p) {
 				}
 			}
 			if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL) {
-				if (player.length > 1) {
+				if (typeof player[1] !== 'undefined') {
 					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
 				} else {
 					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY + 96]);

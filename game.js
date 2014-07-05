@@ -50,7 +50,7 @@ function timerAction() {
 	}
 	if (timerMaster - timerChampionAttack >= 20) {
 		timerChampionAttack = timerMaster;
-		for (p = 0; p < player.length; p++) {
+		for (p in player) {
 			if (player[p].attacking) {
 				player[p].tryAttack();
 			}
@@ -69,7 +69,7 @@ function timerAction() {
 		monsterAttackSequence++;
 	}
 
-	for (p = 0; p < player.length; p++) {
+	for (p in player) {
 		var pl = player[p];
 		var tm = 100;
 		if (pl.sleeping) {
@@ -130,7 +130,7 @@ function timerAction() {
 			projectile[towerThis][p].moveProjectile();
 		}
 	}
-	for (p = 0; p < player.length; p++) {
+	for (p in player) {
 		for (c = 0; c < player[p].champion.length; c++) {
 			if(player[p].uiLeftPanel.champs[c].damage > 0) {
 				if(timerMaster - player[p].uiLeftPanel.champs[c].damageTimer >= 20) {

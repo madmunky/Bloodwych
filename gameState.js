@@ -7,7 +7,7 @@ gameState.prototype.load = function() {
 	this.gameData = JSON.parse(localStorage.getItem(this.fileName));
 
 	tower = this.gameData.tower;
-	//player = this.gameData.player;
+	player = this.gameData.player;
 	champion = this.gameData.champion;
 	monster = this.gameData.monster;
 
@@ -25,17 +25,20 @@ gameState.prototype.load = function() {
 			monster[t][m]["ref"] = monsterRef[monster[t][m].form][monster[t][m].colour];
 		}
 	}
+	for (p in player) {
+		player[p] = castObject(player[p], 'Player');
+	}
 };
 
 gameState.prototype.save = function() {
 	this.gameData = {
 		tower: $.extend(true, {}, tower),
-		//player: $.extend(true, {}, player),
+		player: $.extend(true, {}, player),
 		champion: $.extend(true, {}, champion),
 		monster: $.extend(true, {}, monster)
 	};
-	for(p = 0; p < player.length; p++) {
-		this.gameData.tower[towerThis].floor[player[p].floor].Map[player[p].y][player[p].x] = setHexToBinaryPosition(this.gameData.tower[towerThis].floor[player[p].floor].Map[player[p].y][player[p].x], 8, 1, '0');
+	for (p in player) {
+		//this.gameData.tower[towerThis].floor[player[p].floor].Map[player[p].y][player[p].x] = setHexToBinaryPosition(this.gameData.tower[towerThis].floor[player[p].floor].Map[player[p].y][player[p].x], 8, 1, '0');
 	}
 	localStorage.setItem(this.fileName, JSON.stringify(this.gameData));
 };

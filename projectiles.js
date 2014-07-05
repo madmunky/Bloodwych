@@ -31,7 +31,7 @@ Projectile.prototype.moveProjectile = function() {
 		}
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		if (typeof this.monster !== "undefined") {
-			for (var p = 0; p < player.length; p++) {
+			for (p in player) {
 				if (!player[p].dead && this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
 					this.attack(player[p]);
 					this.dead = 2;

@@ -298,7 +298,7 @@ function getDirection(n) {
 
 function drawPlayersView(p) {
 	debugTextPrint(p); //see bloodwych.js
-	p.getViewPortal();
+	//p.getViewPortal();
 
 	if (p.dead) {
 		p.uiCenterPanel.mode = UI_CENTER_PANEL_DEAD;

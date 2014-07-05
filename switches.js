@@ -149,7 +149,7 @@ function floorActionType(trig, p) {
 		case SWITCH_FLOOR_GAME_COMPLETION_PAD:
 			break;
 		case SWITCH_FLOOR_REMOVE_PILLAR_OTHER_EVENT:
-			if(player.length === 1) {
+			if(typeof player[1] === 'undefined') {
 				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', true);
 			}
 			break;
@@ -160,11 +160,11 @@ function floorActionType(trig, p) {
 }
 
 function initTowerSwitches() {
-	for (p = 0; p < player.length; p++) { //player
+	for (p in player) { //player
 		for (i = 0; i < 2; i++) { //0: to tower, 1: to keep
 			player[p].towerSwitches[i] = new Array();
 			for (t = 0; t < 5; t++) { //tower
-				if(player.length === 2) {
+				if(typeof player[1] !== 'undefined') {
 					player[p].towerSwitches[i][t + 1] = {
 						floor: towerSwitchesData[i][t],
 						x: towerSwitchesData[i][t * 4 + p * 2 + 5],

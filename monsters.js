@@ -89,7 +89,7 @@ Monster.prototype.canInteract = function() {
 	ply = -1;
 	if (this.floor === player[0].floor && this.x + xy.x === player[0].x && this.y + xy.y === player[0].y) {
 		ply = 0;
-	} else if (player.length > 1 && this.floor === player[1].floor && this.x + xy.x === player[1].x && this.y + xy.y === player[1].y) {
+	} else if (typeof player[1] !== 'undefined' && this.floor === player[1].floor && this.x + xy.x === player[1].x && this.y + xy.y === player[1].y) {
 		ply = 1;
 	}
 	if (this.isAggressive() && !this.communicating) { //enemy
@@ -318,7 +318,7 @@ Monster.prototype.followPlayer = function() {
 	var ch = this.getChampion();
 	if ((this.champId === -1 && this.type !== MON_TYPE_MAGICAL) || (ch !== null && ch.recruitment.called)) {
 		var rnd = Math.floor(Math.random() * 2);
-		if (!player[0].dead && (player.length === 1 || Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y))) {
+		if (!player[0].dead && (typeof player[1] === 'undefined' || Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y))) {
 			//player 1 is closer
 			if (player[0].x > this.x && (this.d === 1)) {
 				return false;

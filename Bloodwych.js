@@ -51,7 +51,7 @@ function updatePlayerViewScreen() {
 	configCanvas();
 	debugText(player[0], "FPS: " + fps.getFPS());
 
-	for (p = 0; p < player.length; p++) {
+	for (p in player) {
 		debugText(player[p], "Player " + (p + 1));
 		debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
 		drawPlayersView(player[p]);
@@ -79,7 +79,7 @@ function setViewportScale(sp) {
 	$('html').css('zoom', scaleReal);
 	$('html').css('-moz-transform', 'scale(' + scaleReal + ')');
 	if (typeof player !== "undefined") {
-		for (p = 0; p < player.length; p++) {
+		for (p in player) {
 			player[p].PortalX = (player[p].ScreenX + 96) * scale;
 			player[p].PortalY = (player[p].ScreenY + 2) * scale;
 			player[p].PlayerCanvas.width = 128 * scale;

@@ -202,7 +202,7 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 			}
 		}
 		$('canvas').attr('data-game-status', 'started');
-		//	for(var p = 0; p < player.length; p++) {
+		//for (p in player) {
 		//		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
 		//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
 		//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);

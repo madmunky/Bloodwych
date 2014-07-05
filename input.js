@@ -1,6 +1,6 @@
 function doKeyDown(e) {
 	if (gameStarted) {
-		if (player.length > 1) {
+		if (typeof player[1] !== 'undefined') {
 			switch (e.keyCode) {
 
 				case KEYPAD_8:
@@ -87,8 +87,8 @@ function doKeyDown(e) {
 			case KEY_6:
 				saveGame.load();
 				break;
-			case KEY_5:				
-                                saveGame.save();
+			case KEY_5:
+				saveGame.save();
 				break;
 			case KEY_7:
 				testDistance = (testDistance + 1) % 3;
@@ -140,7 +140,7 @@ function checkClickEvents() {
 		var y = (e.pageY - (canvas.offsetTop * scaleReal)) / (scale * scaleReal);
 		if (t.attr('data-game-status') === 'started') {
 			var p = 0;
-			for (pid = 0; pid < player.length; pid++) {
+			for (pid in player) {
 				p += processCanvasInput(pid, x, y) + 1;
 			}
 			if (p > 0) {
@@ -155,11 +155,11 @@ function checkClickEvents() {
 				for (s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
 					if (uiClickInArea(x, y, s, player[currentPlayer])) {
 						var it = champion[championSelect[currentPlayer].champID].pocket[(s - UI_CLICK_POCKET_SLOT_1)];
-                                                if (currentPlayer === 0){
-                                                    drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
-                                                }else{
-                                                    drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
-                                                }						
+						if (currentPlayer === 0) {
+							drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+						} else {
+							drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+						}
 						writeFontImage(it.itemRef.name, 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
 					}
 				}
@@ -472,8 +472,7 @@ function processCanvasInputMenu(x, y) {
 }
 
 function viewportTouch(x, y, xy) {
-
-	for (p = 0; p < player.length; p++) {
+	for (p in player) {
 		xy = {
 			x: Math.floor((x - player[p].PortalX) / scale / 42.67),
 			y: Math.floor((y - player[p].PortalY) / scale / 38)
@@ -486,41 +485,41 @@ function mouseXY(e) {
 		mouseX = e.offsetX;
 		mouseY = e.offsetY;
 		var currentColour = cursorType;
-		if (player.length > 0) {
-                    if ($('canvas').attr('data-game-status') === 'menu-champions'){
-                        if (currentPlayer === 0){
-                            cursorType = cursorBlue;
-                            if (currentColour !== cursorType) {
-				if (cursorType === cursorRed) {
-					canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+		if (typeof player[0] !== 'undefined') {
+			if ($('canvas').attr('data-game-status') === 'menu-champions') {
+				if (currentPlayer === 0) {
+					cursorType = cursorBlue;
+					if (currentColour !== cursorType) {
+						if (cursorType === cursorRed) {
+							canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+						} else {
+							canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+						}
+					}
 				} else {
-					canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+					cursorType = cursorRed;
+					if (currentColour !== cursorType) {
+						if (cursorType === cursorRed) {
+							canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+						} else {
+							canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+						}
+					}
 				}
-                            }
-                        }else{
-                            cursorType = cursorRed;
-                            if (currentColour !== cursorType) {
-				if (cursorType === cursorRed) {
-					canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
-				} else {
-					canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
-				}
-                            }
-                        }                            
-                    }else{
-			if (mouseY > canvas.height / 2) {
-				cursorType = cursorRed;
 			} else {
-				cursorType = cursorBlue;
-			}
-			if (currentColour !== cursorType) {
-				if (cursorType === cursorRed) {
-					canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+				if (mouseY > canvas.height / 2) {
+					cursorType = cursorRed;
 				} else {
-					canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+					cursorType = cursorBlue;
+				}
+				if (currentColour !== cursorType) {
+					if (cursorType === cursorRed) {
+						canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+					} else {
+						canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+					}
 				}
 			}
-                    }
 		}
 		if (typeof player !== 'undefined') {
 			for (p in player) {
@@ -773,7 +772,7 @@ function spellBookAreas(x, y, p, ch) {
 		if (ch.selectedSpell !== null) {
 			p.castSpell(ch.selectedSpell, ch);
 			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-                        p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
 			return pid;
 		}
 	}
