@@ -6,6 +6,14 @@ function gameState(saveName) {
 gameState.prototype.load = function() {
 	this.gameData = JSON.parse(localStorage.getItem(this.fileName));
 
+        if (this.gameData.player.length >= 1 && player.length < 1){
+            startGame(false, true);
+            players = 2;
+        }else{
+            startGame(true, true);
+            players = 1;
+        }        
+
 	tower = this.gameData.tower;
 	player = this.gameData.player;
 	champion = this.gameData.champion;
@@ -25,9 +33,14 @@ gameState.prototype.load = function() {
 			monster[t][m]["ref"] = monsterRef[monster[t][m].form][monster[t][m].colour];
 		}
 	}
+        
+        clearCanvas();
+        
 	for (p in player) {
 		player[p] = castObject(player[p], 'Player');
+                redrawUI(player[p].id);                
 	}
+        
 };
 
 gameState.prototype.save = function() {

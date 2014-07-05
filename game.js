@@ -17,9 +17,9 @@ Game.prototype = {
 	update: function() {
 		timerMaster++;
 		timerAction();
-                if (startGame){
+                if (checkStarted){
                     clearCanvas();
-                    startGame = false;
+                    checkStarted = false;
                 }
 	},
 
