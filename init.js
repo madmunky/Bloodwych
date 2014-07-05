@@ -149,9 +149,7 @@ function initData() {
 	uiClickArea = uiClickAreas();
 
 	initMonsterGfx();
-	for (var i = 0; i < 6; i++) {
-		initMonsters(tower[i]);
-	}
+	initMonsters();
 
 	initSpells();
 	initItemRefs();

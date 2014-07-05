@@ -262,7 +262,7 @@ function castSpell(s, src, pw) {
 		case SPELL_SUMMON:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x, y, d, (d + 1) % 4, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x, y, d, (d + 1) % 4, 0);
 			}
 			break;
 		case SPELL_VIVIFY:
@@ -365,7 +365,7 @@ function castSpell(s, src, pw) {
 		case SPELL_ILLUSION:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(Math.floor(pow / 3), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x, y, d, (d + 1) % 4, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x, y, d, (d + 1) % 4, 0);
 				monster[towerThis][max].hp = 0;
 			}
 			break;
@@ -406,7 +406,7 @@ function setDungeonSpell(f, x, y, proj) {
 }
 
 function getDungeonSpell(f, x, y) {
-	for(var d = 0; d < dungeonSpellList.length; d++) {
+	for(d in dungeonSpellList) {
 		ds = dungeonSpellList[d];
 		if(ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
 			return ds;
@@ -416,7 +416,7 @@ function getDungeonSpell(f, x, y) {
 }
 
 function updateDungeonSpells() {
-	for (s = 0; s < dungeonSpellList.length; s++) {
+	for (s in dungeonSpellList) {
 		var ds = dungeonSpellList[s];
 		if (ds.tower === towerThis) {
 			if(ds.projectile !== null && typeof ds.projectile.spell !== 'number' && (ds.projectile.spell.index === SPELL_FIREPATH || ds.projectile.spell.index === SPELL_BLAZE)) {

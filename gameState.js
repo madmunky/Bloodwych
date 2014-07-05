@@ -18,7 +18,27 @@ gameState.prototype.load = function() {
 	player = this.gameData.player;
 	champion = this.gameData.champion;
 	monster = this.gameData.monster;
+	projectile = this.gameData.projectile;
+	timerMaster = this.gameData.variables.timerMaster;
+	timerMonsterMove = this.gameData.variables.timerMonsterMove;
+	timerMonsterAttack = this.gameData.variables.timerMonsterAttack;
+	timerChampionStats = this.gameData.variables.timerChampionStats;
+	timerChampionAttack = this.gameData.variables.timerChampionAttack;
+	towerThis = this.gameData.variables.towerThis;
+	monsterTeamIdMax = this.gameData.variables.monsterTeamIdMax;
+	monsterAttackSequence = this.gameData.variables.monsterAttackSequence;
+	dungeonSpellTimer = this.gameData.variables.dungeonSpellTimer;
+	//dungeonSpellList = this.gameData.variables.dungeonSpellList;
+	activeSpellTimer = this.gameData.variables.activeSpellTimer;
+	//for (s in dungeonSpellList) {
+	//	dungeonSpellList[s].projectile = castObject
+	//}
 
+	clearCanvas();
+	for (p in player) {
+		player[p] = castObject(player[p], 'Player');
+		redrawUI(player[p].id);
+	}
 	for (c in champion) {
 		champion[c] = castObject(champion[c], 'Champion');
 		for (pg = 0; pg < COLOUR_MAX; pg++) {
@@ -33,14 +53,13 @@ gameState.prototype.load = function() {
 			monster[t][m]["ref"] = monsterRef[monster[t][m].form][monster[t][m].colour];
 		}
 	}
-
-	clearCanvas();
-
-	for (p in player) {
-		player[p] = castObject(player[p], 'Player');
-		redrawUI(player[p].id);
+	for (var t = 0; t < 6; t++) {
+		for (var p = 0; p < projectile[t].length; p++) {
+			projectile[t][p] = castObject(projectile[t][p], 'Projectile');
+		}
 	}
 
+	player[0].message(TEXT_GAME_LOADED, COLOUR[COLOUR_GREEN]);
 };
 
 gameState.prototype.save = function() {
@@ -48,12 +67,24 @@ gameState.prototype.save = function() {
 		tower: $.extend(true, {}, tower),
 		player: $.extend(true, {}, player),
 		champion: $.extend(true, {}, champion),
-		monster: $.extend(true, {}, monster)
+		monster: $.extend(true, {}, monster),
+		projectile: $.extend(true, {}, projectile),
+		variables: {
+			timerMaster: timerMaster,
+			timerMonsterMove: timerMonsterMove,
+			timerMonsterAttack: timerMonsterAttack,
+			timerChampionStats: timerChampionStats,
+			timerChampionAttack: timerChampionAttack,
+			towerThis: towerThis,
+			monsterTeamIdMax: monsterTeamIdMax,
+			monsterAttackSequence: monsterAttackSequence,
+			dungeonSpellTimer: dungeonSpellTimer,
+			//dungeonSpellList: $.extend(true, {}, dungeonSpellList),
+			activeSpellTimer: activeSpellTimer
+		}
 	};
-	for (p in player) {
-		//this.gameData.tower[towerThis].floor[player[p].floor].Map[player[p].y][player[p].x] = setHexToBinaryPosition(this.gameData.tower[towerThis].floor[player[p].floor].Map[player[p].y][player[p].x], 8, 1, '0');
-	}
 	localStorage.setItem(this.fileName, JSON.stringify(this.gameData));
+	player[0].message(TEXT_GAME_SAVED, COLOUR[COLOUR_GREEN]);
 };
 
 function castObject(ob, to) {

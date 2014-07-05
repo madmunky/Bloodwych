@@ -9,6 +9,7 @@ function Projectile(id, type, palette, s, power, tower, floor, x, y, d, m) {
 	this.y = y;
 	this.d = d;
 	this.monster = m;
+	this.s = s;
 	if(s >= 100) {
 		this.spell = s - 100;
 	} else {
@@ -21,6 +22,39 @@ function Projectile(id, type, palette, s, power, tower, floor, x, y, d, m) {
 	}
 	this.timer = timerMaster;
 }
+
+Types.Projectile = Projectile;
+
+Projectile.prototype.toJSON = function() {
+	var mid = null;
+	if(typeof this.monster !== 'undefined' && this.monster !== null) {
+		mid = this.monster.id;
+	}
+	return {
+		__type: 'Projectile',
+		id: this.id,
+		type: this.type,
+		palette: this.palette,
+		power: this.power,
+		tower: this.tower,
+		floor: this.floor,
+		x: this.x,
+		y: this.y,
+		d: this.d,
+		monster: mid,
+		s: this.s,
+		dead: this.dead,
+		timer: this.timer,
+	}
+}
+
+Projectile.revive = function(data) {
+	var p = new Projectile(data.id, data.type, data.palette, data.s, data.power, data.tower, data.floor, data.x, data.y, data.d);
+	p.monster = getMonsterById(monster.id);
+	p.dead = data.dead;
+	p.timer = data.timer;
+	return p;
+};
 
 Projectile.prototype.moveProjectile = function() {
 	var ob = getObject(this.floor, this.x, this.y, this.d);
