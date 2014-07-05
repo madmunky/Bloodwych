@@ -498,7 +498,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 	}
 
 	var blur = 0;
-	if (doBlur) {
+	if (doBlur && !paused) {
 		if (dist <= DISTANCE_MID) {
 			var br = Math.floor(Math.random() * 20);
 			if (br === 0) {
@@ -604,7 +604,7 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
 	}
 
 	var blur = 0;
-	if (doBlur) {
+	if (doBlur && !paused) {
 		if (dist <= DISTANCE_MID) {
 			var br = Math.floor(Math.random() * 20);
 			if (br === 0) {

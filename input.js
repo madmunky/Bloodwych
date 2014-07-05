@@ -1,5 +1,5 @@
 function doKeyDown(e) {
-	if (gameStarted) {
+	if (gameStarted && !paused) {
 		if (typeof player[1] !== 'undefined') {
 			switch (e.keyCode) {
 
@@ -412,8 +412,8 @@ function processCanvasInput(pid, x, y) {
 			checkBackButton(p);
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, p)) {
-			alert('PAUSED');
 			p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
+                        pauseGame();
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_SAVE, p)) {
 			alert('SAVE GAME');

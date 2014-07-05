@@ -15,12 +15,14 @@ Game.prototype = {
 
 	// Update the game model
 	update: function() {
+            if (!paused){
 		timerMaster++;
 		timerAction();
                 if (checkStarted){
                     clearCanvas();
                     checkStarted = false;
                 }
+            }
 	},
 
 	subscribe: function(e, callback, target) {

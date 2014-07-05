@@ -627,6 +627,12 @@ Player.prototype.checkChampionUp = function() {
 	return false;
 }
 
+Player.prototype.gameState = function() {
+    
+    
+    
+}
+
 Player.prototype.sleep = function() {
 	this.sleeping = true;
 	this.message();

@@ -114,6 +114,11 @@ function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+function pauseGame(){
+    
+    paused = !paused;    
+    
+}
 
 //Renders the sub-coloured objects. E.g. for locked doors and banners
 
