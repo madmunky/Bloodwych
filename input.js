@@ -141,6 +141,7 @@ function checkClickEvents() {
 		if (t.attr('data-game-status') === 'started') {
 			var p = 0;
 			for (pid in player) {
+				pid = parseInt(pid);
 				p += processCanvasInput(pid, x, y) + 1;
 			}
 			if (p > 0) {

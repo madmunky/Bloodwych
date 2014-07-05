@@ -1582,3 +1582,23 @@ function initPlayersStart(ch1, ch2) {
 		}
 	}
 }
+
+function initPlayers(singlePlayer, quickStart, p1_cid, p2_cid) {
+	if (singlePlayer && !quickStart) {
+		player[0] = new Player(0, 0, 30);
+		initPlayersStart(p1_cid, null);
+	} else if (!quickStart) {
+		player[0] = new Player(0, 0, 10);
+		player[1] = new Player(1, 0, 114);
+		initPlayersStart(p1_cid, p2_cid);
+	}
+
+	if (quickStart && !singlePlayer) {
+		player[0] = new Player(0, 0, 10);
+		player[1] = new Player(1, 0, 114);
+		initPlayersStart([0, 14, 5, 3], [4, 6, 13, 15]);
+	} else if (quickStart && singlePlayer) {
+		player[0] = new Player(0, 0, 30);
+		initPlayersStart([0, 14, 5, 3], 4);
+	}
+}

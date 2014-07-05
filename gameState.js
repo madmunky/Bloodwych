@@ -6,13 +6,13 @@ function gameState(saveName) {
 gameState.prototype.load = function() {
 	this.gameData = JSON.parse(localStorage.getItem(this.fileName));
 
-        if (this.gameData.player.length >= 1 && player.length < 1){
-            startGame(false, true);
-            players = 2;
-        }else{
-            startGame(true, true);
-            players = 1;
-        }        
+	if (this.gameData.player.length >= 1 && player.length < 1) {
+		initPlayers(false, true);
+		players = 2;
+	} else {
+		initPlayers(true, true);
+		players = 1;
+	}
 
 	tower = this.gameData.tower;
 	player = this.gameData.player;
@@ -28,19 +28,19 @@ gameState.prototype.load = function() {
 		}
 	}
 	for (var t = 0; t < 7; t++) {
-		for(var m = 0; m < monster[t].length; m++) {
+		for (var m = 0; m < monster[t].length; m++) {
 			monster[t][m] = castObject(monster[t][m], 'Monster');
 			monster[t][m]["ref"] = monsterRef[monster[t][m].form][monster[t][m].colour];
 		}
 	}
-        
-        clearCanvas();
-        
+
+	clearCanvas();
+
 	for (p in player) {
 		player[p] = castObject(player[p], 'Player');
-                redrawUI(player[p].id);                
+		redrawUI(player[p].id);
 	}
-        
+
 };
 
 gameState.prototype.save = function() {
