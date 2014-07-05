@@ -18,6 +18,7 @@ gameState.prototype.load = function() {
 	player = this.gameData.player;
 	champion = this.gameData.champion;
 	monster = this.gameData.monster;
+	item = this.gameData.item;
 	projectile = this.gameData.projectile;
 	timerMaster = this.gameData.variables.timerMaster;
 	timerMonsterMove = this.gameData.variables.timerMonsterMove;
@@ -28,11 +29,8 @@ gameState.prototype.load = function() {
 	monsterTeamIdMax = this.gameData.variables.monsterTeamIdMax;
 	monsterAttackSequence = this.gameData.variables.monsterAttackSequence;
 	dungeonSpellTimer = this.gameData.variables.dungeonSpellTimer;
-	//dungeonSpellList = this.gameData.variables.dungeonSpellList;
+	dungeonSpellList = this.gameData.variables.dungeonSpellList;
 	activeSpellTimer = this.gameData.variables.activeSpellTimer;
-	//for (s in dungeonSpellList) {
-	//	dungeonSpellList[s].projectile = castObject
-	//}
 
 	clearCanvas();
 	for (p in player) {
@@ -54,9 +52,17 @@ gameState.prototype.load = function() {
 		}
 	}
 	for (var t = 0; t < 6; t++) {
+		for (var i = 0; i < item[t].length; i++) {
+			item[t][i] = castObject(item[t][i], 'Item');
+		}
+	}
+	for (var t = 0; t < 6; t++) {
 		for (var p = 0; p < projectile[t].length; p++) {
 			projectile[t][p] = castObject(projectile[t][p], 'Projectile');
 		}
+	}
+	for (s in dungeonSpellList) {
+		dungeonSpellList[s].projectile = getProjectileById(dungeonSpellList[s].projectile.tower, dungeonSpellList[s].projectile.id);
 	}
 
 	player[0].message(TEXT_GAME_LOADED, COLOUR[COLOUR_GREEN]);
@@ -68,6 +74,7 @@ gameState.prototype.save = function() {
 		player: $.extend(true, {}, player),
 		champion: $.extend(true, {}, champion),
 		monster: $.extend(true, {}, monster),
+		item: $.extend(true, {}, item),
 		projectile: $.extend(true, {}, projectile),
 		variables: {
 			timerMaster: timerMaster,
@@ -79,7 +86,7 @@ gameState.prototype.save = function() {
 			monsterTeamIdMax: monsterTeamIdMax,
 			monsterAttackSequence: monsterAttackSequence,
 			dungeonSpellTimer: dungeonSpellTimer,
-			//dungeonSpellList: $.extend(true, {}, dungeonSpellList),
+			dungeonSpellList: $.extend(true, {}, dungeonSpellList),
 			activeSpellTimer: activeSpellTimer
 		}
 	};

@@ -50,7 +50,7 @@ Projectile.prototype.toJSON = function() {
 
 Projectile.revive = function(data) {
 	var p = new Projectile(data.id, data.type, data.palette, data.s, data.power, data.tower, data.floor, data.x, data.y, data.d);
-	p.monster = getMonsterById(monster.id);
+	p.monster = getMonsterById(data.monster);
 	p.dead = data.dead;
 	p.timer = data.timer;
 	return p;
@@ -255,6 +255,15 @@ function getProjectileDistanceByPos(pos) {
 	} else {
 		return -1;
 	}
+}
+
+function getProjectileById(t, id) {
+	for (var p = 0; p < projectile[t].length; p++) {
+		if(id === projectile[t][p].id){
+			return projectile[t][p];
+		}
+	}
+	return null;
 }
 
 function getProjectileGfxOffset(pos) {

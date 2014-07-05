@@ -1,4 +1,4 @@
-function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, champId) {
+function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, teamId, champId) {
 	this.id = id;
 	this.level = level;
 	this.type = type;
@@ -25,8 +25,10 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
 	this.dead = false;
 	if (square > CHAR_FRONT_SOLO) {
 		this.square = (square + d) % 4;
-	} else {
+	} else if(typeof sqrel !== 'undefined' && sqrel) {
 		this.square = CHAR_FRONT_SOLO;
+	} else {
+		this.square = square;
 	}
 	this.champId = -1;
 	if (typeof champId !== "undefined") {
@@ -65,7 +67,7 @@ Monster.prototype.toJSON = function() {
 }
 
 Monster.revive = function(data) {
-	var m = new Monster(data.id, data.level, data.type, data.form, data.tower, data.floor, data.x, data.y, data.d, data.square, data.teamId, data.champId);
+	var m = new Monster(data.id, data.level, data.type, data.form, data.tower, data.floor, data.x, data.y, data.d, data.square, false, data.teamId, data.champId);
 	m.attacking = data.attacking;
 	m.communicating = data.communicating;
 	m.gesture = data.gesture;
@@ -556,7 +558,7 @@ function initMonsters() {
 				} else {
 					square = 0;
 				}
-				monster[tw.id][i] = new Monster(max, level, type, form, tw.id, floor, x, y, 0, square, teamId);
+				monster[tw.id][i] = new Monster(max, level, type, form, tw.id, floor, x, y, 0, square, true, teamId);
 				max++;
 				PrintLog('Loaded monster: ' + monster[tw.id][i]);
 			}
@@ -566,13 +568,13 @@ function initMonsters() {
 	//TESTING!!! REMOVE AFTER
 	/*var testType = 102;
 	var end = monster[TOWER_MOD0].length;
-	monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 12, 18, 2, CHAR_FRONT_SOLO, 0);
+	monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 12, 18, 2, CHAR_FRONT_SOLO, true, 0);
 	max++;end++;
-	monster[TOWER_MOD0][end] = new Monster(max, 3, 0, testType, TOWER_MOD0, 3, 14, 19, 2, CHAR_FRONT_LEFT, 0);
+	monster[TOWER_MOD0][end] = new Monster(max, 3, 0, testType, TOWER_MOD0, 3, 14, 19, 2, CHAR_FRONT_LEFT, true, 0);
 	max++;end++;
-	monster[TOWER_MOD0][end] = new Monster(max, 6, 0, testType, TOWER_MOD0, 3, 14, 18, 2, CHAR_FRONT_RIGHT, 0);
+	monster[TOWER_MOD0][end] = new Monster(max, 6, 0, testType, TOWER_MOD0, 3, 14, 18, 2, CHAR_FRONT_RIGHT, true, 0);
 	max++;end++;
-	monster[TOWER_MOD0][end] = new Monster(max, 9, 0, testType, TOWER_MOD0, 3, 13, 20, 0, CHAR_FRONT_SOLO, 0);
+	monster[TOWER_MOD0][end] = new Monster(max, 9, 0, testType, TOWER_MOD0, 3, 13, 20, 0, CHAR_FRONT_SOLO, true, 0);
 	max++;end++;*/
 }
 
@@ -767,7 +769,7 @@ function updateMonsterTeam(id) {
 
 
 function getMonsterById(id) {
-	for (t = 0; t < tower.length + 1; t++) {
+	for (t = 0; t < 7; t++) {
 		for (m = 0; m < monster[t].length; m++) {
 			if (id === monster[t][m].id) {
 				return monster[t][m];

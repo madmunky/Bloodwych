@@ -5,6 +5,21 @@ function Item(id, quantity, location) {
 	this.type = getItemType(id);
 }
 
+Types.Item = Item;
+
+Item.prototype.toJSON = function() {
+	return {
+		__type: 'Item',
+		id: this.id,
+		quantity: this.quantity,
+		location: this.location
+	}
+}
+
+Item.revive = function(data) {
+	return new Item(data.id, data.quantity, data.location);
+}
+
 Item.prototype.getWeaponPower = function() {
 	if (this.type === ITEM_TYPE_WEAPON) {
 		switch (this.id) {
