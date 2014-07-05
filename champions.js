@@ -72,6 +72,10 @@ Champion.revive = function(data) {
 	c.spellUp = data.spellUp;
 	c.levelUp = data.levelUp;
 	c.spellBook = data.spellBook;
+        for (p in data.pocket){
+            data.pocket[p] = newPocketItem(data.pocket[p].id,data.pocket[p].quantity);                    
+        }
+//        c.pocket = data.pocket;
 	return c;
 };
 

@@ -207,5 +207,5 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 		//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
 		//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
 		//	}
-                setTimeout(function() {Run();}, 50);
+                setTimeout(function() {Run();}, 500);
 }
