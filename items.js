@@ -314,26 +314,28 @@ function newPocketItem(id, q) {
 //new dungeon item
 
 function dropItem(id, q, f, x, y, s) {
-	if(getItemType(id) === ITEM_TYPE_STACKABLE) {
-		for (i = item[towerThis].length - 1; i >= 0; i--) {
-			var it = item[towerThis][i];
-			if (it.id === id) {
-				if(it.location.floor === f && it.location.x === x && it.location.y === y && it.location.square === s) {
-					q += it.quantity;
-					item[towerThis].splice(i, 1);
-					break;
+	if(id > 0) {
+		if(getItemType(id) === ITEM_TYPE_STACKABLE) {
+			for (i = item[towerThis].length - 1; i >= 0; i--) {
+				var it = item[towerThis][i];
+				if (it.id === id) {
+					if(it.location.floor === f && it.location.x === x && it.location.y === y && it.location.square === s) {
+						q += it.quantity;
+						item[towerThis].splice(i, 1);
+						break;
+					}
 				}
 			}
 		}
+		var it = new Item(id, q, {
+			tower: towerThis,
+			floor: f,
+			x: x,
+			y: y,
+			square: s
+		});
+		item[towerThis].push(it);
 	}
-	var it = new Item(id, q, {
-		tower: towerThis,
-		floor: f,
-		x: x,
-		y: y,
-		square: s
-	});
-	item[towerThis].push(it);
 }
 
 //This is the big item list

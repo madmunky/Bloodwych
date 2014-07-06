@@ -356,7 +356,7 @@ function processCanvasInput(pid, x, y) {
 			}
 		}
 		if (uiClickInArea(x, y, UI_CLICK_POCKET_HAND, p)) {
-			p.useItemInHand();
+			p.useItemActivePocket();
 			p.redrawLeftRightUiFlag = UI_REDRAW_POCKETS;
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, p)) {

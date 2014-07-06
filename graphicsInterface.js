@@ -842,7 +842,7 @@ function drawPocketUI(p, chp, start) {
 							if (p.pocket.id > 0) {
 								writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
 								if (p.pocket.type === ITEM_TYPE_FOOD) {
-									var t = showStatusBar(chp.food, 200, 69);
+									var t = showStatusBar(chp.getFood(), 200, 69);
 									ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
 								}
 							}
@@ -954,7 +954,7 @@ function drawStatsPage(p, ch, start) {
 
 		if (!start) {
 			writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-			var t = showStatusBar(ch.food, 200, 62, COLOUR[COLOUR_RED_DARK]);
+			var t = showStatusBar(ch.getFood(), 200, 62, COLOUR[COLOUR_RED_DARK]);
 			ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
 		}
 	}

@@ -171,6 +171,19 @@ Champion.prototype.addSP = function(sp) {
 		this.stat.sp = this.stat.spMax;
 	}
 }
+Champion.prototype.getFood = function() {
+	return this.food;
+}
+Champion.prototype.addFood = function(fd) {
+	this.food += fd;
+	if(this.getFood() < 0) {
+		this.food = 0;
+		return true;
+	} else if(this.getFood() > 200) {
+		this.food = 200;
+	}
+	return false;
+}
 
 Champion.prototype.getWeaponPower = function(s) {
 	return Math.ceil(this.pocket[s].getWeaponPower() * 0.5);
@@ -269,9 +282,7 @@ Champion.prototype.restoreStats = function() {
 			this.addVit(Math.floor((Math.random() * (this.stat.agi / 16)) + 1));
 			this.addSP(Math.floor((Math.random() * (this.stat.int / 16)) + 1));
 			if (this.recruitment.playerId > -1 && this.id !== CHA_MR_FLAY) {
-				if (this.food > 0) {
-					this.food--;
-				} else {
+				if (this.addFood(-1)) {
 					this.addVit(-Math.floor(Math.random() * 9) + 3)
 				}
 			}

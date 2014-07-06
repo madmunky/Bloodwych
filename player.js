@@ -343,7 +343,7 @@ Player.prototype.tryAttack = function() {
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
-			if (this.floor === player[1 - this.id].floor && this.x + xy.x === player[1 - this.id].x && this.y + xy.y === player[1 - this.id].y) {
+			if (typeof player[1] !== 'undefined' && this.floor === player[1 - this.id].floor && this.x + xy.x === player[1 - this.id].x && this.y + xy.y === player[1 - this.id].y) {
 				//attack player
 				this.attack(true, player[1 - this.id]);
 				return true;
@@ -816,10 +816,10 @@ Player.prototype.gainChampionXp = function(xp, ch) {
 			if (ch.xp > 255) {
 				ch.xp = ch.xp % 256;
 				ch.xp2++;
-				if (ch.xp2 >= getXpForSpell(ch.level, ch.prof)) {
+				if (ch.xp2 === getXpForSpell(ch.level, ch.prof)) {
 					ch.spellUp++;
 				}
-				if (ch.xp2 >= getXpForLevel(ch.level)) {
+				if (ch.xp2 === getXpForLevel(ch.level)) {
 					ch.xp2 = 0;
 					ch.levelUp++;
 				}
@@ -914,17 +914,21 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 }
 
 Player.prototype.drawItem = function(it, distance, offset) {
-	var iGfx = itemRef[it.id].gfxD[distance];
-	if (typeof iGfx !== "undefined") {
-		if (getObject(this.floor, it.location.x, it.location.y, this.d, 2) === OBJECT_SHELF) {
-			var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
-			var offy = 60 - Math.floor(iGfx.height) - offset.y;
-		} else {
-			var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
-			var offy = 77 - Math.floor(iGfx.height) - offset.y;
+	try {
+		var iGfx = itemRef[it.id].gfxD[distance];
+		if (typeof iGfx !== "undefined") {
+			if (getObject(this.floor, it.location.x, it.location.y, this.d, 2) === OBJECT_SHELF) {
+				var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
+				var offy = 60 - Math.floor(iGfx.height) - offset.y;
+			} else {
+				var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
+				var offy = 77 - Math.floor(iGfx.height) - offset.y;
+			}
+			this.Portal.drawImage(iGfx, offx * scale, offy * scale, iGfx.width * scale, iGfx.height * scale);
 		}
-		this.Portal.drawImage(iGfx, offx * scale, offy * scale, iGfx.width * scale, iGfx.height * scale);
-	}
+	} catch (e) {
+		"DRAW ITEM ERROR: " + e.toString()
+	};
 }
 
 Player.prototype.drawProjectile = function(pr, distance, offset) {
@@ -952,7 +956,7 @@ Player.prototype.consumeItemInHand = function() {
 	this.pocket.setPocketItem(this.pocket.id, this.pocket.quantity - 1);
 }
 
-Player.prototype.useItemInHand = function() {
+Player.prototype.useItemActivePocket = function() {
 	var ch = this.getActivePocketChampion();
 	if (ch !== null && !ch.dead) {
 		var itH = this.pocket;
@@ -970,16 +974,31 @@ Player.prototype.useItemInHand = function() {
 					break;
 				case ITEM_TYPE_FOOD:
 					var fd = itH.getFoodValue();
-					ch.food += fd;
-					if (ch.food > 200) {
-						ch.food = 200;
-					}
+					ch.addFood(fd);
 					if (itH.id <= ITEM_WATER && itH.id % 3 !== 2) {
 						itH.setPocketItem(itH.id - 1);
 					} else {
 						itH.setPocketItem();
 					}
 					break;
+				case ITEM_TYPE_POTION:
+					switch(itH.id) {
+						case ITEM_SERPENT_SLIME:
+						ch.stat.hp = ch.stat.hpMax;
+						break;
+						case ITEM_BRIMSTONE_BROTH:
+						ch.addHP(Math.floor(ch.stat.hpMax / 2));
+						ch.addVit(Math.floor(ch.stat.vitMax / 2));
+						ch.addSP(Math.floor(ch.stat.spMax / 2));
+						break;
+						case ITEM_DRAGON_ALE:
+						ch.stat.vit = ch.stat.vitMax;
+						break;
+						case ITEM_MOON_ELIXIR:
+						ch.stat.sp = ch.stat.spMax;
+						break;
+					}
+					itH.setPocketItem();
 				default:
 					break;
 			}

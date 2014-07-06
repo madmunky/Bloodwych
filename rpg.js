@@ -134,7 +134,7 @@ function calculateAttack(att, def, tof) {
 							if (!to.attacking) {
 								defense += 10;
 							}
-							defense += 10 + to.level * 3;
+							defense += 10 + to.level * 2;
 						}
 					}
 					break;
