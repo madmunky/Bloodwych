@@ -57,7 +57,7 @@ function calculateAttack(att, def, tof) {
 				}
 				attack = attack * (1.0 + from.stat.str / 16.0 + from.stat.agi / 32.0); //add strength and agility to attack points
 				attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
-				hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
+				//hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
 			}
 		} else if (att instanceof Projectile) {
 			if (a === 0) {
@@ -134,7 +134,7 @@ function calculateAttack(att, def, tof) {
 							if (!to.attacking) {
 								defense += 10;
 							}
-							defense += 10 + to.level * 2;
+							defense += 10 + to.level;
 						}
 					}
 					break;

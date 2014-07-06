@@ -12,16 +12,18 @@ COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shi
 UI  Fix death screen as I did with asleep
 BUG Cast% stays when closing book
 BUG Yellow flash when hit by a spell draws before wooden object
-BUG If a monster is at the bottom of the stairs you shouldnt be able to move down
 
 CHRIS
 ------
 TST Figure out and fix spell points for champs
+TST Figure out the remaining switches and buttons
+TST Figure out gemslots (also tower gems)
 COD Pause game
-COD Load/save game
+UI  Load/save game
 UI  Finish communication
 GFX Big monster drawing fixes
 GFX Find Armour Palettes
+BUG Investigate left communication panel occasionally disappearing (mostly on mobile devices)
 
 QUESTIONS FOR CHRIS
 -------------------

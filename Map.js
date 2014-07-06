@@ -102,6 +102,8 @@ function canMove(f, x, y, d, to) {
 	//Check other objects
 	if (objNext == '3') {
 		return OBJECT_MISC; //Misc
+	} else if (objNext == '4') { //Stairs
+		return OBJECT_STAIRS;
 	} else if (objNext == '5' && getHexToBinaryPosition(hex15, 7, 1) == '1') {
 		return OBJECT_DOOR;
 	}

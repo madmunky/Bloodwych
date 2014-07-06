@@ -167,7 +167,8 @@ Player.prototype.getViewPortal = function() {
 };
 
 Player.prototype.canMove = function(d) {
-	return canMove(this.floor, this.x, this.y, this.d, d) === 0;
+	var mv = canMove(this.floor, this.x, this.y, this.d, d);
+	return mv === OBJECT_NONE || mv === OBJECT_STAIRS;
 };
 
 Player.prototype.canMoveByWood = function(d) {
@@ -309,13 +310,14 @@ Player.prototype.rotate = function(r) {
                        drawActiveSpell(champion[this.championLeader].activeSpell.id,this); 
                     }
                 } */
-		redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
 		this.doEvent(false);
+		redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
 	}
 };
 
 Player.prototype.rotateTo = function(d) {
 	this.d = (d + 4) % 4;
+	redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
 };
 
 Player.prototype.move = function(d) {

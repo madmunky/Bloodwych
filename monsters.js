@@ -35,7 +35,7 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, te
 		this.champId = champId; //optional Champion ID
 		this.hp = 0;
 	} else {
-		this.hp = level * 10 + 25;
+		this.hp = level * 15 + 30;
 	}
 }
 
@@ -503,7 +503,7 @@ Monster.prototype.die = function() {
 				var it = Math.floor(Math.random() * ITEM_WATER + 1);
 				var qt = 1;
 				if (it <= ITEM_ELF_ARROWS) {
-					qt = Math.floor(Math.random() * (this.level + 1) * 3) + 1;
+					qt = Math.floor(Math.random() * (this.level + 2) * 2) + 1;
 				}
 				dropItem(it, qt, this.floor, this.x, this.y, sq);
 			}

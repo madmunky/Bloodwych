@@ -305,6 +305,7 @@ function castSpell(s, src, pw) {
 		case SPELL_DISRUPT:
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, s, pow, f, x, y, d, src);
 			break;
+
 			//dragon
 		case SPELL_MISSILE:
 			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON_ARROW, s, pow, f, x, y, d, src);

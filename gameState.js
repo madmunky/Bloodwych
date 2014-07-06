@@ -14,6 +14,7 @@ gameState.prototype.load = function() {
 		players = 1;
 	}
 
+	versionThis = this.gameData.version;
 	tower = this.gameData.tower;
 	player = this.gameData.player;
 	champion = this.gameData.champion;
@@ -65,11 +66,21 @@ gameState.prototype.load = function() {
 		dungeonSpellList[s].projectile = getProjectileById(dungeonSpellList[s].projectile.tower, dungeonSpellList[s].projectile.id);
 	}
 
+	//version control
+	if(typeof versionThis === 'undefined' || versionThis < 0.50) {
+		for (var t = 0; t < 7; t++) {
+			for (var m = 0; m < monster[t].length; m++) {
+				monster[t][m].hp += monster[t][m].level * 5 + 5;
+			}
+		}
+	}
+
 	player[0].message(TEXT_GAME_LOADED, COLOUR[COLOUR_GREEN]);
 };
 
 gameState.prototype.save = function() {
 	this.gameData = {
+		version: VERSION,
 		tower: $.extend(true, {}, tower),
 		player: $.extend(true, {}, player),
 		champion: $.extend(true, {}, champion),

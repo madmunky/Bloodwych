@@ -13,6 +13,8 @@ var saveGame = new gameState('saveGame0');
 var checkStarted = true;
 
 //Setup some global Varibles for needed
+var VERSION = 0.50
+var versionThis = 0.50
 var Types = {};
 var gameStarted = false;
 var scale = 3;
