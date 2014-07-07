@@ -8,7 +8,6 @@ COD More spells!
 COD Fix RPG on spells
 COD Spell cost % and other spell rpg stuff
 COD Fix Big monster 'edge of screen'
-COD Fix pockets only allow correct items to hands/amour slots (todo: smaller shields)
 UI  Fix death screen as I did with asleep
 BUG Cast% stays when closing book
 BUG Yellow flash when hit by a spell draws before wooden object
@@ -28,6 +27,7 @@ BUG Investigate left communication panel occasionally disappearing (mostly on mo
 QUESTIONS FOR CHRIS
 -------------------
 The spell points seem wrong compared to steem. E.g. Zothen has 43 sp in ours, and 21 in original, and Megrim has 0 spell points. Anything we missed? - Not sure about this maybe we need to rip the ingame stats instead
+When a champ deals damage, do all champions in player team get the same amount of xp per hit, per champ? Or only the champ that deals the damage?
 
 QUESTIONS FOR JORG
 ------------------

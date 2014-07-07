@@ -752,10 +752,14 @@ function drawPocketUI(p, chp, start) {
 							pocketId = UI_GFX_POCKET_EMPTY_RIGHT_HAND;
 							break;
 						case 2:
-							pocketId = UI_GFX_POCKET_EMPTY_AMOUR;
+							pocketId = UI_GFX_POCKET_EMPTY_ARMOUR;
 							break;
 						case 3:
-							pocketId = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
+							if(chp.prof === PROFESSION_WARRIOR || chp.prof === PROFESSION_ADVENTURER) {
+								pocketId = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
+							} else {
+								pocketId = UI_GFX_POCKET_EMPTY_SMALL_SHIELD;
+							}
 							break;
 						default:
 							break;

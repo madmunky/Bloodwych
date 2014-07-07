@@ -6,14 +6,6 @@ function gameState(saveName) {
 gameState.prototype.load = function() {
 	this.gameData = JSON.parse(localStorage.getItem(this.fileName));
 
-	if (this.gameData.player.length >= 1 && player.length < 1) {
-		initPlayers(false, true);
-		players = 2;
-	} else {
-		initPlayers(true, true);
-		players = 1;
-	}
-
 	versionThis = this.gameData.version;
 	tower = this.gameData.tower;
 	player = this.gameData.player;

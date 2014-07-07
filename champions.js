@@ -204,7 +204,7 @@ Champion.prototype.getBowPower = function() {
 
 Champion.prototype.getArmourClass = function() {
 	var ac = this.stat.ac;
-	var arm = this.pocket[POCKET_TORSO].getArmourClass();
+	var arm = this.pocket[POCKET_ARMOUR].getArmourClass();
 	var sld = this.pocket[POCKET_SHIELD].getArmourClass();
 	var glv = this.pocket[POCKET_GLOVES].getArmourClass();
 	if (ac > arm) {

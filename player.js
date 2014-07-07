@@ -803,14 +803,14 @@ Player.prototype.getOrderedChampionIds = function(all) {
 }
 
 Player.prototype.gainChampionXp = function(xp, ch) {
-	if (typeof ch !== "undefined") {
-		gainChampionXp1();
-	} else {
+	//if (typeof ch !== "undefined") {
+	//	gainChampionXp1();
+	//} else {
 		for (c = 0; c < this.champion.length; c++) {
 			var ch = this.getChampion(c);
 			gainChampionXp1();
 		}
-	}
+	//}
 
 	function gainChampionXp1() {
 		if (ch !== null) {
@@ -1013,7 +1013,8 @@ Player.prototype.exchangeItemWithHand = function(s) {
 	if (ch !== null) {
 		var it = ch.pocket[s];
 		var itH = this.pocket;
-		if (itH.id === 0 || ((s !== 2 || itH.type === ITEM_TYPE_ARMOUR) && (s !== 3 || itH.type === ITEM_TYPE_SHIELD))) {
+		var allowedShield = itH.type === ITEM_TYPE_SHIELD && (ch.prof % 2 === PROFESSION_WARRIOR || itH.id <= ITEM_RUNE_SHIELD);
+		if (itH.id === 0 || ((s !== POCKET_ARMOUR || itH.type === ITEM_TYPE_ARMOUR) && (s !== POCKET_SHIELD || allowedShield))) {
 			if (it.type === ITEM_TYPE_STACKABLE && (itH.id === 0 || it.id === itH.id)) {
 				if (itH.id === 0) {
 					itH.setPocketItem(it.id, 1);

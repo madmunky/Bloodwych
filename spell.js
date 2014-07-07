@@ -258,6 +258,12 @@ function castSpell(s, src, pw) {
 		case SPELL_SPELLTAP:
 			break;
 		case SPELL_ALCHEMY:
+			var validItems = [ITEM_TYPE_WEAPON, ITEM_TYPE_ARMOUR, ITEM_TYPE_SHIELD, ITEM_TYPE_GLOVES];
+			if(validItems.indexOf(ch.pocket[POCKET_LEFT_HAND].type) > -1) {
+				ch.pocket[POCKET_LEFT_HAND].setPocketItem(ITEM_COINAGE, pow);
+			} else if(validItems.indexOf(ch.pocket[POCKET_RIGHT_HAND].type) > -1) {
+				ch.pocket[POCKET_RIGHT_HAND].setPocketItem(ITEM_COINAGE, pow);
+			}
 			break;
 		case SPELL_SUMMON:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
