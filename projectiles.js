@@ -65,16 +65,31 @@ Projectile.prototype.moveProjectile = function() {
 		}
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		if (typeof this.monster !== "undefined") {
+			var sid = this.spell.index;
+			var isDamage = (sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND);
 			for (p in player) {
 				if (!player[p].dead && this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
-					this.attack(player[p]);
-					this.dead = 2;
-					return false;
+					if(isDamage) {
+						this.attack(player[p]);
+						this.dead = 2;
+						return false;
+					}
 				}
 			}
 			var mon = getMonsterAt(this.floor, this.x, this.y);
 			if (mon !== null) {
-				this.attack(mon);
+				if(isDamage) {
+					this.attack(mon);
+				} else {
+					var combat = calculateAttack(this, mon);
+					if(combat.length > 0) {
+						if(sid === SPELL_PARALYZE) {
+							mon.timerParalyze = combat[0].power;
+						} else if(sid === SPELL_TERROR) {
+							mon.timerTerror = combat[0].power;
+						}
+					}
+				}
 				this.dead = 2;
 				return false;
 			}

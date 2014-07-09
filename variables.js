@@ -30,7 +30,7 @@ var testDirection = 0;
 var testPalette = 0;
 var timerMaster = 0;
 var timerMonsterMove = 0;
-var timerMonsterAttack = 0;
+//var timerMonsterAttack = 0;
 var timerChampionStats = 0;
 var timerChampionAttack = 16;
 var cutpurseTrueview = 0;
@@ -507,7 +507,7 @@ CHA_BODY[13] = {
 };
 
 var monsterTeamIdMax = 0;
-var monsterAttackSequence = 0;
+//var monsterAttackSequence = 0;
 var monster = new Array();
 var monsterRef = new Array();
 

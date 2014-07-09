@@ -153,7 +153,7 @@ function drawSpellBook(p, ui, dr) {
 		ch = champion[championSelect[currentPlayer].champID];
 		start = true;
 	} else {
-		ch = champion[p.champion[p.championLeader]];
+		ch = p.getChampion(p.championLeader);
 	}
 
 	//var ch = champion[p.champion[p.championLeader]];

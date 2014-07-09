@@ -577,6 +577,10 @@ Champion.prototype.getSpellPower = function() {
 	return res;
 }
 
+Champion.prototype.getSpeed = function(fac) {
+	return Math.floor(fac / (1.0 + 0.02 * this.level));
+}
+
 function getChampionClass(id) {
 	return id % 4;
 }
@@ -655,6 +659,7 @@ function initChampions() {
 				}
 			}
 		}
+		//spellBook[0][1].learnt = true;
 		monster[TOWER_CHAMPIONS][ch] = new Monster(ch, level, 3, ch, TOWER_MOD0, floor, x, y, d, 0, true, 0, ch);
 		champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBook, slot);
 		PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);

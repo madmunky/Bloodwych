@@ -58,17 +58,21 @@ function timerAction() {
 			}
 		}
 	}
-	if (timerMaster - timerMonsterMove >= 20) {
+	/*if (timerMaster - timerMonsterMove >= 20) {
 		timerMonsterMove = timerMaster;
 		monsterAttackSequence = 0;
-		mon = getMonstersInTower(towerThis);
-		for (m in mon) {
-			mon[m].move();
-		}
 	}
 	if (timerMaster - timerMonsterAttack >= 3) {
 		timerMonsterAttack = timerMaster;
 		monsterAttackSequence++;
+	}*/
+	mon = getMonstersInTower(towerThis);
+	for (m in mon) {
+		var tm = mon[m].getCurseTimers();
+		if(tm > 0 && timerMaster - mon[m].timerMove >= tm) {
+			mon[m].timerMove = timerMaster;
+			mon[m].move();
+		}
 	}
 
 	for (p in player) {

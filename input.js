@@ -282,7 +282,7 @@ function processCanvasInput(pid, x, y) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_INTERACT, p)) {
-			var ch = champion[p.champion[p.championLeader]];
+			var ch = p.getChampion(p.championLeader);
 			if (ch.activeSpell.id > -1) {
 				ch.expireSpell();
 			} else if (ch.selectedSpell === null) {

@@ -22,7 +22,7 @@ function Player(id, ScreenX, ScreenY) {
 	this.attacking = false;
 	this.towerSwitches = new Array();
 	this.messageTimeout = 0;
-	this.timerChampionStats = 0;
+	this.timerChampionStats = timerMaster;
 	this.timerSpellBookTurn = 0;
 	this.redrawLeftRightUiFlag = -1;
 	this.showSpellText = false;
@@ -785,6 +785,7 @@ Player.prototype.getChampionPosition = function(id) {
 }
 
 //gets champions. champion 0 is the leader
+//all === true means also getting the 'unattached' champions
 Player.prototype.getOrderedChampionIds = function(all) {
 	if(typeof all === 'undefined') {
 		var all = false;
@@ -800,6 +801,19 @@ Player.prototype.getOrderedChampionIds = function(all) {
 		}
 	}
 	return c1;
+}
+
+Player.prototype.getOrderedChampions = function(all) {
+	var ch1 = new Array();
+	var c1 = this.getOrderedChampionIds();
+	for (c = 0; c < this.champion.length; c++) {
+		var cid = c1[c];
+		var ch = this.getChampion(cid);
+		if(ch !== null && (all || ch.recruitment.attached)) {
+			ch1.push(ch);
+		}
+	}
+	return ch1;
 }
 
 Player.prototype.gainChampionXp = function(xp, ch) {
@@ -1158,6 +1172,8 @@ Player.prototype.castSpell = function(sb, ch, s) {
 	}
 	this.doneCommunication();
 	if (ch.stat.sp - sb.cost >= 0) {
+		ch.addSP(-sb.cost);
+		ch.addVit(-sb.cost);
 		if (Math.random() < ch.getSpellCastChance()) {
 			castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10);
 			sb.castSuccessful++;
@@ -1172,13 +1188,8 @@ Player.prototype.castSpell = function(sb, ch, s) {
 		} else {
 			ch.writeAttackPoints('spell');
 		}
-		ch.selectedSpell = null;
 		ch.spellFatigue = ch.spellFatigue - 0.75;
-		ch.stat.sp -= sb.cost;
-		ch.stat.vit -= sb.cost;
-		if (ch.stat.vit < 0) {
-			ch.stat.vit = 0;
-		}
+		ch.selectedSpell = null;
 		ch.getMonster().doGesture(CHA_GESTURE_SPELLCASTING);
 	} else if (!s) {
 		writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, COLOUR[COLOUR_RED]);

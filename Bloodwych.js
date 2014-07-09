@@ -241,8 +241,8 @@ function godMode() {
 		ch.stat.agi = 99;
 		ch.stat.int = 99;
 		ch.stat.cha = 99;
-		ch.stat.hp = 999;
-		ch.stat.hpMax = 999;
+		ch.stat.hp = 255;
+		ch.stat.hpMax = 255;
 		ch.stat.sp = 255;
 		ch.stat.spMax = 255;
 		ch.stat.vit = 255;

@@ -23,6 +23,10 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, te
 	this.gesture = CHA_GESTURE_NONE;
 	this.gestureTimer = 0;
 	this.dead = false;
+	this.timerMove = timerMaster;
+	this.timerAttack = timerMaster;
+	this.timerTerror = 0;
+	this.timerParalyze = 0;
 	if (square > CHAR_FRONT_SOLO) {
 		this.square = (square + d) % 4;
 	} else if(typeof sqrel !== 'undefined' && sqrel) {
@@ -60,6 +64,8 @@ Monster.prototype.toJSON = function() {
 		gesture: this.gesture,
 		gestureTimer: this.gestureTimer,
 		dead: this.dead,
+		timerMove: this.timerMove,
+		timerAttack: this.timerAttack,
 		square: this.square,
 		champId: this.champId,
 		hp: this.hp
@@ -73,6 +79,8 @@ Monster.revive = function(data) {
 	m.gesture = data.gesture;
 	m.gestureTimer = data.gestureTimer;
 	m.dead = data.dead;
+	m.timerMove = data.timerMove,
+	m.timerAttack = data.timerAttack,
 	m.hp = data.hp;
 	return m;
 };
@@ -116,7 +124,7 @@ Monster.prototype.canInteract = function() {
 				return this.assembleTeamWith(mon);
 			}
 		}
-	} else if (this.champId > -1 && !this.communicating) { //champion
+	} else if ((this.champId > -1 && !this.communicating) || this.timerTerror > 0) { //champion
 		var ch = this.getChampion();
 		if (ch !== null && ch.recruitment.called && ch.recruitment.playerId > -1 && ch.recruitment.playerId === ply) {
 			ch.recruitment.attached = true;
@@ -393,6 +401,9 @@ Monster.prototype.followPlayer = function() {
 }
 
 Monster.prototype.rotateTo = function(d) {
+	if(this.timerTerror > 0) {
+		d = (d + 2) % 4;
+	}
 	this.d = d;
 	updateMonsterTeam(this.teamId);
 }
@@ -477,7 +488,7 @@ Monster.prototype.isRecruitedBy = function() {
 }
 
 Monster.prototype.isAggressive = function() {
-	if (this.champId > -1 || this.ref.id === 21 || this.ref.id === 22) {
+	if (this.champId > -1 || this.ref.id === 21 || this.ref.id === 22 || this.timerTerror > 0) {
 		return false;
 	}
 	return true;
@@ -510,6 +521,23 @@ Monster.prototype.die = function() {
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, -1, 0, this.floor, this.x, this.y, 0, null);
 		}
 	}
+}
+
+//check timers for paralyze and terror, and return a timer factor for slowing the monster down or freezing the monster
+Monster.prototype.getCurseTimers = function() {
+	var fac = 20;
+	if(this.timerParalyze > 0) {
+		fac = 0;
+		this.timerParalyze--;
+	} else if(this.timerTerror > 0) {
+		fac = 5;
+		this.timerTerror--;
+	}
+	return this.getSpeed(fac);
+}
+
+Monster.prototype.getSpeed = function(fac) {
+	return Math.floor(fac / (1.0 + 0.02 * this.level));
 }
 
 Monster.prototype.setBinaryView = function(pos18, index, length, to) {

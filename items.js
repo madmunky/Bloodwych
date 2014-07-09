@@ -92,7 +92,6 @@ Item.prototype.getFoodValue = function() {
 		} else if (this.id <= ITEM_WATER) {
 			return 10;
 		} else if (this.id <= ITEM_NEGG_GREEN) {
-			alert(1);
 			return 33;
 		} else if (this.id <= ITEM_NEGG_BLUE) {
 			return 66;

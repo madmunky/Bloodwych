@@ -130,12 +130,14 @@ function getSpellPower(id) {
 		case SPELL_ARMOUR:
 			return 1;
 		case SPELL_PARALYZE:
-			return 1;
+			return 4;
 		case SPELL_COMPASS:
 			return 2;
 		case SPELL_LEVITATE:
 			return 2;
 		case SPELL_WARPOWER:
+			return 1;
+		case SPELL_RENEW:
 			return 1;
 		case SPELL_ARC_BOLT:
 			return 2;
@@ -166,7 +168,7 @@ function getSpellPower(id) {
 		case SPELL_MAGELOCK:
 			return 1;
 		case SPELL_VITALISE:
-			return 0.5;
+			return 1;
 		case SPELL_DISPELL:
 			return 1;
 		case SPELL_FIREBALL:
@@ -202,12 +204,11 @@ function getSpellPower(id) {
 
 function castSpell(s, src, pw) {
 	var sp = getSpellById(s);
-	var pow = (Math.random() * pw / 2) + (pw / 2);
-	if (pow > 63) {
+	var pow = (Math.random() * pw / 2.0) + (pw / 2.0);
+	/*if (pow > 63) {
 		pow = 63;
-	}
+	}*/
 	pow = Math.ceil(pow * sp.power);
-	PrintLog('SPELLPOWER: ' + pow + ' ' + sp.power);
 	var f = src.floor;
 	var x = src.x;
 	var y = src.y;
@@ -217,6 +218,7 @@ function castSpell(s, src, pw) {
 	var y1 = y + xy.y;
 	if (src.champId > -1) {
 		var ch = champion[src.champId];
+		PrintLog('SPELLPOWER: ' + pow + ' ' + sp.power);
 	}
 	switch (s) {
 		//serpent
@@ -224,6 +226,7 @@ function castSpell(s, src, pw) {
 			ch.activateSpell(s, pow);
 			break;
 		case SPELL_PARALYZE:
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_SERPENT_ARROW, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_COMPASS:
 			ch.activateSpell(s, pow);
@@ -233,6 +236,15 @@ function castSpell(s, src, pw) {
 			break;
 		case SPELL_WARPOWER:
 			ch.activateSpell(s, pow);
+			break;
+		case SPELL_RENEW:
+			if(ch.recruitment.playerId > -1) {
+				var pl = player[ch.recruitment.playerId];
+				var chs = pl.getOrderedChampions();
+				for (c in chs) {
+					chs[c].addHP(pow);
+				}
+			}
 			break;
 		case SPELL_ARC_BOLT:
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_SERPENT_BIG, s, pow, f, x, y, d, src);
@@ -251,6 +263,7 @@ function castSpell(s, src, pw) {
 		case SPELL_DEFLECT:
 			break;
 		case SPELL_TERROR:
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS_ARROW, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_ANTIMAGE:
 			ch.activateSpell(s, pow);
@@ -324,7 +337,13 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_VITALISE:
-			ch.addVit(pow);
+			if(ch.recruitment.playerId > -1) {
+				var pl = player[ch.recruitment.playerId];
+				var chs = pl.getOrderedChampions();
+				for (c in chs) {
+					chs[c].addVit(pow);
+				}
+			}
 			break;
 		case SPELL_DISPELL:
 			if (src.getBinaryView(15, 12, 4) === '7') {

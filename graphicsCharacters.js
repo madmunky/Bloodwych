@@ -514,7 +514,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 				var dir1 = dir;
 				var dir2 = -1;
 				if (part === IMAGE_CHA_ARM) { //attack arms
-					var mas = Math.floor((timerMaster - m.gestureTimer) / 3);
+					var mas = Math.floor((timerMaster - m.gestureTimer) / m.getSpeed(3));
 					if (dir === 0) {
 						dir1 = 0;
 						dir2 = 2;
@@ -632,7 +632,7 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
 					var dir2 = -1;
 
 					if (part === IMAGE_MON_ARM) {
-						var mas = Math.floor((timerMaster - m.gestureTimer) / 3);
+						var mas = Math.floor((timerMaster - m.gestureTimer) / m.getSpeed(3));
 						if (dir === 0) {
 							dir1 = 0;
 							dir2 = 2;
