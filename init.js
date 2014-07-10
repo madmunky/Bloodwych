@@ -82,8 +82,8 @@ function loadGfxData() {
 	gfxLoadImage("dungeon", "deco", "moon-head");
 	gfxLoadImage("dungeon", "deco", "dragon-head");
 	gfxLoadImage("dungeon", "deco", "chaos-head");
-	gfxLoadImage("dungeon", "deco", "switch", 8);
-	gfxLoadImage("dungeon", "deco", "switch-off", 8);
+	gfxLoadImage("dungeon", "deco", "switch", 6);
+	gfxLoadImage("dungeon", "deco", "switch-off", 6);
 	gfxLoadImage("dungeon", "deco", "gem", 7);
 	gfxLoadImage("dungeon", "deco", "gem-off", 7);
 	gfxLoadImage("dungeon", "deco", "script", 7);

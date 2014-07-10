@@ -215,7 +215,7 @@ Player.prototype.action = function() {
 		//Wooden doors (on player)
 		this.checkWoodenDoor(18);
 		//Wall switches
-		if (this.getBinaryView(15, 0, 4) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
+		if (this.getBinaryView(15, 0, 5) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
 			this.setBinaryView(15, 5, 1);
 			switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
 		}

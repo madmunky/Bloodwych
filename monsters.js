@@ -66,6 +66,8 @@ Monster.prototype.toJSON = function() {
 		dead: this.dead,
 		timerMove: this.timerMove,
 		timerAttack: this.timerAttack,
+		timerTerror: this.timerTerror,
+		timerParalyze: this.timerParalyze,
 		square: this.square,
 		champId: this.champId,
 		hp: this.hp
@@ -81,6 +83,8 @@ Monster.revive = function(data) {
 	m.dead = data.dead;
 	m.timerMove = data.timerMove,
 	m.timerAttack = data.timerAttack,
+	m.timerTerror = data.timerTerror,
+	m.timerParalyze = data.timerParalyze,
 	m.hp = data.hp;
 	return m;
 };

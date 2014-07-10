@@ -221,7 +221,7 @@ function getStoneWall(HexCode, d, pos, p, pos18) {
 					return gfx["dungeon"]["deco"]["script"][RND8];
 				}
 			} else if (getHexToBinaryPosition(HexCode, 6, 2) === '2') { //Switch
-				if (getHexToBinaryPosition(HexCode, 0, 4) === '0') {
+				if (getHexToBinaryPosition(HexCode, 0, 5) === '0') {
 					return gfx["dungeon"]["deco"]["switch"][COLOUR_SWITCH_BLACK]; // Black switch
 				} else if (getHexToBinaryPosition(HexCode, 5) === '1') {
 					return gfx["dungeon"]["deco"]["switch-off"][RND6]; // Off switch
@@ -230,7 +230,7 @@ function getStoneWall(HexCode, d, pos, p, pos18) {
 				}
 			} else if (getHexToBinaryPosition(HexCode, 6, 2) === '3') { //Crystal Gem
 				var col = parseInt(getHexToBinaryPosition(HexCode, 2, 3)); //Gem colour
-				if (getHexToBinaryPosition(HexCode, 5) === '0') {
+				if (getHexToBinaryPosition(HexCode, 5) === '1') {
 					return gfx["dungeon"]["deco"]["gem-off"][col];
 				} else {
 					return gfx["dungeon"]["deco"]["gem"][col];
@@ -746,13 +746,20 @@ function recolorImage(img, colour, folder, type, item) {
 	// change any old rgb to the new-rgb
 	if (folder === "dungeon") {
 		if (type === "deco") {
-			if (item === "switch" || item === "switch-off" || item === "gem" || item === "gem-off") {
-				if (item === "switch" || item === "gem") { //Switches
+			if (item === "switch" || item === "switch-off") { //Switches
+				if (item === "switch") {
 					palletDefault = objectPalette["switch"]["default"];
 				} else {
 					palletDefault = objectPalette["switch"]["default-off"];
 				}
 				pallet = objectPalette["switch"][colour];
+			} else if(item === "gem" || item === "gem-off") { //Gems
+				if(item === "gem") {
+					palletDefault = objectPalette["gem"]["default"];
+				} else {
+					palletDefault = objectPalette["gem"]["default-off"];
+				}
+				pallet = objectPalette["gem"][colour];
 			} else { //Banners
 				palletDefault = objectPalette["deco"]["default"];
 				pallet = objectPalette["deco"][colour];
