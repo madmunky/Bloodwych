@@ -617,7 +617,7 @@ function checkClickInViewPortal(p, x, y) {
 						return p.id;
 					}
 				}
-			} else if (o15 === OBJECT_SWITCH) {
+			} else if (o15 === OBJECT_SWITCH || o15 === OBJECT_GEM) {
 				if (uiClickInArea(x, y, UI_CLICK_PORTAL_SWITCH, p)) {
 					p.action();
 					return p.id;

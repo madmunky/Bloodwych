@@ -214,10 +214,30 @@ Player.prototype.action = function() {
 		this.checkWoodenDoor(15);
 		//Wooden doors (on player)
 		this.checkWoodenDoor(18);
+		var o15 = this.getObjectOnPos(15, 2);
 		//Wall switches
-		if (this.getBinaryView(15, 0, 5) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
+		//if (this.getBinaryView(15, 0, 5) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
+		if(o15 === OBJECT_SWITCH) {
 			this.setBinaryView(15, 5, 1);
 			switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
+		} else if(o15 === OBJECT_GEM) {
+			var itH = this.pocket;
+			var wall = parseInt(this.getBinaryView(15, 2, 3));
+			var pock = itH.id - ITEM_SERPENT_CRYSTAL;
+			if(this.getBinaryView(15, 5, 1) === '0') {
+				if(itH.id === 0) {
+					this.pocket.setPocketItem(wall + ITEM_SERPENT_CRYSTAL);
+					this.setBinaryView(15, 5, 1);
+				}
+			} else {
+				if(itH.type === ITEM_TYPE_GEM) {
+					if(pock === wall) {
+						this.pocket.setPocketItem();
+						this.setBinaryView(15, 5, 1);
+						//switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
+					}
+				}
+			}
 		}
 		//Check if something is in the way
 		if (this.getMonstersInRange(15).length > 0) {
