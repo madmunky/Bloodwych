@@ -19,7 +19,7 @@ var Types = {};
 var gameStarted = false;
 var scale = 3;
 var scaleReal = 3;
-var debug = true;
+var debug = false;
 var debugHigh = false;
 var debugWindow;
 var game;
