@@ -22,6 +22,7 @@ function Player(id, ScreenX, ScreenY) {
 	this.attacking = false;
 	this.towerSwitches = new Array();
 	this.messageTimeout = 0;
+	this.timerAttack = timerMaster;
 	this.timerChampionStats = timerMaster;
 	this.timerSpellBookTurn = 0;
 	this.redrawLeftRightUiFlag = -1;
@@ -112,6 +113,7 @@ Player.prototype.toJSON = function() {
 		attacking: this.attacking,
 		towerSwitches: this.towerSwitches,
 		messageTimeout: this.messageTimeout,
+		timerAttack: this.timerAttack,
 		timerChampionStats: this.timerChampionStats,
 		timerSpellBookTurn: this.timerSpellBookTurn,
 		redrawLeftRightUiFlag: this.redrawLeftRightUiFlag,
@@ -149,6 +151,7 @@ Player.revive = function(data) {
 	p.attacking = data.attacking;
 	p.towerSwitches = data.towerSwitches;
 	p.messageTimeout = data.messageTimeout;
+	p.timerAttack = data.timerAttack;
 	p.timerChampionStats = data.timerChampionStats;
 	p.timerSpellBookTurn = data.timerSpellBookTurn;
 	p.redrawLeftRightUiFlag = data.redrawLeftRightUiFlag;
@@ -404,7 +407,7 @@ Player.prototype.attack = function(attack, target) {
 							}
 						}
 					}
-				}, att.recruitment.position * 400);
+				}, att.recruitment.position * self.getAttackSpeed(400));
 				att.getMonster().doGesture(CHA_GESTURE_ATTACKING);
 			})(combat, com);
 		}
@@ -1305,6 +1308,14 @@ Player.prototype.startDrawHitDamage = function(cid, dmg) {
 			}
 		}
 	}
+}
+
+Player.prototype.getAttackSpeed = function(fac) {
+	var lvl = this.getChampion(this.championLeader).level;
+	if (lvl > 20) {
+		lvl = 20;
+	} 
+	return Math.floor(fac / (1.0 + 0.02 * lvl));
 }
 
 Player.prototype.testMode = function(id) {

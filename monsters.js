@@ -408,11 +408,6 @@ Monster.prototype.rotateTo = function(d) {
 	updateMonsterTeam(this.teamId);
 }
 
-Monster.prototype.doGesture = function(g) {
-	this.gesture = g;
-	this.gestureTimer = timerMaster;
-}
-
 //	CHAR_FRONT_LEFT = 0,
 //	CHAR_FRONT_RIGHT = 1,
 //	CHAR_BACK_RIGHT = 2,
@@ -537,7 +532,16 @@ Monster.prototype.getCurseTimers = function() {
 }
 
 Monster.prototype.getSpeed = function(fac) {
-	return Math.floor(fac / (1.0 + 0.02 * this.level));
+	var lvl = this.level;
+	if (lvl > 20) {
+		lvl = 20;
+	} 
+	return Math.floor(fac / (1.0 + 0.02 * lvl));
+}
+
+Monster.prototype.doGesture = function(g) {
+	this.gesture = g;
+	this.gestureTimer = timerMaster;
 }
 
 Monster.prototype.setBinaryView = function(pos18, index, length, to) {

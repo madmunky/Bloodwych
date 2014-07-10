@@ -432,7 +432,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 				//if (p.messageTimeout === 0 || self.recruitment.position === 0) {
 				ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
 				//}
-			}, 1500);
+			}, p.getAttackSpeed(1500));
 		})(p, x, y, w);
 	}
 }

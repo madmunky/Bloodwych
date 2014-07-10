@@ -17,7 +17,7 @@ gameState.prototype.load = function() {
 	timerMonsterMove = this.gameData.variables.timerMonsterMove;
 	//timerMonsterAttack = this.gameData.variables.timerMonsterAttack;
 	timerChampionStats = this.gameData.variables.timerChampionStats;
-	timerChampionAttack = this.gameData.variables.timerChampionAttack;
+	//timerChampionAttack = this.gameData.variables.timerChampionAttack;
 	towerThis = this.gameData.variables.towerThis;
 	monsterTeamIdMax = this.gameData.variables.monsterTeamIdMax;
 	//monsterAttackSequence = this.gameData.variables.monsterAttackSequence;
@@ -84,7 +84,7 @@ gameState.prototype.save = function() {
 			timerMonsterMove: timerMonsterMove,
 			//timerMonsterAttack: timerMonsterAttack,
 			timerChampionStats: timerChampionStats,
-			timerChampionAttack: timerChampionAttack,
+			//timerChampionAttack: timerChampionAttack,
 			towerThis: towerThis,
 			monsterTeamIdMax: monsterTeamIdMax,
 			//monsterAttackSequence: monsterAttackSequence,

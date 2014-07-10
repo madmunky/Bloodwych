@@ -44,7 +44,7 @@ Game.prototype = {
 
 function timerAction() {
 	cutpurseTrueview = (Math.floor(Math.random() * 10) === 0);
-	mon = getMonstersInTower(towerThis);
+	/*mon = getMonstersInTower(towerThis);
 	for (m in mon) {
 		if (timerMaster - mon[m].gestureTimer >= 20) {
 			mon[m].doGesture(CHA_GESTURE_NONE);
@@ -58,7 +58,7 @@ function timerAction() {
 			}
 		}
 	}
-	/*if (timerMaster - timerMonsterMove >= 20) {
+	if (timerMaster - timerMonsterMove >= 20) {
 		timerMonsterMove = timerMaster;
 		monsterAttackSequence = 0;
 	}
@@ -66,20 +66,30 @@ function timerAction() {
 		timerMonsterAttack = timerMaster;
 		monsterAttackSequence++;
 	}*/
+
+	//monster timer actions
 	mon = getMonstersInTower(towerThis);
 	for (m in mon) {
 		var tm = mon[m].getCurseTimers();
 		if(tm > 0 && timerMaster - mon[m].timerMove >= tm) {
 			mon[m].timerMove = timerMaster;
+			mon[m].doGesture(CHA_GESTURE_NONE);
 			mon[m].move();
 		}
 	}
 
+	//player timer actions
 	for (p in player) {
 		var pl = player[p];
 		var tm = 100;
 		if (pl.sleeping) {
 			tm = 50;
+		}
+		if (pl.attacking) {
+			if (timerMaster - pl.timerAttack >= pl.getAttackSpeed(20)) {
+				pl.timerAttack = timerMaster;
+				pl.tryAttack();
+			}
 		}
 		if (timerMaster - pl.timerChampionStats >= tm) {
 			pl.timerChampionStats = timerMaster;
@@ -105,7 +115,19 @@ function timerAction() {
 		if (pl.communication.answer !== null && timerMaster - pl.communication.answerTimer >= 40) {
 			pl.doCommunicationAnswer();
 		}
+
+		for (c = 0; c < pl.champion.length; c++) {
+			if(pl.uiLeftPanel.champs[c].damage > 0) {
+				if(timerMaster - pl.uiLeftPanel.champs[c].damageTimer >= 20) {
+					pl.uiLeftPanel.champs[c].damageTimer = 0;
+					pl.uiLeftPanel.champs[c].damage = 0;
+					redrawUI(p, UI_REDRAW_STATS);
+				}
+			}
+		}
 	}
+
+	//10 second timer actions
 	if (timerMaster - timerChampionStats >= 100) {
 		timerChampionStats = timerMaster;
 		for (ch = 0; ch < champion.length; ch++) {
@@ -126,25 +148,18 @@ function timerAction() {
 			}
 		}
 	}
+
+	//5 second timer actions
 	if (timerMaster - dungeonSpellTimer >= 50) {
 		dungeonSpellTimer = timerMaster;
 		updateDungeonSpells();
 	}
+
+	//projectile timer actions
 	for (var p = 0; p < projectile[towerThis].length; p++) {
 		if (timerMaster - projectile[towerThis][p].timer >= 2) {
 			projectile[towerThis][p].timer = timerMaster;
 			projectile[towerThis][p].moveProjectile();
-		}
-	}
-	for (p in player) {
-		for (c = 0; c < player[p].champion.length; c++) {
-			if(player[p].uiLeftPanel.champs[c].damage > 0) {
-				if(timerMaster - player[p].uiLeftPanel.champs[c].damageTimer >= 20) {
-					player[p].uiLeftPanel.champs[c].damageTimer = 0;
-					player[p].uiLeftPanel.champs[c].damage = 0;
-					redrawUI(p, UI_REDRAW_STATS);
-				}
-			}
 		}
 	}
 }
