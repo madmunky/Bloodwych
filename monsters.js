@@ -41,7 +41,7 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, te
 		this.champId = champId; //optional Champion ID
 		this.hp = 0;
 	} else {
-		this.hp = level * 15 + 30;
+		this.hp = level * 20 + 30;
 	}
 }
 

@@ -8,7 +8,7 @@ function switchAction(r, p) {
 	tar = tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]];
 	switch (sw[0]) {
 		case SWITCH_WALL_REMOVE:
-			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 8, 8, '0');
+			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 0, 16, '0');
 			break;
 		case SWITCH_WALL_TOGGLE_STONE_WALL:
 			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = toggleObject(tar, '1');
@@ -115,7 +115,7 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');
 			break;
 		case SWITCH_FLOOR_CREATE_SPINNER:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = '0103';
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = '0B06';
 			break;
 		case SWITCH_FLOOR_OPEN_CREATE_WALL_WITH_SWITCHES:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1');

@@ -498,6 +498,8 @@ Player.prototype.doPit = function() {
 		x = this.x + fOff.x;
 		y = this.y + fOff.y;
 		this.setPlayerPosition(floor, x, y);
+		this.setMovementData();
+		this.doEvent(true);
 		newProjectile(DUNGEON_NONE, PALETTE_PIT, -1, 0, floor, x, y, 0, null);
 		return true;
 	}

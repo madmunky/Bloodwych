@@ -4,19 +4,18 @@
 
 JORG
 -----
-COD Player attack speed (by level)
 COD More spells!
 COD Spell cost % and other spell rpg stuff
 COD Fix Big monster 'edge of screen'
 UI  Fix death screen as I did with asleep
 BUG Cast% stays when closing book
-BUG Yellow flash when hit by a spell draws before wooden object
+BUG Don't do events when pit on ceiling (in doPit)
 
 CHRIS
 ------
 TST Figure out and fix spell points for champs
 TST Figure out the remaining switches and buttons
-TST Figure out gemslots (also tower gems)
+TST Test tower gems
 COD Pause game
 COD Sounds!
 UI  Load/save game
