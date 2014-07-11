@@ -53,6 +53,8 @@ function toggleObject(hex, o, s, once) {
 function floorActionType(trig, p) {
 	if(p.doPit()) {
 		return;
+	} else if(p.doFizzle()) {
+		return;
 	}
 	tar = tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]];
 

@@ -512,6 +512,7 @@ Champion.prototype.expireSpell = function() {
 	}
 	this.activeSpell.id = -1;
 	this.activeSpell.power = 0;
+	redrawUI(p, UI_REDRAW_RIGHT);
 }
 
 //gets active spell, when spell id matches

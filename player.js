@@ -492,7 +492,7 @@ Player.prototype.doEvent = function(mr) {
 };
 
 Player.prototype.doPit = function() {
-	if (parseInt(this.getView()[18].substring(1, 2), 16) % 4 === 1 && this.getActiveSpellById(SPELL_LEVITATE).timer === 0) {
+	if (this.getBinaryView(18, 6, 2) === '1' && this.getActiveSpellById(SPELL_LEVITATE).timer === 0) {
 		floor = this.floor - 1;
 		fOff = getTowerFloorOffset(this.floor, floor);
 		x = this.x + fOff.x;
@@ -505,6 +505,20 @@ Player.prototype.doPit = function() {
 	}
 	return false;
 };
+
+Player.prototype.doFizzle = function() {
+	if (this.getBinaryView(18, 12, 4) === '6' && this.getBinaryView(18, 6, 2) === '0') {
+		for (c = 0; c < this.champion.length; c++) {
+			var ch = this.getChampion(c);
+			if (ch.activeSpell.id > -1) {
+				ch.expireSpell();
+			}
+		}
+		redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
+		return true;
+	}
+	return false;
+}
 
 Player.prototype.doStairs = function() {
 	var ud = parseInt(this.getBinaryView(18, 7), 10);
@@ -1184,10 +1198,12 @@ Player.prototype.castSpell = function(sb, ch, s) {
 		var s = false;
 	}
 	this.doneCommunication();
-	if (ch.stat.sp - sb.cost >= 0) {
+	if(ch.stat.sp - sb.cost >= 0) {
 		ch.addSP(-sb.cost);
 		ch.addVit(-sb.cost);
-		if (Math.random() < ch.getSpellCastChance()) {
+		if (this.doFizzle()) {
+			writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, COLOUR[COLOUR_BLUE_DARK]);
+		} else if (Math.random() < ch.getSpellCastChance()) {
 			castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10);
 			sb.castSuccessful++;
 			if (!s) {
