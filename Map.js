@@ -182,16 +182,8 @@ function getObject(f, x, y, d, to) {
 					return OBJECT_WOOD;
 				}
 			}
-			//} else if (getHexToBinaryPosition(hex, 8) == '1') { //other player
-			//	return OBJECT_CHARACTER;
-			//} else if (getMonsterAt(f, x, y) !== null) { //monster
-			//	return OBJECT_CHARACTER;
 		} else if (obj === '3') { //misc
-			//if (getHexToBinaryPosition(hex, 6, 2) === '1') { //pillar
 			return OBJECT_MISC;
-			//} else {
-			//return 'bed';
-			//}
 		} else if (obj === '4') { //stairs
 			return OBJECT_STAIRS;
 		} else if (obj === '5') { //door

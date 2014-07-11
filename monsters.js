@@ -27,7 +27,9 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, te
 	this.timerAttack = timerMaster;
 	this.timerTerror = 0;
 	this.timerParalyze = 0;
-	if (square > CHAR_FRONT_SOLO) {
+	if(form === MON_FORM_ZENDIK) {
+		this.square = CHAR_FRONT_SOLO;
+	} else if (square > CHAR_FRONT_SOLO) {
 		this.square = (square + d) % 4;
 	} else if(typeof sqrel !== 'undefined' && sqrel) {
 		this.square = CHAR_FRONT_SOLO;
@@ -201,7 +203,7 @@ Monster.prototype.move = function() {
 	var ch = this.getChampion();
 	if (!this.dead && this.teamId >= 0 && (this.isRecruitedBy() === null || (ch !== null && ch.recruitment.called))) {
 		this.attack(false);
-		if (this.castSpell()) return;
+		//if (this.castSpell()) return;
 		var canMove = this.canMove();
 		if (canMove === OBJECT_CHARACTER && this.canInteract() > -1) return;
 		if (canMove === OBJECT_NONE) {
@@ -510,10 +512,16 @@ Monster.prototype.die = function() {
 			}
 		} else if (this.type !== MON_TYPE_MAGICAL) {
 			if (Math.floor(Math.random() * 2) === 1) {
-				var it = Math.floor(Math.random() * ITEM_WATER + 1);
+				var lvl = Math.floor(this.level / 5.0);
+				if(this.form === MON_FORM_ZENDIK) {
+					lvl = 4;
+				} else if(lvl > 3) {
+					lvl = 3;
+				}
+				var it = MON_ITEM_DROPS[lvl][Math.floor(Math.random() * MON_ITEM_DROPS[lvl].length)];
 				var qt = 1;
 				if (it <= ITEM_ELF_ARROWS) {
-					qt = Math.floor(Math.random() * (this.level + 2) * 2) + 1;
+					qt = Math.floor(Math.random() * (this.level + 2) * 1) + 1;
 				}
 				dropItem(it, qt, this.floor, this.x, this.y, sq);
 			}

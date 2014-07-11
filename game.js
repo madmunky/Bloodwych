@@ -96,7 +96,7 @@ function timerAction() {
 			if (pl.sleeping) {
 				pl.checkChampionUp();
 			}
-			for (c = 0; c < pl.champion.length; c++) {
+			for (var c = 0; c < pl.champion.length; c++) {
 				var ch = pl.getChampion(c);
 				if (ch !== null) {
 					ch.restoreStats();
@@ -105,7 +105,7 @@ function timerAction() {
 		}
 		if (timerMaster - activeSpellTimer >= 10) {
 			activeSpellTimer = timerMaster;
-			for (c = 0; c < pl.champion.length; c++) {
+			for (var c = 0; c < pl.champion.length; c++) {
 				var ch = pl.getChampion(c);
 				if (ch !== null) {
 					ch.checkSpell();
@@ -127,15 +127,29 @@ function timerAction() {
 		}
 	}
 
+	//projectile timer actions
+	for (var p = 0; p < projectile[towerThis].length; p++) {
+		if (timerMaster - projectile[towerThis][p].timer >= 2) {
+			projectile[towerThis][p].timer = timerMaster;
+			projectile[towerThis][p].moveProjectile();
+		}
+	}
+
+	//5 second timer actions
+	if (timerMaster - dungeonSpellTimer >= 50) {
+		dungeonSpellTimer = timerMaster;
+		updateDungeonSpells();
+	}
+
 	//10 second timer actions
 	if (timerMaster - timerChampionStats >= 100) {
 		timerChampionStats = timerMaster;
-		for (ch = 0; ch < champion.length; ch++) {
+		for (var ch = 0; ch < champion.length; ch++) {
 			if (!champion[ch].recruitment.playerId > -1) {
 				champion[ch].restoreStats();
 			}
 		}
-		for (m = 0; m < monster[towerThis].length; m++) {
+		for (var m = 0; m < monster[towerThis].length; m++) {
 			if (monster[towerThis][m].dead) {
 				monster[towerThis].splice(m, 1);
 				m--;
@@ -146,20 +160,6 @@ function timerAction() {
 				projectile[towerThis].splice(p, 1);
 				p--;
 			}
-		}
-	}
-
-	//5 second timer actions
-	if (timerMaster - dungeonSpellTimer >= 50) {
-		dungeonSpellTimer = timerMaster;
-		updateDungeonSpells();
-	}
-
-	//projectile timer actions
-	for (var p = 0; p < projectile[towerThis].length; p++) {
-		if (timerMaster - projectile[towerThis][p].timer >= 2) {
-			projectile[towerThis][p].timer = timerMaster;
-			projectile[towerThis][p].moveProjectile();
 		}
 	}
 }

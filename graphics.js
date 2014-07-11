@@ -311,7 +311,7 @@ function drawPlayersView(p) {
 	} else {
 		p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
-		var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getChampion(p.championLeader).getActiveSpellById(SPELL_TRUEVIEW).timer > 0);
+		var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0);
 
 		for (x = 0; x < 19; x++) {
 			var view = p.getView()
@@ -501,7 +501,7 @@ function drawMonsterOnPos(p, pos) {
 					}
 				}
 			}
-			if(!van || (van && ch1.prof === PROFESSION_CUTPURSE && cutpurseTrueview) || ch1.getActiveSpellById(SPELL_TRUEVIEW).timer > 0) {
+			if(!van || (van && ch1.prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0) {
 				p.drawMonster(monPos[i].monster, monPos[i].distance, monPos[i].gfxCoord);
 			}
 		}
@@ -522,9 +522,11 @@ function drawProjectileOnPos(p, pos) {
 		var prPos = p.getProjectilesInRange(pos);
 		for (i in prPos) {
 			if(prPos[i].position !== 18) {
-				p.drawProjectile(prPos[i].projectile, prPos[i].distance, prPos[i].gfxCoord);
+				if(prPos[i].projectile.type !== DUNGEON_NONE) {
+					p.drawProjectile(prPos[i].projectile, prPos[i].distance, prPos[i].gfxCoord);
+				}
 			} else {
-				if(prPos[i].projectile.type === DUNGEON_PROJECTILE_ARROW || prPos[i].projectile.dead <= 1) {
+				if(prPos[i].projectile.dead <= 1) {
 					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[1][0] + ', ' + prPos[i].projectile.palette[1][1] + ', ' + prPos[i].projectile.palette[1][2] + ')';
 				} else {
 					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[2][0] + ', ' + prPos[i].projectile.palette[2][1] + ', ' + prPos[i].projectile.palette[2][2] + ')';
@@ -585,7 +587,7 @@ function drawWoodenObject(p, x) {
 	BlockSides[17] = [4, 1, -1, -1];
 	BlockSides[18] = [2, 3, -1, 1];
 
-	inFront = (x === 4 || x === 9 || x === 12 || x === 15);
+	inFront = (x === 4 || x === 9 || x === 12 || x === 15 || x === 18);
 
 	var b = hex2bin(p.getView()[x].substring(0, 2));
 	var s = [];

@@ -211,9 +211,10 @@ Player.prototype.changeDownFloor = function() {
 Player.prototype.action = function() {
 	if (!this.dead && !this.sleeping) {
 		//Wooden doors (in front of player)
-		this.checkWoodenDoor(15);
+		if(!this.checkWoodenDoor(18)) {
+			this.checkWoodenDoor(15);
+		}
 		//Wooden doors (on player)
-		this.checkWoodenDoor(18);
 		var o15 = this.getObjectOnPos(15, 2);
 		//Wall switches
 		//if (this.getBinaryView(15, 0, 5) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
@@ -221,23 +222,7 @@ Player.prototype.action = function() {
 			this.setBinaryView(15, 5, 1);
 			switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
 		} else if(o15 === OBJECT_GEM) {
-			var itH = this.pocket;
-			var wall = parseInt(this.getBinaryView(15, 2, 3));
-			var pock = itH.id - ITEM_SERPENT_CRYSTAL;
-			if(this.getBinaryView(15, 5, 1) === '0') {
-				if(itH.id === 0) {
-					this.pocket.setPocketItem(wall + ITEM_SERPENT_CRYSTAL);
-					this.setBinaryView(15, 5, 1);
-				}
-			} else {
-				if(itH.type === ITEM_TYPE_GEM) {
-					if(pock === wall) {
-						this.pocket.setPocketItem();
-						this.setBinaryView(15, 5, 1);
-						//switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
-					}
-				}
-			}
+			gemAction(this);
 		}
 		//Check if something is in the way
 		if (this.getMonstersInRange(15).length > 0) {
@@ -289,7 +274,9 @@ Player.prototype.checkWoodenDoor = function(pos18) {
 		} else if (this.getBinaryView(pos18, 11, 1) === '1') { //If locked, give lock message
 			this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
 		}
+		return true;
 	}
+	return false;
 };
 
 //Sets a binary index on a hexadecimal string to a certain binary flag
@@ -511,6 +498,7 @@ Player.prototype.doPit = function() {
 		x = this.x + fOff.x;
 		y = this.y + fOff.y;
 		this.setPlayerPosition(floor, x, y);
+		newProjectile(DUNGEON_NONE, PALETTE_PIT, -1, 0, floor, x, y, 0, null);
 		return true;
 	}
 	return false;

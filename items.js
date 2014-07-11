@@ -235,7 +235,7 @@ function initItems(t) {
 		}
 
 		//TESTING
-		item[t.id][item[t.id].length] = new Item(ITEM_BLUISH_GEM, 1, {
+		/*item[t.id][item[t.id].length] = new Item(ITEM_BLUISH_GEM, 1, {
 			tower: t.id,
 			floor: 2,
 			x: 12,
@@ -248,7 +248,7 @@ function initItems(t) {
 			x: 12,
 			y: 12,
 			square: 1
-		});
+		});*/
 		//END OF TESTING
 	} catch (e) {
 		"Item init error: " + e.toString()

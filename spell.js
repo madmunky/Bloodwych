@@ -315,7 +315,7 @@ function castSpell(s, src, pw) {
 								redrawUI(p.id);
 							}
 						}
-						newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, -1, 0, f, x, y, 0, null);
+						newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS_ARROW, -1, 0, f, x, y, 0, null);
 						return;
 					}
 				}
@@ -333,6 +333,8 @@ function castSpell(s, src, pw) {
 			if (src.getBinaryView(18, 12, 4) === '2' && src.getBinaryView(18, ((5 + 2 - d) % 4) * 2) === '1') {
 				src.setBinaryView(18, 11, 1);
 			} else if (src.getBinaryView(15, 12, 4) === '2' && src.getBinaryView(15, ((5 + 0 - d) % 4) * 2) === '1') {
+				src.setBinaryView(15, 11, 1);
+			} else if (src.getBinaryView(15, 12, 4) === '5' && src.getBinaryView(15, 4) === '0') {
 				src.setBinaryView(15, 11, 1);
 			}
 			break;

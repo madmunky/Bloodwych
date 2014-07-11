@@ -40,8 +40,11 @@ function getFileData(file_name, callback, t, type, length) {
 				case "itemData":
 					t.itemData = callback(this.response, length);
 					break;
-                                case "scrollData":
+                case "scrollData":
 					scrollData = callback(this.response);
+					break;
+				case "gemSwitchesData":
+					gemSwitchesData = callback(this.response, length);
 					break;
 				default:
 					break;

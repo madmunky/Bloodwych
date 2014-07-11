@@ -33,15 +33,21 @@ function switchAction(r, p) {
 	}
 }
 
-function toggleObject(hex, o, once) {
+function toggleObject(hex, o, s, once) {
+	var ret = hex;
 	if(typeof once === "undefined") {
 		var once = false;
 	}
-	if (getHexToBinaryPosition(hex, 12, 4) === '0' || once) {
-		return setHexToBinaryPosition(hex, 12, 4, o);
+	if (getHexToBinaryPosition(ret, 12, 4) === '0' || once) {
+		ret = setHexToBinaryPosition(ret, 12, 4, o);
 	} else {
-		return setHexToBinaryPosition(hex, 12, 4, '0');
+		ret = setHexToBinaryPosition(ret, 12, 4, '0');
 	}
+	if(typeof s !== "undefined" && s !== null) {
+		ret = setHexToBinaryPosition(ret, 6, 2, s);
+	}
+
+	return ret;
 }
 
 function floorActionType(trig, p) {
@@ -79,12 +85,16 @@ function floorActionType(trig, p) {
 					champ.getMonster().dead = false;
 					redrawUI(p.id);
 				}
-				newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_CHAOS_BIG, -1, 0, p.floor, p.x, p.y, p.d, null);
+				newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS_ARROW, -1, 0, p.floor, p.x, p.y, p.d, null);
 			}
 			break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:
+			tower[towerThis].floor[p.floor].Map[p.y][p.x + 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x + 1], 5, 1, '1');
+			tower[towerThis].floor[p.floor].Map[p.y][p.x + 2] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x + 2], 1, 1, '0');
 			break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_2:
+			tower[towerThis].floor[p.floor].Map[p.y][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 1], 1, 1, '1');
+			tower[towerThis].floor[p.floor].Map[p.y][p.x - 2] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 2], 5, 1, '0');
 			break;
 		case SWITCH_FLOOR_TRADER_DOOR:
 			tower[towerThis].floor[p.floor].Map[p.y][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 1], 7, 1, '1');
@@ -117,7 +127,7 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[p.y - 1][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y - 1][p.x - 1], 7, 1, '0');
 			break; //Not sure this is right
 		case SWITCH_FLOOR_CREATE_PILLAR:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = '1306';
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3', '1', true);
 			break;
 		case SWITCH_FLOOR_KEEP_ENTRANCE_SIDEPAD:
 			checkSwitchTower(p.id, false, 0);
@@ -126,6 +136,8 @@ function floorActionType(trig, p) {
 			checkSwitchTower(p.id, true, 0);
 			break;
 		case SWITCH_FLOOR_FLASH_TELEPORT:
+			p.setPlayerPosition(trig[1], trig[2], trig[3]);
+			newProjectile(DUNGEON_NONE, PALETTE_CHAOS_ARROW, -1, 0, p.floor, p.x, p.y, p.d, null);
 			break;
 		case SWITCH_FLOOR_ROTATE_STONE_WALL:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 10, 2, '' + ((parseInt(getHexToBinaryPosition(tar, 10, 2)) + 1) % 4));
@@ -157,6 +169,39 @@ function floorActionType(trig, p) {
 			window.alert("Unhandled Floor Action: " + trig.toString());
 	}
 
+}
+
+function gemAction(p) {
+	var itH = p.pocket;
+	var gem = parseInt(p.getBinaryView(15, 2, 3));
+	var pock = itH.id - ITEM_SERPENT_CRYSTAL;
+	if(p.getBinaryView(15, 5, 1) === '0') {
+		if(itH.id === 0) {
+			p.pocket.setPocketItem(gem + ITEM_SERPENT_CRYSTAL);
+			p.setBinaryView(15, 5, 1);
+		}
+	} else {
+		if(itH.type === ITEM_TYPE_GEM) {
+			if(pock === gem) {
+				if(gem === 5 || gem === 7) {
+					var i = towerThis * 2; // + from/to
+					if(gem === 7) { //tan
+						i += 12;
+					}
+					var x = [gemSwitchesData[i][0], gemSwitchesData[i + 1][0]];
+					var y = [gemSwitchesData[i][1], gemSwitchesData[i + 1][1]];
+					if(p.x === x[0] && p.y === y[0]) {
+						p.setPlayerPosition(p.floor, x[1], y[1]);
+					} else {
+						p.setPlayerPosition(p.floor, x[0], y[0]);
+					}
+					newProjectile(DUNGEON_NONE, PALETTE_CHAOS_ARROW, -1, 0, p.floor, p.x, p.y, 0, null);
+				}
+				p.pocket.setPocketItem();
+				p.setBinaryView(15, 5, 1);
+			}
+		}
+	}
 }
 
 function initTowerSwitches() {

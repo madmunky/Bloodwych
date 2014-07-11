@@ -464,9 +464,9 @@ Champion.prototype.activateSpell = function(s, pow) {
 	this.activeSpell.id = s;
 	this.activeSpell.timer = pow * 5;
 	this.activeSpell.power = pow;
-	if (this.recruitment.playerId > -1) {
-		redrawUI(this.recruitment.playerId);
-	}
+	//if (this.recruitment.playerId > -1) {
+	//	redrawUI(this.recruitment.playerId);
+	//}
 }
 
 Champion.prototype.checkSpell = function() {
