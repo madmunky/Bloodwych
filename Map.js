@@ -135,14 +135,16 @@ function canMoveByFirepath(f, x, y, d) {
 function canMoveByWood(f, x, y, d, to) {
 	xy = getOffsetByRotation((d + to) % 4);
 	hex18 = tower[towerThis].floor[f].Map[y][x];
-	hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
 	//Check the space the player is standing on
 	if (getHexToBinaryPosition(hex18, 12, 4) == '2' && getHexToBinaryPosition(hex18, ((7 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
 		return false;
 	}
 	//Check the space the player is moving to
-	if (getHexToBinaryPosition(hex15, 12, 4) == '2' && getHexToBinaryPosition(hex15, ((5 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
-		return false;
+	if(typeof tower[towerThis].floor[f].Map[y + xy.y] !== 'undefined' && typeof tower[towerThis].floor[f].Map[y + xy.y][x + xy.x] !== 'undefined') {
+		hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
+		if (getHexToBinaryPosition(hex15, 12, 4) == '2' && getHexToBinaryPosition(hex15, ((5 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
+			return false;
+		}
 	}
 	return true;
 }

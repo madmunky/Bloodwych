@@ -15,12 +15,9 @@ gameState.prototype.load = function() {
 	projectile = this.gameData.projectile;
 	timerMaster = this.gameData.variables.timerMaster;
 	timerMonsterMove = this.gameData.variables.timerMonsterMove;
-	//timerMonsterAttack = this.gameData.variables.timerMonsterAttack;
 	timerChampionStats = this.gameData.variables.timerChampionStats;
-	//timerChampionAttack = this.gameData.variables.timerChampionAttack;
 	towerThis = this.gameData.variables.towerThis;
 	monsterTeamIdMax = this.gameData.variables.monsterTeamIdMax;
-	//monsterAttackSequence = this.gameData.variables.monsterAttackSequence;
 	dungeonSpellTimer = this.gameData.variables.dungeonSpellTimer;
 	dungeonSpellList = this.gameData.variables.dungeonSpellList;
 	activeSpellTimer = this.gameData.variables.activeSpellTimer;
@@ -82,12 +79,9 @@ gameState.prototype.save = function() {
 		variables: {
 			timerMaster: timerMaster,
 			timerMonsterMove: timerMonsterMove,
-			//timerMonsterAttack: timerMonsterAttack,
 			timerChampionStats: timerChampionStats,
-			//timerChampionAttack: timerChampionAttack,
 			towerThis: towerThis,
 			monsterTeamIdMax: monsterTeamIdMax,
-			//monsterAttackSequence: monsterAttackSequence,
 			dungeonSpellTimer: dungeonSpellTimer,
 			dungeonSpellList: $.extend(true, {}, dungeonSpellList),
 			activeSpellTimer: activeSpellTimer

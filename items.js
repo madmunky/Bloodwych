@@ -92,11 +92,11 @@ Item.prototype.getFoodValue = function() {
 		} else if (this.id <= ITEM_WATER) {
 			return 10;
 		} else if (this.id <= ITEM_NEGG_GREEN) {
-			return 33;
+			return 50;
 		} else if (this.id <= ITEM_NEGG_BLUE) {
-			return 66;
+			return 100;
 		} else if (this.id <= ITEM_NEGG_RED) {
-			return 66;
+			return 200;
 		}
 	}
 	return 0;
@@ -235,20 +235,22 @@ function initItems(t) {
 		}
 
 		//TESTING
-		/*item[t.id][item[t.id].length] = new Item(ITEM_BLUISH_GEM, 1, {
-			tower: t.id,
-			floor: 2,
-			x: 12,
-			y: 12,
-			square: 0
-		});
-		item[t.id][item[t.id].length] = new Item(ITEM_TAN_GEM, 1, {
-			tower: t.id,
-			floor: 2,
-			x: 12,
-			y: 12,
-			square: 1
-		});*/
+		/*if(t.id === TOWER_DRAGON) {
+			item[t.id][item[t.id].length] = new Item(ITEM_BLUISH_GEM, 1, {
+				tower: t.id,
+				floor: 3,
+				x: 12,
+				y: 12,
+				square: 0
+			});
+			item[t.id][item[t.id].length] = new Item(ITEM_TAN_GEM, 1, {
+				tower: t.id,
+				floor: 3,
+				x: 12,
+				y: 12,
+				square: 3
+			});
+		}*/
 		//END OF TESTING
 	} catch (e) {
 		"Item init error: " + e.toString()

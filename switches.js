@@ -26,7 +26,8 @@ function switchAction(r, p) {
 			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 12, 4, '3');
 			break;
 		case SWITCH_WALL_ROTATE_WOOD_WALLS:
-			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = hex2bin(hex2bin(tar).substring(2, 8) + hex2bin(tar).substring(0, 2) + hex2bin(tar).substring(8, 16));
+			var wood = hex2bin(getHexToBinaryPosition(tar, 2, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 4, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 6, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 0, 2), 2);
+			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 0, 8, bin2hex(wood));
 			break;
 		default:
 			window.alert("Unhandled Switch Action: " + sw.toString());
@@ -120,7 +121,7 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = '0B06';
 			break;
 		case SWITCH_FLOOR_OPEN_CREATE_WALL_WITH_SWITCHES:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1');
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '1', null, true);
 			break;
 		case SWITCH_FLOOR_CREATE_PAD:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1');
@@ -148,6 +149,7 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '1');
 			break;
 		case SWITCH_FLOOR_SPINNER:
+			p.rotateTo((p.d + 1) % 4);
 			break;
 		case SWITCH_FLOOR_CLICK_TELEPORT:
 			break;
@@ -155,7 +157,8 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '6');
 			break;
 		case SWITCH_FLOOR_ROTATE_WOOD_WALL_COUNTER_CLOCKWISE:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = hex2bin(hex2bin(tar).substring(2, 8) + hex2bin(tar).substring(0, 2) + hex2bin(tar).substring(8, 16));
+			var wood = hex2bin(getHexToBinaryPosition(tar, 6, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 0, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 2, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 4, 2), 2);
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 0, 8, bin2hex(wood));
 			break;
 		case SWITCH_FLOOR_TOGGLE_HOLE:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '6');

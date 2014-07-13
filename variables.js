@@ -19,7 +19,7 @@ var Types = {};
 var gameStarted = false;
 var scale = 3;
 var scaleReal = 3;
-var debug = true;
+var debug = false;
 var debugHigh = false;
 var debugWindow;
 var game;
@@ -390,8 +390,10 @@ var CHA_GESTURE_NONE = 0,
 
 var MON_TYPE_NORMAL = 0,
     MON_TYPE_SPELLCASTER = 1,
-    MON_TYPE_LAUNCHER = 2,
-    MON_TYPE_MAGICAL = 3;
+    MON_TYPE_CHAMPION = 2,
+    MON_TYPE_UNKNOWN = 3,
+    MON_TYPE_LAUNCHER = 4,
+    MON_TYPE_MAGICAL = 5;
 
 var MON_FORM_VENDOR_1 = 21,
     MON_FORM_VENDOR_2 = 22,

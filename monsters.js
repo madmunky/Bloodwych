@@ -201,9 +201,11 @@ Monster.prototype.canOpenDoor = function() {
 
 Monster.prototype.move = function() {
 	var ch = this.getChampion();
-	if (!this.dead && this.teamId >= 0 && (this.isRecruitedBy() === null || (ch !== null && ch.recruitment.called))) {
+	if(this.type === MON_TYPE_LAUNCHER) {
+		this.launchSpell();
+	} else if (!this.dead && this.teamId >= 0 && (this.isRecruitedBy() === null || (ch !== null && ch.recruitment.called))) {
 		this.attack(false);
-		//if (this.castSpell()) return;
+		if (this.castSpell()) return;
 		var canMove = this.canMove();
 		if (canMove === OBJECT_CHARACTER && this.canInteract() > -1) return;
 		if (canMove === OBJECT_NONE) {
@@ -311,7 +313,7 @@ Monster.prototype.getHP = function() {
 Monster.prototype.castSpell = function() {
 	if (!this.communicating) {
 		var sq = this.getSquareByDir();
-		if (this.type === 1 && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
+		if (this.type === MON_TYPE_SPELLCASTER && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
 			var id = SPELL_MISSILE;
 			if (this.level >= 5 && Math.floor(Math.random() * 2) === 0) {
 				id = SPELL_FIREBALL;
@@ -328,6 +330,13 @@ Monster.prototype.castSpell = function() {
 		}
 	}
 	return false;
+}
+
+Monster.prototype.launchSpell = function() {
+	if(this.type === MON_TYPE_LAUNCHER) {
+		id = SPELL_ARC_BOLT;
+		castSpell(id, this, Math.floor(this.level * 2 + 4 + getSpellById(id).level * 0.4));
+	}
 }
 
 Monster.prototype.followPlayer = function() {
