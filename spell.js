@@ -429,7 +429,8 @@ function setDungeonSpell(f, x, y, proj) {
 		floor: f,
 		x: x,
 		y: y,
-		projectile: proj
+		projectile: proj,
+		projectileId: proj.id
 	};
 }
 

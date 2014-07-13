@@ -462,7 +462,7 @@ Player.prototype.doEvent = function(mr) {
 		redrawUI(this.id, UI_REDRAW_RIGHT);
 	}
 	this.doneCommunication();
-	this.resetChampUI();
+	//this.resetChampUI();
 	this.updateChampions();
 	var view = this.getView();
 	switch (getHexToBinaryPosition(view[18], 12, 4)) {
@@ -498,7 +498,7 @@ Player.prototype.doPit = function() {
 		x = this.x + fOff.x;
 		y = this.y + fOff.y;
 		this.setPlayerPosition(floor, x, y);
-		this.setMovementData();
+		//this.setMovementData();
 		this.doEvent(true);
 		newProjectile(DUNGEON_NONE, PALETTE_PIT, -1, 0, floor, x, y, 0, null);
 		return true;
@@ -512,9 +512,9 @@ Player.prototype.doFizzle = function() {
 			var ch = this.getChampion(c);
 			if (ch.activeSpell.id > -1) {
 				ch.expireSpell();
+				redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
 			}
 		}
-		redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
 		return true;
 	}
 	return false;
@@ -532,12 +532,16 @@ Player.prototype.doStairs = function() {
 };
 
 Player.prototype.setPlayerPosition = function(floor, x, y, d) {
+	this.lastFloor = this.floor;
+	this.lastX = this.x;
+	this.lastY = this.y;
 	this.floor = floor;
 	if (typeof x !== "undefined") this.x = x;
 	if (typeof y !== "undefined") this.y = y;
 	if (typeof d !== "undefined") this.d = d;
 	this.setMovementData();
-	//this.updateView();
+	this.updateChampions();
+	//this.doEvent(true);
 };
 
 Player.prototype.getAliveChampionCount = function() {

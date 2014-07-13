@@ -55,7 +55,7 @@ gameState.prototype.load = function() {
 		}
 	}
 	for (s in dungeonSpellList) {
-		dungeonSpellList[s].projectile = getProjectileById(dungeonSpellList[s].projectile.tower, dungeonSpellList[s].projectile.id);
+		dungeonSpellList[s].projectile = getProjectileById(dungeonSpellList[s].tower, dungeonSpellList[s].projectileId);
 	}
 
 	//version control

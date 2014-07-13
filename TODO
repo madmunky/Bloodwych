@@ -8,6 +8,7 @@ COD More spells!
 COD Spell cost % and other spell rpg stuff
 COD Fix Big monster 'edge of screen'
 UI  Fix death screen as I did with asleep
+BUG Fix saving dungeonSpellList
 BUG Cast% stays when closing book
 BUG Don't do events when pit on ceiling (in doPit)
 

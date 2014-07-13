@@ -108,7 +108,7 @@ function floorActionType(trig, p) {
 			checkSwitchTower(p.id, true, Math.floor(trig[1] * 0.25));
 			break;
 		case SWITCH_FLOOR_REMOVE:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', true);
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', null, true);
 			break;
 		case SWITCH_FLOOR_CLOSE_VOID_LOCK_DOOR:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1');
@@ -164,7 +164,7 @@ function floorActionType(trig, p) {
 			break;
 		case SWITCH_FLOOR_REMOVE_PILLAR_OTHER_EVENT:
 			if(typeof player[1] === 'undefined') {
-				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', true);
+				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', null, true);
 			}
 			break;
 		default:
@@ -183,7 +183,7 @@ function gemAction(p) {
 			p.setBinaryView(15, 5, 1);
 		}
 	} else {
-		if(itH.type === ITEM_TYPE_GEM) {
+		if(itH.type === ITEM_TYPE_CRYSTAL || itH.type === ITEM_TYPE_GEM) {
 			if(pock === gem) {
 				if(gem === 5 || gem === 7) {
 					var i = towerThis * 2; // + from/to
@@ -197,8 +197,8 @@ function gemAction(p) {
 					} else {
 						p.setPlayerPosition(p.floor, x[0], y[0]);
 					}
-					newProjectile(DUNGEON_NONE, PALETTE_CHAOS_ARROW, -1, 0, p.floor, p.x, p.y, 0, null);
 				}
+				newProjectile(DUNGEON_NONE, PALETTE_CHAOS_ARROW, -1, 0, p.floor, p.x, p.y, 0, null);
 				p.pocket.setPocketItem();
 				p.setBinaryView(15, 5, 1);
 			}

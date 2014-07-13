@@ -57,9 +57,9 @@ function switchTower(id, po) {
 			player[pt].setPlayerPosition(floor, x, y);
 		}
 	}
-	for (p in player) {
-		player[p].updateChampions();
-	}
+	//for (p in player) {
+	//	player[p].updateChampions();
+	//}
 	//$('canvas').attr('data-game-status', 'started');
 }
 
