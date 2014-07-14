@@ -60,19 +60,31 @@ Projectile.prototype.moveProjectile = function() {
 	var ob = getObject(this.floor, this.x, this.y, this.d);
 	var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
 	if (this.dead === 0) {
-		if (this.action()) {
+		if (this.event()) {
 			return true;
 		}
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		if (typeof this.monster !== "undefined") {
 			var sid = this.spell.index;
 			var isDamage = (sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND);
+			var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_ANTIMAGE || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE);
 			for (p in player) {
 				if (!player[p].dead && this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
-					if(isDamage) {
-						this.attack(player[p]);
-						this.dead = 2;
-						return false;
+					if(player[p].getActiveSpellById(SPELL_DEFLECT).timer > 0 && isMissile) {
+						player[p].getActiveSpellById(SPELL_DEFLECT).timer -= this.power;
+						this.d = (this.d + 2) % 2;
+						var xy = getOffsetByRotation(this.d);
+						this.x += xy.x;
+						this.y += xy.y;
+						return true;
+					} else {
+						if(isDamage) {
+							this.attack(player[p]);
+							this.dead = 2;
+							return false;
+						} else {
+							this.action(player[p].getChampion(player[p].championLeader).getMonster());
+						}
 					}
 				}
 			}
@@ -81,14 +93,7 @@ Projectile.prototype.moveProjectile = function() {
 				if(isDamage) {
 					this.attack(mon);
 				} else {
-					var combat = calculateAttack(this, mon);
-					if(combat.length > 0) {
-						if(sid === SPELL_PARALYZE) {
-							mon.timerParalyze = combat[0].power;
-						} else if(sid === SPELL_TERROR) {
-							mon.timerTerror = combat[0].power;
-						}
-					}
+					this.action(mon);
 				}
 				this.dead = 2;
 				return false;
@@ -128,7 +133,34 @@ Projectile.prototype.moveProjectile = function() {
 	return true;
 }
 
-Projectile.prototype.action = function() {
+Projectile.prototype.action = function(mon) {
+	var combat = calculateAttack(this, mon);
+	if(combat.length > 0) {
+		switch (this.spell.index) {
+			case SPELL_PARALYZE:
+				if(typeof mon !== 'undefined') {
+					mon.timerParalyze = combat[0].power;
+				}
+				break;
+			case SPELL_TERROR:
+				if(typeof mon !== 'undefined') {
+					mon.timerTerror = combat[0].power;
+				}
+				break;
+			case SPELL_CONFUSE:
+				var dr = Math.floor(Math.random() * 4);
+				mon.rotateTo(dr);
+				var cht = mon.getChampion();
+				if (cht !== null && cht.recruitment.playerId > -1) {
+					player[cht.recruitment.playerId].rotateTo(dr);
+					player[cht.recruitment.playerId].doEvent(false);
+				}
+				break;
+		}
+	}
+}
+
+Projectile.prototype.event = function() {
 	if(typeof this.spell !== 'number') {
 		var ob = getObject(this.floor, this.x, this.y, this.d);
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
@@ -182,6 +214,8 @@ Projectile.prototype.action = function() {
 						}
 					}
 				}
+				break;
+			default:
 				break;
 		}
 	}

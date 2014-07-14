@@ -261,6 +261,7 @@ function castSpell(s, src, pw) {
 
 			//chaos
 		case SPELL_DEFLECT:
+			ch.activateSpell(s, pow);
 			break;
 		case SPELL_TERROR:
 			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS_ARROW, s, pow, f, x, y, d, src);
@@ -281,7 +282,7 @@ function castSpell(s, src, pw) {
 		case SPELL_SUMMON:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_MAGICAL, MON_FORM_SUMMON, towerThis, f, x, y, d, (d + 1) % 4, true, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_DRONE, MON_FORM_SUMMON, towerThis, f, x, y, d, Math.floor(Math.random() * 2), true, 0);
 			}
 			break;
 		case SPELL_VIVIFY:
@@ -368,19 +369,7 @@ function castSpell(s, src, pw) {
 		case SPELL_BEGUILE:
 			break;
 		case SPELL_CONFUSE:
-			var mon = getMonstersInTower(towerThis);
-			var dr = Math.floor(Math.random() * 4);
-			for (m in mon) {
-				if (mon[m].floor === f && mon[m].x === x1 && mon[m].y === y1) {
-					mon[m].d = dr;
-					if (mon[m].champId > -1) {
-						var cht = champion[mon[m].champId];
-						if (cht.recruitment.playerId > -1) {
-							player[cht.recruitment.playerId].d = dr;
-						}
-					}
-				}
-			}
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_MOON_ARROW, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_CONCEAL:
 			break;
@@ -393,7 +382,7 @@ function castSpell(s, src, pw) {
 		case SPELL_ILLUSION:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_MAGICAL, MON_FORM_ILLUSION, towerThis, f, x, y, d, (d + 1) % 4, true, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_DRONE, MON_FORM_ILLUSION, towerThis, f, x, y, d, 0, true, 0);
 				monster[towerThis][max].hp = 0;
 			}
 			break;

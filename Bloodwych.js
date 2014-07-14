@@ -212,7 +212,7 @@ function debugTextPrint(p) {
 		for (c = 0; c < p.champion.length; c++) {
 			var ch = p.getChampion(c);
 			if (ch !== null) {
-				debugText(p, 'XP' + c + ': ' + ch.xp + ' - XP2' + c + ': ' + ch.xp2 + ' / ' + getXpForSpell(ch.level, ch.prof) + ' / ' + getXpForLevel(ch.level) + ' - Level up' + c + ': ' + ch.levelUp + ' - Spell up' + c + ': ' + ch.spellUp);
+				debugText(p, 'C' + c + ' - XP: ' + ch.xp + ' - XP2: ' + ch.xp2 + ' / ' + getXpForSpell(ch.level, ch.prof) + ' / ' + getXpForLevel(ch.level) + ' - Level up: ' + ch.levelUp + ' - Spell up: ' + ch.spellUp);
 			}
 		}
 		//debugText(p, hex2dec(getHexToBinaryPosition(p.getView()[15], 0, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 4, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 8, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 12, 4)));

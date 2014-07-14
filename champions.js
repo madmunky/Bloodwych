@@ -134,15 +134,17 @@ Champion.prototype.getHP = function() {
 }
 
 Champion.prototype.addHP = function(hp, safe) {
-	this.stat.hp += hp;
-	if (this.getHP() < 0) {
-		if (typeof safe !== "undefined" && safe) {
-			this.stat.hp = 0;
-		} else {
-			this.stat.hp = -1;
+	if(!this.getMonster().dead && this.recruitment.attached) {
+		this.stat.hp += hp;
+		if (this.getHP() < 0) {
+			if (typeof safe !== "undefined" && safe) {
+				this.stat.hp = 0;
+			} else {
+				this.stat.hp = -1;
+			}
+		} else if (this.getHP() > this.stat.hpMax) {
+			this.stat.hp = this.stat.hpMax;
 		}
-	} else if (this.getHP() > this.stat.hpMax) {
-		this.stat.hp = this.stat.hpMax;
 	}
 }
 
@@ -151,11 +153,13 @@ Champion.prototype.getVit = function() {
 }
 
 Champion.prototype.addVit = function(vit) {
-	this.stat.vit += vit;
-	if (this.getVit() < 0) {
-		this.stat.vit = 0;
-	} else if (this.getVit() > this.stat.vitMax) {
-		this.stat.vit = this.stat.vitMax;
+	if(!this.getMonster().dead && this.recruitment.attached) {
+		this.stat.vit += vit;
+		if (this.getVit() < 0) {
+			this.stat.vit = 0;
+		} else if (this.getVit() > this.stat.vitMax) {
+			this.stat.vit = this.stat.vitMax;
+		}
 	}
 }
 
@@ -164,25 +168,29 @@ Champion.prototype.getSP = function() {
 }
 
 Champion.prototype.addSP = function(sp) {
-	this.stat.sp += sp;
-	if (this.getSP() < 0) {
-		this.stat.sp = 0;
-	} else if (this.getSP() > this.stat.spMax) {
-		this.stat.sp = this.stat.spMax;
+	if(!this.getMonster().dead && this.recruitment.attached) {
+		this.stat.sp += sp;
+		if (this.getSP() < 0) {
+			this.stat.sp = 0;
+		} else if (this.getSP() > this.stat.spMax) {
+			this.stat.sp = this.stat.spMax;
+		}
 	}
 }
 Champion.prototype.getFood = function() {
 	return this.food;
 }
 Champion.prototype.addFood = function(fd) {
-	this.food += fd;
-	if(this.getFood() < 0) {
-		this.food = 0;
-		return true;
-	} else if(this.getFood() > 200) {
-		this.food = 200;
+	if(!this.getMonster().dead && this.recruitment.attached) {
+		this.food += fd;
+		if(this.getFood() < 0) {
+			this.food = 0;
+			return true;
+		} else if(this.getFood() > 200) {
+			this.food = 200;
+		}
+		return false;
 	}
-	return false;
 }
 
 Champion.prototype.getWeaponPower = function(s) {
@@ -476,7 +484,7 @@ Champion.prototype.checkSpell = function() {
 	}
 	if (this.activeSpell.id > -1) {
 		this.activeSpell.timer--;
-		if (this.activeSpell.timer === 0) {
+		if (this.activeSpell.timer <= 0) {
 			this.expireSpell();
 		}
 	}

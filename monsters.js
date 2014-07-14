@@ -121,7 +121,7 @@ Monster.prototype.canInteract = function() {
 		}
 		var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
 		if (mon !== null) {
-			if (mon.type === MON_TYPE_MAGICAL || this.type === MON_TYPE_MAGICAL || mon.champId > -1) {
+			if (mon.type === MON_TYPE_DRONE || this.type === MON_TYPE_DRONE || mon.type === MON_TYPE_DRONE_CASTER || this.type === MON_TYPE_DRONE_CASTER || mon.champId > -1) {
 				//attack champion
 				this.attack(true, mon);
 				return 2;
@@ -182,7 +182,7 @@ Monster.prototype.canOpenDoor = function() {
 	var hexNext = this.getBinaryView(15, 0, 16);
 	//Check the space the monster is standing on
 	if (getHexToBinaryPosition(hexThis, 12, 4) == '2' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2 + 1, 1) == '1') {
-		if (this.isAggressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
+		if (this.isAggressive() && this.type !== MON_TYPE_DRONE && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1, '0');
 			return true;
@@ -190,7 +190,7 @@ Monster.prototype.canOpenDoor = function() {
 	}
 	//Check the space the monster is moving to
 	if (getHexToBinaryPosition(hexNext, 12, 4) == '2' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2 + 1, 1) == '1') {
-		if (this.isAggressive() && this.type !== MON_TYPE_MAGICAL && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
+		if (this.isAggressive() && this.type !== MON_TYPE_DRONE && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1, '0');
 			return true;
@@ -313,15 +313,21 @@ Monster.prototype.getHP = function() {
 Monster.prototype.castSpell = function() {
 	if (!this.communicating) {
 		var sq = this.getSquareByDir();
-		if (this.type === MON_TYPE_SPELLCASTER && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
+		if ((this.type === MON_TYPE_CASTER || this.type === MON_TYPE_DRONE_CASTER) && Math.floor(Math.random() * 3) === 0 && (this.teamId > 0 || this.square === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT)) {
 			var id = SPELL_MISSILE;
-			if (this.level >= 5 && Math.floor(Math.random() * 2) === 0) {
+			if (this.level >= 4 && Math.floor(Math.random() * 2) === 0) {
+				id = SPELL_SPELLTAP;
+			}
+			if (this.level >= 8 && Math.floor(Math.random() * 3) === 0) {
 				id = SPELL_FIREBALL;
 			}
-			if (this.level >= 10 && Math.floor(Math.random() * 3) === 0) {
+			if (this.level >= 12 && Math.floor(Math.random() * 4) === 0) {
+				id = SPELL_CONFUSE;
+			}
+			if (this.level >= 16 && Math.floor(Math.random() * 5) === 0) {
 				id = SPELL_ARC_BOLT;
 			}
-			if (this.level >= 15 && Math.floor(Math.random() * 4) === 0) {
+			if (this.level >= 18 && Math.floor(Math.random() * 6) === 0) {
 				id = SPELL_DISRUPT;
 			}
 			castSpell(id, this, Math.floor(this.level * 2 + 4 + getSpellById(id).level * 0.4));
@@ -342,7 +348,7 @@ Monster.prototype.launchSpell = function() {
 Monster.prototype.followPlayer = function() {
 	//Move to player
 	var ch = this.getChampion();
-	if ((this.champId === -1 && this.type !== MON_TYPE_MAGICAL) || (ch !== null && ch.recruitment.called)) {
+	if ((this.champId === -1 && this.type !== MON_TYPE_DRONE) || (ch !== null && ch.recruitment.called)) {
 		var rnd = Math.floor(Math.random() * 2);
 		if (!player[0].dead && (typeof player[1] === 'undefined' || Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y))) {
 			//player 1 is closer
@@ -519,7 +525,7 @@ Monster.prototype.die = function() {
 			if (this.isRecruitedBy() === null || !ch.recruitment.attached) {
 				dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, sq);
 			}
-		} else if (this.type !== MON_TYPE_MAGICAL) {
+		} else if (this.type !== MON_TYPE_DRONE) {
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, -1, 0, this.floor, this.x, this.y, 0, null);
 			var lvl = Math.floor(this.level / 5.0);
 			if(lvl > 3) {
