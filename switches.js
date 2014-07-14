@@ -14,13 +14,13 @@ function switchAction(r, p) {
 			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = toggleObject(tar, '1');
 			break;
 		case SWITCH_WALL_OPEN_VOID_DOOR:
-			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 12, 4, '0');
+			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 7, 1, '0');
 			break;
 		case SWITCH_WALL_ROTATE_STONE_WALL:
 			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 10, 2, '' + ((parseInt(getHexToBinaryPosition(tar, 10, 2)) + 1) % 4));
 			break;
 		case SWITCH_WALL_TOGGLE_PILLAR:
-			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = toggleObject(tar, '3');
+			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = toggleObject(tar, '3', '1');
 			break;
 		case SWITCH_WALL_PLACE_PILLAR:
 			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 12, 4, '3');
@@ -45,7 +45,11 @@ function toggleObject(hex, o, s, once) {
 		ret = setHexToBinaryPosition(ret, 12, 4, '0');
 	}
 	if(typeof s !== "undefined" && s !== null) {
-		ret = setHexToBinaryPosition(ret, 6, 2, s);
+		if (getHexToBinaryPosition(ret, 6, 2) === '0' || once) {
+			ret = setHexToBinaryPosition(ret, 6, 2, s);
+		} else {
+			ret = setHexToBinaryPosition(ret, 6, 2, '0');
+		}
 	}
 
 	return ret;
@@ -103,10 +107,10 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[p.y][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 1], 7, 1, '1');
 			break;
 		case SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD:
-			checkSwitchTower(p.id, false, Math.floor(trig[1] * 0.5));
+			checkSwitchTower(p.id, false, Math.floor(trig[1] * 0.5), trig);
 			break;
 		case SWITCH_FLOOR_TOWER_ENTRANCE:
-			checkSwitchTower(p.id, true, Math.floor(trig[1] * 0.25));
+			checkSwitchTower(p.id, true, Math.floor(trig[1] * 0.25), trig);
 			break;
 		case SWITCH_FLOOR_REMOVE:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', null, true);
@@ -115,7 +119,7 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1');
 			break;
 		case SWITCH_FLOOR_TOGGLE_PILLAR:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3');
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3', '1');
 			break;
 		case SWITCH_FLOOR_CREATE_SPINNER:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = '0B06';
@@ -133,10 +137,10 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3', '1', true);
 			break;
 		case SWITCH_FLOOR_KEEP_ENTRANCE_SIDEPAD:
-			checkSwitchTower(p.id, false, 0);
+			checkSwitchTower(p.id, false, 0, trig);
 			break;
 		case SWITCH_FLOOR_KEEP_ENTRANCE_CENTRAL_PAD:
-			checkSwitchTower(p.id, true, 0);
+			checkSwitchTower(p.id, true, 0, trig);
 			break;
 		case SWITCH_FLOOR_FLASH_TELEPORT:
 			p.setPlayerPosition(trig[1], trig[2], trig[3]);
@@ -152,16 +156,25 @@ function floorActionType(trig, p) {
 			p.rotateTo((p.d + 1) % 4);
 			break;
 		case SWITCH_FLOOR_CLICK_TELEPORT:
+			p.setPlayerPosition(trig[1], trig[2], trig[3]);
 			break;
 		case SWITCH_FLOOR_TOGGLE_GREEN_PAD:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '6');
+			if(getHexToBinaryPosition(tar, 13, 3) === '0') {
+				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 13, 3, '6');
+			} else {
+				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 13, 3, '0');
+			}
 			break;
 		case SWITCH_FLOOR_ROTATE_WOOD_WALL_COUNTER_CLOCKWISE:
 			var wood = hex2bin(getHexToBinaryPosition(tar, 6, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 0, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 2, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 4, 2), 2);
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 0, 8, bin2hex(wood));
 			break;
 		case SWITCH_FLOOR_TOGGLE_HOLE:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '6');
+			if(getHexToBinaryPosition(tar, 6, 2) === '1') {
+				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 6, 2, '2');
+			} else {
+				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 6, 2, '1');
+			}
 			break;
 		case SWITCH_FLOOR_GAME_COMPLETION_PAD:
 			break;

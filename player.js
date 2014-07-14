@@ -69,6 +69,7 @@ function Player(id, ScreenX, ScreenY) {
 		answerTimer: 0,
 		charisma: 0
 	};
+	this.frozen = false;
 
 	this.PlayerCanvas = document.createElement('canvas');
 	this.PlayerCanvas.width = 128 * scale;
@@ -98,8 +99,6 @@ Player.prototype.toJSON = function() {
 		d: this.d,
 		PortalX: this.PortalX,
 		PortalY: this.PortalY,
-		//PlayerCanvas: this.PlayerCanvas,
-		//Portal: this.Portal,
 		ScreenX: this.ScreenX,
 		ScreenY: this.ScreenY,
 		pocket: this.pocket,
@@ -123,7 +122,8 @@ Player.prototype.toJSON = function() {
 		uiRightPanel: this.uiRightPanel,
 		uiLeftPanel: this.uiLeftPanel,
 		uiCenterPanel: this.uiCenterPanel,
-		communication: this.communication
+		communication: this.communication,
+		frozen: this.frozen
 	}
 }
 
@@ -162,6 +162,7 @@ Player.revive = function(data) {
 	p.uiLeftPanel = data.uiLeftPanel;
 	p.uiCenterPanel = data.uiCenterPanel;
 	p.communication = data.communication;
+	p.frozen = data.frozen;
 	return p;
 };
 
@@ -214,49 +215,49 @@ Player.prototype.action = function() {
 		if(!this.checkWoodenDoor(18)) {
 			this.checkWoodenDoor(15);
 		}
-		//Wooden doors (on player)
-		var o15 = this.getObjectOnPos(15, 2);
-		//Wall switches
-		//if (this.getBinaryView(15, 0, 5) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
-		if(o15 === OBJECT_SWITCH) {
-			this.setBinaryView(15, 5, 1);
-			switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
-		} else if(o15 === OBJECT_GEM) {
-			gemAction(this);
-		}
-		//Check if something is in the way
-		if (this.getMonstersInRange(15).length > 0) {
-			return false;
-		}
-		//Doors
-		if (this.getBinaryView(15, 12, 4) === '5' && this.getBinaryView(15, 4) === '0') {
-			var keylock = parseInt(this.getBinaryView(15, 1, 3));
-			if (keylock > 0) {
-				if (this.pocket.id === keylock + 79) { //Use key
+		if(this.canMoveByWood(0)) {
+			//Wooden doors (on player)
+			var o15 = this.getObjectOnPos(15, 2);
+			//Wall switches
+			//if (this.getBinaryView(15, 0, 5) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
+			if(o15 === OBJECT_SWITCH) {
+				this.setBinaryView(15, 5, 1);
+				switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
+			} else if(o15 === OBJECT_GEM) {
+				gemAction(this);
+			}
+			//Check if something is in the way
+			if (this.getMonstersInRange(15).length > 0) {
+				return false;
+			}
+			//Doors
+			if (this.getBinaryView(15, 12, 4) === '5' && this.getBinaryView(15, 4) === '0') {
+				var keylock = parseInt(this.getBinaryView(15, 1, 3));
+				if (keylock > 0) {
+					if (this.pocket.id === keylock + 79) { //Use key
+						this.consumeItemInHand();
+						this.setBinaryView(15, 11, 1);
+						this.setBinaryView(15, 1, 3, '0');
+					}
+				} else if (this.pocket.id === ITEM_KEY) { //Use common key
 					this.consumeItemInHand();
 					this.setBinaryView(15, 11, 1);
-					this.setBinaryView(15, 1, 3, '0');
 				}
-			} else if (this.pocket.id === ITEM_KEY) { //Use common key
-				this.consumeItemInHand();
-				this.setBinaryView(15, 11, 1);
+				if (this.getBinaryView(15, 1, 3) === '0' && this.getBinaryView(15, 11, 1) === '0') { //If unlocked, open/close door
+					this.setBinaryView(15, 7, 1);
+					//this.setBinaryView(15, 1, 3, '000'); //Will set the door to 'normal'
+				} else { //If locked, give lock message
+					this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
+				}
 			}
-			if (this.getBinaryView(15, 1, 3) === '0' && this.getBinaryView(15, 11, 1) === '0') { //If unlocked, open/close door
-				this.setBinaryView(15, 7, 1);
-				//this.setBinaryView(15, 1, 3, '000'); //Will set the door to 'normal'
-			} else { //If locked, give lock message
-				this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
-			}
+			return true;
 		}
-		return true;
 	}
 	return false;
 };
 
 Player.prototype.toggleFrontObject = function() {
-	if (debug) {
-		this.setBinaryView(15, 12, 1);
-	}
+	this.setBinaryView(15, 12, 1);
 };
 Player.prototype.checkWoodenDoor = function(pos18) {
 	if (pos18 === 18) {
@@ -492,14 +493,21 @@ Player.prototype.doEvent = function(mr) {
 };
 
 Player.prototype.doPit = function() {
-	if (this.getBinaryView(18, 6, 2) === '1' && this.getActiveSpellById(SPELL_LEVITATE).timer === 0) {
+	var self = this;
+	if (this.getBinaryView(18, 6, 2) === '1') {
+		if(this.getActiveSpellById(SPELL_LEVITATE).timer > 0) {
+			return true;
+		}
 		floor = this.floor - 1;
 		fOff = getTowerFloorOffset(this.floor, floor);
 		x = this.x + fOff.x;
 		y = this.y + fOff.y;
 		this.setPlayerPosition(floor, x, y);
-		//this.setMovementData();
-		this.doEvent(true);
+		//this.frozen = true;
+		setTimeout(function() {
+			self.doEvent(true);
+			//self.frozen = false;
+		}, 400);
 		newProjectile(DUNGEON_NONE, PALETTE_PIT, -1, 0, floor, x, y, 0, null);
 		return true;
 	}

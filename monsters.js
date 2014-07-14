@@ -4,7 +4,7 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, te
 	this.type = type;
 	var clr = 0;
 	if (form >= MON_FORM_ILLUSION && form < MON_FORM_BEHEMOTH) {
-		clr = Math.floor(level / 2.5);
+		clr = Math.floor(level / 2);
 		if (clr > 7) {
 			clr = 7;
 		}
@@ -520,21 +520,22 @@ Monster.prototype.die = function() {
 				dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, sq);
 			}
 		} else if (this.type !== MON_TYPE_MAGICAL) {
-			if (Math.floor(Math.random() * 2) === 1) {
-				var lvl = Math.floor(this.level / 5.0);
-				if(this.form === MON_FORM_ZENDIK) {
-					lvl = 4;
-				} else if(lvl > 3) {
-					lvl = 3;
-				}
-				var it = MON_ITEM_DROPS[lvl][Math.floor(Math.random() * MON_ITEM_DROPS[lvl].length)];
-				var qt = 1;
-				if (it <= ITEM_ELF_ARROWS) {
-					qt = Math.floor(Math.random() * (this.level + 2) * 1) + 1;
-				}
-				dropItem(it, qt, this.floor, this.x, this.y, sq);
-			}
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, -1, 0, this.floor, this.x, this.y, 0, null);
+			var lvl = Math.floor(this.level / 5.0);
+			if(lvl > 3) {
+				lvl = 3;
+			}
+			if(this.form === MON_FORM_ZENDIK) {
+				lvl = 4;
+			} else if (Math.floor(Math.random() * 2) === 1) {
+				return;
+			}
+			var it = MON_ITEM_DROPS[lvl][Math.floor(Math.random() * MON_ITEM_DROPS[lvl].length)];
+			var qt = 1;
+			if (it <= ITEM_ELF_ARROWS) {
+				qt = Math.floor(Math.random() * (this.level + 2) * 1) + 1;
+			}
+			dropItem(it, qt, this.floor, this.x, this.y, sq);
 		}
 	}
 }

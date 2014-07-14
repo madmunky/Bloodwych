@@ -34,22 +34,22 @@ Item.prototype.getWeaponPower = function() {
 			case ITEM_MITHRIL_SWORD:
 				return 7;
 			case ITEM_FLESHBANE:
-				return 9;
+				return 11;
 			case ITEM_DEMON_BLADE:
 				return 13;
 			case ITEM_ACE_OF_SWORDS:
-				return 17;
+				return 19;
 
 			case ITEM_BATTLE_AXE:
 				return 6;
 			case ITEM_MITHRIL_AXE:
 				return 8;
 			case ITEM_TROLLS_AXE:
-				return 11;
+				return 10;
 			case ITEM_BRAINBITER:
 				return 14;
 			case ITEM_DEATHBRINGER:
-				return 19;
+				return 17;
 
 			case ITEM_STAFF:
 				return 4;
@@ -354,7 +354,7 @@ function initItemRefs() {
 	createItemRef(8, "Food", gfxUI[UI_GFX_POCKET_BISCUIT_1], itemsGfxD[DUNGEON_ITEM_BISCUIT]);
 	createItemRef(9, "Food", gfxUI[UI_GFX_POCKET_BISCUIT_2], itemsGfxD[DUNGEON_ITEM_BISCUIT]);
 	createItemRef(10, "Food", gfxUI[UI_GFX_POCKET_BISCUIT_3], itemsGfxD[DUNGEON_ITEM_BISCUIT]);
-	createItemRef(11, "Food", gfxUI[UI_GFX_POCKET_CHICKEN_1], itemsGfxD[DUNGEON_ITEM_CHICKEN]);
+	createItemRef(11, "Food", gfxUI[UI_GFX_POCKET_CHICKEN_1], itemsGfxD[DUNGEON_ITEM_BONE]);
 	createItemRef(12, "Food", gfxUI[UI_GFX_POCKET_CHICKEN_2], itemsGfxD[DUNGEON_ITEM_CHICKEN]);
 	createItemRef(13, "Food", gfxUI[UI_GFX_POCKET_CHICKEN_3], itemsGfxD[DUNGEON_ITEM_CHICKEN]);
 	createItemRef(14, "Mead", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_1], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_PINK]), itemsGfxD[DUNGEON_ITEM_DRINK]);

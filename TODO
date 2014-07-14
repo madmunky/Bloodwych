@@ -10,12 +10,12 @@ COD Fix Big monster 'edge of screen'
 UI  Fix death screen as I did with asleep
 BUG Fix saving dungeonSpellList
 BUG Cast% stays when closing book
-BUG Don't do events when pit on ceiling (in doPit)
+BUG Don't call "player.event" when pit on ceiling (in doPit)
+BUG Arrows on Right UI sometimes show over pockets or scroll
 
 CHRIS
 ------
 TST Figure out and fix spell points for champs
-TST Figure out the remaining switches and buttons
 TST Test tower gems
 COD Pause game
 COD Sounds!
@@ -29,6 +29,8 @@ QUESTIONS FOR CHRIS
 -------------------
 The spell points seem wrong compared to steem. E.g. Zothen has 43 sp in ours, and 21 in original, and Megrim has 0 spell points. Anything we missed? - Not sure about this maybe we need to rip the ingame stats instead
 When a champ deals damage, do all champions in player team get the same amount of xp per hit, per champ? Or only the champ that deals the damage?
+Need to know how the crystals work on paths and triggers in Zendik's end floor
+How does Behemoth spawn?
 
 QUESTIONS FOR JORG
 ------------------

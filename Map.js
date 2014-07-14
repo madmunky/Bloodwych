@@ -12,7 +12,7 @@ function Map(Width, Height, xOff, yOff) {
 	this.Map = [];
 }
 
-function checkSwitchTower(p, m, id) {
+function checkSwitchTower(p, m, id, trig) {
 	if (typeof player[1] === 'undefined' && m) {
 		if (parseInt(player[0].getView()[18].substring(3, 4), 16) === 6) {
 			//var tw = Math.floor(trig[1] * 0.5);
