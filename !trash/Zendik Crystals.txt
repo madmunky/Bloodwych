@@ -1,0 +1,27 @@
+abcd efgh ijkl mnop
+
+cde		colour			000, 001, 010, 011
+f 		empty slot		1
+gh		crystal			11
+i 		decoration		1
+kl		direction		00, 01, 10, 11
+nop		wall			001
+
+-------------------
+abcd efgh ijkl mnop
+
+Serpent
+0781
+0000 0111 1000 0001
+
+Dragon
+1791
+0001 0111 1001 0001
+
+Moon
+1FA1
+0001 1111 1010 0001
+
+Chaos
+0FB1
+0000 1111 1011 0001

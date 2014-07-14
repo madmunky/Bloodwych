@@ -1,0 +1,20 @@
+0010 0010 1011 0001   KNOWN
+
+0000 1010 1001 0001   UNKNOWN
+0A91
+
+0000 0010 1011 0001   VIVIFY
+
+abcd efgh ijkl mnop
+
+abcde = reference to switch
+f = dim/lit
+gh = 2 = switch
+i = 1 = deco on wall (switch, shelf, etc)
+j
+kl = direction
+mnop = 1 = wall
+
+
+0011 1111 1010 0001	TAN GEM OFF
+0010 1111 1010 0001	BLUISH GEM OFF

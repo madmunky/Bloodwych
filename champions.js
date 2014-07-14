@@ -627,11 +627,11 @@ function initChampions() {
 			int: int,
 			cha: cha,
 			hp: hp,
-			hpMax: hp,
+			hpMax: hpMax,
 			vit: vit,
-			vitMax: vit,
+			vitMax: vitMax,
 			sp: sp,
-			spMax: sp,
+			spMax: spMax,
 			ac: ac
 		};
 		var x = parseInt(hex2dec(md.substr(44, 2)));
@@ -655,7 +655,7 @@ function initChampions() {
 				spellBook[pg][rw].id = spl[rw].index;
 				spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
 				if (spellBin !== null && spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
-					spellBook[pg][rw].castSuccessful = 5;
+					spellBook[pg][rw].castSuccessful = 4;
 					spellBook[pg][rw].learnt = true;
 				}
 			}

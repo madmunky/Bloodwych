@@ -224,6 +224,51 @@ function debugTextPrint(p) {
         for (i in mon) {
             debugText(p, 'Monster:' + mon[i].monster + ' - MonsterPos:' + mon[i].position + ' - MonsterOffset:' + getMonsterGfxOffset(15, 0).x + ', ' + getMonsterGfxOffset(12, 0).x + ', ' + getMonsterGfxOffset(9, 0).x);
         }*/
+        if (typeof debugWindow !== "undefined" && debugWindow !== null) {
+        	if($('body .debug-input', debugWindow.document).length === 0) {
+        		$('body', debugWindow.document).append('<div class="debug-input">');
+        		$('body .debug-input', debugWindow.document).append('<label for="coord-t">T: </label><input type="text" id="coord-t" value="' + towerThis + '">');
+        		$('body .debug-input', debugWindow.document).append('<label for="coord-f">F: </label><input type="text" id="coord-f" value="' + player[0].floor + '">');
+        		$('body .debug-input', debugWindow.document).append('<label for="coord-x">X: </label><input type="text" id="coord-x" value="' + player[0].x + '">');
+        		$('body .debug-input', debugWindow.document).append('<label for="coord-y">Y: </label><input type="text" id="coord-y" value="' + player[0].y + '">');
+        		$('body .debug-input', debugWindow.document).append('<input type="button" id="coord-submit" value="update">');
+        		$('body .debug-input', debugWindow.document).on('click', '#coord-submit', function() {
+        			var tower = parseInt($('body .debug-input #coord-t', debugWindow.document).val());
+        			var floor = parseInt($('body .debug-input #coord-f', debugWindow.document).val());
+        			var x = parseInt($('body .debug-input #coord-x', debugWindow.document).val());
+        			var y = parseInt($('body .debug-input #coord-y', debugWindow.document).val());
+        			if(towerThis !== tower) {
+        				switchTower(tower);
+        			}
+        			player[0].setPlayerPosition(floor, x, y);
+        		});
+        	}
+			var tower = parseInt($('body .debug-input #coord-t', debugWindow.document).val());
+			var floor = parseInt($('body .debug-input #coord-f', debugWindow.document).val());
+			var x = parseInt($('body .debug-input #coord-x', debugWindow.document).val());
+			var y = parseInt($('body .debug-input #coord-y', debugWindow.document).val());
+			if(!$('body .debug-input #coord-t', debugWindow.document).is(':focus') && !$('body .debug-input #coord-f', debugWindow.document).is(':focus') && !$('body .debug-input #coord-x', debugWindow.document).is(':focus') && !$('body .debug-input #coord-y', debugWindow.document).is(':focus') && !$('body .debug-input #coord-submit', debugWindow.document).is(':focus')) {
+				if(tower !== towerThis) {
+					$('body .debug-input #coord-t', debugWindow.document).val(towerThis);
+				}
+				if(floor !== player[0].floor) {
+					$('body .debug-input #coord-f', debugWindow.document).val(player[0].floor);
+				}
+				if(x !== player[0].x) {
+					$('body .debug-input #coord-x', debugWindow.document).val(player[0].x);
+				}
+				if(y !== player[0].y) {
+					$('body .debug-input #coord-y', debugWindow.document).val(player[0].y);
+				}
+			}
+        }
+	}
+}
+
+function debugGetInputCoords() {
+	if (typeof debugWindow !== "undefined" && debugWindow !== null) {
+		if($('body .debug-input', debugWindow.document).length > 0) {
+		}
 	}
 }
 

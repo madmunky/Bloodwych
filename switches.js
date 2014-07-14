@@ -128,11 +128,12 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '1', null, true);
 			break;
 		case SWITCH_FLOOR_CREATE_PAD:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 7, 1, '1');
+			tower[towerThis].floor[trig[1]].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 13, 3, '6');
 			break;
 		case SWITCH_FLOOR_MOVE_PILLAR_AT_PLAYER:
-			tower[towerThis].floor[p.floor].Map[p.y - 1][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y - 1][p.x - 1], 7, 1, '0');
-			break; //Not sure this is right
+			tower[towerThis].floor[p.floor].Map[p.y - 1][p.x - 1] = '0000';
+			tower[towerThis].floor[p.floor].Map[p.y - 1][p.x] = toggleObject(tar, '3', '1', true);
+			break;
 		case SWITCH_FLOOR_CREATE_PILLAR:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3', '1', true);
 			break;

@@ -543,10 +543,10 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 	this.lastFloor = this.floor;
 	this.lastX = this.x;
 	this.lastY = this.y;
-	this.floor = floor;
-	if (typeof x !== "undefined") this.x = x;
-	if (typeof y !== "undefined") this.y = y;
-	if (typeof d !== "undefined") this.d = d;
+	if (typeof floor !== "undefined" && floor >= 0 && floor < tower[towerThis].floor.length) this.floor = floor;
+	if (typeof x !== "undefined" && x >= 0 && x < tower[towerThis].floor[floor].Height) this.x = x;
+	if (typeof y !== "undefined" && y >= 0 && y < tower[towerThis].floor[floor].Width) this.y = y;
+	if (typeof d !== "undefined") this.d = d % 4;
 	this.setMovementData();
 	this.updateChampions();
 	//this.doEvent(true);

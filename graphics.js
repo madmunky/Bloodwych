@@ -258,10 +258,6 @@ function getWallDirection(d, s) {
 	var Wall = [0, 1, 2, 3, 2, 1, 2, 3, 2, 2, 1, 2, 3, 2, 2, 1, 2, 3, 2, 1, 2, 1, 3, 2, 3, 2, 1, 3, 2, 3, 0, 1];
 	Wall[s] = (Wall[s] + d) % 4;
 
-	if (debugHigh) {
-		console.log(s + " = " + getDirection(Wall[s]));
-	}
-
 	return Wall[s];
 };
 

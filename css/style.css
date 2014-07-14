@@ -22,13 +22,6 @@ div.logo {
 	clear: both;
 	width: 100%;
 }
-section.info {
-	clear: both;
-	width: 100%;
-	float: left;
-	margin-top: 20px;
-	display: none;
-}
 div.canvas-wrapper {
 	position: relative;
 }
@@ -41,4 +34,36 @@ canvas {
 canvas[data-game-status="loading"] {
 	background: #000 url(../images/loading.png) center center no-repeat;
 	background-size: 100%;
+}
+
+/* DEBUG */
+section.info {
+	clear: both;
+	width: 100%;
+	float: left;
+	margin-top: 20px;
+	display: none;
+}
+.debug-input label {
+	float: left;
+	width: 15px;
+	padding: 3px;
+	text-align: right;
+}
+.debug-input input[type=text] {
+	font: 12px"Bookman Old Style", verdana, sans-serif;
+	float: left;
+	color: #fff;
+	background-color: #000;
+	border: solid 1px #444;
+	width: 30px;
+}
+.debug-input input[type=button] {
+	font: 12px"Bookman Old Style", verdana, sans-serif;
+	color: #fff;
+	background-color: #444;
+	border: solid 1px #888;
+	float: left;
+	line-height: 17px;
+	margin-left: 5px;
 }
