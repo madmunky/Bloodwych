@@ -912,7 +912,7 @@ Player.prototype.getMonstersInRange = function(pos2) {
 	var p = this;
 	var monstersInRange = [];
 	var pos = -1;
-	mon = getMonstersInTower(towerThis);
+	mon = getMonstersInTower(towerThis, true);
 	for (m in mon) {
 		if (p.floor === mon[m].floor && !mon[m].dead) {
 			pos = coordinatesToPos(mon[m].x, mon[m].y, p.x, p.y, p.d);
@@ -1172,6 +1172,7 @@ Player.prototype.actionItem = function(s) {
 	} else { //drop item
 		dropItem(itH.id, itH.quantity, this.floor, xyi.x, xyi.y, (this.d + s) % 4);
 		itH.setPocketItem();
+		redrawUI(this.id, UI_REDRAW_RIGHT);
 		return true;
 	}
 	return false;
@@ -1206,34 +1207,38 @@ Player.prototype.getItemsInRange = function(pos2) {
 }
 
 Player.prototype.castSpell = function(sb, ch, s) {
-	if (typeof s === "undefined") {
-		var s = false;
-	}
-	this.doneCommunication();
-	if(ch.stat.sp - sb.cost >= 0) {
-		ch.addSP(-sb.cost);
-		ch.addVit(-sb.cost);
-		if (this.doFizzle()) {
-			writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, COLOUR[COLOUR_BLUE_DARK]);
-		} else if (Math.random() < ch.getSpellCastChance()) {
-			castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10);
-			sb.castSuccessful++;
-			if (!s) {
-				this.showSpellText = false;
-				writeSpellInfoFont(this);
+	if(!this.dead) {
+		if (typeof s === "undefined") {
+			var s = false;
+		}
+		this.doneCommunication();
+		if(ch.stat.sp - sb.cost >= 0) {
+			ch.addSP(-sb.cost);
+			ch.addVit(-sb.cost);
+			if (this.doFizzle()) {
+				writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, COLOUR[COLOUR_BLUE_DARK]);
+			} else if (Math.random() < ch.getSpellCastChance()) {
+				castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10);
+				sb.castSuccessful++;
+				if (!s) {
+					this.showSpellText = false;
+					writeSpellInfoFont(this);
+				} else {
+					ch.writeAttackPoints('spell');
+				}
+				this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+				this.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+			} else if (!s) {
+				writeSpellInfoFont(this, TEXT_SPELL_FAILED, COLOUR[COLOUR_GREY_LIGHT]);
 			} else {
 				ch.writeAttackPoints('spell');
 			}
+			ch.spellFatigue = ch.spellFatigue - 0.75;
+			ch.selectedSpell = null;
+			ch.getMonster().doGesture(CHA_GESTURE_SPELLCASTING);
 		} else if (!s) {
-			writeSpellInfoFont(this, TEXT_SPELL_FAILED, COLOUR[COLOUR_GREY_LIGHT]);
-		} else {
-			ch.writeAttackPoints('spell');
+			writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, COLOUR[COLOUR_RED]);
 		}
-		ch.spellFatigue = ch.spellFatigue - 0.75;
-		ch.selectedSpell = null;
-		ch.getMonster().doGesture(CHA_GESTURE_SPELLCASTING);
-	} else if (!s) {
-		writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, COLOUR[COLOUR_RED]);
 	}
 }
 

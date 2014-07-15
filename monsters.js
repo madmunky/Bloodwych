@@ -182,7 +182,7 @@ Monster.prototype.canOpenDoor = function() {
 	var hexNext = this.getBinaryView(15, 0, 16);
 	//Check the space the monster is standing on
 	if (getHexToBinaryPosition(hexThis, 12, 4) == '2' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2 + 1, 1) == '1') {
-		if (this.isAggressive() && this.type !== MON_TYPE_DRONE && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
+		if (this.isAggressive() && this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1, '0');
 			return true;
@@ -190,7 +190,7 @@ Monster.prototype.canOpenDoor = function() {
 	}
 	//Check the space the monster is moving to
 	if (getHexToBinaryPosition(hexNext, 12, 4) == '2' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2 + 1, 1) == '1') {
-		if (this.isAggressive() && this.type !== MON_TYPE_DRONE && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
+		if (this.isAggressive() && this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1, '0');
 			return true;
@@ -348,7 +348,7 @@ Monster.prototype.launchSpell = function() {
 Monster.prototype.followPlayer = function() {
 	//Move to player
 	var ch = this.getChampion();
-	if ((this.champId === -1 && this.type !== MON_TYPE_DRONE) || (ch !== null && ch.recruitment.called)) {
+	if ((this.champId === -1 && this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER) || (ch !== null && ch.recruitment.called)) {
 		var rnd = Math.floor(Math.random() * 2);
 		if (!player[0].dead && (typeof player[1] === 'undefined' || Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y))) {
 			//player 1 is closer
@@ -525,23 +525,25 @@ Monster.prototype.die = function() {
 			if (this.isRecruitedBy() === null || !ch.recruitment.attached) {
 				dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, sq);
 			}
-		} else if (this.type !== MON_TYPE_DRONE) {
+		} else {
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, -1, 0, this.floor, this.x, this.y, 0, null);
-			var lvl = Math.floor(this.level / 5.0);
-			if(lvl > 3) {
-				lvl = 3;
+			if (this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER) {
+				var lvl = Math.floor(this.level / 5.0);
+				if(lvl > 3) {
+					lvl = 3;
+				}
+				if(this.form === MON_FORM_ZENDIK) {
+					lvl = 4;
+				} else if (Math.floor(Math.random() * 2) === 1) {
+					return;
+				}
+				var it = MON_ITEM_DROPS[lvl][Math.floor(Math.random() * MON_ITEM_DROPS[lvl].length)];
+				var qt = 1;
+				if (it <= ITEM_ELF_ARROWS) {
+					qt = Math.floor(Math.random() * (this.level + 2) * 1) + 1;
+				}
+				dropItem(it, qt, this.floor, this.x, this.y, sq);
 			}
-			if(this.form === MON_FORM_ZENDIK) {
-				lvl = 4;
-			} else if (Math.floor(Math.random() * 2) === 1) {
-				return;
-			}
-			var it = MON_ITEM_DROPS[lvl][Math.floor(Math.random() * MON_ITEM_DROPS[lvl].length)];
-			var qt = 1;
-			if (it <= ITEM_ELF_ARROWS) {
-				qt = Math.floor(Math.random() * (this.level + 2) * 1) + 1;
-			}
-			dropItem(it, qt, this.floor, this.x, this.y, sq);
 		}
 	}
 }
@@ -724,7 +726,7 @@ function createMonsterRef(id, level, gfx) {
 //Gets the (leader) monster at floor, x, y
 
 function getMonsterAt(floor, x, y) {
-	mon = getMonstersInTower(towerThis);
+	mon = getMonstersInTower(towerThis, true);
 	for (m in mon) {
 		if (!mon[m].dead && mon[m].teamId >= 0 && mon[m].floor === floor && mon[m].x === x && mon[m].y === y) {
 			return mon[m];
@@ -840,11 +842,26 @@ function getMonsterById(id) {
 }
 
 //returns a list of monsters on this tower. Includes champions on this tower
-function getMonstersInTower(id) {
-	var mon = monster[id].slice();
+function getMonstersInTower(id, f) {
+	var mon = new Array();
+	var f1 = null;
+	var f2 = null;
+	if(typeof f !== 'undefined') {
+		f1 = player[0].floor;
+		if(typeof player[1] !== 'undefined') {
+			f2 = player[1].floor;
+		}
+	}
+	for (m = 0; m < monster[id].length; m++) {
+		if (f1 === null || f1 === monster[id][m].floor || (f2 !== null && f2 === monster[id][m].floor)) {
+			mon.push(monster[id][m]);
+		}
+	}
 	for (m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
 		if (monster[TOWER_CHAMPIONS][m].tower === id) {
-			mon.push(monster[TOWER_CHAMPIONS][m]);
+			if (f1 === null || f1 === monster[TOWER_CHAMPIONS][m].floor || (f2 !== null && f2 === monster[TOWER_CHAMPIONS][m].floor)) {
+				mon.push(monster[TOWER_CHAMPIONS][m]);
+			}
 		}
 	}
 	return mon;

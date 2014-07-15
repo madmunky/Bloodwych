@@ -9,7 +9,6 @@ COD Fix rpg. More HP for monsters. More damage/spelldamage for players at more s
 COD Fix Big monster 'edge of screen'
 UI  Fix death screen as I did with asleep
 BUG Fix saving dungeonSpellList
-BUG Cast% stays when closing book
 BUG Don't call "player.event" when pit on ceiling (in doPit)
 BUG Arrows on Right UI sometimes show over pockets or scroll
 BUG Avoid putting items in edge-floor walls

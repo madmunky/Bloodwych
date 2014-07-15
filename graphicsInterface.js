@@ -196,7 +196,8 @@ function drawSpellBook(p, ui, dr) {
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-	} else if (ch.selectedSpell !== null && start) {
+		drawPocketInfo(p);
+	} else if (ch.selectedSpell !== null && start) { //start screen
 		if (currentPlayer === 0) {
 			drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
 		} else {
@@ -218,10 +219,9 @@ function drawSpellBook(p, ui, dr) {
 			writeFontImage("CAST % ", p.ScreenX + 96 + 2, (p.ScreenY + 79), COLOUR[COLOUR_YELLOW]);
 			var cst = ch.getSpellCastChance();
 			var t = showStatusBar(cst, 1.0, 62, COLOUR[COLOUR_RED]);
-			//drawFillRect((p.ScreenX + 154), (p.ScreenY + 80), t.width, t.height, COLOUR[COLOUR_BLACK]);
 			ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
 		}
-	} else if (ch.selectedSpell === null && start) {
+	} else if (ch.selectedSpell === null && start) { //start screen
 		if (currentPlayer === 0) {
 			drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
 		} else {
@@ -237,7 +237,6 @@ function drawSpellBook(p, ui, dr) {
 		writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
 		writeFontImage(getSpellNotation(champion[championSelect[currentPlayer].champID].stat.sp) + "/" + getSpellNotation(champion[championSelect[currentPlayer].champID].stat.spMax), p.ScreenX + 282, (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
 	}
-
 }
 
 function changeSpellBookPage(p, dr) {
@@ -702,15 +701,23 @@ function rightUI(p) {
 			}
 		}
 	}
-	if (!p.attacking) {
-		if (p.pocket.id > 0) {
-			ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
-			writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
-		}
-	}
+	drawPocketInfo(p);
 
 	ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 
+}
+
+function drawPocketInfo(p, chp) {
+	if (!p.attacking) {
+		ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 78) * scale, 128 * scale, 8 * scale);
+		if (p.pocket.id > 0) {
+			writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
+			if (typeof chp !== 'undefined' && p.pocket.type === ITEM_TYPE_FOOD) {
+				var t = showStatusBar(chp.getFood(), 200, 69);
+				ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
+			}
+		}
+	}
 }
 
 function drawPocketUI(p, chp, start) {
@@ -841,16 +848,7 @@ function drawPocketUI(p, chp, start) {
 								writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
 							}
 						}
-						if (!p.attacking) {
-							ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 79) * scale, 128 * scale, 8 * scale);
-							if (p.pocket.id > 0) {
-								writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
-								if (p.pocket.type === ITEM_TYPE_FOOD) {
-									var t = showStatusBar(chp.getFood(), 200, 69);
-									ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
-								}
-							}
-						}
+						drawPocketInfo(p, chp);
 						//ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY], ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
 					};
 					break
@@ -962,6 +960,7 @@ function drawStatsPage(p, ch, start) {
 			ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
 		}
 	}
+	drawPocketInfo(p);
 }
 
 function createShield(id, type, colour) {

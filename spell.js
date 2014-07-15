@@ -242,7 +242,9 @@ function castSpell(s, src, pw) {
 				var pl = player[ch.recruitment.playerId];
 				var chs = pl.getOrderedChampions();
 				for (c in chs) {
-					chs[c].addHP(pow);
+					if(chs[c].recruitment.attached) {
+						chs[c].addHP(pow);
+					}
 				}
 			}
 			break;
@@ -282,7 +284,8 @@ function castSpell(s, src, pw) {
 		case SPELL_SUMMON:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_DRONE, MON_FORM_SUMMON, towerThis, f, x, y, d, Math.floor(Math.random() * 2), true, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_DRONE, MON_FORM_SUMMON, towerThis, f, x1, y1, d, Math.floor(Math.random() * 2) + 2, true, 0);
+				monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
 			}
 			break;
 		case SPELL_VIVIFY:
@@ -344,7 +347,9 @@ function castSpell(s, src, pw) {
 				var pl = player[ch.recruitment.playerId];
 				var chs = pl.getOrderedChampions();
 				for (c in chs) {
-					chs[c].addVit(pow);
+					if(chs[c].recruitment.attached) {
+						chs[c].addVit(pow);
+					}
 				}
 			}
 			break;
@@ -382,8 +387,9 @@ function castSpell(s, src, pw) {
 		case SPELL_ILLUSION:
 			if (canMove(f, x, y, d) === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_DRONE, MON_FORM_ILLUSION, towerThis, f, x, y, d, 0, true, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_DRONE, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, Math.floor(Math.random() * 2) + 2, true, 0);
 				monster[towerThis][max].hp = 0;
+				monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
 			}
 			break;
 		case SPELL_MINDROCK:

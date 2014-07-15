@@ -44,31 +44,9 @@ Game.prototype = {
 
 function timerAction() {
 	cutpurseTrueview = (Math.floor(Math.random() * 10) === 0);
-	/*mon = getMonstersInTower(towerThis);
-	for (m in mon) {
-		if (timerMaster - mon[m].gestureTimer >= 20) {
-			mon[m].doGesture(CHA_GESTURE_NONE);
-		}
-	}
-	if (timerMaster - timerChampionAttack >= 20) {
-		timerChampionAttack = timerMaster;
-		for (p in player) {
-			if (player[p].attacking) {
-				player[p].tryAttack();
-			}
-		}
-	}
-	if (timerMaster - timerMonsterMove >= 20) {
-		timerMonsterMove = timerMaster;
-		monsterAttackSequence = 0;
-	}
-	if (timerMaster - timerMonsterAttack >= 3) {
-		timerMonsterAttack = timerMaster;
-		monsterAttackSequence++;
-	}*/
 
 	//monster timer actions
-	mon = getMonstersInTower(towerThis);
+	mon = getMonstersInTower(towerThis, true);
 	for (m in mon) {
 		var tm = mon[m].getCurseTimers();
 		if(tm > 0 && timerMaster - mon[m].timerMove >= tm) {
@@ -85,9 +63,10 @@ function timerAction() {
 		if (pl.sleeping) {
 			tm = 50;
 		}
-		if (pl.attacking) {
-			if (timerMaster - pl.timerAttack >= pl.getAttackSpeed(20)) {
-				pl.timerAttack = timerMaster;
+		
+		if (timerMaster - pl.timerAttack >= pl.getAttackSpeed(20)) {
+			pl.timerAttack = timerMaster;
+			if (pl.attacking) {
 				pl.tryAttack();
 			}
 		}

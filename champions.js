@@ -134,7 +134,7 @@ Champion.prototype.getHP = function() {
 }
 
 Champion.prototype.addHP = function(hp, safe) {
-	if(!this.getMonster().dead && this.recruitment.attached) {
+	if(!this.getMonster().dead) {
 		this.stat.hp += hp;
 		if (this.getHP() < 0) {
 			if (typeof safe !== "undefined" && safe) {
@@ -153,7 +153,7 @@ Champion.prototype.getVit = function() {
 }
 
 Champion.prototype.addVit = function(vit) {
-	if(!this.getMonster().dead && this.recruitment.attached) {
+	if(!this.getMonster().dead) {
 		this.stat.vit += vit;
 		if (this.getVit() < 0) {
 			this.stat.vit = 0;
@@ -168,7 +168,7 @@ Champion.prototype.getSP = function() {
 }
 
 Champion.prototype.addSP = function(sp) {
-	if(!this.getMonster().dead && this.recruitment.attached) {
+	if(!this.getMonster().dead) {
 		this.stat.sp += sp;
 		if (this.getSP() < 0) {
 			this.stat.sp = 0;
@@ -181,7 +181,7 @@ Champion.prototype.getFood = function() {
 	return this.food;
 }
 Champion.prototype.addFood = function(fd) {
-	if(!this.getMonster().dead && this.recruitment.attached) {
+	if(!this.getMonster().dead) {
 		this.food += fd;
 		if(this.getFood() < 0) {
 			this.food = 0;
@@ -397,11 +397,11 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		//var self = this;
 		var p = player[this.recruitment.playerId];
 		var x = 0,
-			y = 0;
-		w = 96;
+			y = 0,
+			w = 112;
 		switch (this.recruitment.position) {
 			case 0:
-				x = 96;
+				x = 104;
 				y = 88;
 				w = 128;
 				break;
@@ -410,15 +410,15 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 				y = 0;
 				break;
 			case 2:
-				x = 96;
+				x = 112;
 				y = 0;
 				break;
 			case 3:
-				x = 212;
+				x = 216;
 				y = 0;
 				break;
 		}
-		ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
+		ctx.clearRect((p.ScreenX + x - 8) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
 		writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x + 2), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
 		if (typeof def === "undefined" || def === false) {
 			if (typeof pwr === 'number') {
@@ -438,7 +438,7 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 		(function(p, x, y, w) {
 			setTimeout(function() {
 				//if (p.messageTimeout === 0 || self.recruitment.position === 0) {
-				ctx.clearRect((p.ScreenX + x) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
+				ctx.clearRect((p.ScreenX + x - 8) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
 				//}
 			}, p.getAttackSpeed(1500));
 		})(p, x, y, w);
