@@ -92,7 +92,7 @@ function floorActionType(trig, p) {
 					champ.getMonster().dead = false;
 					redrawUI(p.id);
 				}
-				newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS_ARROW, -1, 0, p.floor, p.x, p.y, p.d, null);
+				newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, -1, 0, p.floor, p.x, p.y, p.d, null);
 			}
 			break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:
@@ -128,8 +128,15 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '1', null, true);
 			break;
 		case SWITCH_FLOOR_CREATE_PAD:
-			if(typeof tower[towerThis].floor[p.floor].Map[p.y + 1] !== 'undefined' && parseInt(getHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y + 1][p.x], 6, 2)) === trig[1]) {
-				tower[towerThis].floor[p.floor].Map[p.y + 1][p.x] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y + 1][p.x], 13, 3, '6');
+			var xy = getOffsetByRotation(trig[1]);
+			if(typeof tower[towerThis].floor[p.floor].Map[p.y + xy.y] !== 'undefined' && typeof tower[towerThis].floor[p.floor].Map[p.y + xy.y][p.x + xy.x] !== 'undefined') {
+				var tar2 = tower[towerThis].floor[p.floor].Map[p.y + xy.y][p.x + xy.x];
+				var ob = parseInt(getHexToBinaryPosition(tar2, 12, 4));
+				if(ob >= 4) {
+					tower[towerThis].floor[p.floor].Map[p.y + xy.y][p.x + xy.x] = toggleObject(tar2, '' + ((ob + 2) % 8), null, true);
+				} else {
+					tower[towerThis].floor[p.floor].Map[p.y + xy.y][p.x + xy.x] = toggleObject(tar2, '' + ((ob + 6) % 8), null, true);
+				}
 			} else {
 				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', null, true);
 			}
@@ -149,7 +156,7 @@ function floorActionType(trig, p) {
 			break;
 		case SWITCH_FLOOR_FLASH_TELEPORT:
 			p.setPlayerPosition(trig[1], trig[2], trig[3]);
-			newProjectile(DUNGEON_NONE, PALETTE_CHAOS_ARROW, -1, 0, p.floor, p.x, p.y, p.d, null);
+			newProjectile(DUNGEON_NONE, PALETTE_TELEPORT_FLASH, -1, 0, p.floor, p.x, p.y, p.d, null);
 			break;
 		case SWITCH_FLOOR_ROTATE_STONE_WALL:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 10, 2, '' + ((parseInt(getHexToBinaryPosition(tar, 10, 2)) + 1) % 4));
@@ -219,7 +226,14 @@ function gemAction(p) {
 						p.setPlayerPosition(p.floor, x[0], y[0]);
 					}
 				}
-				newProjectile(DUNGEON_NONE, PALETTE_CHAOS_ARROW, -1, 0, p.floor, p.x, p.y, 0, null);
+				var pal = PALETTE_TELEPORT_FLASH;
+				switch(gem + ITEM_SERPENT_CRYSTAL) {
+					case ITEM_SERPENT_CRYSTAL: pal = PALETTE_SERPENT; break;
+					case ITEM_MOON_CRYSTAL: pal = PALETTE_MOON; break;
+					case ITEM_DRAGON_CRYSTAL: pal = PALETTE_DRAGON; break;
+					case ITEM_CHAOS_CRYSTAL: pal = PALETTE_CHAOS; break;
+				}
+				newProjectile(DUNGEON_NONE, pal, -1, 0, p.floor, p.x, p.y, 0, null);
 				p.pocket.setPocketItem();
 				p.setBinaryView(15, 5, 1);
 			}

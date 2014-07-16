@@ -58,6 +58,7 @@ function timerAction() {
 
 	//player timer actions
 	for (p in player) {
+		var p = parseInt(p);
 		var pl = player[p];
 		var tm = 100;
 		if (pl.sleeping) {
@@ -100,7 +101,7 @@ function timerAction() {
 				if(timerMaster - pl.uiLeftPanel.champs[c].damageTimer >= 20) {
 					pl.uiLeftPanel.champs[c].damageTimer = 0;
 					pl.uiLeftPanel.champs[c].damage = 0;
-					redrawUI(p, UI_REDRAW_STATS);
+					redrawUI(p, UI_REDRAW_LEFT);
 				}
 			}
 		}

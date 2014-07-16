@@ -503,12 +503,10 @@ Player.prototype.doPit = function() {
 		x = this.x + fOff.x;
 		y = this.y + fOff.y;
 		this.setPlayerPosition(floor, x, y);
-		//this.frozen = true;
 		setTimeout(function() {
 			self.doEvent(true);
-			//self.frozen = false;
-		}, 400);
-		newProjectile(DUNGEON_NONE, PALETTE_PIT, -1, 0, floor, x, y, 0, null);
+		}, 200);
+		newProjectile(DUNGEON_NONE, PALETTE_PIT_FLASH, -1, 0, floor, x, y, 0, null);
 		return true;
 	}
 	return false;
@@ -1263,17 +1261,18 @@ Player.prototype.shootArrow = function(ch) {
 
 //gets active spell from any champion, when spell id matches
 Player.prototype.getActiveSpellById = function(id) {
-	for (c = 0; c < this.champion.length; c++) {
-		var ch = this.getChampion(c);
-		if (ch !== null && id === ch.activeSpell.id) {
-			return ch.activeSpell;
-		}
-	}
-	return {
+	var ret = {
 		id: -1,
 		power: 0,
 		timer: 0
 	};
+	for (c = 0; c < this.champion.length; c++) {
+		var ch = this.getChampion(c);
+		if (ch !== null && id === ch.activeSpell.id && ret.timer < ch.activeSpell.timer) {
+			ret = ch.activeSpell;
+		}
+	}
+	return ret;
 }
 
 Player.prototype.getProjectilesInRange = function(pos2) {

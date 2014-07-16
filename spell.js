@@ -272,6 +272,7 @@ function castSpell(s, src, pw) {
 			ch.activateSpell(s, pow);
 			break;
 		case SPELL_SPELLTAP:
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_GOLD_ARROW, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_ALCHEMY:
 			var validItems = [ITEM_TYPE_WEAPON, ITEM_TYPE_ARMOUR, ITEM_TYPE_SHIELD, ITEM_TYPE_GLOVES];
@@ -282,7 +283,10 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_SUMMON:
-			if (canMove(f, x, y, d) === OBJECT_NONE) {
+			var ob = canMove(f, x, y, d);
+			if (ob === OBJECT_CHARACTER || ob === OBJECT_PROJECTILE || ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR) {
+				castSpell(SPELL_FIREBALL, src, pw);
+			} else if (ob === OBJECT_NONE) {
 				var max = monster[towerThis].length;
 				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_DRONE, MON_FORM_SUMMON, towerThis, f, x1, y1, d, Math.floor(Math.random() * 2) + 2, true, 0);
 				monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
@@ -319,7 +323,7 @@ function castSpell(s, src, pw) {
 								redrawUI(p.id);
 							}
 						}
-						newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS_ARROW, -1, 0, f, x, y, 0, null);
+						newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, -1, 0, f, x, y, 0, null);
 						return;
 					}
 				}
@@ -385,9 +389,12 @@ function castSpell(s, src, pw) {
 			ch.activateSpell(s, pow);
 			break;
 		case SPELL_ILLUSION:
-			if (canMove(f, x, y, d) === OBJECT_NONE) {
+			var ob = canMove(f, x, y, d);
+			if (ob === OBJECT_CHARACTER || ob === OBJECT_PROJECTILE || ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR) {
+				castSpell(SPELL_FIREBALL, src, pw);
+			} else if (ob === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_DRONE, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, Math.floor(Math.random() * 2) + 2, true, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_DRONE_CASTER, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, Math.floor(Math.random() * 2) + 2, true, 0);
 				monster[towerThis][max].hp = 0;
 				monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
 			}

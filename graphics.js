@@ -522,12 +522,13 @@ function drawProjectileOnPos(p, pos) {
 					p.drawProjectile(prPos[i].projectile, prPos[i].distance, prPos[i].gfxCoord);
 				}
 			} else {
-				if(prPos[i].projectile.dead <= 1) {
-					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[1][0] + ', ' + prPos[i].projectile.palette[1][1] + ', ' + prPos[i].projectile.palette[1][2] + ')';
-				} else {
-					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[2][0] + ', ' + prPos[i].projectile.palette[2][1] + ', ' + prPos[i].projectile.palette[2][2] + ')';
+				if(typeof prPos[i].projectile.palette[4] !== 'undefined' && prPos[i].projectile.palette[4] !== null && prPos[i].projectile.dead <= 1) {
+					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[4][0] + ', ' + prPos[i].projectile.palette[4][1] + ', ' + prPos[i].projectile.palette[4][2] + ')';
+					p.Portal.fillRect(0, 0, 128 * scale, 76 * scale);
+				} else if(typeof prPos[i].projectile.palette[5] !== 'undefined' && prPos[i].projectile.palette[5] !== null && prPos[i].projectile.dead > 1) {
+					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[5][0] + ', ' + prPos[i].projectile.palette[5][1] + ', ' + prPos[i].projectile.palette[5][2] + ')';
+					p.Portal.fillRect(0, 0, 128 * scale, 76 * scale);
 				}
-				p.Portal.fillRect(0, 0, 128 * scale, 76 * scale);
 			}
 		}
 	}
@@ -655,7 +656,7 @@ function recolourSprite(img, paletteFrom, paletteTo) {
 
 	for (var i = 0; i < imageData.data.length; i += 4) {
 
-		for (j = 0; j < paletteTo.length; j++) {
+		for (j = 0; j < paletteFrom.length; j++) {
 			if (imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
 				imageData.data[i] = paletteTo[j][0];
 				imageData.data[i + 1] = paletteTo[j][1];
@@ -705,7 +706,7 @@ function recolourSpriteArray(img, paletteFrom, paletteTo) {
 
 		for (var i = 0; i < imageData.data.length; i += 4) {
 
-			for (j = 0; j < paletteTo.length; j++) {
+			for (j = 0; j < paletteFrom.length; j++) {
 				if (imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
 					imageData.data[i] = paletteTo[j][0];
 					imageData.data[i + 1] = paletteTo[j][1];

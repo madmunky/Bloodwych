@@ -70,7 +70,7 @@ Projectile.prototype.moveProjectile = function() {
 			var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_ANTIMAGE || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE);
 			for (p in player) {
 				if (!player[p].dead && this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
-					if(player[p].getActiveSpellById(SPELL_DEFLECT).timer > 0 && isMissile) {
+					if(player[p].getActiveSpellById(SPELL_DEFLECT).timer > 0 && isMissile) { //Deflect makes missile-shaped spells to reverse direction
 						player[p].getActiveSpellById(SPELL_DEFLECT).timer -= this.power;
 						this.d = (this.d + 2) % 2;
 						var xy = getOffsetByRotation(this.d);
@@ -80,11 +80,11 @@ Projectile.prototype.moveProjectile = function() {
 					} else {
 						if(isDamage) {
 							this.attack(player[p]);
-							this.dead = 2;
-							return false;
 						} else {
-							this.action(player[p].getChampion(player[p].championLeader).getMonster());
+							this.action(player[p]);
 						}
+						this.dead = 2;
+						return false;
 					}
 				}
 			}
@@ -133,28 +133,65 @@ Projectile.prototype.moveProjectile = function() {
 	return true;
 }
 
-Projectile.prototype.action = function(mon) {
-	var combat = calculateAttack(this, mon);
+Projectile.prototype.action = function(tar) {
+	var combat = calculateAttack(this, tar);
 	if(combat.length > 0) {
 		switch (this.spell.index) {
 			case SPELL_PARALYZE:
-				if(typeof mon !== 'undefined') {
-					mon.timerParalyze = combat[0].power;
+				if(tar instanceof Monster) {
+					tar.timerParalyze = combat[0].power;
 				}
 				break;
 			case SPELL_TERROR:
-				if(typeof mon !== 'undefined') {
-					mon.timerTerror = combat[0].power;
+				if(tar instanceof Monster) {
+					tar.timerTerror = combat[0].power;
+				}
+				break;
+			case SPELL_SPELLTAP:
+				var pw = combat[0].power;
+				if(tar instanceof Monster) {
+					var cht = tar.getChampion();
+					if(cht !== null) {
+						if(pw > cht.getSP()) {
+							pw = cht.getSP();
+						}
+						cht.addSP(-pw);
+					} else if(tar.type === MON_TYPE_CASTER || tar.type === MON_TYPE_DRONE_CASTER) {
+						tar.type--;
+					}
+				} else {
+					var def = combat[0].defender;
+					if(def !== null) {
+						if(pw > def.getSP()) {
+							pw = def.getSP();
+						}
+						def.addSP(-pw);
+						if(def.recruitment.playerId > -1) {
+							redrawUI(def.recruitment.playerId, UI_REDRAW_LEFT);
+						}
+					}
+				}
+				if (typeof this.monster !== "undefined") {
+					var ch = this.monster.getChampion();
+					if(ch !== null) {
+						ch.addSP(pw);
+						if(ch.recruitment.playerId > -1) {
+							redrawUI(ch.recruitment.playerId, UI_REDRAW_LEFT);
+						}
+					}
 				}
 				break;
 			case SPELL_CONFUSE:
 				var dr = Math.floor(Math.random() * 4);
-				mon.rotateTo(dr);
-				var cht = mon.getChampion();
-				if (cht !== null && cht.recruitment.playerId > -1) {
-					player[cht.recruitment.playerId].rotateTo(dr);
-					player[cht.recruitment.playerId].doEvent(false);
+				tar.rotateTo(dr);
+				if(tar instanceof Player) {
+					tar.doEvent(false);
 				}
+				//var cht = tar.getChampion();
+				//if (cht !== null && cht.recruitment.playerId > -1) {
+				//	player[cht.recruitment.playerId].rotateTo(dr);
+				//	player[cht.recruitment.playerId].doEvent(false);
+				//}
 				break;
 		}
 	}
@@ -240,8 +277,21 @@ Projectile.prototype.attack = function(target, prc) {
 			var att = combat[com].attacker;
 			var def = combat[com].defender;
 			var pwr = Math.floor(combat[com].power * prc);
+			if(def instanceof Champion) {
+				var def2 = def;
+				if(def2.recruitment.playerId > -1) {
+					def2 = player[def.recruitment.playerId];
+				}
+				if(def2.getActiveSpellById(SPELL_ANTIMAGE).timer > 0) { //Antimage decreases power of the spell
+					def2.getActiveSpellById(SPELL_ANTIMAGE).timer -= pwr;
+					pwr = 0;
+					if(def2.getActiveSpellById(SPELL_ANTIMAGE).timer < 0) {
+						pwr = -def2.getActiveSpellById(SPELL_ANTIMAGE).timer;
+					}
+				}
+			}
 			if (typeof this.spell !== 'number' && this.spell.index === SPELL_DISRUPT) {
-				if(pwr < def.getHP()) {
+				if(pwr > 1 && pwr < def.getHP()) {
 					pwr = 1;
 				}
 			}
