@@ -63,6 +63,29 @@ function switchTower(id, po) {
 	//$('canvas').attr('data-game-status', 'started');
 }
 
+function getObjectNameById(id) {
+	switch(id) {
+		case OBJECT_NONE: return "Floor"; break;
+		case OBJECT_PATH: return "Floor path"; break;
+		case OBJECT_PIT: return "Pit"; break;
+		case OBJECT_CHARACTER: return "Character"; break;
+		case OBJECT_PROJECTILE: return "Projectile"; break;
+		case OBJECT_MISC: return "Misc"; break;
+		case OBJECT_WOOD: return "Wood"; break;
+		case OBJECT_WALL: return "Wall"; break;
+		case OBJECT_WOOD_DOOR: return "Wood door"; break;
+		case OBJECT_SHELF: return "Wall shelf"; break;
+		case OBJECT_SCROLL: return "Wall scroll"; break;
+		case OBJECT_SWITCH: return "Wall switch"; break;
+		case OBJECT_GEM: return "Wall gem"; break;
+		case OBJECT_STAIRS: return "Stairs"; break;
+		case OBJECT_DOOR: return "Door"; break;
+		case OBJECT_DOOR_OPEN: return "Door open"; break;
+		case OBJECT_WOOD_DOOR_OPEN: return "Wood door open"; break;
+		default: return "";
+	}
+}
+
 function canMove(f, x, y, d, to) {
 	if (typeof to === "undefined") {
 		to = 0;
@@ -133,6 +156,9 @@ function canMoveByFirepath(f, x, y, d) {
 }
 
 function canMoveByWood(f, x, y, d, to) {
+	if (typeof to === "undefined") {
+		to = 0;
+	}
 	xy = getOffsetByRotation((d + to) % 4);
 	hex18 = tower[towerThis].floor[f].Map[y][x];
 	//Check the space the player is standing on

@@ -82,7 +82,7 @@ function doKeyDown(e) {
 					PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
 					break; // G KEY
 				case KEY_Y:
-					if(player[0].floor < tower[towerThis].length) {
+					if(player[0].floor < tower[towerThis].floor.length) {
 						var floor = player[0].floor + 1;
 						var fOff = getTowerFloorOffset(player[0].floor, floor);
 						var x = player[0].x + fOff.x;
@@ -181,7 +181,7 @@ function checkClickEvents() {
 						} else {
 							drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
 						}
-						writeFontImage(it.itemRef.name, 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
+						writeFontImage(itemRef[it.id].name, 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
 					}
 				}
 			} else if (championSelect[currentPlayer].mode === UI_CHARACTER_SELECT_SPELLBOOK) {

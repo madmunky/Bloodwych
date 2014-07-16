@@ -4,15 +4,17 @@
 
 JORG
 -----
-COD More spells!
-COD Fix rpg. More HP for monsters. More damage/spelldamage for players at more strength.
+COD Fine-tune rpg. More HP for monsters. More damage/spelldamage for players at more strength.
+COD More spells! Conceal and Beguile remaining
 COD Fix Big monster 'edge of screen'
+COD Add 50% more damage to Ace of Swords + Chaos Gloves
 UI  Fix death screen as I did with asleep
 BUG Fix saving dungeonSpellList
 BUG Don't call "player.event" when pit on ceiling (in doPit)
 BUG Arrows on Right UI sometimes show over pockets or scroll
 BUG Avoid putting items in edge-floor walls
-TST Test tower gems
+BUG Fix 99+ coins/keys/etc not to stack
+TST Test Zendik Tower crystal slot switch events
 
 CHRIS
 ------
@@ -30,7 +32,7 @@ When a champ deals damage, do all champions in player team get the same amount o
 Need to know how the crystals work on paths and triggers in Zendik's end floor
 How does Behemoth spawn?
 How do items drop from Behemoth and Zendik?
-I need to know some easy-to-find (big or summon) monster positions, and their form on the allMonsters list. E.g. all first monsters of every tower. Basically i need to know what formId matches what level of the big monster.
+I need to know some easy-to-find (big or summon) monster positions, and their form/colour on the allMonsters list. E.g. all first monsters of every tower. Basically i need to know what formId/colour matches what level of the big monster.
 
 QUESTIONS FOR JORG
 ------------------

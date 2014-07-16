@@ -140,7 +140,7 @@ Player.revive = function(data) {
 	p.PortalY = data.PortalY;
 	//p.PlayerCanvas = data.PlayerCanvas;
 	//p.Portal = data.Portal;
-	p.pocket = newPocketItem(data.pocket.id,data.pocket.quantity); 
+	p.pocket = newPocketItem(data.pocket.id, data.pocket.quantity);
 	p.dead = data.dead;
 	p.sleeping = data.sleeping;
 	p.lastX = data.lastX;
@@ -212,18 +212,18 @@ Player.prototype.changeDownFloor = function() {
 Player.prototype.action = function() {
 	if (!this.dead && !this.sleeping) {
 		//Wooden doors (in front of player)
-		if(!this.checkWoodenDoor(18)) {
+		if (!this.checkWoodenDoor(18)) {
 			this.checkWoodenDoor(15);
 		}
-		if(this.canMoveByWood(0)) {
+		if (this.canMoveByWood(0)) {
 			//Wooden doors (on player)
 			var o15 = this.getObjectOnPos(15, 2);
 			//Wall switches
 			//if (this.getBinaryView(15, 0, 5) !== '0' && this.getBinaryView(15, 8) === '1' && this.getBinaryView(15, 6, 2) === '2') {
-			if(o15 === OBJECT_SWITCH) {
+			if (o15 === OBJECT_SWITCH) {
 				this.setBinaryView(15, 5, 1);
 				switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
-			} else if(o15 === OBJECT_GEM) {
+			} else if (o15 === OBJECT_GEM) {
 				gemAction(this);
 			}
 			//Check if something is in the way
@@ -317,10 +317,10 @@ Player.prototype.rotate = function(r) {
 		}
 		this.d = (4 + this.d + r) % 4;
 		/*if (this.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN){
-                    if (champion[this.championLeader].activeSpell.id === SPELL_COMPASS){
-                       drawActiveSpell(champion[this.championLeader].activeSpell.id,this); 
-                    }
-                } */
+						  if (champion[this.championLeader].activeSpell.id === SPELL_COMPASS){
+							 drawActiveSpell(champion[this.championLeader].activeSpell.id,this); 
+						  }
+					  } */
 		this.doEvent(false);
 		redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
 	}
@@ -367,9 +367,9 @@ Player.prototype.tryAttack = function() {
 			this.attack(true, mon);
 			return true;
 		}
-		for(var c = 0; c < 4; c++) {
+		for (var c = 0; c < this.champion.length; c++) {
 			var ch = this.getChampion(c);
-			if(ch.selectedSpell !== null || ch.getBowPower() > 0) {
+			if (ch.selectedSpell !== null || ch.getBowPower() > 0) {
 				this.attack(true);
 				return true;
 			}
@@ -390,28 +390,30 @@ Player.prototype.attack = function(attack, target) {
 				att.recruitment.attackTimer = setTimeout(function() {
 					att.recruitment.attackTimer = 0;
 					att.getMonster().attacking = true;
-					if(att.selectedSpell !== null) {
+					if (att.selectedSpell !== null) {
 						self.castSpell(att.selectedSpell, att, true);
 						redrawUI(self.id);
-					} else if(att.getBowPower() > 0) {
+					} else if (att.getBowPower() > 0) {
 						self.shootArrow(att);
-						if(typeof target === 'undefined') {
+						if (typeof target === 'undefined') {
 							self.attack(false);
 						}
 						redrawUI(self.id);
 					} else {
 						var def = combat[com].defender;
-						var pwr = combat[com].power;
-						var aExh = combat[com].attExhaustion;
-						var dExh = combat[com].defExhaustion;
-						att.doDamageTo(def, pwr, aExh, dExh);
-						if (def instanceof Champion) {
-							PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
-						} else if (def instanceof Monster) {
-							PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
-							self.gainChampionXp(pwr, att);
-							if (def.dead) {
-								self.gainChampionXp(128);
+						if(!def.dead) {
+							var pwr = combat[com].power;
+							var aExh = combat[com].attExhaustion;
+							var dExh = combat[com].defExhaustion;
+							att.doDamageTo(def, pwr, aExh, dExh);
+							if (def instanceof Champion) {
+								PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
+							} else if (def instanceof Monster) {
+								PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+								self.gainChampionXp(pwr, att);
+								if (def.dead) {
+									self.gainChampionXp(128);
+								}
 							}
 						}
 					}
@@ -495,7 +497,7 @@ Player.prototype.doEvent = function(mr) {
 Player.prototype.doPit = function() {
 	var self = this;
 	if (this.getBinaryView(18, 6, 2) === '1') {
-		if(this.getActiveSpellById(SPELL_LEVITATE).timer > 0) {
+		if (this.getActiveSpellById(SPELL_LEVITATE).timer > 0) {
 			return true;
 		}
 		floor = this.floor - 1;
@@ -541,10 +543,27 @@ Player.prototype.setPlayerPosition = function(floor, x, y, d) {
 	this.lastFloor = this.floor;
 	this.lastX = this.x;
 	this.lastY = this.y;
+
 	if (typeof floor !== "undefined" && floor >= 0 && floor < tower[towerThis].floor.length) this.floor = floor;
-	if (typeof x !== "undefined" && x >= 0 && x < tower[towerThis].floor[floor].Height) this.x = x;
-	if (typeof y !== "undefined" && y >= 0 && y < tower[towerThis].floor[floor].Width) this.y = y;
-	if (typeof d !== "undefined") this.d = d % 4;
+	if (typeof x !== "undefined") {
+		if (x >= tower[towerThis].floor[floor].Height) {
+			x = tower[towerThis].floor[floor].Height - 1;
+		} else if (x < 0) {
+			x = 0;
+		}
+		this.x = x;
+	}
+	if (typeof y !== "undefined") {
+		if (y >= tower[towerThis].floor[floor].Width) {
+			y = tower[towerThis].floor[floor].Width - 1;
+		} else if (y < 0) {
+			y = 0;
+		}
+		this.y = y;
+	}
+	if (typeof d !== "undefined") {
+		this.d = d % 4;
+	}
 	this.setMovementData();
 	this.updateChampions();
 	//this.doEvent(true);
@@ -666,12 +685,6 @@ Player.prototype.checkChampionUp = function() {
 	return false;
 }
 
-Player.prototype.gameState = function() {
-    
-    
-    
-}
-
 Player.prototype.sleep = function() {
 	this.sleeping = true;
 	this.message();
@@ -728,9 +741,9 @@ Player.prototype.checkDead = function() {
 }
 
 Player.prototype.recruitChampion = function(id) {
-	for(var c = 0; c < 4; c++) {
+	for (var c = 0; c < 4; c++) {
 		if (typeof id === "undefined") {
-			if(typeof this.champion[c] === 'undefined') {
+			if (typeof this.champion[c] === 'undefined') {
 				this.champion[c] = -1;
 				return true;
 			}
@@ -794,8 +807,8 @@ Player.prototype.dismissChampion = function(c) {
 
 Player.prototype.getChampionLength = function() {
 	var l = 0;
-	for(c = 0; c < 4; c++) {
-		if(typeof this.champion[c] !== 'undefined' && this.champion[c] !== -1) {
+	for (c = 0; c < 4; c++) {
+		if (typeof this.champion[c] !== 'undefined' && this.champion[c] !== -1) {
 			l++;
 		}
 	}
@@ -824,7 +837,7 @@ Player.prototype.getChampionPosition = function(id) {
 //gets champions. champion 0 is the leader
 //all === true means also getting the 'unattached' champions
 Player.prototype.getOrderedChampionIds = function(all) {
-	if(typeof all === 'undefined') {
+	if (typeof all === 'undefined') {
 		var all = false;
 	}
 	var c1 = new Array();
@@ -832,7 +845,7 @@ Player.prototype.getOrderedChampionIds = function(all) {
 	for (c = 0; c < this.champion.length; c++) {
 		if (c !== this.championLeader) {
 			var ch = this.getChampion(c);
-			if(ch !== null && (all || ch.recruitment.attached)) {
+			if (ch !== null && (all || ch.recruitment.attached)) {
 				c1.push(c);
 			}
 		}
@@ -846,7 +859,7 @@ Player.prototype.getOrderedChampions = function(all) {
 	for (c = 0; c < this.champion.length; c++) {
 		var cid = c1[c];
 		var ch = this.getChampion(cid);
-		if(ch !== null && (all || ch.recruitment.attached)) {
+		if (ch !== null && (all || ch.recruitment.attached)) {
 			ch1.push(ch);
 		}
 	}
@@ -857,10 +870,10 @@ Player.prototype.gainChampionXp = function(xp, ch) {
 	//if (typeof ch !== "undefined") {
 	//	gainChampionXp1();
 	//} else {
-		for (c = 0; c < this.champion.length; c++) {
-			var ch = this.getChampion(c);
-			gainChampionXp1();
-		}
+	for (c = 0; c < this.champion.length; c++) {
+		var ch = this.getChampion(c);
+		gainChampionXp1();
+	}
 	//}
 
 	function gainChampionXp1() {
@@ -1035,21 +1048,21 @@ Player.prototype.useItemActivePocket = function() {
 					}
 					break;
 				case ITEM_TYPE_POTION:
-					switch(itH.id) {
+					switch (itH.id) {
 						case ITEM_SERPENT_SLIME:
-						ch.stat.hp = ch.stat.hpMax;
-						break;
+							ch.stat.hp = ch.stat.hpMax;
+							break;
 						case ITEM_BRIMSTONE_BROTH:
-						ch.addHP(Math.floor(ch.stat.hpMax / 2));
-						ch.addVit(Math.floor(ch.stat.vitMax / 2));
-						ch.addSP(Math.floor(ch.stat.spMax / 2));
-						break;
+							ch.addHP(Math.floor(ch.stat.hpMax / 2));
+							ch.addVit(Math.floor(ch.stat.vitMax / 2));
+							ch.addSP(Math.floor(ch.stat.spMax / 2));
+							break;
 						case ITEM_DRAGON_ALE:
-						ch.stat.vit = ch.stat.vitMax;
-						break;
+							ch.stat.vit = ch.stat.vitMax;
+							break;
 						case ITEM_MOON_ELIXIR:
-						ch.stat.sp = ch.stat.spMax;
-						break;
+							ch.stat.sp = ch.stat.spMax;
+							break;
 					}
 					itH.setPocketItem();
 				default:
@@ -1205,12 +1218,12 @@ Player.prototype.getItemsInRange = function(pos2) {
 }
 
 Player.prototype.castSpell = function(sb, ch, s) {
-	if(!this.dead) {
+	if (!this.dead) {
 		if (typeof s === "undefined") {
 			var s = false;
 		}
 		this.doneCommunication();
-		if(ch.stat.sp - sb.cost >= 0) {
+		if (ch.stat.sp - sb.cost >= 0) {
 			ch.addSP(-sb.cost);
 			ch.addVit(-sb.cost);
 			if (this.doFizzle()) {
@@ -1243,18 +1256,18 @@ Player.prototype.castSpell = function(sb, ch, s) {
 Player.prototype.shootArrow = function(ch) {
 	this.doneCommunication();
 	var pow = ch.getBowPower();
-	if(pow > 0) {
-		if(ch.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || ch.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS) {
+	if (pow > 0) {
+		if (ch.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || ch.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS) {
 			var arr = ch.pocket[POCKET_LEFT_HAND];
-		} else if(ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS) {
+		} else if (ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS) {
 			var arr = ch.pocket[POCKET_RIGHT_HAND];
 		}
 		var col = PALETTE_BRONZE_ARROW;
-		if(arr.id === ITEM_ELF_ARROWS) {
+		if (arr.id === ITEM_ELF_ARROWS) {
 			col = PALETTE_GREEN_ARROW;
 		}
 		arr.setPocketItem(arr.id, arr.quantity - 1);
-		newProjectile(DUNGEON_PROJECTILE_ARROW, col, arr.id + 100, pow * (1.0 + ch.stat.str / 32.0 + ch.stat.agi / 16.0), this.floor, this.x, this.y, this.d, ch.getMonster());
+		newProjectile(DUNGEON_PROJECTILE_ARROW, col, arr.id + 100, pow * (1.0 + ch.stat.str / 8.0 + ch.stat.agi / 4.0), this.floor, this.x, this.y, this.d, ch.getMonster());
 		ch.writeAttackPoints('shoot');
 	}
 }
@@ -1356,7 +1369,7 @@ Player.prototype.getAttackSpeed = function(fac) {
 	var lvl = this.getChampion(this.championLeader).level;
 	if (lvl > 20) {
 		lvl = 20;
-	} 
+	}
 	return Math.floor(fac / (1.0 + 0.02 * lvl));
 }
 
@@ -1403,9 +1416,9 @@ Player.prototype.doCommunication = function(text) {
 					}
 					break;
 				case COMMUNICATION_CALL:
-					for(var c = 0; c < 4; c++) {
+					for (var c = 0; c < 4; c++) {
 						var ch = this.getChampion(c);
-						if(ch !== null && !ch.recruitment.attached && !ch.dead) {
+						if (ch !== null && !ch.recruitment.attached && !ch.dead) {
 							ch.recruitment.called = true;
 						}
 					}
@@ -1420,27 +1433,27 @@ Player.prototype.doCommunication = function(text) {
 			}
 			break;
 		case COMMUNICATION_PAGE_NAMES:
-			switch(this.communication.text) {
+			switch (this.communication.text) {
 				case COMMUNICATION_WAIT:
-				if(text < this.getChampionLength() - 1) {
-					var c1 = this.getOrderedChampionIds();
-					var c2 = c1[text + 1];
-					this.waitChampion(c2);
-					this.communication.mode = COMMUNICATION_PAGE_MAIN;
-					this.communication.text = null;
-					redrawUI(this.id);
-				}
-				break;
+					if (text < this.getChampionLength() - 1) {
+						var c1 = this.getOrderedChampionIds();
+						var c2 = c1[text + 1];
+						this.waitChampion(c2);
+						this.communication.mode = COMMUNICATION_PAGE_MAIN;
+						this.communication.text = null;
+						redrawUI(this.id);
+					}
+					break;
 				case COMMUNICATION_DISMISS:
-				if(text < this.getChampionLength() - 1) {
-					var c1 = this.getOrderedChampionIds();
-					var c2 = c1[text + 1];
-					this.dismissChampion(c2);
-					this.communication.mode = COMMUNICATION_PAGE_MAIN;
-					this.communication.text = null;
-					redrawUI(this.id);
-				}
-				break;
+					if (text < this.getChampionLength() - 1) {
+						var c1 = this.getOrderedChampionIds();
+						var c2 = c1[text + 1];
+						this.dismissChampion(c2);
+						this.communication.mode = COMMUNICATION_PAGE_MAIN;
+						this.communication.text = null;
+						redrawUI(this.id);
+					}
+					break;
 			}
 			break;
 		default:
@@ -1481,7 +1494,7 @@ Player.prototype.determineCommunicationQuestionAnswer = function(mode, text) {
 		var q = Math.floor(Math.random() * c.question.length);
 		this.message(c.question[q], myColour);
 		var mon = this.communication.monster;
-		if(mon !== null) {
+		if (mon !== null) {
 			if (mon.champId === -1 || mon.isRecruitedBy() === null) {
 				if (c.answer.length > 0) {
 					var a = this.filterCommunicationAnswer(c.answer, mode, text);
@@ -1500,14 +1513,14 @@ Player.prototype.determineCommunicationQuestionAnswer = function(mode, text) {
 
 Player.prototype.filterCommunicationAnswer = function(answer, mode, text) {
 	var ans = new Array();
-	for(a = 0; a < answer.length; a++) {
+	for (a = 0; a < answer.length; a++) {
 		ans.push(a);
 	}
 	var mon = this.communication.monster;
-	if(mode === COMMUNICATION_PAGE_COMMUNICATE_0) {
+	if (mode === COMMUNICATION_PAGE_COMMUNICATE_0) {
 		if (text === COMMUNICATION_RECRUIT) {
 			if (mon.champId > -1) { //champions
-				if(this.getChampionLength() >= 4) {
+				if (this.getChampionLength() >= 4) {
 					ans = [1, 4];
 				} else {
 					ans = [1, 2, 3];
@@ -1574,16 +1587,16 @@ Player.prototype.getCommunication = function(mode, text) {
 				}
 				for (var q1 = 0; q1 < ql; q1++) {
 					var que = '';
-					if(typeof TEXT_COMMUNICATION[q + q1 + qs][0] === 'string') {
+					if (typeof TEXT_COMMUNICATION[q + q1 + qs][0] === 'string') {
 						que = TEXT_COMMUNICATION[q + q1 + qs][0];
 					} else {
-						for(var w = 0; w < TEXT_COMMUNICATION[q + q1 + qs][0].length; w++) {
+						for (var w = 0; w < TEXT_COMMUNICATION[q + q1 + qs][0].length; w++) {
 							var w1 = Math.floor(Math.random() * TEXT_COMMUNICATION[q + q1 + qs][0][w].length);
 							que += TEXT_COMMUNICATION[q + q1 + qs][0][w][w1];
 						}
 					}
 					var suf = '';
-					if(typeof text === 'string') {
+					if (typeof text === 'string') {
 						suf = text;
 					}
 					if (typeof TEXT_COMMUNICATION[q][7] !== 'undefined') {
@@ -1613,10 +1626,10 @@ Player.prototype.getCommunication = function(mode, text) {
 				}
 				for (var a1 = 0; a1 < al; a1++) {
 					var ans = '';
-					if(typeof TEXT_COMMUNICATION[q + a1 + as][0] === 'string') {
+					if (typeof TEXT_COMMUNICATION[q + a1 + as][0] === 'string') {
 						ans = TEXT_COMMUNICATION[q + a1 + as][0];
 					} else {
-						for(var w = 0; w < TEXT_COMMUNICATION[q + a1 + as][0].length; w++) {
+						for (var w = 0; w < TEXT_COMMUNICATION[q + a1 + as][0].length; w++) {
 							var w1 = Math.floor(Math.random() * TEXT_COMMUNICATION[q + a1 + as][0][w].length);
 							ans += TEXT_COMMUNICATION[q + a1 + as][0][w][w1];
 						}

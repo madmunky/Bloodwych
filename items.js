@@ -36,9 +36,9 @@ Item.prototype.getWeaponPower = function() {
 			case ITEM_FLESHBANE:
 				return 11;
 			case ITEM_DEMON_BLADE:
-				return 13;
+				return 14;
 			case ITEM_ACE_OF_SWORDS:
-				return 19;
+				return 14;
 
 			case ITEM_BATTLE_AXE:
 				return 6;
@@ -47,9 +47,9 @@ Item.prototype.getWeaponPower = function() {
 			case ITEM_TROLLS_AXE:
 				return 10;
 			case ITEM_BRAINBITER:
-				return 14;
+				return 13;
 			case ITEM_DEATHBRINGER:
-				return 17;
+				return 16;
 
 			case ITEM_STAFF:
 				return 4;

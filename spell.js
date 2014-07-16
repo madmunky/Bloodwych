@@ -204,7 +204,7 @@ function getSpellPower(id) {
 
 function castSpell(s, src, pw) {
 	var sp = getSpellById(s);
-	var pow = (Math.random() * pw / 2.0) + (pw / 2.0);
+	var pow = (Math.random() * pw) + (pw * 1.5);
 	/*if (pow > 63) {
 		pow = 63;
 	}*/
@@ -288,7 +288,7 @@ function castSpell(s, src, pw) {
 				castSpell(SPELL_FIREBALL, src, pw);
 			} else if (ob === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_DRONE, MON_FORM_SUMMON, towerThis, f, x1, y1, d, Math.floor(Math.random() * 2) + 2, true, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3.0), MON_TYPE_DRONE, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + Math.floor(Math.random() * 2) + 2) % 4, true, 0);
 				monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
 			}
 			break;
@@ -394,7 +394,7 @@ function castSpell(s, src, pw) {
 				castSpell(SPELL_FIREBALL, src, pw);
 			} else if (ob === OBJECT_NONE) {
 				var max = monster[towerThis].length;
-				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_DRONE_CASTER, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, Math.floor(Math.random() * 2) + 2, true, 0);
+				monster[towerThis][max] = new Monster(null, Math.floor(pow / 3), MON_TYPE_DRONE_CASTER, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, (d + Math.floor(Math.random() * 2) + 2) % 4, true, 0);
 				monster[towerThis][max].hp = 0;
 				monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
 			}

@@ -493,24 +493,12 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 		returnImg = false;
 	}
 
-	if (typeof doBlur === "undefined") {
-		doBlur = true;
-	}
-
-	var blur = 0;
-	if (doBlur && !paused) {
-		if (dist <= DISTANCE_MID) {
-			var br = Math.floor(Math.random() * 20);
-			if (br === 0) {
-				blur = -1;
-			} else if (br === 1) {
-				blur = 1;
-			}
-		}
-	}
 	if (dist > -1) {
 		for (part = 0; part < 5; part++) {
 			if (typeof m.ref.gfx[part] !== "undefined" && typeof m.ref.gfx[part][dist] !== "undefined" && typeof m.ref.gfx[part][dist][dir] !== "undefined") {
+				if(typeof doBlur === 'undefined') {
+					doBlur = true;
+				}
 				var dir1 = dir;
 				var dir2 = -1;
 				if (part === IMAGE_CHA_ARM) { //attack arms
@@ -518,53 +506,59 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 					if (dir === 0) {
 						dir1 = 0;
 						dir2 = 2;
-						if (m.gesture === CHA_GESTURE_ATTACKING) {
-							if (mas === 0 || mas === 1 || mas === 3) {
-								dir2 = 5;
-							}
-							if (mas === 1 || mas === 2 || mas === 3) {
-								dir1 = 4;
-							}
-						} else if (m.gesture === CHA_GESTURE_SPELLCASTING) {
-							if (mas === 0 || mas === 1 || mas === 2) {
-								dir1 = 4;
-								dir2 = 5;
+						if (doBlur) {
+							if (m.gesture === CHA_GESTURE_ATTACKING) {
+								if (mas === 0 || mas === 1 || mas === 3) {
+									dir2 = 5;
+								}
+								if (mas === 1 || mas === 2 || mas === 3) {
+									dir1 = 4;
+								}
+							} else if (m.gesture === CHA_GESTURE_SPELLCASTING) {
+								if (mas === 0 || mas === 1 || mas === 2) {
+									dir1 = 4;
+									dir2 = 5;
+								}
 							}
 						}
 					} else if (dir === 2) {
 						dir1 = 2;
 						dir2 = 0;
-						if (m.gesture === CHA_GESTURE_ATTACKING) {
-							if (mas === 0 || mas === 1 || mas === 3) {
-								dir2 = 4;
-							}
-							if (mas === 1 || mas === 2 || mas === 3) {
-								dir1 = 5;
-							}
-						} else if (m.gesture === CHA_GESTURE_SPELLCASTING) {
-							if (mas === 0 || mas === 1 || mas === 2) {
-								dir1 = 5;
-								dir2 = 4;
-							}
-						}
-					} else if (dir === 1) {
-						if (m.gesture === CHA_GESTURE_ATTACKING) {
-							if (mas === 1 || mas === 2 || mas === 3) {
-								dir1 = 7;
-							}
-						} else if (m.gesture === CHA_GESTURE_SPELLCASTING) {
-							if (mas === 0 || mas === 1 || mas === 2) {
-								dir1 = 7;
+						if (doBlur) {
+							if (m.gesture === CHA_GESTURE_ATTACKING) {
+								if (mas === 0 || mas === 1 || mas === 3) {
+									dir2 = 4;
+								}
+								if (mas === 1 || mas === 2 || mas === 3) {
+									dir1 = 5;
+								}
+							} else if (m.gesture === CHA_GESTURE_SPELLCASTING) {
+								if (mas === 0 || mas === 1 || mas === 2) {
+									dir1 = 5;
+									dir2 = 4;
+								}
 							}
 						}
-					} else if (dir === 3) {
-						if (m.gesture === CHA_GESTURE_ATTACKING) {
-							if (mas === 0 || mas === 1 || mas === 3) {
-								dir1 = 6;
+					} else if (doBlur) {
+						if (dir === 1) {
+							if (m.gesture === CHA_GESTURE_ATTACKING) {
+								if (mas === 1 || mas === 2 || mas === 3) {
+									dir1 = 7;
+								}
+							} else if (m.gesture === CHA_GESTURE_SPELLCASTING) {
+								if (mas === 0 || mas === 1 || mas === 2) {
+									dir1 = 7;
+								}
 							}
-						} else if (m.gesture === CHA_GESTURE_SPELLCASTING) {
-							if (mas === 0 || mas === 1 || mas === 2) {
-								dir1 = 6;
+						} else if (dir === 3) {
+							if (m.gesture === CHA_GESTURE_ATTACKING) {
+								if (mas === 0 || mas === 1 || mas === 3) {
+									dir1 = 6;
+								}
+							} else if (m.gesture === CHA_GESTURE_SPELLCASTING) {
+								if (mas === 0 || mas === 1 || mas === 2) {
+									dir1 = 6;
+								}
 							}
 						}
 					}
@@ -573,6 +567,10 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 				var offy = 76 - Math.floor(m.ref.gfx[part][dist][dir1].height) - offset.y;
 
 				if (dist >= 4 || part !== IMAGE_CHA_MINI) {
+					var blur = 0;
+					if (doBlur && dist <= DISTANCE_MID) {
+						blur = m.blur;
+					}
 					if (!returnImg) {
 						player.Portal.drawImage(m.ref.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.ref.gfx[part][dist][dir1].width * scale, m.ref.gfx[part][dist][dir1].height * scale);
 					} else {
@@ -597,23 +595,8 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 	}
 }
 
-function drawMonster(m, dir, dist, player, offset, doBlur) {
+function drawMonster(m, dir, dist, player, offset) {
 	//m.attacking = true;
-	if (typeof doBlur === "undefined") {
-		doBlur = true;
-	}
-
-	var blur = 0;
-	if (doBlur && !paused) {
-		if (dist <= DISTANCE_MID) {
-			var br = Math.floor(Math.random() * 20);
-			if (br === 0) {
-				blur = -1;
-			} else if (br === 1) {
-				blur = 1;
-			}
-		}
-	}
 	if (dist > -1) {
 		for (part1 = 0; part1 < 3; part1++) {
 			try {
@@ -670,7 +653,6 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
 								}
 							}
 						} else if (dir === 1) {
-
 							if (m.gesture === CHA_GESTURE_ATTACKING) {
 								if (mas === 1 || mas === 2 || mas === 3) {
 									dir1 = 7;
@@ -696,6 +678,10 @@ function drawMonster(m, dir, dist, player, offset, doBlur) {
 					var offy = 76 - Math.floor(m.ref.gfx[part][dist][dir1].height) - offset.y;
 
 					if (dist >= 4 || part !== IMAGE_MON_MINI) {
+						var blur = 0;
+						if (dist <= DISTANCE_MID) {
+							blur = m.blur;
+						}
 						player.Portal.drawImage(m.ref.gfx[part][dist][dir1], (offx - armoffx + blur) * scale, (offy - armoffy) * scale, m.ref.gfx[part][dist][dir1].width * scale, m.ref.gfx[part][dist][dir1].height * scale);
 						if (dir2 > -1) {
 							offx = 64 - Math.floor(m.ref.gfx[part][dist][dir2].width * 0.5) + offset.x;

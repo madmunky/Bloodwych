@@ -568,7 +568,7 @@ function commandUI(p) {
 	ctx.fillRect((p.ScreenX + 91) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
 
 	ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
-	drawCommunicationBox(p);
+	drawCommunicationBox(p, p.communication.highlighted, true);
 }
 
 function drawActiveSpell(p) {
@@ -799,7 +799,7 @@ function drawPocketUI(p, chp, start) {
 	if (start) {
 		ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 7) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 		ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 14) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
-		writeFontImage("INVENTORY", p.ScreenX / scale + 234, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
+		writeFontImage(TEXT_INVENTORY, p.ScreenX / scale + 234, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
 		ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 	}
 
@@ -1143,37 +1143,37 @@ function uiClickAreas() {
 
 	UCA.push({
 		x: 225,
-		y: 23,
+		y: 22,
 		width: 16,
 		height: 16
 	}); //POCKET SLOT 1
 	UCA.push({
 		x: 241,
-		y: 23,
+		y: 22,
 		width: 16,
 		height: 16
 	}); //POCKET SLOT 2
 	UCA.push({
 		x: 257,
-		y: 23,
+		y: 22,
 		width: 16,
 		height: 16
 	}); //POCKET SLOT 3
 	UCA.push({
 		x: 273,
-		y: 23,
+		y: 22,
 		width: 16,
 		height: 16
 	}); //POCKET SLOT 4
 	UCA.push({
 		x: 289,
-		y: 23,
+		y: 22,
 		width: 16,
 		height: 16
 	}); //POCKET SLOT 5
 	UCA.push({
 		x: 305,
-		y: 23,
+		y: 22,
 		width: 16,
 		height: 16
 	}); //POCKET SLOT 6    
@@ -1587,7 +1587,7 @@ function uiClickInArea(x, y, ui, p) {
 	}
 	if (x >= (px + uiClickArea[ui].x) * 1 && x < (px + uiClickArea[ui].x + uiClickArea[ui].width) * 1 && y >= (py + uiClickArea[ui].y) * 1 && y < (py + uiClickArea[ui].y + uiClickArea[ui].height) * 1) {
 		if (debug) {
-			if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA) {
+			if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA && ui !== UI_CLICK_COMMUNICATION_AREA) {
 				ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
 				ctx.fillRect((px + uiClickArea[ui].x) * scale, (py + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
 			}
@@ -1885,7 +1885,7 @@ function drawScroll(text, x, y, small) {
 		if(r === 0 && small) {
 			col = COLOUR[COLOUR_YELLOW];
 		}
-		writeFontImage(text[r], x + 48, y + 16 + (l * 8), col, FONT_ALIGNMENT_CENTER);
+		writeFontImage(text[r], x + 52, y + 16 + (l * 8), col, FONT_ALIGNMENT_CENTER);
 		l++;
 	}
 }

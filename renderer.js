@@ -4,8 +4,9 @@ function Renderer(game) {
 };
 Renderer.prototype = {
 	init: function() {
-		this.fps = 10;
+		this.fps = 60;
 		this.step = 1 / this.fps;
+		clearCanvas();
 		redrawUI(2);
 		configCanvas();
 	},

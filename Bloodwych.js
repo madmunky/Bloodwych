@@ -52,7 +52,6 @@ function updatePlayerViewScreen() {
 	debugText(player[0], "FPS: " + fps.getFPS());
 
 	for (p in player) {
-		debugText(player[p], "Player " + (p + 1));
 		debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
 		drawPlayersView(player[p]);
 		drawUI(player[p]);
@@ -201,32 +200,23 @@ function checkAllGfxLoaded() {
 function debugTextPrint(p) {
 	if (debug) {
 		hex = p.getBinaryView(15, 0, 16);
-		//debugText(p, 'Master timer:' + timerMaster)
-		//debugText(p, 'Champ: ' + p.getChampion(0));
-		//debugText(champion[2].firstName + ' hp:' + champion[2].hp + ' rec:' + champion[2].recruitment.playerId + ' Spells:' + champion[2].spellBook);
-		//debugText(hex2bin(hex));
-		//debugText(hex2bin(hex).substring(2, 8) + ' ' + hex2bin(hex).substring(0, 2) + ' ' + hex2bin(hex).substring(8, 16) + ' : ' + bin2hex(hex2bin(hex).substring(2, 8) + hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)));
-		debugText(p, hex2bin(getHexToBinaryPosition(p.getView()[15], 0, 16)));
+		debugText(p, hex2bin(hex) + ' | ' + hex);
 		var xy = getOffsetByRotation(p.d);
-		debugText(p, getObject(p.floor, p.x + xy.x, p.y + xy.y, p.d, 2));
-		for (c = 0; c < p.champion.length; c++) {
+		var ob = getObject(p.floor, p.x + xy.x, p.y + xy.y, p.d, 2);
+		if(ob === OBJECT_NONE) {
+			ob = canMove(p.floor, p.x, p.y, p.d);
+		}
+		debugText(p, getObjectNameById(ob));
+		for (var c = 0; c < p.champion.length; c++) {
 			var ch = p.getChampion(c);
 			if (ch !== null) {
 				debugText(p, 'C' + c + ' - XP: ' + ch.xp + ' - XP2: ' + ch.xp2 + ' / ' + getXpForSpell(ch.level, ch.prof) + ' / ' + getXpForLevel(ch.level) + ' - Level up: ' + ch.levelUp + ' - Spell up: ' + ch.spellUp);
 			}
 		}
-		//debugText(p, hex2dec(getHexToBinaryPosition(p.getView()[15], 0, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 4, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 8, 4)) + ' ' + hex2dec(getHexToBinaryPosition(p.getView()[15], 12, 4)));
-		//debugText(p.getView()[15]);
-		//debugText(p.getView()[15].substring(0,2));
-		//debugText(parseInt(getHexToBinaryPosition(p.getView()[15], 0, 5), 16).toString(10));
-		//debugText(parseInt(p.getView()[15].substring(0,2), 16).toString(10));
-		/*var mon = p.getMonstersInRange();
-        for (i in mon) {
-            debugText(p, 'Monster:' + mon[i].monster + ' - MonsterPos:' + mon[i].position + ' - MonsterOffset:' + getMonsterGfxOffset(15, 0).x + ', ' + getMonsterGfxOffset(12, 0).x + ', ' + getMonsterGfxOffset(9, 0).x);
-        }*/
         if (typeof debugWindow !== "undefined" && debugWindow !== null) {
         	if($('body .debug-input', debugWindow.document).length === 0) {
         		$('body', debugWindow.document).append('<div class="debug-input">');
+        		$('body .debug-input', debugWindow.document).append('<div><strong>Coordinates</strong></div>');
         		$('body .debug-input', debugWindow.document).append('<label for="coord-t">T: </label><input type="text" id="coord-t" value="' + towerThis + '">');
         		$('body .debug-input', debugWindow.document).append('<label for="coord-f">F: </label><input type="text" id="coord-f" value="' + player[0].floor + '">');
         		$('body .debug-input', debugWindow.document).append('<label for="coord-x">X: </label><input type="text" id="coord-x" value="' + player[0].x + '">');

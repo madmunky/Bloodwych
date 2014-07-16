@@ -19,7 +19,6 @@ Game.prototype = {
 		timerMaster++;
 		timerAction();
                 if (checkStarted){
-                    clearCanvas();
                     checkStarted = false;
                 }
             }
@@ -49,6 +48,14 @@ function timerAction() {
 	mon = getMonstersInTower(towerThis, true);
 	for (m in mon) {
 		var tm = mon[m].getCurseTimers();
+
+		var br = Math.floor(Math.random() * 20);
+		mon[m].blur = 0;
+		if (br === 0) {
+			mon[m].blur = -1;
+		} else if (br === 1) {
+			mon[m].blur = 1;
+		}
 		if(tm > 0 && timerMaster - mon[m].timerMove >= tm) {
 			mon[m].timerMove = timerMaster;
 			mon[m].doGesture(CHA_GESTURE_NONE);

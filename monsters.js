@@ -27,21 +27,33 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, te
 	this.timerAttack = timerMaster;
 	this.timerTerror = 0;
 	this.timerParalyze = 0;
+	this.blur = 0;
 	if(form === MON_FORM_ZENDIK) {
 		this.square = CHAR_FRONT_SOLO;
 	} else if (square > CHAR_FRONT_SOLO) {
-		this.square = (square + d) % 4;
-	} else if(typeof sqrel !== 'undefined' && sqrel) {
-		this.square = CHAR_FRONT_SOLO;
-	} else {
 		this.square = square;
+	} else { //if(typeof sqrel !== 'undefined' && sqrel) {
+		this.square = CHAR_FRONT_SOLO;
 	}
 	this.champId = -1;
 	if (typeof champId !== "undefined") {
 		this.champId = champId; //optional Champion ID
 		this.hp = 0;
 	} else {
-		this.hp = level * 20 + 30;
+		this.hp = level * 150 + 25;
+		/*if(level < 2) {
+			this.hp = level * 25 + 25;
+		} else if(level < 5) {
+			this.hp = (level - 1) * 50 + 25;
+		} else if(level < 9) {
+			this.hp = (level - 3) * 100 + 25;
+		} else if(level < 14) {
+			this.hp = (level - 5) * 150 + 25;
+		} else if(level < 20) {
+			this.hp = (level - 7) * 200 + 25;
+		} else {
+			this.hp = (level - 9) * 250 + 25;
+		}*/
 	}
 }
 

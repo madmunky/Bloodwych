@@ -66,7 +66,7 @@ Projectile.prototype.moveProjectile = function() {
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		if (typeof this.monster !== "undefined") {
 			var sid = this.spell.index;
-			var isDamage = (sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND);
+			var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND);
 			var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_ANTIMAGE || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE);
 			for (p in player) {
 				if (!player[p].dead && this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
@@ -334,7 +334,7 @@ function newProjectile(type, palette, s, power, f, x, y, d, m) {
 
 function getProjectilesAt(f, x, y) {
 	var pr = new Array();
-	for (p = 0; p < projectile[towerThis].length; p++) {
+	for (var p = 0; p < projectile[towerThis].length; p++) {
 		if (projectile[towerThis][p].dead === 0 && projectile[towerThis][p].floor === f && projectile[towerThis][p].x === x && projectile[towerThis][p].y === y) {
 			pr.push(projectile[towerThis][p]);
 		}
