@@ -204,10 +204,7 @@ function getSpellPower(id) {
 
 function castSpell(s, src, pw) {
 	var sp = getSpellById(s);
-	var pow = (Math.random() * pw) + (pw * 1.5);
-	/*if (pow > 63) {
-		pow = 63;
-	}*/
+	var pow = (Math.random() * pw * 0.25) + pw;
 	pow = Math.ceil(pow * sp.power);
 	var f = src.floor;
 	var x = src.x;

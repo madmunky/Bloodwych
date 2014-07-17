@@ -55,7 +55,7 @@ function calculateAttack(att, def, tof) {
 				} else {
 					attack += from.getWeaponPower(POCKET_RIGHT_HAND); //if no weapon in right hand, check left hand
 				}
-				attack = attack * (1.0 + from.stat.str / 4.0 + from.stat.agi / 8.0); //add strength and agility to attack points
+				attack = attack * (1.0 + from.stat.str / 2.0 + from.stat.agi / 4.0); //add strength and agility to attack points
 				attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
 				//hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
 			}
@@ -74,10 +74,10 @@ function calculateAttack(att, def, tof) {
 				continue;
 			}
 			fromDir = from.d;
-			attack += 30 + from.level * 4;
+			attack += 25 + from.level * 6;
 		}
 
-		//Defender calculations
+		//Defender calculationss
 		if (def instanceof Player) {
 			var ch = [];
 			var ch1 = [];
@@ -98,9 +98,10 @@ function calculateAttack(att, def, tof) {
 				}
 				if (typeof to !== "undefined") {
 					tmon = to.getMonster();
-					defense += 30 + to.stat.agi;
-					defense -= to.getArmourClass() * 2;
+					defense += to.stat.agi;
+					defense -= to.getArmourClass();
 					defense += to.getActiveSpellById(SPELL_ARMOUR).power;
+					defense += (4.0 + to.level) * 4.0;
 					if (!to.attacking) {
 						defense = defense * 1.1;
 					}
@@ -126,15 +127,16 @@ function calculateAttack(att, def, tof) {
 						if (to.champId > -1) { //champion
 							to = champion[to.champId];
 							tmon = to.getMonster();
-							defense += 50 + to.stat.agi;
-							defense -= to.getArmourClass() * 2;
+							defense += to.stat.agi;
+							defense -= to.getArmourClass();
 							defense += to.getActiveSpellById(SPELL_ARMOUR).power;
+							defense += (4.0 + to.level) * 4.0;
 							defExhaustion = Math.floor(Math.random() * 2) + 1;
 						} else { //monster
-							defense += 10 + to.level * 2;
-							if (!to.attacking) {
-								defense = defense * 1.1;
-							}
+							defense += 35; // + to.level * 2;
+							//if (!to.attacking) {
+							//	defense = defense * 1.1;
+							//}
 						}
 					}
 					break;
@@ -148,7 +150,8 @@ function calculateAttack(att, def, tof) {
 		//Final calculations
 		if (typeof from !== "undefined" && (fmon === null || !fmon.dead) && typeof to !== 'undefined' && (tmon === null || !tmon.dead)) {
 			var dmg = (attack - defChance * defense) * critChance;
-			var power = Math.floor(Math.random() * attack * 0.5 + dmg);
+			var lvl = (2.0 + from.level) * 2.0;
+			var power = Math.floor(Math.random() * lvl + dmg + lvl);
 			if (Math.random() > hit || power < 0) {
 				power = 0;
 			}

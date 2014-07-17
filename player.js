@@ -540,25 +540,26 @@ Player.prototype.doStairs = function() {
 };
 
 Player.prototype.setPlayerPosition = function(floor, x, y, d) {
-	this.lastFloor = this.floor;
-	this.lastX = this.x;
-	this.lastY = this.y;
-
-	if (typeof floor !== "undefined" && floor >= 0 && floor < tower[towerThis].floor.length) this.floor = floor;
+	if (typeof floor !== "undefined" && floor >= 0 && floor < tower[towerThis].floor.length) {
+		this.lastFloor = this.floor;
+		this.floor = floor;
+	}
 	if (typeof x !== "undefined") {
-		if (x >= tower[towerThis].floor[floor].Height) {
-			x = tower[towerThis].floor[floor].Height - 1;
+		if (x >= tower[towerThis].floor[this.floor].Height) {
+			x = tower[towerThis].floor[this.floor].Height - 1;
 		} else if (x < 0) {
 			x = 0;
 		}
+		this.lastX = this.x;
 		this.x = x;
 	}
 	if (typeof y !== "undefined") {
-		if (y >= tower[towerThis].floor[floor].Width) {
-			y = tower[towerThis].floor[floor].Width - 1;
+		if (y >= tower[towerThis].floor[this.floor].Width) {
+			y = tower[towerThis].floor[this.floor].Width - 1;
 		} else if (y < 0) {
 			y = 0;
 		}
+		this.lastY = this.y;
 		this.y = y;
 	}
 	if (typeof d !== "undefined") {
@@ -1113,6 +1114,7 @@ Player.prototype.exchangeItemWithHand = function(s) {
 				it.setPocketItem(itH.id, itH.quantity);
 				itH.setPocketItem(temp.id, temp.quantity);
 			}
+			this.showSpellText = false;
 		}
 	}
 }
@@ -1178,6 +1180,7 @@ Player.prototype.actionItem = function(s) {
 			}
 
 			itH.setPocketItem(it[0].id, it[0].quantity);
+			this.showSpellText = false;
 			return true;
 		}
 	} else { //drop item
@@ -1229,7 +1232,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
 			if (this.doFizzle()) {
 				writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, COLOUR[COLOUR_BLUE_DARK]);
 			} else if (Math.random() < ch.getSpellCastChance()) {
-				castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10);
+				castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10 + ch.level * 4 + 10);
 				sb.castSuccessful++;
 				if (!s) {
 					this.showSpellText = false;
@@ -1267,7 +1270,7 @@ Player.prototype.shootArrow = function(ch) {
 			col = PALETTE_GREEN_ARROW;
 		}
 		arr.setPocketItem(arr.id, arr.quantity - 1);
-		newProjectile(DUNGEON_PROJECTILE_ARROW, col, arr.id + 100, pow * (1.0 + ch.stat.str / 8.0 + ch.stat.agi / 4.0), this.floor, this.x, this.y, this.d, ch.getMonster());
+		newProjectile(DUNGEON_PROJECTILE_ARROW, col, arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
 		ch.writeAttackPoints('shoot');
 	}
 }

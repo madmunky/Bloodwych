@@ -78,6 +78,7 @@ function readMapData(evt) {
 
 	for (x = 0; x < 8; x++) {
 		myFloor = new Map(uInt8Array[x + 8], uInt8Array[x], uInt8Array[x + 32], uInt8Array[x + 40]);
+		if(myFloor.Width === 0 || myFloor.Height === 0) break;
 		floors.push(myFloor);
 	}
 

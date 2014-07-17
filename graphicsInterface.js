@@ -708,7 +708,7 @@ function rightUI(p) {
 }
 
 function drawPocketInfo(p, chp) {
-	if (!p.attacking) {
+	if (!p.attacking && !p.showSpellText) {
 		ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 78) * scale, 128 * scale, 8 * scale);
 		if (p.pocket.id > 0) {
 			writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);

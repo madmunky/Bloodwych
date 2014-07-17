@@ -18,7 +18,7 @@ function checkSwitchTower(p, m, id, trig) {
 			//var tw = Math.floor(trig[1] * 0.5);
 			switchTower(id);
 		}
-	} else if(typeof player[1] !== 'undefined' && !m){
+	} else if (typeof player[1] !== 'undefined' && !m) {
 		if ((trig[0] == 18 || trig[0] == 38) && parseInt(player[0].getView()[18].substring(3, 4), 16) === 6 && parseInt(player[1].getView()[18].substring(3, 4), 16) === 6) {
 			if (player[1 - p].floor === player[p].floor && player[1 - p].x === trig[2] && player[1 - p].y === trig[3]) {
 				//var tw = Math.floor(trig[1] * 0.5);
@@ -64,25 +64,60 @@ function switchTower(id, po) {
 }
 
 function getObjectNameById(id) {
-	switch(id) {
-		case OBJECT_NONE: return "Floor"; break;
-		case OBJECT_PATH: return "Floor path"; break;
-		case OBJECT_PIT: return "Pit"; break;
-		case OBJECT_CHARACTER: return "Character"; break;
-		case OBJECT_PROJECTILE: return "Projectile"; break;
-		case OBJECT_MISC: return "Misc"; break;
-		case OBJECT_WOOD: return "Wood"; break;
-		case OBJECT_WALL: return "Wall"; break;
-		case OBJECT_WOOD_DOOR: return "Wood door"; break;
-		case OBJECT_SHELF: return "Wall shelf"; break;
-		case OBJECT_SCROLL: return "Wall scroll"; break;
-		case OBJECT_SWITCH: return "Wall switch"; break;
-		case OBJECT_GEM: return "Wall gem"; break;
-		case OBJECT_STAIRS: return "Stairs"; break;
-		case OBJECT_DOOR: return "Door"; break;
-		case OBJECT_DOOR_OPEN: return "Door open"; break;
-		case OBJECT_WOOD_DOOR_OPEN: return "Wood door open"; break;
-		default: return "";
+	switch (id) {
+		case OBJECT_NONE:
+			return "Floor";
+			break;
+		case OBJECT_PATH:
+			return "Floor path";
+			break;
+		case OBJECT_PIT:
+			return "Pit";
+			break;
+		case OBJECT_CHARACTER:
+			return "Character";
+			break;
+		case OBJECT_PROJECTILE:
+			return "Projectile";
+			break;
+		case OBJECT_MISC:
+			return "Misc";
+			break;
+		case OBJECT_WOOD:
+			return "Wood";
+			break;
+		case OBJECT_WALL:
+			return "Wall";
+			break;
+		case OBJECT_WOOD_DOOR:
+			return "Wood door";
+			break;
+		case OBJECT_SHELF:
+			return "Wall shelf";
+			break;
+		case OBJECT_SCROLL:
+			return "Wall scroll";
+			break;
+		case OBJECT_SWITCH:
+			return "Wall switch";
+			break;
+		case OBJECT_GEM:
+			return "Wall gem";
+			break;
+		case OBJECT_STAIRS:
+			return "Stairs";
+			break;
+		case OBJECT_DOOR:
+			return "Door";
+			break;
+		case OBJECT_DOOR_OPEN:
+			return "Door open";
+			break;
+		case OBJECT_WOOD_DOOR_OPEN:
+			return "Wood door open";
+			break;
+		default:
+			return "";
 	}
 }
 
@@ -166,7 +201,7 @@ function canMoveByWood(f, x, y, d, to) {
 		return false;
 	}
 	//Check the space the player is moving to
-	if(typeof tower[towerThis].floor[f].Map[y + xy.y] !== 'undefined' && typeof tower[towerThis].floor[f].Map[y + xy.y][x + xy.x] !== 'undefined') {
+	if (typeof tower[towerThis].floor[f].Map[y + xy.y] !== 'undefined' && typeof tower[towerThis].floor[f].Map[y + xy.y][x + xy.x] !== 'undefined') {
 		hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
 		if (getHexToBinaryPosition(hex15, 12, 4) == '2' && getHexToBinaryPosition(hex15, ((5 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
 			return false;
@@ -222,14 +257,14 @@ function getObject(f, x, y, d, to) {
 					return OBJECT_DOOR_OPEN;
 				}
 			}
-		} else if(obj == '6') { //path, pits
-			if(getHexToBinaryPosition(hex, 6, 2) === '1') {
+		} else if (obj == '6') { //path, pits
+			if (getHexToBinaryPosition(hex, 6, 2) === '1') {
 				return OBJECT_PATH;
-			} else if(getHexToBinaryPosition(hex, 6, 2) === '2') {
+			} else if (getHexToBinaryPosition(hex, 6, 2) === '2') {
 				return OBJECT_PIT;
 			}
-		} else if(obj == '7') { //magic
-			if(getHexToBinaryPosition(hex, 6, 2) === '1') {
+		} else if (obj == '7') { //magic
+			if (getHexToBinaryPosition(hex, 6, 2) === '1') {
 				return OBJECT_PATH;
 			}
 		}
@@ -244,6 +279,12 @@ function setDungeonHex(f, x, y, index, length, to) {
 //floor1: floor we are on
 //floor2: floor we go to
 function getTowerFloorOffset(floor1, floor2) {
+	if (typeof tower[towerThis].floor[floor2] === 'undefined') {
+		return {
+			x: 0,
+			y: 0
+		};
+	}
 	return {
 		x: tower[towerThis].floor[floor1].xOffset - tower[towerThis].floor[floor2].xOffset,
 		y: tower[towerThis].floor[floor1].yOffset - tower[towerThis].floor[floor2].yOffset

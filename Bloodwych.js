@@ -207,10 +207,15 @@ function debugTextPrint(p) {
 			ob = canMove(p.floor, p.x, p.y, p.d);
 		}
 		debugText(p, getObjectNameById(ob));
+		var mon = getMonsterAt(p.floor, p.x + xy.x, p.y + xy.y);
+		if(mon !== null) {
+			debugText(p, 'M' + mon.id + ' - lvl: ' + mon.level + ' - typ: ' + mon.type + ' - frm: ' + mon.form + ' - hp: ' + mon.hp);
+		}
+
 		for (var c = 0; c < p.champion.length; c++) {
 			var ch = p.getChampion(c);
 			if (ch !== null) {
-				debugText(p, 'C' + c + ' - XP: ' + ch.xp + ' - XP2: ' + ch.xp2 + ' / ' + getXpForSpell(ch.level, ch.prof) + ' / ' + getXpForLevel(ch.level) + ' - Level up: ' + ch.levelUp + ' - Spell up: ' + ch.spellUp);
+				debugText(p, 'C' + c + ' - xp: ' + ch.xp + ' - xp2: ' + ch.xp2 + ' / ' + getXpForSpell(ch.level, ch.prof) + ' / ' + getXpForLevel(ch.level) + ' - level up: ' + ch.levelUp + ' - spell up: ' + ch.spellUp);
 			}
 		}
         if (typeof debugWindow !== "undefined" && debugWindow !== null) {
@@ -271,17 +276,28 @@ function debugText(p, txt) {
 function godMode() {
 	for (c in champion) {
 		var ch = champion[c];
-		ch.level = 99;
+		/*ch.level = 99;
 		ch.stat.str = 99;
 		ch.stat.agi = 99;
 		ch.stat.int = 99;
 		ch.stat.cha = 99;
 		ch.stat.hp = 255;
 		ch.stat.hpMax = 255;
-		ch.stat.sp = 255;
-		ch.stat.spMax = 255;
 		ch.stat.vit = 255;
 		ch.stat.vitMax = 255;
+		ch.stat.sp = 255;
+		ch.stat.spMax = 255;*/
+		ch.level = 18;
+		ch.stat.str = 65;
+		ch.stat.agi = 56;
+		ch.stat.int = 52;
+		ch.stat.cha = 49;
+		ch.stat.hp = 120;
+		ch.stat.hpMax = 120;
+		ch.stat.vit = 153;
+		ch.stat.vitMax = 153;
+		ch.stat.sp = 76;
+		ch.stat.spMax = 76;
 		for (pg = 0; pg < COLOUR_MAX; pg++) {
 			for (rw = 0; rw < SPELL_MAX; rw++) {
 				ch.spellBook[pg][rw].learnt = true;

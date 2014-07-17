@@ -342,7 +342,7 @@ Monster.prototype.castSpell = function() {
 			if (this.level >= 18 && Math.floor(Math.random() * 6) === 0) {
 				id = SPELL_DISRUPT;
 			}
-			castSpell(id, this, Math.floor(this.level * 2 + 4 + getSpellById(id).level * 0.4));
+			castSpell(id, this, 40);
 			this.doGesture(CHA_GESTURE_SPELLCASTING);
 			return true;
 		}

@@ -124,7 +124,7 @@ Champion.prototype.getDamage = function(dmg, safe) {
 			player[this.recruitment.playerId].checkDead();
 			player[this.recruitment.playerId].updateChampions();
 			player[this.recruitment.playerId].startDrawHitDamage(this.id, dmg);
-			redrawUI(this.recruitment.playerId, UI_REDRAW_STATS);
+			redrawUI(this.recruitment.playerId);
 		}
 	}
 }
@@ -194,7 +194,11 @@ Champion.prototype.addFood = function(fd) {
 }
 
 Champion.prototype.getWeaponPower = function(s) {
-	return 1.0 + 0.1 * this.pocket[s].getWeaponPower();
+	var pow = this.pocket[s].getWeaponPower();
+	if(this.pocket[POCKET_GLOVES].id === ITEM_CHAOS_GLOVES && this.pocket[s].id === ITEM_ACE_OF_SWORDS) {
+		pow = pow * 1.25;
+	}
+	return 1.0 + 0.1 * pow;
 }
 
 Champion.prototype.getBowPower = function() {
@@ -580,7 +584,7 @@ Champion.prototype.getSpellCastChance = function() {
 }
 
 Champion.prototype.getSpellPower = function() {
-	var res = (this.selectedSpell.castSuccessful * 0.01 - 6.0 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.01 - (this.selectedSpell.ref.level - 1.0) * 0.2) + this.spellFatigue + (this.level - 1) * 0.1;
+	var res = (this.selectedSpell.castSuccessful * 0.015 - 6.0 / (this.selectedSpell.cost + 6.0) + (this.stat.int + 5.0) * 0.015 - this.selectedSpell.ref.level * 0.15) + this.spellFatigue;// + (this.level - 1) * 0.1;
 	//var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue; /* + (this.level - 1) * 0.1;*/
 	PrintLog('pcast:' + this.selectedSpell.castSuccessful + ' scost:' + this.selectedSpell.cost + ' pint:' + this.stat.int + ' slvl:' + this.selectedSpell.ref.level + ' fat:' + this.spellFatigue + ' = res:' + res)
 	return res;
@@ -663,7 +667,7 @@ function initChampions() {
 				spellBook[pg][rw].id = spl[rw].index;
 				spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
 				if (spellBin !== null && spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
-					spellBook[pg][rw].castSuccessful = 4;
+					//spellBook[pg][rw].castSuccessful = 4;
 					spellBook[pg][rw].learnt = true;
 				}
 			}
