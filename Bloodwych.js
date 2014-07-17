@@ -276,7 +276,7 @@ function debugText(p, txt) {
 function godMode() {
 	for (c in champion) {
 		var ch = champion[c];
-		/*ch.level = 99;
+		ch.level = 99;
 		ch.stat.str = 99;
 		ch.stat.agi = 99;
 		ch.stat.int = 99;
@@ -285,9 +285,9 @@ function godMode() {
 		ch.stat.hpMax = 255;
 		ch.stat.vit = 255;
 		ch.stat.vitMax = 255;
-		ch.stat.sp = 255;
-		ch.stat.spMax = 255;*/
-		ch.level = 18;
+		ch.stat.sp = 99;
+		ch.stat.spMax = 99;
+		/*ch.level = 18;
 		ch.stat.str = 65;
 		ch.stat.agi = 56;
 		ch.stat.int = 52;
@@ -297,7 +297,7 @@ function godMode() {
 		ch.stat.vit = 153;
 		ch.stat.vitMax = 153;
 		ch.stat.sp = 76;
-		ch.stat.spMax = 76;
+		ch.stat.spMax = 76;*/
 		for (pg = 0; pg < COLOUR_MAX; pg++) {
 			for (rw = 0; rw < SPELL_MAX; rw++) {
 				ch.spellBook[pg][rw].learnt = true;

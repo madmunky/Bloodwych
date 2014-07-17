@@ -465,10 +465,10 @@ function processCanvasInput(pid, x, y) {
 
 			checkCommunicationArea(p, x, y, false);
 		}
-		if (p.sleeping) {
+		/*if (p.sleeping) {
 			p.wakeUp();
 			return pid;
-		}
+		}*/
 	}
 	return -1;
 }

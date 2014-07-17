@@ -231,48 +231,60 @@ Champion.prototype.gainLevel = function() {
 		var stat = new Array();
 		stat[PROFESSION_WARRIOR] = {
 			str: 10,
-			agi: 7,
+			agi: 5,
 			int: 5,
 			cha: 5,
-			hp: 10,
-			vit: 8,
-			sp: 3
+			hp: 5,
+			hpMax: 15,
+			vit: 3,
+			vitMax: 9,
+			sp: 1,
+			spMax: 3
 		}
 		stat[PROFESSION_WIZARD] = {
 			str: 5,
-			agi: 7,
+			agi: 5,
 			int: 10,
 			cha: 5,
-			hp: 5,
-			vit: 8,
-			sp: 10
+			hp: 2,
+			hpMax: 5,
+			vit: 2,
+			vitMax: 5,
+			sp: 3,
+			spMax: 9
 		}
 		stat[PROFESSION_ADVENTURER] = {
 			str: 7,
-			agi: 5,
+			agi: 7,
 			int: 7,
 			cha: 10,
-			hp: 8,
-			vit: 8,
-			sp: 5
+			hp: 3,
+			hpMax: 9,
+			vit: 3,
+			vitMax: 9,
+			sp: 2,
+			spMax: 6
 		}
 		stat[PROFESSION_CUTPURSE] = {
 			str: 5,
 			agi: 10,
 			int: 5,
 			cha: 5,
-			hp: 8,
-			vit: 8,
-			sp: 5
+			hp: 3,
+			hpMax: 9,
+			vit: 5,
+			vitMax: 15,
+			sp: 1,
+			spMax: 3
 		}
 		//for (l = 0; l < this.levelUp; l++) {
 		this.stat.str += Math.floor(Math.random() * stat[prof].str) + 1;
 		this.stat.agi += Math.floor(Math.random() * stat[prof].agi) + 1;
 		this.stat.int += Math.floor(Math.random() * stat[prof].int) + 1;
 		this.stat.cha += Math.floor(Math.random() * stat[prof].cha) + 1;
-		this.stat.hpMax += Math.floor(Math.random() * stat[prof].hp) + 1;
-		this.stat.vitMax += Math.floor(Math.random() * stat[prof].vit) + 1;
-		this.stat.spMax += Math.floor(Math.random() * stat[prof].sp) + 1;
+		this.stat.hpMax += Math.floor(Math.random() * stat[prof].hpMax) + stat[prof].hp;
+		this.stat.vitMax += Math.floor(Math.random() * stat[prof].vitMax) + stat[prof].vit;
+		this.stat.spMax += Math.floor(Math.random() * stat[prof].spMax) + stat[prof].sp;
 		this.level++;
 		//}
 		var p = this.recruitment.playerId;
