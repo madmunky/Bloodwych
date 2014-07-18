@@ -235,19 +235,19 @@ function initItems(t) {
 		}
 
 		//TESTING
-		/*if(t.id === TOWER_DRAGON) {
-			item[t.id][item[t.id].length] = new Item(ITEM_BLUISH_GEM, 1, {
+		/*if(t.id === TOWER_MOD0) {
+			item[t.id][item[t.id].length] = new Item(ITEM_COINAGE, 91, {
 				tower: t.id,
 				floor: 3,
 				x: 12,
-				y: 12,
+				y: 23,
 				square: 0
 			});
-			item[t.id][item[t.id].length] = new Item(ITEM_TAN_GEM, 1, {
+			item[t.id][item[t.id].length] = new Item(ITEM_COMMON_KEYS, 78, {
 				tower: t.id,
 				floor: 3,
 				x: 12,
-				y: 12,
+				y: 23,
 				square: 3
 			});
 		}*/

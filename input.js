@@ -98,7 +98,7 @@ function doKeyDown(e) {
 						var y = player[0].y + fOff.y;
 						player[0].setPlayerPosition(floor, x, y, player[0].d);
 					}
-					break;
+					break; 
 				case KEY_PLUS:
 					testPalette = testPalette + 1;
 					break;
@@ -162,7 +162,9 @@ function checkClickEvents() {
 			var p = 0;
 			for (pid in player) {
 				pid = parseInt(pid);
-				p += processCanvasInput(pid, x, y) + 1;
+				if(!player[pid].dead) {
+					p += processCanvasInput(pid, x, y) + 1;
+				}
 			}
 			if (p > 0) {
 				redrawUI(p - 1);

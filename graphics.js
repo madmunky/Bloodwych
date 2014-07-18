@@ -297,13 +297,7 @@ function drawPlayersView(p) {
 	//p.getViewPortal();
 
 	if (p.dead) {
-		p.uiCenterPanel.mode = UI_CENTER_PANEL_DEAD;
-		coverViewPort(p);
-		writeFontImage(TEXT_THOU, 64, 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER, p.Portal);
-		writeFontImage(TEXT_ART_DEAD, 64, 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER, p.Portal);
 	} else if (p.sleeping) {
-		//showFairy(p.champion[0],p);
-		//champion[0].spellUp = 1;
 	} else {
 		p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);

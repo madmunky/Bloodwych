@@ -122,7 +122,7 @@ function floorActionType(trig, p) {
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '3', '1');
 			break;
 		case SWITCH_FLOOR_CREATE_SPINNER:
-			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = '0B06';
+			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 13, 3, '6');
 			break;
 		case SWITCH_FLOOR_OPEN_CREATE_WALL_WITH_SWITCHES:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '1', null, true);
@@ -195,6 +195,15 @@ function floorActionType(trig, p) {
 				tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = toggleObject(tar, '0', null, true);
 			}
 			break;
+		case SWITCH_FLOOR_TELEPORT_MONSTER:
+			mon = getMonstersInTower(towerThis, true);
+			for (m in mon) {
+				if(trig[2] === mon[m].x - 128 && trig[3] === mon[m].y) {
+					mon[m].x -= 128;
+					break;
+				}
+			}
+			break;
 		default:
 			window.alert("Unhandled Floor Action: " + trig.toString());
 	}
@@ -213,7 +222,7 @@ function gemAction(p) {
 	} else {
 		if(itH.type === ITEM_TYPE_CRYSTAL || itH.type === ITEM_TYPE_GEM) {
 			if(pock === gem) {
-				if(gem === 5 || gem === 7) {
+				if(gem === 5 || gem === 7) { //gems
 					var i = towerThis * 2; // + from/to
 					if(gem === 7) { //tan
 						i += 12;
@@ -224,6 +233,32 @@ function gemAction(p) {
 						p.setPlayerPosition(p.floor, x[1], y[1]);
 					} else {
 						p.setPlayerPosition(p.floor, x[0], y[0]);
+					}
+				} else if(gem < 4) { //crystals
+					var i = 0;
+					var twr = -1;
+					var l = 0;
+					var trg = new Array();
+
+					while(i < crystalSwitchesData.length) {
+						twr = crystalSwitchesData[i++];
+						for(c = 0; c < 4; c++) {
+							l = crystalSwitchesData[i++];
+							trg[c] = new Array();
+							for(s = 0; s < l; s++) {
+								trg[c][s] = new Array();
+								trg[c][s][0] = crystalSwitchesData[i++];
+								trg[c][s][1] = crystalSwitchesData[i++];
+								trg[c][s][2] = crystalSwitchesData[i++];
+								trg[c][s][3] = crystalSwitchesData[i++];
+							}
+						}
+						if(twr === towerThis) {
+							for(var s = 0; s < trg[gem].length; s++) {
+								floorActionType(trg[gem][s], p);
+							}
+							break;
+						}
 					}
 				}
 				var pal = PALETTE_TELEPORT_FLASH;

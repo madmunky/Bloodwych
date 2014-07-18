@@ -74,7 +74,7 @@ function calculateAttack(att, def, tof) {
 				continue;
 			}
 			fromDir = from.d;
-			attack += 25 + from.level * 6;
+			attack += 25 + from.level * 4;
 		}
 
 		//Defender calculationss
@@ -98,10 +98,10 @@ function calculateAttack(att, def, tof) {
 				}
 				if (typeof to !== "undefined") {
 					tmon = to.getMonster();
-					defense += to.stat.agi;
+					defense += to.stat.agi / 2.0;
 					defense -= to.getArmourClass();
 					defense += to.getActiveSpellById(SPELL_ARMOUR).power;
-					defense += (4.0 + to.level) * 4.0;
+					defense += (6.0 + to.level) * 4.0;
 					if (!to.attacking) {
 						defense = defense * 1.1;
 					}
@@ -127,10 +127,10 @@ function calculateAttack(att, def, tof) {
 						if (to.champId > -1) { //champion
 							to = champion[to.champId];
 							tmon = to.getMonster();
-							defense += to.stat.agi;
+							defense += to.stat.agi / 2.0;
 							defense -= to.getArmourClass();
 							defense += to.getActiveSpellById(SPELL_ARMOUR).power;
-							defense += (4.0 + to.level) * 4.0;
+							defense += (6.0 + to.level) * 4.0;
 							defExhaustion = Math.floor(Math.random() * 2) + 1;
 						} else { //monster
 							defense += 35; // + to.level * 2;

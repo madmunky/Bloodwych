@@ -230,50 +230,50 @@ Champion.prototype.gainLevel = function() {
 		var prof = this.prof;
 		var stat = new Array();
 		stat[PROFESSION_WARRIOR] = {
-			str: 10,
+			str: 8,
 			agi: 5,
-			int: 5,
+			int: 4,
 			cha: 5,
-			hp: 5,
-			hpMax: 15,
+			hp: 10,
+			hpMax: 20,
 			vit: 3,
 			vitMax: 9,
 			sp: 1,
 			spMax: 3
 		}
 		stat[PROFESSION_WIZARD] = {
-			str: 5,
+			str: 4,
 			agi: 5,
-			int: 10,
+			int: 8,
 			cha: 5,
-			hp: 2,
-			hpMax: 5,
+			hp: 4,
+			hpMax: 8,
 			vit: 2,
 			vitMax: 5,
 			sp: 3,
-			spMax: 9
+			spMax: 6
 		}
 		stat[PROFESSION_ADVENTURER] = {
-			str: 7,
-			agi: 7,
-			int: 7,
-			cha: 10,
-			hp: 3,
-			hpMax: 9,
+			str: 6,
+			agi: 6,
+			int: 6,
+			cha: 6,
+			hp: 6,
+			hpMax: 12,
 			vit: 3,
 			vitMax: 9,
 			sp: 2,
-			spMax: 6
+			spMax: 5
 		}
 		stat[PROFESSION_CUTPURSE] = {
 			str: 5,
-			agi: 10,
+			agi: 8,
 			int: 5,
-			cha: 5,
-			hp: 3,
-			hpMax: 9,
-			vit: 5,
-			vitMax: 15,
+			cha: 4,
+			hp: 4,
+			hpMax: 8,
+			vit: 10,
+			vitMax: 20,
 			sp: 1,
 			spMax: 3
 		}
@@ -285,6 +285,27 @@ Champion.prototype.gainLevel = function() {
 		this.stat.hpMax += Math.floor(Math.random() * stat[prof].hpMax) + stat[prof].hp;
 		this.stat.vitMax += Math.floor(Math.random() * stat[prof].vitMax) + stat[prof].vit;
 		this.stat.spMax += Math.floor(Math.random() * stat[prof].spMax) + stat[prof].sp;
+		if(this.stat.str > 99) {
+			this.stat.str = 99;
+		}
+		if(this.stat.agi > 99) {
+			this.stat.agi = 99;
+		}
+		if(this.stat.int > 99) {
+			this.stat.int = 99;
+		}
+		if(this.stat.cha > 99) {
+			this.stat.cha = 99;
+		}
+		if(this.stat.hpMax > 255) {
+			this.stat.hpMax = 255;
+		}
+		if(this.stat.vitMax > 255) {
+			this.stat.vitMax = 255;
+		}
+		if(this.stat.spMax > 99) {
+			this.stat.spMax = 99;
+		}
 		this.level++;
 		//}
 		var p = this.recruitment.playerId;
@@ -305,11 +326,6 @@ Champion.prototype.restoreStats = function() {
 			this.addHP(Math.floor((Math.random() * (this.stat.str / 16)) + 1));
 			this.addVit(Math.floor((Math.random() * (this.stat.agi / 16)) + 1));
 			this.addSP(Math.floor((Math.random() * (this.stat.int / 16)) + 1));
-			if (this.recruitment.playerId > -1 && this.id !== CHA_MR_FLAY) {
-				if (this.addFood(-1)) {
-					this.addVit(-Math.floor(Math.random() * 9) + 3)
-				}
-			}
 			if (this.stat.vitMax * 0.15 > this.stat.vit) {
 				dmg = Math.ceil(this.stat.vitMax * 0.15) - this.stat.vit;
 				this.getDamage(dmg, true);
@@ -324,6 +340,14 @@ Champion.prototype.restoreStats = function() {
 			p.alertDamagedPlayer();
 		}
 		redrawUI(p.id, UI_REDRAW_STATS);
+	}
+}
+
+Champion.prototype.addHunger = function() {
+	if (this.recruitment.playerId > -1 && this.id !== CHA_MR_FLAY) {
+		if (this.addFood(-1)) {
+			this.addVit(-Math.floor(Math.random() * 9) + 3)
+		}
 	}
 }
 

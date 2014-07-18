@@ -43,6 +43,10 @@ Game.prototype = {
 
 function timerAction() {
 	cutpurseTrueview = (Math.floor(Math.random() * 10) === 0);
+	var tmf = 1.0;
+	if(player.length === 1 && player[0].sleeping) {
+		tmf = 0.5;
+	}
 
 	//monster timer actions
 	mon = getMonstersInTower(towerThis, true);
@@ -56,7 +60,7 @@ function timerAction() {
 		} else if (br === 1) {
 			mon[m].blur = 1;
 		}
-		if(tm > 0 && timerMaster - mon[m].timerMove >= tm) {
+		if(tm > 0 && timerMaster - mon[m].timerMove >= tm * tmf) {
 			mon[m].timerMove = timerMaster;
 			mon[m].doGesture(CHA_GESTURE_NONE);
 			mon[m].move();
@@ -72,13 +76,13 @@ function timerAction() {
 			tm = 50;
 		}
 		
-		if (timerMaster - pl.timerAttack >= pl.getAttackSpeed(20)) {
+		if (timerMaster - pl.timerAttack >= pl.getAttackSpeed(20) * tmf) {
 			pl.timerAttack = timerMaster;
 			if (pl.attacking) {
 				pl.tryAttack();
 			}
 		}
-		if (timerMaster - pl.timerChampionStats >= tm) {
+		if (timerMaster - pl.timerChampionStats >= tm * tmf) {
 			pl.timerChampionStats = timerMaster;
 			if (pl.sleeping) {
 				pl.checkChampionUp();
@@ -90,7 +94,7 @@ function timerAction() {
 				}
 			}
 		}
-		if (timerMaster - activeSpellTimer >= 10) {
+		if (timerMaster - activeSpellTimer >= 10 * tmf) {
 			activeSpellTimer = timerMaster;
 			for (var c = 0; c < pl.champion.length; c++) {
 				var ch = pl.getChampion(c);
@@ -99,13 +103,13 @@ function timerAction() {
 				}
 			}
 		}
-		if (pl.communication.answer !== null && timerMaster - pl.communication.answerTimer >= 40) {
+		if (pl.communication.answer !== null && timerMaster - pl.communication.answerTimer >= 40 * tmf) {
 			pl.doCommunicationAnswer();
 		}
 
 		for (c = 0; c < pl.champion.length; c++) {
 			if(pl.uiLeftPanel.champs[c].damage > 0) {
-				if(timerMaster - pl.uiLeftPanel.champs[c].damageTimer >= 20) {
+				if(timerMaster - pl.uiLeftPanel.champs[c].damageTimer >= 20 * tmf) {
 					pl.uiLeftPanel.champs[c].damageTimer = 0;
 					pl.uiLeftPanel.champs[c].damage = 0;
 					redrawUI(p, UI_REDRAW_LEFT);
@@ -116,24 +120,26 @@ function timerAction() {
 
 	//projectile timer actions
 	for (var p = 0; p < projectile[towerThis].length; p++) {
-		if (timerMaster - projectile[towerThis][p].timer >= 2) {
+		if (timerMaster - projectile[towerThis][p].timer >= 2 * tmf) {
 			projectile[towerThis][p].timer = timerMaster;
 			projectile[towerThis][p].moveProjectile();
 		}
 	}
 
 	//5 second timer actions
-	if (timerMaster - dungeonSpellTimer >= 50) {
+	if (timerMaster - dungeonSpellTimer >= 50 * tmf) {
 		dungeonSpellTimer = timerMaster;
 		updateDungeonSpells();
 	}
 
 	//10 second timer actions
-	if (timerMaster - timerChampionStats >= 100) {
+	if (timerMaster - timerChampionStats >= 100 * tmf) {
 		timerChampionStats = timerMaster;
 		for (var ch = 0; ch < champion.length; ch++) {
-			if (!champion[ch].recruitment.playerId > -1) {
+			if (champion[ch].recruitment.playerId === -1) {
 				champion[ch].restoreStats();
+			} else {
+				champion[ch].addHunger();
 			}
 		}
 		for (var m = 0; m < monster[towerThis].length; m++) {

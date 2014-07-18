@@ -674,7 +674,7 @@ Player.prototype.checkChampionUp = function() {
 						return true;
 					}
 				} else if (up === 'level') {
-					if (ch.levelUp > 0) {
+					if (ch.levelUp > 0 && ch.level < 13) {
 						ch.gainLevel();
 						return true;
 					}
@@ -687,17 +687,19 @@ Player.prototype.checkChampionUp = function() {
 }
 
 Player.prototype.sleep = function() {
-	this.sleeping = true;
-	this.message();
-	this.fairyDetails.champ = null;
-	this.uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
-	this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
-	this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-	this.attack(false);
-	coverViewPort(this);
-	writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
-	writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
-	redrawUI(this.id);
+	if(!this.dead) {
+		this.sleeping = true;
+		this.message();
+		this.fairyDetails.champ = null;
+		this.uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
+		this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
+		this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+		this.attack(false);
+		coverViewPort(this);
+		writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
+		writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
+		redrawUI(this.id);
+	}
 }
 
 Player.prototype.wakeUp = function() {
@@ -737,6 +739,11 @@ Player.prototype.checkDead = function() {
 				}
 			}
 			this.setMovementData();
+
+			this.uiCenterPanel.mode = UI_CENTER_PANEL_DEAD;
+			coverViewPort(this);
+			writeFontImage(TEXT_THOU, 64, 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER, this.Portal);
+			writeFontImage(TEXT_ART_DEAD, 64, 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER, this.Portal);
 		}
 	}
 }
@@ -1232,7 +1239,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
 			if (this.doFizzle()) {
 				writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, COLOUR[COLOUR_BLUE_DARK]);
 			} else if (Math.random() < ch.getSpellCastChance()) {
-				castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10 + ch.level * 4 + 10);
+				castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10 + ch.level * 4);
 				sb.castSuccessful++;
 				if (!s) {
 					this.showSpellText = false;
@@ -1400,74 +1407,76 @@ Player.prototype.testMode = function(id) {
 }
 
 Player.prototype.doCommunication = function(text) {
-	switch (this.communication.mode) {
-		case COMMUNICATION_PAGE_MAIN:
-			switch (text) {
-				case COMMUNICATION_COMMUNICATE:
-					var m = this.checkForMonsterInFront();
-					if (m !== null) {
-						m.communicating = true;
-						if (m.champId === -1 || m.isRecruitedBy() === null) {
-							m.rotateTo((this.d + 2) % 4);
+	if(!this.dead) {
+		switch (this.communication.mode) {
+			case COMMUNICATION_PAGE_MAIN:
+				switch (text) {
+					case COMMUNICATION_COMMUNICATE:
+						var m = this.checkForMonsterInFront();
+						if (m !== null) {
+							m.communicating = true;
+							if (m.champId === -1 || m.isRecruitedBy() === null) {
+								m.rotateTo((this.d + 2) % 4);
+							}
+							this.communication.monster = m;
+							this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
+							this.communication.charisma = champion[this.championLeader].stat.cha;
+							this.determineCommunicationQuestionAnswer(7);
+						} else {
+							this.determineCommunicationQuestionAnswer(6);
 						}
-						this.communication.monster = m;
-						this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
-						this.communication.charisma = champion[this.championLeader].stat.cha;
-						this.determineCommunicationQuestionAnswer(7);
-					} else {
-						this.determineCommunicationQuestionAnswer(6);
-					}
-					break;
-				case COMMUNICATION_CALL:
-					for (var c = 0; c < 4; c++) {
-						var ch = this.getChampion(c);
-						if (ch !== null && !ch.recruitment.attached && !ch.dead) {
-							ch.recruitment.called = true;
+						break;
+					case COMMUNICATION_CALL:
+						for (var c = 0; c < 4; c++) {
+							var ch = this.getChampion(c);
+							if (ch !== null && !ch.recruitment.attached && !ch.dead) {
+								ch.recruitment.called = true;
+							}
 						}
-					}
-					this.communication.text = text;
-					this.determineCommunicationQuestionAnswer(this.communication.mode, this.communication.text);
-					break;
-				default:
-					this.communication.text = text;
-					this.determineCommunicationQuestionAnswer(this.communication.mode, this.communication.text);
-					this.communication.mode = COMMUNICATION_PAGE_NAMES;
-					break;
-			}
-			break;
-		case COMMUNICATION_PAGE_NAMES:
-			switch (this.communication.text) {
-				case COMMUNICATION_WAIT:
-					if (text < this.getChampionLength() - 1) {
-						var c1 = this.getOrderedChampionIds();
-						var c2 = c1[text + 1];
-						this.waitChampion(c2);
-						this.communication.mode = COMMUNICATION_PAGE_MAIN;
-						this.communication.text = null;
-						redrawUI(this.id);
-					}
-					break;
-				case COMMUNICATION_DISMISS:
-					if (text < this.getChampionLength() - 1) {
-						var c1 = this.getOrderedChampionIds();
-						var c2 = c1[text + 1];
-						this.dismissChampion(c2);
-						this.communication.mode = COMMUNICATION_PAGE_MAIN;
-						this.communication.text = null;
-						redrawUI(this.id);
-					}
-					break;
-			}
-			break;
-		default:
-			this.determineCommunicationQuestionAnswer(this.communication.mode, text);
-			if (typeof TEXT_COMMUNICATION_COMMANDS[this.communication.mode] !== 'undefined' && typeof TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text] !== 'undefined' && TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text].to !== null) {
-				this.communication.mode = TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text].to;
-			}
-			break;
+						this.communication.text = text;
+						this.determineCommunicationQuestionAnswer(this.communication.mode, this.communication.text);
+						break;
+					default:
+						this.communication.text = text;
+						this.determineCommunicationQuestionAnswer(this.communication.mode, this.communication.text);
+						this.communication.mode = COMMUNICATION_PAGE_NAMES;
+						break;
+				}
+				break;
+			case COMMUNICATION_PAGE_NAMES:
+				switch (this.communication.text) {
+					case COMMUNICATION_WAIT:
+						if (text < this.getChampionLength() - 1) {
+							var c1 = this.getOrderedChampionIds();
+							var c2 = c1[text + 1];
+							this.waitChampion(c2);
+							this.communication.mode = COMMUNICATION_PAGE_MAIN;
+							this.communication.text = null;
+							redrawUI(this.id);
+						}
+						break;
+					case COMMUNICATION_DISMISS:
+						if (text < this.getChampionLength() - 1) {
+							var c1 = this.getOrderedChampionIds();
+							var c2 = c1[text + 1];
+							this.dismissChampion(c2);
+							this.communication.mode = COMMUNICATION_PAGE_MAIN;
+							this.communication.text = null;
+							redrawUI(this.id);
+						}
+						break;
+				}
+				break;
+			default:
+				this.determineCommunicationQuestionAnswer(this.communication.mode, text);
+				if (typeof TEXT_COMMUNICATION_COMMANDS[this.communication.mode] !== 'undefined' && typeof TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text] !== 'undefined' && TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text].to !== null) {
+					this.communication.mode = TEXT_COMMUNICATION_COMMANDS[this.communication.mode][text].to;
+				}
+				break;
+		}
+		this.communication.text = text;
+		drawCommunicationBox(this, text, true);
 	}
-	this.communication.text = text;
-	drawCommunicationBox(this, text, true);
 
 };
 

@@ -213,42 +213,44 @@ Monster.prototype.canOpenDoor = function() {
 
 Monster.prototype.move = function() {
 	var ch = this.getChampion();
-	if(this.type === MON_TYPE_LAUNCHER) {
-		this.launchSpell();
-	} else if (!this.dead && this.teamId >= 0 && (this.isRecruitedBy() === null || (ch !== null && ch.recruitment.called))) {
-		this.attack(false);
-		if (this.castSpell()) return;
-		var canMove = this.canMove();
-		if (canMove === OBJECT_CHARACTER && this.canInteract() > -1) return;
-		if (canMove === OBJECT_NONE) {
-			xy = getOffsetByRotation(this.d);
-			if (this.teamId > 0 || this.square === CHAR_FRONT_SOLO) {
-				if (this.followPlayer()) return;
-				this.x += xy.x;
-				this.y += xy.y;
-				updateMonsterTeam(this.teamId);
-				this.doEvent();
-			} else {
-				var sq = this.getSquareByDir();
-				switch (sq) {
-					case CHAR_FRONT_LEFT:
-					case CHAR_FRONT_RIGHT:
-						if (this.followPlayer()) return;
-						this.x += xy.x;
-						this.y += xy.y;
-						this.doEvent();
-						break;
-					default:
-						break;
+	if(this.x < 128) {
+		if(this.type === MON_TYPE_LAUNCHER) {
+			this.launchSpell();
+		} else if (!this.dead && this.teamId >= 0 && (this.isRecruitedBy() === null || (ch !== null && ch.recruitment.called))) {
+			this.attack(false);
+			if (this.castSpell()) return;
+			var canMove = this.canMove();
+			if (canMove === OBJECT_CHARACTER && this.canInteract() > -1) return;
+			if (canMove === OBJECT_NONE) {
+				xy = getOffsetByRotation(this.d);
+				if (this.teamId > 0 || this.square === CHAR_FRONT_SOLO) {
+					if (this.followPlayer()) return;
+					this.x += xy.x;
+					this.y += xy.y;
+					updateMonsterTeam(this.teamId);
+					this.doEvent();
+				} else {
+					var sq = this.getSquareByDir();
+					switch (sq) {
+						case CHAR_FRONT_LEFT:
+						case CHAR_FRONT_RIGHT:
+							if (this.followPlayer()) return;
+							this.x += xy.x;
+							this.y += xy.y;
+							this.doEvent();
+							break;
+						default:
+							break;
+					}
+					this.square = this.getSquareByDirNext();
 				}
-				this.square = this.getSquareByDirNext();
-			}
-		} else if (canMove !== OBJECT_WOOD_DOOR) {
-			if (this.followPlayer()) {
-				return;
-			} else {
-				var turn = Math.floor(Math.random() * 2) * 2 - 1;
-				this.rotateTo((this.d + turn + 4) % 4);
+			} else if (canMove !== OBJECT_WOOD_DOOR) {
+				if (this.followPlayer()) {
+					return;
+				} else {
+					var turn = Math.floor(Math.random() * 2) * 2 - 1;
+					this.rotateTo((this.d + turn + 4) % 4);
+				}
 			}
 		}
 	}
@@ -362,7 +364,7 @@ Monster.prototype.followPlayer = function() {
 	var ch = this.getChampion();
 	if ((this.champId === -1 && this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER) || (ch !== null && ch.recruitment.called)) {
 		var rnd = Math.floor(Math.random() * 2);
-		if (!player[0].dead && (typeof player[1] === 'undefined' || Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y))) {
+		if (!player[0].dead && player[0].floor === this.floor && (typeof player[1] === 'undefined' || player[1].dead ||  Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y))) {
 			//player 1 is closer
 			if (player[0].x > this.x && (this.d === 1)) {
 				return false;
@@ -395,7 +397,7 @@ Monster.prototype.followPlayer = function() {
 					return true;
 				}
 			}
-		} else if (!player[1].dead) {
+		} else if (!player[1].dead && player[1].floor === this.floor) {
 			//player 2 is closer
 			if (player[1].x > this.x && (this.d === 1)) {
 				return false;
@@ -546,6 +548,8 @@ Monster.prototype.die = function() {
 				}
 				if(this.form === MON_FORM_ZENDIK) {
 					lvl = 4;
+				} else if(this.form === MON_FORM_BEHEMOTH) {
+					lvl = 5;
 				} else if (Math.floor(Math.random() * 2) === 1) {
 					return;
 				}
