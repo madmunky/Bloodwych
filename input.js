@@ -466,8 +466,9 @@ function processCanvasInput(pid, x, y) {
 					return pid;
 				}
 			}
-
-			checkCommunicationArea(p, x, y, false);
+                        if (!paused){
+                            checkCommunicationArea(p, x, y, false);
+                        }
 		}
 		/*if (p.sleeping) {
 			p.wakeUp();
@@ -548,7 +549,9 @@ function mouseXY(e) {
 		}
 		if (typeof player !== 'undefined') {
 			for (p in player) {
+                            if (!paused){
 				checkCommunicationArea(player[p], mouseX / (scale * scaleReal), mouseY / (scale * scaleReal), true);
+                            }
 			}
 		}
 	}
