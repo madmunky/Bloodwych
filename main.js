@@ -19,23 +19,23 @@ Run = function() {
 			rdt = 0;
 
 		function run() {
-                        
-			now = new Date().getTime();
+                            now = new Date().getTime();
 
-			dt = Math.min(1, (now - last) / 1000);
-			gdt = gdt + dt;
-			while (gdt > game.step) {
-				gdt = gdt - game.step;
-				game.update();
-			}
-			rdt = rdt + dt;
-			if (rdt > render.step) {
-				rdt = rdt - render.step;
-				render.update();
-			}
-			last = now;
-			requestAnimFrame(run);
-		}
+                            dt = Math.min(1, (now - last) / 1000);
+                            gdt = gdt + dt;
+                            while (gdt > game.step) {
+                                    gdt = gdt - game.step;
+                                    game.update();
+                            }
+                            rdt = rdt + dt;
+                            if (rdt > render.step) {
+                                    rdt = rdt - render.step;
+                                    render.update();
+                            }
+                            last = now;
+                            requestAnimFrame(run);                            
+                        }
+
 
 		game.init && game.init();
 		render.init && render.init();

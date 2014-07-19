@@ -48,16 +48,17 @@ function updatePlayerViewScreen() {
 		}
 	}
 
-	configCanvas();
+	//configCanvas();
 	debugText(player[0], "FPS: " + fps.getFPS());
-
-	for (p in player) {
-		debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
-		drawPlayersView(player[p]);
-		drawUI(player[p]);
-		testing(player[p]);
-	}
-	redrawPlayerUiFlag = 0;
+        if (!paused){
+            for (p in player) {
+                    debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
+                    drawPlayersView(player[p]);
+                    drawUI(player[p]);
+                    testing(player[p]);
+            }
+            redrawPlayerUiFlag = 0;
+    }
 }
 
 function setViewportScale(sp) {
@@ -115,7 +116,25 @@ function clearCanvas() {
 
 function pauseGame(){
     
-    paused = !paused;    
+    paused = !paused;   
+    if (paused){
+                canvas.style.background = '#400000';
+		var paletteFrom = [0,0,0];
+                var paletteTo = [64,0,0];
+		var imageData = ctx.getImageData(0, 0, canvas.width, canvas.width);
+
+		for (var i = 0; i < imageData.data.length; i += 4) {			
+				if (imageData.data[i] === paletteFrom[0] && imageData.data[i + 1] === paletteFrom[1] && imageData.data[i + 2] === paletteFrom[2]) {
+					imageData.data[i] = paletteTo[0];
+					imageData.data[i + 1] = paletteTo[1];
+					imageData.data[i + 2] = paletteTo[2];
+					j = j + 3;
+				}
+		}
+		ctx.putImageData(imageData, 0, 0);      
+    }else{
+        canvas.style.background = '#000';
+    }
     
 }
 

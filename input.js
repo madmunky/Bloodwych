@@ -1,5 +1,5 @@
 function doKeyDown(e) {
-	if (gameStarted && !paused) {
+	if (gameStarted && !paused) {            
 		if (typeof player[1] !== 'undefined' && !player[1].frozen) {
 			switch (e.keyCode) {
 				case KEY_END:
@@ -127,7 +127,7 @@ function doKeyDown(e) {
 					break;
 			}
 		}
-	} else { //Start menu screen
+	} else { //Start menu screen            
 		switch (e.keyCode) {
 			case KEY_1:
 				$('canvas').attr('data-game-status', 'menu-champions');
@@ -159,6 +159,9 @@ function checkClickEvents() {
 		var x = (e.pageX - (canvas.offsetLeft * scaleReal)) / (scale * scaleReal);
 		var y = (e.pageY - (canvas.offsetTop * scaleReal)) / (scale * scaleReal);
 		if (t.attr('data-game-status') === 'started') {
+                    if (paused){
+                        pauseGame();
+                    }
 			var p = 0;
 			for (pid in player) {
 				pid = parseInt(pid);
@@ -195,8 +198,7 @@ function checkClickEvents() {
 }
 
 function processCanvasInput(pid, x, y) {
-	var p = player[pid];
-	if(!paused) {
+	var p = player[pid];	
 		if (!p.sleeping) {
 			if (!p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
 				return checkClickInViewPortal(p, x, y);
@@ -471,7 +473,7 @@ function processCanvasInput(pid, x, y) {
 			p.wakeUp();
 			return pid;
 		}*/
-	}
+	
 	return -1;
 }
 
