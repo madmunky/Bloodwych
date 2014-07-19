@@ -1082,8 +1082,11 @@ Player.prototype.useItemActivePocket = function() {
 	}
 }
 
-Player.prototype.exchangeItemWithHand = function(s) {
+Player.prototype.exchangeItemWithHand = function(s, q) {
 	var ch = this.getActivePocketChampion();
+	if(typeof q === 'undefined') {
+		q = 1;
+	}
 	if (ch !== null) {
 		var it = ch.pocket[s];
 		var itH = this.pocket;
@@ -1091,10 +1094,13 @@ Player.prototype.exchangeItemWithHand = function(s) {
 		if (itH.id === 0 || ((s !== POCKET_ARMOUR || itH.type === ITEM_TYPE_ARMOUR) && (s !== POCKET_SHIELD || allowedShield))) {
 			if (it.type === ITEM_TYPE_STACKABLE && (itH.id === 0 || it.id === itH.id)) {
 				if (itH.id === 0) {
-					itH.setPocketItem(it.id, 1);
-					it.quantity--;
-					if (it.quantity === 0) {
-						it.setPocketItem();
+					for(q1 = 0; q1 < q; q1++) {
+						itH.setPocketItem(it.id, itH.quantity + 1);
+						it.quantity--;
+						if (it.quantity === 0) {
+							it.setPocketItem();
+							break;
+						}
 					}
 				} else if (it.id === itH.id) {
 					var qt = it.quantity + itH.quantity;
@@ -1111,16 +1117,15 @@ Player.prototype.exchangeItemWithHand = function(s) {
 				}
 			} else if (itH.type === ITEM_TYPE_STACKABLE && this.findPocketItem(itH.id) > -1) {
 				var i = this.findPocketItem(itH.id);
-				var qty = 0;
-				qty = ch.pocket[i].quantity;
-				ch.pocket[i].setPocketItem();
+				var qty = itH.quantity + ch.pocket[i].quantity;
+
 				var temp = newPocketItem(it.id, it.quantity);
-				it.setPocketItem(itH.id, itH.quantity + qty);
+				it.setPocketItem(itH.id, itH.quantity);
 				itH.setPocketItem(temp.id, temp.quantity);
-				if(it.quantity > 99) {
-					this.exchangeItemWithHand(i);
-					this.exchangeItemWithHand(s);
-					this.exchangeItemWithHand(s);
+				
+				this.exchangeItemWithHand(i, 99);
+				if(qty <= 99) {
+					this.exchangeItemWithHand(s, 99);
 				}
 			} else {
 				if ((s === POCKET_LEFT_HAND || s === POCKET_RIGHT_HAND) && it.id === 0) {
