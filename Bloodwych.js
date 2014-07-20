@@ -114,38 +114,27 @@ function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function pauseGame(changeImage, colourTo) {
-
-	//changeImage = True or False
+function pauseGame(colourTo) {
 	//colourTo = RGB HEX CODE i.e. #400000
 
 	paused = !paused;
-	if (paused) {
-		if (changeImage) {
-			$('html').css('background', colourTo);
-			$('body').css('background', colourTo);
-			canvas.style.background = colourTo;
-			var paletteFrom = [0, 0, 0];
-			var paletteTo = hexToRgb(colourTo);
-			var imageData = ctx.getImageData(0, 0, canvas.width, canvas.width);
+	$('html').css('background', colourTo);
+	$('body').css('background', colourTo);
+	canvas.style.background = colourTo;
+	var paletteFrom = [0, 0, 0];
+	var paletteTo = hexToRgb(colourTo);
+	var imageData = ctx.getImageData(0, 0, canvas.width, canvas.width);
 
-			for (var i = 0; i < imageData.data.length; i += 4) {
-				if (imageData.data[i] === paletteFrom[0] && imageData.data[i + 1] === paletteFrom[1] && imageData.data[i + 2] === paletteFrom[2]) {
-					imageData.data[i] = paletteTo.r;
-					imageData.data[i + 1] = paletteTo.g;
-					imageData.data[i + 2] = paletteTo.b;
-					j = j + 3;
-				}
-			}
-			ctx.putImageData(imageData, 0, 0);
+	for (var i = 0; i < imageData.data.length; i += 4) {
+		if (imageData.data[i] === paletteFrom[0] && imageData.data[i + 1] === paletteFrom[1] && imageData.data[i + 2] === paletteFrom[2]) {
+			imageData.data[i] = paletteTo.r;
+			imageData.data[i + 1] = paletteTo.g;
+			imageData.data[i + 2] = paletteTo.b;
+			j = j + 3;
 		}
-	} else {
-		$('html').css('background', '#000');
-		$('body').css('background', '#000');
-		canvas.style.background = '#000';
-
 	}
-
+	ctx.putImageData(imageData, 0, 0);
+	redrawUI(2);
 }
 
 //Renders the sub-coloured objects. E.g. for locked doors and banners
@@ -345,7 +334,7 @@ $(function() {
 				t.trigger('focusout');
 				if (name !== '') {
 					player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
-					saveGame[slot].save(name);
+					saveGame(slot, name);
 					redrawUI(p);
 				}
 			} else if (e.which === 27) {
@@ -371,5 +360,6 @@ $(function() {
 		if (player[p].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
 			createStateGrid(player[p], "SAVE");
 		}
+		canvas.focus();
 	});
 });

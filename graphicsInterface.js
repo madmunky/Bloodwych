@@ -2152,7 +2152,7 @@ function createStateGrid(p, state) {
 	//writeFontImage(state + " GAME", 28, 2, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
 	for (var x = 0; x < 8; x++) {
 		var clr = COLOUR[COLOUR_GREY_LIGHT];
-		var name = saveGame[x].getName();
+		var name = getGameName(x);
 		if (name === '') {
 			clr = COLOUR[COLOUR_GREY_DARKEST];
 			name = 'EMPTY SLOT';
@@ -2179,7 +2179,7 @@ function uiGameStateMenu(x, y, p) {
 			if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
 				p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", COLOUR[COLOUR_GREEN], false, 0);
 				var inp = $('input.save-game');
-				inp.val(saveGame[slot].getName());
+				inp.val(getGameName(slot));
 				inp.data('player-id', p.id);
 				inp.data('slot-id', slot);
 				inp.focus().select();
@@ -2189,9 +2189,9 @@ function uiGameStateMenu(x, y, p) {
 	} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
 		for (slot = 0; slot < 8; slot++) {
 			if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
-				if (saveGame[slot].gameData !== null) {
+				if (getGameName(slot) !== '') {
 					redrawUI(p.id);
-					saveGame[slot].load();
+					loadGame(slot);
 					p.message();
 				}
 			}

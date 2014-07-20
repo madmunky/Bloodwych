@@ -1,34 +1,35 @@
-function gameState(saveName) {
+function gameState(fileName) {
 	this.gameData = [];
-	this.fileName = saveName;
+	this.fileName = fileName;
 }
 
-gameState.prototype.getName = function() {
-	var json = JSON.parse(localStorage.getItem(this.fileName));
+function getGameName(g) {
+	var json = JSON.parse(localStorage.getItem('savegame' + g));
 	if(json !== null) {
 		return json.name;
 	}
 	return '';
 }
 
-gameState.prototype.load = function() {
-	this.gameData = JSON.parse(localStorage.getItem(this.fileName));
-	if(this.gameData !== null) {
-		versionThis = this.gameData.version;
-		tower = this.gameData.tower;
-		player = this.gameData.player;
-		champion = this.gameData.champion;
-		monster = this.gameData.monster;
-		item = this.gameData.item;
-		projectile = this.gameData.projectile;
-		timerMaster = this.gameData.variables.timerMaster;
-		timerMonsterMove = this.gameData.variables.timerMonsterMove;
-		timerChampionStats = this.gameData.variables.timerChampionStats;
-		towerThis = this.gameData.variables.towerThis;
-		monsterTeamIdMax = this.gameData.variables.monsterTeamIdMax;
-		dungeonSpellTimer = this.gameData.variables.dungeonSpellTimer;
-		dungeonSpellList = this.gameData.variables.dungeonSpellList;
-	//	activeSpellTimer = this.gameData.variables.activeSpellTimer;
+function loadGame(g) {
+	var save = new gameState('savegame' + g);
+	save.gameData = JSON.parse(localStorage.getItem(save.fileName));
+	if(save.gameData !== null) {
+		versionThis = save.gameData.version;
+		tower = save.gameData.tower;
+		player = save.gameData.player;
+		champion = save.gameData.champion;
+		monster = save.gameData.monster;
+		item = save.gameData.item;
+		projectile = save.gameData.projectile;
+		timerMaster = save.gameData.variables.timerMaster;
+		timerMonsterMove = save.gameData.variables.timerMonsterMove;
+		timerChampionStats = save.gameData.variables.timerChampionStats;
+		towerThis = save.gameData.variables.towerThis;
+		monsterTeamIdMax = save.gameData.variables.monsterTeamIdMax;
+		dungeonSpellTimer = save.gameData.variables.dungeonSpellTimer;
+		dungeonSpellList = save.gameData.variables.dungeonSpellList;
+	//	activeSpellTimer = save.gameData.variables.activeSpellTimer;
 
 		clearCanvas();
 		for (p in player) {
@@ -76,8 +77,9 @@ gameState.prototype.load = function() {
 	}
 };
 
-gameState.prototype.save = function(name) {
-	this.gameData = {
+function saveGame(g, name) {
+	var save = new gameState('savegame' + g);
+	save.gameData = {
 		name: name,
 		version: VERSION,
 		tower: $.extend(true, {}, tower),
@@ -97,7 +99,7 @@ gameState.prototype.save = function(name) {
 //			activeSpellTimer: activeSpellTimer
 		}
 	};
-	localStorage.setItem(this.fileName, JSON.stringify(this.gameData));
+	localStorage.setItem(save.fileName, JSON.stringify(save.gameData));
 	player[0].message(TEXT_GAME_SAVED, COLOUR[COLOUR_GREEN]);
 };
 

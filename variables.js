@@ -12,11 +12,6 @@ var gameStateSelectGrid = [];
 var players = 0;
 var currentPlayer = 0;
 var paused = false;
-
-var saveGame = new Array();
-for(var g = 0; g < 8; g++) {
-	saveGame[g] = new gameState('savegame' + g);
-}
 var checkStarted = true;
 
 //Setup some global Varibles for needed
@@ -903,7 +898,8 @@ var KEYPAD_4 = 100,
 	KEY_9 = 57,
 	KEY_0 = 48,
 	KEY_MINUS = 189,
-	KEY_PLUS = 187;
+	KEY_PLUS = 187,
+	KEY_ESC = 27;
 
 //messages
 var TEXT_PLAYER = "PLAYER",

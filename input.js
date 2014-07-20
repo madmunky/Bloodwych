@@ -1,129 +1,149 @@
 function doKeyDown(e) {
-	if (gameStarted && !paused) {
-		if (typeof player[1] !== 'undefined' && !player[1].frozen) {
+	if (gameStarted) {
+		if (!paused) {
+			if (typeof player[1] !== 'undefined' && !player[1].frozen) {
+				switch (e.keyCode) {
+					case KEY_END:
+						player[1].action();
+						break; //End Key
+					case KEYPAD_8:
+						if (!player[1].frozen) player[1].move(DIRECTION_NORTH);
+						break; //8
+					case KEYPAD_5:
+						if (!player[1].frozen) player[1].move(DIRECTION_SOUTH);
+						break; //5
+					case KEYPAD_4:
+						if (!player[1].frozen) player[1].move(DIRECTION_WEST);
+						break; //4
+					case KEYPAD_6:
+						if (!player[1].frozen) player[1].move(DIRECTION_EAST);
+						break; //6
+					case KEYPAD_7:
+						if (!player[1].frozen) player[1].rotate(-1);
+						break; //7
+					case KEYPAD_9:
+						if (!player[1].frozen) player[1].rotate(1);
+						break; //9
+					default:
+						break;
+				}
+			}
 			switch (e.keyCode) {
-				case KEY_END:
-					player[1].action();
-					break; //End Key
-				case KEYPAD_8:
-					if (!player[1].frozen) player[1].move(DIRECTION_NORTH);
-					break; //8
-				case KEYPAD_5:
-					if (!player[1].frozen) player[1].move(DIRECTION_SOUTH);
-					break; //5
-				case KEYPAD_4:
-					if (!player[1].frozen) player[1].move(DIRECTION_WEST);
-					break; //4
-				case KEYPAD_6:
-					if (!player[1].frozen) player[1].move(DIRECTION_EAST);
-					break; //6
-				case KEYPAD_7:
-					if (!player[1].frozen) player[1].rotate(-1);
-					break; //7
-				case KEYPAD_9:
-					if (!player[1].frozen) player[1].rotate(1);
-					break; //9
+				case KEY_SPACEBAR:
+					player[0].action();
+					break; // SpaceBar        
+				case KEY_W:
+					player[0].move(DIRECTION_NORTH);
+					break; // W KEY
+				case KEY_S:
+					if (!player[0].frozen) player[0].move(DIRECTION_SOUTH);
+					break; // S KEY
+				case KEY_A:
+					if (!player[0].frozen) player[0].move(DIRECTION_WEST);
+					break; // A KEY
+				case KEY_D:
+					if (!player[0].frozen) player[0].move(DIRECTION_EAST);
+					break; // D KEY
+				case KEY_Q:
+					if (!player[0].frozen) player[0].rotate(-1);
+					break; // Q KEY
+				case KEY_E:
+					if (!player[0].frozen) player[0].rotate(1);
+					break; // E KEY
+				case KEY_6:
+					player[0].uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
+					showGameStateMenu(player[0]);
+					break;
+				case KEY_5:
+					player[0].uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
+					showGameStateMenu(player[0]);
+					break;
+				case KEY_ESC:
+					if (player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+						player[0].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+						player[0].message();
+					}
+					if (player[1].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || player[1].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || player[1].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+						player[1].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+						player[1].message();
+					}
+					break;
 				default:
 					break;
 			}
-		}
-		switch (e.keyCode) {
-			case KEY_SPACEBAR:
-				player[0].action();
-				break; // SpaceBar        
-			case KEY_W:
-				player[0].move(DIRECTION_NORTH);
-				break; // W KEY
-			case KEY_S:
-				if (!player[0].frozen) player[0].move(DIRECTION_SOUTH);
-				break; // S KEY
-			case KEY_A:
-				if (!player[0].frozen) player[0].move(DIRECTION_WEST);
-				break; // A KEY
-			case KEY_D:
-				if (!player[0].frozen) player[0].move(DIRECTION_EAST);
-				break; // D KEY
-			case KEY_Q:
-				if (!player[0].frozen) player[0].rotate(-1);
-				break; // Q KEY
-			case KEY_E:
-				if (!player[0].frozen) player[0].rotate(1);
-				break; // E KEY
-			case KEY_6:
-				//saveGame.load();
-				break;
-			case KEY_5:
-				//saveGame.save();
-				break;
-			default:
-				break;
-		}
-		if (debug) {
+			if (debug) {
+				switch (e.keyCode) {
+					case KEY_L: // THE L KEY
+						switchTower((towerThis + 1) % TOWER_NAME.length);
+						break;
+					case KEY_T:
+						//player[0].changeUpFloor();
+						var ch = player[0].getActivePocketChampion();
+						ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 1) % 110, 1);
+						redrawUI(0);
+						PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
+						break; // T KEY
+					case KEY_F:
+						player[0].testMode();
+						//player[0].castSpell(SPELL_DISPELL, player[0].getChampion(player[0].championLeader));
+						break; // F cheat  
+					case KEY_G:
+						//player[0].changeDownFloor();
+						var ch = player[0].getActivePocketChampion();
+						ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 109) % 110, 1);
+						redrawUI(0);
+						PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
+						break; // G KEY
+					case KEY_Y:
+						if (player[0].floor < tower[towerThis].floor.length) {
+							var floor = player[0].floor + 1;
+							var fOff = getTowerFloorOffset(player[0].floor, floor);
+							var x = player[0].x + fOff.x;
+							var y = player[0].y + fOff.y;
+							player[0].setPlayerPosition(floor, x, y, player[0].d);
+						}
+						break;
+					case KEY_H:
+						if (player[0].floor > 0) {
+							var floor = player[0].floor - 1;
+							var fOff = getTowerFloorOffset(player[0].floor, floor);
+							var x = player[0].x + fOff.x;
+							var y = player[0].y + fOff.y;
+							player[0].setPlayerPosition(floor, x, y, player[0].d);
+						}
+						break;
+					case KEY_PLUS:
+						testPalette = testPalette + 1;
+						break;
+					case KEY_MINUS:
+						testPalette = testPalette - 1;
+						break;
+					case KEY_7:
+						testDistance = (testDistance + 1) % 3;
+						PrintLog("Distance: " + testDistance);
+						break;
+					case KEY_8:
+						testDistance = (testDistance + 3) % 3;
+						PrintLog("Distance: " + testDistance);
+						break;
+					case KEY_0:
+						testMon1 = (testMon1 + 1);
+						break;
+					case KEY_9:
+						testMon1 = (testMon1 - 1);
+						break;
+					case KEY_R:
+						player[0].toggleFrontObject();
+						//player[0].castSpell(SPELL_FORMWALL, player[0].getChampion(player[0].championLeader));
+						break; //R Key
+					default:
+						break;
+				}
+			}
+		} else {
 			switch (e.keyCode) {
-				case KEY_L: // THE L KEY
-					switchTower((towerThis + 1) % TOWER_NAME.length);
-					break;
-				case KEY_T:
-					//player[0].changeUpFloor();
-					var ch = player[0].getActivePocketChampion();
-					ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 1) % 110, 1);
-					redrawUI(0);
-					PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
-					break; // T KEY
-				case KEY_F:
-					player[0].testMode();
-					//player[0].castSpell(SPELL_DISPELL, player[0].getChampion(player[0].championLeader));
-					break; // F cheat  
-				case KEY_G:
-					//player[0].changeDownFloor();
-					var ch = player[0].getActivePocketChampion();
-					ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 109) % 110, 1);
-					redrawUI(0);
-					PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
-					break; // G KEY
-				case KEY_Y:
-					if (player[0].floor < tower[towerThis].floor.length) {
-						var floor = player[0].floor + 1;
-						var fOff = getTowerFloorOffset(player[0].floor, floor);
-						var x = player[0].x + fOff.x;
-						var y = player[0].y + fOff.y;
-						player[0].setPlayerPosition(floor, x, y, player[0].d);
-					}
-					break;
-				case KEY_H:
-					if (player[0].floor > 0) {
-						var floor = player[0].floor - 1;
-						var fOff = getTowerFloorOffset(player[0].floor, floor);
-						var x = player[0].x + fOff.x;
-						var y = player[0].y + fOff.y;
-						player[0].setPlayerPosition(floor, x, y, player[0].d);
-					}
-					break;
-				case KEY_PLUS:
-					testPalette = testPalette + 1;
-					break;
-				case KEY_MINUS:
-					testPalette = testPalette - 1;
-					break;
-				case KEY_7:
-					testDistance = (testDistance + 1) % 3;
-					PrintLog("Distance: " + testDistance);
-					break;
-				case KEY_8:
-					testDistance = (testDistance + 3) % 3;
-					PrintLog("Distance: " + testDistance);
-					break;
-				case KEY_0:
-					testMon1 = (testMon1 + 1);
-					break;
-				case KEY_9:
-					testMon1 = (testMon1 - 1);
-					break;
-				case KEY_R:
-					player[0].toggleFrontObject();
-					//player[0].castSpell(SPELL_FORMWALL, player[0].getChampion(player[0].championLeader));
-					break; //R Key
-				default:
+				case KEY_ESC:
+					pauseGame('#000000');
 					break;
 			}
 		}
@@ -160,7 +180,7 @@ function checkClickEvents() {
 		var y = (e.pageY - (canvas.offsetTop * scaleReal)) / (scale * scaleReal);
 		if (t.attr('data-game-status') === 'started') {
 			if (paused) {
-				pauseGame();
+				pauseGame('#000000');
 			}
 			var p = 0;
 			for (pid in player) {
@@ -441,7 +461,7 @@ function processCanvasInput(pid, x, y) {
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, p)) {
 			p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
-			pauseGame(true, '#400000');
+			pauseGame('#400000');
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_SAVE, p)) {
 			if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
