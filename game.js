@@ -135,7 +135,8 @@ function timerAction() {
 	//10 second timer actions
 	if (timerMaster - timerChampionStats >= 100 * tmf) {
 		timerChampionStats = timerMaster;
-		for (var ch = 0; ch < champion.length; ch++) {
+		//for (var ch = 0; ch < champion.length; ch++) {
+		for (ch in champion) {
 			if (champion[ch].recruitment.playerId === -1) {
 				champion[ch].restoreStats();
 			} else {
