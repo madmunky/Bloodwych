@@ -160,7 +160,7 @@ function getSpellPower(id) {
 		case SPELL_VIVIFY:
 			return 1;
 		case SPELL_DISRUPT:
-			return 6;
+			return 4;
 
 			//dragon
 		case SPELL_MISSILE:
@@ -196,7 +196,7 @@ function getSpellPower(id) {
 		case SPELL_MINDROCK:
 			return 1;
 		case SPELL_WYCHWIND:
-			return 1;
+			return 2;
 		default:
 			return 0;
 	}

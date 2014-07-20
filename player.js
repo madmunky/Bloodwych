@@ -1263,7 +1263,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
 			if (this.doFizzle()) {
 				writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, COLOUR[COLOUR_BLUE_DARK]);
 			} else if (Math.random() < ch.getSpellCastChance()) {
-				castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10 + ch.level * 4);
+				castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10 + ch.level * 5);
 				sb.castSuccessful++;
 				if (!s) {
 					this.showSpellText = false;
