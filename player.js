@@ -1124,7 +1124,10 @@ Player.prototype.exchangeItemWithHand = function(s, q) {
 				itH.setPocketItem(temp.id, temp.quantity);
 				
 				this.exchangeItemWithHand(i, 99);
+				this.exchangeItemWithHand(s, 99);
 				if(qty <= 99) {
+					this.exchangeItemWithHand(i, 99);
+				} else {
 					this.exchangeItemWithHand(s, 99);
 				}
 			} else {

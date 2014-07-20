@@ -344,7 +344,7 @@ Monster.prototype.castSpell = function() {
 			if (this.level >= 18 && Math.floor(Math.random() * 6) === 0) {
 				id = SPELL_DISRUPT;
 			}
-			castSpell(id, this, 40);
+			castSpell(id, this, 15 + this.level);
 			this.doGesture(CHA_GESTURE_SPELLCASTING);
 			return true;
 		}
