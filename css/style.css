@@ -25,6 +25,22 @@ div.logo {
 div.canvas-wrapper {
 	position: relative;
 }
+input.save-game {
+	font: 16px"Bookman Old Style", verdana, sans-serif;
+	font-weight: bold;
+	text-transform: uppercase;
+	position: absolute;
+	z-index: 99;
+	top: 63px;
+	left: 573px;
+	color: rgb(224, 224, 224);
+	background-color: #000;
+	border: solid 3px #444;
+	line-height: 15px;
+	width: 288px;
+	height: 18px;
+	display: none;
+}
 canvas {
 	background-color: #000;
 	background-image: none;

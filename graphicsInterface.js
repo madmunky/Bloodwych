@@ -762,7 +762,7 @@ function drawPocketUI(p, chp, start) {
 							pocketId = UI_GFX_POCKET_EMPTY_ARMOUR;
 							break;
 						case 3:
-							if(chp.prof === PROFESSION_WARRIOR || chp.prof === PROFESSION_ADVENTURER) {
+							if (chp.prof === PROFESSION_WARRIOR || chp.prof === PROFESSION_ADVENTURER) {
 								pocketId = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
 							} else {
 								pocketId = UI_GFX_POCKET_EMPTY_SMALL_SHIELD;
@@ -1576,12 +1576,12 @@ function uiClickAreas() {
 
 }
 
-function uiClickInArea(x, y, ui, p,clickArea) {
-    
-    	if (typeof clickArea === "undefined") {
+function uiClickInArea(x, y, ui, p, clickArea) {
+
+	if (typeof clickArea === "undefined") {
 		clickArea = uiClickArea;
 	}
-    
+
 	var px = 0;
 	var py = 0;
 	if (typeof p !== "undefined") {
@@ -1860,7 +1860,7 @@ function drawWallScroll(p) {
 				B = parseInt(hex.substring(1, 2), 16),
 				scrollRef = Math.floor((((A * 16) + B) / 4) - 4) - 1 + off[towerThis];
 
-				drawScroll(scrollData[scrollRef], p.ScreenX + 226, p.ScreenY - 1);
+			drawScroll(scrollData[scrollRef], p.ScreenX + 226, p.ScreenY - 1);
 		}
 	} catch (e) {
 		p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
@@ -1869,10 +1869,10 @@ function drawWallScroll(p) {
 }
 
 function drawScroll(text, x, y, small) {
-	if(typeof small === 'undefined') {
+	if (typeof small === 'undefined') {
 		var small = false;
 	}
-	if(small) {
+	if (small) {
 		var rm = 5;
 		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], x * scale, y * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
 	} else {
@@ -1885,7 +1885,7 @@ function drawScroll(text, x, y, small) {
 
 	for (var r = 0; r < text.length; r++) {
 		var col = COLOUR[COLOUR_BLACK];
-		if(r === 0 && small) {
+		if (r === 0 && small) {
 			col = COLOUR[COLOUR_YELLOW];
 		}
 		writeFontImage(text[r], x + 52, y + 16 + (l * 8), col, FONT_ALIGNMENT_CENTER);
@@ -2041,7 +2041,7 @@ function drawQuickStartUI(pl) {
 			}
 
 			if (champSelectGrid.length < champion.length) {
-				createSelectGrid(champSelectGrid,(col * 40), (row * 48) + 15, t.width, t.height, chN);
+				createSelectGrid(champSelectGrid, (col * 40), (row * 48) + 15, t.width, t.height, chN);
 			}
 			chN++;
 		}
@@ -2108,7 +2108,7 @@ function showCharacterDetails(ch, pl) {
 			break;
 		case UI_CHARACTER_SELECT_START_GAME:
 			var t = TEXT_PLAYER;
-			if(pl === 1) {
+			if (pl === 1) {
 				t += TEXT_PLURAL + ' ';
 			} else {
 				t += ' ' + (pl + 1) + ' ';
@@ -2123,36 +2123,43 @@ function showCharacterDetails(ch, pl) {
 
 }
 
-function showGameStateMenu(p){
-    
-    gameStateSelectGrid = [];
-    
-    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU){
-        coverViewPort(p);
-        writeFontImage("LOAD GAME", 30, 15, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);
-	createSelectGrid(gameStateSelectGrid,110, 15, 100, 12, null);
-        writeFontImage("SAVE GAME", 30, 35, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);
-        createSelectGrid(gameStateSelectGrid,110, 34, 100, 12, null);
-        writeFontImage("QUIT", 50, 60, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT,p.Portal);    
-        createSelectGrid(gameStateSelectGrid,136, 60, 50, 12, null);
-        //pauseGame(false)
-    }
-    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE){createStateGrid(p,"SAVE");}
-    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD){createStateGrid(p,"LOAD");}
-    
+function showGameStateMenu(p) {
+
+	gameStateSelectGrid = [];
+
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
+		coverViewPort(p);
+		writeFontImage("LOAD GAME", 30, 16, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+		createSelectGrid(gameStateSelectGrid, 110, 15, 100, 12, null);
+		writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+		createSelectGrid(gameStateSelectGrid, 110, 34, 100, 12, null);
+		writeFontImage("QUIT GAME", 30, 56, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
+		createSelectGrid(gameStateSelectGrid, 136, 60, 50, 12, null);
+		//pauseGame(false)
+	}
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
+		createStateGrid(p, "SAVE");
+	}
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+		createStateGrid(p, "LOAD");
+	}
+
 }
 
-function createStateGrid(p,state){
-    coverViewPort(p);
-    writeFontImage(state + " GAME...", 20.5, 2, COLOUR[COLOUR_PINK], FONT_ALIGNMENT_LEFT,p.Portal);
-    var x = 0;
-    for (x;x < 8;x++){
-        writeFontImage(x + "." +state, 1.5 * scale, (2.6 * scale * x) + 10, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);    
-        createSelectGrid(gameStateSelectGrid,100, 11 + (8*x), 120, 7, null);
-    } 
+function createStateGrid(p, state) {
+	coverViewPort(p);
+	writeFontImage(state + " GAME", 20, 2, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+	for (var x = 0; x < 8; x++) {
+		var name = saveGame[x].getName();
+		if (name === '') {
+			name = '-EMPTY-';
+		}
+		writeFontImage(x + ' ' + name, 4, x * 8 + 10, COLOUR[COLOUR_GREEN_DARK], FONT_ALIGNMENT_LEFT, p.Portal);
+		createSelectGrid(gameStateSelectGrid, 100, 11 + (8 * x), 120, 7, null);
+	}
 }
 
-function createSelectGrid(myObject,myX, myY, myWidth, myHeight, cid) {
+function createSelectGrid(myObject, myX, myY, myWidth, myHeight, cid) {
 	myObject.push({
 		x: myX,
 		y: myY,
@@ -2162,31 +2169,42 @@ function createSelectGrid(myObject,myX, myY, myWidth, myHeight, cid) {
 	});
 }
 
-function uiGameStateMenu(x,y,p){
-    
-    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE){
+function uiGameStateMenu(x, y, p) {
 
-    }
-    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD){
-        for (slot = 0;slot < 8;slot++){
-            if (uiClickInArea(x,y,slot,p,gameStateSelectGrid)){
-                alert('slot: ' + slot);
-            }
-        }
-    }
-    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU){
-       if (uiClickInArea(x,y,0,p,gameStateSelectGrid)){
-           p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
-           showGameStateMenu(p);
-       }else if (uiClickInArea(x,y,1,p,gameStateSelectGrid)){
-            p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
-           showGameStateMenu(p);
-       }else if (uiClickInArea(x,y,2,p,gameStateSelectGrid)){
-           location.reload();
-       }
-    }
-    
-    
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
+		for (slot = 0; slot < 8; slot++) {
+			if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
+				var inp = $('input.save-game');
+				inp.show();
+				inp.css('top', (63 + slot * 8 * 3) + 'px');
+				inp.val(saveGame[slot].getName());
+				inp.data('player-id', p.id);
+				inp.data('slot-id', slot);
+				inp.focus().select();
+			}
+		}
+	} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+		for (slot = 0; slot < 8; slot++) {
+			if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
+				if (saveGame[slot].gameData !== null) {
+					redrawUI(p.id);
+					saveGame[slot].load();
+				}
+			}
+		}
+	} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
+		if (uiClickInArea(x, y, 0, p, gameStateSelectGrid)) {
+			p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
+			showGameStateMenu(p);
+		} else if (uiClickInArea(x, y, 1, p, gameStateSelectGrid)) {
+			p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
+			showGameStateMenu(p);
+		} else if (uiClickInArea(x, y, 2, p, gameStateSelectGrid)) {
+			location.reload();
+		}
+	}
+
+
 }
 
 function uiChampSelectArea(x, y, pl) {

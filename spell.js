@@ -174,7 +174,7 @@ function getSpellPower(id) {
 		case SPELL_FIREBALL:
 			return 2;
 		case SPELL_FIREPATH:
-			return 1;
+			return 2;
 		case SPELL_RECHARGE:
 			return 1;
 		case SPELL_BLAZE:

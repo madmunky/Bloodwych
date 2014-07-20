@@ -296,10 +296,9 @@ function drawPlayersView(p) {
 	debugTextPrint(p); //see bloodwych.js
 	//p.getViewPortal();
 
-	if (p.dead) {} 
-        else if (p.sleeping) {} 
-        else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {}
-        else {
+	if (p.dead || p.sleeping || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+		debugText(p, 'test');
+    } else {
 		p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
 		var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0);

@@ -24,6 +24,7 @@ function Player(id, ScreenX, ScreenY) {
 	this.messageTimeout = 0;
 	//this.timerAttack = timerMaster;
 	this.timerChampionStats = timerMaster;
+	this.timerActiveSpell = timerMaster;
 	this.timerSpellBookTurn = 0;
 	this.redrawLeftRightUiFlag = -1;
 	this.showSpellText = false;
@@ -114,6 +115,7 @@ Player.prototype.toJSON = function() {
 		messageTimeout: this.messageTimeout,
 		//timerAttack: this.timerAttack,
 		timerChampionStats: this.timerChampionStats,
+		timerActiveSpell: this.timerActiveSpell,
 		timerSpellBookTurn: this.timerSpellBookTurn,
 		redrawLeftRightUiFlag: this.redrawLeftRightUiFlag,
 		showSpellText: this.showSpellText,
@@ -151,6 +153,7 @@ Player.revive = function(data) {
 	p.messageTimeout = data.messageTimeout;
 	//p.timerAttack = data.timerAttack;
 	p.timerChampionStats = data.timerChampionStats;
+	p.timerActiveSpell = data.timerActiveSpell;
 	p.timerSpellBookTurn = data.timerSpellBookTurn;
 	p.redrawLeftRightUiFlag = data.redrawLeftRightUiFlag;
 	p.showSpellText = data.showSpellText;

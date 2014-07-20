@@ -13,7 +13,10 @@ var players = 0;
 var currentPlayer = 0;
 var paused = false;
 
-var saveGame = new gameState('saveGame0');
+var saveGame = new Array();
+for(var g = 0; g < 8; g++) {
+	saveGame[g] = new gameState('savegame' + g);
+}
 var checkStarted = true;
 
 //Setup some global Varibles for needed
@@ -1638,7 +1641,7 @@ MON_ITEM_DROPS[5] = [ITEM_CHROMATIC_KEY];
 var spell = new Array();
 var dungeonSpellTimer = 0;
 var dungeonSpellList = new Array();
-var activeSpellTimer = 0;
+//var activeSpellTimer = 0;
 var SPELL_MAX = 8;
 
 //Serpent spells

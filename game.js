@@ -89,8 +89,8 @@ function timerAction() {
 				}
 			}
 		}
-		if (timerMaster - activeSpellTimer >= 10 * tmf) {
-			activeSpellTimer = timerMaster;
+		if (timerMaster - pl.timerActiveSpell >= 10 * tmf) {
+			pl.timerActiveSpell = timerMaster;
 			for (var c = 0; c < pl.champion.length; c++) {
 				var ch = pl.getChampion(c);
 				if (ch !== null) {
