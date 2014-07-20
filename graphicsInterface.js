@@ -2131,6 +2131,7 @@ function showGameStateMenu(p){
 	createSelectGrid(gameStateSelectGrid,(p.PortalX / scale) + 20, (p.PortalY / scale) + 10, 100, 30, null);
         writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);
         writeFontImage("QUIT", 50, 60, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT,p.Portal);    
+        //pauseGame(false)
     }
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE){createStateGrid(p,"SAVE");}
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD){createStateGrid(p,"LOAD");}

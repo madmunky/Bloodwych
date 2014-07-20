@@ -442,7 +442,7 @@ function processCanvasInput(pid, x, y) {
 				return pid;
 			} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, p)) {
 				p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
-	                        pauseGame();
+	                        pauseGame(true,'#400000');
 				return pid;
 			} else if (uiClickInArea(x, y, UI_CLICK_SAVE, p)) {
                                 if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD){

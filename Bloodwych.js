@@ -114,26 +114,31 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function pauseGame() {
+function pauseGame(changeImage,colourTo) {
+
+    //changeImage = True or False
+    //colourTo = RGB HEX CODE i.e. #400000
 
     paused = !paused;
     if (paused) {
-        $('html').css('background', '#400000');
-        $('body').css('background', '#400000');
-        canvas.style.background = '#400000';
+        if (changeImage){
+            $('html').css('background', colourTo);
+        $('body').css('background', colourTo);
+        canvas.style.background = colourTo;
         var paletteFrom = [0, 0, 0];
-        var paletteTo = [64, 0, 0];
+        var paletteTo = hexToRgb(colourTo);
         var imageData = ctx.getImageData(0, 0, canvas.width, canvas.width);
 
         for (var i = 0; i < imageData.data.length; i += 4) {
             if (imageData.data[i] === paletteFrom[0] && imageData.data[i + 1] === paletteFrom[1] && imageData.data[i + 2] === paletteFrom[2]) {
-                imageData.data[i] = paletteTo[0];
-                imageData.data[i + 1] = paletteTo[1];
-                imageData.data[i + 2] = paletteTo[2];
+                imageData.data[i] = paletteTo.r;
+                imageData.data[i + 1] = paletteTo.g;
+                imageData.data[i + 2] = paletteTo.b;
                 j = j + 3;
             }
         }
         ctx.putImageData(imageData, 0, 0);
+        }        
     } else {
         $('html').css('background', '#000');
         $('body').css('background', '#000');
