@@ -74,8 +74,8 @@ function setViewportScale(sp) {
 	}
 	scale = Math.floor(scaleReal);
 	scaleReal = scaleReal / scale / zoom;
-	//canvas.width = 320 * scale;
-	//canvas.height = 200 * scale;
+	canvas.width = 320 * scale;
+	canvas.height = 200 * scale;
 	$('html').css('zoom', scaleReal);
 	$('html').css('-moz-transform', 'scale(' + scaleReal + ')');
 	if (typeof player !== "undefined") {
@@ -338,22 +338,28 @@ $(function() {
 	$('body').keyup(function(e) {
 		var t = $(e.target);
 		if (t.is('input.save-game')) {
+			var p = t.data('player-id');
+			var slot = t.data('slot-id');
+			var name = t.val().substring(0, 12).toUpperCase();
 			if (e.which === 13) {
-				name = t.val().substring(0, 13).toUpperCase();
 				if (name !== '') {
-					var p = t.data('player-id');
-					var slot = t.data('slot-id');
 					player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 					saveGame[slot].save(name);
 					redrawUI(p);
+					player[p].message();
 				}
 				t.trigger('focusout');
 			} else if (e.which === 27) {
 				t.trigger('focusout');
+			} else {
+				player[p].Portal.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARKEST][0] + ', ' + COLOUR[COLOUR_GREY_DARKEST][1] + ', ' + COLOUR[COLOUR_GREY_DARKEST][2] + ')';
+				player[p].Portal.fillRect(4 * scale, (slot * 8 + 5) * scale, 120 * scale, 9 * scale);
+				writeFontImage((slot + 1) + ' ' + name, 8, slot * 8 + 6, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT, player[p].Portal);
 			}
 		}
 	});
 	$('body').on('focusout', 'input.save-game', function() {
-		$(this).hide();
+		var p = $(this).data('player-id');
+		createStateGrid(player[p], "SAVE");
 	});
 });

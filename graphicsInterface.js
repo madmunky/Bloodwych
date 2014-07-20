@@ -2148,14 +2148,15 @@ function showGameStateMenu(p) {
 
 function createStateGrid(p, state) {
 	coverViewPort(p);
-	writeFontImage(state + " GAME", 20, 2, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+	p.message(state + " GAME - PLEASE SELECT A SLOT...", COLOUR[COLOUR_GREEN], false, 0);
+	//writeFontImage(state + " GAME", 28, 2, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
 	for (var x = 0; x < 8; x++) {
 		var name = saveGame[x].getName();
 		if (name === '') {
-			name = '-EMPTY-';
+			name = '-EMPTY SLOT-';
 		}
-		writeFontImage(x + ' ' + name, 4, x * 8 + 10, COLOUR[COLOUR_GREEN_DARK], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 100, 11 + (8 * x), 120, 7, null);
+		writeFontImage((x + 1) + ' ' + name, 8, x * 8 + 6, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
+		createSelectGrid(gameStateSelectGrid, 104, x * 8 + 7, 120, 8, null);
 	}
 }
 
@@ -2174,13 +2175,13 @@ function uiGameStateMenu(x, y, p) {
 	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
 		for (slot = 0; slot < 8; slot++) {
 			if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
+				p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", COLOUR[COLOUR_GREEN], false, 0);
 				var inp = $('input.save-game');
-				inp.show();
-				inp.css('top', (63 + slot * 8 * 3) + 'px');
 				inp.val(saveGame[slot].getName());
 				inp.data('player-id', p.id);
 				inp.data('slot-id', slot);
 				inp.focus().select();
+				inp.trigger('keyup');
 			}
 		}
 	} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
@@ -2189,6 +2190,7 @@ function uiGameStateMenu(x, y, p) {
 				if (saveGame[slot].gameData !== null) {
 					redrawUI(p.id);
 					saveGame[slot].load();
+					p.message();
 				}
 			}
 		}

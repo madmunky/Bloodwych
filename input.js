@@ -444,8 +444,11 @@ function processCanvasInput(pid, x, y) {
 			pauseGame(true, '#400000');
 			return pid;
 		} else if (uiClickInArea(x, y, UI_CLICK_SAVE, p)) {
-			if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+			if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
 				p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+			} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+				p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+				p.message();
 			} else {
 				p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_MENU;
 				showGameStateMenu(p);
