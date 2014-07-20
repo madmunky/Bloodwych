@@ -342,24 +342,34 @@ $(function() {
 			var slot = t.data('slot-id');
 			var name = t.val().substring(0, 12).toUpperCase();
 			if (e.which === 13) {
+				t.trigger('focusout');
 				if (name !== '') {
 					player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 					saveGame[slot].save(name);
 					redrawUI(p);
-					player[p].message();
 				}
-				t.trigger('focusout');
 			} else if (e.which === 27) {
 				t.trigger('focusout');
 			} else {
-				player[p].Portal.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARKEST][0] + ', ' + COLOUR[COLOUR_GREY_DARKEST][1] + ', ' + COLOUR[COLOUR_GREY_DARKEST][2] + ')';
-				player[p].Portal.fillRect(4 * scale, (slot * 8 + 5) * scale, 120 * scale, 9 * scale);
-				writeFontImage((slot + 1) + ' ' + name, 8, slot * 8 + 6, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT, player[p].Portal);
+				var pp = player[p].Portal;
+				pp.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARKEST][0] + ', ' + COLOUR[COLOUR_GREY_DARKEST][1] + ', ' + COLOUR[COLOUR_GREY_DARKEST][2] + ')';
+				pp.fillRect(4 * scale, (slot * 8 + 5) * scale, 120 * scale, 9 * scale);
+				writeFontImage((slot + 1) + '.' + name, 8, slot * 8 + 6, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT, pp);
+				var crt = t.caret();
+				var off = scale * 0.5;
+				pp.strokeStyle = 'rgb(' + COLOUR[COLOUR_GREY_LIGHT][0] + ', ' + COLOUR[COLOUR_GREY_LIGHT][1] + ', ' + COLOUR[COLOUR_GREY_LIGHT][2] + ')';
+				pp.beginPath();
+				pp.moveTo((23 + crt * 8) * scale + off, (slot * 8 + 5) * scale);
+				pp.lineTo((23 + crt * 8) * scale + off, (slot * 8 + 14) * scale);
+				pp.lineWidth = 3;
+				pp.stroke();
 			}
 		}
 	});
 	$('body').on('focusout', 'input.save-game', function() {
 		var p = $(this).data('player-id');
-		createStateGrid(player[p], "SAVE");
+		if (player[p].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
+			createStateGrid(player[p], "SAVE");
+		}
 	});
 });

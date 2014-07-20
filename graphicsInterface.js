@@ -2151,11 +2151,13 @@ function createStateGrid(p, state) {
 	p.message(state + " GAME - PLEASE SELECT A SLOT...", COLOUR[COLOUR_GREEN], false, 0);
 	//writeFontImage(state + " GAME", 28, 2, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
 	for (var x = 0; x < 8; x++) {
+		var clr = COLOUR[COLOUR_GREY_LIGHT];
 		var name = saveGame[x].getName();
 		if (name === '') {
-			name = '-EMPTY SLOT-';
+			clr = COLOUR[COLOUR_GREY_DARKEST];
+			name = 'EMPTY SLOT';
 		}
-		writeFontImage((x + 1) + ' ' + name, 8, x * 8 + 6, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
+		writeFontImage((x + 1) + '.' + name, 8, x * 8 + 6, clr, FONT_ALIGNMENT_LEFT, p.Portal);
 		createSelectGrid(gameStateSelectGrid, 104, x * 8 + 7, 120, 8, null);
 	}
 }
