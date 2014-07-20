@@ -910,8 +910,6 @@ function highliteMovementArrow(p, m) {
 
 function drawStatsPage(p, ch, start) {
 
-
-
 	if (typeof ch === 'undefined') {
 		ch = p.getChampion(p.championLeader);
 	}
@@ -960,7 +958,7 @@ function drawStatsPage(p, ch, start) {
 			ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
 		}
 	}
-	drawPocketInfo(p);
+	//drawPocketInfo(p);
 }
 
 function createShield(id, type, colour) {
@@ -2038,7 +2036,7 @@ function drawQuickStartUI(pl) {
 			}
 
 			if (champSelectGrid.length < champion.length) {
-				createCharSelectGrid((col * 40), (row * 48) + 15, t.width, t.height, chN);
+				createSelectGrid(champSelectGrid,(col * 40), (row * 48) + 15, t.width, t.height, chN);
 			}
 			chN++;
 		}
@@ -2120,8 +2118,36 @@ function showCharacterDetails(ch, pl) {
 
 }
 
-function createCharSelectGrid(myX, myY, myWidth, myHeight, cid) {
-	champSelectGrid.push({
+function showGameStateMenu(p){
+    
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU){
+        coverViewPort(p);
+        writeFontImage("LOAD GAME", 30, 15, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);
+        writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);
+        writeFontImage("QUIT", 50, 60, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT,p.Portal);    
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE){createStateGrid(p,"SAVE");}
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD){createStateGrid(p,"LOAD");}
+    
+}
+
+function createStateGrid(p,state){
+    for (col = 0; col < 3; col++) {
+		for (row = 0; row < 2; row++) {
+                    coverViewPort(p);
+                    p.Portal.drawImage(gfxUI[UI_GFX_ICON_SAVE], 8 * scale, 5 * scale, gfxUI[UI_GFX_ICON_SAVE][0].width * scale, gfxUI[UI_GFX_ICON_SAVE][0].height * scale);
+                    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY) {}
+		
+			if (champSelectGrid.length < champion.length) {
+				createSelectGrid(champSelectGrid,(col * 40), (row * 48) + 15, t.width, t.height, chN);
+			}
+			chN++;
+		}
+	}
+}
+
+function createSelectGrid(myObject,myX, myY, myWidth, myHeight, cid) {
+	myObject.push({
 		x: myX,
 		y: myY,
 		width: myWidth,

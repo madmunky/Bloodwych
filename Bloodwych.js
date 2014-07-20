@@ -118,8 +118,8 @@ function pauseGame() {
 
     paused = !paused;
     if (paused) {
-        $('html').css('background', '#400');
-        $('body').css('background', '#400');
+        $('html').css('background', '#400000');
+        $('body').css('background', '#400000');
         canvas.style.background = '#400000';
         var paletteFrom = [0, 0, 0];
         var paletteTo = [64, 0, 0];

@@ -296,15 +296,16 @@ function drawPlayersView(p) {
 	debugTextPrint(p); //see bloodwych.js
 	//p.getViewPortal();
 
-	if (p.dead) {
-	} else if (p.sleeping) {
-	} else {
+	if (p.dead) {} 
+        else if (p.sleeping) {} 
+        else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {}
+        else {
 		p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
 		var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0);
 
 		for (x = 0; x < 19; x++) {
-			var view = p.getView()
+			var view = p.getView();
 			var BlockType = getHexToBinaryPosition(view[x], 12, 4);
 			var spellWall = BlockType === '7' && (getHexToBinaryPosition(view[x], 6, 2) === '2' || getHexToBinaryPosition(view[x], 6, 2) === '3');
 			if (BlockType === '2') {
