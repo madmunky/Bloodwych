@@ -1576,18 +1576,23 @@ function uiClickAreas() {
 
 }
 
-function uiClickInArea(x, y, ui, p) {
+function uiClickInArea(x, y, ui, p,clickArea) {
+    
+    	if (typeof clickArea === "undefined") {
+		clickArea = uiClickArea;
+	}
+    
 	var px = 0;
 	var py = 0;
 	if (typeof p !== "undefined") {
 		px = p.ScreenX;
 		py = p.ScreenY;
 	}
-	if (x >= (px + uiClickArea[ui].x) * 1 && x < (px + uiClickArea[ui].x + uiClickArea[ui].width) * 1 && y >= (py + uiClickArea[ui].y) * 1 && y < (py + uiClickArea[ui].y + uiClickArea[ui].height) * 1) {
+	if (x >= (px + clickArea[ui].x) * 1 && x < (px + clickArea[ui].x + clickArea[ui].width) * 1 && y >= (py + clickArea[ui].y) * 1 && y < (py + clickArea[ui].y + clickArea[ui].height) * 1) {
 		if (debug) {
 			if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA && ui !== UI_CLICK_COMMUNICATION_AREA) {
 				ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
-				ctx.fillRect((px + uiClickArea[ui].x) * scale, (py + uiClickArea[ui].y) * scale, uiClickArea[ui].width * scale, uiClickArea[ui].height * scale);
+				ctx.fillRect((px + clickArea[ui].x) * scale, (py + clickArea[ui].y) * scale, clickArea[ui].width * scale, clickArea[ui].height * scale);
 			}
 		}
 		return true;
@@ -2123,6 +2128,7 @@ function showGameStateMenu(p){
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU){
         coverViewPort(p);
         writeFontImage("LOAD GAME", 30, 15, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);
+	createSelectGrid(gameStateSelectGrid,(p.PortalX / scale) + 20, (p.PortalY / scale) + 10, 100, 30, null);
         writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);
         writeFontImage("QUIT", 50, 60, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT,p.Portal);    
     }
@@ -2154,6 +2160,20 @@ function createSelectGrid(myObject,myX, myY, myWidth, myHeight, cid) {
 		height: myHeight,
 		champID: cid
 	});
+}
+
+function uiGameStateMenu(x,y,p){
+    
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU){
+        uiClickInArea(x,y,0,p,gameStateSelectGrid);
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE){
+        uiClickInArea(x,y,1,p,gameStateSelectGrid);
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD){
+        uiClickInArea(x,y,2,p,gameStateSelectGrid);
+    }
+    
 }
 
 function uiChampSelectArea(x, y, pl) {

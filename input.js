@@ -200,7 +200,13 @@ function checkClickEvents() {
 function processCanvasInput(pid, x, y) {
 	var p = player[pid];	
 		if (!p.sleeping) {
-			if (!p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
+                    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
+                    uiGameStateMenu(x, y, p);
+                }else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
+                    
+                }else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+                    
+                }else if (!p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
 				return checkClickInViewPortal(p, x, y);
 			}
 		} else {
@@ -477,15 +483,7 @@ function processCanvasInput(pid, x, y) {
                             checkCommunicationArea(p, x, y, false);
                         }
 		}
-                if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
-                    
-                }
-                if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
-                    
-                }
-                if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-                    
-                }
+                
 		/*if (p.sleeping) {
 			p.wakeUp();
 			return pid;
