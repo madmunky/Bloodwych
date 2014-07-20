@@ -40,21 +40,10 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, te
 	if (typeof champId !== "undefined") {
 		this.champId = champId; //optional Champion ID
 		this.hp = 0;
+	} else if(this.square === CHAR_FRONT_SOLO) {
+		this.hp = level * 225 + 25;
 	} else {
 		this.hp = level * 150 + 25;
-		/*if(level < 2) {
-			this.hp = level * 25 + 25;
-		} else if(level < 5) {
-			this.hp = (level - 1) * 50 + 25;
-		} else if(level < 9) {
-			this.hp = (level - 3) * 100 + 25;
-		} else if(level < 14) {
-			this.hp = (level - 5) * 150 + 25;
-		} else if(level < 20) {
-			this.hp = (level - 7) * 200 + 25;
-		} else {
-			this.hp = (level - 9) * 250 + 25;
-		}*/
 	}
 }
 

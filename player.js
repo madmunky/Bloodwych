@@ -411,7 +411,7 @@ Player.prototype.attack = function(ch, attack, target) {
 								PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
 							} else if (def instanceof Monster) {
 								PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
-								self.gainChampionXp(pwr, att);
+								self.gainChampionXp(pwr, Math.ceil(att / 4.0));
 								if (def.dead) {
 									self.gainChampionXp(128);
 								}
