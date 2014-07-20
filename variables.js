@@ -8,6 +8,7 @@ var tower = new Array();
 var cursorType = 0;
 var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 var champSelectGrid = [];
+var gameStateSelectGrid = [];
 var players = 0;
 var currentPlayer = 0;
 var paused = false;
@@ -16,8 +17,8 @@ var saveGame = new gameState('saveGame0');
 var checkStarted = true;
 
 //Setup some global Varibles for needed
-var VERSION = 0.50
-var versionThis = 0.50
+var VERSION = 0.50;
+var versionThis = 0.50;
 var Types = {};
 var gameStarted = false;
 var scale = 3;
@@ -749,7 +750,11 @@ var UI_CENTER_PANEL_SLEEPING = 0,
 	UI_CENTER_PANEL_FAIRY_MOON = 5,
 	UI_CENTER_PANEL_FAIRY_CHAOS = 6,
 	UI_CENTER_PANEL_FAIRY_SPELLDETAILS = 7,
-	UI_CENTER_PANEL_VIEWPORT = 8;
+	UI_CENTER_PANEL_VIEWPORT = 8,
+        UI_CENTER_PANEL_GAMESTATE_MENU = 9,
+        UI_CENTER_PANEL_GAMESTATE_SAVE = 10,
+        UI_CENTER_PANEL_GAMESTATE_LOAD = 11;
+
 
 var UI_CHARACTER_SELECT_SCROLL = 0,
 	UI_CHARACTER_SELECT_POCKET = 1,

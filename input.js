@@ -439,7 +439,14 @@ function processCanvasInput(pid, x, y) {
 	                        pauseGame();
 				return pid;
 			} else if (uiClickInArea(x, y, UI_CLICK_SAVE, p)) {
-				alert('SAVE GAME');
+                                if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD){
+                                    p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+                                }
+                                else
+                                {
+                                    p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_MENU;
+                                    showGameStateMenu(p);
+                                }                                
 				p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
 				return pid;
 			} else if (uiClickInArea(x, y, UI_CLICK_SLEEP, p)) {
@@ -470,6 +477,15 @@ function processCanvasInput(pid, x, y) {
                             checkCommunicationArea(p, x, y, false);
                         }
 		}
+                if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
+                    
+                }
+                if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
+                    
+                }
+                if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+                    
+                }
 		/*if (p.sleeping) {
 			p.wakeUp();
 			return pid;
@@ -689,16 +705,16 @@ function checkClickInViewPortal(p, x, y) {
 			break;
 		case UI_CENTER_PANEL_DEAD:
 			break;
-		case UI_CENTER_PANEL_FAIRY:
-			break;
-		case UI_CENTER_PANEL_FAIRY_DRAGON:
-			break;
-		case UI_CENTER_PANEL_FAIRY_SERPENT:
-			break;
-		case UI_CENTER_PANEL_FAIRY_MOON:
-			break;
-		case UI_CENTER_PANEL_FAIRY_CHAOS:
-			break;
+//		case UI_CENTER_PANEL_FAIRY:
+//			break;
+//		case UI_CENTER_PANEL_FAIRY_DRAGON:
+//			break;
+//		case UI_CENTER_PANEL_FAIRY_SERPENT:
+//			break;
+//		case UI_CENTER_PANEL_FAIRY_MOON:
+//			break;
+//		case UI_CENTER_PANEL_FAIRY_CHAOS:
+//			break;
 		default:
 			break;
 	}
