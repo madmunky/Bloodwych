@@ -236,8 +236,8 @@ Champion.prototype.gainLevel = function() {
 			cha: 5,
 			hp: 10,
 			hpMax: 20,
-			vit: 3,
-			vitMax: 9,
+			vit: 5,
+			vitMax: 10,
 			sp: 1,
 			spMax: 3
 		}
@@ -246,10 +246,10 @@ Champion.prototype.gainLevel = function() {
 			agi: 5,
 			int: 8,
 			cha: 5,
-			hp: 4,
-			hpMax: 8,
-			vit: 2,
-			vitMax: 5,
+			hp: 5,
+			hpMax: 10,
+			vit: 5,
+			vitMax: 10,
 			sp: 3,
 			spMax: 6
 		}
@@ -258,20 +258,20 @@ Champion.prototype.gainLevel = function() {
 			agi: 6,
 			int: 6,
 			cha: 6,
-			hp: 6,
-			hpMax: 12,
-			vit: 3,
-			vitMax: 9,
+			hp: 7,
+			hpMax: 14,
+			vit: 7,
+			vitMax: 14,
 			sp: 2,
-			spMax: 5
+			spMax: 4
 		}
 		stat[PROFESSION_CUTPURSE] = {
 			str: 5,
 			agi: 8,
 			int: 5,
 			cha: 4,
-			hp: 4,
-			hpMax: 8,
+			hp: 5,
+			hpMax: 10,
 			vit: 10,
 			vitMax: 20,
 			sp: 1,
@@ -434,7 +434,7 @@ Champion.prototype.consumePocketItem = function(pk, q) {
 
 Champion.prototype.writeAttackPoints = function(pwr, def) {
 	if (typeof pwr !== "undefined" && this.recruitment.playerId > -1) {
-		//var self = this;
+		var self = this;
 		var p = player[this.recruitment.playerId];
 		var x = 0,
 			y = 0,
@@ -480,9 +480,17 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
 				//if (p.messageTimeout === 0 || self.recruitment.position === 0) {
 				ctx.clearRect((p.ScreenX + x - 8) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
 				//}
-			}, p.getAttackSpeed(1500));
+			}, self.getAttackSpeed(1500));
 		})(p, x, y, w);
 	}
+}
+
+Champion.prototype.getAttackSpeed = function(fac) {
+	var lvl = this.level;
+	if (lvl > 20) {
+		lvl = 20;
+	}
+	return Math.floor(fac / (1.0 + 0.02 * lvl));
 }
 
 Champion.prototype.toString = function() {

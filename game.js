@@ -60,6 +60,7 @@ function timerAction() {
 		} else if (br === 1) {
 			mon[m].blur = 1;
 		}
+		mon[m].glow = Math.floor(Math.random() * 2);
 		if(tm > 0 && timerMaster - mon[m].timerMove >= tm * tmf) {
 			mon[m].timerMove = timerMaster;
 			mon[m].doGesture(CHA_GESTURE_NONE);
@@ -75,13 +76,7 @@ function timerAction() {
 		if (pl.sleeping) {
 			tm = 50;
 		}
-		
-		if (timerMaster - pl.timerAttack >= pl.getAttackSpeed(20) * tmf) {
-			pl.timerAttack = timerMaster;
-			if (pl.attacking) {
-				pl.tryAttack();
-			}
-		}
+
 		if (timerMaster - pl.timerChampionStats >= tm * tmf) {
 			pl.timerChampionStats = timerMaster;
 			if (pl.sleeping) {
@@ -108,6 +103,13 @@ function timerAction() {
 		}
 
 		for (c = 0; c < pl.champion.length; c++) {
+			var ch = pl.getChampion(c);
+			ch.recruitment.attackTimer++;
+			if (ch.recruitment.attackTimer % (ch.getAttackSpeed(20) * tmf) === 0) {
+				if (pl.attacking) {
+					pl.tryAttack(ch);
+				}
+			}
 			if(pl.uiLeftPanel.champs[c].damage > 0) {
 				if(timerMaster - pl.uiLeftPanel.champs[c].damageTimer >= 20 * tmf) {
 					pl.uiLeftPanel.champs[c].damageTimer = 0;
@@ -135,7 +137,6 @@ function timerAction() {
 	//10 second timer actions
 	if (timerMaster - timerChampionStats >= 100 * tmf) {
 		timerChampionStats = timerMaster;
-		//for (var ch = 0; ch < champion.length; ch++) {
 		for (ch in champion) {
 			if (champion[ch].recruitment.playerId === -1) {
 				champion[ch].restoreStats();

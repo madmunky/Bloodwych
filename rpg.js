@@ -27,8 +27,15 @@ function calculateAttack(att, def, tof) {
 		}
 
 		//Attacker calculations
-		if (att instanceof Player) {
-			from = att.getChampion(a);
+		if(att instanceof Champion && att.recruitment.playerId > -1 && att.recruitment.position !== a) {
+			continue;
+		}
+		if (att instanceof Player || (att instanceof Champion && att.recruitment.playerId > -1)) {
+			var att2 = att;
+			if (att instanceof Champion) {
+				att2 = player[att.recruitment.playerId];
+			}
+			from = att2.getChampion(a);
 			if (typeof from === "undefined" || from === null || !from.recruitment.attached) {
 				continue;
 			}
@@ -46,7 +53,7 @@ function calculateAttack(att, def, tof) {
 					critChance = 1.5;
 				}
 				fromDir = fmon.d;
-				if (from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === ITEM_DAGGER || from.pocket[0].id === ITEM_STEALTH_BLADE) && att.d === def.d) { //cutpurses can cut through 50% of the defense
+				if (from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === ITEM_DAGGER || from.pocket[0].id === ITEM_STEALTH_BLADE) && att2.d === def.d) { //cutpurses can cut through 50% of the defense
 					defChance = 0.5;
 				}
 				var wp = from.getWeaponPower(POCKET_LEFT_HAND); //weapon attack power
@@ -67,7 +74,7 @@ function calculateAttack(att, def, tof) {
 			} else {
 				continue;
 			}
-		} else { //monster
+		} else if (att instanceof Monster) { //monster
 			from = mon[a];
 			fmon = from;
 			if (typeof from === "undefined" || from.dead) {

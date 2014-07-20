@@ -24,10 +24,11 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, te
 	this.gestureTimer = 0;
 	this.dead = false;
 	this.timerMove = timerMaster;
-	this.timerAttack = timerMaster;
+	//this.timerAttack = timerMaster;
 	this.timerTerror = 0;
 	this.timerParalyze = 0;
 	this.blur = 0;
+	this.glow = 0;
 	if(form === MON_FORM_ZENDIK) {
 		this.square = CHAR_FRONT_SOLO;
 	} else if (square > CHAR_FRONT_SOLO) {
@@ -79,7 +80,7 @@ Monster.prototype.toJSON = function() {
 		gestureTimer: this.gestureTimer,
 		dead: this.dead,
 		timerMove: this.timerMove,
-		timerAttack: this.timerAttack,
+		//timerAttack: this.timerAttack,
 		timerTerror: this.timerTerror,
 		timerParalyze: this.timerParalyze,
 		square: this.square,
@@ -96,7 +97,7 @@ Monster.revive = function(data) {
 	m.gestureTimer = data.gestureTimer;
 	m.dead = data.dead;
 	m.timerMove = data.timerMove,
-	m.timerAttack = data.timerAttack,
+	//m.timerAttack = data.timerAttack,
 	m.timerTerror = data.timerTerror,
 	m.timerParalyze = data.timerParalyze,
 	m.hp = data.hp;
@@ -397,7 +398,7 @@ Monster.prototype.followPlayer = function() {
 					return true;
 				}
 			}
-		} else if (!player[1].dead && player[1].floor === this.floor) {
+		} else if (typeof player[1] !== 'undefined' && !player[1].dead && player[1].floor === this.floor) {
 			//player 2 is closer
 			if (player[1].x > this.x && (this.d === 1)) {
 				return false;

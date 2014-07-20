@@ -22,7 +22,7 @@ function Player(id, ScreenX, ScreenY) {
 	this.attacking = false;
 	this.towerSwitches = new Array();
 	this.messageTimeout = 0;
-	this.timerAttack = timerMaster;
+	//this.timerAttack = timerMaster;
 	this.timerChampionStats = timerMaster;
 	this.timerSpellBookTurn = 0;
 	this.redrawLeftRightUiFlag = -1;
@@ -112,7 +112,7 @@ Player.prototype.toJSON = function() {
 		attacking: this.attacking,
 		towerSwitches: this.towerSwitches,
 		messageTimeout: this.messageTimeout,
-		timerAttack: this.timerAttack,
+		//timerAttack: this.timerAttack,
 		timerChampionStats: this.timerChampionStats,
 		timerSpellBookTurn: this.timerSpellBookTurn,
 		redrawLeftRightUiFlag: this.redrawLeftRightUiFlag,
@@ -138,8 +138,6 @@ Player.revive = function(data) {
 	p.d = data.d;
 	p.PortalX = data.PortalX;
 	p.PortalY = data.PortalY;
-	//p.PlayerCanvas = data.PlayerCanvas;
-	//p.Portal = data.Portal;
 	p.pocket = newPocketItem(data.pocket.id, data.pocket.quantity);
 	p.dead = data.dead;
 	p.sleeping = data.sleeping;
@@ -151,7 +149,7 @@ Player.revive = function(data) {
 	p.attacking = data.attacking;
 	p.towerSwitches = data.towerSwitches;
 	p.messageTimeout = data.messageTimeout;
-	p.timerAttack = data.timerAttack;
+	//p.timerAttack = data.timerAttack;
 	p.timerChampionStats = data.timerChampionStats;
 	p.timerSpellBookTurn = data.timerSpellBookTurn;
 	p.redrawLeftRightUiFlag = data.redrawLeftRightUiFlag;
@@ -338,7 +336,7 @@ Player.prototype.move = function(d) {
 		this.moving = d;
 		this.lastX = this.x;
 		this.lastY = this.y;
-		this.attack(false);
+		this.attack(null, false);
 		if (this.canMove(d)) {
 			xy = getOffsetByRotation((this.d + d) % 4);
 			this.x = this.x + xy.x;
@@ -351,44 +349,44 @@ Player.prototype.move = function(d) {
 	}
 };
 
-Player.prototype.tryAttack = function() {
+Player.prototype.tryAttack = function(ch) {
 	if (!this.dead && !this.sleeping && this.canMoveByWood(0)) {
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
 			if (typeof player[1] !== 'undefined' && this.floor === player[1 - this.id].floor && this.x + xy.x === player[1 - this.id].x && this.y + xy.y === player[1 - this.id].y) {
 				//attack player
-				this.attack(true, player[1 - this.id]);
+				this.attack(ch, true, player[1 - this.id]);
 				return true;
 			}
 		}
 		var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
 		if (mon !== null) {
-			this.attack(true, mon);
+			this.attack(ch, true, mon);
 			return true;
 		}
-		for (var c = 0; c < this.champion.length; c++) {
-			var ch = this.getChampion(c);
+		//for (var c = 0; c < this.champion.length; c++) {
+			//var ch = this.getChampion(c);
 			if (ch.selectedSpell !== null || ch.getBowPower() > 0) {
-				this.attack(true);
+				this.attack(ch, true);
 				return true;
 			}
-		}
+		//}
 	}
-	this.attack(false);
+	this.attack(null, false);
 	return false;
 };
 
-Player.prototype.attack = function(attack, target) {
+Player.prototype.attack = function(ch, attack, target) {
 	if (attack) {
 		this.doneCommunication();
 		var self = this;
-		var combat = calculateAttack(this, target);
+		var combat = calculateAttack(ch, target);
 		for (var com = 0; com < combat.length; com++) {
-			(function(combat, com) {
+			//(function(combat, com) {
 				var att = combat[com].attacker;
-				att.recruitment.attackTimer = setTimeout(function() {
-					att.recruitment.attackTimer = 0;
+				//att.recruitment.attackTimer = setTimeout(function() {
+					//att.recruitment.attackTimer = 0;
 					att.getMonster().attacking = true;
 					if (att.selectedSpell !== null) {
 						self.castSpell(att.selectedSpell, att, true);
@@ -396,7 +394,7 @@ Player.prototype.attack = function(attack, target) {
 					} else if (att.getBowPower() > 0) {
 						self.shootArrow(att);
 						if (typeof target === 'undefined') {
-							self.attack(false);
+							self.attack(null, false);
 						}
 						redrawUI(self.id);
 					} else {
@@ -417,19 +415,19 @@ Player.prototype.attack = function(attack, target) {
 							}
 						}
 					}
-				}, att.recruitment.position * self.getAttackSpeed(400));
+				//}, att.recruitment.position * self.getAttackSpeed(400));
 				att.getMonster().doGesture(CHA_GESTURE_ATTACKING);
-			})(combat, com);
+			//})(combat, com);
 		}
 	} else {
 		for (c = 0; c < this.champion.length; c++) {
 			var ch = this.getChampion(c);
 			if (ch !== null) {
 				var m = ch.getMonster();
-				if (ch.recruitment.attackTimer !== 0) {
-					clearTimeout(ch.recruitment.attackTimer);
-					ch.recruitment.attackTimer = 0;
-				}
+				//if (ch.recruitment.attackTimer !== 0) {
+					//clearTimeout(ch.recruitment.attackTimer);
+					//ch.recruitment.attackTimer = 0;
+				//}
 				m.attacking = false;
 			}
 		}
@@ -694,7 +692,7 @@ Player.prototype.sleep = function() {
 		this.uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
 		this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 		this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-		this.attack(false);
+		this.attack(null, false);
 		coverViewPort(this);
 		writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
 		writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
@@ -730,7 +728,7 @@ Player.prototype.checkDead = function() {
 		}
 		if (deadNum == 4) {
 			this.dead = true;
-			this.attack(false);
+			this.attack(null, false);
 			for (c = 0; c < this.champion.length; c++) {
 				var ch = this.getChampion(c);
 				if (ch !== null && ch.recruitment.attached) {
@@ -749,7 +747,12 @@ Player.prototype.checkDead = function() {
 }
 
 Player.prototype.recruitChampion = function(id) {
+	var pos = 0;
 	for (var c = 0; c < 4; c++) {
+		var ch = this.getChampion(c);
+		if(ch !== null && pos === ch.recruitment.position) {
+			pos++;
+		}
 		if (typeof id === "undefined") {
 			if (typeof this.champion[c] === 'undefined') {
 				this.champion[c] = -1;
@@ -760,8 +763,8 @@ Player.prototype.recruitChampion = function(id) {
 			champion[id].recruitment = {
 				playerId: this.id,
 				attached: true,
-				position: c,
-				attackTimer: 0,
+				position: pos,
+				attackTimer: 20 - pos * 5,
 				called: false
 			};
 			return true;
@@ -782,7 +785,7 @@ Player.prototype.waitChampion = function(c) {
 			ch.getMonster().y = y1;
 			ch.getMonster().square = this.d; //(s[this.d] + ch.getMonster().square) % 4;
 			ch.recruitment.attached = false;
-			ch.recruitment.attackTimer = 0;
+			//ch.recruitment.attackTimer = 0;
 			return true;
 		}
 	}
@@ -1394,14 +1397,6 @@ Player.prototype.startDrawHitDamage = function(cid, dmg) {
 			}
 		}
 	}
-}
-
-Player.prototype.getAttackSpeed = function(fac) {
-	var lvl = this.getChampion(this.championLeader).level;
-	if (lvl > 20) {
-		lvl = 20;
-	}
-	return Math.floor(fac / (1.0 + 0.02 * lvl));
 }
 
 Player.prototype.testMode = function(id) {

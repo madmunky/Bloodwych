@@ -563,8 +563,14 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 						}
 					}
 				}
-				var offx = 64 - Math.floor(m.ref.gfx[part][dist][dir1].width * 0.5) + offset.x;
-				var offy = 76 - Math.floor(m.ref.gfx[part][dist][dir1].height) - offset.y;
+				var gfx1 = m.ref.gfx[part][dist][dir1];
+				var gfx2 = m.ref.gfx[part][dist][dir2];
+				if(m.form === 26 && m.glow === 0) {
+					gfx1 = monsterRef[27][0].gfx[part][dist][dir1];
+					gfx2 = monsterRef[27][0].gfx[part][dist][dir2];
+				}
+				var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
+				var offy = 76 - Math.floor(gfx1.height) - offset.y;
 
 				if (dist >= 4 || part !== IMAGE_CHA_MINI) {
 					var blur = 0;
@@ -572,17 +578,17 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 						blur = m.blur;
 					}
 					if (!returnImg) {
-						player.Portal.drawImage(m.ref.gfx[part][dist][dir1], (offx + blur) * scale, offy * scale, m.ref.gfx[part][dist][dir1].width * scale, m.ref.gfx[part][dist][dir1].height * scale);
+						player.Portal.drawImage(gfx1, (offx + blur) * scale, offy * scale, gfx1.width * scale, gfx1.height * scale);
 					} else {
-						charContext.drawImage(m.ref.gfx[part][dist][dir1], (offx + blur), offy, m.ref.gfx[part][dist][dir1].width, m.ref.gfx[part][dist][dir1].height);
+						charContext.drawImage(gfx1, (offx + blur), offy, gfx1.width, gfx1.height);
 					}
 					if (dir2 > -1) {
-						offx = 64 - Math.floor(m.ref.gfx[part][dist][dir2].width * 0.5) + offset.x;
-						offy = 76 - Math.floor(m.ref.gfx[part][dist][dir2].height) - offset.y;
+						offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
+						offy = 76 - Math.floor(gfx2.height) - offset.y;
 						if (!returnImg) {
-							player.Portal.drawImage(m.ref.gfx[part][dist][dir2], (offx + blur) * scale, offy * scale, m.ref.gfx[part][dist][dir2].width * scale, m.ref.gfx[part][dist][dir2].height * scale);
+							player.Portal.drawImage(gfx2, (offx + blur) * scale, offy * scale, gfx2.width * scale, gfx2.height * scale);
 						} else {
-							charContext.drawImage(m.ref.gfx[part][dist][dir2], (offx + blur), offy, m.ref.gfx[part][dist][dir2].width, m.ref.gfx[part][dist][dir2].height);
+							charContext.drawImage(gfx2, (offx + blur), offy, gfx2.width, gfx2.height);
 						}
 					}
 				}
@@ -674,19 +680,21 @@ function drawMonster(m, dir, dist, player, offset) {
 							}
 						}
 					}
-					var offx = 64 - Math.floor(m.ref.gfx[part][dist][dir1].width * 0.5) + offset.x;
-					var offy = 76 - Math.floor(m.ref.gfx[part][dist][dir1].height) - offset.y;
+					var gfx1 = m.ref.gfx[part][dist][dir1];
+					var gfx2 = m.ref.gfx[part][dist][dir2]
+					var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
+					var offy = 76 - Math.floor(gfx1.height) - offset.y;
 
 					if (dist >= 4 || part !== IMAGE_MON_MINI) {
 						var blur = 0;
 						if (dist <= DISTANCE_MID) {
 							blur = m.blur;
 						}
-						player.Portal.drawImage(m.ref.gfx[part][dist][dir1], (offx - armoffx + blur) * scale, (offy - armoffy) * scale, m.ref.gfx[part][dist][dir1].width * scale, m.ref.gfx[part][dist][dir1].height * scale);
+						player.Portal.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
 						if (dir2 > -1) {
-							offx = 64 - Math.floor(m.ref.gfx[part][dist][dir2].width * 0.5) + offset.x;
-							offy = 76 - Math.floor(m.ref.gfx[part][dist][dir2].height) - offset.y;
-							player.Portal.drawImage(m.ref.gfx[part][dist][dir2], (offx + armoffx + blur) * scale, (offy - armoffy) * scale, m.ref.gfx[part][dist][dir2].width * scale, m.ref.gfx[part][dist][dir2].height * scale);
+							offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
+							offy = 76 - Math.floor(gfx2.height) - offset.y;
+							player.Portal.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
 						}
 					}
 				}

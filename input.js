@@ -344,7 +344,7 @@ function processCanvasInput(pid, x, y) {
 			} else if (uiClickInArea(x, y, UI_CLICK_ATTACK, p)) {
 				p.attacking = true;
 			} else if (uiClickInArea(x, y, UI_CLICK_DEFEND, p)) {
-				p.attack(false);
+				p.attack(null, false);
 			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, p)) {
 				p.exchangeChampionPosition(p.championHighlite, 0);
 				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
