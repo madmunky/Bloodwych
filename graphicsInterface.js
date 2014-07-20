@@ -2125,6 +2125,8 @@ function showCharacterDetails(ch, pl) {
 
 function showGameStateMenu(p){
     
+    gameStateSelectGrid = [];
+    
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU){
         coverViewPort(p);
         writeFontImage("LOAD GAME", 30, 15, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);
@@ -2142,15 +2144,12 @@ function showGameStateMenu(p){
 
 function createStateGrid(p,state){
     coverViewPort(p);
+    writeFontImage(state + " GAME...", 20.5, 2, COLOUR[COLOUR_PINK], FONT_ALIGNMENT_LEFT,p.Portal);
     var x = 0;
-    for (row = 0; row < 2; row++) { 
-        for (col = 0; col < 3; col++) {
-                        writeFontImage(state + " GAME...", 20, 2, COLOUR[COLOUR_PINK], FONT_ALIGNMENT_LEFT,p.Portal);
-                        p.Portal.drawImage(gfxUI[UI_GFX_ICON_SAVE], (42 * col * scale ) + (15 * scale), (30 * row * scale ) + (16 * scale), gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale); 
-                        writeFontImage("SLT" + x, (14 * scale * col) + 8, (10 * scale * row) + 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);
-                        x++;
-            }
-    }    
+    for (x;x < 8;x++){
+        writeFontImage(x + "." +state, 1.5 * scale, (2.6 * scale * x) + 10, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT,p.Portal);    
+        createSelectGrid(gameStateSelectGrid,100, 11 + (8*x), 120, 7, null);
+    } 
 }
 
 function createSelectGrid(myObject,myX, myY, myWidth, myHeight, cid) {
@@ -2165,25 +2164,28 @@ function createSelectGrid(myObject,myX, myY, myWidth, myHeight, cid) {
 
 function uiGameStateMenu(x,y,p){
     
-    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU){
-       if (uiClickInArea(x,y,0,p,gameStateSelectGrid)){
-           p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
-           showGameStateMenu(p);
-       }
-       if (uiClickInArea(x,y,1,p,gameStateSelectGrid)){
-            p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
-            showGameStateMenu(p);
-       }
-       if (uiClickInArea(x,y,2,p,gameStateSelectGrid)){
-           location.reload();
-       }
-    }
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE){
 
     }
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD){
-
+        for (slot = 0;slot < 8;slot++){
+            if (uiClickInArea(x,y,slot,p,gameStateSelectGrid)){
+                alert('slot: ' + slot);
+            }
+        }
     }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU){
+       if (uiClickInArea(x,y,0,p,gameStateSelectGrid)){
+           p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
+           showGameStateMenu(p);
+       }else if (uiClickInArea(x,y,1,p,gameStateSelectGrid)){
+            p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
+           showGameStateMenu(p);
+       }else if (uiClickInArea(x,y,2,p,gameStateSelectGrid)){
+           location.reload();
+       }
+    }
+    
     
 }
 

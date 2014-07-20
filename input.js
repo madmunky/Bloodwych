@@ -200,13 +200,9 @@ function checkClickEvents() {
 function processCanvasInput(pid, x, y) {
 	var p = player[pid];	
 		if (!p.sleeping) {
-                    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
-                    uiGameStateMenu(x, y, p);
-                }else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
-                    
-                }else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-                    
-                }else if (!p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
+                    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+                    uiGameStateMenu(x, y, p);                
+                    }else if (!p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
 				return checkClickInViewPortal(p, x, y);
 			}
 		} else {
