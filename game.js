@@ -104,10 +104,12 @@ function timerAction() {
 
 		for (c = 0; c < pl.champion.length; c++) {
 			var ch = pl.getChampion(c);
-			ch.recruitment.attackTimer++;
-			if (ch.recruitment.attackTimer % (ch.getAttackSpeed(20) * tmf) === 0) {
-				if (pl.attacking) {
-					pl.tryAttack(ch);
+			if(ch !== null) {
+				ch.recruitment.attackTimer++;
+				if (ch.recruitment.attackTimer % (ch.getAttackSpeed(20) * tmf) === 0) {
+					if (pl.attacking) {
+						pl.tryAttack(ch);
+					}
 				}
 			}
 			if(pl.uiLeftPanel.champs[c].damage > 0) {
