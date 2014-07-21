@@ -56,7 +56,7 @@ Projectile.revive = function(data) {
 	return p;
 };
 
-Projectile.prototype.moveProjectile = function() {
+Projectile.prototype.move = function() {
 	var ob = getObject(this.floor, this.x, this.y, this.d);
 	var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
 	if (this.dead === 0) {
@@ -125,6 +125,9 @@ Projectile.prototype.moveProjectile = function() {
 			}
 		}
 		this.dead = 3;
+		return false;
+	} else if (this.dead === 3) {
+		this.dead = 4;
 		return false;
 	}
 	var xy = getOffsetByRotation(this.d);

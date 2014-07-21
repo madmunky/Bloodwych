@@ -415,7 +415,7 @@ Player.prototype.attack = function(ch, attack, target) {
 								PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
 							} else if (def instanceof Monster) {
 								PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
-								self.gainChampionXp(pwr, Math.ceil(att / 4.0));
+								self.gainChampionXp(pwr, att);
 								if (def.dead) {
 									self.gainChampionXp(128);
 								}
@@ -886,14 +886,14 @@ Player.prototype.getOrderedChampions = function(all) {
 }
 
 Player.prototype.gainChampionXp = function(xp, ch) {
-	//if (typeof ch !== "undefined") {
-	//	gainChampionXp1();
-	//} else {
-	for (c = 0; c < this.champion.length; c++) {
-		var ch = this.getChampion(c);
+	if (typeof ch !== "undefined") {
 		gainChampionXp1();
+	} else {
+		for (c = 0; c < this.champion.length; c++) {
+			var ch = this.getChampion(c);
+			gainChampionXp1();
+		}
 	}
-	//}
 
 	function gainChampionXp1() {
 		if (ch !== null) {

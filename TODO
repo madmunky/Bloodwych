@@ -6,27 +6,23 @@ JORG
 -----
 COD More spells! Conceal and Beguile remaining
 COD Fix Big monster 'edge of screen'
-BUG Fix saving dungeonSpellList
+COD Tune vivify spell
 BUG Don't call "player.event" when pit on ceiling (in doPit)
 BUG Arrows on Right UI sometimes show over pockets or scroll
 BUG Avoid putting items in edge-floor walls
-BUG Fix 99+ coins/keys/etc not to stack
+GFX Draw back champs on stairs lower
 
 CHRIS
 ------
-COD Pause game
 COD Sounds!
-UI  Load/save game
 UI  Finish communication
 GFX Big monster drawing fixes
 GFX Find Armour Palettes
-BUG Investigate left communication panel occasionally disappearing (mostly on mobile devices) - I think this is fixed now by the drawing changes
+
+
 
 QUESTIONS FOR CHRIS
 -------------------
-When a champ deals damage, do all champions in player team get the same amount of xp per hit, per champ? Or only the champ that deals the damage?
-End chamber: when we put the crystals in the sockets, do we get teleported?
-End chamber: when we put the crystals in the sockets, do they stick or can they be removed again?
 End chamber: which crystal makes Behemoth spawn in the middle?
 How do items drop from Behemoth and Zendik?
 I need to know some easy-to-find (big or summon) monster positions, and their form/colour on the allMonsters list. E.g. all first monsters of every tower. Basically i need to know what formId/colour matches what level of the big monster.

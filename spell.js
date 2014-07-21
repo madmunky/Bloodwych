@@ -321,13 +321,22 @@ function castSpell(s, src, pw) {
 								redrawUI(p.id);
 							}
 						}
-						newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, -1, 0, f, x, y, 0, null);
-						return;
+						break;
 					}
 				}
-                                playSound(SOUND_FLASH);
 			}
-                        
+			if(typeof ch !== 'undefined') {
+				var p = player[ch.recruitment.playerId];
+				for(c = 0; c < p.champion.length; c++) {
+					var ch1 = p.getChampion(c);
+					if(ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
+						ch1.stat.hp = 0;
+						ch1.getMonster().dead = false;
+						redrawUI(p.id);
+					}
+				}
+				newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, s, 0, f, x1, y1, (d + 2) % 4, src);
+			}                        
 			break;
 		case SPELL_DISRUPT:
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, s, pow, f, x, y, d, src);
@@ -360,6 +369,10 @@ function castSpell(s, src, pw) {
 		case SPELL_DISPELL:
 			if (src.getBinaryView(15, 12, 4) === '7') {
 				src.setBinaryView(15, 0, 16, '0000');
+				var ds = getDungeonSpell(f, x1, y1);
+				if(ds !== null) {
+					delete ds;
+				}
 			}
 			break;
 		case SPELL_FIREBALL:
@@ -466,8 +479,7 @@ function updateDungeonSpells() {
 				tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x] = setHexToBinaryPosition(hex, 0, 6, dec2hex(tm));
 			} else {
 				tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x] = setHexToBinaryPosition(hex, 0, 16, '0000');
-				dungeonSpellList.splice(s, 1);
-				s--;
+				delete ds;
 			}
 		}
 	}

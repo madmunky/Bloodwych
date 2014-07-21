@@ -126,7 +126,7 @@ function timerAction() {
 	for (var p = 0; p < projectile[towerThis].length; p++) {
 		if (timerMaster - projectile[towerThis][p].timer >= 2 * tmf) {
 			projectile[towerThis][p].timer = timerMaster;
-			projectile[towerThis][p].moveProjectile();
+			projectile[towerThis][p].move();
 		}
 	}
 
@@ -153,7 +153,7 @@ function timerAction() {
 			}
 		}
 		for (var p = 0; p < projectile[towerThis].length; p++) {
-			if (projectile[towerThis][p].dead >= 3) {
+			if (projectile[towerThis][p].dead >= 4) {
 				projectile[towerThis].splice(p, 1);
 				p--;
 			}

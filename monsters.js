@@ -208,7 +208,7 @@ Monster.prototype.move = function() {
 			this.launchSpell();
 		} else if (!this.dead && this.teamId >= 0 && (this.isRecruitedBy() === null || (ch !== null && ch.recruitment.called))) {
 			this.attack(false);
-			if (this.castSpell()) return;
+			//if (this.castSpell()) return;
 			var canMove = this.canMove();
 			if (canMove === OBJECT_CHARACTER && this.canInteract() > -1) return;
 			if (canMove === OBJECT_NONE) {
