@@ -136,6 +136,19 @@ function loadTowerData(t, start) {
 	getFileData('data/' + TOWER_NAME[id] + '.ob', readSimpleData, t, "itemData", 0);
 }
 
+function loadSounds(){
+    
+    var s = [];
+    var location = "data/sounds/";
+    s.push(new Audio(location+"door.wav"));
+    s.push(new Audio(location+"attack.wav"));
+    s.push(new Audio(location+"flash.wav"));
+    s.push(new Audio(location+"death.wav"));
+    s.push(new Audio(location+"spell.wav"));
+    
+    return s;
+    
+}
 
 function initData() {
 	//if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['minis'].width > 0 && championData.length > 0 && gfx['misc']['font'].width > 0) {
@@ -149,7 +162,7 @@ function initData() {
 	itemsGfxD = initItemsGfxD();
 	font = grabFont();
 	uiClickArea = uiClickAreas();
-
+        audioFiles = loadSounds();
 	initMonsterGfx();
 	initMonsters();
 

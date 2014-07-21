@@ -215,6 +215,7 @@ Player.prototype.action = function() {
 		//Wooden doors (in front of player)
 		if (!this.checkWoodenDoor(18)) {
 			this.checkWoodenDoor(15);
+                        playSound(SOUND_DOOR);
 		}
 		if (this.canMoveByWood(0)) {
 			//Wooden doors (on player)
@@ -246,6 +247,7 @@ Player.prototype.action = function() {
 				}
 				if (this.getBinaryView(15, 1, 3) === '0' && this.getBinaryView(15, 11, 1) === '0') { //If unlocked, open/close door
 					this.setBinaryView(15, 7, 1);
+                                        playSound(SOUND_DOOR);
 					//this.setBinaryView(15, 1, 3, '000'); //Will set the door to 'normal'
 				} else { //If locked, give lock message
 					this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);

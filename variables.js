@@ -1,6 +1,6 @@
 //DEBUG
 var debug = false;
-
+var audioFiles = [];
 //Declare Arrays for the Graphics
 var gfx = [];
 var player = new Array();
@@ -43,6 +43,13 @@ var font;
 var uiClickArea = [];
 var itemsGfxD = [];
 var redrawPlayerUiFlag = 0;
+
+//sounds
+var SOUND_DOOR = 0,
+        SOUND_ATTACK = 1,
+        SOUND_FLASH = 2,
+        SOUND_DEATH = 3,
+        SOUND_SPELL = 4;
 
 //mobile settings
 var mobileMenuOpen = false;
