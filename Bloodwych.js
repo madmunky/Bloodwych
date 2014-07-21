@@ -26,15 +26,16 @@ $(function() {
 	// Handle the menu button
 	//
 	function onMenu() {
-		if (typeof player[0] !== "undefined") {
-			if (mobileMenuOpen) {
-				alert("closed the menu");
+		var p = player[0];
+		if (typeof p !== "undefined") {
+			if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
 				mobileMenuOpen = false;
-				player[0].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
+				p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+				p.message();
 			} else {
-				alert("opened the menu");
 				mobileMenuOpen = true;
-				player[0].uiLeftPanel.mode = UI_LEFT_PANEL_MODE_COMMAND;
+				p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_MENU;
+				showGameStateMenu(p);
 			}
 			redrawUI(0, UI_REDRAW_LEFT);
 		}
