@@ -325,8 +325,9 @@ function castSpell(s, src, pw) {
 						return;
 					}
 				}
+                                playSound(SOUND_FLASH);
 			}
-                        playSound(SOUND_SPELL);
+                        
 			break;
 		case SPELL_DISRUPT:
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, s, pow, f, x, y, d, src);
@@ -372,7 +373,6 @@ function castSpell(s, src, pw) {
 		case SPELL_BLAZE:
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_BLAZE_BIG, s, pow, f, x, y, d, src);
 			break;
-
 			//moon
 		case SPELL_BEGUILE:
 			break;

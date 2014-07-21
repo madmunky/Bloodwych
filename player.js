@@ -224,6 +224,7 @@ Player.prototype.action = function() {
 			if (o15 === OBJECT_SWITCH) {
 				this.setBinaryView(15, 5, 1);
 				switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
+                                playSound(SOUND_SWITCH);
 			} else if (o15 === OBJECT_GEM) {
 				gemAction(this);
                                 playSound(SOUND_FLASH);

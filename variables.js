@@ -49,7 +49,8 @@ var SOUND_DOOR = 0,
         SOUND_ATTACK = 1,
         SOUND_FLASH = 2,
         SOUND_DEATH = 3,
-        SOUND_SPELL = 4;
+        SOUND_SPELL = 4,
+        SOUND_SWITCH = 5;
 
 //mobile settings
 var mobileMenuOpen = false;

@@ -4,6 +4,20 @@
  * and open the template in the editor.
  */
 
+function loadSounds(){
+    
+    var s = [];
+    var location = "data/sounds/";
+    s.push(new Audio(location+"door.wav"));
+    s.push(new Audio(location+"attack.wav"));
+    s.push(new Audio(location+"flash.wav"));
+    s.push(new Audio(location+"death.wav"));
+    s.push(new Audio(location+"spell.wav"));
+    s.push(new Audio(location+"switch.wav"));
+    
+    return s;
+    
+}
 
 function playSound(soundName){
     
