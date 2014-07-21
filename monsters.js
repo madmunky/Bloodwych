@@ -278,7 +278,8 @@ Monster.prototype.attack = function(attack, target) {
 				PrintLog('MONSTER #' + att.id + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
 			} else if (def instanceof Monster) {
 				PrintLog('MONSTER #' + att.id + ' HITS HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
-			}
+			}                        
+                        playSound(SOUND_ATTACK);
 		}
 	} else {
 		var team = getMonsterTeam(this.teamId);
@@ -528,7 +529,9 @@ Monster.prototype.die = function() {
 			var ch = champion[this.champId];
 			if (this.isRecruitedBy() === null || !ch.recruitment.attached) {
 				dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, sq);
-			}
+			}else{                            
+                            playSound(SOUND_DEATH);
+                        }
 		} else {
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, -1, 0, this.floor, this.x, this.y, 0, null);
 			if (this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER) {

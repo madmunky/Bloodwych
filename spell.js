@@ -224,6 +224,7 @@ function castSpell(s, src, pw) {
 			break;
 		case SPELL_PARALYZE:
 			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_SERPENT_ARROW, s, pow, f, x, y, d, src);
+                        playSound(SOUND_SPELL);
 			break;
 		case SPELL_COMPASS:
 			ch.activateSpell(s, pow);
@@ -325,6 +326,7 @@ function castSpell(s, src, pw) {
 					}
 				}
 			}
+                        playSound(SOUND_SPELL);
 			break;
 		case SPELL_DISRUPT:
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, s, pow, f, x, y, d, src);

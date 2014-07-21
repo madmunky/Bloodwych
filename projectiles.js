@@ -146,6 +146,7 @@ Projectile.prototype.action = function(tar) {
 				if(tar instanceof Monster) {
 					tar.timerTerror = combat[0].power;
 				}
+                                playSound(SOUND_SPELL);
 				break;
 			case SPELL_SPELLTAP:
 				var pw = combat[0].power;

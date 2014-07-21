@@ -214,8 +214,7 @@ Player.prototype.action = function() {
 	if (!this.dead && !this.sleeping) {
 		//Wooden doors (in front of player)
 		if (!this.checkWoodenDoor(18)) {
-			this.checkWoodenDoor(15);
-                        playSound(SOUND_DOOR);
+			this.checkWoodenDoor(15);                        
 		}
 		if (this.canMoveByWood(0)) {
 			//Wooden doors (on player)
@@ -227,6 +226,7 @@ Player.prototype.action = function() {
 				switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
 			} else if (o15 === OBJECT_GEM) {
 				gemAction(this);
+                                playSound(SOUND_FLASH);
 			}
 			//Check if something is in the way
 			if (this.getMonstersInRange(15).length > 0) {
@@ -275,6 +275,7 @@ Player.prototype.checkWoodenDoor = function(pos18) {
 		}
 		if (this.getBinaryView(pos18, 11, 1) === '0') { //If unlocked, open/close door
 			this.setBinaryView(pos18, ((5 + d - this.d) % 4) * 2 + 1, 1);
+                        playSound(SOUND_DOOR);
 		} else if (this.getBinaryView(pos18, 11, 1) === '1') { //If locked, give lock message
 			this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
 		}
@@ -422,6 +423,7 @@ Player.prototype.attack = function(ch, attack, target) {
 					}
 				//}, att.recruitment.position * self.getAttackSpeed(400));
 				att.getMonster().doGesture(CHA_GESTURE_ATTACKING);
+                                playSound(SOUND_ATTACK);
 			//})(combat, com);
 		}
 	} else {
