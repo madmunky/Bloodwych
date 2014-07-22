@@ -15,11 +15,12 @@ function Projectile(id, type, palette, s, power, tower, floor, x, y, d, m) {
 	} else {
 		this.spell = getSpellById(s);
 	}
-	if (s > -1) {
+	this.dead = 0;
+	/*if (s > -1) {
 		this.dead = 0;
 	} else {
 		this.dead = 1;
-	}
+	}*/
 	this.timer = timerMaster;
 }
 
@@ -65,9 +66,12 @@ Projectile.prototype.move = function() {
 		}
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		if (typeof this.monster !== "undefined") {
-			var sid = this.spell.index;
-			var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND);
-			var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_ANTIMAGE || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE);
+			var sid = null;
+			if(this.spell !== null) {
+				var sid = this.spell.index;
+				var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND);
+				var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_ANTIMAGE || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE);
+			}
 			for (p in player) {
 				if (!player[p].dead && this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
 					if(player[p].getActiveSpellById(SPELL_DEFLECT).timer > 0 && isMissile) { //Deflect makes missile-shaped spells to reverse direction
@@ -110,11 +114,18 @@ Projectile.prototype.move = function() {
 			}
 			return false;
 		}
+		if(this.power === 0) {
+			if(this.spell !== null) {
+				this.action();
+			}
+			this.dead = 2;
+			return false;
+		}
 	} else if (this.dead === 1) {
 		this.dead = 2;
 		return false;
 	} else if (this.dead === 2) {
-		if(typeof this.spell === 'number') { //item
+		if(this.spell !== null && typeof this.spell === 'number') { //item
 			if(getMonsterAt(this.floor, this.x, this.y) === null) {
 				if(msc) {
 					var d1 = [ 3, 0, 1, 2 ];
@@ -125,9 +136,6 @@ Projectile.prototype.move = function() {
 			}
 		}
 		this.dead = 3;
-		return false;
-	} else if (this.dead === 3) {
-		this.dead = 4;
 		return false;
 	}
 	var xy = getOffsetByRotation(this.d);
@@ -185,6 +193,53 @@ Projectile.prototype.action = function(tar) {
 					}
 				}
 				break;
+			case SPELL_VIVIFY:
+				if (getMonsterAt(this.floor, this.x, this.y) === null) {
+					for (i = item[towerThis].length - 1; i >= 0; i--) {
+						var it = item[towerThis][i];
+						if (it.id >= ITEM_BLODWYN_RIP && it.id <= ITEM_THAI_CHANG_RIP && it.location.tower === towerThis && it.location.floor === this.floor && it.location.x === this.x && it.location.y === this.y) {
+							var c = it.id - ITEM_BLODWYN_RIP;
+							item[towerThis].splice(i, 1);
+							champion[c].stat.hp = 0;
+							champion[c].getMonster().floor = this.floor;
+							champion[c].getMonster().x = this.x;
+							champion[c].getMonster().y = this.y;
+							champion[c].getMonster().d = this.d;
+							champion[c].getMonster().hp = 0;
+							champion[c].getMonster().dead = false;
+							if (!champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
+								var p = player[champion[c].recruitment.playerId];
+								if (p.dead) {
+									champion[c].recruitment.attached = true;
+									var i = p.getChampionPosition(c);
+									p.exchangeChampionPosition(0, i);
+									p.championLeader = 0;
+									p.tower = towerThis;
+									p.floor = this.floor;
+									p.x = this.x;
+									p.y = this.y;
+									p.d = this.d;
+									p.dead = false;
+									p.updateChampions();
+									redrawUI(p.id);
+								}
+							}
+							return;
+						}
+					}
+				}
+				if(tar instanceof Player) {
+					for(c = 0; c < tar.champion.length; c++) {
+						var ch = tar.getChampion(c);
+						if(ch !== null && ch.getMonster().dead && ch.recruitment.attached) {
+							ch.stat.hp = 0;
+							ch.getMonster().dead = false;
+							redrawUI(tar.id);
+						}
+					}
+					tar.updateChampions();
+				}
+				break;
 			case SPELL_CONFUSE:
 				var dr = Math.floor(Math.random() * 4);
 				tar.rotateTo(dr);
@@ -202,7 +257,7 @@ Projectile.prototype.action = function(tar) {
 }
 
 Projectile.prototype.event = function() {
-	if(typeof this.spell !== 'number') {
+	if(this.spell !== null && typeof this.spell !== 'number') {
 		var ob = getObject(this.floor, this.x, this.y, this.d);
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
