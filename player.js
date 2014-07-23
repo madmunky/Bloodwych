@@ -996,11 +996,13 @@ Player.prototype.drawMonster = function(m, distance, offset) {
                     if (this.getObjectOnPos(15, 2) === OBJECT_STAIRS && distance === DISTANCE_CLOSE){  
                         var t = offset;                        
                         if (this.getBinaryView(15, 7) === '0'){
-                        t.y = (t.y +8);                                                            
+                            t.y = (t.y +8);                                                           
+                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t);
                         }else{                            
-                        t.y = (t.y -8);                                                            
+                            t.y = (t.y -8);                                                            
+                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t,false,true,true);
                         }
-                        drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t);
+                        
                     }else{
                         drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
                     }

@@ -473,7 +473,21 @@ function grabCharacter(form, part, dir, dist) {
 
 }
 
-function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
+function clipCharacter(img,percentClipped){
+    
+    var can = document.createElement('canvas');
+    can.width = img.width;
+    can.height = img.height - 3;
+    var charContext = can.getContext("2d");
+                
+    charContext.drawImage(img,0,0);
+    charContext.save();
+    
+    return can;    
+    
+}
+
+function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip) {
 
 	var can,
 		charContext;
@@ -491,6 +505,10 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 
 	if (typeof returnImg === "undefined") {
 		returnImg = false;
+	}
+        
+        if (typeof doClip === "undefined") {
+		doClip = false;
 	}
 
 	if (dist > -1) {
@@ -578,15 +596,25 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur) {
 						blur = m.blur;
 					}
 					if (!returnImg) {
-						player.Portal.drawImage(gfx1, (offx + blur) * scale, offy * scale, gfx1.width * scale, gfx1.height * scale);
-					} else {
+                                            if (doClip && part === IMAGE_CHA_LEG){   
+                                                var t = clipCharacter(gfx1,7);
+                                                player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
+                                            }else{
+                                                player.Portal.drawImage(gfx1, (offx + blur) * scale, offy * scale, gfx1.width * scale, gfx1.height * scale);      
+                                            }                                                
+                                            } else {
 						charContext.drawImage(gfx1, (offx + blur), offy, gfx1.width, gfx1.height);
 					}
 					if (dir2 > -1) {
 						offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
 						offy = 76 - Math.floor(gfx2.height) - offset.y;
 						if (!returnImg) {
-							player.Portal.drawImage(gfx2, (offx + blur) * scale, offy * scale, gfx2.width * scale, gfx2.height * scale);
+                                                    if (doClip && part === IMAGE_CHA_LEG){           
+                                                        var t = clipCharacter(gfx2,7);
+                                                        player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
+                                                    }else{
+                                                        player.Portal.drawImage(gfx2, (offx + blur) * scale, offy * scale, gfx2.width * scale, gfx2.height * scale);
+                                                    }							
 						} else {
 							charContext.drawImage(gfx2, (offx + blur), offy, gfx2.width, gfx2.height);
 						}
