@@ -326,7 +326,7 @@ $(function() {
 	$('body').keyup(function(e) {
 		var t = $(e.target);
 		if (t.is('input.save-game')) {
-			var p = t.data('player-id');
+			var p = 0
 			var slot = t.data('slot-id');
 			var name = t.val().substring(0, 12).toUpperCase();
 			if (e.which === 13) {
@@ -358,7 +358,7 @@ $(function() {
 		$(this).trigger('click');
 	});
 	$('body').on('focusout', 'input.save-game', function() {
-		var p = $(this).data('player-id');
+		var p = 0
 		if (player[p].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
 			createStateGrid(player[p], "SAVE");
 		}

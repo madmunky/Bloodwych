@@ -477,7 +477,7 @@ function clipCharacter(img,percentClipped){
     
     var can = document.createElement('canvas');
     can.width = img.width;
-    can.height = img.height - 3;
+    can.height = img.height - percentClipped;
     var charContext = can.getContext("2d");
                 
     charContext.drawImage(img,0,0);
@@ -487,7 +487,7 @@ function clipCharacter(img,percentClipped){
     
 }
 
-function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip) {
+function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip,pixToClip) {
 
 	var can,
 		charContext;
@@ -597,7 +597,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip) 
 					}
 					if (!returnImg) {
                                             if (doClip && part === IMAGE_CHA_LEG){   
-                                                var t = clipCharacter(gfx1,7);
+                                                var t = clipCharacter(gfx1,pixToClip);
                                                 player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
                                             }else{
                                                 player.Portal.drawImage(gfx1, (offx + blur) * scale, offy * scale, gfx1.width * scale, gfx1.height * scale);      
@@ -610,7 +610,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip) 
 						offy = 76 - Math.floor(gfx2.height) - offset.y;
 						if (!returnImg) {
                                                     if (doClip && part === IMAGE_CHA_LEG){           
-                                                        var t = clipCharacter(gfx2,7);
+                                                        var t = clipCharacter(gfx2,pixToClip);
                                                         player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
                                                     }else{
                                                         player.Portal.drawImage(gfx2, (offx + blur) * scale, offy * scale, gfx2.width * scale, gfx2.height * scale);
