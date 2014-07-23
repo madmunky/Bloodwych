@@ -1016,15 +1016,27 @@ Player.prototype.drawMonster = function(m, distance, offset) {
                     }else if ((this.getObjectOnPos(12, 2) === OBJECT_STAIRS && distance === DISTANCE_FAR)){
                         var t = offset;                        
                         if (this.getBinaryView(12, 7) === '0'){
-                            t.y = (t.y +8);                                                           
+                            t.y = (t.y +6);                                                           
                             drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t);
                         }else{                            
-                            t.y = (t.y -8);                                                            
-                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t,false,true,true,6);
+                            t.y = (t.y -6);                                                            
+                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t,false,true,true,4);
                         }
-                    }
-                        
-                else{
+                    }else if ((this.getObjectOnPos(9, 2) === OBJECT_STAIRS && distance === DISTANCE_DISTANT)){
+                        if (m.getSquareByDir() === CHAR_BACK_RIGHT || m.getSquareByDir() === CHAR_BACK_LEFT){
+                            var t = offset;               
+                            var tt = this.getBinaryView(12, 7);
+                            if (this.getBinaryView(9, 7) === '0'){
+                                t.y = (t.y +4);                                                           
+                                drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t);
+                            }else{                            
+                                t.y = (t.y -4);                                                            
+                                drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t,false,true,true,3);
+                            }
+                        }else{
+                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
+                        }                        
+                    }else{
                         drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
                     }
 		}

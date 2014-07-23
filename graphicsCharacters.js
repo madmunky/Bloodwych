@@ -596,13 +596,15 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip,p
 						blur = m.blur;
 					}
 					if (!returnImg) {
-                                            if (doClip && part === IMAGE_CHA_LEG){   
+                                            if ((doClip && part === IMAGE_CHA_LEG) || (doClip && part === IMAGE_CHA_MINI)){   
                                                 var t = clipCharacter(gfx1,pixToClip);
                                                 player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
-                                            }else{
+                                                }
+                                                else{
                                                 player.Portal.drawImage(gfx1, (offx + blur) * scale, offy * scale, gfx1.width * scale, gfx1.height * scale);      
-                                            }                                                
-                                            } else {
+                                                }                                                
+                                            } 
+                                            else {
 						charContext.drawImage(gfx1, (offx + blur), offy, gfx1.width, gfx1.height);
 					}
 					if (dir2 > -1) {
