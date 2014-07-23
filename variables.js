@@ -1,5 +1,5 @@
 //DEBUG
-var debug = false;
+var debug = true;
 //Declare Arrays for the Graphics
 var gfx = [];
 var player = new Array();

@@ -492,7 +492,7 @@ function drawMonsterOnPos(p, pos) {
 				}
 			}
 			if(!van || (van && ch1.prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0) {
-				p.drawMonster(monPos[i].monster, monPos[i].distance, monPos[i].gfxCoord);
+                            p.drawMonster(monPos[i].monster, monPos[i].distance, monPos[i].gfxCoord);                            
 			}
 		}
 	}

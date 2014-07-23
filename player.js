@@ -993,7 +993,17 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 		drawMonster(m, (6 + p.d - m.d) % 4, dis[distance], this, offset);
 	} else {
 		if (typeof monsterPalette[form] !== "undefined") {
-			drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
+                    if (this.getObjectOnPos(15, 2) === OBJECT_STAIRS && distance === DISTANCE_CLOSE){  
+                        var t = offset;                        
+                        if (this.getBinaryView(15, 7) === '0'){
+                        t.y = (t.y +8);                                                            
+                        }else{                            
+                        t.y = (t.y -8);                                                            
+                        }
+                        drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t);
+                    }else{
+                        drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
+                    }
 		}
 	}
 }
