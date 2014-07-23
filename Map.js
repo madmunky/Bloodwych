@@ -132,8 +132,8 @@ function canMove(f, x, y, d, to) {
 
 	hex18 = tower[towerThis].floor[f].Map[y][x];
 	hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
-	var objThis = getHexToBinaryPosition(hex18, 12, 4);
-	var objNext = getHexToBinaryPosition(hex15, 12, 4);
+	var objThis = getHexToBinaryPosition(hex18, 13, 3);
+	var objNext = getHexToBinaryPosition(hex15, 13, 3);
 
 	if (objNext == '1') {
 		return OBJECT_WALL;
@@ -184,7 +184,7 @@ function canMoveByFirepath(f, x, y, d) {
 		return false;
 	}
 	hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
-	if (getHexToBinaryPosition(hex15, 12, 4) === '7' && getHexToBinaryPosition(hex15, 6, 2) === '1') {
+	if (getHexToBinaryPosition(hex15, 13, 3) === '7' && getHexToBinaryPosition(hex15, 6, 2) === '1') {
 		return true;
 	}
 	return false;
@@ -197,13 +197,13 @@ function canMoveByWood(f, x, y, d, to) {
 	xy = getOffsetByRotation((d + to) % 4);
 	hex18 = tower[towerThis].floor[f].Map[y][x];
 	//Check the space the player is standing on
-	if (getHexToBinaryPosition(hex18, 12, 4) == '2' && getHexToBinaryPosition(hex18, ((7 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
+	if (getHexToBinaryPosition(hex18, 13, 3) == '2' && getHexToBinaryPosition(hex18, ((7 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
 		return false;
 	}
 	//Check the space the player is moving to
 	if (typeof tower[towerThis].floor[f].Map[y + xy.y] !== 'undefined' && typeof tower[towerThis].floor[f].Map[y + xy.y][x + xy.x] !== 'undefined') {
 		hex15 = tower[towerThis].floor[f].Map[y + xy.y][x + xy.x];
-		if (getHexToBinaryPosition(hex15, 12, 4) == '2' && getHexToBinaryPosition(hex15, ((5 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
+		if (getHexToBinaryPosition(hex15, 13, 3) == '2' && getHexToBinaryPosition(hex15, ((5 - ((d + to) % 4)) % 4) * 2 + 1, 1) == '1') {
 			return false;
 		}
 	}
@@ -213,7 +213,7 @@ function canMoveByWood(f, x, y, d, to) {
 function getObject(f, x, y, d, to) {
 	if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
 		var hex = tower[towerThis].floor[f].Map[y][x];
-		var obj = getHexToBinaryPosition(hex, 12, 4);
+		var obj = getHexToBinaryPosition(hex, 13, 3);
 		if (obj === '1') { //wall
 			if (typeof to === "undefined" || (d + to) % 4 === parseInt(getHexToBinaryPosition(hex, 10, 2))) {
 				if (getHexToBinaryPosition(hex, 8) === '1') { //wall deco

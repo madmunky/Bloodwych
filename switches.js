@@ -23,7 +23,7 @@ function switchAction(r, p) {
 			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = toggleObject(tar, '3', '1');
 			break;
 		case SWITCH_WALL_PLACE_PILLAR:
-			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 12, 4, '3');
+			tower[towerThis].floor[p.floor].Map[sw[3]][sw[2]] = setHexToBinaryPosition(tar, 13, 3, '3');
 			break;
 		case SWITCH_WALL_ROTATE_WOOD_WALLS:
 			var wood = hex2bin(getHexToBinaryPosition(tar, 2, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 4, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 6, 2), 2) + hex2bin(getHexToBinaryPosition(tar, 0, 2), 2);
@@ -39,10 +39,10 @@ function toggleObject(hex, o, s, once) {
 	if(typeof once === "undefined") {
 		var once = false;
 	}
-	if (getHexToBinaryPosition(ret, 12, 4) === '0' || once) {
-		ret = setHexToBinaryPosition(ret, 12, 4, o);
+	if (getHexToBinaryPosition(ret, 13, 3) === '0' || once) {
+		ret = setHexToBinaryPosition(ret, 13, 3, o);
 	} else {
-		ret = setHexToBinaryPosition(ret, 12, 4, '0');
+		ret = setHexToBinaryPosition(ret, 13, 3, '0');
 	}
 	if(typeof s !== "undefined" && s !== null) {
 		if (getHexToBinaryPosition(ret, 6, 2) === '0' || once) {
@@ -136,7 +136,7 @@ function floorActionType(trig, p) {
 			var xy = getOffsetByRotation(trig[1]);
 			if(typeof tower[towerThis].floor[p.floor].Map[p.y + xy.y] !== 'undefined' && typeof tower[towerThis].floor[p.floor].Map[p.y + xy.y][p.x + xy.x] !== 'undefined') {
 				var tar2 = tower[towerThis].floor[p.floor].Map[p.y + xy.y][p.x + xy.x];
-				var ob = parseInt(getHexToBinaryPosition(tar2, 12, 4));
+				var ob = parseInt(getHexToBinaryPosition(tar2, 13, 3));
 				if(ob >= 4) {
 					tower[towerThis].floor[p.floor].Map[p.y + xy.y][p.x + xy.x] = toggleObject(tar2, '' + ((ob + 2) % 8), null, true);
 				} else {

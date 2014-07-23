@@ -251,7 +251,7 @@ function castSpell(s, src, pw) {
 			break;
 		case SPELL_FORMWALL:
 			if (src.getBinaryView(15, 0, 16) === '0000') {
-				src.setBinaryView(15, 12, 4, '7');
+				src.setBinaryView(15, 13, 3, '7');
 				src.setBinaryView(15, 6, 2, '3');
 				src.setBinaryView(15, 0, 6, dec2hex(pow));
 				var xy = posToCoordinates(15, x, y, d);
@@ -292,40 +292,6 @@ function castSpell(s, src, pw) {
 			break;
 		case SPELL_VIVIFY:
 			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, s, 0, f, x, y, d, src);
-			/*if (canMove(f, x, y, d) === OBJECT_NONE && getMonsterAt(f, x1, y1) === null) {
-				for (i = item[towerThis].length - 1; i >= 0; i--) {
-					var it = item[towerThis][i];
-					if (it.id >= ITEM_BLODWYN_RIP && it.id <= ITEM_THAI_CHANG_RIP && it.location.tower === towerThis && it.location.floor === f && it.location.x === x1 && it.location.y === y1) {
-						var c = it.id - ITEM_BLODWYN_RIP;
-						item[towerThis].splice(i, 1);
-						champion[c].stat.hp = 0;
-						champion[c].getMonster().floor = f;
-						champion[c].getMonster().x = x1;
-						champion[c].getMonster().y = y1;
-						champion[c].getMonster().d = (d + 2) % 4;
-						champion[c].getMonster().hp = 0;
-						champion[c].getMonster().dead = false;
-						if (!champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
-							var p = player[champion[c].recruitment.playerId];
-							if (p.dead) {
-								champion[c].recruitment.attached = true;
-								var i = p.getChampionPosition(c);
-								p.exchangeChampionPosition(0, i);
-								p.championLeader = 0;
-								p.tower = towerThis;
-								p.floor = f;
-								p.x = x1;
-								p.y = y1;
-								p.d = (d + 2) % 4;
-								p.dead = false;
-								p.updateChampions();
-								redrawUI(p.id);
-							}
-						}
-						break;
-					}
-				}
-			}*/
 			for (p in player) {
 				var pl = player[p];
 				if (!pl.dead && f === pl.floor && x === pl.x && y === pl.y) {
@@ -351,11 +317,11 @@ function castSpell(s, src, pw) {
 			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON_ARROW, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_MAGELOCK:
-			if (src.getBinaryView(18, 12, 4) === '2' && src.getBinaryView(18, ((5 + 2 - d) % 4) * 2) === '1') {
+			if (src.getBinaryView(18, 13, 3) === '2' && src.getBinaryView(18, ((5 + 2 - d) % 4) * 2) === '1') {
 				src.setBinaryView(18, 11, 1);
-			} else if (src.getBinaryView(15, 12, 4) === '2' && src.getBinaryView(15, ((5 + 0 - d) % 4) * 2) === '1') {
+			} else if (src.getBinaryView(15, 13, 3) === '2' && src.getBinaryView(15, ((5 + 0 - d) % 4) * 2) === '1') {
 				src.setBinaryView(15, 11, 1);
-			} else if (src.getBinaryView(15, 12, 4) === '5' && src.getBinaryView(15, 4) === '0') {
+			} else if (src.getBinaryView(15, 13, 3) === '5' && src.getBinaryView(15, 4) === '0') {
 				src.setBinaryView(15, 11, 1);
 			}
 			break;
@@ -371,7 +337,10 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_DISPELL:
-			if (src.getBinaryView(15, 12, 4) === '7') {
+			if(src.setBinaryView(15, 12, 1) === '1') {
+				src.setBinaryView(15, 12, 1, '0');
+			}
+			if (src.getBinaryView(15, 13, 3) === '7') {
 				src.setBinaryView(15, 0, 16, '0000');
 				var ds = getDungeonSpell(f, x1, y1);
 				if(ds !== null) {
@@ -397,6 +366,7 @@ function castSpell(s, src, pw) {
 			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_MOON_ARROW, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_CONCEAL:
+			this.setBinaryView(15, 12, 1);
 			break;
 		case SPELL_TRUEVIEW:
 			ch.activateSpell(s, pow);
@@ -417,7 +387,7 @@ function castSpell(s, src, pw) {
 			break;
 		case SPELL_MINDROCK:
 			if (src.getBinaryView(15, 0, 16) === '0000') {
-				src.setBinaryView(15, 12, 4, '7');
+				src.setBinaryView(15, 13, 3, '7');
 				src.setBinaryView(15, 6, 2, '2');
 				src.setBinaryView(15, 0, 6, dec2hex(pow));
 			}

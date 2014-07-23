@@ -59,14 +59,14 @@ function getImage(Hex, d, pos, p, pos18) {
 	// I may need to pass the Graphics Position to be drawn so I can work out which graphic
 	// to be return for each wall side.
 
-	//        if (getHexToBinaryPosition(Hex, 12, 4) !== '1'){
+	//        if (getHexToBinaryPosition(Hex, 13, 3) !== '1'){
 	//            if (getHexToBinaryPosition(Hex, 8, 4) === '8'){
 	//                PrintLog("Should be drawing something...");
 	//            }
 	//        }
 
 
-	switch (getHexToBinaryPosition(Hex, 12, 4)) {
+	switch (getHexToBinaryPosition(Hex, 13, 3)) {
 		case '0':
 			return null;
 			break;
@@ -176,7 +176,7 @@ function getStoneWall(HexCode, d, pos, p, pos18) {
 	}
 
 	p.Portal.drawImage(gfx["dungeon"]["stone"][wall], gfxPos[pos][0], gfxPos[pos][1], gfxPos[pos][2], gfxPos[pos][3], (gfxPos[pos][4] * scale), (gfxPos[pos][5] * scale), gfxPos[pos][2] * scale, gfxPos[pos][3] * scale);
-	if (d === parseInt(getHexToBinaryPosition(HexCode, 10, 2)) && getHexToBinaryPosition(HexCode, 12, 4) !== '7') {
+	if (d === parseInt(getHexToBinaryPosition(HexCode, 10, 2)) && getHexToBinaryPosition(HexCode, 13, 3) !== '7') {
 		return getWallDeco();
 	}
 	return gfx["dungeon"]["stone"][wall];
@@ -186,9 +186,10 @@ function getStoneWall(HexCode, d, pos, p, pos18) {
 		var RND4 = Math.floor(xy.x * 1.3 + xy.y * 3.7 + d * 1.3) % 4; //For random banner faces
 		var RND6 = Math.floor(xy.x * 1.1 + xy.y * 2.3 + d * 5.7) % 6; //For random switch colour
 		var RND8 = Math.floor(xy.x * 1.7 + xy.y * 5.5 + d * 6.3) % 8; //For random banner colour
+		var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0);
 		//try {
 		if (getHexToBinaryPosition(HexCode, 8) === '1') { //Wall has something on it
-			if (getHexToBinaryPosition(HexCode, 6, 2) === '0') { //Shelf
+			if (getHexToBinaryPosition(HexCode, 6, 2) === '0' && (getHexToBinaryPosition(HexCode, 12) === '0' || il)) { //Shelf
 				return gfx["dungeon"]["stone"]["shelf"];
 			} else if (getHexToBinaryPosition(HexCode, 6, 2) === '1') { //Sign
 				var col = parseInt(getHexToBinaryPosition(HexCode, 0, 6)); //Sign colour
@@ -305,13 +306,14 @@ function drawPlayersView(p) {
 
 		for (x = 0; x < 19; x++) {
 			var view = p.getView();
-			var BlockType = getHexToBinaryPosition(view[x], 12, 4);
+			var BlockType = getHexToBinaryPosition(view[x], 13, 3);
 			var spellWall = BlockType === '7' && (getHexToBinaryPosition(view[x], 6, 2) === '2' || getHexToBinaryPosition(view[x], 6, 2) === '3');
+			var concealed = (getHexToBinaryPosition(view[x], 12) === '1' && !il);
 			if (BlockType === '2') {
 				drawWoodenObject(p, x);
 			} else {
 				var obj = p.getObjectOnPos(x, 2);
-				if (obj !== OBJECT_SHELF && obj !== OBJECT_PIT && obj !== OBJECT_PATH) { //draw items not on shelf, pit, path first
+				if (obj !== OBJECT_SHELF && obj !== OBJECT_PIT && obj !== OBJECT_PATH && !concealed) { //draw items not on shelf, pit, path first
 					drawItemsOnPos(p, x);
 				}
 				if(BlockType === '1' || spellWall) { //draw monsters before drawing walls
@@ -462,7 +464,7 @@ function drawPlayersView(p) {
 							break;
 					}
 				}
-				if (obj === OBJECT_SHELF || obj === OBJECT_PIT || obj === OBJECT_PATH) { //draw items on shelf, pit, path last
+				if ((obj === OBJECT_SHELF || obj === OBJECT_PIT || obj === OBJECT_PATH) && !concealed) { //draw items on shelf, pit, path last
 					drawItemsOnPos(p, x);
 				}
 				if(BlockType !== '1' && !spellWall) { //draw monsters after drawing anything else than walls

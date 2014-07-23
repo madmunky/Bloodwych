@@ -183,7 +183,7 @@ Monster.prototype.canOpenDoor = function() {
 	var hexThis = this.getBinaryView(18, 0, 16);
 	var hexNext = this.getBinaryView(15, 0, 16);
 	//Check the space the monster is standing on
-	if (getHexToBinaryPosition(hexThis, 12, 4) == '2' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2 + 1, 1) == '1') {
+	if (getHexToBinaryPosition(hexThis, 13, 3) == '2' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2 + 1, 1) == '1') {
 		if (this.isAggressive() && this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER && getHexToBinaryPosition(hexThis, 11, 1) == '0' && getHexToBinaryPosition(hexThis, ((7 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(18, ((7 - this.d) % 4) * 2 + 1, 1, '0');
@@ -191,7 +191,7 @@ Monster.prototype.canOpenDoor = function() {
 		}
 	}
 	//Check the space the monster is moving to
-	if (getHexToBinaryPosition(hexNext, 12, 4) == '2' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2 + 1, 1) == '1') {
+	if (getHexToBinaryPosition(hexNext, 13, 3) == '2' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2 + 1, 1) == '1') {
 		if (this.isAggressive() && this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER && getHexToBinaryPosition(hexNext, 11, 1) == '0' && getHexToBinaryPosition(hexNext, ((5 - this.d) % 4) * 2, 1) === '1') {
 			//a door that can be opened
 			this.setBinaryView(15, ((5 - this.d) % 4) * 2 + 1, 1, '0');
@@ -248,7 +248,7 @@ Monster.prototype.move = function() {
 
 Monster.prototype.doEvent = function() {
 	hex18 = tower[towerThis].floor[this.floor].Map[this.y][this.x];
-	switch (getHexToBinaryPosition(hex18, 12, 4)) {
+	switch (getHexToBinaryPosition(hex18, 13, 3)) {
 		case '7':
 			if (getHexToBinaryPosition(hex18, 6, 2) === '1') { //firepath
 				var ds = getDungeonSpell(this.floor, this.x, this.y);

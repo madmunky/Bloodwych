@@ -246,11 +246,6 @@ Projectile.prototype.action = function(tar) {
 				if(tar instanceof Player) {
 					tar.doEvent(false);
 				}
-				//var cht = tar.getChampion();
-				//if (cht !== null && cht.recruitment.playerId > -1) {
-				//	player[cht.recruitment.playerId].rotateTo(dr);
-				//	player[cht.recruitment.playerId].doEvent(false);
-				//}
 				break;
 		}
 	}
@@ -282,7 +277,7 @@ Projectile.prototype.event = function() {
 				break;
 			case SPELL_FIREPATH:
 				if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
-					setDungeonHex(this.floor, this.x, this.y, 12, 4, '7');
+					setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
 					setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
 					setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
 					setDungeonSpell(this.floor, this.x, this.y, this);
@@ -291,7 +286,7 @@ Projectile.prototype.event = function() {
 			case SPELL_BLAZE:
 				if(this.palette === PALETTE_BLAZE_BIG) {
 					if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
-						setDungeonHex(this.floor, this.x, this.y, 12, 4, '7');
+						setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
 						setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
 						setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
 						setDungeonSpell(this.floor, this.x, this.y, this);

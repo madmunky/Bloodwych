@@ -234,7 +234,7 @@ Player.prototype.action = function() {
 				return false;
 			}
 			//Doors
-			if (this.getBinaryView(15, 12, 4) === '5' && this.getBinaryView(15, 4) === '0') {
+			if (this.getBinaryView(15, 13, 3) === '5' && this.getBinaryView(15, 4) === '0') {
 				var keylock = parseInt(this.getBinaryView(15, 1, 3));
 				if (keylock > 0) {
 					if (this.pocket.id === keylock + 79) { //Use key
@@ -269,7 +269,7 @@ Player.prototype.checkWoodenDoor = function(pos18) {
 	} else { //pos18 === 15
 		d = 0;
 	}
-	if (this.getBinaryView(pos18, 12, 4) === '2' && this.getBinaryView(pos18, ((5 + d - this.d) % 4) * 2) === '1') {
+	if (this.getBinaryView(pos18, 13, 3) === '2' && this.getBinaryView(pos18, ((5 + d - this.d) % 4) * 2) === '1') {
 		if (this.pocket.id === ITEM_KEY) { //Use common key
 			this.consumeItemInHand();
 			this.setBinaryView(pos18, 11, 1);
@@ -474,7 +474,7 @@ Player.prototype.doEvent = function(mr) {
 	//this.resetChampUI();
 	this.updateChampions();
 	var view = this.getView();
-	switch (getHexToBinaryPosition(view[18], 12, 4)) {
+	switch (getHexToBinaryPosition(view[18], 13, 3)) {
 
 		case '4':
 			this.doStairs();
@@ -521,7 +521,7 @@ Player.prototype.doPit = function() {
 };
 
 Player.prototype.doFizzle = function() {
-	if (this.getBinaryView(18, 12, 4) === '6' && this.getBinaryView(18, 6, 2) === '0') {
+	if (this.getBinaryView(18, 13, 3) === '6' && this.getBinaryView(18, 6, 2) === '0') {
 		for (c = 0; c < this.champion.length; c++) {
 			var ch = this.getChampion(c);
 			if (ch.activeSpell.id > -1) {
@@ -1214,6 +1214,8 @@ Player.prototype.actionItem = function(s) {
 		default:
 			break;
 	}
+	
+	setDungeonHex(this.floor, xyi.x, xyi.y, 12, 1, '0');
 	if (itH.id === 0) { //take item
 		for (i = item[towerThis].length - 1; i >= 0; i--) {
 			if (item[towerThis][i].location.tower === towerThis && item[towerThis][i].location.floor === this.floor && item[towerThis][i].location.x === xyi.x && item[towerThis][i].location.y === xyi.y && item[towerThis][i].location.square === (this.d + s) % 4) {

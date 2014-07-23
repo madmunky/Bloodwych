@@ -4,17 +4,18 @@
 
 JORG
 -----
-COD More spells! Conceal and Beguile remaining
+COD More spells! Beguile remaining
 COD Fix Big monster 'edge of screen'
 COD Tune vivify spell
+COD Add sounds to where it is needed
 BUG Don't call "player.event" when pit on ceiling (in doPit)
 BUG Arrows on Right UI sometimes show over pockets or scroll
 BUG Avoid putting items in edge-floor walls
+BUG Firepath is now blinking too fast
 GFX Draw back champs on stairs lower
 
 CHRIS
 ------
-COD Sounds!
 UI  Finish communication
 GFX Big monster drawing fixes
 GFX Find Armour Palettes
