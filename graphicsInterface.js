@@ -2182,7 +2182,6 @@ function uiGameStateMenu(x, y, p) {
 				inp.val(getGameName(slot));
 				inp.data('player-id', p.id);
 				inp.data('slot-id', slot);
-				inp.trigger('click');
 				inp.focus().select();
 				inp.trigger('keyup');
 			}

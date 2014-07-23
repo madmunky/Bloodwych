@@ -356,6 +356,9 @@ $(function() {
 			}
 		}
 	});
+	$('body').on('focus', 'input.save-game', function() {
+		$(this).trigger('click');
+	});
 	$('body').on('focusout', 'input.save-game', function() {
 		var p = $(this).data('player-id');
 		if (player[p].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
