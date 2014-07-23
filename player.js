@@ -260,8 +260,19 @@ Player.prototype.action = function() {
 	return false;
 };
 
-Player.prototype.toggleFrontObject = function() {
-	this.setBinaryView(15, 12, 1);
+Player.prototype.alterObject = function(a, b, c) {
+	if(debug) {
+		var a1 = (parseInt(this.getBinaryView(15, 13, 3)) + a + 8) % 8;
+		this.setBinaryView(15, 13, 3, '' + a1);
+		if(typeof b !== 'undefined') {
+			var b1 = (parseInt(this.getBinaryView(15, 6, 2)) + b + 4) % 4;
+			this.setBinaryView(15, 6, 2, '' + b1);
+		}
+		/*if(typeof c !== 'undefined') {
+			var c1 = (parseInt(this.getBinaryView(15, 10, 2)) + c + 4) % 4;
+			this.setBinaryView(15, 10, 2, '' + c1);
+		}*/
+	}
 };
 Player.prototype.checkWoodenDoor = function(pos18) {
 	if (pos18 === 18) {

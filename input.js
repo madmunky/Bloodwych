@@ -83,10 +83,6 @@ function doKeyDown(e) {
 						redrawUI(0);
 						PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
 						break; // T KEY
-					case KEY_F:
-						player[0].testMode();
-						//player[0].castSpell(SPELL_DISPELL, player[0].getChampion(player[0].championLeader));
-						break; // F cheat  
 					case KEY_G:
 						//player[0].changeDownFloor();
 						var ch = player[0].getActivePocketChampion();
@@ -132,10 +128,15 @@ function doKeyDown(e) {
 					case KEY_9:
 						testMon1 = (testMon1 - 1);
 						break;
-					case KEY_R:
-						player[0].toggleFrontObject();
-						//player[0].castSpell(SPELL_FORMWALL, player[0].getChampion(player[0].championLeader));
-						break; //R Key
+					case KEY_1:
+						player[0].alterObject(-1);
+						break;
+					case KEY_2:
+						player[0].alterObject(0, 1);
+						break;
+					case KEY_3:
+						player[0].alterObject(1);
+						break; 
 					default:
 						break;
 				}
