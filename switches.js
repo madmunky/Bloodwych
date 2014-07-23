@@ -79,14 +79,18 @@ function floorActionType(trig, p) {
 			if(getMonsterAt(p.floor, p.x + 1, p.y) === null) {
 				tower[towerThis].floor[p.floor].Map[p.y][p.x + 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x + 1], 7, 1, '1');
 			}
-			castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x + 1, y: p.y, d: 1 });
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, -1, 0, p.floor, p.x + 2, p.y, 1, null);
+			castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x + 3, y: p.y, d: 1 });
+			castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x + 2, y: p.y - 1, d: 2 });
+			castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x + 2, y: p.y + 1, d: 0 });
 			break;
 		case SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL:
 			if(getMonsterAt(p.floor, p.x - 1, p.y) === null) {
 				tower[towerThis].floor[p.floor].Map[p.y][p.x - 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x - 1], 7, 1, '1');
 			}
-			for(ch = 0; ch < p.champion.length; ch++) {
+			castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x + 1, y: p.y, d: 1 });
+			castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x, y: p.y - 1, d: 2 });
+			castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x, y: p.y + 1, d: 0 });
+			/*for(ch = 0; ch < p.champion.length; ch++) {
 				var champ = p.getChampion(ch);
 				if(champ !== null && champ.getMonster().dead && champ.recruitment.attached) {
 					champ.stat.hp = 0;
@@ -94,7 +98,7 @@ function floorActionType(trig, p) {
 					redrawUI(p.id);
 				}
 			}
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, -1, 0, p.floor, p.x, p.y, 1, null);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, -1, 0, p.floor, p.x, p.y, 1, null);*/
 			break;
 		case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:
 			tower[towerThis].floor[p.floor].Map[p.y][p.x + 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x + 1], 5, 1, '1');

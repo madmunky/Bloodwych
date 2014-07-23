@@ -1,6 +1,5 @@
 //DEBUG
 var debug = false;
-var audioFiles = [];
 //Declare Arrays for the Graphics
 var gfx = [];
 var player = new Array();
@@ -14,7 +13,7 @@ var currentPlayer = 0;
 var paused = false;
 var checkStarted = true;
 
-//Setup some global Varibles for needed
+//Setup some global variables for needed
 var VERSION = 0.50;
 var versionThis = 0.50;
 var Types = {};
@@ -30,9 +29,7 @@ var testDirection = 0;
 var testPalette = 0;
 var timerMaster = 0;
 var timerMonsterMove = 0;
-//var timerMonsterAttack = 0;
 var timerChampionStats = 0;
-//var timerChampionAttack = 16;
 var cutpurseTrueview = 0;
 var towerSwitchesData = new Array();
 var gemSwitchesData = new Array();
@@ -43,6 +40,7 @@ var font;
 var uiClickArea = [];
 var itemsGfxD = [];
 var redrawPlayerUiFlag = 0;
+var audioFiles = [];
 
 //sounds
 var SOUND_DOOR = 0,
@@ -51,9 +49,6 @@ var SOUND_DOOR = 0,
         SOUND_DEATH = 3,
         SOUND_SPELL = 4,
         SOUND_SWITCH = 5;
-
-//mobile settings
-var mobileMenuOpen = false;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 //When a file is called, we increase 'count'

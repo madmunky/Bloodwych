@@ -29,11 +29,9 @@ $(function() {
 		var p = player[0];
 		if (typeof p !== "undefined") {
 			if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-				mobileMenuOpen = false;
 				p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 				p.message();
 			} else {
-				mobileMenuOpen = true;
 				p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_MENU;
 				showGameStateMenu(p);
 			}

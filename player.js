@@ -1018,7 +1018,9 @@ Player.prototype.drawItem = function(it, distance, offset) {
 
 Player.prototype.drawProjectile = function(pr, distance, offset) {
 	if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 1) {
-		var pGfx = itemsGfxD[pr.type][distance];
+		if(pr.type !== DUNGEON_NONE) {
+			var pGfx = itemsGfxD[pr.type][distance];
+		}
 	} else {
 		var pGfx = itemsGfxD[DUNGEON_PROJECTILE_EXPLODE][distance];
 	}

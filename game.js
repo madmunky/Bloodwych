@@ -153,7 +153,7 @@ function timerAction() {
 			}
 		}
 		for (var p = 0; p < projectile[towerThis].length; p++) {
-			if (projectile[towerThis][p].dead >= 4) {
+			if (projectile[towerThis][p].dead >= 3) {
 				projectile[towerThis].splice(p, 1);
 				p--;
 			}

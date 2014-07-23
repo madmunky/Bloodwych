@@ -291,7 +291,8 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_VIVIFY:
-			if (canMove(f, x, y, d) === OBJECT_NONE && getMonsterAt(f, x1, y1) === null) {
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, s, 0, f, x, y, d, src);
+			/*if (canMove(f, x, y, d) === OBJECT_NONE && getMonsterAt(f, x1, y1) === null) {
 				for (i = item[towerThis].length - 1; i >= 0; i--) {
 					var it = item[towerThis][i];
 					if (it.id >= ITEM_BLODWYN_RIP && it.id <= ITEM_THAI_CHANG_RIP && it.location.tower === towerThis && it.location.floor === f && it.location.x === x1 && it.location.y === y1) {
@@ -324,19 +325,22 @@ function castSpell(s, src, pw) {
 						break;
 					}
 				}
-			}
-			if(typeof ch !== 'undefined') {
-				var p = player[ch.recruitment.playerId];
-				for(c = 0; c < p.champion.length; c++) {
-					var ch1 = p.getChampion(c);
-					if(ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
-						ch1.stat.hp = 0;
-						ch1.getMonster().dead = false;
-						redrawUI(p.id);
+			}*/
+			for (p in player) {
+				var pl = player[p];
+				if (!pl.dead && f === pl.floor && x === pl.x && y === pl.y) {
+					for(c = 0; c < pl.champion.length; c++) {
+						var ch1 = pl.getChampion(c);
+						if(ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
+							ch1.stat.hp = 0;
+							ch1.getMonster().dead = false;
+							redrawUI(p);
+						}
 					}
+					pl.updateChampions();
+					break;
 				}
-				newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, s, 0, f, x1, y1, (d + 2) % 4, src);
-			}                        
+			}
 			break;
 		case SPELL_DISRUPT:
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, s, pow, f, x, y, d, src);
