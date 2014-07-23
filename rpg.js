@@ -68,6 +68,9 @@ function calculateAttack(att, def, tof) {
 			}
 		} else if (att instanceof Projectile) {
 			if (a === 0) {
+				if(att.monster === null) {
+					break;
+				}
 				from = att.monster;
 				fmon = null;
 				attack += att.power;

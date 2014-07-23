@@ -366,7 +366,7 @@ function castSpell(s, src, pw) {
 			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_MOON_ARROW, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_CONCEAL:
-			this.setBinaryView(15, 12, 1);
+			src.setBinaryView(15, 12, 1);
 			break;
 		case SPELL_TRUEVIEW:
 			ch.activateSpell(s, pow);

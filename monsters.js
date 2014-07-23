@@ -152,8 +152,11 @@ Monster.prototype.canMove = function() {
 
 	if (this.teamId > 0 || sq === CHAR_FRONT_SOLO || sq === CHAR_FRONT_LEFT || sq === CHAR_FRONT_RIGHT) {
 		var ob = canMove(this.floor, this.x, this.y, this.d);
+		var xy = getOffsetByRotation(this.d);
 		if (ob === OBJECT_WOOD && this.canOpenDoor()) {
 			return OBJECT_WOOD_DOOR;
+		} else if(ob === OBJECT_NONE && getObject(this.floor, this.x + xy.x, this.y + xy.y) === OBJECT_PIT && this.form !== MON_FORM_BEHOLDER && this.form !== MON_FORM_ENTITY) {
+			return OBJECT_PIT;
 		}
 		return ob;
 	}

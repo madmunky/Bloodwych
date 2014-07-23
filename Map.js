@@ -259,9 +259,9 @@ function getObject(f, x, y, d, to) {
 			}
 		} else if (obj == '6') { //path, pits
 			if (getHexToBinaryPosition(hex, 6, 2) === '1') {
-				return OBJECT_PATH;
-			} else if (getHexToBinaryPosition(hex, 6, 2) === '2') {
 				return OBJECT_PIT;
+			} else if (getHexToBinaryPosition(hex, 6, 2) === '2') {
+				return OBJECT_PATH;
 			}
 		} else if (obj == '7') { //magic
 			if (getHexToBinaryPosition(hex, 6, 2) === '1') {

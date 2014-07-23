@@ -268,10 +268,10 @@ Player.prototype.alterObject = function(a, b, c) {
 			var b1 = (parseInt(this.getBinaryView(15, 6, 2)) + b + 4) % 4;
 			this.setBinaryView(15, 6, 2, '' + b1);
 		}
-		/*if(typeof c !== 'undefined') {
+		if(typeof c !== 'undefined') {
 			var c1 = (parseInt(this.getBinaryView(15, 10, 2)) + c + 4) % 4;
-			this.setBinaryView(15, 10, 2, '' + c1);
-		}*/
+			this.setBinaryView(15, 0, 8, '' + c1);
+		}
 	}
 };
 Player.prototype.checkWoodenDoor = function(pos18) {
@@ -300,7 +300,9 @@ Player.prototype.checkWoodenDoor = function(pos18) {
 //'to' will be a binary string, e.g. '1010'
 Player.prototype.setBinaryView = function(pos18, index, length, to) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
-	tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length, to);
+	if(typeof tower[towerThis].floor[this.floor].Map[xy.y] !== 'undefined' && typeof tower[towerThis].floor[this.floor].Map[xy.y][xy.x] !== 'undefined') {
+		tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length, to);
+	}
 	//this.updateView();
 };
 
@@ -1320,7 +1322,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
 			if (this.doFizzle()) {
 				writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, COLOUR[COLOUR_BLUE_DARK]);
 			} else if (Math.random() < ch.getSpellCastChance()) {
-				castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10 + ch.level * 5);
+				castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10 + ch.level * 4);
 				sb.castSuccessful++;
 				if (!s) {
 					this.showSpellText = false;
