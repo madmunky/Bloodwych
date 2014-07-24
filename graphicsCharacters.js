@@ -326,23 +326,6 @@ function grabCharacter(form, part, dir, dist) {
 			var tmpPalette = monsterPalette[form].miniPalette;
 			var d = [0, 2, 3, 1];
 			var mini = recolourSprite(characterGfx[IMAGE_CHA_MINI][miniId][dist - 4][d[dir]], MON_PALETTE_DEFAULT, tmpPalette);
-
-			//            var height = mini.height,
-			//                width = mini.width;
-			//
-			//            var can = document.createElement('canvas');
-			//            can.width = width;
-			//            can.height = height;
-			//            var charContext = can.getContext("2d");
-			//            //var charImageObj = new Image();
-			//            //charImageObj.width = width;
-			//            //charImageObj.height = height;
-			//
-			//            charContext.drawImage(mini, 0, 0, mini.width, mini.height);
-			//
-			//            charContext.save();
-			//            //charImageObj.src = can.toDataURL();
-			//            delete mini;
 			return mini;
 		}
 	} else if (dist < 4 && part !== IMAGE_CHA_MINI) {
@@ -391,9 +374,6 @@ function grabCharacter(form, part, dir, dist) {
 			can.width = width;
 			can.height = height;
 			var charContext = can.getContext("2d");
-			//var charImageObj = new Image();
-			//charImageObj.width = width;
-			//charImageObj.height = height;
 
 			switch (part) {
 				case IMAGE_CHA_LEG:
@@ -462,32 +442,27 @@ function grabCharacter(form, part, dir, dist) {
 			charContext.drawImage(partSprite, coord.x, coord.y, partSprite.width, partSprite.height);
 
 			charContext.save();
-			//charImageObj.src = can.toDataURL();
 			delete partSprite;
 			return can;
 		}
 	}
-	//} catch (e) {
-	//	PrintLog("GrabCharacter ERROR Monster ID "+form.toString()+ ", DIR: " +dir.toString()+" , DIST: "+dist+" : " + e.toString());
-	//}
+}
+
+function clipCharacter(img, percentClipped) {
+
+	var can = document.createElement('canvas');
+	can.width = img.width;
+	can.height = img.height - percentClipped;
+	var charContext = can.getContext("2d");
+
+	charContext.drawImage(img, 0, 0);
+	charContext.save();
+
+	return can;
 
 }
 
-function clipCharacter(img,percentClipped){
-    
-    var can = document.createElement('canvas');
-    can.width = img.width;
-    can.height = img.height - percentClipped;
-    var charContext = can.getContext("2d");
-                
-    charContext.drawImage(img,0,0);
-    charContext.save();
-    
-    return can;    
-    
-}
-
-function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip,pixToClip) {
+function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, pixToClip) {
 
 	var can,
 		charContext;
@@ -506,15 +481,15 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip,p
 	if (typeof returnImg === "undefined") {
 		returnImg = false;
 	}
-        
-        if (typeof doClip === "undefined") {
+
+	if (typeof doClip === "undefined") {
 		doClip = false;
 	}
 
 	if (dist > -1) {
 		for (part = 0; part < 5; part++) {
 			if (typeof m.ref.gfx[part] !== "undefined" && typeof m.ref.gfx[part][dist] !== "undefined" && typeof m.ref.gfx[part][dist][dir] !== "undefined") {
-				if(typeof doBlur === 'undefined') {
+				if (typeof doBlur === 'undefined') {
 					doBlur = true;
 				}
 				var dir1 = dir;
@@ -583,7 +558,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip,p
 				}
 				var gfx1 = m.ref.gfx[part][dist][dir1];
 				var gfx2 = m.ref.gfx[part][dist][dir2];
-				if(m.form === 26 && m.glow === 0) {
+				if (m.form === 26 && m.glow === 0) {
 					gfx1 = monsterRef[27][0].gfx[part][dist][dir1];
 					gfx2 = monsterRef[27][0].gfx[part][dist][dir2];
 				}
@@ -596,27 +571,25 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip,p
 						blur = m.blur;
 					}
 					if (!returnImg) {
-                                            if ((doClip && part === IMAGE_CHA_LEG) || (doClip && part === IMAGE_CHA_MINI)){   
-                                                var t = clipCharacter(gfx1,pixToClip);
-                                                player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
-                                                }
-                                                else{
-                                                player.Portal.drawImage(gfx1, (offx + blur) * scale, offy * scale, gfx1.width * scale, gfx1.height * scale);      
-                                                }                                                
-                                            } 
-                                            else {
+						if ((doClip && part === IMAGE_CHA_LEG) || (doClip && part === IMAGE_CHA_MINI)) {
+							var t = clipCharacter(gfx1, pixToClip);
+							player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
+						} else {
+							player.Portal.drawImage(gfx1, (offx + blur) * scale, offy * scale, gfx1.width * scale, gfx1.height * scale);
+						}
+					} else {
 						charContext.drawImage(gfx1, (offx + blur), offy, gfx1.width, gfx1.height);
 					}
 					if (dir2 > -1) {
 						offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
 						offy = 76 - Math.floor(gfx2.height) - offset.y;
 						if (!returnImg) {
-                                                    if (doClip && part === IMAGE_CHA_LEG){           
-                                                        var t = clipCharacter(gfx2,pixToClip);
-                                                        player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
-                                                    }else{
-                                                        player.Portal.drawImage(gfx2, (offx + blur) * scale, offy * scale, gfx2.width * scale, gfx2.height * scale);
-                                                    }							
+							if (doClip && part === IMAGE_CHA_LEG) {
+								var t = clipCharacter(gfx2, pixToClip);
+								player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
+							} else {
+								player.Portal.drawImage(gfx2, (offx + blur) * scale, offy * scale, gfx2.width * scale, gfx2.height * scale);
+							}
 						} else {
 							charContext.drawImage(gfx2, (offx + blur), offy, gfx2.width, gfx2.height);
 						}
@@ -682,7 +655,8 @@ function drawMonster(m, dir, dist, player, offset) {
 								if (mas === 1 || mas === 2 || mas === 3) {
 									dir1 = 5;
 								}
-							} if (m.gesture === CHA_GESTURE_SPELLCASTING) {
+							}
+							if (m.gesture === CHA_GESTURE_SPELLCASTING) {
 								if (mas === 0 || mas === 1 || mas === 2) {
 									dir1 = 5;
 									dir2 = 4;
@@ -693,7 +667,8 @@ function drawMonster(m, dir, dist, player, offset) {
 								if (mas === 1 || mas === 2 || mas === 3) {
 									dir1 = 7;
 								}
-							} if (m.gesture === CHA_GESTURE_SPELLCASTING) {
+							}
+							if (m.gesture === CHA_GESTURE_SPELLCASTING) {
 								if (mas === 0 || mas === 1 || mas === 2) {
 									dir1 = 7;
 								}
@@ -703,7 +678,8 @@ function drawMonster(m, dir, dist, player, offset) {
 								if (mas === 0 || mas === 1 || mas === 3) {
 									dir1 = 6;
 								}
-							} if (m.gesture === CHA_GESTURE_SPELLCASTING) {
+							}
+							if (m.gesture === CHA_GESTURE_SPELLCASTING) {
 								if (mas === 0 || mas === 1 || mas === 2) {
 									dir1 = 6;
 								}
@@ -711,7 +687,7 @@ function drawMonster(m, dir, dist, player, offset) {
 						}
 					}
 					var gfx1 = m.ref.gfx[part][dist][dir1];
-					var gfx2 = m.ref.gfx[part][dist][dir2]
+					var gfx2 = m.ref.gfx[part][dist][dir2];
 					var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
 					var offy = 76 - Math.floor(gfx1.height) - offset.y;
 

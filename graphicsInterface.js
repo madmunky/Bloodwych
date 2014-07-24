@@ -1,3 +1,97 @@
+function drawUI(p) {
+	if (p.redrawLeftRightUiFlag > -1 && redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
+		if (typeof gfxUI !== "undefined" && gfxUI !== null) {
+			if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
+					ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
+					leftUI(p);
+				}
+			} else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_COMMAND) {
+					ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
+					commandUI(p);
+				}
+			}
+
+			if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
+					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+					rightUI(p);
+				}
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_ACTIVESPELL) {
+					drawActiveSpell(p);
+				}
+			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_POCKETS) {
+					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+					drawPocketUI(p);
+				}
+			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
+				if (p.timerSpellBookTurn === 0) {
+					if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_SPELLBOOK) {
+						ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+						drawSpellBook(p);
+					}
+				}
+			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
+					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+					drawStatsPage(p);
+				}
+			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
+					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+					drawWallScroll(p);
+				}
+			}
+			if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL) {
+				if (typeof player[1] !== 'undefined') {
+					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
+				} else {
+					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY + 96]);
+					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY - 20]);
+				}
+			}
+			p.redrawLeftRightUiFlag = -1;
+			return true;
+		}
+	}
+	return false;
+}
+
+function redrawUI(p, lr) {
+	if (redrawPlayerUiFlag === 0 || (redrawPlayerUiFlag & (p + 1)) !== (p + 1)) {
+		redrawPlayerUiFlag = redrawPlayerUiFlag + (p + 1);
+	}
+	if (typeof lr === "undefined") {
+		lr = 0;
+	}
+	if (p === 2) {
+		if (typeof player[0] !== "undefined") {
+			if (player[0].redrawLeftRightUiFlag > -1 && player[0].redrawLeftRightUiFlag !== lr) {
+				player[0].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+			} else {
+				player[0].redrawLeftRightUiFlag = lr;
+			}
+		}
+		if (typeof player[1] !== "undefined") {
+			if (player[1].redrawLeftRightUiFlag > -1 && player[1].redrawLeftRightUiFlag !== lr) {
+				player[1].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+			} else {
+				player[1].redrawLeftRightUiFlag = lr;
+			}
+		}
+	} else {
+		if (typeof player[p] !== "undefined") {
+			if (player[p].redrawLeftRightUiFlag > -1 && player[p].redrawLeftRightUiFlag !== lr) {
+				player[p].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+			} else {
+				player[p].redrawLeftRightUiFlag = lr;
+			}
+		}
+	}
+}
+
 function grabUISprites(spriteSheetIMG) {
 
 	var ImageArray = [];
@@ -293,100 +387,6 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop, full) {
 	})(p, ui, dr, stop);
 }
 
-function drawUI(p) {
-	if (p.redrawLeftRightUiFlag > -1 && redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
-		if (typeof gfxUI !== "undefined" && gfxUI !== null) {
-			if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
-					ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
-					leftUI(p);
-				}
-			} else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_COMMAND) {
-					ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
-					commandUI(p);
-				}
-			}
-
-			if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
-					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					rightUI(p);
-				}
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_ACTIVESPELL) {
-					drawActiveSpell(p);
-				}
-			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_POCKETS) {
-					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					drawPocketUI(p);
-				}
-			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
-				if (p.timerSpellBookTurn === 0) {
-					if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_SPELLBOOK) {
-						ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-						drawSpellBook(p);
-					}
-				}
-			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
-					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					drawStatsPage(p);
-				}
-			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
-					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					drawWallScroll(p);
-				}
-			}
-			if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL) {
-				if (typeof player[1] !== 'undefined') {
-					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
-				} else {
-					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY + 96]);
-					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY - 20]);
-				}
-			}
-			p.redrawLeftRightUiFlag = -1;
-			return true;
-		}
-	}
-	return false;
-}
-
-function redrawUI(p, lr) {
-	if (redrawPlayerUiFlag === 0 || (redrawPlayerUiFlag & (p + 1)) !== (p + 1)) {
-		redrawPlayerUiFlag = redrawPlayerUiFlag + (p + 1);
-	}
-	if (typeof lr === "undefined") {
-		lr = 0;
-	}
-	if (p === 2) {
-		if (typeof player[0] !== "undefined") {
-			if (player[0].redrawLeftRightUiFlag > -1 && player[0].redrawLeftRightUiFlag !== lr) {
-				player[0].redrawLeftRightUiFlag = UI_REDRAW_ALL;
-			} else {
-				player[0].redrawLeftRightUiFlag = lr;
-			}
-		}
-		if (typeof player[1] !== "undefined") {
-			if (player[1].redrawLeftRightUiFlag > -1 && player[1].redrawLeftRightUiFlag !== lr) {
-				player[1].redrawLeftRightUiFlag = UI_REDRAW_ALL;
-			} else {
-				player[1].redrawLeftRightUiFlag = lr;
-			}
-		}
-	} else {
-		if (typeof player[p] !== "undefined") {
-			if (player[p].redrawLeftRightUiFlag > -1 && player[p].redrawLeftRightUiFlag !== lr) {
-				player[p].redrawLeftRightUiFlag = UI_REDRAW_ALL;
-			} else {
-				player[p].redrawLeftRightUiFlag = lr;
-			}
-		}
-	}
-}
-
 function leftUI(p) {
 
 	ctx.drawImage(gfxUI[UI_GFX_STATSBOX], (p.ScreenX + 51) * scale, p.ScreenY * scale, gfxUI[UI_GFX_STATSBOX].width * scale, gfxUI[UI_GFX_STATSBOX].height * scale);
@@ -573,65 +573,41 @@ function drawActiveSpell(p) {
 
 		switch (id) {
 			case SPELL_ARMOUR:
-				{
-					spellImage = UI_GFX_ICON_SPELL_ARMOUR;
-				}
+				spellImage = UI_GFX_ICON_SPELL_ARMOUR;
 				break;
 			case SPELL_COMPASS:
-				{
-					switch (p.d) {
-						case DIRECTION_NORTH:
-							{
-								spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;
-							}
-							break;
-						case DIRECTION_EAST:
-							{
-								spellImage = UI_GFX_ICON_SPELL_COMPASS_EAST;
-							}
-							break;
-						case DIRECTION_SOUTH:
-							{
-								spellImage = UI_GFX_ICON_SPELL_COMPASS_SOUTH;
-							}
-							break;
-						case DIRECTION_WEST:
-							{
-								spellImage = UI_GFX_ICON_SPELL_COMPASS_WEST;
-							}
-							break;
-					}
+				switch (p.d) {
+					case DIRECTION_NORTH:
+						spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;
+						break;
+					case DIRECTION_EAST:
+						spellImage = UI_GFX_ICON_SPELL_COMPASS_EAST;
+						break;
+					case DIRECTION_SOUTH:
+						spellImage = UI_GFX_ICON_SPELL_COMPASS_SOUTH;
+						break;
+					case DIRECTION_WEST:
+						spellImage = UI_GFX_ICON_SPELL_COMPASS_WEST;
+						break;
 				}
 				break;
 			case SPELL_LEVITATE:
-				{
-					spellImage = UI_GFX_ICON_SPELL_LEVITATE;
-				}
+				spellImage = UI_GFX_ICON_SPELL_LEVITATE;
 				break;
 			case SPELL_WARPOWER:
-				{
-					spellImage = UI_GFX_ICON_SPELL_WARPOWER;
-				}
+				spellImage = UI_GFX_ICON_SPELL_WARPOWER;
 				break;
 			case SPELL_DEFLECT:
-				{
-					spellImage = UI_GFX_ICON_SPELL_DEFLECT;
-				}
+				spellImage = UI_GFX_ICON_SPELL_DEFLECT;
 				break;
 			case SPELL_VANISH:
-				{
-					spellImage = UI_GFX_ICON_SPELL_VANISH;
-				}
+				spellImage = UI_GFX_ICON_SPELL_VANISH;
 				break;
 			case SPELL_ANTIMAGE:
-				{
-					spellImage = UI_GFX_ICON_SPELL_ANTIMAGE;
-				}
+				spellImage = UI_GFX_ICON_SPELL_ANTIMAGE;
 				break;
 			case SPELL_TRUEVIEW:
-				{
-					spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;
-				}
+				spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;
 				break;
 		}
 		ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
@@ -665,11 +641,7 @@ function rightUI(p) {
 			ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
 		}
 	}
-
-
-
 	ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
-
 	for (c = 0; c < p.champion.length; c++) {
 		var ca = [0, 1, 3, 2];
 		var c1 = ca[c];
@@ -715,8 +687,6 @@ function drawPocketInfo(p, chp) {
 }
 
 function drawPocketUI(p, chp, start) {
-
-
 	if (typeof chp === 'undefined') {
 		chp = p.getActivePocketChampion();
 		start = false;
@@ -730,12 +700,6 @@ function drawPocketUI(p, chp, start) {
 		}
 		writeFontImage(chp.firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
 	}
-
-
-	//var ch = p.getOrderedChampionIds();
-	//var cp = ch[p.uiRightPanel.activePocket];
-
-
 
 	var i = 0;
 	for (y = 0; y < 2; y++) {
@@ -855,8 +819,6 @@ function drawPocketUI(p, chp, start) {
 			}
 		}
 	}
-
-
 }
 
 function highliteMovementArrow(p, m) {
@@ -903,7 +865,6 @@ function highliteMovementArrow(p, m) {
 }
 
 function drawStatsPage(p, ch, start) {
-
 	if (typeof ch === 'undefined') {
 		ch = p.getChampion(p.championLeader);
 	}
@@ -1010,596 +971,6 @@ function createShield(id, type, colour) {
 
 }
 
-function uiClickAreas() {
-
-	//X , Y , WIDTH , HEIGHT
-
-	var UCA = [];
-
-	UCA.push({
-		x: 0,
-		y: 0,
-		width: 50,
-		height: 44
-	}); //CHAMP 1
-	UCA.push({
-		x: 51,
-		y: 0,
-		width: 43,
-		height: 44
-	}); //STATS GRAPH
-	UCA.push({
-		x: 0,
-		y: 45,
-		width: 30,
-		height: 41
-	}); //CHAMP 2
-	UCA.push({
-		x: 32,
-		y: 45,
-		width: 30,
-		height: 41
-	}); //CHAMP 3
-	UCA.push({
-		x: 64,
-		y: 45,
-		width: 30,
-		height: 41
-	}); //CHAMP 4
-
-	UCA.push({
-		x: 96,
-		y: 9,
-		width: 128,
-		height: 76
-	}); //3D VIEWPORT
-
-	UCA.push({
-		x: 226,
-		y: 1,
-		width: 94,
-		height: 19
-	}); //NAME TAG AREA
-	UCA.push({
-		x: 226,
-		y: 22,
-		width: 37,
-		height: 22
-	}); //SPELLBOOK
-	UCA.push({
-		x: 265,
-		y: 22,
-		width: 22,
-		height: 22
-	}); //CHARACTER STATS
-	UCA.push({
-		x: 289,
-		y: 22,
-		width: 16,
-		height: 16
-	}); //INTERACT
-	UCA.push({
-		x: 305,
-		y: 22,
-		width: 16,
-		height: 16
-	}); //OPEN POCKETS
-	UCA.push({
-		x: 226,
-		y: 47,
-		width: 13,
-		height: 13
-	}); //ROTATE LEFT
-	UCA.push({
-		x: 239,
-		y: 47,
-		width: 16,
-		height: 13
-	}); //MOVE FORWARD
-	UCA.push({
-		x: 255,
-		y: 47,
-		width: 13,
-		height: 13
-	}); //ROTATE RIGHT
-	UCA.push({
-		x: 226,
-		y: 60,
-		width: 13,
-		height: 14
-	}); //MOVE LEFT
-	UCA.push({
-		x: 239,
-		y: 60,
-		width: 16,
-		height: 14
-	}); //MOVE BACKWARDS
-	UCA.push({
-		x: 255,
-		y: 60,
-		width: 13,
-		height: 14
-	}); //MOVE RIGHT
-	UCA.push({
-		x: 269,
-		y: 45,
-		width: 17,
-		height: 16
-	}); //ATTACK
-	UCA.push({
-		x: 269,
-		y: 61,
-		width: 17,
-		height: 15
-	}); //DEFEND
-
-	UCA.push({
-		x: 225,
-		y: 22,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 1
-	UCA.push({
-		x: 241,
-		y: 22,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 2
-	UCA.push({
-		x: 257,
-		y: 22,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 3
-	UCA.push({
-		x: 273,
-		y: 22,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 4
-	UCA.push({
-		x: 289,
-		y: 22,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 5
-	UCA.push({
-		x: 305,
-		y: 22,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 6    
-	UCA.push({
-		x: 225,
-		y: 38,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 7
-	UCA.push({
-		x: 241,
-		y: 38,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 8
-	UCA.push({
-		x: 257,
-		y: 38,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 9
-	UCA.push({
-		x: 273,
-		y: 38,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 10
-	UCA.push({
-		x: 289,
-		y: 38,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 11
-	UCA.push({
-		x: 305,
-		y: 38,
-		width: 16,
-		height: 16
-	}); //POCKET SLOT 12    
-	UCA.push({
-		x: 225,
-		y: 63,
-		width: 16,
-		height: 15
-	}); //POCKET CHARACTER 0
-	UCA.push({
-		x: 241,
-		y: 63,
-		width: 16,
-		height: 15
-	}); //POCKET CHARACTER 1
-	UCA.push({
-		x: 257,
-		y: 63,
-		width: 16,
-		height: 15
-	}); //POCKET CHARACTER 2
-	UCA.push({
-		x: 273,
-		y: 63,
-		width: 16,
-		height: 15
-	}); //POCKET CHARACTER 3
-	UCA.push({
-		x: 289,
-		y: 63,
-		width: 16,
-		height: 15
-	}); //POCKET HAND
-	UCA.push({
-		x: 305,
-		y: 63,
-		width: 16,
-		height: 15
-	}); //POCKET BACK
-
-	UCA.push({
-		x: 56,
-		y: 0,
-		width: 16,
-		height: 16
-	}); //PAUSE BUTTON
-	UCA.push({
-		x: 73,
-		y: 0,
-		width: 16,
-		height: 16
-	}); //SAVE BUTTON
-	UCA.push({
-		x: 56,
-		y: 16,
-		width: 16,
-		height: 16
-	}); //SLEEP BUTTON
-	UCA.push({
-		x: 73,
-		y: 16,
-		width: 16,
-		height: 16
-	}); //LEFT BACK BUTTON
-	UCA.push({
-		x: 57,
-		y: 32,
-		width: 14,
-		height: 12
-	}); //SCROLLUP BUTTON
-	UCA.push({
-		x: 71,
-		y: 32,
-		width: 14,
-		height: 12
-	}); //SCROLLDOWN BUTTON
-	UCA.push({
-		x: 289,
-		y: 46,
-		width: 16,
-		height: 14
-	}); //Character Front Left Icon
-	UCA.push({
-		x: 305,
-		y: 46,
-		width: 16,
-		height: 14
-	}); //Character Front Right Icon
-	UCA.push({
-		x: 289,
-		y: 61,
-		width: 16,
-		height: 14
-	}); //Character Back Left Icon
-	UCA.push({
-		x: 305,
-		y: 61,
-		width: 16,
-		height: 14
-	}); //Character Back Right Icon
-	UCA.push({
-		x: 225,
-		y: 0,
-		width: 95,
-		height: 86
-	}); //Character Stats Exit
-	UCA.push({
-		x: 255,
-		y: -1,
-		width: 35,
-		height: 8
-	}); //Spell Book Exit
-	UCA.push({
-		x: 0,
-		y: 0,
-		width: 320,
-		height: 86
-	}); //Player Area
-	UCA.push({
-		x: 135,
-		y: 25,
-		width: 50,
-		height: 15
-	}); //Portal - Shelf Top
-	UCA.push({
-		x: 135,
-		y: 40,
-		width: 50,
-		height: 15
-	}); //Portal - Shelf Bottom
-	UCA.push({
-		x: 135,
-		y: 25,
-		width: 50,
-		height: 29
-	}); //Portal - Switch
-	UCA.push({
-		x: 118,
-		y: 12,
-		width: 83,
-		height: 53
-	}); //Portal - Door
-	UCA.push({
-		x: 110,
-		y: 70,
-		width: 45,
-		height: 8
-	}); //Portal - Item Close Left
-	UCA.push({
-		x: 165,
-		y: 70,
-		width: 45,
-		height: 8
-	}); //Portal - Item Close Right
-	UCA.push({
-		x: 120,
-		y: 61,
-		width: 35,
-		height: 9
-	}); //Portal - Item Back Left
-	UCA.push({
-		x: 165,
-		y: 61,
-		width: 35,
-		height: 9
-	}); //Portal - Item Back Right
-	UCA.push({
-		x: 111,
-		y: 8,
-		width: 98,
-		height: 63
-	}); //Portal - Wooden Door       
-	UCA.push({
-		x: 113,
-		y: 52,
-		width: 15,
-		height: 15
-	}); //Fairy - Serpent Spell
-	UCA.push({
-		x: 129,
-		y: 52,
-		width: 15,
-		height: 15
-	}); //Fairy - Chaos Spell  
-	UCA.push({
-		x: 145,
-		y: 52,
-		width: 15,
-		height: 15
-	}); //Fairy - Dragon Spell  
-	UCA.push({
-		x: 161,
-		y: 52,
-		width: 15,
-		height: 15
-	}); //Fairy - Moon Spell  
-	UCA.push({
-		x: 192,
-		y: 52,
-		width: 15,
-		height: 15
-	}); //Fairy - Back Button   
-	UCA.push({
-		x: 136,
-		y: 12,
-		width: 85,
-		height: 10
-	}); //Fairy - Text Area 1 
-	UCA.push({
-		x: 136,
-		y: 22,
-		width: 85,
-		height: 10
-	}); //Fairy - Text Area 2 
-	UCA.push({
-		x: 226,
-		y: -1,
-		width: 30,
-		height: 8
-	}); //Spell Book - Turn Page Back 
-	UCA.push({
-		x: 290,
-		y: -1,
-		width: 30,
-		height: 8
-	}); //Spell Book - Turn Page Forward
-	UCA.push({
-		x: 232,
-		y: 14,
-		width: 34,
-		height: 8
-	}); //Spell Book - Spell 1  
-	UCA.push({
-		x: 232,
-		y: 22,
-		width: 34,
-		height: 8
-	}); //Spell Book - Spell 2
-	UCA.push({
-		x: 232,
-		y: 30,
-		width: 34,
-		height: 8
-	}); //Spell Book - Spell 3  
-	UCA.push({
-		x: 232,
-		y: 38,
-		width: 34,
-		height: 8
-	}); //Spell Book - Spell 4  
-	UCA.push({
-		x: 280,
-		y: 14,
-		width: 34,
-		height: 8
-	}); //Spell Book - Spell 5  
-	UCA.push({
-		x: 280,
-		y: 22,
-		width: 34,
-		height: 8
-	}); //Spell Book - Spell 6
-	UCA.push({
-		x: 280,
-		y: 30,
-		width: 34,
-		height: 8
-	}); //Spell Book - Spell 7  
-	UCA.push({
-		x: 280,
-		y: 38,
-		width: 34,
-		height: 8
-	}); //Spell Book - Spell 8  
-	UCA.push({
-		x: 225,
-		y: 62,
-		width: 16,
-		height: 16
-	}); //Spell Book - Spell Fire 1 
-	UCA.push({
-		x: 305,
-		y: 62,
-		width: 16,
-		height: 16
-	}); //Spell Book - Spell Fire 2 
-	UCA.push({
-		x: 273,
-		y: 70,
-		width: 8,
-		height: 8
-	}); //Spell Book - Spell Cost Up
-	UCA.push({
-		x: 297,
-		y: 70,
-		width: 8,
-		height: 8
-	}); //Spell Book - Spell Cost Down
-	UCA.push({
-		x: 0,
-		y: 46,
-		width: 320,
-		height: 16
-	}); //Start Screen - 1. Start One Player Game
-	UCA.push({
-		x: 0,
-		y: 62,
-		width: 320,
-		height: 16
-	}); //Start Screen - 2. Start Two Player Game
-	UCA.push({
-		x: 0,
-		y: 86,
-		width: 320,
-		height: 16
-	}); //Start Screen - 3. Quickstart One Player Game
-	UCA.push({
-		x: 0,
-		y: 102,
-		width: 320,
-		height: 16
-	}); //Start Screen - 4. Quickstart Two Player Game
-	UCA.push({
-		x: 0,
-		y: 47,
-		width: 95,
-		height: 31
-	}); //Communication Area
-	UCA.push({
-		x: 1,
-		y: 47,
-		width: 93,
-		height: 7
-	}); //Communication First Row
-	UCA.push({
-		x: 1,
-		y: 55,
-		width: 93,
-		height: 7
-	}); //Communication Second Row
-	UCA.push({
-		x: 1,
-		y: 63,
-		width: 93,
-		height: 7
-	}); //Communication Third Row
-	UCA.push({
-		x: 1,
-		y: 71,
-		width: 93,
-		height: 7
-	}); //Communication Forth Row
-	UCA.push({
-		x: 172,
-		y: 106,
-		width: 20,
-		height: 16
-	}); //Champion Select 1 Player Pocket
-	UCA.push({
-		x: 196,
-		y: 106,
-		width: 20,
-		height: 16
-	}); //Champion Select 1 START
-	UCA.push({
-		x: 0,
-		y: 126,
-		width: 320,
-		height: 16
-	}); //Start Screen - 5. Resume last game
-	return UCA;
-
-}
-
-function uiClickInArea(x, y, ui, p, clickArea) {
-
-	if (typeof clickArea === "undefined") {
-		clickArea = uiClickArea;
-	}
-
-	var px = 0;
-	var py = 0;
-	if (typeof p !== "undefined") {
-		px = p.ScreenX;
-		py = p.ScreenY;
-	}
-	if (x >= (px + clickArea[ui].x) * 1 && x < (px + clickArea[ui].x + clickArea[ui].width) * 1 && y >= (py + clickArea[ui].y) * 1 && y < (py + clickArea[ui].y + clickArea[ui].height) * 1) {
-		if (debug) {
-			if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA && ui !== UI_CLICK_COMMUNICATION_AREA) {
-				ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
-				ctx.fillRect((px + clickArea[ui].x) * scale, (py + clickArea[ui].y) * scale, clickArea[ui].width * scale, clickArea[ui].height * scale);
-			}
-		}
-		return true;
-	}
-	return false;
-}
-
 function toggleChampUI(i, p, set) {
 	if (typeof set === "undefined") {
 		if (p.uiLeftPanel.champs[i].opened) {
@@ -1656,16 +1027,6 @@ function showStatusBar(thisVal, maxVal, width, colour) {
 	canContent.drawImage(flipImage(gfxUI[UI_GFX_FOOD_POINTER]), width - 4, 1);
 	canContent.save();
 	return can;
-}
-
-function coverViewPort(p) {
-
-	p.Portal.fillStyle = 'rgb(0, 0, 0)';
-	p.Portal.fillRect(0.5, 0.5, 128 * scale, 76 * scale);
-	drawRect(1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK], p);
-	drawRect(0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT], p);
-	drawRect(2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT], p);
-
 }
 
 function gotoFairyMode(p, m) {
@@ -1893,28 +1254,6 @@ function drawScroll(text, x, y, small) {
 	}
 }
 
-function startScreen() {
-	$('canvas').attr('data-game-status', 'menu');
-	canvas.addEventListener('keydown', doKeyDown, true);
-	checkClickEvents();
-	canvas.focus();
-
-	configCanvas();
-	clearCanvas();
-
-	writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
-	writeFontImage(" 1   START ONE PLAYER GAME", 34, 50, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-	writeFontImage(" 2   START TWO PLAYER GAME", 34, 66, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-	writeFontImage(" 3   QUICKSTART ONE PLAYER GAME", 34, 90, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-	writeFontImage(" 4   QUICKSTART TWO PLAYER GAME", 34, 106, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-	if(getGameName(99) !== '') {
-		writeFontImage(" 5   RESUME GAME", 34, 130, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-	}
-	writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
-	writeFontImage("RECREATED BY MAD BONE PRODUCTIONS 2014", 10, 194, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
-
-}
-
 function drawCommunicationBox(p, item, forced) {
 
 	//We meed the commincation box to be drawn on its own and not with the UI as this will be updated more offern
@@ -1971,156 +1310,8 @@ function drawCommunicationBox(p, item, forced) {
 			} else {
 				writeFontImage(TEXT_COMMUNICATION_COMMANDS[myPage][r].text, (x + t), y, myColour, al);
 			}
-			/*} else {
-					var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION_COMMANDS[myPage][r - 1].width + 1),
-						y = (p.ScreenY + 47) + (TEXT_COMMUNICATION_COMMANDS[myPage][r].row * 8),
-						t = TEXT_COMMUNICATION_COMMANDS[myPage][r].width;
-					ctx.fillRect(x * scale, y * scale, t * scale, 7 * scale);
-					writeFontImage(TEXT_COMMUNICATION_COMMANDS[myPage][r].text, (x + t) + 2, y, myColour, FONT_ALIGNMENT_RIGHT);
-				}*/
-
 		}
-		/*} else {
-			var partyNames = [];
-
-			for (c = 0; c < this.champion.length; c++) {
-				if (p.champion[c] !== p.championLeader && p.getChampion(p) !== null) {
-					partyNames.push(champion[p.champion[c]].firstName);
-				}
-			}
-
-			for (row = 0; row < 4; row++) {
-				ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARK][0] + ', ' + COLOUR[COLOUR_GREY_DARK][1] + ', ' + COLOUR[COLOUR_GREY_DARK][2] + ')';
-				var myColour = COLOUR[COLOUR_YELLOW];
-
-				if (row === item) {
-					ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_BLUE_DARK][0] + ', ' + COLOUR[COLOUR_BLUE_DARK][1] + ', ' + COLOUR[COLOUR_BLUE_DARK][2] + ')';
-					myColour = COLOUR[COLOUR_WHITE];
-				}
-
-				var x = (p.ScreenX + 1),
-					y = (p.ScreenY + 47) + (row * 8),
-					t = 93;
-				ctx.fillRect(x * scale, y * scale, t * scale, 7 * scale);
-				if (partyNames.length > 0 && row < 3) {
-					writeFontImage(partyNames[row], (x + 1), y, myColour);
-				}
-			}
-		}*/
 		p.communication.highlighted = item;
-	}
-
-
-}
-
-function drawQuickStartUI(pl) {
-
-	clearCanvas();
-	if (currentPlayer === 1) {
-		writeFontImage("PLAYER 2, " + TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
-	} else {
-		writeFontImage(TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
-	}
-
-
-	var chN = 0;
-
-	for (col = 0; col < 4; col++) {
-		for (row = 0; row < 4; row++) {
-			var ch = champion[chN];
-			var t = createShield(ch.id, ch.prof, ch.colour);
-			if (players === 2 && currentPlayer === 1 && ch.id === championSelect[0].champID) {
-				ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-			} else {
-				if (championSelect[pl].champID !== -1) {
-					if (championSelect[pl].champID !== -1 && ch.id === championSelect[pl].champID) {
-						showCharacterDetails(ch, pl);
-					} else {
-						ctx.drawImage(t, (col * 40) * scale, ((row * 48) + 15) * scale, t.width * scale, t.height * scale);
-					}
-				} else {
-					ctx.drawImage(t, (col * 40) * scale, ((row * 48) + 15) * scale, t.width * scale, t.height * scale);
-				}
-			}
-
-			if (champSelectGrid.length < champion.length) {
-				createSelectGrid(champSelectGrid, (col * 40), (row * 48) + 15, t.width, t.height, chN);
-			}
-			chN++;
-		}
-	}
-
-
-
-	var imageColour;
-
-	if (pl === 0) {
-		imageColour = UI_GFX_CHARACTER_NAME_BLUE;
-	} else {
-		imageColour = UI_GFX_CHARACTER_NAME_RED;
-	}
-	if (championSelect[pl].champID === -1) {
-		var myY = 50,
-			myX = 0;
-
-		ctx.drawImage(gfxUI[imageColour], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], 168 * scale, (myY) * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], (myX + 226) * scale, (myY - 1) * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
-
-	}
-
-}
-
-function showCharacterDetails(ch, pl) {
-
-	var myY = 50,
-		myX = 0;
-
-	var a = ch.prof;
-	var b = ch.colour;
-
-	ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][b], 198 * scale, (myY + 57) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-	if (pl === 0) {
-		ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_NAME_BLUE], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].height * scale);
-	} else {
-		ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_NAME_RED], 168 * scale, (myY + 75) * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].width * scale, gfxUI[UI_GFX_CHARACTER_NAME_BLUE].height * scale);
-	}
-	ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOXES], 170 * scale, (myY + 54) * scale, gfxUI[UI_GFX_CHARACTER_BOXES].width * scale, gfxUI[UI_GFX_CHARACTER_BOXES].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], 168 * scale, (myY) * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][ch.id], 176 * scale, (myY + 7) * scale, gfxUI[UI_GFX_PORTRAITS][ch.id].width * scale, gfxUI[UI_GFX_PORTRAITS][ch.id].height * scale);
-
-
-	switch (championSelect[pl].mode) {
-
-		case UI_CHARACTER_SELECT_SPELLBOOK:
-			writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
-			drawSpellBook(player[pl]);
-			ctx.drawImage(gfxUI[UI_GFX_ICON_UNKNOWN], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
-			break;
-		case UI_CHARACTER_SELECT_POCKET:
-			drawPocketUI(player[pl], champion[ch.id], true);
-			writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
-			ctx.drawImage(gfxUI[UI_GFX_ICON_BOOKOFSKULLS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
-			break;
-		case UI_CHARACTER_SELECT_SCROLL:
-			drawStatsPage(player[pl], champion[ch.id], true);
-			writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
-			ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
-			break;
-		case UI_CHARACTER_SELECT_START_GAME:
-			var t = TEXT_PLAYER;
-			if (pl === 1) {
-				t += TEXT_PLURAL + ' ';
-			} else {
-				t += ' ' + (pl + 1) + ' ';
-			}
-			t += ';' + TEXT_READY_QUEST;
-			var txt = t.split(';');
-			drawScroll(txt, player[pl].ScreenX + 226, player[pl].ScreenY - 1, true);
-			break;
-
 	}
 
 
@@ -2163,16 +1354,6 @@ function createStateGrid(p, state) {
 		writeFontImage((x + 1) + '.' + name, 8, x * 8 + 6, clr, FONT_ALIGNMENT_LEFT, p.Portal);
 		createSelectGrid(gameStateSelectGrid, 104, x * 8 + 7, 120, 8, null);
 	}
-}
-
-function createSelectGrid(myObject, myX, myY, myWidth, myHeight, cid) {
-	myObject.push({
-		x: myX,
-		y: myY,
-		width: myWidth,
-		height: myHeight,
-		champID: cid
-	});
 }
 
 function uiGameStateMenu(x, y, p) {

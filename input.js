@@ -63,7 +63,7 @@ function doKeyDown(e) {
 				case KEY_0:
 					pauseGame(true);
 					break;
-				/*case KEY_ESC:
+					/*case KEY_ESC:
 					if (player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
 						player[0].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 						player[0].message();
@@ -128,7 +128,7 @@ function doKeyDown(e) {
 					case KEY_3:
 						player[0].alterObject(1);
 						break;
-					/*case KEY_4:
+						/*case KEY_4:
 						player[0].alterObject(0, 0, -1);
 						break;
 					case KEY_R:
@@ -154,7 +154,8 @@ function doKeyDown(e) {
 			}
 		} else {
 			switch (e.keyCode) {
-				case KEY_0: case KEY_ESC:
+				case KEY_0:
+				case KEY_ESC:
 					pauseGame(false);
 					break;
 			}
@@ -178,7 +179,7 @@ function doKeyDown(e) {
 				startGame(false, true);
 				break;
 			case KEY_5:
-				if(getGameName(99) !== '') {
+				if (getGameName(99) !== '') {
 					startGame(true, true);
 					resumeLoadGame = true;
 				}
@@ -235,7 +236,7 @@ function checkClickEvents() {
 
 function processCanvasInput(pid, x, y) {
 	var p = player[parseInt(pid)];
-	if(!paused) {
+	if (!paused) {
 		if (!p.sleeping) {
 
 		} else {
@@ -479,7 +480,7 @@ function processCanvasInput(pid, x, y) {
 	}
 
 	//game options (works when paused)
-	if(!p.sleeping) {
+	if (!p.sleeping) {
 		if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
 			uiGameStateMenu(x, y, p);
 		} else if (!paused && !p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
@@ -492,7 +493,7 @@ function processCanvasInput(pid, x, y) {
 				return pid;
 			} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, p)) {
 				p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
-				if(paused) {
+				if (paused) {
 					pauseGame(false);
 				} else {
 					pauseGame(true);
@@ -562,7 +563,7 @@ function processCanvasInputMenu(x, y) {
 		startGame(true, true);
 	} else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) {
 		startGame(false, true);
-	} else if(uiClickInArea(x, y, UI_CLICK_START_RESUME_GAME) && getGameName(99) !== '') {
+	} else if (uiClickInArea(x, y, UI_CLICK_START_RESUME_GAME) && getGameName(99) !== '') {
 		startGame(true, true);
 		resumeLoadGame = true;
 	}
@@ -884,4 +885,604 @@ function spellBookAreas(x, y, p, ch) {
 		return pid;
 	}
 	return -1;
+}
+
+function uiClickAreas() {
+
+	//X , Y , WIDTH , HEIGHT
+
+	var UCA = [];
+
+	UCA.push({
+		x: 0,
+		y: 0,
+		width: 50,
+		height: 44
+	}); //CHAMP 1
+	UCA.push({
+		x: 51,
+		y: 0,
+		width: 43,
+		height: 44
+	}); //STATS GRAPH
+	UCA.push({
+		x: 0,
+		y: 45,
+		width: 30,
+		height: 41
+	}); //CHAMP 2
+	UCA.push({
+		x: 32,
+		y: 45,
+		width: 30,
+		height: 41
+	}); //CHAMP 3
+	UCA.push({
+		x: 64,
+		y: 45,
+		width: 30,
+		height: 41
+	}); //CHAMP 4
+
+	UCA.push({
+		x: 96,
+		y: 9,
+		width: 128,
+		height: 76
+	}); //3D VIEWPORT
+
+	UCA.push({
+		x: 226,
+		y: 1,
+		width: 94,
+		height: 19
+	}); //NAME TAG AREA
+	UCA.push({
+		x: 226,
+		y: 22,
+		width: 37,
+		height: 22
+	}); //SPELLBOOK
+	UCA.push({
+		x: 265,
+		y: 22,
+		width: 22,
+		height: 22
+	}); //CHARACTER STATS
+	UCA.push({
+		x: 289,
+		y: 22,
+		width: 16,
+		height: 16
+	}); //INTERACT
+	UCA.push({
+		x: 305,
+		y: 22,
+		width: 16,
+		height: 16
+	}); //OPEN POCKETS
+	UCA.push({
+		x: 226,
+		y: 47,
+		width: 13,
+		height: 13
+	}); //ROTATE LEFT
+	UCA.push({
+		x: 239,
+		y: 47,
+		width: 16,
+		height: 13
+	}); //MOVE FORWARD
+	UCA.push({
+		x: 255,
+		y: 47,
+		width: 13,
+		height: 13
+	}); //ROTATE RIGHT
+	UCA.push({
+		x: 226,
+		y: 60,
+		width: 13,
+		height: 14
+	}); //MOVE LEFT
+	UCA.push({
+		x: 239,
+		y: 60,
+		width: 16,
+		height: 14
+	}); //MOVE BACKWARDS
+	UCA.push({
+		x: 255,
+		y: 60,
+		width: 13,
+		height: 14
+	}); //MOVE RIGHT
+	UCA.push({
+		x: 269,
+		y: 45,
+		width: 17,
+		height: 16
+	}); //ATTACK
+	UCA.push({
+		x: 269,
+		y: 61,
+		width: 17,
+		height: 15
+	}); //DEFEND
+
+	UCA.push({
+		x: 225,
+		y: 22,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 1
+	UCA.push({
+		x: 241,
+		y: 22,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 2
+	UCA.push({
+		x: 257,
+		y: 22,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 3
+	UCA.push({
+		x: 273,
+		y: 22,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 4
+	UCA.push({
+		x: 289,
+		y: 22,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 5
+	UCA.push({
+		x: 305,
+		y: 22,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 6    
+	UCA.push({
+		x: 225,
+		y: 38,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 7
+	UCA.push({
+		x: 241,
+		y: 38,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 8
+	UCA.push({
+		x: 257,
+		y: 38,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 9
+	UCA.push({
+		x: 273,
+		y: 38,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 10
+	UCA.push({
+		x: 289,
+		y: 38,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 11
+	UCA.push({
+		x: 305,
+		y: 38,
+		width: 16,
+		height: 16
+	}); //POCKET SLOT 12    
+	UCA.push({
+		x: 225,
+		y: 63,
+		width: 16,
+		height: 15
+	}); //POCKET CHARACTER 0
+	UCA.push({
+		x: 241,
+		y: 63,
+		width: 16,
+		height: 15
+	}); //POCKET CHARACTER 1
+	UCA.push({
+		x: 257,
+		y: 63,
+		width: 16,
+		height: 15
+	}); //POCKET CHARACTER 2
+	UCA.push({
+		x: 273,
+		y: 63,
+		width: 16,
+		height: 15
+	}); //POCKET CHARACTER 3
+	UCA.push({
+		x: 289,
+		y: 63,
+		width: 16,
+		height: 15
+	}); //POCKET HAND
+	UCA.push({
+		x: 305,
+		y: 63,
+		width: 16,
+		height: 15
+	}); //POCKET BACK
+
+	UCA.push({
+		x: 56,
+		y: 0,
+		width: 16,
+		height: 16
+	}); //PAUSE BUTTON
+	UCA.push({
+		x: 73,
+		y: 0,
+		width: 16,
+		height: 16
+	}); //SAVE BUTTON
+	UCA.push({
+		x: 56,
+		y: 16,
+		width: 16,
+		height: 16
+	}); //SLEEP BUTTON
+	UCA.push({
+		x: 73,
+		y: 16,
+		width: 16,
+		height: 16
+	}); //LEFT BACK BUTTON
+	UCA.push({
+		x: 57,
+		y: 32,
+		width: 14,
+		height: 12
+	}); //SCROLLUP BUTTON
+	UCA.push({
+		x: 71,
+		y: 32,
+		width: 14,
+		height: 12
+	}); //SCROLLDOWN BUTTON
+	UCA.push({
+		x: 289,
+		y: 46,
+		width: 16,
+		height: 14
+	}); //Character Front Left Icon
+	UCA.push({
+		x: 305,
+		y: 46,
+		width: 16,
+		height: 14
+	}); //Character Front Right Icon
+	UCA.push({
+		x: 289,
+		y: 61,
+		width: 16,
+		height: 14
+	}); //Character Back Left Icon
+	UCA.push({
+		x: 305,
+		y: 61,
+		width: 16,
+		height: 14
+	}); //Character Back Right Icon
+	UCA.push({
+		x: 225,
+		y: 0,
+		width: 95,
+		height: 86
+	}); //Character Stats Exit
+	UCA.push({
+		x: 255,
+		y: -1,
+		width: 35,
+		height: 8
+	}); //Spell Book Exit
+	UCA.push({
+		x: 0,
+		y: 0,
+		width: 320,
+		height: 86
+	}); //Player Area
+	UCA.push({
+		x: 135,
+		y: 25,
+		width: 50,
+		height: 15
+	}); //Portal - Shelf Top
+	UCA.push({
+		x: 135,
+		y: 40,
+		width: 50,
+		height: 15
+	}); //Portal - Shelf Bottom
+	UCA.push({
+		x: 135,
+		y: 25,
+		width: 50,
+		height: 29
+	}); //Portal - Switch
+	UCA.push({
+		x: 118,
+		y: 12,
+		width: 83,
+		height: 53
+	}); //Portal - Door
+	UCA.push({
+		x: 110,
+		y: 70,
+		width: 45,
+		height: 8
+	}); //Portal - Item Close Left
+	UCA.push({
+		x: 165,
+		y: 70,
+		width: 45,
+		height: 8
+	}); //Portal - Item Close Right
+	UCA.push({
+		x: 120,
+		y: 61,
+		width: 35,
+		height: 9
+	}); //Portal - Item Back Left
+	UCA.push({
+		x: 165,
+		y: 61,
+		width: 35,
+		height: 9
+	}); //Portal - Item Back Right
+	UCA.push({
+		x: 111,
+		y: 8,
+		width: 98,
+		height: 63
+	}); //Portal - Wooden Door       
+	UCA.push({
+		x: 113,
+		y: 52,
+		width: 15,
+		height: 15
+	}); //Fairy - Serpent Spell
+	UCA.push({
+		x: 129,
+		y: 52,
+		width: 15,
+		height: 15
+	}); //Fairy - Chaos Spell  
+	UCA.push({
+		x: 145,
+		y: 52,
+		width: 15,
+		height: 15
+	}); //Fairy - Dragon Spell  
+	UCA.push({
+		x: 161,
+		y: 52,
+		width: 15,
+		height: 15
+	}); //Fairy - Moon Spell  
+	UCA.push({
+		x: 192,
+		y: 52,
+		width: 15,
+		height: 15
+	}); //Fairy - Back Button   
+	UCA.push({
+		x: 136,
+		y: 12,
+		width: 85,
+		height: 10
+	}); //Fairy - Text Area 1 
+	UCA.push({
+		x: 136,
+		y: 22,
+		width: 85,
+		height: 10
+	}); //Fairy - Text Area 2 
+	UCA.push({
+		x: 226,
+		y: -1,
+		width: 30,
+		height: 8
+	}); //Spell Book - Turn Page Back 
+	UCA.push({
+		x: 290,
+		y: -1,
+		width: 30,
+		height: 8
+	}); //Spell Book - Turn Page Forward
+	UCA.push({
+		x: 232,
+		y: 14,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 1  
+	UCA.push({
+		x: 232,
+		y: 22,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 2
+	UCA.push({
+		x: 232,
+		y: 30,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 3  
+	UCA.push({
+		x: 232,
+		y: 38,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 4  
+	UCA.push({
+		x: 280,
+		y: 14,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 5  
+	UCA.push({
+		x: 280,
+		y: 22,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 6
+	UCA.push({
+		x: 280,
+		y: 30,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 7  
+	UCA.push({
+		x: 280,
+		y: 38,
+		width: 34,
+		height: 8
+	}); //Spell Book - Spell 8  
+	UCA.push({
+		x: 225,
+		y: 62,
+		width: 16,
+		height: 16
+	}); //Spell Book - Spell Fire 1 
+	UCA.push({
+		x: 305,
+		y: 62,
+		width: 16,
+		height: 16
+	}); //Spell Book - Spell Fire 2 
+	UCA.push({
+		x: 273,
+		y: 70,
+		width: 8,
+		height: 8
+	}); //Spell Book - Spell Cost Up
+	UCA.push({
+		x: 297,
+		y: 70,
+		width: 8,
+		height: 8
+	}); //Spell Book - Spell Cost Down
+	UCA.push({
+		x: 0,
+		y: 46,
+		width: 320,
+		height: 16
+	}); //Start Screen - 1. Start One Player Game
+	UCA.push({
+		x: 0,
+		y: 62,
+		width: 320,
+		height: 16
+	}); //Start Screen - 2. Start Two Player Game
+	UCA.push({
+		x: 0,
+		y: 86,
+		width: 320,
+		height: 16
+	}); //Start Screen - 3. Quickstart One Player Game
+	UCA.push({
+		x: 0,
+		y: 102,
+		width: 320,
+		height: 16
+	}); //Start Screen - 4. Quickstart Two Player Game
+	UCA.push({
+		x: 0,
+		y: 47,
+		width: 95,
+		height: 31
+	}); //Communication Area
+	UCA.push({
+		x: 1,
+		y: 47,
+		width: 93,
+		height: 7
+	}); //Communication First Row
+	UCA.push({
+		x: 1,
+		y: 55,
+		width: 93,
+		height: 7
+	}); //Communication Second Row
+	UCA.push({
+		x: 1,
+		y: 63,
+		width: 93,
+		height: 7
+	}); //Communication Third Row
+	UCA.push({
+		x: 1,
+		y: 71,
+		width: 93,
+		height: 7
+	}); //Communication Forth Row
+	UCA.push({
+		x: 172,
+		y: 106,
+		width: 20,
+		height: 16
+	}); //Champion Select 1 Player Pocket
+	UCA.push({
+		x: 196,
+		y: 106,
+		width: 20,
+		height: 16
+	}); //Champion Select 1 START
+	UCA.push({
+		x: 0,
+		y: 126,
+		width: 320,
+		height: 16
+	}); //Start Screen - 5. Resume last game
+	return UCA;
+
+}
+
+function uiClickInArea(x, y, ui, p, clickArea) {
+
+	if (typeof clickArea === "undefined") {
+		clickArea = uiClickArea;
+	}
+
+	var px = 0;
+	var py = 0;
+	if (typeof p !== "undefined") {
+		px = p.ScreenX;
+		py = p.ScreenY;
+	}
+	if (x >= (px + clickArea[ui].x) * 1 && x < (px + clickArea[ui].x + clickArea[ui].width) * 1 && y >= (py + clickArea[ui].y) * 1 && y < (py + clickArea[ui].y + clickArea[ui].height) * 1) {
+		if (debug) {
+			if (ui !== UI_CLICK_VIEWPORT && ui !== UI_CLICK_PLAYERS_AREA && ui !== UI_CLICK_COMMUNICATION_AREA) {
+				ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
+				ctx.fillRect((px + clickArea[ui].x) * scale, (py + clickArea[ui].y) * scale, clickArea[ui].width * scale, clickArea[ui].height * scale);
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+function createSelectGrid(myObject, myX, myY, myWidth, myHeight, cid) {
+	myObject.push({
+		x: myX,
+		y: myY,
+		width: myWidth,
+		height: myHeight,
+		champID: cid
+	});
 }
