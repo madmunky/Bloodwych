@@ -297,7 +297,8 @@ function drawPlayersView(p) {
 	debugTextPrint(p); //see bloodwych.js
 	//p.getViewPortal();
 	if (p.dead || p.sleeping || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-		//debugText(p, 'test');
+		p.Portal.save();
+		ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);
     } else if(!paused) {
 		p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
@@ -472,9 +473,9 @@ function drawPlayersView(p) {
 				}
 			}
 		}
+		p.Portal.save();
+		ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);
 	}
-	p.Portal.save();
-	ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);
 }
 
 function drawMonsterOnPos(p, pos) {

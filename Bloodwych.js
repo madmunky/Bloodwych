@@ -329,13 +329,15 @@ function godMode() {
 }
 
 $(function() {
-	$('html').focusin(function() {
-		if (gameStarted && paused) {
+	$('html').focusin(function(e) {
+		var t = $(e.target);
+		if (gameStarted && paused && !t.is('input.save-game')) {
 			pauseGame(false);
 		}
 	});
-	$('html').focusout(function() {
-		if (gameStarted && !paused) {
+	$('html').focusout(function(e) {
+		var t = $(e.target);
+		if (gameStarted && !paused && !t.is('input.save-game')) {
 			pauseGame(true);
 		}
 	});
