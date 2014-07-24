@@ -718,6 +718,28 @@ function initMonsterGfx() {
 			pGfx = [];
 		}
 	}
+	
+	//armour
+	var dGfx = [];
+	var disGfx = [];
+	var pGfx = [];
+	for(var id = 0; id < 1; id++) {
+		for (part = 0; part < 5; part++) {
+			for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+				for (d = 0; d < 8; d++) {
+					if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
+						dGfx.push(grabCharacterArmour(id, part, d, dis));
+					}
+				}
+				disGfx.push(dGfx);
+				dGfx = [];
+			}
+			pGfx.push(disGfx);
+			disGfx = [];
+		}
+		createArmourRef(id, pGfx);
+		pGfx = [];
+	}
 	//}
 }
 
@@ -732,6 +754,20 @@ function createMonsterRef(id, level, gfx) {
 			monsterRef[id][level] = {
 				id: id,
 				level: level,
+				gfx: gfx
+			};
+		}
+	}
+}
+
+function createArmourRef(id, gfx) {
+	if (typeof armourRef[id] === "undefined") {
+		armourRef[id] = new Array();
+	}
+	if (typeof armourRef[id] === "undefined" || typeof armourRef[id].gfx === "undefined") {
+		if (typeof gfx !== "undefined") {
+			armourRef[id] = {
+				id: id,
 				gfx: gfx
 			};
 		}

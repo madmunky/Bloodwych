@@ -448,6 +448,126 @@ function grabCharacter(form, part, dir, dist) {
 	}
 }
 
+function grabCharacterArmour(id, part, dir, dist) {
+	if(part !== IMAGE_CHA_HEAD) {
+		if (dist >= 4 && part === IMAGE_CHA_MINI) {
+			/*if (typeof monsterPalette[form] !== "undefined") {
+				var miniId = monsterPalette[form].mini;
+				var tmpPalette = monsterPalette[form].miniPalette;
+				var d = [0, 2, 3, 1];
+				var mini = recolourSprite(characterGfx[IMAGE_CHA_MINI][miniId][dist - 4][d[dir]], MON_PALETTE_DEFAULT, tmpPalette);
+				return mini;
+			}*/
+		} else if (dist < 4 && part !== IMAGE_CHA_MINI) {
+			//if (typeof monsterPalette[form] !== "undefined") {
+				/*var LEG;
+				var ARM;
+				var TORSO;
+				var HEAD;*/
+				var paletteType;
+				var palette;
+				var d = [0, 2, 3, 1];
+				dir2 = dir % 2;
+				switch (part) {
+					case IMAGE_CHA_LEG:
+						//paletteType = monsterPalette[form].leg;
+						//palette = monsterPalette[form].legPalette;
+						dir6 = dir % 4;
+						break;
+					case IMAGE_CHA_TORSO:
+						//paletteType = monsterPalette[form].torso;
+						//palette = monsterPalette[form].torsoPalette;
+						dir6 = dir % 4;
+						break;
+					case IMAGE_CHA_ARM:
+						//paletteType = monsterPalette[form].arm;
+						//palette = monsterPalette[form].armPalette;
+						d = [0, 2, 1, 3, 4, 5, 4, 5];
+						dir6 = dir;
+						break;
+				}
+				var type = [0, 1, null, 0];
+				var leg = characterGfx[IMAGE_CHA_LEG][2][dist][d[dir2]];
+				var torso = characterGfx[IMAGE_CHA_TORSO][1][dist][d[dir2]];
+				var arm = characterGfx[IMAGE_CHA_ARM][0][dist][d[dir]];
+				var partSprite = recolourSprite(characterGfx[part][type[part]][dist][d[dir6]], MON_PALETTE_DEFAULT, CHA_ARMOUR[ITEM_LEATHER_ARMOUR]);
+
+				var height = torso.height + leg.height,
+					width = 65; //arm.width + torso.width + arm.width;
+
+				var can = document.createElement('canvas');
+				can.width = width;
+				can.height = height;
+				var charContext = can.getContext("2d");
+
+				switch (part) {
+					case IMAGE_CHA_LEG:
+						var coord = {
+							x: Math.floor((width - leg.width) * 0.5),
+							y: height - leg.height
+						};
+						break;
+					case IMAGE_CHA_TORSO:
+						var coord = {
+							x: Math.floor((width - torso.width) * 0.5),
+							y: height - leg.height - torso.height
+						};
+						break;
+					case IMAGE_CHA_ARM:
+						if (dir === 0) {
+							var coord = {
+								x: Math.floor((width - torso.width) * 0.5) - arm.width + 5,
+								y: height - leg.height - torso.height + 1
+							};
+						} else if (dir === 2) {
+							var coord = {
+								x: Math.floor((width + torso.width) * 0.5) - 5,
+								y: height - leg.height - torso.height + 1
+							}
+						} else if (dir === 1) {
+							var coord = {
+								x: Math.floor((width - torso.width) * 0.5) - arm.width + 9,
+								y: height - leg.height - torso.height + 1
+							};
+						} else if (dir === 3) {
+							var coord = {
+								x: Math.floor((width + torso.width) * 0.5) - 9,
+								y: height - leg.height - torso.height + 1
+							};
+						} else if (dir === 4) {
+							var coord = {
+								x: Math.floor((width - torso.width) * 0.5) - arm.width + 5,
+								y: height - leg.height - torso.height * 1.5
+							};
+						} else if (dir === 5) {
+							var coord = {
+								x: Math.floor((width + torso.width) * 0.5) - 5,
+								y: height - leg.height - torso.height * 1.5
+							};
+						} else if (dir === 6) {
+							var coord = {
+								x: Math.floor((width - torso.width) * 0.5) + 1,
+								y: height - leg.height - torso.height * 1.5
+							};
+						} else if (dir === 7) {
+							var coord = {
+								x: Math.floor((width + torso.width) * 0.5) - arm.width - 1,
+								y: height - leg.height - torso.height * 1.5
+							};
+						}
+						break;
+				}
+
+				charContext.drawImage(partSprite, coord.x, coord.y, partSprite.width, partSprite.height);
+
+				charContext.save();
+				delete partSprite;
+				return can;
+			//}
+		}
+	}
+}
+
 function clipCharacter(img, percentClipped) {
 
 	var can = document.createElement('canvas');
@@ -561,6 +681,20 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 				if (m.form === 26 && m.glow === 0) {
 					gfx1 = monsterRef[27][0].gfx[part][dist][dir1];
 					gfx2 = monsterRef[27][0].gfx[part][dist][dir2];
+				} else if (m.champId > -1) {
+					var amr = m.getChampion().pocket[POCKET_ARMOUR];
+					if(amr.id > 0) {
+						if(part === IMAGE_CHA_TORSO) {
+							var gfx1 = armourRef[0].gfx[IMAGE_CHA_TORSO][dist][dir1];
+							var gfx2 = armourRef[0].gfx[IMAGE_CHA_TORSO][dist][dir2];
+						} else if(part === IMAGE_CHA_ARM) {
+							var gfx1 = armourRef[0].gfx[IMAGE_CHA_ARM][dist][dir1];
+							var gfx2 = armourRef[0].gfx[IMAGE_CHA_ARM][dist][dir2];
+						} else if(part === IMAGE_CHA_LEG) {
+							var gfx1 = armourRef[0].gfx[IMAGE_CHA_LEG][dist][dir1];
+							var gfx2 = armourRef[0].gfx[IMAGE_CHA_LEG][dist][dir2];
+						}
+					}
 				}
 				var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
 				var offy = 76 - Math.floor(gfx1.height) - offset.y;

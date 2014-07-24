@@ -538,6 +538,7 @@ var monsterTeamIdMax = 0;
 //var monsterAttackSequence = 0;
 var monster = new Array();
 var monsterRef = new Array();
+var armourRef = new Array();
 
 //Switches
 var SWITCH_WALL_NONE = 0,
@@ -1706,3 +1707,7 @@ var championSelect = [{
 	chosen: false,
 	mode: UI_CHARACTER_SELECT_SCROLL
 }];
+
+//armour palettes
+var CHA_ARMOUR = {};
+	CHA_ARMOUR[ITEM_LEATHER_ARMOUR] = [COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], COLOUR[COLOUR_PINK]];
