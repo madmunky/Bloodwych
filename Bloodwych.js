@@ -54,7 +54,7 @@ function updatePlayerViewScreen() {
 	for (p in player) {
 		debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
 		drawPlayersView(player[p]);
-		if(drawUI(player[p])) {
+		if (drawUI(player[p])) {
 			dr = true;
 		}
 		//testing(player[p]);
@@ -121,7 +121,11 @@ function clearCanvas() {
 
 function pauseGame(ps, colourTo) {
 	//colourTo = RGB HEX CODE i.e. #400000
-	if (!ps) {
+	if (ps) {
+		if(!paused) {
+			saveGame(99, 'autosave');
+		}
+	} else {
 		pausedByBrowser = false;
 		for (p in player) {
 			player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
@@ -342,6 +346,10 @@ $(function() {
 			pauseGame(true);
 			pausedByBrowser = true;
 		}
+	});
+	$(window).on('beforeunload ',function() {
+		pauseGame(false);
+		saveGame(99, 'autosave');
 	});
 	if (typeof debugWindow !== "undefined" && debugWindow !== null) {
 		$('body', debugWindow.document).on('click', '.debug-input #coord-submit', function() {

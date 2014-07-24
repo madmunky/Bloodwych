@@ -178,6 +178,12 @@ function doKeyDown(e) {
 				startGame(false, true);
 				break;
 			case KEY_5:
+				if(getGameName(99) !== '') {
+					startGame(true, true);
+					resumeLoadGame = true;
+				}
+				break;
+			case KEY_6:
 				startGame(false, true, null, null, true);
 				break;
 		}
@@ -556,6 +562,9 @@ function processCanvasInputMenu(x, y) {
 		startGame(true, true);
 	} else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) {
 		startGame(false, true);
+	} else if(uiClickInArea(x, y, UI_CLICK_START_RESUME_GAME) && getGameName(99) !== '') {
+		startGame(true, true);
+		resumeLoadGame = true;
 	}
 }
 

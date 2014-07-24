@@ -148,7 +148,7 @@ function initData() {
 	itemsGfxD = initItemsGfxD();
 	font = grabFont();
 	uiClickArea = uiClickAreas();
-        audioFiles = loadSounds();
+	audioFiles = loadSounds();
 	initMonsterGfx();
 	initMonsters();
 
@@ -163,31 +163,38 @@ function initData() {
 }
 
 function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
-    
-    	if (typeof god === "undefined") {
-			god = false;
-		}
-    	initPlayers(singlePlayer, quickStart, p1_cid, p2_cid);
 
-		if (god) {
-			godMode();
+	if (typeof god === "undefined") {
+		god = false;
+	}
+	initPlayers(singlePlayer, quickStart, p1_cid, p2_cid);
+
+	if (god) {
+		godMode();
+	}
+	loadGfxData();
+	initTowerSwitches();
+	switchTower(0);
+	gameStarted = true;
+
+	for (pl in championSelect) {
+		if (championSelect[pl].champID > -1) {
+			champion[championSelect[pl].champID].selectedSpell = null;
+			championSelect[pl].champID = -1;
 		}
-		loadGfxData();
-		initTowerSwitches();
-		switchTower(0);		
-		gameStarted = true;
-		
-		for (pl in championSelect) {
-			if (championSelect[pl].champID > -1) {
-				champion[championSelect[pl].champID].selectedSpell = null;
-				championSelect[pl].champID = -1;
-			}
+	}
+	$('canvas').attr('data-game-status', 'started');
+	//for (p in player) {
+	//		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
+	//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
+	//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
+	//	}
+	//saveGame(99, 'autosave');
+	setTimeout(function() {
+		if(resumeLoadGame) {
+			loadGame(99);
+			resumeLoadGame = false;
 		}
-		$('canvas').attr('data-game-status', 'started');
-		//for (p in player) {
-		//		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
-		//		player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
-		//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
-		//	}
-                setTimeout(function() {Run();}, 500);
+		Run();
+	}, 500);
 }

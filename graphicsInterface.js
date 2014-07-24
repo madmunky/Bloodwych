@@ -1566,6 +1566,12 @@ function uiClickAreas() {
 		width: 20,
 		height: 16
 	}); //Champion Select 1 START
+	UCA.push({
+		x: 0,
+		y: 126,
+		width: 320,
+		height: 16
+	}); //Start Screen - 5. Resume last game
 	return UCA;
 
 }
@@ -1901,6 +1907,9 @@ function startScreen() {
 	writeFontImage(" 2   START TWO PLAYER GAME", 34, 66, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
 	writeFontImage(" 3   QUICKSTART ONE PLAYER GAME", 34, 90, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
 	writeFontImage(" 4   QUICKSTART TWO PLAYER GAME", 34, 106, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	if(getGameName(99) !== '') {
+		writeFontImage(" 5   RESUME GAME", 34, 130, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	}
 	writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
 	writeFontImage("RECREATED BY MAD BONE PRODUCTIONS 2014", 10, 194, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
 

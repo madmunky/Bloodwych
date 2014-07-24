@@ -13,6 +13,7 @@ var currentPlayer = 0;
 var paused = false;
 var pausedByBrowser = false;
 var checkStarted = true;
+var resumeLoadGame = false;
 
 //Setup some global variables for needed
 var VERSION = 0.50;
@@ -853,7 +854,8 @@ var UI_CLICK_CHAMP1 = 0,
 	UI_CLICK_COMMUNICATION_AREA_THIRD_ROW = 87,
 	UI_CLICK_COMMUNICATION_AREA_FORTH_ROW = 88,
 	UI_CLICK_CHAMPION_SELECT_1_PLAYER_ACTION = 89,
-	UI_CLICK_CHAMPION_SELECT_1_START = 90;
+	UI_CLICK_CHAMPION_SELECT_1_START = 90,
+	UI_CLICK_START_RESUME_GAME = 91;
 
 var UI_REDRAW_ALL = 0,
 	UI_REDRAW_LEFT = 1,

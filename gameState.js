@@ -100,8 +100,14 @@ function saveGame(g, name) {
 		}
 	};
 	localStorage.setItem(save.fileName, JSON.stringify(save.gameData));
-	player[0].message(TEXT_GAME_SAVED, COLOUR[COLOUR_GREEN]);
+	if(g < 99) {
+		player[0].message(TEXT_GAME_SAVED, COLOUR[COLOUR_GREEN]);
+	}
 };
+
+function deleteGame(g) {
+	localStorage.removeItem('savegame' + g);
+}
 
 function castObject(ob, to) {
 	return Types[ob.__type].revive(ob);
