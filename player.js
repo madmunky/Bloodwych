@@ -214,7 +214,7 @@ Player.prototype.action = function() {
 	if (!this.dead && !this.sleeping) {
 		//Wooden doors (in front of player)
 		if (!this.checkWoodenDoor(18)) {
-			this.checkWoodenDoor(15);                        
+			this.checkWoodenDoor(15);
 		}
 		if (this.canMoveByWood(0)) {
 			//Wooden doors (on player)
@@ -224,10 +224,10 @@ Player.prototype.action = function() {
 			if (o15 === OBJECT_SWITCH) {
 				this.setBinaryView(15, 5, 1);
 				switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
-                                playSound(SOUND_SWITCH);
+				playSound(SOUND_SWITCH);
 			} else if (o15 === OBJECT_GEM) {
 				gemAction(this);
-                                playSound(SOUND_FLASH);
+				playSound(SOUND_FLASH);
 			}
 			//Check if something is in the way
 			if (this.getMonstersInRange(15).length > 0) {
@@ -248,7 +248,7 @@ Player.prototype.action = function() {
 				}
 				if (this.getBinaryView(15, 1, 3) === '0' && this.getBinaryView(15, 11, 1) === '0') { //If unlocked, open/close door
 					this.setBinaryView(15, 7, 1);
-                                        playSound(SOUND_DOOR);
+					playSound(SOUND_DOOR);
 					//this.setBinaryView(15, 1, 3, '000'); //Will set the door to 'normal'
 				} else { //If locked, give lock message
 					this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
@@ -261,14 +261,14 @@ Player.prototype.action = function() {
 };
 
 Player.prototype.alterObject = function(a, b, c) {
-	if(debug) {
+	if (debug) {
 		var a1 = (parseInt(this.getBinaryView(15, 13, 3)) + a + 8) % 8;
 		this.setBinaryView(15, 13, 3, '' + a1);
-		if(typeof b !== 'undefined') {
+		if (typeof b !== 'undefined') {
 			var b1 = (parseInt(this.getBinaryView(15, 6, 2)) + b + 4) % 4;
 			this.setBinaryView(15, 6, 2, '' + b1);
 		}
-		if(typeof c !== 'undefined') {
+		if (typeof c !== 'undefined') {
 			var c1 = (parseInt(this.getBinaryView(15, 10, 2)) + c + 4) % 4;
 			this.setBinaryView(15, 0, 8, '' + c1);
 		}
@@ -287,7 +287,7 @@ Player.prototype.checkWoodenDoor = function(pos18) {
 		}
 		if (this.getBinaryView(pos18, 11, 1) === '0') { //If unlocked, open/close door
 			this.setBinaryView(pos18, ((5 + d - this.d) % 4) * 2 + 1, 1);
-                        playSound(SOUND_DOOR);
+			playSound(SOUND_DOOR);
 		} else if (this.getBinaryView(pos18, 11, 1) === '1') { //If locked, give lock message
 			this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
 		}
@@ -300,7 +300,7 @@ Player.prototype.checkWoodenDoor = function(pos18) {
 //'to' will be a binary string, e.g. '1010'
 Player.prototype.setBinaryView = function(pos18, index, length, to) {
 	var xy = posToCoordinates(pos18, this.x, this.y, this.d);
-	if(typeof tower[towerThis].floor[this.floor].Map[xy.y] !== 'undefined' && typeof tower[towerThis].floor[this.floor].Map[xy.y][xy.x] !== 'undefined') {
+	if (typeof tower[towerThis].floor[this.floor].Map[xy.y] !== 'undefined' && typeof tower[towerThis].floor[this.floor].Map[xy.y][xy.x] !== 'undefined') {
 		tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length, to);
 	}
 	//this.updateView();
@@ -386,11 +386,11 @@ Player.prototype.tryAttack = function(ch) {
 			return true;
 		}
 		//for (var c = 0; c < this.champion.length; c++) {
-			//var ch = this.getChampion(c);
-			if (ch.selectedSpell !== null || ch.getBowPower() > 0) {
-				this.attack(ch, true);
-				return true;
-			}
+		//var ch = this.getChampion(c);
+		if (ch.selectedSpell !== null || ch.getBowPower() > 0) {
+			this.attack(ch, true);
+			return true;
+		}
 		//}
 	}
 	this.attack(null, false);
@@ -404,40 +404,40 @@ Player.prototype.attack = function(ch, attack, target) {
 		var combat = calculateAttack(ch, target);
 		for (var com = 0; com < combat.length; com++) {
 			//(function(combat, com) {
-				var att = combat[com].attacker;
-				//att.recruitment.attackTimer = setTimeout(function() {
-					//att.recruitment.attackTimer = 0;
-					att.getMonster().attacking = true;
-					if (att.selectedSpell !== null) {
-						self.castSpell(att.selectedSpell, att, true);
-						redrawUI(self.id);
-					} else if (att.getBowPower() > 0) {
-						self.shootArrow(att);
-						if (typeof target === 'undefined') {
-							self.attack(null, false);
-						}
-						redrawUI(self.id);
-					} else {
-						var def = combat[com].defender;
-						if(!def.dead) {
-							var pwr = combat[com].power;
-							var aExh = combat[com].attExhaustion;
-							var dExh = combat[com].defExhaustion;
-							att.doDamageTo(def, pwr, aExh, dExh);
-							if (def instanceof Champion) {
-								PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
-							} else if (def instanceof Monster) {
-								PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
-								self.gainChampionXp(pwr, att);
-								if (def.dead) {
-									self.gainChampionXp(128);
-								}
-							}
+			var att = combat[com].attacker;
+			//att.recruitment.attackTimer = setTimeout(function() {
+			//att.recruitment.attackTimer = 0;
+			att.getMonster().attacking = true;
+			if (att.selectedSpell !== null) {
+				self.castSpell(att.selectedSpell, att, true);
+				redrawUI(self.id);
+			} else if (att.getBowPower() > 0) {
+				self.shootArrow(att);
+				if (typeof target === 'undefined') {
+					self.attack(null, false);
+				}
+				redrawUI(self.id);
+			} else {
+				var def = combat[com].defender;
+				if (!def.dead) {
+					var pwr = combat[com].power;
+					var aExh = combat[com].attExhaustion;
+					var dExh = combat[com].defExhaustion;
+					att.doDamageTo(def, pwr, aExh, dExh);
+					if (def instanceof Champion) {
+						PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS CHAMPION ' + TEXT_CHAMPION_NAME[def.id] + ' FOR ' + pwr + '!');
+					} else if (def instanceof Monster) {
+						PrintLog('CHAMPION ' + TEXT_CHAMPION_NAME[att.id] + ' HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
+						self.gainChampionXp(pwr, att);
+						if (def.dead) {
+							self.gainChampionXp(128);
 						}
 					}
-				//}, att.recruitment.position * self.getAttackSpeed(400));
-				att.getMonster().doGesture(CHA_GESTURE_ATTACKING);
-                                playSound(SOUND_ATTACK);
+				}
+			}
+			//}, att.recruitment.position * self.getAttackSpeed(400));
+			att.getMonster().doGesture(CHA_GESTURE_ATTACKING);
+			playSound(SOUND_ATTACK);
 			//})(combat, com);
 		}
 	} else {
@@ -446,8 +446,8 @@ Player.prototype.attack = function(ch, attack, target) {
 			if (ch !== null) {
 				var m = ch.getMonster();
 				//if (ch.recruitment.attackTimer !== 0) {
-					//clearTimeout(ch.recruitment.attackTimer);
-					//ch.recruitment.attackTimer = 0;
+				//clearTimeout(ch.recruitment.attackTimer);
+				//ch.recruitment.attackTimer = 0;
 				//}
 				m.attacking = false;
 			}
@@ -706,7 +706,7 @@ Player.prototype.checkChampionUp = function() {
 }
 
 Player.prototype.sleep = function() {
-	if(!this.dead) {
+	if (!this.dead) {
 		this.sleeping = true;
 		this.message();
 		this.fairyDetails.champ = null;
@@ -771,7 +771,7 @@ Player.prototype.recruitChampion = function(id) {
 	var pos = 0;
 	for (var c = 0; c < 4; c++) {
 		var ch = this.getChampion(c);
-		if(ch !== null && pos === ch.recruitment.position) {
+		if (ch !== null && pos === ch.recruitment.position) {
 			pos++;
 		}
 		if (typeof id === "undefined") {
@@ -1006,41 +1006,29 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 		drawMonster(m, (6 + p.d - m.d) % 4, dis[distance], this, offset);
 	} else {
 		if (typeof monsterPalette[form] !== "undefined") {
-                    if (this.getObjectOnPos(15, 2) === OBJECT_STAIRS && distance === DISTANCE_CLOSE ){  
-                        var t = offset;                        
-                        if (this.getBinaryView(15, 7) === '0'){
-                            t.y = (t.y +8);                                                           
-                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t);
-                        }else{                            
-                            t.y = (t.y -8);                                                            
-                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t,false,true,true,3);
-                        }                        
-                    }else if ((this.getObjectOnPos(12, 2) === OBJECT_STAIRS && distance === DISTANCE_FAR)){
-                        var t = offset;                        
-                        if (this.getBinaryView(12, 7) === '0'){
-                            t.y = (t.y +6);                                                           
-                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t);
-                        }else{                            
-                            t.y = (t.y -6);                                                            
-                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t,false,true,true,4);
-                        }
-                    }else if ((this.getObjectOnPos(9, 2) === OBJECT_STAIRS && distance === DISTANCE_DISTANT)){
-                        if (m.getSquareByDir() === CHAR_BACK_RIGHT || m.getSquareByDir() === CHAR_BACK_LEFT){
-                            var t = offset;               
-                            var tt = this.getBinaryView(12, 7);
-                            if (this.getBinaryView(9, 7) === '0'){
-                                t.y = (t.y +4);                                                           
-                                drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t);
-                            }else{                            
-                                t.y = (t.y -4);                                                            
-                                drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t,false,true,true,3);
-                            }
-                        }else{
-                            drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
-                        }                        
-                    }else{
-                        drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
-                    }
+			var ofy = 0;
+			if(distance === DISTANCE_CLOSE) {
+				ofy = 8;
+				cut = 3;
+			} else if(distance === DISTANCE_FAR) {
+				ofy = 6;
+				cut = 4;
+			} else if(distance === DISTANCE_DISTANT && (m.getSquareByDir() === CHAR_BACK_RIGHT || m.getSquareByDir() === CHAR_BACK_LEFT)) {
+				ofy = 4;
+				cut = 3;
+			}
+			if (getObject(m.floor, m.x, m.y) === OBJECT_STAIRS && ofy > 0) {
+				var t = offset;
+				if (m.getBinaryView(18, 7) === '0') {
+					t.y = (t.y + ofy);
+					drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t);
+				} else {
+					t.y = (t.y - ofy);
+					drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, t, false, true, true, cut);
+				}
+			} else {
+				drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
+			}
 		}
 	}
 }
@@ -1065,7 +1053,7 @@ Player.prototype.drawItem = function(it, distance, offset) {
 
 Player.prototype.drawProjectile = function(pr, distance, offset) {
 	if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 1) {
-		if(pr.type !== DUNGEON_NONE) {
+		if (pr.type !== DUNGEON_NONE) {
 			var pGfx = itemsGfxD[pr.type][distance];
 		}
 	} else {
@@ -1099,7 +1087,7 @@ Player.prototype.useItemActivePocket = function() {
 				case ITEM_TYPE_STACKABLE:
 					var i = this.findPocketItem(itH.id);
 					if (i > -1) {
-						if(itH.quantity < 99) {
+						if (itH.quantity < 99) {
 							itH.quantity++;
 							ch.pocket[i].quantity--;
 							if (ch.pocket[i].quantity === 0) {
@@ -1144,7 +1132,7 @@ Player.prototype.useItemActivePocket = function() {
 
 Player.prototype.exchangeItemWithHand = function(s, q) {
 	var ch = this.getActivePocketChampion();
-	if(typeof q === 'undefined') {
+	if (typeof q === 'undefined') {
 		q = 1;
 	}
 	if (ch !== null) {
@@ -1154,7 +1142,7 @@ Player.prototype.exchangeItemWithHand = function(s, q) {
 		if (itH.id === 0 || ((s !== POCKET_ARMOUR || itH.type === ITEM_TYPE_ARMOUR) && (s !== POCKET_SHIELD || allowedShield))) {
 			if (it.type === ITEM_TYPE_STACKABLE && (itH.id === 0 || it.id === itH.id)) {
 				if (itH.id === 0) {
-					for(q1 = 0; q1 < q; q1++) {
+					for (q1 = 0; q1 < q; q1++) {
 						itH.setPocketItem(it.id, itH.quantity + 1);
 						it.quantity--;
 						if (it.quantity === 0) {
@@ -1165,10 +1153,10 @@ Player.prototype.exchangeItemWithHand = function(s, q) {
 				} else if (it.id === itH.id) {
 					var qt = it.quantity + itH.quantity;
 					var qtH = 0;
-					if(it.quantity === 99) {
+					if (it.quantity === 99) {
 						qt = qt - 99;
 						qtH = 99;
-					} else if(qt >= 99) {
+					} else if (qt >= 99) {
 						qtH = qt - 99;
 						qt = 99;
 					}
@@ -1182,10 +1170,10 @@ Player.prototype.exchangeItemWithHand = function(s, q) {
 				var temp = newPocketItem(it.id, it.quantity);
 				it.setPocketItem(itH.id, itH.quantity);
 				itH.setPocketItem(temp.id, temp.quantity);
-				
+
 				this.exchangeItemWithHand(i, 99);
 				this.exchangeItemWithHand(s, 99);
-				if(qty <= 99) {
+				if (qty <= 99) {
 					this.exchangeItemWithHand(i, 99);
 				} else {
 					this.exchangeItemWithHand(s, 99);
@@ -1251,7 +1239,7 @@ Player.prototype.actionItem = function(s) {
 		default:
 			break;
 	}
-	
+
 	setDungeonHex(this.floor, xyi.x, xyi.y, 12, 1, '0');
 	if (itH.id === 0) { //take item
 		for (i = item[towerThis].length - 1; i >= 0; i--) {
@@ -1482,7 +1470,7 @@ Player.prototype.testMode = function(id) {
 }
 
 Player.prototype.doCommunication = function(text) {
-	if(!this.dead) {
+	if (!this.dead) {
 		switch (this.communication.mode) {
 			case COMMUNICATION_PAGE_MAIN:
 				switch (text) {
@@ -1747,7 +1735,13 @@ Player.prototype.getCommunication = function(mode, text) {
 }
 
 function getPlayerAt(f, x, y) {
-
+	for (p in player) {
+		var pl = player[parseInt(p)];
+		if(f === pl.floor && x === pl.x && y === pl.y) {
+			return pl;
+		}
+	}
+	return null;
 }
 
 function initPlayersStart(ch1, ch2) {

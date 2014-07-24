@@ -105,19 +105,24 @@ Monster.prototype.toString = function() {
 
 Monster.prototype.canInteract = function() {
 	//Check other player to attack
-	ply = -1;
+	var xy = getOffsetByRotation(this.d);
+	var pl = getPlayerAt(this.floor, this.x + xy.x, this.y + xy.y);
+	var ply = -1;
+	if(pl !== null) {
+		ply = pl.id;
+	}
+	/*ply = -1;
 	if (this.floor === player[0].floor && this.x + xy.x === player[0].x && this.y + xy.y === player[0].y) {
 		ply = 0;
 	} else if (typeof player[1] !== 'undefined' && this.floor === player[1].floor && this.x + xy.x === player[1].x && this.y + xy.y === player[1].y) {
 		ply = 1;
-	}
+	}*/
 	if (this.isAggressive() && !this.communicating) { //enemy
-		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
 			if (ply > -1) {
 				//attack player
-				this.attack(true, player[ply]);
+				this.attack(true, pl);
 				return ply;
 			}
 		}
@@ -137,7 +142,7 @@ Monster.prototype.canInteract = function() {
 		if (ch !== null && ch.recruitment.called && ch.recruitment.playerId > -1 && ch.recruitment.playerId === ply) {
 			ch.recruitment.attached = true;
 			ch.recruitment.called = false;
-			player[ply].updateChampions();
+			pl.updateChampions();
 			redrawUI(ply);
 			return ply;
 		}

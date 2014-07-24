@@ -148,7 +148,7 @@ function canMove(f, x, y, d, to) {
 		}
 	}
 
-	if (getHexToBinaryPosition(hex15, 8) == '1') { //other player
+	if (getPlayerAt(f, x + xy.x, y + xy.y) !== null) { //other player
 		return OBJECT_CHARACTER;
 	} else if (getMonsterAt(f, x + xy.x, y + xy.y) !== null) { //monster
 		return OBJECT_CHARACTER;
