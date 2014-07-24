@@ -316,9 +316,9 @@ Player.prototype.getBinaryView = function(pos18, index, length) {
 };
 
 Player.prototype.setMovementData = function() {
-	tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
+	//tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
 	if (!this.dead && !this.sleeping) {
-		this.setBinaryView(18, 8, 1, '1');
+		//this.setBinaryView(18, 8, 1, '1');
 		this.lastX = this.x;
 		this.lastY = this.y;
 		this.lastFloor = this.floor;
@@ -374,7 +374,8 @@ Player.prototype.tryAttack = function(ch) {
 		xy = getOffsetByRotation(this.d);
 		var hexNext = this.getBinaryView(15, 0, 16);
 		if (getHexToBinaryPosition(hexNext, 8) === '1') {
-			if (typeof player[1] !== 'undefined' && this.floor === player[1 - this.id].floor && this.x + xy.x === player[1 - this.id].x && this.y + xy.y === player[1 - this.id].y) {
+			if(getPlayerAt(this.floor, this.x + xy.x, this.y + xy.y) !== null) {
+			//if (typeof player[1] !== 'undefined' && this.floor === player[1 - this.id].floor && this.x + xy.x === player[1 - this.id].x && this.y + xy.y === player[1 - this.id].y) {
 				//attack player
 				this.attack(ch, true, player[1 - this.id]);
 				return true;
@@ -1735,9 +1736,9 @@ Player.prototype.getCommunication = function(mode, text) {
 }
 
 function getPlayerAt(f, x, y) {
-	for (p in player) {
+	for (var p in player) {
 		var pl = player[parseInt(p)];
-		if(f === pl.floor && x === pl.x && y === pl.y) {
+		if(!pl.dead && f === pl.floor && x === pl.x && y === pl.y) {
 			return pl;
 		}
 	}
@@ -1753,10 +1754,11 @@ function initPlayersStart(ch1, ch2) {
 				player[p].recruitChampion();
 			}
 			var ch = player[p].getChampion(0);
-			var f = ch.getMonster().floor;
-			var x = ch.getMonster().x;
-			var y = ch.getMonster().y;
-			var d = ch.getMonster().d;
+			var m = ch.getMonster();
+			var f = m.floor;
+			var x = m.x;
+			var y = m.y;
+			var d = m.d;
 			player[p].setPlayerPosition(f, x, y, d);
 		}
 	} else {

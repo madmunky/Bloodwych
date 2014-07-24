@@ -118,13 +118,11 @@ Monster.prototype.canInteract = function() {
 		ply = 1;
 	}*/
 	if (this.isAggressive() && !this.communicating) { //enemy
-		var hexNext = this.getBinaryView(15, 0, 16);
-		if (getHexToBinaryPosition(hexNext, 8) === '1') {
-			if (ply > -1) {
-				//attack player
-				this.attack(true, pl);
-				return ply;
-			}
+		//var hexNext = this.getBinaryView(15, 0, 16);
+		if (ply > -1) {
+			//attack player
+			this.attack(true, pl);
+			return ply;
 		}
 		var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
 		if (mon !== null) {

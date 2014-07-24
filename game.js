@@ -50,7 +50,7 @@ function timerAction() {
 
 	//monster timer actions
 	mon = getMonstersInTower(towerThis, true);
-	for (m in mon) {
+	for (var m in mon) {
 		var tm = mon[m].getCurseTimers();
 
 		var br = Math.floor(Math.random() * 20);
@@ -69,7 +69,7 @@ function timerAction() {
 	}
 
 	//player timer actions
-	for (p in player) {
+	for (var p in player) {
 		var p = parseInt(p);
 		var pl = player[p];
 		var tm = 100;
@@ -102,7 +102,7 @@ function timerAction() {
 			pl.doCommunicationAnswer();
 		}
 
-		for (c = 0; c < pl.champion.length; c++) {
+		for (var c = 0; c < pl.champion.length; c++) {
 			var ch = pl.getChampion(c);
 			if (ch !== null) {
 				ch.recruitment.attackTimer++;
