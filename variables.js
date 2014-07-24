@@ -11,6 +11,7 @@ var gameStateSelectGrid = [];
 var players = 0;
 var currentPlayer = 0;
 var paused = false;
+var pausedByBrowser = false;
 var checkStarted = true;
 
 //Setup some global variables for needed

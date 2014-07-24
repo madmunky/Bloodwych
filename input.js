@@ -51,12 +51,17 @@ function doKeyDown(e) {
 					if (!player[0].frozen) player[0].rotate(1);
 					break; // E KEY
 				case KEY_5:
+					pauseGame(true);
 					player[0].uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
 					showGameStateMenu(player[0]);
 					break;
 				case KEY_6:
+					pauseGame(true);
 					player[0].uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
 					showGameStateMenu(player[0]);
+					break;
+				case KEY_0:
+					pauseGame(true);
 					break;
 				/*case KEY_ESC:
 					if (player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
@@ -114,6 +119,21 @@ function doKeyDown(e) {
 					case KEY_MINUS:
 						testPalette = testPalette - 1;
 						break;
+					case KEY_1:
+						player[0].alterObject(-1);
+						break;
+					case KEY_2:
+						player[0].alterObject(0, 1);
+						break;
+					case KEY_3:
+						player[0].alterObject(1);
+						break;
+					/*case KEY_4:
+						player[0].alterObject(0, 0, -1);
+						break;
+					case KEY_R:
+						player[0].alterObject(0, 0, 1);
+						break;
 					case KEY_7:
 						testDistance = (testDistance + 1) % 3;
 						PrintLog("Distance: " + testDistance);
@@ -127,21 +147,6 @@ function doKeyDown(e) {
 						break;
 					case KEY_9:
 						testMon1 = (testMon1 - 1);
-						break;
-					case KEY_1:
-						player[0].alterObject(-1);
-						break;
-					case KEY_2:
-						player[0].alterObject(0, 1);
-						break;
-					case KEY_3:
-						player[0].alterObject(1);
-						break; 
-					/*case KEY_4:
-						player[0].alterObject(0, 0, -1);
-						break;
-					case KEY_R:
-						player[0].alterObject(0, 0, 1);
 						break;*/
 					default:
 						break;
@@ -149,7 +154,7 @@ function doKeyDown(e) {
 			}
 		} else {
 			switch (e.keyCode) {
-				case KEY_ESC:
+				case KEY_0: case KEY_ESC:
 					pauseGame(false);
 					break;
 			}

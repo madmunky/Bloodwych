@@ -122,6 +122,7 @@ function clearCanvas() {
 function pauseGame(ps, colourTo) {
 	//colourTo = RGB HEX CODE i.e. #400000
 	if (!ps) {
+		pausedByBrowser = false;
 		for (p in player) {
 			player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 			player[p].message();
@@ -329,16 +330,17 @@ function godMode() {
 }
 
 $(function() {
-	$('html').focusin(function(e) {
+	$('body').focusin(function(e) {
 		var t = $(e.target);
-		if (gameStarted && paused && !t.is('input.save-game')) {
+		if (gameStarted && paused && pausedByBrowser) {
 			pauseGame(false);
 		}
 	});
-	$('html').focusout(function(e) {
+	$('body').focusout(function(e) {
 		var t = $(e.target);
-		if (gameStarted && !paused && !t.is('input.save-game')) {
+		if (gameStarted && !paused) {
 			pauseGame(true);
+			pausedByBrowser = true;
 		}
 	});
 	if (typeof debugWindow !== "undefined" && debugWindow !== null) {

@@ -2127,7 +2127,7 @@ function showGameStateMenu(p) {
 		createSelectGrid(gameStateSelectGrid, 96, 14, 128, 16, null);
 		writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
 		createSelectGrid(gameStateSelectGrid, 96, 30, 128, 16, null);
-		writeFontImage("QUIT GAME", 30, 56, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
+		writeFontImage("RESTART", 38, 56, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
 		createSelectGrid(gameStateSelectGrid, 96, 54, 128, 16, null);
 		//pauseGame(false)
 	}
