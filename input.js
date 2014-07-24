@@ -50,15 +50,15 @@ function doKeyDown(e) {
 				case KEY_E:
 					if (!player[0].frozen) player[0].rotate(1);
 					break; // E KEY
-				case KEY_6:
-					player[0].uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
-					showGameStateMenu(player[0]);
-					break;
 				case KEY_5:
 					player[0].uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
 					showGameStateMenu(player[0]);
 					break;
-				case KEY_ESC:
+				case KEY_6:
+					player[0].uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
+					showGameStateMenu(player[0]);
+					break;
+				/*case KEY_ESC:
 					if (player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
 						player[0].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 						player[0].message();
@@ -67,7 +67,7 @@ function doKeyDown(e) {
 						player[1].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 						player[1].message();
 					}
-					break;
+					break;*/
 				default:
 					break;
 			}
@@ -150,7 +150,7 @@ function doKeyDown(e) {
 		} else {
 			switch (e.keyCode) {
 				case KEY_ESC:
-					pauseGame('#000000');
+					pauseGame(false);
 					break;
 			}
 		}
@@ -186,9 +186,9 @@ function checkClickEvents() {
 		var x = (e.pageX - (canvas.offsetLeft * scaleReal)) / (scale * scaleReal);
 		var y = (e.pageY - (canvas.offsetTop * scaleReal)) / (scale * scaleReal);
 		if (t.attr('data-game-status') === 'started') {
-			if (paused) {
-				pauseGame('#000000');
-			}
+			//if (paused) {
+			//	pauseGame(false);
+			//}
 			var p = 0;
 			for (pid in player) {
 				pid = parseInt(pid);
@@ -224,290 +224,306 @@ function checkClickEvents() {
 
 function processCanvasInput(pid, x, y) {
 	var p = player[parseInt(pid)];
-	if (!p.sleeping) {
+	if(!paused) {
+		if (!p.sleeping) {
+
+		} else {
+			if (uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, p) && (p.fairyDetails.champ === null || !uiClickInArea(x, y, UI_CLICK_VIEWPORT, p))) {
+				p.wakeUp();
+				return pid;
+			} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY) {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SERPENT);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_CHAOS_SPELL, p)) {
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_CHAOS);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_DRAGON_SPELL, p)) {
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_DRAGON);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_MOON_SPELL, p)) {
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_MOON);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+					p.nextChampionUp++;
+					p.sleep();
+					return 0;
+				}
+			} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT) {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
+					//show buy spell screen    
+					p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(0)[0];
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
+					//show buy spell screen  
+					p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(0)[1];
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+					return 0;
+				}
+			} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_CHAOS) {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
+					//show buy spell screen    
+					p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(1)[0];
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
+					//show buy spell screen  
+					p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(1)[1];
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+					return 0;
+				}
+			} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_DRAGON) {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
+					//show buy spell screen    
+					p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(2)[0];
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
+					//show buy spell screen  
+					p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(2)[1];
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+					return 0;
+				}
+			} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON) {
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
+					//show buy spell screen    
+					p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(3)[0];
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
+					//show buy spell screen  
+					p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(3)[1];
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+					return 0;
+				}
+			} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
+
+				if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
+					p.fairyDetails.champ.buySpell(p.fairyDetails.spell);
+					return 0;
+				} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
+					gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
+					return 0;
+				}
+			}
+		}
+
+		if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
+
+			if (uiClickInArea(x, y, UI_CLICK_OPEN_POCKETS, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_POCKETS;
+				p.uiRightPanel.activePocket = 0;
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_INTERACT, p)) {
+				var ch = p.getChampion(p.championLeader);
+				if (ch.activeSpell.id > -1) {
+					ch.expireSpell();
+				} else if (ch.selectedSpell === null) {
+					p.action();
+				} else {
+					p.castSpell(ch.selectedSpell, ch);
+				}
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_SPELLBOOK;
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_CHARACTER_STATS, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_STATS;
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_LEFT, p)) {
+				if (!p.frozen) p.rotate(-1);
+			} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_RIGHT, p)) {
+				if (!p.frozen) p.rotate(1);
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_FORWARD, p)) {
+				if (!p.frozen) p.move(DIRECTION_NORTH);
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_BACKWARDS, p)) {
+				if (!p.frozen) p.move(DIRECTION_SOUTH);
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_LEFT, p)) {
+				if (!p.frozen) p.move(DIRECTION_WEST);
+			} else if (uiClickInArea(x, y, UI_CLICK_MOVE_RIGHT, p)) {
+				if (!p.frozen) p.move(DIRECTION_EAST);
+			} else if (uiClickInArea(x, y, UI_CLICK_ATTACK, p)) {
+				p.attacking = true;
+			} else if (uiClickInArea(x, y, UI_CLICK_DEFEND, p)) {
+				p.attack(null, false);
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, p)) {
+				p.exchangeChampionPosition(p.championHighlite, 0);
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_RIGHT, p)) {
+				p.exchangeChampionPosition(p.championHighlite, 1);
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_LEFT, p)) {
+				p.exchangeChampionPosition(p.championHighlite, 3);
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_RIGHT, p)) {
+				p.exchangeChampionPosition(p.championHighlite, 2);
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			}
+
+		} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
+			if (!p.dead) {
+				for (s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
+					if (uiClickInArea(x, y, s, p)) {
+						p.exchangeItemWithHand(s - UI_CLICK_POCKET_SLOT_1);
+						p.redrawLeftRightUiFlag = UI_REDRAW_POCKETS;
+						return pid;
+					}
+				}
+				if (uiClickInArea(x, y, UI_CLICK_POCKET_HAND, p)) {
+					p.useItemActivePocket();
+					p.redrawLeftRightUiFlag = UI_REDRAW_POCKETS;
+					return pid;
+				}
+			}
+			for (cid = UI_CLICK_POCKET_CHARACTER_0; cid <= UI_CLICK_POCKET_CHARACTER_3; cid++) {
+				if (uiClickInArea(x, y, cid, p)) {
+					var ap = cid - UI_CLICK_POCKET_CHARACTER_0;
+					var c = p.getOrderedChampionIds();
+					var ch = p.getChampion(c[ap]);
+					if (ch !== null && ch.recruitment.attached) {
+						p.uiRightPanel.activePocket = ap;
+						p.redrawLeftRightUiFlag = UI_REDRAW_POCKETS;
+						return pid;
+					}
+					break;
+				}
+			}
+			if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			}
+
+		} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
+			if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			}
+		} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+			if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, p)) {
+				p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+				p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
+				return pid;
+			}
+		} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
+			if (!p.dead) {
+				if (spellBookAreas(x, y, p) > -1) {
+					return p.id;
+				}
+			}
+		}
+		if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
+
+			if (uiClickInArea(x, y, UI_CLICK_CHAMP1, p)) {
+				toggleChampUI(0, p);
+				redrawUI(p.id, UI_REDRAW_LEFT);
+				//return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP2, p)) {
+				toggleChampUI(1, p);
+				p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP3, p)) {
+				toggleChampUI(2, p);
+				p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_CHAMP4, p)) {
+				toggleChampUI(3, p);
+				p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_STATS_BOX, p)) {
+				p.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_COMMAND;
+				p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
+				return pid;
+			}
+		} else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
+			if (uiClickInArea(x, y, UI_CLICK_SLEEP, p)) {
+				p.nextChampionUp = 0;
+				p.sleep();
+				p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
+				return pid;
+			}
+		}
+	}
+
+	//game options (works when paused)
+	if(!p.sleeping) {
 		if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
 			uiGameStateMenu(x, y, p);
-		} else if (!p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
+		} else if (!paused && !p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
 			return checkClickInViewPortal(p, x, y);
 		}
-	} else {
-		if (uiClickInArea(x, y, UI_CLICK_PLAYERS_AREA, p) && (p.fairyDetails.champ === null || !uiClickInArea(x, y, UI_CLICK_VIEWPORT, p))) {
-			p.wakeUp();
-			return pid;
-		} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY) {
-			if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SERPENT);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_CHAOS_SPELL, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_CHAOS);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_DRAGON_SPELL, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_DRAGON);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_MOON_SPELL, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_MOON);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-				p.nextChampionUp++;
-				p.sleep();
-				return 0;
+		if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
+			if (uiClickInArea(x, y, UI_CLICK_BACK, p)) {
+				checkBackButton(p);
+				pauseGame(false);
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, p)) {
+				p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
+				if(paused) {
+					pauseGame(false);
+				} else {
+					pauseGame(true);
+				}
+				return pid;
+			} else if (uiClickInArea(x, y, UI_CLICK_SAVE, p)) {
+				if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
+					pauseGame(false);
+					p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+				} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+					pauseGame(false);
+					p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+					p.message();
+				} else {
+					pauseGame(true);
+					p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_MENU;
+					showGameStateMenu(p);
+				}
+				p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
+				return pid;
 			}
-		} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT) {
-			if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
-				//show buy spell screen    
-				p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(0)[0];
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
-				//show buy spell screen  
-				p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(0)[1];
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
-				return 0;
-			}
-		} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_CHAOS) {
-			if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
-				//show buy spell screen    
-				p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(1)[0];
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
-				//show buy spell screen  
-				p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(1)[1];
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
-				return 0;
-			}
-		} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_DRAGON) {
-			if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
-				//show buy spell screen    
-				p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(2)[0];
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
-				//show buy spell screen  
-				p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(2)[1];
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
-				return 0;
-			}
-		} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON) {
-			if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_0, p)) {
-				//show buy spell screen    
-				p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(3)[0];
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_TEXTAREA_1, p)) {
-				//show buy spell screen  
-				p.fairyDetails.spell = p.fairyDetails.champ.getUnlearntSpellsByColour(3)[1];
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY_SPELLDETAILS);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
-				return 0;
-			}
-		} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
-
-			if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_SERPENT_SPELL, p)) {
-				p.fairyDetails.champ.buySpell(p.fairyDetails.spell);
-				return 0;
-			} else if (uiClickInArea(x, y, UI_CLICK_PORTAL_FAIRY_BACK, p)) {
-				gotoFairyMode(p, UI_CENTER_PANEL_FAIRY);
-				return 0;
-			}
-		}
-	}
-
-	if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
-
-		if (uiClickInArea(x, y, UI_CLICK_OPEN_POCKETS, p)) {
-			p.uiRightPanel.mode = UI_RIGHT_PANEL_POCKETS;
-			p.uiRightPanel.activePocket = 0;
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_INTERACT, p)) {
-			var ch = p.getChampion(p.championLeader);
-			if (ch.activeSpell.id > -1) {
-				ch.expireSpell();
-			} else if (ch.selectedSpell === null) {
-				p.action();
-			} else {
-				p.castSpell(ch.selectedSpell, ch);
-			}
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_SPELLBOOK_ICON, p)) {
-			p.uiRightPanel.mode = UI_RIGHT_PANEL_SPELLBOOK;
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_CHARACTER_STATS, p)) {
-			p.uiRightPanel.mode = UI_RIGHT_PANEL_STATS;
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_LEFT, p)) {
-			if (!p.frozen) p.rotate(-1);
-		} else if (uiClickInArea(x, y, UI_CLICK_ROTATE_RIGHT, p)) {
-			if (!p.frozen) p.rotate(1);
-		} else if (uiClickInArea(x, y, UI_CLICK_MOVE_FORWARD, p)) {
-			if (!p.frozen) p.move(DIRECTION_NORTH);
-		} else if (uiClickInArea(x, y, UI_CLICK_MOVE_BACKWARDS, p)) {
-			if (!p.frozen) p.move(DIRECTION_SOUTH);
-		} else if (uiClickInArea(x, y, UI_CLICK_MOVE_LEFT, p)) {
-			if (!p.frozen) p.move(DIRECTION_WEST);
-		} else if (uiClickInArea(x, y, UI_CLICK_MOVE_RIGHT, p)) {
-			if (!p.frozen) p.move(DIRECTION_EAST);
-		} else if (uiClickInArea(x, y, UI_CLICK_ATTACK, p)) {
-			p.attacking = true;
-		} else if (uiClickInArea(x, y, UI_CLICK_DEFEND, p)) {
-			p.attack(null, false);
-		} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_LEFT, p)) {
-			p.exchangeChampionPosition(p.championHighlite, 0);
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_FRONT_RIGHT, p)) {
-			p.exchangeChampionPosition(p.championHighlite, 1);
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_LEFT, p)) {
-			p.exchangeChampionPosition(p.championHighlite, 3);
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_CHAMP_BACK_RIGHT, p)) {
-			p.exchangeChampionPosition(p.championHighlite, 2);
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		}
-
-	} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
-		if (!p.dead) {
-			for (s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
-				if (uiClickInArea(x, y, s, p)) {
-					p.exchangeItemWithHand(s - UI_CLICK_POCKET_SLOT_1);
-					p.redrawLeftRightUiFlag = UI_REDRAW_POCKETS;
+			if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1) {
+				if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, p)) {
+					var t = p.communication.mode + 1;
+					if (t > 2) {
+						t = 1;
+					}
+					p.communication.mode = t;
+					return pid;
+				}
+				if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, p)) {
+					var t = p.communication.mode - 1;
+					if (t < 1) {
+						t = 2;
+					}
+					p.communication.mode = t;
 					return pid;
 				}
 			}
-			if (uiClickInArea(x, y, UI_CLICK_POCKET_HAND, p)) {
-				p.useItemActivePocket();
-				p.redrawLeftRightUiFlag = UI_REDRAW_POCKETS;
-				return pid;
+			if (!paused) {
+				checkCommunicationArea(p, x, y, false);
 			}
-		}
-		for (cid = UI_CLICK_POCKET_CHARACTER_0; cid <= UI_CLICK_POCKET_CHARACTER_3; cid++) {
-			if (uiClickInArea(x, y, cid, p)) {
-				var ap = cid - UI_CLICK_POCKET_CHARACTER_0;
-				var c = p.getOrderedChampionIds();
-				var ch = p.getChampion(c[ap]);
-				if (ch !== null && ch.recruitment.attached) {
-					p.uiRightPanel.activePocket = ap;
-					p.redrawLeftRightUiFlag = UI_REDRAW_POCKETS;
-					return pid;
-				}
-				break;
-			}
-		}
-		if (uiClickInArea(x, y, UI_CLICK_POCKET_BACK, p)) {
-			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		}
-
-	} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
-		if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, p)) {
-			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		}
-	} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
-		if (uiClickInArea(x, y, UI_CLICK_CLOSE_SCRIPT, p)) {
-			p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-			p.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-			return pid;
-		}
-	} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
-		if (!p.dead) {
-			if (spellBookAreas(x, y, p) > -1) {
-				return p.id;
-			}
-		}
-	}
-	if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
-
-		if (uiClickInArea(x, y, UI_CLICK_CHAMP1, p)) {
-			toggleChampUI(0, p);
-			redrawUI(p.id, UI_REDRAW_LEFT);
-			//return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_CHAMP2, p)) {
-			toggleChampUI(1, p);
-			p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_CHAMP3, p)) {
-			toggleChampUI(2, p);
-			p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_CHAMP4, p)) {
-			toggleChampUI(3, p);
-			p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_STATS_BOX, p)) {
-			p.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_COMMAND;
-			p.redrawLeftRightUiFlag = UI_REDRAW_LEFT;
-			return pid;
-		}
-
-	} else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
-
-		if (uiClickInArea(x, y, UI_CLICK_BACK, p)) {
-			checkBackButton(p);
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_PAUSE, p)) {
-			p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
-			pauseGame('#400000');
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_SAVE, p)) {
-			if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
-				p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
-			} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-				p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
-				p.message();
-			} else {
-				p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_MENU;
-				showGameStateMenu(p);
-			}
-			p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
-			return pid;
-		} else if (uiClickInArea(x, y, UI_CLICK_SLEEP, p)) {
-			p.nextChampionUp = 0;
-			p.sleep();
-			p.redrawLeftRightUiFlag = UI_REDRAW_COMMAND;
-			return pid;
-		}
-		if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1) {
-			if (uiClickInArea(x, y, UI_CLICK_TOGGLEUP, p)) {
-				var t = p.communication.mode + 1;
-				if (t > 2) {
-					t = 1;
-				}
-				p.communication.mode = t;
-				return pid;
-			}
-			if (uiClickInArea(x, y, UI_CLICK_TOGGLEDOWN, p)) {
-				var t = p.communication.mode - 1;
-				if (t < 1) {
-					t = 2;
-				}
-				p.communication.mode = t;
-				return pid;
-			}
-		}
-		if (!paused) {
-			checkCommunicationArea(p, x, y, false);
 		}
 	}
 

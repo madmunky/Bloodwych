@@ -1746,6 +1746,10 @@ Player.prototype.getCommunication = function(mode, text) {
 	}
 }
 
+function getPlayerAt(f, x, y) {
+
+}
+
 function initPlayersStart(ch1, ch2) {
 	if (typeof ch1 === "number") {
 		c1 = [ch1, ch2];

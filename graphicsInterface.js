@@ -294,16 +294,8 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop, full) {
 }
 
 function drawUI(p) {
-	if (redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
+	if (p.redrawLeftRightUiFlag > -1 && redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
 		if (typeof gfxUI !== "undefined" && gfxUI !== null) {
-
-			/*if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS || p.redrawLeftRightUiFlag === UI_REDRAW_COMMAND) {
-				ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
-			}
-			if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS || p.redrawLeftRightUiFlag === UI_REDRAW_POCKETS || p.redrawLeftRightUiFlag === UI_REDRAW_SPELLBOOK) {
-				ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-			}*/
-
 			if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
 				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
 					ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
@@ -356,8 +348,10 @@ function drawUI(p) {
 				}
 			}
 			p.redrawLeftRightUiFlag = -1;
+			return true;
 		}
 	}
+	return false;
 }
 
 function redrawUI(p, lr) {
@@ -2130,11 +2124,11 @@ function showGameStateMenu(p) {
 	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
 		coverViewPort(p);
 		writeFontImage("LOAD GAME", 30, 16, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 110, 15, 100, 12, null);
+		createSelectGrid(gameStateSelectGrid, 96, 14, 128, 16, null);
 		writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 110, 34, 100, 12, null);
+		createSelectGrid(gameStateSelectGrid, 96, 30, 128, 16, null);
 		writeFontImage("QUIT GAME", 30, 56, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 136, 60, 50, 12, null);
+		createSelectGrid(gameStateSelectGrid, 96, 54, 128, 16, null);
 		//pauseGame(false)
 	}
 	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
@@ -2175,24 +2169,25 @@ function createSelectGrid(myObject, myX, myY, myWidth, myHeight, cid) {
 function uiGameStateMenu(x, y, p) {
 
 	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
-		for (slot = 0; slot < 8; slot++) {
+		for (var slot = 0; slot < 8; slot++) {
 			if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
 				p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", COLOUR[COLOUR_GREEN], false, 0);
 				var inp = $('input.save-game');
 				inp.val(getGameName(slot));
 				inp.data('player-id', p.id);
 				inp.data('slot-id', slot);
+				inp.show();
 				inp.focus().select();
 				inp.trigger('keyup');
 			}
 		}
 	} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-		for (slot = 0; slot < 8; slot++) {
+		for (var slot = 0; slot < 8; slot++) {
 			if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
 				if (getGameName(slot) !== '') {
-					redrawUI(p.id);
+					pauseGame(false);
 					loadGame(slot);
-					p.message();
+					redrawUI(2);
 				}
 			}
 		}

@@ -49,15 +49,21 @@ function updatePlayerViewScreen() {
 
 	//configCanvas();
 	debugText(player[0], "FPS: " + fps.getFPS());
-	if (!paused) {
-		for (p in player) {
-			debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
-			drawPlayersView(player[p]);
-			drawUI(player[p]);
-			testing(player[p]);
+	//if (!paused) {
+	var dr = false;
+	for (p in player) {
+		debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
+		drawPlayersView(player[p]);
+		if(drawUI(player[p])) {
+			dr = true;
 		}
-		redrawPlayerUiFlag = 0;
+		//testing(player[p]);
 	}
+	if (dr && paused) {
+		recolourCanvas([0, 0, 0], [64, 0, 0]);
+	}
+	redrawPlayerUiFlag = 0;
+	//}
 }
 
 function setViewportScale(sp) {
@@ -113,27 +119,40 @@ function clearCanvas() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function pauseGame(colourTo) {
+function pauseGame(ps, colourTo) {
 	//colourTo = RGB HEX CODE i.e. #400000
-
-	paused = !paused;
+	if (!ps) {
+		for (p in player) {
+			player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+			player[p].message();
+		}
+	}
+	if (typeof colourTo === 'undefined') {
+		if (ps) {
+			var colourTo = '#400000';
+		} else {
+			var colourTo = '#000000';
+		}
+	}
+	paused = ps;
 	$('html').css('background', colourTo);
 	$('body').css('background', colourTo);
 	canvas.style.background = colourTo;
-	var paletteFrom = [0, 0, 0];
-	var paletteTo = hexToRgb(colourTo);
-	var imageData = ctx.getImageData(0, 0, canvas.width, canvas.width);
 
-	for (var i = 0; i < imageData.data.length; i += 4) {
-		if (imageData.data[i] === paletteFrom[0] && imageData.data[i + 1] === paletteFrom[1] && imageData.data[i + 2] === paletteFrom[2]) {
-			imageData.data[i] = paletteTo.r;
-			imageData.data[i + 1] = paletteTo.g;
-			imageData.data[i + 2] = paletteTo.b;
+	redrawUI(2);
+}
+
+function recolourCanvas(from, to) {
+	var img = ctx.getImageData(0, 0, canvas.width, canvas.width);
+	for (var i = 0; i < img.data.length; i += 4) {
+		if (img.data[i] === from[0] && img.data[i + 1] === from[1] && img.data[i + 2] === from[2]) {
+			img.data[i] = to[0];
+			img.data[i + 1] = to[1];
+			img.data[i + 2] = to[2];
 			j = j + 3;
 		}
 	}
-	ctx.putImageData(imageData, 0, 0);
-	redrawUI(2);
+	ctx.putImageData(img, 0, 0);
 }
 
 //Renders the sub-coloured objects. E.g. for locked doors and banners
@@ -310,6 +329,16 @@ function godMode() {
 }
 
 $(function() {
+	$('html').focusin(function() {
+		if (gameStarted && paused) {
+			pauseGame(false);
+		}
+	});
+	$('html').focusout(function() {
+		if (gameStarted && !paused) {
+			pauseGame(true);
+		}
+	});
 	if (typeof debugWindow !== "undefined" && debugWindow !== null) {
 		$('body', debugWindow.document).on('click', '.debug-input #coord-submit', function() {
 			var tower = parseInt($('body .debug-input #coord-t', debugWindow.document).val());
@@ -326,31 +355,33 @@ $(function() {
 	$('body').keyup(function(e) {
 		var t = $(e.target);
 		if (t.is('input.save-game')) {
-			var p = 0
-			var slot = t.data('slot-id');
-			var name = t.val().substring(0, 12).toUpperCase();
-			if (e.which === 13) {
-				t.trigger('focusout');
-				if (name !== '') {
-					player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
-					saveGame(slot, name);
-					redrawUI(p);
+			var p = t.data('player-id');
+			if (typeof p !== 'undefined') {
+				var slot = t.data('slot-id');
+				var name = t.val().substring(0, 12).toUpperCase();
+				if (e.which === 13) {
+					t.trigger('focusout');
+					if (name !== '') {
+						pauseGame(false);
+						saveGame(slot, name);
+						redrawUI(p);
+					}
+				} else if (e.which === 27) {
+					t.trigger('focusout');
+				} else {
+					var pp = player[p].Portal;
+					pp.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARKEST][0] + ', ' + COLOUR[COLOUR_GREY_DARKEST][1] + ', ' + COLOUR[COLOUR_GREY_DARKEST][2] + ')';
+					pp.fillRect(4 * scale, (slot * 8 + 5) * scale, 120 * scale, 9 * scale);
+					writeFontImage((slot + 1) + '.' + name, 8, slot * 8 + 6, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT, pp);
+					var crt = t.caret();
+					var off = scale * 0.5;
+					pp.strokeStyle = 'rgb(' + COLOUR[COLOUR_GREY_LIGHT][0] + ', ' + COLOUR[COLOUR_GREY_LIGHT][1] + ', ' + COLOUR[COLOUR_GREY_LIGHT][2] + ')';
+					pp.beginPath();
+					pp.moveTo((23 + crt * 8) * scale + off, (slot * 8 + 5) * scale);
+					pp.lineTo((23 + crt * 8) * scale + off, (slot * 8 + 14) * scale);
+					pp.lineWidth = 3;
+					pp.stroke();
 				}
-			} else if (e.which === 27) {
-				t.trigger('focusout');
-			} else {
-				var pp = player[p].Portal;
-				pp.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARKEST][0] + ', ' + COLOUR[COLOUR_GREY_DARKEST][1] + ', ' + COLOUR[COLOUR_GREY_DARKEST][2] + ')';
-				pp.fillRect(4 * scale, (slot * 8 + 5) * scale, 120 * scale, 9 * scale);
-				writeFontImage((slot + 1) + '.' + name, 8, slot * 8 + 6, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT, pp);
-				var crt = t.caret();
-				var off = scale * 0.5;
-				pp.strokeStyle = 'rgb(' + COLOUR[COLOUR_GREY_LIGHT][0] + ', ' + COLOUR[COLOUR_GREY_LIGHT][1] + ', ' + COLOUR[COLOUR_GREY_LIGHT][2] + ')';
-				pp.beginPath();
-				pp.moveTo((23 + crt * 8) * scale + off, (slot * 8 + 5) * scale);
-				pp.lineTo((23 + crt * 8) * scale + off, (slot * 8 + 14) * scale);
-				pp.lineWidth = 3;
-				pp.stroke();
 			}
 		}
 	});
@@ -358,8 +389,9 @@ $(function() {
 		$(this).trigger('click');
 	});
 	$('body').on('focusout', 'input.save-game', function() {
-		var p = 0
-		if (player[p].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
+		$(this).hide();
+		var p = $(this).data('player-id');
+		if (typeof p !== 'undefined' && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
 			createStateGrid(player[p], "SAVE");
 		}
 		canvas.focus();

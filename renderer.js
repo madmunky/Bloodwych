@@ -12,7 +12,7 @@ Renderer.prototype = {
 	},
 
 	update: function() {
-               updatePlayerViewScreen();
+		updatePlayerViewScreen();
 	},
 
 	invalid: {

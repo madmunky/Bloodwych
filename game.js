@@ -15,13 +15,13 @@ Game.prototype = {
 
 	// Update the game model
 	update: function() {
-            if (!paused){
-		timerMaster++;
-		timerAction();
-                if (checkStarted){
-                    checkStarted = false;
-                }
-            }
+		if (checkStarted) {
+			checkStarted = false;
+		}
+		if (!paused) {
+			timerAction();
+			timerMaster++;
+		}
 	},
 
 	subscribe: function(e, callback, target) {
@@ -36,7 +36,7 @@ Game.prototype = {
 	publish: function(e) {
 		this.subs && this.subs[e].forEach(function(sub) {
 			var args = [].slice.call(arguments, 1);
-			sub.callback.apply(sub.target, args)
+			sub.callback.apply(sub.target, args);
 		});
 	}
 }
@@ -44,7 +44,7 @@ Game.prototype = {
 function timerAction() {
 	cutpurseTrueview = (Math.floor(Math.random() * 10) === 0);
 	var tmf = 1.0;
-	if(player.length === 1 && player[0].sleeping) {
+	if (player.length === 1 && player[0].sleeping) {
 		tmf = 0.5;
 	}
 
@@ -61,7 +61,7 @@ function timerAction() {
 			mon[m].blur = 1;
 		}
 		mon[m].glow = Math.floor(Math.random() * 2);
-		if(tm > 0 && timerMaster - mon[m].timerMove >= tm * tmf) {
+		if (tm > 0 && timerMaster - mon[m].timerMove >= tm * tmf) {
 			mon[m].timerMove = timerMaster;
 			mon[m].doGesture(CHA_GESTURE_NONE);
 			mon[m].move();
@@ -104,7 +104,7 @@ function timerAction() {
 
 		for (c = 0; c < pl.champion.length; c++) {
 			var ch = pl.getChampion(c);
-			if(ch !== null) {
+			if (ch !== null) {
 				ch.recruitment.attackTimer++;
 				if (ch.recruitment.attackTimer % (ch.getAttackSpeed(20) * tmf) === 0) {
 					if (pl.attacking) {
@@ -112,8 +112,8 @@ function timerAction() {
 					}
 				}
 			}
-			if(pl.uiLeftPanel.champs[c].damage > 0) {
-				if(timerMaster - pl.uiLeftPanel.champs[c].damageTimer >= 20 * tmf) {
+			if (pl.uiLeftPanel.champs[c].damage > 0) {
+				if (timerMaster - pl.uiLeftPanel.champs[c].damageTimer >= 20 * tmf) {
 					pl.uiLeftPanel.champs[c].damageTimer = 0;
 					pl.uiLeftPanel.champs[c].damage = 0;
 					redrawUI(p, UI_REDRAW_LEFT);
