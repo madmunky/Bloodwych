@@ -142,6 +142,7 @@ Monster.prototype.canInteract = function() {
 			ch.recruitment.called = false;
 			pl.updateChampions();
 			redrawUI(ply);
+			pl.message(ch.firstName + TEXT_REJOINS_THE_PARTY, COLOUR[COLOUR_GREEN]);
 			return ply;
 		}
 	} else { //vendor and communicating monsters

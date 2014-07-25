@@ -1520,6 +1520,7 @@ Player.prototype.doCommunication = function(text) {
 							this.communication.mode = COMMUNICATION_PAGE_MAIN;
 							this.communication.text = null;
 							redrawUI(this.id);
+							this.message(this.getChampion(c2).firstName + TEXT_WAITS, COLOUR[COLOUR_GREEN]);
 						}
 						break;
 					case COMMUNICATION_DISMISS:
