@@ -468,6 +468,13 @@ function createItemRef(id, name, gfx, gfxD) {
 	};
 }
 
+//id starts at 0 (= ITEM_LEATHER_ARMOUR)
+//returns 0 for leather, 1 for chain and 2 for plate
+function getItemArmourType(id) {
+	var typ = [0, 1, 2, 1, 2, 1, 2, 1, 2];
+	return typ[id];
+}
+
 function initItemsGfxD() {
 
 	var spriteSheetIMG = gfx['dungeon']['items2'];

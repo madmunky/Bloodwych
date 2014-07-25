@@ -448,7 +448,7 @@ function grabCharacter(form, part, dir, dist) {
 	}
 }
 
-function grabCharacterArmour(id, part, dir, dist) {
+function grabCharacterArmour(id, gen, part, dir, dist) {
 	if(part !== IMAGE_CHA_HEAD) {
 		if (dist >= 4 && part === IMAGE_CHA_MINI) {
 			/*if (typeof monsterPalette[form] !== "undefined") {
@@ -459,7 +459,6 @@ function grabCharacterArmour(id, part, dir, dist) {
 				return mini;
 			}*/
 		} else if (dist < 4 && part !== IMAGE_CHA_MINI) {
-			//if (typeof monsterPalette[form] !== "undefined") {
 				/*var LEG;
 				var ARM;
 				var TORSO;
@@ -470,27 +469,23 @@ function grabCharacterArmour(id, part, dir, dist) {
 				dir2 = dir % 2;
 				switch (part) {
 					case IMAGE_CHA_LEG:
-						//paletteType = monsterPalette[form].leg;
-						//palette = monsterPalette[form].legPalette;
 						dir6 = dir % 4;
 						break;
 					case IMAGE_CHA_TORSO:
-						//paletteType = monsterPalette[form].torso;
-						//palette = monsterPalette[form].torsoPalette;
 						dir6 = dir % 4;
 						break;
 					case IMAGE_CHA_ARM:
-						//paletteType = monsterPalette[form].arm;
-						//palette = monsterPalette[form].armPalette;
 						d = [0, 2, 1, 3, 4, 5, 4, 5];
 						dir6 = dir;
 						break;
 				}
-				var type = [0, 1, null, 0];
-				var leg = characterGfx[IMAGE_CHA_LEG][2][dist][d[dir2]];
-				var torso = characterGfx[IMAGE_CHA_TORSO][1][dist][d[dir2]];
-				var arm = characterGfx[IMAGE_CHA_ARM][0][dist][d[dir]];
-				var partSprite = recolourSprite(characterGfx[part][type[part]][dist][d[dir6]], MON_PALETTE_DEFAULT, CHA_ARMOUR[ITEM_LEATHER_ARMOUR]);
+				var amr = getItemArmourType(id);
+				var type = [armourData[gen + amr * 3][0], armourData[gen + amr * 3][1], null, armourData[gen + amr * 3][2]];
+
+				var leg = characterGfx[IMAGE_CHA_LEG][type[0]][dist][d[dir2]];
+				var torso = characterGfx[IMAGE_CHA_TORSO][type[1]][dist][d[dir2]];
+				var arm = characterGfx[IMAGE_CHA_ARM][type[3]][dist][d[dir]];
+				var partSprite = recolourSprite(characterGfx[part][type[part]][dist][d[dir6]], MON_PALETTE_DEFAULT, CHA_ARMOUR[ITEM_LEATHER_ARMOUR]); // CHA_ARMOUR[ITEM_LEATHER_ARMOUR] needs to be changed to correct palette
 
 				var height = torso.height + leg.height,
 					width = 65; //arm.width + torso.width + arm.width;
@@ -563,7 +558,6 @@ function grabCharacterArmour(id, part, dir, dist) {
 				charContext.save();
 				delete partSprite;
 				return can;
-			//}
 		}
 	}
 }
@@ -682,17 +676,20 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 					gfx1 = monsterRef[27][0].gfx[part][dist][dir1];
 					gfx2 = monsterRef[27][0].gfx[part][dist][dir2];
 				} else if (m.champId > -1) {
-					var amr = m.getChampion().pocket[POCKET_ARMOUR];
-					if(amr.id > 0) {
+					var ch = m.getChampion();
+					var amr = ch.pocket[POCKET_ARMOUR];
+					var gen = ch.getGender();
+					if(amr.id >= ITEM_LEATHER_ARMOUR && amr.id <= ITEM_CRYSTAL_PLATE && typeof armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen] !== 'undefined') {
+
 						if(part === IMAGE_CHA_TORSO) {
-							var gfx1 = armourRef[0].gfx[IMAGE_CHA_TORSO][dist][dir1];
-							var gfx2 = armourRef[0].gfx[IMAGE_CHA_TORSO][dist][dir2];
+							var gfx1 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_TORSO][dist][dir1];
+							var gfx2 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_TORSO][dist][dir2];
 						} else if(part === IMAGE_CHA_ARM) {
-							var gfx1 = armourRef[0].gfx[IMAGE_CHA_ARM][dist][dir1];
-							var gfx2 = armourRef[0].gfx[IMAGE_CHA_ARM][dist][dir2];
+							var gfx1 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_ARM][dist][dir1];
+							var gfx2 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_ARM][dist][dir2];
 						} else if(part === IMAGE_CHA_LEG) {
-							var gfx1 = armourRef[0].gfx[IMAGE_CHA_LEG][dist][dir1];
-							var gfx2 = armourRef[0].gfx[IMAGE_CHA_LEG][dist][dir2];
+							var gfx1 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_LEG][dist][dir1];
+							var gfx2 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_LEG][dist][dir2];
 						}
 					}
 				}

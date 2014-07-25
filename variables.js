@@ -36,6 +36,7 @@ var cutpurseTrueview = 0;
 var towerSwitchesData = new Array();
 var gemSwitchesData = new Array();
 var crystalSwitchesData = new Array();
+var armourData = new Array();
 var loadingInterval = 0;
 var gfxUI = [];
 var font;
@@ -388,6 +389,10 @@ var CHA_BODY = new Array();
 
 var CHA_GENDER_MALE = 0,
 	CHA_GENDER_FEMALE = 1;
+
+var CHA_ARMOUR_MALE = 0,
+	CHA_ARMOUR_FEMALE = 1,
+	CHA_ARMOUR_FEMALE_NAKED = 2;
 
 var CHA_GESTURE_NONE = 0,
 	CHA_GESTURE_ATTACKING = 1,

@@ -723,22 +723,24 @@ function initMonsterGfx() {
 	var dGfx = [];
 	var disGfx = [];
 	var pGfx = [];
-	for(var id = 0; id < 1; id++) {
-		for (part = 0; part < 5; part++) {
-			for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-				for (d = 0; d < 8; d++) {
-					if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
-						dGfx.push(grabCharacterArmour(id, part, d, dis));
+	for(var id = 0; id < 9; id++) {
+		for(var gen = 0; gen < 3; gen++) {
+			for (part = 0; part < 5; part++) {
+				for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+					for (d = 0; d < 8; d++) {
+						if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
+							dGfx.push(grabCharacterArmour(id, gen, part, d, dis));
+						}
 					}
+					disGfx.push(dGfx);
+					dGfx = [];
 				}
-				disGfx.push(dGfx);
-				dGfx = [];
+				pGfx.push(disGfx);
+				disGfx = [];
 			}
-			pGfx.push(disGfx);
-			disGfx = [];
+			createArmourRef(id, gen, pGfx);
+			pGfx = [];
 		}
-		createArmourRef(id, pGfx);
-		pGfx = [];
 	}
 	//}
 }
@@ -760,14 +762,15 @@ function createMonsterRef(id, level, gfx) {
 	}
 }
 
-function createArmourRef(id, gfx) {
+function createArmourRef(id, gen, gfx) {
 	if (typeof armourRef[id] === "undefined") {
 		armourRef[id] = new Array();
 	}
-	if (typeof armourRef[id] === "undefined" || typeof armourRef[id].gfx === "undefined") {
+	if (typeof armourRef[id][gen] === "undefined" || typeof armourRef[id][gen].gfx === "undefined") {
 		if (typeof gfx !== "undefined") {
-			armourRef[id] = {
+			armourRef[id][gen] = {
 				id: id,
+				gen: gen,
 				gfx: gfx
 			};
 		}

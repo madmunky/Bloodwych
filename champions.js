@@ -72,24 +72,30 @@ Champion.revive = function(data) {
 	c.spellUp = data.spellUp;
 	c.levelUp = data.levelUp;
 	c.spellBook = data.spellBook;
-        for (p in data.pocket){
-            data.pocket[p] = newPocketItem(data.pocket[p].id,data.pocket[p].quantity);                    
-        }
-//        c.pocket = data.pocket;
+	for (p in data.pocket) {
+		data.pocket[p] = newPocketItem(data.pocket[p].id, data.pocket[p].quantity);
+	}
+	//        c.pocket = data.pocket;
 	return c;
 };
 
 Champion.prototype.getName = function() {
 	return this.firstName + " " + this.lastName;
-};
+}
 
 Champion.prototype.getTrade = function() {
 	return TEXT_TRADE[this.prof];
-};
+}
 
 Champion.prototype.getMonster = function() {
 	return monster[TOWER_CHAMPIONS][this.id];
 }
+
+//needed for knowing what armour type to wear
+Champion.prototype.getGender = function() {
+	var gen = [2, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+	return gen[this.id];
+};
 
 Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
 	if (this.recruitment.playerId > -1) {
@@ -134,7 +140,7 @@ Champion.prototype.getHP = function() {
 }
 
 Champion.prototype.addHP = function(hp, safe) {
-	if(!this.getMonster().dead) {
+	if (!this.getMonster().dead) {
 		this.stat.hp += hp;
 		if (this.getHP() < 0) {
 			if (typeof safe !== "undefined" && safe) {
@@ -153,7 +159,7 @@ Champion.prototype.getVit = function() {
 }
 
 Champion.prototype.addVit = function(vit) {
-	if(!this.getMonster().dead) {
+	if (!this.getMonster().dead) {
 		this.stat.vit += vit;
 		if (this.getVit() < 0) {
 			this.stat.vit = 0;
@@ -168,7 +174,7 @@ Champion.prototype.getSP = function() {
 }
 
 Champion.prototype.addSP = function(sp) {
-	if(!this.getMonster().dead) {
+	if (!this.getMonster().dead) {
 		this.stat.sp += sp;
 		if (this.getSP() < 0) {
 			this.stat.sp = 0;
@@ -181,12 +187,12 @@ Champion.prototype.getFood = function() {
 	return this.food;
 }
 Champion.prototype.addFood = function(fd) {
-	if(!this.getMonster().dead) {
+	if (!this.getMonster().dead) {
 		this.food += fd;
-		if(this.getFood() < 0) {
+		if (this.getFood() < 0) {
 			this.food = 0;
 			return true;
-		} else if(this.getFood() > 200) {
+		} else if (this.getFood() > 200) {
 			this.food = 200;
 		}
 		return false;
@@ -195,7 +201,7 @@ Champion.prototype.addFood = function(fd) {
 
 Champion.prototype.getWeaponPower = function(s) {
 	var pow = this.pocket[s].getWeaponPower();
-	if(this.pocket[POCKET_GLOVES].id === ITEM_CHAOS_GLOVES && this.pocket[s].id === ITEM_ACE_OF_SWORDS) {
+	if (this.pocket[POCKET_GLOVES].id === ITEM_CHAOS_GLOVES && this.pocket[s].id === ITEM_ACE_OF_SWORDS) {
 		pow = pow * 1.25;
 	}
 	return 1.0 + 0.1 * pow;
@@ -266,18 +272,18 @@ Champion.prototype.gainLevel = function() {
 			spMax: 4
 		}
 		stat[PROFESSION_CUTPURSE] = {
-			str: 5,
-			agi: 8,
-			int: 5,
-			cha: 4,
-			hp: 5,
-			hpMax: 10,
-			vit: 10,
-			vitMax: 20,
-			sp: 1,
-			spMax: 3
-		}
-		//for (l = 0; l < this.levelUp; l++) {
+				str: 5,
+				agi: 8,
+				int: 5,
+				cha: 4,
+				hp: 5,
+				hpMax: 10,
+				vit: 10,
+				vitMax: 20,
+				sp: 1,
+				spMax: 3
+			}
+			//for (l = 0; l < this.levelUp; l++) {
 		this.stat.str += Math.floor(Math.random() * stat[prof].str) + 1;
 		this.stat.agi += Math.floor(Math.random() * stat[prof].agi) + 1;
 		this.stat.int += Math.floor(Math.random() * stat[prof].int) + 1;
@@ -285,25 +291,25 @@ Champion.prototype.gainLevel = function() {
 		this.stat.hpMax += Math.floor(Math.random() * stat[prof].hpMax) + stat[prof].hp;
 		this.stat.vitMax += Math.floor(Math.random() * stat[prof].vitMax) + stat[prof].vit;
 		this.stat.spMax += Math.floor(Math.random() * stat[prof].spMax) + stat[prof].sp;
-		if(this.stat.str > 99) {
+		if (this.stat.str > 99) {
 			this.stat.str = 99;
 		}
-		if(this.stat.agi > 99) {
+		if (this.stat.agi > 99) {
 			this.stat.agi = 99;
 		}
-		if(this.stat.int > 99) {
+		if (this.stat.int > 99) {
 			this.stat.int = 99;
 		}
-		if(this.stat.cha > 99) {
+		if (this.stat.cha > 99) {
 			this.stat.cha = 99;
 		}
-		if(this.stat.hpMax > 255) {
+		if (this.stat.hpMax > 255) {
 			this.stat.hpMax = 255;
 		}
-		if(this.stat.vitMax > 255) {
+		if (this.stat.vitMax > 255) {
 			this.stat.vitMax = 255;
 		}
-		if(this.stat.spMax > 99) {
+		if (this.stat.spMax > 99) {
 			this.stat.spMax = 99;
 		}
 		this.level++;
@@ -628,7 +634,7 @@ Champion.prototype.getSpellCastChance = function() {
 }
 
 Champion.prototype.getSpellPower = function() {
-	var res = (this.selectedSpell.castSuccessful * 0.015 - 6.0 / (this.selectedSpell.cost + 6.0) + (this.stat.int + 5.0) * 0.015 - this.selectedSpell.ref.level * 0.15) + this.spellFatigue;// + (this.level - 1) * 0.1;
+	var res = (this.selectedSpell.castSuccessful * 0.015 - 6.0 / (this.selectedSpell.cost + 6.0) + (this.stat.int + 5.0) * 0.015 - this.selectedSpell.ref.level * 0.15) + this.spellFatigue; // + (this.level - 1) * 0.1;
 	//var res = (this.selectedSpell.castSuccessful * 0.01 - 7.5 / (this.selectedSpell.cost + 6.0) + this.stat.int * 0.02 - (this.selectedSpell.ref.level - 1.0) * 0.4) + this.spellFatigue; /* + (this.level - 1) * 0.1;*/
 	PrintLog('pcast:' + this.selectedSpell.castSuccessful + ' scost:' + this.selectedSpell.cost + ' pint:' + this.stat.int + ' slvl:' + this.selectedSpell.ref.level + ' fat:' + this.spellFatigue + ' = res:' + res)
 	return res;

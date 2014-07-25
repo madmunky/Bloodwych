@@ -49,6 +49,8 @@ function getFileData(file_name, callback, t, type, length) {
 				case "crystalSwitchesData":
 					crystalSwitchesData = callback(this.response, length);
 					break;
+				case "armourData":
+					armourData = callback(this.response, length);
 				default:
 					break;
 			}
