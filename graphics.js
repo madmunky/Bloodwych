@@ -518,10 +518,10 @@ function drawProjectileOnPos(p, pos) {
 					p.drawProjectile(prPos[i].projectile, prPos[i].distance, prPos[i].gfxCoord);
 				}
 			} else {
-				if(typeof prPos[i].projectile.palette[4] !== 'undefined' && prPos[i].projectile.palette[4] !== null && prPos[i].projectile.dead <= 1) {
+				if(typeof prPos[i].projectile.palette[4] !== 'undefined' && prPos[i].projectile.palette[4] !== null && prPos[i].projectile.dead <= 0) {
 					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[4][0] + ', ' + prPos[i].projectile.palette[4][1] + ', ' + prPos[i].projectile.palette[4][2] + ')';
 					p.Portal.fillRect(0, 0, 128 * scale, 76 * scale);
-				} else if(typeof prPos[i].projectile.palette[5] !== 'undefined' && prPos[i].projectile.palette[5] !== null && prPos[i].projectile.dead > 1) {
+				} else if(typeof prPos[i].projectile.palette[5] !== 'undefined' && prPos[i].projectile.palette[5] !== null && prPos[i].projectile.dead > 0) {
 					p.Portal.fillStyle = 'rgb(' + prPos[i].projectile.palette[5][0] + ', ' + prPos[i].projectile.palette[5][1] + ', ' + prPos[i].projectile.palette[5][2] + ')';
 					p.Portal.fillRect(0, 0, 128 * scale, 76 * scale);
 				}

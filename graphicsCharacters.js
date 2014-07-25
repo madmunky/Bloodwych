@@ -626,6 +626,10 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 									dir1 = 4;
 									dir2 = 5;
 								}
+							} else if (m.gesture === CHA_GESTURE_GREETING) {
+								if (mas === 0 || mas === 1 || mas === 2) {
+									dir2 = 5;
+								}
 							}
 						}
 					} else if (dir === 2) {
@@ -644,6 +648,10 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 									dir1 = 5;
 									dir2 = 4;
 								}
+							} else if (m.gesture === CHA_GESTURE_GREETING) {
+								if (mas === 0 || mas === 1 || mas === 2) {
+									dir1 = 5;
+								}
 							}
 						}
 					} else if (doBlur) {
@@ -653,6 +661,10 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 									dir1 = 7;
 								}
 							} else if (m.gesture === CHA_GESTURE_SPELLCASTING) {
+								if (mas === 0 || mas === 1 || mas === 2) {
+									dir1 = 7;
+								}
+							} else if (m.gesture === CHA_GESTURE_GREETING) {
 								if (mas === 0 || mas === 1 || mas === 2) {
 									dir1 = 7;
 								}

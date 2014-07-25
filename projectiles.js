@@ -1,7 +1,8 @@
-function Projectile(id, type, palette, s, power, tower, floor, x, y, d, m) {
+function Projectile(id, type, palette, snd, s, power, tower, floor, x, y, d, m) {
 	this.id = id;
 	this.type = type;
 	this.palette = palette;
+	this.sound = snd;
 	this.power = power;
 	this.tower = tower;
 	this.floor = floor;
@@ -16,11 +17,6 @@ function Projectile(id, type, palette, s, power, tower, floor, x, y, d, m) {
 		this.spell = getSpellById(s);
 	}
 	this.dead = 0;
-	/*if (s > -1) {
-		this.dead = 0;
-	} else {
-		this.dead = 1;
-	}*/
 	this.timer = timerMaster;
 }
 
@@ -36,6 +32,7 @@ Projectile.prototype.toJSON = function() {
 		id: this.id,
 		type: this.type,
 		palette: this.palette,
+		sound: this.sound,
 		power: this.power,
 		tower: this.tower,
 		floor: this.floor,
@@ -50,7 +47,7 @@ Projectile.prototype.toJSON = function() {
 }
 
 Projectile.revive = function(data) {
-	var p = new Projectile(data.id, data.type, data.palette, data.s, data.power, data.tower, data.floor, data.x, data.y, data.d);
+	var p = new Projectile(data.id, data.type, data.palette, data.sound, data.s, data.power, data.tower, data.floor, data.x, data.y, data.d);
 	p.monster = getMonsterById(data.monster);
 	p.dead = data.dead;
 	p.timer = data.timer;
@@ -72,24 +69,23 @@ Projectile.prototype.move = function() {
 				var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND);
 				var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_ANTIMAGE || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE);
 			}
-			for (p in player) {
-				if (!player[p].dead && this.floor === player[p].floor && this.x === player[p].x && this.y === player[p].y) {
-					if(player[p].getActiveSpellById(SPELL_DEFLECT).timer > 0 && isMissile) { //Deflect makes missile-shaped spells to reverse direction
-						player[p].getActiveSpellById(SPELL_DEFLECT).timer -= this.power;
-						this.d = (this.d + 2) % 2;
-						var xy = getOffsetByRotation(this.d);
-						this.x += xy.x;
-						this.y += xy.y;
-						return true;
+			var pl = getPlayerAt(this.floor, this.x, this.y);
+			if(pl !== null) {
+				if(pl.getActiveSpellById(SPELL_DEFLECT).timer > 0 && isMissile) { //Deflect makes missile-shaped spells to reverse direction
+					pl.getActiveSpellById(SPELL_DEFLECT).timer -= this.power;
+					this.d = (this.d + 2) % 2;
+					var xy = getOffsetByRotation(this.d);
+					this.x += xy.x;
+					this.y += xy.y;
+					return true;
+				} else {
+					if(isDamage) {
+						this.attack(pl);
 					} else {
-						if(isDamage) {
-							this.attack(player[p]);
-						} else {
-							this.action(player[p]);
-						}
-						this.dead = 2;
-						return false;
+						this.action(pl);
 					}
+					this.die(true);
+					return false;
 				}
 			}
 			var mon = getMonsterAt(this.floor, this.x, this.y);
@@ -99,7 +95,7 @@ Projectile.prototype.move = function() {
 				} else {
 					this.action(mon);
 				}
-				this.dead = 2;
+				this.die();
 				return false;
 			}
 		}
@@ -107,24 +103,21 @@ Projectile.prototype.move = function() {
 			if(this.spell !== null) {
 				this.action();
 			}
-			this.dead = 2;
+			this.die();
 			return false;
 		}
 		if ((obNext >= OBJECT_WOOD && obNext <= OBJECT_GEM) || msc) {
-			this.dead = 2;
+			this.die();
 			return false;
 		}
 		var pr = getProjectilesAt(this.floor, this.x, this.y);
 		if (pr.length > 1) {
 			for (var p = 0; p < pr.length; p++) {
-				pr[p].dead = 2;
+				pr[p].die();
 			}
 			return false;
 		}
 	} else if (this.dead === 1) {
-		this.dead = 2;
-		return false;
-	} else if (this.dead === 2) {
 		if(this.spell !== null && typeof this.spell === 'number') { //item
 			if(getMonsterAt(this.floor, this.x, this.y) === null) {
 				if(msc) {
@@ -135,13 +128,27 @@ Projectile.prototype.move = function() {
 				}
 			}
 		}
-		this.dead = 3;
+		this.dead = 2;
 		return false;
 	}
 	var xy = getOffsetByRotation(this.d);
 	this.x += xy.x;
 	this.y += xy.y;
 	return true;
+}
+
+Projectile.prototype.die = function(snd) {
+	var fromP = false;
+	if(typeof this.monster !== 'undefined' && this.monster !== null) {
+		var ch = this.monster.getChampion();
+		if(ch !== null && ch.recruitment.playerId > -1) {
+			fromP = true;
+		}
+	}
+	this.dead = 1;
+	if(fromP || (snd && this.sound !== null)) {
+		playSound(this.sound);
+	}
 }
 
 Projectile.prototype.action = function(tar) {
@@ -157,7 +164,6 @@ Projectile.prototype.action = function(tar) {
 				if(tar instanceof Monster) {
 					tar.timerTerror = combat[0].power;
 				}
-                                playSound(SOUND_SPELL);
 				break;
 			case SPELL_SPELLTAP:
 				var pw = combat[0].power;
@@ -370,7 +376,7 @@ Projectile.prototype.attack = function(target, prc) {
 	}
 }
 
-function newProjectile(type, palette, s, power, f, x, y, d, m) {
+function newProjectile(type, palette, snd, s, power, f, x, y, d, m) {
 	if (typeof tower[towerThis].floor[f].Map[y] === "undefined" || typeof tower[towerThis].floor[f].Map[y][x] === "undefined") {
 		return false;
 	}
@@ -378,10 +384,10 @@ function newProjectile(type, palette, s, power, f, x, y, d, m) {
 	if (s > -1) {
 		var xy = getOffsetByRotation(d);
 		if (canMove(f, x, y, d) !== OBJECT_WALL && canMove(f, x, y, d) !== OBJECT_WOOD) {
-			projectile[towerThis][pmax] = new Projectile(pmax, type, palette, s, power, towerThis, f, x + xy.x, y + xy.y, d, m);
+			projectile[towerThis][pmax] = new Projectile(pmax, type, palette, snd, s, power, towerThis, f, x + xy.x, y + xy.y, d, m);
 		}
 	} else {
-		projectile[towerThis][pmax] = new Projectile(pmax, type, palette, s, power, towerThis, f, x, y, d, m);
+		projectile[towerThis][pmax] = new Projectile(pmax, type, palette, snd, s, power, towerThis, f, x, y, d, m);
 	}
 	return true;
 }

@@ -95,7 +95,7 @@ function saveGame(g, name) {
 			towerThis: towerThis,
 			monsterTeamIdMax: monsterTeamIdMax,
 			dungeonSpellTimer: dungeonSpellTimer,
-			dungeonSpellList: $.extend(true, {}, dungeonSpellList),
+			dungeonSpellList: dungeonSpellList,
 //			activeSpellTimer: activeSpellTimer
 		}
 	};

@@ -161,7 +161,7 @@ function floorActionType(trig, p) {
 			break;
 		case SWITCH_FLOOR_FLASH_TELEPORT:
 			p.setPlayerPosition(trig[1], trig[2], trig[3]);
-			newProjectile(DUNGEON_NONE, PALETTE_TELEPORT_FLASH, -1, 0, p.floor, p.x, p.y, p.d, null);
+			newProjectile(DUNGEON_NONE, PALETTE_TELEPORT_FLASH, SOUND_FLASH, -1, 0, p.floor, p.x, p.y, p.d, null);
 			break;
 		case SWITCH_FLOOR_ROTATE_STONE_WALL:
 			tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 10, 2, '' + ((parseInt(getHexToBinaryPosition(tar, 10, 2)) + 1) % 4));
@@ -273,7 +273,7 @@ function gemAction(p) {
 					case ITEM_DRAGON_CRYSTAL: pal = PALETTE_DRAGON; break;
 					case ITEM_CHAOS_CRYSTAL: pal = PALETTE_CHAOS; break;
 				}
-				newProjectile(DUNGEON_NONE, pal, -1, 0, p.floor, p.x, p.y, 0, null);
+				newProjectile(DUNGEON_NONE, pal, SOUND_FLASH, -1, 0, p.floor, p.x, p.y, 0, null);
 				p.pocket.setPocketItem();
 				p.setBinaryView(15, 5, 1);
 			}

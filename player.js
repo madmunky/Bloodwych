@@ -227,7 +227,6 @@ Player.prototype.action = function() {
 				playSound(SOUND_SWITCH);
 			} else if (o15 === OBJECT_GEM) {
 				gemAction(this);
-				playSound(SOUND_FLASH);
 			}
 			//Check if something is in the way
 			if (this.getMonstersInRange(15).length > 0) {
@@ -528,7 +527,7 @@ Player.prototype.doPit = function() {
 		setTimeout(function() {
 			self.doEvent(true);
 		}, 200);
-		newProjectile(DUNGEON_NONE, PALETTE_PIT_FLASH, -1, 0, floor, x, y, 0, null);
+		newProjectile(DUNGEON_NONE, PALETTE_PIT_FLASH, null, -1, 0, floor, x, y, 0, null);
 		return true;
 	}
 	return false;
@@ -714,6 +713,7 @@ Player.prototype.sleep = function() {
 		this.uiCenterPanel.mode = UI_CENTER_PANEL_SLEEPING;
 		this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
 		this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+		this.doneCommunication();
 		this.attack(null, false);
 		coverViewPort(this);
 		writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
@@ -750,6 +750,7 @@ Player.prototype.checkDead = function() {
 		}
 		if (deadNum == 4) {
 			this.dead = true;
+			this.doneCommunication();
 			this.attack(null, false);
 			for (c = 0; c < this.champion.length; c++) {
 				var ch = this.getChampion(c);
@@ -1053,7 +1054,7 @@ Player.prototype.drawItem = function(it, distance, offset) {
 }
 
 Player.prototype.drawProjectile = function(pr, distance, offset) {
-	if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 1) {
+	if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 0) {
 		if (pr.type !== DUNGEON_NONE) {
 			var pGfx = itemsGfxD[pr.type][distance];
 		}
@@ -1349,7 +1350,7 @@ Player.prototype.shootArrow = function(ch) {
 			col = PALETTE_GREEN_ARROW;
 		}
 		arr.setPocketItem(arr.id, arr.quantity - 1);
-		newProjectile(DUNGEON_PROJECTILE_ARROW, col, arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
+		newProjectile(DUNGEON_PROJECTILE_ARROW, col, SOUND_ATTACK, arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
 		ch.writeAttackPoints('shoot');
 	}
 }
@@ -1375,7 +1376,7 @@ Player.prototype.getProjectilesInRange = function(pos2) {
 	var pos = -1;
 	for (i = 0; i < projectile[towerThis].length; i++) {
 		var pr = projectile[towerThis][i];
-		if (this.floor === pr.floor && pr.dead < 3) {
+		if (this.floor === pr.floor && pr.dead <= 1) {
 			pos = coordinatesToPos(pr.x, pr.y, this.x, this.y, this.d);
 			if (pos > -1 && (typeof pos2 === "undefined" || pos2 === pos)) {
 				projectilesInRange.push({
@@ -1478,6 +1479,7 @@ Player.prototype.doCommunication = function(text) {
 					case COMMUNICATION_COMMUNICATE:
 						var m = this.checkForMonsterInFront();
 						if (m !== null) {
+							var mon = champion[this.championLeader].getMonster();
 							m.communicating = true;
 							if (m.champId === -1 || m.isRecruitedBy() === null) {
 								m.rotateTo((this.d + 2) % 4);
@@ -1486,6 +1488,7 @@ Player.prototype.doCommunication = function(text) {
 							this.communication.mode = COMMUNICATION_PAGE_COMMUNICATE_0;
 							this.communication.charisma = champion[this.championLeader].stat.cha;
 							this.determineCommunicationQuestionAnswer(7);
+							mon.doGesture(CHA_GESTURE_GREETING);
 						} else {
 							this.determineCommunicationQuestionAnswer(6);
 						}

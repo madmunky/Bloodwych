@@ -12,7 +12,7 @@ function loadSounds(){
     s.push(new Audio(location+"attack.wav"));
     s.push(new Audio(location+"flash.wav"));
     s.push(new Audio(location+"death.wav"));
-    s.push(new Audio(location+"spell.wav"));
+    s.push(new Audio(location+"explode.wav"));
     s.push(new Audio(location+"switch.wav"));
     
     return s;

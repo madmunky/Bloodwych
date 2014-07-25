@@ -539,7 +539,7 @@ Monster.prototype.die = function() {
                             playSound(SOUND_DEATH);
                         }
 		} else {
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, -1, 0, this.floor, this.x, this.y, 0, null);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, null, -1, 0, this.floor, this.x, this.y, 0, null);
 			if (this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER) {
 				var lvl = Math.floor(this.level / 5.0);
 				if(lvl > 3) {

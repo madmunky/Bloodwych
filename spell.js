@@ -223,8 +223,7 @@ function castSpell(s, src, pw) {
 			ch.activateSpell(s, pow);
 			break;
 		case SPELL_PARALYZE:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_SERPENT_ARROW, s, pow, f, x, y, d, src);
-                        playSound(SOUND_SPELL);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_SERPENT_ARROW, SOUND_FLASH, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_COMPASS:
 			ch.activateSpell(s, pow);
@@ -247,7 +246,7 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_ARC_BOLT:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_SERPENT_BIG, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_SERPENT_BIG, SOUND_EXPLODE, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_FORMWALL:
 			if (src.getBinaryView(15, 0, 16) === '0000') {
@@ -264,13 +263,13 @@ function castSpell(s, src, pw) {
 			ch.activateSpell(s, pow);
 			break;
 		case SPELL_TERROR:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS_ARROW, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS_ARROW, SOUND_FLASH, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_ANTIMAGE:
 			ch.activateSpell(s, pow);
 			break;
 		case SPELL_SPELLTAP:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_GOLD_ARROW, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_GOLD_ARROW, SOUND_FLASH, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_ALCHEMY:
 			var validItems = [ITEM_TYPE_WEAPON, ITEM_TYPE_ARMOUR, ITEM_TYPE_SHIELD, ITEM_TYPE_GLOVES];
@@ -291,7 +290,7 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_VIVIFY:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, s, 0, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_CHAOS, SOUND_FLASH, s, 0, f, x, y, d, src);
 			for (p in player) {
 				var pl = player[p];
 				if (!pl.dead && f === pl.floor && x === pl.x && y === pl.y) {
@@ -309,12 +308,12 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_DISRUPT:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, SOUND_EXPLODE, s, pow, f, x, y, d, src);
 			break;
 
 			//dragon
 		case SPELL_MISSILE:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON_ARROW, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON_ARROW, SOUND_ATTACK, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_MAGELOCK:
 			if (src.getBinaryView(18, 13, 3) === '2' && src.getBinaryView(18, ((5 + 2 - d) % 4) * 2) === '1') {
@@ -349,21 +348,21 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_FIREBALL:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DRAGON_BIG, SOUND_EXPLODE, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_FIREPATH:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON_ARROW, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON_ARROW, SOUND_ATTACK, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_RECHARGE:
 			break;
 		case SPELL_BLAZE:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_BLAZE_BIG, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_BLAZE_BIG, SOUND_EXPLODE, s, pow, f, x, y, d, src);
 			break;
 			//moon
 		case SPELL_BEGUILE:
 			break;
 		case SPELL_CONFUSE:
-			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_MOON_ARROW, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_MOON_ARROW, SOUND_FLASH, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_CONCEAL:
 			src.setBinaryView(15, 12, 1);
@@ -393,14 +392,14 @@ function castSpell(s, src, pw) {
 			}
 			break;
 		case SPELL_WYCHWIND:
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.y, y - xy.x, d, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x, y, d, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.y, y + xy.x, d, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x + xy.y, y + xy.x, (d + 2) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x, y, (d + 2) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x - xy.y, y - xy.x, (d + 2) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x, y, (d + 1) % 4, src);
-			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, s, pow, f, x, y, (d + 3) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x - xy.y, y - xy.x, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x + xy.y, y + xy.x, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x + xy.y, y + xy.x, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x, y, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x - xy.y, y - xy.x, (d + 2) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x, y, (d + 1) % 4, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x, y, (d + 3) % 4, src);
 			break;
 		default:
 			break;
