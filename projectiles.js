@@ -103,6 +103,13 @@ Projectile.prototype.move = function() {
 				return false;
 			}
 		}
+		if(this.power === 0) {
+			if(this.spell !== null) {
+				this.action();
+			}
+			this.dead = 2;
+			return false;
+		}
 		if ((obNext >= OBJECT_WOOD && obNext <= OBJECT_GEM) || msc) {
 			this.dead = 2;
 			return false;
@@ -112,13 +119,6 @@ Projectile.prototype.move = function() {
 			for (var p = 0; p < pr.length; p++) {
 				pr[p].dead = 2;
 			}
-			return false;
-		}
-		if(this.power === 0) {
-			if(this.spell !== null) {
-				this.action();
-			}
-			this.dead = 2;
 			return false;
 		}
 	} else if (this.dead === 1) {
@@ -221,7 +221,7 @@ Projectile.prototype.action = function(tar) {
 									p.d = this.d;
 									p.dead = false;
 									p.updateChampions();
-									redrawUI(p.id);
+									redrawUI(2);
 								}
 							}
 							return;
@@ -234,7 +234,7 @@ Projectile.prototype.action = function(tar) {
 						if(ch !== null && ch.getMonster().dead && ch.recruitment.attached) {
 							ch.stat.hp = 0;
 							ch.getMonster().dead = false;
-							redrawUI(tar.id);
+							redrawUI(2);
 						}
 					}
 					tar.updateChampions();

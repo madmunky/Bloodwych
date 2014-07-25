@@ -300,7 +300,7 @@ function castSpell(s, src, pw) {
 						if(ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
 							ch1.stat.hp = 0;
 							ch1.getMonster().dead = false;
-							redrawUI(p);
+							redrawUI(2);
 						}
 					}
 					pl.updateChampions();
