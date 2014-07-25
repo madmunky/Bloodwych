@@ -139,7 +139,7 @@ Projectile.prototype.move = function() {
 
 Projectile.prototype.die = function(snd) {
 	var fromP = false;
-	if(typeof this.monster !== 'undefined' && this.monster !== null) {
+	if(this.monster instanceof Monster && this.monster !== null) {
 		var ch = this.monster.getChampion();
 		if(ch !== null && ch.recruitment.playerId > -1) {
 			fromP = true;
