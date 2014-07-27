@@ -1,5 +1,6 @@
 //DEBUG
 var debug = true;
+var iosDebug = true;
 //Declare Arrays for the Graphics
 var gfx = [];
 var player = new Array();
@@ -1719,3 +1720,4 @@ var championSelect = [{
 //armour palettes
 var CHA_ARMOUR = {};
 	CHA_ARMOUR[ITEM_LEATHER_ARMOUR] = [COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_PINK]];
+        CHA_ARMOUR[ITEM_LEATHER_ARMOUR] = [COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], COLOUR[COLOUR_PINK]];

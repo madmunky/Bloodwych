@@ -66,21 +66,26 @@ function updatePlayerViewScreen() {
 	//}
 }
 
-function setViewportScale(sp) {
-	var zoom = 1;
-	scaleReal = 3;
-	if (isMobile) {
-		zoom = 2;
-		if (typeof sp !== "undefined" && sp) {
-			scaleReal = $(window).width() / (320 / zoom);
-		} else {
-			scaleReal = $(window).height() / (200 / zoom);
-		}
-	}
-	scale = Math.floor(scaleReal);
-	scaleReal = scaleReal / scale / zoom;
-	canvas.width = 320 * scale;
-	canvas.height = 200 * scale;
+function setViewportScale(sp) {            
+        if (navigator.userAgent.match(/(iPad)/g) ? true : false){
+            scaleReal = 1.06;         
+        }else if (navigator.userAgent.match(/(iPhone|iPod)/g) ? true : false){
+            scaleReal = 0.5;
+        }else{
+            var zoom = 1;
+            scaleReal = 3;
+            if(isMobile) {
+                    zoom = 2;
+                    if (typeof sp !== "undefined" && sp) {
+                            scaleReal = $(window).width() / (320 / zoom);
+                    } else {
+                            scaleReal = $(window).height() / (200 / zoom);
+                    }
+            }
+            scale = Math.floor(scaleReal);
+            scaleReal = scaleReal / scale / zoom;
+            
+        }
 	$('html').css('zoom', scaleReal);
 	$('html').css('-moz-transform', 'scale(' + scaleReal + ')');
 	if (typeof player !== "undefined") {

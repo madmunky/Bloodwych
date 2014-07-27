@@ -168,22 +168,40 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 	if (typeof god === "undefined") {
 		god = false;
 	}
+        if (iosDebug){
+            alert("initPlayers")
+        }
 	initPlayers(singlePlayer, quickStart, p1_cid, p2_cid);
 
 	if (god) {
 		godMode();
 	}
+        if (iosDebug){
+            alert("loadGfxData");
+        }
 	loadGfxData();
+        if (iosDebug){
+            alert("initTower");
+        }
 	initTowerSwitches();
+        if (iosDebug){
+            alert("switchTower");
+        }
 	switchTower(0);
 	gameStarted = true;
 
+        if (iosDebug){
+            alert("clearQuickStart");
+        }
 	for (pl in championSelect) {
 		if (championSelect[pl].champID > -1) {
 			champion[championSelect[pl].champID].selectedSpell = null;
 			championSelect[pl].champID = -1;
 		}
 	}
+        if (iosDebug){
+            alert("setCanvas");
+        }
 	$('canvas').attr('data-game-status', 'started');
 	//for (p in player) {
 	//		player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
@@ -191,6 +209,9 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 	//		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
 	//	}
 	//saveGame(99, 'autosave');
+        if (iosDebug){
+            alert("someTimer :)");
+        }
 	setTimeout(function() {
 		if(resumeLoadGame) {
 			loadGame(99);
