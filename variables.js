@@ -1,6 +1,6 @@
 //DEBUG
 var debug = true;
-var iosDebug = true;
+var iosDebug = false;
 //Declare Arrays for the Graphics
 var gfx = [];
 var player = new Array();
