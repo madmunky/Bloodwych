@@ -1,12 +1,16 @@
-//DEBUG
-var debug = false;
+//General
+var debug = true;
 var iosDebug = false;
+var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+if(isMobile) {
+	debug = false;
+}
+
 //Declare Arrays for the Graphics
 var gfx = [];
 var player = new Array();
 var tower = new Array();
 var cursorType = 0;
-var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 var champSelectGrid = [];
 var gameStateSelectGrid = [];
 var players = 0;
