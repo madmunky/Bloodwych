@@ -657,12 +657,11 @@ function initMonsters() {
 }
 
 function initMonsterGfx() {
-	//if (characterGfx.length > 0) {
 	for (i = 0; i < monsterBodiesData.length; i++) {
 		var body = CHA_BODY[monsterBodiesData[i][0]];
 		var j = i * 5;
 		monsterPalette[i] = {
-			gender: CHA_GENDER_MALE,
+			//gender: CHA_GENDER_MALE,
 			head: monsterHeadsData[i][0],
 			leg: body.leg,
 			torso: body.torso,
@@ -689,13 +688,13 @@ function initMonsterGfx() {
 		monsterBigPalette[i][8] = [COLOUR[monsterPaletteData[430 + b][0]], COLOUR[monsterPaletteData[430 + b][1]], COLOUR[monsterPaletteData[430 + b][2]], COLOUR[monsterPaletteData[430 + b][3]]];
 	}
 
-	for (id = 0; id <= MON_FORM_BEHEMOTH; id++) {
-		if (id >= MON_FORM_ILLUSION) {
-			if (id === MON_FORM_BEHEMOTH) {
-				createMonsterRef(id, 0, grabMonster(id, 0));
+	for (frm = 0; frm <= MON_FORM_BEHEMOTH; frm++) {
+		if (frm >= MON_FORM_ILLUSION) {
+			if (frm === MON_FORM_BEHEMOTH) {
+				createMonsterRef(frm, 0, grabMonster(frm, 0));
 			} else {
 				for (l = 0; l < 8; l++) {
-					createMonsterRef(id, l, grabMonster(id, l));
+					createMonsterRef(frm, l, grabMonster(frm, l));
 				}
 			}
 		} else {
@@ -706,7 +705,7 @@ function initMonsterGfx() {
 				for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
 					for (d = 0; d < 8; d++) {
 						if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
-							dGfx.push(grabCharacter(id, part, d, dis));
+							dGfx.push(grabCharacter(frm, part, d, dis));
 						}
 					}
 					disGfx.push(dGfx);
@@ -715,7 +714,7 @@ function initMonsterGfx() {
 				pGfx.push(disGfx);
 				disGfx = [];
 			}
-			createMonsterRef(id, 0, pGfx);
+			createMonsterRef(frm, 0, pGfx);
 			pGfx = [];
 		}
 	}
@@ -743,7 +742,6 @@ function initMonsterGfx() {
 			pGfx = [];
 		}
 	}
-	//}
 }
 
 //Read out the items here

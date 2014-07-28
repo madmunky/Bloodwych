@@ -353,8 +353,10 @@ $(function() {
 		}
 	});
 	$(window).on('beforeunload ',function() {
-		pauseGame(false);
-		saveGame(99, 'autosave');
+		if(gameStarted) {
+			pauseGame(false);
+			saveGame(99, 'autosave');
+		}
 	});
 	if (typeof debugWindow !== "undefined" && debugWindow !== null) {
 		$('body', debugWindow.document).on('click', '.debug-input #coord-submit', function() {

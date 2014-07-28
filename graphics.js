@@ -653,7 +653,7 @@ function recolourSprite(img, paletteFrom, paletteTo) {
 	for (var i = 0; i < imageData.data.length; i += 4) {
 
 		for (j = 0; j < paletteFrom.length; j++) {
-			if (imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
+			if (paletteTo[j] !== null && imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
 				imageData.data[i] = paletteTo[j][0];
 				imageData.data[i + 1] = paletteTo[j][1];
 				imageData.data[i + 2] = paletteTo[j][2];

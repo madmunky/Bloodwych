@@ -480,12 +480,27 @@ function grabCharacterArmour(id, gen, part, dir, dist) {
 						break;
 				}
 				var amr = getItemArmourType(id);
-				var type = [armourData[gen + amr * 3][0], armourData[gen + amr * 3][1], null, armourData[gen + amr * 3][2]];
 
+				/*var IMAGE_CHA_LEG = 0,
+					IMAGE_CHA_TORSO = 1,
+					IMAGE_CHA_HEAD = 2,
+					IMAGE_CHA_ARM = 3,
+					IMAGE_CHA_MINI = 4;
+				*/
+				var prt = part;
+				if(prt >= IMAGE_CHA_ARM) { //exlude head part
+					prt--;
+				}
+				var type = [armourData[gen + amr * 3][0], armourData[gen + amr * 3][1], null, armourData[gen + amr * 3][2]];
 				var leg = characterGfx[IMAGE_CHA_LEG][type[0]][dist][d[dir2]];
 				var torso = characterGfx[IMAGE_CHA_TORSO][type[1]][dist][d[dir2]];
 				var arm = characterGfx[IMAGE_CHA_ARM][type[3]][dist][d[dir]];
-				var partSprite = recolourSprite(characterGfx[part][type[part]][dist][d[dir6]], MON_PALETTE_DEFAULT, CHA_ARMOUR[ITEM_LEATHER_ARMOUR]); // CHA_ARMOUR[ITEM_LEATHER_ARMOUR] needs to be changed to correct palette
+				/*if(typeof CHA_ARMOUR[id] === 'undefined' || typeof CHA_ARMOUR[id][gen] === 'undefined' || typeof CHA_ARMOUR[id][gen][prt] === 'undefined') {
+					var partSprite = recolourSprite(characterGfx[part][type[part]][dist][d[dir6]], MON_PALETTE_DEFAULT, CHA_ARMOUR[0][0][0]);
+				} else {
+					var partSprite = recolourSprite(characterGfx[part][type[part]][dist][d[dir6]], MON_PALETTE_DEFAULT, CHA_ARMOUR[id][gen][prt]);
+				}*/
+				partSprite = characterGfx[part][type[part]][dist][d[dir6]];
 
 				var height = torso.height + leg.height,
 					width = 65; //arm.width + torso.width + arm.width;
@@ -684,6 +699,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 				}
 				var gfx1 = m.ref.gfx[part][dist][dir1];
 				var gfx2 = m.ref.gfx[part][dist][dir2];
+
 				if (m.form === 26 && m.glow === 0) {
 					gfx1 = monsterRef[27][0].gfx[part][dist][dir1];
 					gfx2 = monsterRef[27][0].gfx[part][dist][dir2];
@@ -691,18 +707,48 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 					var ch = m.getChampion();
 					var amr = ch.pocket[POCKET_ARMOUR];
 					var gen = ch.getGender();
-					if(amr.id >= ITEM_LEATHER_ARMOUR && amr.id <= ITEM_CRYSTAL_PLATE && typeof armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen] !== 'undefined') {
-
-						if(part === IMAGE_CHA_TORSO) {
-							var gfx1 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_TORSO][dist][dir1];
-							var gfx2 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_TORSO][dist][dir2];
-						} else if(part === IMAGE_CHA_ARM) {
-							var gfx1 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_ARM][dist][dir1];
-							var gfx2 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_ARM][dist][dir2];
-						} else if(part === IMAGE_CHA_LEG) {
-							var gfx1 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_LEG][dist][dir1];
-							var gfx2 = armourRef[amr.id - ITEM_LEATHER_ARMOUR][gen].gfx[IMAGE_CHA_LEG][dist][dir2];
+					var id = amr.id - ITEM_LEATHER_ARMOUR;
+					if(part !== IMAGE_CHA_HEAD && amr.id >= ITEM_LEATHER_ARMOUR && amr.id <= ITEM_CRYSTAL_PLATE && typeof armourRef[id][gen] !== 'undefined') {
+						switch (part) {
+							case IMAGE_CHA_LEG:
+								palette = monsterPalette[m.form].legPalette.slice(0);
+								break;
+							case IMAGE_CHA_TORSO:
+								palette = monsterPalette[m.form].torsoPalette.slice(0);
+								break;
+							case IMAGE_CHA_ARM:
+								palette = monsterPalette[m.form].armPalette.slice(0);
+								break;
+							case IMAGE_CHA_HEAD:
+								palette = monsterPalette[m.form].headPalette.slice(0);
+								break;
 						}
+						var prt = part;
+						if(prt >= IMAGE_CHA_ARM) { //exlude head part
+							prt--;
+						}
+						if(typeof CHA_ARMOUR[id] === 'undefined' || typeof CHA_ARMOUR[id][gen] === 'undefined' || typeof CHA_ARMOUR[id][gen][prt] === 'undefined') {
+							var car = CHA_ARMOUR[0][0][0];
+						} else {
+							var car = CHA_ARMOUR[id][gen][prt];
+						}
+						if(part === IMAGE_CHA_TORSO) {
+							gfx1 = armourRef[id][gen].gfx[IMAGE_CHA_TORSO][dist][dir1];
+							if (dir2 > -1) gfx2 = armourRef[id][gen].gfx[IMAGE_CHA_TORSO][dist][dir2];
+						} else if(part === IMAGE_CHA_ARM) {
+							gfx1 = armourRef[id][gen].gfx[IMAGE_CHA_ARM][dist][dir1];
+							if (dir2 > -1) gfx2 = armourRef[id][gen].gfx[IMAGE_CHA_ARM][dist][dir2];
+						} else if(part === IMAGE_CHA_LEG) {
+							gfx1 = armourRef[id][gen].gfx[IMAGE_CHA_LEG][dist][dir1];
+							if (dir2 > -1) gfx2 = armourRef[id][gen].gfx[IMAGE_CHA_LEG][dist][dir2];
+						}
+						for(pl = 0; pl < 4; pl++) {
+							if(car[pl] !== null) {
+								palette[pl] = car[pl];
+							}
+						}
+						gfx1 = recolourSprite(gfx1, MON_PALETTE_DEFAULT, palette);
+						if (dir2 > -1) gfx2 = recolourSprite(gfx2, MON_PALETTE_DEFAULT, palette);
 					}
 				}
 				var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
