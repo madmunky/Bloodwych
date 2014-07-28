@@ -127,7 +127,7 @@ function loadTowerData(t, start) {
 		getFileData('data/scroll.data', readScrollData, t, "scrollData");
 		getFileData('data/gem.switches', readSimpleData, null, "gemSwitchesData", 2);
 		getFileData('data/crystal.switches', readSimpleData, null, "crystalSwitchesData", 0);
-		getFileData('data/palette.armours', readSimpleData, null, "armourData", 3);
+		getFileData('data/palette.armours', readSimpleData, null, "armourData", 4);
 	}
 
 	getFileData('data/' + TOWER_NAME[id] + '.MAP', readMapData, t, "floor");
