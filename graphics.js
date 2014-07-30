@@ -480,8 +480,13 @@ function drawPlayersView(p) {
 
 function drawMonsterOnPos(p, pos) {
 	if (pos > -1 && pos <= 15) {
-		var monPos = p.getMonstersInRange(pos);
+		var monPos = p.getMonstersInRange(pos); 
 		for (i in monPos) {
+                    if (typeof monsterRef[monPos[i].monster.form] === "undefined"){
+                        initMonsterGfxNew(monPos[i].monster);
+                    }else if (monPos[i].monster.ref === null || (typeof monPos[i].monster.ref === 'undefined')){
+                        initMonsterGfxNew(monPos[i].monster);
+                    }
 			var van = false;
 			var ch1 = p.getChampion(p.championLeader);
 			if(monPos[i].monster.champId > -1) {

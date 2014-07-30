@@ -11,7 +11,7 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, sqrel, te
 	}
 	this.colour = clr;
 	this.form = form;
-	this.ref = monsterRef[form][clr];
+	this.ref = null;//monsterRef[form][clr];
 	this.teamId = teamId;
 	this.tower = tower;
 	this.floor = floor;
@@ -93,6 +93,19 @@ Monster.revive = function(data) {
 	return m;
 };
 
+Monster.prototype.getMonsterRef = function(){
+    if (this.ref === null){
+        if (monsterRef[this.form][this.colour] === "undefined"){
+            initMonsterGfxNew(this);
+            return monsterRef[this.form][this.colour];
+        }else{            
+            return monsterRef[this.form][this.colour];
+        }
+    }else{
+        return monsterRef[this.form][this.colour];
+    }
+};
+
 Monster.prototype.toString = function() {
 	var cha = "";
 	var torso = "null";
@@ -100,7 +113,7 @@ Monster.prototype.toString = function() {
 	if (this.champId !== -1) {
 		cha = ', champion:' + TEXT_CHAMPION_NAME[this.champId] + '(' + this.champId + ')';
 	}
-	return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.ref.id + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', hp:' + this.getHP() + ', teamId:' + this.teamId + cha + ']';
+        return '[id:' + this.id + ', level:' + this.level + ', type:' + this.type + ', form:' + this.form + ', tower:' + this.tower + ', floor:' + this.floor + ', x:' + this.x + ', y:' + this.y + ', d:' + this.d + ', square:' + this.square + ', hp:' + this.getHP() + ', teamId:' + this.teamId + cha + ']';
 }
 
 Monster.prototype.canInteract = function() {
@@ -516,7 +529,7 @@ Monster.prototype.isRecruitedBy = function() {
 }
 
 Monster.prototype.isAggressive = function() {
-	if (this.champId > -1 || this.ref.id === 21 || this.ref.id === 22 || this.timerTerror > 0) {
+	if (this.champId > -1 || this.form === 21 || this.form === 22 || this.timerTerror > 0) {
 		return false;
 	}
 	return true;
@@ -656,8 +669,9 @@ function initMonsters() {
 	max++;end++;*/
 }
 
-function initMonsterGfx() {
-	for (i = 0; i < monsterBodiesData.length; i++) {
+function initMonsterPalettes() {
+    
+    for (i = 0; i < monsterBodiesData.length; i++) {
 		var body = CHA_BODY[monsterBodiesData[i][0]];
 		var j = i * 5;
 		monsterPalette[i] = {
@@ -675,7 +689,7 @@ function initMonsterGfx() {
 			bodyId: monsterBodiesData[i][0]
 		};
 	}
-
+        
 	for (i = 0; i < 6; i++) {
 		monsterBigPalette[i] = new Array();
 		for (j = 0; j < 8; j++) { //palettes
@@ -687,39 +701,82 @@ function initMonsterGfx() {
 		var b = monsterPaletteMetaData[i][0];
 		monsterBigPalette[i][8] = [COLOUR[monsterPaletteData[430 + b][0]], COLOUR[monsterPaletteData[430 + b][1]], COLOUR[monsterPaletteData[430 + b][2]], COLOUR[monsterPaletteData[430 + b][3]]];
 	}
+    
+    
+}
 
-	for (frm = 0; frm <= MON_FORM_BEHEMOTH; frm++) {
-		if (frm >= MON_FORM_ILLUSION) {
-			if (frm === MON_FORM_BEHEMOTH) {
-				createMonsterRef(frm, 0, grabMonster(frm, 0));
-			} else {
-				for (l = 0; l < 8; l++) {
-					createMonsterRef(frm, l, grabMonster(frm, l));
-				}
-			}
-		} else {
-			var dGfx = [];
-			var disGfx = [];
-			var pGfx = [];
-			for (part = 0; part < 5; part++) {
-				for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-					for (d = 0; d < 8; d++) {
-						if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
-							dGfx.push(grabCharacter(frm, part, d, dis));
-						}
-					}
-					disGfx.push(dGfx);
-					dGfx = [];
-				}
-				pGfx.push(disGfx);
-				disGfx = [];
-			}
-			createMonsterRef(frm, 0, pGfx);
-			pGfx = [];
-		}
-	}
+//function initMonsterGfx() {
+//	
+//	for (frm = 0; frm <= MON_FORM_BEHEMOTH; frm++) {
+//		if (frm >= MON_FORM_ILLUSION) {
+//			if (frm === MON_FORM_BEHEMOTH) {
+//				createMonsterRef(frm, 0, grabMonster(frm, 0));
+//			} else {
+//				for (l = 0; l < 8; l++) {
+//					createMonsterRef(frm, l, grabMonster(frm, l));
+//				}
+//			}
+//		} else {
+//			var dGfx = [];
+//			var disGfx = [];
+//			var pGfx = [];
+//			for (part = 0; part < 5; part++) {
+//				for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+//					for (d = 0; d < 8; d++) {
+//						if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
+//							dGfx.push(grabCharacter(frm, part, d, dis));
+//						}
+//					}
+//					disGfx.push(dGfx);
+//					dGfx = [];
+//				}
+//				pGfx.push(disGfx);
+//				disGfx = [];
+//			}
+//			createMonsterRef(frm, 0, pGfx);
+//			pGfx = [];
+//		}
+//	}
+//}
+
+function initMonsterGfxNew(m) {
 	
-	//armour
+        if (m.form <= MON_FORM_BEHEMOTH){
+            if (m.form >= MON_FORM_ILLUSION) {
+			if (m.form === MON_FORM_BEHEMOTH) {
+				createMonsterRef(m, 0, grabMonster(m.form, 0));
+			} else {
+				createMonsterRef(m, m.level, grabMonster(m.form, m.colour));
+                        }
+            }
+        else{            
+                var dGfx = [];
+                var disGfx = [];
+                var pGfx = [];
+                for (part = 0; part < 5; part++) {
+                        for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+                                for (d = 0; d < 8; d++) {
+                                        if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
+                                                dGfx.push(grabCharacter(m.form, part, d, dis));
+                                        }
+                                }
+                                disGfx.push(dGfx);
+                                dGfx = [];
+                        }
+                        pGfx.push(disGfx);
+                        disGfx = [];
+                }
+                createMonsterRef(m, 0, pGfx);
+                pGfx = [];
+        }
+        }
+    }
+	
+
+
+function initArmourGfx() {
+    
+        //armour
 	var dGfx = [];
 	var disGfx = [];
 	var pGfx = [];
@@ -741,24 +798,26 @@ function initMonsterGfx() {
 			createArmourRef(id, gen, pGfx);
 			pGfx = [];
 		}
-	}
+	}    
 }
 
 //Read out the items here
 
-function createMonsterRef(id, level, gfx) {
-	if (typeof monsterRef[id] === "undefined") {
-		monsterRef[id] = new Array();
+function createMonsterRef(m, level, gfx) {
+    
+	if (typeof monsterRef[m.form] === "undefined") {
+		monsterRef[m.form] = new Array();
 	}
-	if (typeof monsterRef[id][level] === "undefined" || typeof monsterRef[id][level].gfx === "undefined") {
+	if (typeof monsterRef[m.form][level] === "undefined" || typeof monsterRef[m.form][level].gfx === "undefined") {
 		if (typeof gfx !== "undefined") {
-			monsterRef[id][level] = {
-				id: id,
+			monsterRef[m.form][level] = {
+				id: m.form,
 				level: level,
 				gfx: gfx
 			};
 		}
 	}
+        m.ref = monsterRef[m.form][level];
 }
 
 function createArmourRef(id, gen, gfx) {

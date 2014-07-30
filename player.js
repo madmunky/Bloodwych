@@ -770,6 +770,9 @@ Player.prototype.checkDead = function() {
 }
 
 Player.prototype.recruitChampion = function(id) {
+        if (typeof monsterRef[champion[id].getMonster().form] === "undefined"){
+                        initMonsterGfxNew(champion[id].getMonster());
+        }
 	var pos = 0;
 	for (var c = 0; c < 4; c++) {
 		var ch = this.getChampion(c);
@@ -993,8 +996,10 @@ Player.prototype.getMonstersInRange = function(pos2) {
 
 
 Player.prototype.drawMonster = function(m, distance, offset) {
-	var form = m.ref.id;
-	//var loc = characterSpriteLocation();
+    
+        var form = m.form;
+
+    	//var loc = characterSpriteLocation();
 	var p = this;
 
 	if (form >= MON_FORM_ILLUSION) {
