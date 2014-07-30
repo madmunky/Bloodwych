@@ -57,6 +57,12 @@ function switchTower(id, po) {
 			player[pt].setPlayerPosition(floor, x, y);
 		}
 	}
+        if (isMobile){
+            var mon = getMonstersInTower(towerThis, true);
+            for (m in mon){
+                initMonsterGfxNew(monster[towerThis][m]);
+            }
+        }
 	//for (p in player) {
 	//	player[p].updateChampions();
 	//}

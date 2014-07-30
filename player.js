@@ -770,9 +770,6 @@ Player.prototype.checkDead = function() {
 }
 
 Player.prototype.recruitChampion = function(id) {
-        if (typeof monsterRef[champion[id].getMonster().form] === "undefined"){
-                        initMonsterGfxNew(champion[id].getMonster());
-        }
 	var pos = 0;
 	for (var c = 0; c < 4; c++) {
 		var ch = this.getChampion(c);
@@ -792,7 +789,10 @@ Player.prototype.recruitChampion = function(id) {
 				position: pos,
 				attackTimer: 20 - pos * 5,
 				called: false
-			};
+			};                        
+                        if (typeof monsterRef[champion[id].getMonster().form] === "undefined"){
+                                        initMonsterGfxNew(champion[id].getMonster());
+                        }
 			return true;
 		}
 	}

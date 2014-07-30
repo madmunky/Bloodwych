@@ -46,7 +46,6 @@ function updatePlayerViewScreen() {
 			$('section.debug p', debugWindow.document).html('');
 		}
 	}
-
 	//configCanvas();
 	debugText(player[0], "FPS: " + fps.getFPS());
 	//if (!paused) {
@@ -63,6 +62,13 @@ function updatePlayerViewScreen() {
 		recolourCanvas([0, 0, 0], [64, 0, 0]);
 	}
 	redrawPlayerUiFlag = 0;
+        if (showFPS){
+            ctx.fillStyle = "black";
+            ctx.fillRect(1, 0, 80, 10 * scale);
+            ctx.fillStyle = "white";
+            ctx.font = "bold 16px Arial";
+            ctx.fillText("FPS: " + fps.getFPS(), 1, 20);
+        }
 	//}
 }
 
@@ -311,17 +317,6 @@ function debugText(p, txt) {
 function godMode() {
 	for (c in champion) {
 		var ch = champion[c];
-		/*ch.level = 99;
-		ch.stat.str = 99;
-		ch.stat.agi = 99;
-		ch.stat.int = 99;
-		ch.stat.cha = 99;
-		ch.stat.hp = 255;
-		ch.stat.hpMax = 255;
-		ch.stat.vit = 255;
-		ch.stat.vitMax = 255;
-		ch.stat.sp = 99;
-		ch.stat.spMax = 99;*/
 		ch.levelUp = 13;
 		while (ch.levelUp > 0) {
 			ch.gainLevel();

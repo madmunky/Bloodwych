@@ -151,7 +151,6 @@ function initData() {
 	uiClickArea = uiClickAreas();
 	audioFiles = loadSounds();
         initMonsterPalettes();
-	//initMonsterGfx();
         initArmourGfx();
 	initMonsters();
 
@@ -178,6 +177,12 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 	loadGfxData();
 	initTowerSwitches();
 	switchTower(0);
+//        if (isMobile){
+//            var mon = getMonstersInTower(towerThis, true);
+//            for (m in mon){
+//                initMonsterGfxNew(monster[towerThis][m]);
+//            }
+//        }
 	gameStarted = true;
 
 	for (pl in championSelect) {

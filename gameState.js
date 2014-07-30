@@ -34,7 +34,7 @@ function loadGame(g) {
 		clearCanvas();
 		for (p in player) {
 			player[p] = castObject(player[p], 'Player');
-			redrawUI(player[p].id);
+			redrawUI(player[p].id);                        
 		}
 		for (c in champion) {
 			champion[c] = castObject(champion[c], 'Champion');
@@ -47,7 +47,12 @@ function loadGame(g) {
 		for (var t = 0; t < 7; t++) {
 			for (var m = 0; m < monster[t].length; m++) {
 				monster[t][m] = castObject(monster[t][m], 'Monster');
-				monster[t][m]["ref"] = monsterRef[monster[t][m].form][monster[t][m].colour];
+//                                if (typeof monsterRef[monster[t][m].form][monster[t][m].colour] !== 'undefined'){
+//                                    monster[t][m]["ref"] = monsterRef[monster[t][m].form][monster[t][m].colour];
+//                                }else{
+                                    monster[t][m]["ref"] = null;
+//                                }
+				
 			}
 		}
 		for (var t = 0; t < 6; t++) {
@@ -72,7 +77,12 @@ function loadGame(g) {
 				}
 			}
 		}
-
+                for (p in player){
+                    for (c in player[p].champion){             
+                        var id = champion[player[p].champion[c]].id;
+                            initMonsterGfxNew(champion[id].getMonster());
+                        }
+                }
 		player[0].message(TEXT_GAME_LOADED, COLOUR[COLOUR_GREEN]);
 	}
 };
