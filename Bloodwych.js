@@ -400,10 +400,16 @@ $(function() {
 			}
 		}
 	});
-	$(document).on('focus', 'input.save-game', function() {
-		$(this).trigger('tap');
+	$('input.save-game').click(function() {
+		$(this).trigger('focusout');
+		var e = jQuery.Event("keyup");
+		e.which = 50;
+		e.keyCode = 50;
+		$(this).trigger(e);
+		$(this).focus().select();
+		$(this).setSelectionRange && $(this).setSelectionRange(0, 0);
 	});
-	$(document).on('focusout', 'input.save-game', function() {
+	$('input.save-game').focusout(function() {
 		$(this).hide();
 		var p = $(this).data('player-id');
 		if (typeof p !== 'undefined' && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {

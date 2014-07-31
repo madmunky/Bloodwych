@@ -1367,8 +1367,7 @@ function uiGameStateMenu(x, y, p) {
 				inp.data('player-id', p.id);
 				inp.data('slot-id', slot);
 				inp.show();
-				inp.focus().select();
-				inp.trigger('keyup');
+				inp.trigger('click');
 				return;
 			}
 		}
