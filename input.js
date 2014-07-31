@@ -114,10 +114,10 @@ function doKeyDown(e) {
 						}
 						break;
 					case KEY_PLUS:
-						testPalette = testPalette + 1;
+						game.fps = game.fps +1;
 						break;
 					case KEY_MINUS:
-						testPalette = testPalette - 1;
+						game.fps = game.fps -1;
 						break;
 					case KEY_1:
 						player[0].alterObject(-1);

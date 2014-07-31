@@ -4,10 +4,14 @@ function Renderer(game) {
 };
 Renderer.prototype = {
 	init: function() {
-		this.fps = 60;
+		this.fps = 30;
 		this.step = 1 / this.fps;
-		clearCanvas();
-		redrawUI(2);
+                if(resumeLoadGame) {
+                    resumeLoadGame = false;
+		}else{
+                    clearCanvas();
+                    redrawUI(2);
+                }		
 		configCanvas();
 	},
 

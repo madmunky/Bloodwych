@@ -201,7 +201,6 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 	setTimeout(function() {
 		if(resumeLoadGame) {
 			loadGame(99);
-			resumeLoadGame = false;
 		}
 		Run();
 	}, 500);

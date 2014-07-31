@@ -39,7 +39,7 @@ Run = function() {
 
 		game.init && game.init();
 		render.init && render.init();
-		run();
+                run();
 //		setTimeout(function() {
 //			clearCanvas();
 //			
