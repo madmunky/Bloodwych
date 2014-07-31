@@ -334,27 +334,27 @@ function godMode() {
 }
 
 $(function() {
-	$('body').focusin(function(e) {
+	$(document).focusin(function(e) {
 		var t = $(e.target);
 		if (gameStarted && paused && pausedByBrowser) {
 			pauseGame(false);
 		}
 	});
-	$('body').focusout(function(e) {
+	$(document).focusout(function(e) {
 		var t = $(e.target);
 		if (gameStarted && !paused) {
 			pauseGame(true);
 			pausedByBrowser = true;
 		}
 	});
-	$(window).on('beforeunload ',function() {
+	$(window).on('beforeunload', function() {
 		if(gameStarted) {
 			pauseGame(false);
 			saveGame(99, 'autosave');
 		}
 	});
 	if (typeof debugWindow !== "undefined" && debugWindow !== null) {
-		$('body', debugWindow.document).on('click', '.debug-input #coord-submit', function() {
+		$('body', debugWindow.document).on('tap', '.debug-input #coord-submit', function() {
 			var tower = parseInt($('body .debug-input #coord-t', debugWindow.document).val());
 			var floor = parseInt($('body .debug-input #coord-f', debugWindow.document).val());
 			var x = parseInt($('body .debug-input #coord-x', debugWindow.document).val());
@@ -366,21 +366,22 @@ $(function() {
 		});
 	}
 
-	$('body').keyup(function(e) {
+	$(document).on('keyup', 'body', function(e) {
 		var t = $(e.target);
 		if (t.is('input.save-game')) {
 			var p = t.data('player-id');
 			if (typeof p !== 'undefined') {
 				var slot = t.data('slot-id');
 				var name = t.val().substring(0, 12).toUpperCase();
-				if (e.which === 13) {
+				var code = e.keyCode || e.which;
+				if (code === 13) {
 					t.trigger('focusout');
 					if (name !== '') {
 						pauseGame(false);
 						saveGame(slot, name);
 						redrawUI(p);
 					}
-				} else if (e.which === 27) {
+				} else if (code === 27) {
 					t.trigger('focusout');
 				} else {
 					var pp = player[p].Portal;
@@ -399,10 +400,10 @@ $(function() {
 			}
 		}
 	});
-	$('body').on('focus', 'input.save-game', function() {
-		$(this).trigger('click');
+	$(document).on('focus', 'input.save-game', function() {
+		$(this).trigger('tap');
 	});
-	$('body').on('focusout', 'input.save-game', function() {
+	$(document).on('focusout', 'input.save-game', function() {
 		$(this).hide();
 		var p = $(this).data('player-id');
 		if (typeof p !== 'undefined' && player[p].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {

@@ -1369,6 +1369,7 @@ function uiGameStateMenu(x, y, p) {
 				inp.show();
 				inp.focus().select();
 				inp.trigger('keyup');
+				return;
 			}
 		}
 	} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
@@ -1378,6 +1379,7 @@ function uiGameStateMenu(x, y, p) {
 					pauseGame(false);
 					loadGame(slot);
 					redrawUI(2);
+					return;
 				}
 			}
 		}

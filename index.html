@@ -28,7 +28,7 @@
 	<div class="content">
 		<div class="canvas-wrapper">
 			<canvas id="game-port" width="960" height="600" tabindex="1"></canvas>
-			<input type="text" class="save-game" maxlength="12" />
+			<input type="text" class="save-game" id="save-game" maxlength="12" />
 		</div>
 	</div>
 
@@ -65,7 +65,7 @@
 	</script>
 	<script>
 	document.ontouchstart = function(e) {
-		e.preventDefault();
+		//e.preventDefault();
 	}
 	$(document).ready(function() {
 		function hideNetbeansGlassPane() {
