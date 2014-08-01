@@ -1356,7 +1356,7 @@ function createStateGrid(p, state) {
 	}
 }
 
-function uiGameStateMenu(x, y, p) {
+/*function uiGameStateMenu(x, y, p) {
 
 	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
 		for (var slot = 0; slot < 8; slot++) {
@@ -1395,7 +1395,7 @@ function uiGameStateMenu(x, y, p) {
 	}
 
 
-}
+}*/
 
 function uiChampSelectArea(x, y, pl) {
 

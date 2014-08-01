@@ -482,7 +482,7 @@ function processCanvasInput(pid, x, y) {
 	//game options (works when paused)
 	if (!p.sleeping) {
 		if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-			uiGameStateMenu(x, y, p);
+			//uiGameStateMenu(x, y, p);
 		} else if (!paused && !p.dead && uiClickInArea(x, y, UI_CLICK_VIEWPORT, p)) {
 			return checkClickInViewPortal(p, x, y);
 		}

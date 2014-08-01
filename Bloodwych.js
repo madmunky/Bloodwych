@@ -400,15 +400,57 @@ $(function() {
 			}
 		}
 	});
-	$('input.save-game').click(function() {
-		$(this).trigger('focusout');
-		var e = jQuery.Event("keyup");
-		e.which = 50;
-		e.keyCode = 50;
-		$(this).trigger(e);
-		$(this).focus().select();
-		$(this).setSelectionRange && $(this).setSelectionRange(0, 0);
+	$('body').on('tap', 'canvas', function(e) {
+		if (e.pageX) {
+			var x = e.pageX / (scale * scaleReal);
+			var y = e.pageY / (scale * scaleReal);
+			for (var p1 in player) {
+				var p = player[parseInt(p1)];
+				if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
+					for (var slot = 0; slot < 8; slot++) {
+						if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
+							p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", COLOUR[COLOUR_GREEN], false, 0);
+							var inp = $('input.save-game');
+							inp.trigger('focusout');
+							inp.val(getGameName(slot));
+							inp.data('player-id', p.id);
+							inp.data('slot-id', slot);
+							inp.show();
+							inp.trigger('keyup');
+							inp.focus().select().click();
+							inp.trigger('tap');
+							return false;
+						}
+					}
+				} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+					for (var slot = 0; slot < 8; slot++) {
+						if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
+							if (getGameName(slot) !== '') {
+								pauseGame(false);
+								loadGame(slot);
+								redrawUI(2);
+								return false;
+							}
+						}
+					}
+				} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
+					if (uiClickInArea(x, y, 0, p, gameStateSelectGrid)) {
+						p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
+						showGameStateMenu(p);
+					} else if (uiClickInArea(x, y, 1, p, gameStateSelectGrid)) {
+						p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
+						showGameStateMenu(p);
+					} else if (uiClickInArea(x, y, 2, p, gameStateSelectGrid)) {
+						location.reload();
+					}
+					return false;
+				}
+			}
+		}
 	});
+
+	//$('input.save-game').click(function() {
+	//});
 	$('input.save-game').focusout(function() {
 		$(this).hide();
 		var p = $(this).data('player-id');
