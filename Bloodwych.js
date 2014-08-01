@@ -402,8 +402,10 @@ $(function() {
 	});
 	$('body').on('tap', 'canvas', function(e) {
 		if (e.pageX) {
-			var x = e.pageX / (scale * scaleReal);
-			var y = e.pageY / (scale * scaleReal);
+			var offX = $(this).offset().left;
+			var offY = $(this).offset().top;
+			var x = Math.floor((e.pageX - offX) / (scale * scaleReal));
+			var y = Math.floor((e.pageY - offY) / (scale * scaleReal));
 			for (var p1 in player) {
 				var p = player[parseInt(p1)];
 				if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {

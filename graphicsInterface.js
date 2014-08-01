@@ -1324,11 +1324,11 @@ function showGameStateMenu(p) {
 	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
 		coverViewPort(p);
 		writeFontImage("LOAD GAME", 30, 16, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 96, 14, 128, 16, null);
+		createSelectGrid(gameStateSelectGrid, 100, 14, 120, 16, null);
 		writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 96, 30, 128, 16, null);
+		createSelectGrid(gameStateSelectGrid, 100, 30, 120, 16, null);
 		writeFontImage("RESTART", 38, 56, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 96, 54, 128, 16, null);
+		createSelectGrid(gameStateSelectGrid, 100, 54, 120, 16, null);
 		//pauseGame(false)
 	}
 	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
@@ -1352,7 +1352,7 @@ function createStateGrid(p, state) {
 			name = 'EMPTY SLOT';
 		}
 		writeFontImage((x + 1) + '.' + name, 8, x * 8 + 6, clr, FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 104, x * 8 + 7, 120, 8, null);
+		createSelectGrid(gameStateSelectGrid, 100, x * 8 + 7, 120, 8, null);
 	}
 }
 
