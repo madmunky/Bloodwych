@@ -13,7 +13,6 @@ CHRIS
 ------
 UI  Finish communication
 GFX Big monster drawing fixes
-BUG Don't call "player.event" when pit on ceiling (in doPit)
 
 QUESTIONS FOR CHRIS
 -------------------

@@ -354,7 +354,7 @@ $(function() {
 		}
 	});
 	if (typeof debugWindow !== "undefined" && debugWindow !== null) {
-		$('body', debugWindow.document).on('tap', '.debug-input #coord-submit', function() {
+		$('body', debugWindow.document).on('click', '.debug-input #coord-submit', function() {
 			var tower = parseInt($('body .debug-input #coord-t', debugWindow.document).val());
 			var floor = parseInt($('body .debug-input #coord-f', debugWindow.document).val());
 			var x = parseInt($('body .debug-input #coord-x', debugWindow.document).val());
