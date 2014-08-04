@@ -493,9 +493,11 @@ Player.prototype.doEvent = function(mr) {
 			this.doStairs();
 			break;
 		case '6':
-			if (mr) {
+                    if (getHexToBinaryPosition(view[18], 13, 1) !== '7'){
+                        if (mr) {
 				floorActionType(tower[towerThis].triggers[parseInt(getHexToBinaryPosition(view[18], 0, 5), 16).toString(10)], this);
 			}
+                    }			
 			break;
 		case '7':
 			if (mr) {
@@ -526,7 +528,7 @@ Player.prototype.doPit = function() {
 		this.setPlayerPosition(floor, x, y);
 		setTimeout(function() {
 			self.doEvent(true);
-		}, 200);
+		}, 300);
 		newProjectile(DUNGEON_NONE, PALETTE_PIT_FLASH, null, -1, 0, floor, x, y, 0, null);
 		return true;
 	}
@@ -1247,7 +1249,10 @@ Player.prototype.actionItem = function(s) {
 			break;
 	}
 
-	setDungeonHex(this.floor, xyi.x, xyi.y, 12, 1, '0');
+
+if ((tower[towerThis].floor[this.floor].Map.length -1) >= xyi.y){
+   if (tower[towerThis].floor[this.floor].Map[xyi.y].length >= xyi.x){
+    setDungeonHex(this.floor, xyi.x, xyi.y, 12, 1, '0');
 	if (itH.id === 0) { //take item
 		for (i = item[towerThis].length - 1; i >= 0; i--) {
 			if (item[towerThis][i].location.tower === towerThis && item[towerThis][i].location.floor === this.floor && item[towerThis][i].location.x === xyi.x && item[towerThis][i].location.y === xyi.y && item[towerThis][i].location.square === (this.d + s) % 4) {
@@ -1274,6 +1279,9 @@ Player.prototype.actionItem = function(s) {
 		redrawUI(this.id, UI_REDRAW_RIGHT);
 		return true;
 	}
+	return false;
+    } 
+}
 	return false;
 }
 
