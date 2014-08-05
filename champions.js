@@ -233,90 +233,92 @@ Champion.prototype.getArmourClass = function() {
 
 Champion.prototype.gainLevel = function() {
 	if (this.levelUp > 0) {
-		var prof = this.prof;
-		var stat = new Array();
-		stat[PROFESSION_WARRIOR] = {
-			str: 8,
-			agi: 5,
-			int: 4,
-			cha: 5,
-			hp: 10,
-			hpMax: 20,
-			vit: 5,
-			vitMax: 10,
-			sp: 1,
-			spMax: 3
-		}
-		stat[PROFESSION_WIZARD] = {
-			str: 4,
-			agi: 5,
-			int: 8,
-			cha: 5,
-			hp: 5,
-			hpMax: 10,
-			vit: 5,
-			vitMax: 10,
-			sp: 3,
-			spMax: 6
-		}
-		stat[PROFESSION_ADVENTURER] = {
-			str: 6,
-			agi: 6,
-			int: 6,
-			cha: 6,
-			hp: 7,
-			hpMax: 14,
-			vit: 7,
-			vitMax: 14,
-			sp: 2,
-			spMax: 4
-		}
-		stat[PROFESSION_CUTPURSE] = {
-				str: 5,
-				agi: 8,
-				int: 5,
-				cha: 4,
-				hp: 5,
-				hpMax: 10,
-				vit: 10,
-				vitMax: 20,
+		if(this.level < 14) {
+			var prof = this.prof;
+			var stat = new Array();
+			stat[PROFESSION_WARRIOR] = {
+				str: 8,
+				agi: 5,
+				int: 4,
+				cha: 5,
+				hp: 10,
+				hpMax: 20,
+				vit: 5,
+				vitMax: 10,
 				sp: 1,
 				spMax: 3
 			}
-			//for (l = 0; l < this.levelUp; l++) {
-		this.stat.str += Math.floor(Math.random() * stat[prof].str) + 1;
-		this.stat.agi += Math.floor(Math.random() * stat[prof].agi) + 1;
-		this.stat.int += Math.floor(Math.random() * stat[prof].int) + 1;
-		this.stat.cha += Math.floor(Math.random() * stat[prof].cha) + 1;
-		this.stat.hpMax += Math.floor(Math.random() * stat[prof].hpMax) + stat[prof].hp;
-		this.stat.vitMax += Math.floor(Math.random() * stat[prof].vitMax) + stat[prof].vit;
-		this.stat.spMax += Math.floor(Math.random() * stat[prof].spMax) + stat[prof].sp;
-		if (this.stat.str > 99) {
-			this.stat.str = 99;
-		}
-		if (this.stat.agi > 99) {
-			this.stat.agi = 99;
-		}
-		if (this.stat.int > 99) {
-			this.stat.int = 99;
-		}
-		if (this.stat.cha > 99) {
-			this.stat.cha = 99;
-		}
-		if (this.stat.hpMax > 255) {
-			this.stat.hpMax = 255;
-		}
-		if (this.stat.vitMax > 255) {
-			this.stat.vitMax = 255;
-		}
-		if (this.stat.spMax > 99) {
-			this.stat.spMax = 99;
-		}
-		this.level++;
-		//}
-		var p = this.recruitment.playerId;
-		if (p > -1) {
-			player[p].message(this.firstName + TEXT_GAINED_LEVEL, COLOUR[COLOUR_RED]);
+			stat[PROFESSION_WIZARD] = {
+				str: 4,
+				agi: 5,
+				int: 8,
+				cha: 5,
+				hp: 5,
+				hpMax: 10,
+				vit: 5,
+				vitMax: 10,
+				sp: 3,
+				spMax: 6
+			}
+			stat[PROFESSION_ADVENTURER] = {
+				str: 6,
+				agi: 6,
+				int: 6,
+				cha: 6,
+				hp: 7,
+				hpMax: 14,
+				vit: 7,
+				vitMax: 14,
+				sp: 2,
+				spMax: 4
+			}
+			stat[PROFESSION_CUTPURSE] = {
+					str: 5,
+					agi: 8,
+					int: 5,
+					cha: 4,
+					hp: 5,
+					hpMax: 10,
+					vit: 10,
+					vitMax: 20,
+					sp: 1,
+					spMax: 3
+				}
+				//for (l = 0; l < this.levelUp; l++) {
+			this.stat.str += Math.floor(Math.random() * stat[prof].str) + 1;
+			this.stat.agi += Math.floor(Math.random() * stat[prof].agi) + 1;
+			this.stat.int += Math.floor(Math.random() * stat[prof].int) + 1;
+			this.stat.cha += Math.floor(Math.random() * stat[prof].cha) + 1;
+			this.stat.hpMax += Math.floor(Math.random() * stat[prof].hpMax) + stat[prof].hp;
+			this.stat.vitMax += Math.floor(Math.random() * stat[prof].vitMax) + stat[prof].vit;
+			this.stat.spMax += Math.floor(Math.random() * stat[prof].spMax) + stat[prof].sp;
+			if (this.stat.str > 99) {
+				this.stat.str = 99;
+			}
+			if (this.stat.agi > 99) {
+				this.stat.agi = 99;
+			}
+			if (this.stat.int > 99) {
+				this.stat.int = 99;
+			}
+			if (this.stat.cha > 99) {
+				this.stat.cha = 99;
+			}
+			if (this.stat.hpMax > 255) {
+				this.stat.hpMax = 255;
+			}
+			if (this.stat.vitMax > 255) {
+				this.stat.vitMax = 255;
+			}
+			if (this.stat.spMax > 99) {
+				this.stat.spMax = 99;
+			}
+			this.level++;
+			//}
+			var p = this.recruitment.playerId;
+			if (p > -1) {
+				player[p].message(this.firstName + TEXT_GAINED_LEVEL, COLOUR[COLOUR_RED]);
+			}
 		}
 		this.levelUp--;
 	}
