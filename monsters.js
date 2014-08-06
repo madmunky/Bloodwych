@@ -657,15 +657,15 @@ function initMonsters() {
 	}
 
 	//TESTING!!! REMOVE AFTER
-	var testType = MON_FORM_CRAB;
+	var testType = MON_FORM_DRAGON;
 	var end = monster[TOWER_MOD0].length;
-	monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 12, 18, 2, CHAR_FRONT_SOLO, true, 0);
+	monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 15, 18, 0, CHAR_FRONT_SOLO, true, 0);
 	max++;end++;
-	monster[TOWER_MOD0][end] = new Monster(max, 3, 0, testType, TOWER_MOD0, 3, 14, 19, 2, CHAR_FRONT_SOLO, true, 0);
+	monster[TOWER_MOD0][end] = new Monster(max, 3, 0, testType, TOWER_MOD0, 3, 13, 20, 2, CHAR_FRONT_SOLO, true, 0);
 	max++;end++;
 	monster[TOWER_MOD0][end] = new Monster(max, 6, 0, testType, TOWER_MOD0, 3, 14, 16, 2, CHAR_FRONT_SOLO, true, 0);
 	max++;end++;
-	monster[TOWER_MOD0][end] = new Monster(max, 9, 0, testType, TOWER_MOD0, 3, 13, 20, 0, CHAR_FRONT_SOLO, true, 0);
+	monster[TOWER_MOD0][end] = new Monster(max, 9, 0, testType, TOWER_MOD0, 3, 11, 20, 0, CHAR_FRONT_SOLO, true, 0);
 	max++;end++;
 }
 
