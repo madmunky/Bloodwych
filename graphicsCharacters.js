@@ -794,7 +794,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 }
 
 function drawMonster(m, dir, dist, player, offset) {
-	//m.attacking = true;
+    //m.doGesture(CHA_GESTURE_SPELLCASTING);
 	if (dist > -1) {
 		for (part1 = 0; part1 < 3; part1++) {
 			try {
@@ -1217,21 +1217,23 @@ function grabMonster(form, level) {
 					DISTANCE_4 = [];
 
 				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 180, 1, 16, 21, false, 32, 0));
-				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 252, 7, 15, 9, false, 20, 0));
+				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 252, 7, 15, 9, true, 50, 8));
 				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 180, 1, 16, 21, true, 32, 0));
-				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 252, 7, 15, 9, false, 20, 0));
+				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 252, 7, 15, 9, false, 51, 8));
 				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 229, 0, 16, 21, false, 32, 14));
 				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 229, 0, 16, 21, true, 32, 14));
-				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 206, 2, 14, 19, false, 20, 0));
-				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 206, 2, 14, 19, false, 20, 0));
+				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 206, 2, 14, 19, false, 50, 14));
+				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 206, 2, 14, 19, true, 50, 14));
 
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 183, 31, 10, 14, false, 20, 0));
-				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 205, 25, 16, 24, false));
+				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 255, 34, 9, 8, true, 37, 4));
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 183, 31, 10, 14, true, 19, 0));
-				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 205, 25, 16, 24, true));
+                                DISTANCE_2.push(grabImageAt(spriteSheetIMG, 255, 34, 9, 8, false, 36, 4));
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 232, 30, 10, 14, false, 20, 8));
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 232, 30, 10, 14, true, 20, 8));
-				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 255, 34, 9, 8, false, 20, 15));
+                                DISTANCE_2.push(grabImageAt(spriteSheetIMG, 205, 25, 16, 24, false,23, 0));
+                                DISTANCE_2.push(grabImageAt(spriteSheetIMG, 205, 25, 16, 24, true,24, 0));		
+                                DISTANCE_2.push(grabImageAt(spriteSheetIMG, 255, 34, 9, 8, false, 20, 15));
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 255, 34, 9, 8, true, 20, 15));
 
 
