@@ -1316,7 +1316,7 @@ function grabMonster(form, level) {
 				DISTANCE_3.push(grabImageAt(spriteSheetIMG, 254, 118, 8, 10, false, 21, 8));
 				DISTANCE_3.push(grabImageAt(spriteSheetIMG, 254, 118, 8, 10, true, 21, 8));
 				DISTANCE_3.push(grabImageAt(spriteSheetIMG, 280, 117, 12, 11, false, 12, 7));
-				DISTANCE_3.push(grabImageAt(spriteSheetIMG, 280, 117, 12, 11, true, 12, 7));
+				DISTANCE_3.push(grabImageAt(spriteSheetIMG, 280, 117, 12, 11, true, 12, 6));
 
 				BODYPART.push(DISTANCE_1, DISTANCE_2, DISTANCE_3);
 				ImageArray.push(BODYPART);
