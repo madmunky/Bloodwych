@@ -1390,8 +1390,8 @@ function grabMonster(form, level) {
 				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 110, 2, 14, 26, true, 4, 15));
 				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, false, 35, 31));
 				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, true, 35, 31));
-				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, false, 19, 32));
-				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, true, 18, 32));
+				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, false, 16, 32));
+				DISTANCE_1.push(grabImageAt(spriteSheetIMG, 128, 2, 16, 21, true, 16, 32));
 
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 112, 64, 10, 18, false, 23, 10));
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 112, 64, 10, 18, false, 4, 10));
@@ -1399,8 +1399,8 @@ function grabMonster(form, level) {
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 112, 64, 10, 18, true, 4, 10));
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, false, 24, 22));
 				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, true, 24, 22));
-				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, false, 10, 24));
-				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, true, 10, 24));
+				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, false, 9, 22));
+				DISTANCE_2.push(grabImageAt(spriteSheetIMG, 131, 64, 11, 15, true, 8, 23));
 
 				BODYPART.push(DISTANCE_1, DISTANCE_2);
 				ImageArray.push(BODYPART);
