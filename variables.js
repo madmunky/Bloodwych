@@ -1,7 +1,7 @@
 //General
-var debug = true;
+var debug = false;
 var iosDebug = false;
-var showFPS = true;
+var showFPS = false;
 var game;
 var isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 if(isMobile) {
