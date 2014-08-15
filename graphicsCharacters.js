@@ -794,7 +794,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 }
 
 function drawMonster(m, dir, dist, player, offset) {
-   m.doGesture(CHA_GESTURE_SPELLCASTING);
+	//m.doGesture(CHA_GESTURE_SPELLCASTING);
 	if (dist > -1) {
 		for (part1 = 0; part1 < 3; part1++) {
 			try {

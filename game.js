@@ -19,7 +19,7 @@ Game.prototype = {
 			checkStarted = false;
 		}
 		if (!paused) {
-			//timerAction();
+			timerAction();
 			timerMaster++;
 		}
 	},
