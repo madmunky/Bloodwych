@@ -114,7 +114,8 @@ function doKeyDown(e) {
 						}
 						break;
 					case KEY_PLUS:
-						game.fps = game.fps +1;
+						player[0].uiCenterPanel.mode = UI_CENTER_PANEL_ENDGAME;
+                                                showEndGame(player[0]);
 						break;
 					case KEY_MINUS:
 						game.fps = game.fps -1;
@@ -761,16 +762,6 @@ function checkClickInViewPortal(p, x, y) {
 			break;
 		case UI_CENTER_PANEL_DEAD:
 			break;
-			//		case UI_CENTER_PANEL_FAIRY:
-			//			break;
-			//		case UI_CENTER_PANEL_FAIRY_DRAGON:
-			//			break;
-			//		case UI_CENTER_PANEL_FAIRY_SERPENT:
-			//			break;
-			//		case UI_CENTER_PANEL_FAIRY_MOON:
-			//			break;
-			//		case UI_CENTER_PANEL_FAIRY_CHAOS:
-			//			break;
 		default:
 			break;
 	}

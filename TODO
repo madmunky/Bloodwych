@@ -8,12 +8,12 @@ COD Beguile spell
 COD Fix Big monster 'edge of screen'
 BUG Arrows on Right UI sometimes show over pockets or scroll
 BUG Firepath is now blinking too fast
+GFX Beholder Fixes
 
 CHRIS
 ------
 UI  Finish communication (trading, charisma)
-UI	Add behemoth end screen
-GFX Big monster drawing fixes
+UI  Add behemoth end screen
 
 QUESTIONS FOR CHRIS
 -------------------

@@ -1029,6 +1029,19 @@ function showStatusBar(thisVal, maxVal, width, colour) {
 	return can;
 }
 
+function showEndGame(p) {
+
+    coverViewPort(p);
+
+	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME) {
+		p.message(TEXT_ACCURSED_BLOODWYCH, COLOUR[COLOUR_GREEN]);
+		writeFontImage(TEXT_CONGRATS, p.ScreenX, (p.ScreenY +100) * scale, COLOUR[COLOUR_PINK]);
+                //drawMonster(monster[TOWER_MOD0][0], 0, 0, p, [0,0]);
+		p.Portal.drawImage(grabMonster(MON_FORM_BEHEMOTH, 0), 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);	
+	} 
+
+}
+
 function gotoFairyMode(p, m) {
 	if (p.uiCenterPanel.mode !== m) {
 		var ch = p.fairyDetails.champ;

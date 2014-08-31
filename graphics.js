@@ -298,7 +298,10 @@ function drawPlayersView(p) {
 	//p.getViewPortal();
 	if (p.dead || p.sleeping || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
 		p.Portal.save();
-		ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);
+		ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);  
+            }
+        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME){
+              ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);   
     } else if(!paused) {
 		p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
