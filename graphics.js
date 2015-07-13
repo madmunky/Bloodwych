@@ -302,7 +302,7 @@ function drawPlayersView(p) {
             }
         if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME){
               ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);   
-    } else if(!paused) {
+    } else if(!paused && !p.sleeping) {
 		p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
 		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
 		var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0);

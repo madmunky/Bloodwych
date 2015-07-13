@@ -1,5 +1,5 @@
 //General
-var debug = false;
+var debug = true;
 var iosDebug = false;
 var showFPS = false;
 var game;

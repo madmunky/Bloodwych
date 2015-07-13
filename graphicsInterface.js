@@ -1035,9 +1035,10 @@ function showEndGame(p) {
 
 	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME) {
 		p.message(TEXT_ACCURSED_BLOODWYCH, COLOUR[COLOUR_GREEN]);
-		writeFontImage(TEXT_CONGRATS, p.ScreenX, (p.ScreenY +100) * scale, COLOUR[COLOUR_PINK]);
-                //drawMonster(monster[TOWER_MOD0][0], 0, 0, p, [0,0]);
-		p.Portal.drawImage(grabMonster(MON_FORM_BEHEMOTH, 0), 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);	
+		writeFontImage(TEXT_CONGRATS, (p.ScreenX +33) * scale, (p.ScreenY +26) * scale, COLOUR[COLOUR_PINK]);
+                initMonsterGfxNew(monster[TOWER_MOD0][6]);
+                var t = drawMonster(monster[TOWER_MOD0][6], 0, 3, p, [0,0],true);
+                ctx.drawImage(t,0,0,t.width,t.height);	
 	} 
 
 }

@@ -590,10 +590,6 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 		can.width = canvas.width;
 		can.height = canvas.height;
 		var charContext = can.getContext("2d");
-		//        charContext.imageSmoothingEnabled = false;
-		//        charContext.webkitImageSmoothingEnabled = false;
-		//        charContext.mozImageSmoothingEnabled = false;
-		//        charContext.oImageSmoothingEnabled = false;
 	}
 
 	if (typeof returnImg === "undefined") {
@@ -793,8 +789,19 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 	}
 }
 
-function drawMonster(m, dir, dist, player, offset) {
+function drawMonster(m, dir, dist, player, offset, returnImg) {
 	//m.doGesture(CHA_GESTURE_SPELLCASTING);
+        if (typeof returnImg === "undefined") {
+		returnImg = true;
+	}
+        
+        if (returnImg) {
+		var can = document.createElement('canvas');
+		can.width = player.Portal.canvas.width;
+		can.height = player.Portal.canvas.height;
+		var charContext = can.getContext("2d");
+	}
+        
 	if (dist > -1) {
 		for (part1 = 0; part1 < 3; part1++) {
 			try {
@@ -885,11 +892,19 @@ function drawMonster(m, dir, dist, player, offset) {
 						if (dist <= DISTANCE_MID) {
 							blur = m.blur;
 						}
-						player.Portal.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
+                                                if (returnImg){
+                                                    charContext.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
+                                                }else{
+                                                    player.Portal.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
+                                                }						
 						if (dir2 > -1) {
 							offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
 							offy = 76 - Math.floor(gfx2.height) - offset.y;
-							player.Portal.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
+                                                        if (returnImg){
+                                                            charContext.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
+                                                        }else{
+                                                            player.Portal.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
+                                                        }							
 						}
 					}
 				}
@@ -898,6 +913,12 @@ function drawMonster(m, dir, dist, player, offset) {
 			}
 		}
 	}
+        
+        if (returnImg) {
+            charContext.save();
+            var dataURL = can.toDataURL();
+            return can;
+        }        
 }
 
 function grabMonster(form, level) {
