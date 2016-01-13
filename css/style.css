@@ -38,6 +38,12 @@ canvas {
 	background-image: none;
 	outline: none;
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+	image-rendering: pixelated;
+	image-rendering: optimizeSpeed;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: optimize-contrast;
+	-ms-interpolation-mode: nearest-neighbor;
 }
 canvas[data-game-status="loading"] {
 	background: #000 url(../images/loading.png) center center no-repeat;

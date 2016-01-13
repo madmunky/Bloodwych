@@ -101,11 +101,12 @@ function setViewportScale(sp) {
 			player[p].PlayerCanvas.width = 128 * scale;
 			player[p].PlayerCanvas.height = 76 * scale;
 			player[p].PlayerCanvas.getContext("2d").imageSmoothingEnabled = false;
-			//player[p].PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
+			player[p].PlayerCanvas.getContext("2d").webkitImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").mozImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").oImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").msImageSmoothingEnabled = false;
 			player[p].PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
+			
 		}
 		//redrawUI(2);
 	}
@@ -119,7 +120,7 @@ function myDIx(canvas, img, PosAry) {
 
 function configCanvas() {
 	ctx.imageSmoothingEnabled = false;
-	//ctx.webkitImageSmoothingEnabled = false;
+	ctx.webkitImageSmoothingEnabled = false;
 	ctx.mozImageSmoothingEnabled = false;
 	ctx.oImageSmoothingEnabled = false;
 	ctx.msImageSmoothingEnabled = false;
