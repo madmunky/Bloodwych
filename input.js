@@ -585,7 +585,8 @@ function mouseXY(e) {
 		mouseY = e.offsetY;
 		var currentColour = cursorType;
 		if (typeof player[0] !== 'undefined') {
-			if ($('canvas').attr('data-game-status') === 'menu-champions') {
+			if (typeof player[1] !== 'undefined') {
+				if ($('canvas').attr('data-game-status') === 'menu-champions') {
 				if (currentPlayer === 0) {
 					cursorType = cursorBlue;
 					if (currentColour !== cursorType) {
@@ -619,6 +620,10 @@ function mouseXY(e) {
 					}
 				}
 			}
+			}else{
+			
+			}
+			
 		}
 		if (typeof player !== 'undefined') {
 			for (p in player) {

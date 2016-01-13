@@ -1044,8 +1044,7 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 				drawCharacter(m, (6 + p.d - m.d) % 4, distance, this, offset);
 			}
 		}
-	}
-	for (p in player) { player[p].redrawViewPort = true;}
+	}	
 }
 
 Player.prototype.drawItem = function(it, distance, offset) {
