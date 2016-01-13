@@ -1223,6 +1223,7 @@ Player.prototype.findPocketItem = function(i) {
 }
 
 Player.prototype.actionItem = function(s) {
+	this.redrawViewPort = true;
 	var itH = this.pocket;
 	xy = getOffsetByRotation(this.d);
 	xyi = new Array();
