@@ -30,6 +30,7 @@ function initGame() {
 		}
 	});
 	updateLoadingScreen("Loading Graphics", 0);
+	loadGfxData();
 }
 
 function updateLoadingScreen(msg, percent) {
@@ -174,7 +175,7 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
 	if (god) {
             godMode();
 	}
-	loadGfxData();
+	
 	initTowerSwitches();
 	switchTower(0);
 //        if (isMobile){

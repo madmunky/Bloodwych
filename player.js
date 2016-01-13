@@ -71,6 +71,7 @@ function Player(id, ScreenX, ScreenY) {
 		charisma: 0
 	};
 	this.frozen = false;
+	this.redrawViewPort = true;
 
 	this.PlayerCanvas = document.createElement('canvas');
 	this.PlayerCanvas.width = 128 * scale;
@@ -192,7 +193,7 @@ Player.prototype.changeUpFloor = function() {
 		this.move(DIRECTION_NORTH);
 		this.move(DIRECTION_NORTH);
 	}
-
+	this.redrawViewPort = true;
 };
 
 Player.prototype.changeDownFloor = function() {
@@ -207,6 +208,7 @@ Player.prototype.changeDownFloor = function() {
 		this.move(DIRECTION_NORTH);
 		this.move(DIRECTION_NORTH);
 	}
+	this.redrawViewPort = true;
 };
 
 //Take the map code which is in front of the player and see if the player can interact with it.
@@ -253,6 +255,7 @@ Player.prototype.action = function() {
 					this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
 				}
 			}
+			this.redrawViewPort = true;
 			return true;
 		}
 	}
@@ -340,6 +343,7 @@ Player.prototype.rotate = function(r) {
 					  } */
 		this.doEvent(false);
 		redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
+		this.redrawViewPort = true;
 	}
 };
 
@@ -365,6 +369,7 @@ Player.prototype.move = function(d) {
 		} else if (d === 2) { //check current square when moving backward
 			this.doEvent(false);
 		}
+		this.redrawViewPort = true;
 	}
 };
 
@@ -1040,6 +1045,7 @@ Player.prototype.drawMonster = function(m, distance, offset) {
 			}
 		}
 	}
+	for (p in player) { player[p].redrawViewPort = true;}
 }
 
 Player.prototype.drawItem = function(it, distance, offset) {

@@ -61,6 +61,7 @@ Projectile.prototype.move = function() {
 		if (this.event()) {
 			return true;
 		}
+		for (p in player) { player[p].redrawViewPort = true;} 
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		if (typeof this.monster !== "undefined") {
 			var sid = null;

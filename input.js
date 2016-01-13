@@ -129,7 +129,7 @@ function doKeyDown(e) {
 					case KEY_3:
 						player[0].alterObject(1);
 						break;
-						/*case KEY_4:
+						case KEY_4:
 						player[0].alterObject(0, 0, -1);
 						break;
 					case KEY_R:
@@ -148,7 +148,7 @@ function doKeyDown(e) {
 						break;
 					case KEY_9:
 						testMon1 = (testMon1 - 1);
-						break;*/
+						break;
 					default:
 						break;
 				}

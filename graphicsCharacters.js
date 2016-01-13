@@ -589,7 +589,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 		var can = document.createElement('canvas');
 		can.width = canvas.width;
 		can.height = canvas.height;
-		var charContext = can.getContext("2d");
+		charContext = can.getContext("2d");
 	}
 
 	if (typeof returnImg === "undefined") {
@@ -791,15 +791,16 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 
 function drawMonster(m, dir, dist, player, offset, returnImg) {
 	//m.doGesture(CHA_GESTURE_SPELLCASTING);
-        if (typeof returnImg === "undefined") {
-		returnImg = true;
+	var charContext
+    if (typeof returnImg === "undefined") {
+		returnImg = false;
 	}
         
         if (returnImg) {
 		var can = document.createElement('canvas');
 		can.width = player.Portal.canvas.width;
 		can.height = player.Portal.canvas.height;
-		var charContext = can.getContext("2d");
+		charContext = can.getContext("2d");
 	}
         
 	if (dist > -1) {

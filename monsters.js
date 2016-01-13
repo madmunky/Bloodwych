@@ -262,6 +262,7 @@ Monster.prototype.move = function() {
 					this.rotateTo((this.d + turn + 4) % 4);
 				}
 			}
+			for (p in player) { player[p].redrawViewPort = true;} 
 		}
 	}
 }
@@ -301,6 +302,7 @@ Monster.prototype.attack = function(attack, target) {
 			}                        
                         playSound(SOUND_ATTACK);
 		}
+		for (p in player) { player[p].redrawViewPort = true;} 
 	} else {
 		var team = getMonsterTeam(this.teamId);
 		this.attacking = false;
@@ -357,7 +359,8 @@ Monster.prototype.castSpell = function() {
 			}
 			castSpell(id, this, 15 + this.level);
 			this.doGesture(CHA_GESTURE_SPELLCASTING);
-			return true;
+			for (p in player) { player[p].redrawViewPort = true;} 
+			return true;			
 		}
 	}
 	return false;

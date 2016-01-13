@@ -1,5 +1,10 @@
 var gfxPos = SpriteSheetArray();
 
+if (debug) {
+		console.log("Loading Graphics.js");
+	}
+
+
 function SpriteSheetArray() {
 
 	//Convert the graphics sprite sheets into individual images and put them in an array
@@ -299,186 +304,191 @@ function drawPlayersView(p) {
 	if (p.dead || p.sleeping || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
 		p.Portal.save();
 		ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);  
-            }
-        if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME){
+		return;
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME){
               ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);   
     } else if(!paused && !p.sleeping) {
-		p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
-		myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
-		var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0);
-
-		for (x = 0; x < 19; x++) {
-			var view = p.getView();
-			var BlockType = getHexToBinaryPosition(view[x], 13, 3);
-			var spellWall = BlockType === '7' && (getHexToBinaryPosition(view[x], 6, 2) === '2' || getHexToBinaryPosition(view[x], 6, 2) === '3');
-			var concealed = (getHexToBinaryPosition(view[x], 12) === '1' && !il);
-			if (BlockType === '2') {
-				drawWoodenObject(p, x);
-			} else {
-				var obj = p.getObjectOnPos(x, 2);
-				if (obj !== OBJECT_SHELF && obj !== OBJECT_PIT && obj !== OBJECT_PATH && !concealed) { //draw items not on shelf, pit, path first
-					drawItemsOnPos(p, x);
-				}
-				if(BlockType === '1' || spellWall) { //draw monsters before drawing walls
-					drawMonsterOnPos(p, x);
-					drawProjectileOnPos(p, x);
-				}
-				if(!(spellWall && getHexToBinaryPosition(view[x], 6, 2) === '2' && il)) {
-					switch (x) {
-						case 0:
-							{
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 28), 28, p, x), gfxPos[28]);
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 27), 27, p, x), gfxPos[27]);
-							};
-							break;
-						case 1:
-							{
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 26), 26, p, x), gfxPos[26]);
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 25), 25, p, x), gfxPos[25]);
-							};
-							break;
-						case 2:
-							{
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 27), 27, p, x), gfxPos[27]);
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 23), 23, p, x), gfxPos[23]);
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 22), 22, p, x), gfxPos[22]);
-							};
-							break;
-						case 3:
-							{
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 26), 26, p, x), gfxPos[26]);
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 21), 21, p, x), gfxPos[21]);
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 20), 20, p, x), gfxPos[20]);
-							};
-							break;
-						case 4:
-							{
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 22), 22, p, x), gfxPos[22]);
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 21), 21, p, x), gfxPos[21]);
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 16), 16, p, x), gfxPos[16]);
-							};
-							break;
-						case 5:
-							{
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 24), 24, p, x), gfxPos[24]);
-							};
-							break;
-						case 6:
-							{
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 19), 19, p, x), gfxPos[19]);
-							};
-							break;
-						case 7:
-							{
-								if (BlockType === '1' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 17), 17, p, x), gfxPos[17]);
-								}
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 18), 18, p, x), gfxPos[18]);
-							};
-							break;
-						case 8:
-							{
-								if (BlockType === '1' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 15), 15, p, x), gfxPos[15]);
-								}
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 14), 14, p, x), gfxPos[14]);
-							};
-							break;
-						case 9:
-							{
-								if (BlockType === '1' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 15), 15, p, x), gfxPos[15]);
-								}
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 11), 11, p, x), gfxPos[11]);
-							};
-							break;
-						case 10:
-							{
-								if (BlockType === '1' || BlockType === '4' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 12), 12, p, x), gfxPos[12]);
-								}
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 13), 13, p, x), gfxPos[13]);
-							};
-							break;
-						case 11:
-							{
-								if (BlockType === '1' || BlockType === '4' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 10), 10, p, x), gfxPos[10]);
-								}
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 9), 9, p, x), gfxPos[9]);
-							};
-							break;
-						case 12:
-							{
-								if (BlockType === '1' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 10), 10, p, x), gfxPos[10]);
-								}
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 6), 6, p, x), gfxPos[6]);
-							};
-							break;
-						case 13:
-							{
-								if (BlockType === '1' || BlockType === '4' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 7), 7, p, x), gfxPos[7]);
-								}
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 8), 8, p, x), gfxPos[8]);
-							};
-							break;
-						case 14:
-							{
-								if (BlockType === '1' || BlockType === '4' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 5), 5, p, x), gfxPos[5]);
-								}
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 4), 4, p, x), gfxPos[4]);
-							};
-							break;
-						case 15:
-							{
-								if (BlockType === '1' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 5), 5, p, x), gfxPos[5]);
-								}
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 2), 2, p, x), gfxPos[2]);
-							};
-							break;
-						case 16:
-							{
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 3), 3, p, x), gfxPos[3]);
-							};
-							break;
-						case 17:
-							{
-								myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 1), 1, p, x), gfxPos[1]);
-							};
-							break;
-						case 18:
-							{
-								if (BlockType === '5') {
-									drawDoorFrame(p);
-								} else if (BlockType === '1' || spellWall) {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 1), 1, p, x), gfxPos[1]);
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 3), 3, p, x), gfxPos[3]);
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 2), 2, p, x), gfxPos[2]);
-								} else {
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 31), 31, p, x), gfxPos[31]);
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 29), 29, p, x), gfxPos[29]);
-									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 30), 30, p, x), gfxPos[30]);
+		if (p.redrawViewPort){		
+			p.redrawViewPort = false;
+			p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+			myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
+			var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0);
+			if (debug){
+				console.log("We are redawing to the Players Canvas");
+			}
+			for (x = 0; x < 19; x++) {
+				var view = p.getView();
+				var BlockType = getHexToBinaryPosition(view[x], 13, 3);
+				var spellWall = BlockType === '7' && (getHexToBinaryPosition(view[x], 6, 2) === '2' || getHexToBinaryPosition(view[x], 6, 2) === '3');
+				var concealed = (getHexToBinaryPosition(view[x], 12) === '1' && !il);
+				if (BlockType === '2') {
+					drawWoodenObject(p, x);
+				} else {
+					var obj = p.getObjectOnPos(x, 2);
+					if (obj !== OBJECT_SHELF && obj !== OBJECT_PIT && obj !== OBJECT_PATH && !concealed) { //draw items not on shelf, pit, path first
+						drawItemsOnPos(p, x);
+					}
+					if(BlockType === '1' || spellWall) { //draw monsters before drawing walls
+						drawMonsterOnPos(p, x);
+						drawProjectileOnPos(p, x);
+					}
+					if(!(spellWall && getHexToBinaryPosition(view[x], 6, 2) === '2' && il)) {
+						switch (x) {
+							case 0:
+								{
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 28), 28, p, x), gfxPos[28]);
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 27), 27, p, x), gfxPos[27]);
 								};
-							};
-							break;
+								break;
+							case 1:
+								{
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 26), 26, p, x), gfxPos[26]);
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 25), 25, p, x), gfxPos[25]);
+								};
+								break;
+							case 2:
+								{
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 27), 27, p, x), gfxPos[27]);
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 23), 23, p, x), gfxPos[23]);
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 22), 22, p, x), gfxPos[22]);
+								};
+								break;
+							case 3:
+								{
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 26), 26, p, x), gfxPos[26]);
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 21), 21, p, x), gfxPos[21]);
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 20), 20, p, x), gfxPos[20]);
+								};
+								break;
+							case 4:
+								{
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 22), 22, p, x), gfxPos[22]);
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 21), 21, p, x), gfxPos[21]);
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 16), 16, p, x), gfxPos[16]);
+								};
+								break;
+							case 5:
+								{
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 24), 24, p, x), gfxPos[24]);
+								};
+								break;
+							case 6:
+								{
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 19), 19, p, x), gfxPos[19]);
+								};
+								break;
+							case 7:
+								{
+									if (BlockType === '1' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 17), 17, p, x), gfxPos[17]);
+									}
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 18), 18, p, x), gfxPos[18]);
+								};
+								break;
+							case 8:
+								{
+									if (BlockType === '1' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 15), 15, p, x), gfxPos[15]);
+									}
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 14), 14, p, x), gfxPos[14]);
+								};
+								break;
+							case 9:
+								{
+									if (BlockType === '1' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 15), 15, p, x), gfxPos[15]);
+									}
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 11), 11, p, x), gfxPos[11]);
+								};
+								break;
+							case 10:
+								{
+									if (BlockType === '1' || BlockType === '4' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 12), 12, p, x), gfxPos[12]);
+									}
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 13), 13, p, x), gfxPos[13]);
+								};
+								break;
+							case 11:
+								{
+									if (BlockType === '1' || BlockType === '4' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 10), 10, p, x), gfxPos[10]);
+									}
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 9), 9, p, x), gfxPos[9]);
+								};
+								break;
+							case 12:
+								{
+									if (BlockType === '1' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 10), 10, p, x), gfxPos[10]);
+									}
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 6), 6, p, x), gfxPos[6]);
+								};
+								break;
+							case 13:
+								{
+									if (BlockType === '1' || BlockType === '4' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 7), 7, p, x), gfxPos[7]);
+									}
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 8), 8, p, x), gfxPos[8]);
+								};
+								break;
+							case 14:
+								{
+									if (BlockType === '1' || BlockType === '4' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 5), 5, p, x), gfxPos[5]);
+									}
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 4), 4, p, x), gfxPos[4]);
+								};
+								break;
+							case 15:
+								{
+									if (BlockType === '1' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 5), 5, p, x), gfxPos[5]);
+									}
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 2), 2, p, x), gfxPos[2]);
+								};
+								break;
+							case 16:
+								{
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 3), 3, p, x), gfxPos[3]);
+								};
+								break;
+							case 17:
+								{
+									myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 1), 1, p, x), gfxPos[1]);
+								};
+								break;
+							case 18:
+								{
+									if (BlockType === '5') {
+										drawDoorFrame(p);
+									} else if (BlockType === '1' || spellWall) {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 1), 1, p, x), gfxPos[1]);
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 3), 3, p, x), gfxPos[3]);
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 2), 2, p, x), gfxPos[2]);
+									} else {
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 31), 31, p, x), gfxPos[31]);
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 29), 29, p, x), gfxPos[29]);
+										myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 30), 30, p, x), gfxPos[30]);
+									};
+								};
+								break;
+						}
+					}
+					if ((obj === OBJECT_SHELF || obj === OBJECT_PIT || obj === OBJECT_PATH) && !concealed) { //draw items on shelf, pit, path last
+						drawItemsOnPos(p, x);
+					}
+					if(BlockType !== '1' && !spellWall) { //draw monsters after drawing anything else than walls
+						drawMonsterOnPos(p, x);
+						drawProjectileOnPos(p, x);
 					}
 				}
-				if ((obj === OBJECT_SHELF || obj === OBJECT_PIT || obj === OBJECT_PATH) && !concealed) { //draw items on shelf, pit, path last
-					drawItemsOnPos(p, x);
-				}
-				if(BlockType !== '1' && !spellWall) { //draw monsters after drawing anything else than walls
-					drawMonsterOnPos(p, x);
-					drawProjectileOnPos(p, x);
-				}
-			}
-		}
+		}		
 		p.Portal.save();
 		ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);
-	}
+	}}
 }
 
 function drawMonsterOnPos(p, pos) {
@@ -816,5 +826,5 @@ function coverViewPort(p) {
 	drawRect(1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK], p);
 	drawRect(0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT], p);
 	drawRect(2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT], p);
-
+	p.Portal.save()
 }

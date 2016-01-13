@@ -176,9 +176,13 @@ function recolourCanvas(from, to) {
 function gfxColourSubs(folder, type, item, sub) {
 	if (item != "") {
 		for (i = 1; i <= sub; i++) {
-			gfx[folder][type][item][i] = recolorImage(gfx[folder][type][item][0], i, folder, type, item);
+			//if (typeof gfx[folder][type][item][i] != 'undefined'){
+				gfx[folder][type][item][i] = recolorImage(gfx[folder][type][item][0], i, folder, type, item);
+			//}			
 		}
-		gfx[folder][type][item][0] = recolorImage(gfx[folder][type][item][0], 0, folder, type, item);
+		//if (typeof gfx[folder][type][item][0] != 'undefined'){
+			gfx[folder][type][item][0] = recolorImage(gfx[folder][type][item][0], 0, folder, type, item);
+		//}		
 	} else {
 		for (i = 1; i <= sub; i++) {
 			gfx[folder][type][i] = recolorImage(gfx[folder][type][0], i, folder, type, item);
@@ -193,6 +197,7 @@ function gfxColourSubs(folder, type, item, sub) {
 //sub: define this to the number of color variations you wish to add for this type of object. Currently maximum of 8
 
 function gfxLoadImage(folder, type, item, sub) {
+	console.log("LoadImage: " + folder + " " + type + " " + item + " " + sub);
 	if (typeof type === 'string') {
 		gfxLoaded.count++;
 		var id = '';
@@ -212,6 +217,7 @@ function gfxLoadImage(folder, type, item, sub) {
 		}
 
 		$('body').append('<img id="' + id + '" src="images/' + folder + '/' + id + '.png" class="gfx" />');
+		console.log('<img id="' + id + '" src="images/' + folder + '/' + id + '.png" class="gfx" />');
 		if (typeof sub === 'number' && sub != null) {
 			if (item != '') {
 				gfx[folder][type][item][0] = document.getElementById(id);
@@ -243,6 +249,7 @@ function gfxLoadImage(folder, type, item, sub) {
 function checkAllGfxLoaded() {
 	gfxLoaded.max++;
 	if (gfxLoaded.count === gfxLoaded.max) {
+		console.log("All Graphics processed");
 		gfxLoaded.done = true;
 	}
 }
