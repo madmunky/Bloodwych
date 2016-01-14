@@ -16,7 +16,11 @@ Renderer.prototype = {
 	},
 
 	update: function() {
-		updatePlayerViewScreen();
+		try{
+			updatePlayerViewScreen();
+		}catch(err){
+			console.log("Drawing Error: " + err.toString());
+		}
 	},
 
 	invalid: {

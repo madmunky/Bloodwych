@@ -13,7 +13,7 @@ function initGame() {
 
 	watch(dataLoaded, "done", function(prop, action, newvalue, oldvalue) {
 		if (newvalue === 1) {
-			for (var i = 1; i < 6; i++) {
+			for (var i = 1; i < TOWER_NAME.length; i++) {
 				tower[i] = new Tower(i);
 				projectile[i] = new Array();
 			}
@@ -157,7 +157,7 @@ function initData() {
 
 	initSpells();
 	initItemRefs();
-	for (var i = 0; i < 6; i++) {
+	for (var i = 0; i < TOWER_NAME.length; i++) {
 		initItems(tower[i]);
 	}
 

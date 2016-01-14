@@ -268,14 +268,15 @@ var OBJECT_NONE = 0,
 	OBJECT_WOOD_DOOR_OPEN = 16;
 
 //Towers
-var TOWER_NAME = ["MOD0", "SERP", "MOON", "DRAGON", "CHAOS", "ZENDIK"];
+var TOWER_NAME = ["MOD0", "SERP", "MOON", "DRAGON", "CHAOS", "ZENDIK", "chaosex", "dragex", "moonex", "serpex"];
 var TOWER_MOD0 = 0,
 	TOWER_SERPENT = 1,
 	TOWER_MOON = 2,
 	TOWER_DRAGON = 3,
 	TOWER_CHAOS = 4,
 	TOWER_ZENDIK = 5,
-	TOWER_CHAMPIONS = 6; //dummy tower to store champions
+	TOWER_CHAMPIONS = 6,
+	TOWER_chaosex = 7; //dummy tower to store champions
 var towerThis = TOWER_MOD0;
 
 //Background gfx

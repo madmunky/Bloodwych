@@ -1,5 +1,5 @@
 function getFileData(file_name, callback, t, type, length) {
-	console.log("Reading file" + file_name + " Callback: " + callback);
+	console.log("Reading file" + file_name);
 	dataLoaded.count++;
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
