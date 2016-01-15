@@ -1,12 +1,12 @@
 html {
 	width: 100%;
 	height: 100%;
-	zoom: 3;
-	-moz-transform: scale(3);
+	/* zoom: 3;
+	-moz-transform: scale(3); */
 	-moz-transform-origin: 0 0;
 }
 body {
-	font: 12px"Bookman Old Style", verdana, sans-serif;
+	font: 12px, verdana, sans-serif;
 	background-color: #000;
 	color: #fff;
 	overflow: hidden;
@@ -65,7 +65,7 @@ section.info {
 	text-align: right;
 }
 .debug-input input[type=text] {
-	font: 12px"Bookman Old Style", verdana, sans-serif;
+	font: 12px, verdana, sans-serif;
 	float: left;
 	color: #fff;
 	background-color: #000;

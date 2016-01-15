@@ -11,6 +11,12 @@ $(function() {
 			debugWindow.document.body.innerHTML = '';
 			debugWindow.document.body.style.background = '#000000';
 			debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
+			if (MapEnabled){
+				debugWindow.document.write('<img id="stoneWall" src="images/map/StoneWall.png" class="gfx">');
+				debugWindow.document.write('<img id="Floor" src="images/map/Floor.png" class="gfx">');
+				debugWindow.document.write('<div class="canvas-wrapper"><canvas id="mapCanvas" width="960" height="600" tabindex="1" style="margin: 20px;"></canvas></div>');
+				debugWindow.document.write('<script src="debugCanvas.js" type="text/javascript"></script>');				
+			}
 		}
 	}
 	canvas.style.cursor = "url('images/misc/cursor0.png'),auto";
@@ -48,6 +54,7 @@ function updatePlayerViewScreen() {
 	}
 	//configCanvas();
 	debugText(player[0], "FPS: " + fps.getFPS());
+	debugText(player[0], "CURRENT TOWER: " + TOWER_NAME[towerThis]);	
 	//if (!paused) {
 	var dr = false;
 	for (p in player) {
@@ -325,7 +332,7 @@ function debugText(p, txt) {
 function godMode() {
 	for (c in champion) {
 		var ch = champion[c];
-		ch.levelUp = 13;
+		ch.levelUp = 99;
 		while (ch.levelUp > 0) {
 			ch.gainLevel();
 		}
@@ -470,3 +477,4 @@ $(function() {
 		canvas.focus();
 	});
 });
+
