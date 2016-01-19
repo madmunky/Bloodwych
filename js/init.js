@@ -128,6 +128,8 @@ function loadGfxData() {
 	gfxLoadImage("map", "Shelf");
 	gfxLoadImage("map", "WoodenWall");
 	gfxLoadImage("map", "Stairs");
+	gfxLoadImage("map", "Monster");
+	gfxLoadImage("map", "Champion");
 	
 }
 
@@ -168,8 +170,8 @@ function initData() {
 	font = grabFont();
 	uiClickArea = uiClickAreas();
 	audioFiles = loadSounds();
-        initMonsterPalettes();
-        initArmourGfx();
+    initMonsterPalettes();
+    initArmourGfx();
 	initMonsters();
 
 	initSpells();
@@ -182,7 +184,7 @@ function initData() {
 
 }
 
-function startGame(singlePlayer, quickStart, p1_cid, p2_cid, god) {
+function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
 
 	if (typeof god === "undefined") {
 		god = false;

@@ -654,7 +654,14 @@ function initMonsters() {
 				}
 				monster[tw.id][i] = new Monster(max, level, type, form, tw.id, floor, x, y, 0, square, true, teamId);
 				max++;
-				PrintLog('Loaded monster: ' + monster[tw.id][i]);
+				if (debug){
+					if(t == 6){
+						if (floor == 4){
+							PrintLog('Loaded monster: ');
+						}						
+					}
+					PrintLog('Loaded monster: ' + monster[tw.id][i]);
+				}				
 			}
 		}
 	}

@@ -78,6 +78,10 @@ function doKeyDown(e) {
 			}
 			if (debug) {
 				switch (e.keyCode) {
+				
+					case KEY_1: // Number 1
+						startExtendedLevel();
+						break;
 					case KEY_L: // THE L KEY
 						switchTower((towerThis + 1) % TOWER_NAME.length);
 						break;

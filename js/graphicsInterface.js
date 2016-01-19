@@ -403,7 +403,7 @@ function leftUI(p) {
 			if (c === 0) {
 				if (p.uiLeftPanel.champs[c].opened) {
 					ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
-					var t = drawCharacter(monster[6][cid], 0, 0, p, {
+					var t = drawCharacter(monster[TOWER_CHAMPIONS][cid], 0, 0, p, {
 						x: 0,
 						y: -1
 					}, true, false);
@@ -428,7 +428,7 @@ function leftUI(p) {
 					ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
 				} else if (p.uiLeftPanel.champs[c].opened) {
 					ctx.drawImage(gfxUI[UI_GFX_SHIELD], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD].width * scale, gfxUI[UI_GFX_SHIELD].height * scale);
-					t = drawCharacter(monster[6][cid], 0, 1, p, {
+					t = drawCharacter(monster[TOWER_CHAMPIONS][cid], 0, 1, p, {
 						x: 0,
 						y: 0
 					}, true, false);
