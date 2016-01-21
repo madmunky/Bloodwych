@@ -329,6 +329,11 @@ function debugText(p, txt) {
     }
 }
 
+function setPlayerRedrawFlag(){
+
+
+}
+
 function godMode() {
     for (c in champion) {
         var ch = champion[c];

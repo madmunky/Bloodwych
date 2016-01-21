@@ -12,8 +12,8 @@ if(isMobile) {
 
 //Declare Arrays for the Graphics
 var gfx = [];
-var player = new Array();
-var tower = new Array();
+window.player = new Array();
+window.tower = new Array();
 var cursorType = 0;
 var champSelectGrid = [];
 var gameStateSelectGrid = [];
@@ -277,10 +277,10 @@ var TOWER_MOD0 = 0,
     TOWER_DRAGON = 3,
     TOWER_CHAOS = 4,
     TOWER_ZENDIK = 5,
-	TOWER_EXT_SERPENT = 6,
-	TOWER_EXT_CHAOS = 7,
-	TOWER_EXT_MOON = 8,
-	TOWER_EXT_DRAGON = 9,
+    TOWER_EXT_SERPENT = 6,
+    TOWER_EXT_CHAOS = 7,
+    TOWER_EXT_MOON = 8,
+    TOWER_EXT_DRAGON = 9,
     TOWER_CHAMPIONS = 10 //dummy tower to store champions
 var towerThis = TOWER_MOD0;
 
@@ -552,7 +552,7 @@ CHA_BODY[13] = {
 
 var monsterTeamIdMax = 0;
 //var monsterAttackSequence = 0;
-var monster = new Array();
+window.monster = new Array();
 var monsterRef = new Array();
 var armourRef = new Array();
 
@@ -1501,7 +1501,7 @@ var DUNGEON_ITEM_POTION = 0,
     DUNGEON_ITEM_APPLE_HALF = 26;
 
 //items
-var item = new Array();
+window.item = new Array();
 var itemGfxD = new Array();
 var itemRef = new Array(109);
 
