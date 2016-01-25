@@ -1,24 +1,37 @@
 //Init the game
 
-
-
-$(function() {
-    initGame();
+function createDebugWindow(){
 
     if (debug) {
-        debugWindow = window.open("", "Bloodwych Debug", "status=no, width=400, height=200");
+        debugWindow = window.open("", "Bloodwych Debug", "status=no, width=800, height=600");
         if (typeof debugWindow !== "undefined" && debugWindow !== null) {
             debugWindow.document.body.innerHTML = '';
             debugWindow.document.body.style.background = '#000000';
             debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
             if (MapEnabled){
-                debugWindow.document.write('<img id="stoneWall" src="images/map/StoneWall.png" class="gfx">');
-                debugWindow.document.write('<img id="Floor" src="images/map/Floor.png" class="gfx">');
-                debugWindow.document.write('<div class="canvas-wrapper"><canvas id="mapCanvas" width="960" height="600" tabindex="1" style="margin: 20px;border: 2px solid white;"></canvas></div>');
-                debugWindow.document.write('<script src="js/debugCanvas.js" type="text/javascript"></script>');
+                debugWindow.document.write('<div>');
+                debugWindow.document.write('	<div class="canvas-wrapper" style="float: left;">');
+                debugWindow.document.write('		<canvas id="mapCanvas" width="460" height="460" tabindex="1" style="margin: 20px; border: 2px solid white;"></canvas>');
+                debugWindow.document.write('	</div>');
+                debugWindow.document.write('	<div style="border: 1px solid white;width: 400px;margin-left: 20px;margin-bottom: 10px;display: inline-block;margin-top: 20px;">');
+                debugWindow.document.write('		<canvas id="previewCanvas" width="150" height="100" tabindex="1" style="margin: 20px;padding-left: 90px;margin-bottom: 0px;"></canvas>');
+                debugWindow.document.write('		<div id="BlockData" style="margin: 20px;font-family: monospace;">X:2 Y:13 Block: 0001 Binary: 0000000000000001</div>');
+                debugWindow.document.write('	</div>');
+                debugWindow.document.write('</div>');
+                debugWindow.document.write('<script src="lib/jquery-2.1.1.min.js" type="text/javascript"></script>');
+                debugWindow.document.write('<script src="js/3rdparty/easeljs-0.8.2.min.js" type="text/javascript"></script>');
+                debugWindow.document.write('<script src="js/3rdparty/preloadjs-0.6.2.min.js" type="text/javascript"></script>');
+                debugWindow.document.write('<script src="js/mapViewer.js" type="text/javascript"></script>');
+                debugWindow.document.write('<script>init();</script>');
             }
         }
     }
+
+}
+
+$(function() {
+    initGame();
+
     canvas.style.cursor = "url('images/misc/cursor0.png'),auto";
 
     document.addEventListener("deviceready", onDeviceReady, false);
@@ -140,6 +153,13 @@ function clearCanvas() {
 
 function pauseGame(ps, colourTo) {
     //colourTo = RGB HEX CODE i.e. #400000
+    if (ps){
+        pauseSound(SOUND_PCMUSIC);
+    }else{
+        resumeSound(SOUND_PCMUSIC);
+    }
+
+
     if (ps) {
         if(!paused) {
             saveGame(99, 'autosave');
@@ -205,7 +225,7 @@ function gfxColourSubs(folder, type, item, sub) {
 //sub: define this to the number of color variations you wish to add for this type of object. Currently maximum of 8
 
 function gfxLoadImage(folder, type, item, sub) {
-    console.log("LoadImage: " + folder + " " + type + " " + item + " " + sub);
+    //console.log("LoadImage: " + folder + " " + type + " " + item + " " + sub);
     if (typeof type === 'string') {
         gfxLoaded.count++;
         var id = '';
@@ -225,7 +245,7 @@ function gfxLoadImage(folder, type, item, sub) {
         }
 
         $('body').append('<img id="' + id + '" src="images/' + folder + '/' + id + '.png" class="gfx" />');
-        console.log('<img id="' + id + '" src="images/' + folder + '/' + id + '.png" class="gfx" />');
+        //console.log('<img id="' + id + '" src="images/' + folder + '/' + id + '.png" class="gfx" />');
         if (typeof sub === 'number' && sub != null) {
             if (item != '') {
                 gfx[folder][type][item][0] = document.getElementById(id);

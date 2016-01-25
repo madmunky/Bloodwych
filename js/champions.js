@@ -304,11 +304,11 @@ Champion.prototype.gainLevel = function() {
             if (this.stat.cha > 99) {
                 this.stat.cha = 99;
             }
-            if (this.stat.hpMax > 255) {
-                this.stat.hpMax = 255;
+            if (this.stat.hpMax > 999) {
+                this.stat.hpMax = 999;
             }
-            if (this.stat.vitMax > 255) {
-                this.stat.vitMax = 255;
+            if (this.stat.vitMax > 999) {
+                this.stat.vitMax = 999;
             }
             if (this.stat.spMax > 99) {
                 this.stat.spMax = 99;

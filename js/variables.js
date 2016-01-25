@@ -25,6 +25,7 @@ var checkStarted = true;
 var resumeLoadGame = false;
 
 //Setup some global variables for needed
+var ExtLvl = false;
 var VERSION = 0.50;
 var versionThis = 0.50;
 var Types = {};
@@ -46,6 +47,7 @@ var towerSwitchesData = new Array();
 var gemSwitchesData = new Array();
 var crystalSwitchesData = new Array();
 var armourData = new Array();
+var monsterItemData = [];
 var loadingInterval = 0;
 var gfxUI = [];
 var font;
@@ -60,7 +62,8 @@ var SOUND_DOOR = 0,
     SOUND_FLASH = 2,
     SOUND_DEATH = 3,
     SOUND_EXPLODE = 4,
-    SOUND_SWITCH = 5;
+    SOUND_SWITCH = 5,
+    SOUND_PCMUSIC = 6;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 //When a file is called, we increase 'count'
@@ -414,7 +417,8 @@ var MON_TYPE_NORMAL = 0,
     MON_TYPE_CASTER = 1,
     MON_TYPE_DRONE = 2,
     MON_TYPE_DRONE_CASTER = 3,
-    MON_TYPE_LAUNCHER = 4;
+    MON_TYPE_LAUNCHER = 4,
+    MON_TYPE_DROPPER = 8;
 
 var MON_FORM_VENDOR_1 = 21,
     MON_FORM_VENDOR_2 = 22,
@@ -427,6 +431,7 @@ var MON_FORM_VENDOR_1 = 21,
     MON_FORM_DRAGON = 105,
     MON_FORM_DRAGON_SMALL = 106,
     MON_FORM_BEHEMOTH = 107;
+
 
 var PALETTE_SERPENT = new Array(COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_WHITE]),
     PALETTE_MOON = new Array(COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE]),
@@ -1233,7 +1238,17 @@ TEXT_SPELL_DESCRIPTION = [
     "NOW YOU SEE ME...NOW YOU DON'T",
     "REAL ENOUGH TO HURT!",
     "FOR THOSE WHO THINK THEY LOVE WALLS",
-    "JUST BLOW THEM AWAY"
+    "JUST BLOW THEM AWAY",
+
+    //Extended Level SPELLS
+    "A GUARANTEED ALL-IN-ONE INSURANCE",
+    "TELEPORT YOUR WAY INTO TROUBLE",
+    "THE INSTANT SUPER-HERO",
+    "A BALL OF FRIENDLY FIERY FUN",
+    "DISPELL AT A DISTANCE",
+    "A SECOND CHANCE FOR THE WEALTHY",
+    "UNLEASH THE FULL FURY OF CHAOS",
+    "A MAELSTROM OF TOTAL DISASTER"
 ];
 var scrollData = null;
 
