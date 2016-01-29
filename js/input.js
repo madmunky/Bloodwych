@@ -61,19 +61,18 @@ function doKeyDown(e) {
                     player[0].uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
                     showGameStateMenu(player[0]);
                     break;
+                case KEY_9:
+                    if(soundEnabled) {
+                        pauseSound(SOUND_PCMUSIC);
+                        soundEnabled = false;
+                    } else {
+                        soundEnabled = true;
+                        resumeSound(SOUND_PCMUSIC);
+                    }
+                    break;
                 case KEY_0:
                     pauseGame(true);
                     break;
-                    /*case KEY_ESC:
-                    if (player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || player[0].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-                        player[0].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
-                        player[0].message();
-                    }
-                    if (player[1].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU || player[1].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE || player[1].uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-                        player[1].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
-                        player[1].message();
-                    }
-                    break;*/
                 default:
                     break;
             }
@@ -151,12 +150,12 @@ function doKeyDown(e) {
                         testDistance = (testDistance + 3) % 3;
                         PrintLog("Distance: " + testDistance);
                         break;
-                    case KEY_0:
+                    /*case KEY_0:
                         testMon1 = (testMon1 + 1);
                         break;
                     case KEY_9:
                         testMon1 = (testMon1 - 1);
-                        break;
+                        break;*/
                     default:
                         break;
                 }

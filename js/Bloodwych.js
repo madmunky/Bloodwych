@@ -8,7 +8,7 @@ function createDebugWindow(){
             debugWindow.document.body.innerHTML = '';
             debugWindow.document.body.style.background = '#000000';
             debugWindow.document.write('<head><link href="css/style.css" type="text/css" rel="stylesheet"></head><section class="debug player0"><p></p></section><section class="debug player1"><p></p></section>');
-            if (MapEnabled){
+            if (mapEnabled){
                 debugWindow.document.write('<div>');
                 debugWindow.document.write('	<div class="canvas-wrapper" style="float: left;">');
                 debugWindow.document.write('		<canvas id="mapCanvas" width="460" height="460" tabindex="1" style="margin: 20px; border: 2px solid white;"></canvas>');
@@ -404,11 +404,6 @@ function debugText(p, txt) {
     }
 }
 
-function setPlayerRedrawFlag(){
-
-
-}
-
 function godMode() {
     for (c in champion) {
         var ch = champion[c];
@@ -419,8 +414,8 @@ function godMode() {
         ch.stat.hp = ch.stat.hpMax;
         ch.stat.vit = ch.stat.vitMax;
         ch.stat.sp = ch.stat.spMax;
-        for (pg = 0; pg < COLOUR_MAX; pg++) {
-            for (rw = 0; rw < SPELL_MAX; rw++) {
+        for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+            for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
                 ch.spellBook[pg][rw].learnt = true;
             }
         }

@@ -256,11 +256,11 @@ function drawSpellBook(p, ui, dr) {
 		var pg = ch.spellBookPage;
 		if (typeof dr !== "undefined" && typeof ui !== "undefined") {
 			if (x >= 4 && dr && ui <= 3) {
-				pg = (pg + 1) % 4;
+				pg = (pg + 1) % SPELL_PAGE_MAX;
 			} else if (x < 4 && !dr && ui >= 1) {
-				pg = (pg + 3) % 4;
+				pg = (pg + SPELL_PAGE_MAX - 1) % SPELL_PAGE_MAX;
 			} else if (x >= 4 && !dr && ui >= 4) {
-				pg = (pg + 3) % 4;
+				pg = (pg + SPELL_PAGE_MAX - 1) % SPELL_PAGE_MAX;
 			}
 		}
 		var sym = ch.spellBook[pg][x].ref.symbols;
@@ -370,9 +370,9 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop, full) {
 						var ch = p.getChampion(p.championLeader);
 						p.timerSpellBookTurn = 0;
 						if (dr) {
-							ch.spellBookPage = (ch.spellBookPage + 1) % 4;
+							ch.spellBookPage = (ch.spellBookPage + 1) % SPELL_PAGE_MAX;
 						} else {
-							ch.spellBookPage = (ch.spellBookPage + 3) % 4;
+							ch.spellBookPage = (ch.spellBookPage + SPELL_PAGE_MAX - 1) % SPELL_PAGE_MAX;
 						}
 						if (championSelect[0].champID > -1) {
 							drawSpellBook(p);
@@ -529,6 +529,11 @@ function getClassColour(c, palette) {
 			grn = COLOUR[COLOUR_BLUE_DARK][1];
 			blu = COLOUR[COLOUR_BLUE_DARK][2];
 			break;
+		case CLASS_COLOUR_ANCIENT:
+			red = COLOUR[COLOUR_PINK][0];
+			grn = COLOUR[COLOUR_PINK][1];
+			blu = COLOUR[COLOUR_PINK][2];
+			break;
 		default:
 			break;
 	}
@@ -608,6 +613,9 @@ function drawActiveSpell(p) {
 				break;
 			case SPELL_TRUEVIEW:
 				spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;
+				break;
+			case SPELL_PROTECT:
+				spellImage = UI_GFX_ICON_SPELL_13;
 				break;
 		}
 		ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
@@ -1146,7 +1154,7 @@ function showFairySpellDetailsScreen(spell, p, c) {
 
 	p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass + 1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].height * scale);
 
-	switch (spellClass) {
+	/*switch (spellClass) {
 
 		case 0:
 			{
@@ -1167,11 +1175,15 @@ function showFairySpellDetailsScreen(spell, p, c) {
 			{
 				spellColour = COLOUR[COLOUR_BLUE];
 			};
+		case 4:
+			{
+				spellColour = COLOUR[COLOUR_PINK];
+			};
 			break
 
-	}
+	}*/
 
-	writeFontImage(spell.name, 43, 12, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
+	writeFontImage(spell.name, 43, 12, CLASS_COLOUR[spellClass], FONT_ALIGNMENT_LEFT, p.Portal);
 	writeFontImage("LEVEL " + spell.level, 43, 23, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
 	writeFontImage(spell.cost + " GOLD", 43, 31, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
 	p.message(spell.description, COLOUR[COLOUR_GREEN], false, 0);
@@ -1197,12 +1209,12 @@ function colourSpellPage(dr, ch, img) {
 	var page = null;
 
 	if (dr) {
-		var page = (ch.spellBookPage + 1) % 4;
+		var page = (ch.spellBookPage + 1) % SPELL_PAGE_MAX;
 	} else {
 		var page = ch.spellBookPage;
 	}
 
-	for (x = 0; x < 4; x++) {
+	for (x = 0; x < SPELL_PAGE_MAX; x++) {
 		if (ch.spellBook[page][x].learnt) {
 			if (ch.spellBook[page][x] === getSpellById(ch.selectedSpell)) {
 				pal.push(COLOUR[COLOUR_WHITE]);

@@ -18,13 +18,13 @@ Spell.prototype.toString = function() {
 }
 
 function initSpells() {
-	for (cl = 0; cl < COLOUR_MAX; cl++) {
+	for (cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
 		spell[cl] = new Array();
-		for (id = 0; id < SPELL_MAX; id++) {
-			var l = [0, 1, 1, 2, 2, 3];
-			var name = TEXT_SPELL_NAME[id + cl * SPELL_MAX];
-			var description = TEXT_SPELL_DESCRIPTION[id + cl * SPELL_MAX];
-			var symbols = TEXT_SPELL_BOOK[id + cl * SPELL_MAX];
+		for (id = 0; id < SPELL_LEVEL_MAX; id++) {
+			//var l = [0, 1, 1, 2, 2, 3];
+			var name = TEXT_SPELL_NAME[id + cl * SPELL_LEVEL_MAX];
+			var description = TEXT_SPELL_DESCRIPTION[id + cl * SPELL_LEVEL_MAX];
+			var symbols = TEXT_SPELL_BOOK[id + cl * SPELL_LEVEL_MAX];
 			var level = getSpellLevel(cl, id);
 			spell[cl][id] = new Spell(cl, id, name, description, symbols, level);
 			PrintLog('Loaded spell: ' + spell[cl][id]);
@@ -37,7 +37,8 @@ function getSpellLevel(c, i) {
 		[1, 2, 2, 2, 3, 3, 4, 5],
 		[1, 2, 4, 5, 5, 6, 7, 8],
 		[1, 2, 2, 3, 3, 4, 5, 6],
-		[1, 2, 2, 3, 3, 4, 4, 7]
+		[1, 2, 2, 3, 3, 4, 4, 7],
+		[6, 7, 7, 8, 8, 10, 12, 18]
 	];
 	return sl[c][i];
 }
@@ -85,13 +86,15 @@ function getSpellPageAndRow(c, i) {
 		[0, 1, 2, 1, 0, 2, 3, 3],
 		[0, 0, 1, 2, 1, 3, 2, 3],
 		[1, 0, 0, 2, 3, 2, 1, 3],
-		[0, 1, 0, 2, 1, 2, 3, 3]
+		[0, 1, 0, 2, 1, 2, 3, 3],
+		[4, 4, 4, 4, 4, 4, 4, 4]
 	];
 	var sr = [
 		[0, 2, 6, 5, 7, 1, 3, 4],
 		[4, 1, 6, 7, 3, 5, 2, 0],
 		[0, 5, 2, 3, 1, 4, 7, 6],
-		[3, 4, 6, 0, 1, 5, 7, 2]
+		[3, 4, 6, 0, 1, 5, 7, 2],
+		[0, 1, 2, 3, 4, 5, 6, 7]
 	];
 	return {
 		page: sp[c][i],
@@ -112,8 +115,8 @@ function getSpellById(id) {
 
 function getSpellBookPage(p) {
 	var sb = new Array();
-	for (cl = 0; cl < COLOUR_MAX; cl++) {
-		for (id = 0; id < SPELL_MAX; id++) {
+	for (cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
+		for (id = 0; id < SPELL_LEVEL_MAX; id++) {
 			var sp = spell[cl][id];
 			if (sp.page === p) {
 				sb.push(sp);
@@ -198,7 +201,7 @@ function getSpellPower(id) {
 		case SPELL_WYCHWIND:
 			return 2;
 		default:
-			return 0;
+			return 1;
 	}
 }
 
@@ -358,6 +361,7 @@ function castSpell(s, src, pw) {
 		case SPELL_BLAZE:
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_BLAZE_BIG, SOUND_EXPLODE, s, pow, f, x, y, d, src);
 			break;
+
 			//moon
 		case SPELL_BEGUILE:
 			break;
@@ -401,6 +405,36 @@ function castSpell(s, src, pw) {
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x, y, (d + 1) % 4, src);
 			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_MOON_BIG, SOUND_EXPLODE, s, pow, f, x, y, (d + 3) % 4, src);
 			break;
+
+			//ancient
+		case SPELL_PROTECT:
+			ch.activateSpell(s, pow);
+			break; 
+		case SPELL_PHASE:
+			var pl = player[ch.recruitment.playerId];
+			var ob = canMove(f, x, y, d, DIRECTION_NORTH);
+			var ob2 = canMove(f, x1, y1, d, DIRECTION_NORTH);
+			var x2 = x;
+			var y2 = y;
+			if(ob <= OBJECT_PROJECTILE && ob2 <= OBJECT_PIT) {
+				x2 = x2 + xy.x * 2;
+				y2 = y2 + xy.y * 2;
+				pl.setPlayerPosition(f, x2, y2);
+			}
+			newProjectile(DUNGEON_NONE, PALETTE_TELEPORT_FLASH, SOUND_FLASH, -1, 0, f, x2, y2, d, null);
+			break; 
+		case SPELL_ENHANCE:
+			break; 
+		case SPELL_INFERNO:
+			break; 
+		case SPELL_NULLIFY:
+			break; 
+		case SPELL_SPRAY:
+			break; 
+		case SPELL_VORTEX:
+			break; 
+		case SPELL_RESTORE:
+			break; 
 		default:
 			break;
 	}

@@ -16,10 +16,10 @@ function loadManifest() {
 
     switch(gameType){
 
-        case GAME_BLOODWYCH:path = "/data/BW/data.json";break;
-        case GAME_EXTENDED_LEVELS:path = "/data/EXT/data.json";break;
-        case GAME_BOOK_OF_SKULLS:path = "/data/BOS/data.json";break;
-        case GAME_CUSTOM:path = "/data/CUSTOM/data.json";break;
+        case GAME_BLOODWYCH:path = "data/BW/data.json";break;
+        case GAME_EXTENDED_LEVELS:path = "data/EXT/data.json";break;
+        case GAME_BOOK_OF_SKULLS:path = "data/BOS/data.json";break;
+        case GAME_CUSTOM:path = "data/CUSTOM/data.json";break;
 
     }
 
@@ -66,7 +66,7 @@ function handleComplete(event){
 }
 
 function loadBinaryData(event){
-    preload.loadManifest(event.manifest,true,"/data/");
+    preload.loadManifest(event.manifest,true,"data/");
 }
 
 function updateLoadingScreen(msg, percent) {
@@ -83,7 +83,7 @@ function loadGfxUIData() {
 function loadTowerData(event) {
     tower = event.towers;
 	initTowers();    
-    preload.loadManifest(event.manifest,true,"/data/");
+    preload.loadManifest(event.manifest,true,"data/");
 }
 
 function initMenuData(){
@@ -178,12 +178,12 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
 
 	}
 
-    if (debug && MapEnabled){
+    if (debug && mapEnabled){
         setTimeout(function() {
             window.setInterval(createDebugWindow(), 1000);
         }, 1500);
     }
 
-    //setTimeout(function() {playSoundLoop(SOUND_PCMUSIC);}, 500);
+    setTimeout(function() {playSoundLoop(SOUND_PCMUSIC);}, 500);
 
 }

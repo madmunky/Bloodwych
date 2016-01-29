@@ -1,7 +1,7 @@
 //General
 var god = true;
 var debug = true;
-var MapEnabled = true;
+var mapEnabled = true;
 var iosDebug = false;
 var showFPS = false;
 var game;
@@ -32,7 +32,6 @@ var BOS = false;
 var WTW = false;
 
 //Setup some global variables for needed
-var ExtLvl = false;
 var VERSION = 0.50;
 var versionThis = 0.50;
 var Types = {};
@@ -73,6 +72,7 @@ var GAME_BLOODWYCH = 0,
 
 
 //sounds
+var soundEnabled = true;
 var SOUND_DOOR = 0,
     SOUND_ATTACK = 1,
     SOUND_FLASH = 2,
@@ -100,11 +100,11 @@ var cursorBlue = 0,
     cursorRed = 1;
 
 //COLOURS AND PALETTES
-var COLOUR_MAX = 4,
-    COLOUR_SERP = 0,
+var COLOUR_SERP = 0,
     COLOUR_DRAG = 1,
     COLOUR_MOON = 2,
-    COLOUR_CHAOS = 3;
+    COLOUR_CHAOS = 3,
+    COLOUR_ANCIENT = 4;
 
 var PROFESSION_MAX = 4,
     PROFESSION_WARRIOR = 0,
@@ -155,13 +155,15 @@ COLOUR_PLAYER[1] = [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_
 var CLASS_COLOUR_SERP = 0,
     CLASS_COLOUR_CHAOS = 1,
     CLASS_COLOUR_DRAG = 2,
-    CLASS_COLOUR_MOON = 3;
+    CLASS_COLOUR_MOON = 3,
+    CLASS_COLOUR_ANCIENT = 4;
 
 var CLASS_COLOUR = new Array();
 CLASS_COLOUR[CLASS_COLOUR_SERP] = COLOUR[COLOUR_GREEN],
 CLASS_COLOUR[CLASS_COLOUR_CHAOS] = COLOUR[COLOUR_YELLOW],
 CLASS_COLOUR[CLASS_COLOUR_DRAG] = COLOUR[COLOUR_RED],
-CLASS_COLOUR[CLASS_COLOUR_MOON] = COLOUR[COLOUR_BLUE];
+CLASS_COLOUR[CLASS_COLOUR_MOON] = COLOUR[COLOUR_BLUE],
+CLASS_COLOUR[CLASS_COLOUR_ANCIENT] = COLOUR[COLOUR_PINK];
 
 var COLOUR_DOOR_NORMAL = 0,
     COLOUR_DOOR_BRONZE = 1,
@@ -1190,6 +1192,7 @@ TEXT_SPELL_NAME = [
     "RENEW",
     "ARC BOLT",
     "FORMWALL",
+
     "DEFLECT",
     "TERROR",
     "ANTIMAGE",
@@ -1198,6 +1201,7 @@ TEXT_SPELL_NAME = [
     "SUMMON",
     "VIVIFY",
     "DISRUPT",
+
     "MISSILE",
     "MAGELOCK",
     "VITALISE",
@@ -1206,6 +1210,7 @@ TEXT_SPELL_NAME = [
     "FIREPATH",
     "RECHARGE",
     "BLAZE",
+
     "BEGUILE",
     "CONFUSE",
     "CONCEAL",
@@ -1213,7 +1218,16 @@ TEXT_SPELL_NAME = [
     "VANISH",
     "ILLUSION",
     "MINDROCK",
-    "WYCHWIND"
+    "WYCHWIND",
+
+    "PROTECT",
+    "PHASE",
+    "ENHANCE",
+    "INFERNO",
+    "NULLIFY",
+    "SPRAY",
+    "VORTEX",
+    "RESTORE"
 ],
 TEXT_SPELL_BOOK = [
     "MARY",
@@ -1250,7 +1264,16 @@ TEXT_SPELL_BOOK = [
     "EWAN",
     "PETH",
     "ESQX",
-    "IDFI"
+    "IDFI",
+
+    "WISH",
+    "BONE",
+    "RULE",
+    "THEW",
+    "ORLD",
+    "ANDT",
+    "HATS",
+    "TRUE"
 ],
 TEXT_SPELL_DESCRIPTION = [
     "WEAR THIS SPELL WITH PRIDE",
@@ -1261,6 +1284,7 @@ TEXT_SPELL_DESCRIPTION = [
     "CURES EVERYTHING EXCEPT CRAMP",
     "AN ELECTRIFYING EXPERIENCE",
     "FOR THOSE WHO LOVE WALLS",
+
     "A SPELL A DAY KEEPS AN ARROW AWAY",
     "BOO!",
     "NEVERMORE WORRY ABOUT SPELLCASTERS",
@@ -1269,6 +1293,7 @@ TEXT_SPELL_DESCRIPTION = [
     "YOU'LL NEVER WALK ALONE",
     "MAKES DEATH BUT A MINOR INCONVENIENCE",
     "KNOWN TO SOME AS DEATHSTRIKE",
+
     "ONE IN THE EYE FOR ARCHERS",
     "WHY BOTHER WITH ALL THOSE SILLY KEYS?",
     "YOU'LL NEVER FEEL SO GOOD",
@@ -1277,6 +1302,7 @@ TEXT_SPELL_DESCRIPTION = [
     "LAY DOWN THE RED CARPET",
     "BOOSTS THE FLATTEST OF RINGS!",
     "NONE SHALL PASS THIS FIERY BLAST",
+
     "COAT THY TONGUE WITH SILVER!",
     "THEY WON'T KNOW WHAT HIT THEM",
     "WHAT CANNOT BE SEEN CANNOT BE STOLEN",
@@ -1292,9 +1318,9 @@ TEXT_SPELL_DESCRIPTION = [
     "THE INSTANT SUPER-HERO",
     "A BALL OF FRIENDLY FIERY FUN",
     "DISPELL AT A DISTANCE",
-    "A SECOND CHANCE FOR THE WEALTHY",
     "UNLEASH THE FULL FURY OF CHAOS",
-    "A MAELSTROM OF TOTAL DISASTER"
+    "A MAELSTROM OF TOTAL DISASTER",
+    "A SECOND CHANCE FOR THE WEALTHY"
 ];
 var scrollData = null;
 
@@ -1727,7 +1753,9 @@ var spell = new Array();
 var dungeonSpellTimer = 0;
 var dungeonSpellList = new Array();
 //var activeSpellTimer = 0;
-var SPELL_MAX = 8;
+var SPELL_LEVEL_MAX = 8,
+    SPELL_COLOUR_MAX = 5,
+    SPELL_PAGE_MAX = 5;
 
 //Serpent spells
 var SPELL_ARMOUR = 0,
@@ -1767,10 +1795,20 @@ var SPELL_ARMOUR = 0,
     SPELL_VANISH = 28,
     SPELL_ILLUSION = 29,
     SPELL_MINDROCK = 30,
-    SPELL_WYCHWIND = 31;
+    SPELL_WYCHWIND = 31,
+
+    //Ancient spells
+    SPELL_PROTECT = 32,
+    SPELL_PHASE = 33,
+    SPELL_ENHANCE = 34,
+    SPELL_INFERNO = 35,
+    SPELL_NULLIFY = 36,
+    SPELL_SPRAY = 37,
+    SPELL_VORTEX = 38,
+    SPELL_RESTORE = 39;
 
 //Exceptional spells
-SPELL_BLAZE_BALL = 32;
+SPELL_BLAZE_BALL = 40;
 
 //projectiles
 var projectile = new Array();

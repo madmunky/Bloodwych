@@ -38,8 +38,8 @@ function loadGame(g) {
 		}
 		for (c in champion) {
 			champion[c] = castObject(champion[c], 'Champion');
-			for (pg = 0; pg < COLOUR_MAX; pg++) {
-				for (rw = 0; rw < SPELL_MAX; rw++) {
+			for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+				for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
 					champion[c].spellBook[pg][rw]["ref"] = getSpellById(champion[c].spellBook[pg][rw].id);
 				}
 			}

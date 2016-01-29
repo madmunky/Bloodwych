@@ -15,6 +15,7 @@ function Champion(id, firstName, lastName, prof, colour, level, stat, spellBook,
     this.prof = prof;
     this.colour = colour;
     this.spellBookPage = 0;
+    this.ancientSpell = -1;
     this.selectedSpell = null;
     this.activeSpell = {
         id: -1,
@@ -46,6 +47,7 @@ Champion.prototype.toJSON = function() {
         prof: this.prof,
         colour: this.colour,
         spellBookPage: this.spellBookPage,
+        ancientSpell: this.ancientSpell,
         selectedSpell: this.selectedSpell,
         activeSpell: this.activeSpell,
         stat: this.stat,
@@ -63,6 +65,7 @@ Champion.revive = function(data) {
     var c = new Champion(data.id, data.firstName, data.lastName, data.prof, data.colour, data.level, data.stat, data.spellBook, data.pocket);
     c.recruitment = data.recruitment;
     c.spellBookPage = data.spellBookPage;
+    c.ancientSpell = data.ancientSpell;
     c.selectedSpell = data.selectedSpell;
     c.activeSpell = data.activeSpell;
     c.food = data.food;
@@ -365,8 +368,8 @@ Champion.prototype.addSpellToSpellBook = function(sp) {
 
 Champion.prototype.getUnlearntSpellsByColour = function(cl) {
     var sb = new Array();
-    for (pg = 0; pg < COLOUR_MAX; pg++) {
-        for (rw = 0; rw < SPELL_MAX; rw++) {
+    for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+        for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
             var sp = this.spellBook[pg][rw];
             if (!sp.learnt && sp.ref.colour === cl) {
                 sb.push(sp.ref);
@@ -380,8 +383,8 @@ Champion.prototype.getUnlearntSpellsByColour = function(cl) {
 }
 
 Champion.prototype.getSpellInBook = function(sp) {
-    for (pg = 0; pg < COLOUR_MAX; pg++) {
-        for (rw = 0; rw < SPELL_MAX; rw++) {
+    for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+        for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
             var sb = this.spellBook[pg][rw];
             if (getSpellById(sb.id) === sp) {
                 return sb;
@@ -391,8 +394,8 @@ Champion.prototype.getSpellInBook = function(sp) {
 }
 
 Champion.prototype.getSpellInBookById = function(id) {
-    for (pg = 0; pg < COLOUR_MAX; pg++) {
-        for (rw = 0; rw < SPELL_MAX; rw++) {
+    for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+        for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
             var sb = this.spellBook[pg][rw];
             if (sb.id === id) {
                 return sb;
@@ -503,20 +506,20 @@ Champion.prototype.getAttackSpeed = function(fac) {
 
 Champion.prototype.toString = function() {
     sb = "";
-    for (cl = 0; cl < COLOUR_MAX; cl++) {
+    for (cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
         sb = sb + "[";
-        for (i = 0; i < SPELL_MAX; i++) {
+        for (i = 0; i < SPELL_LEVEL_MAX; i++) {
             if (this.spellBook[cl][i].learnt) {
                 sb = sb + "1";
             } else {
                 sb = sb + "0";
             }
-            if (i < SPELL_MAX - 1) {
+            if (i < SPELL_LEVEL_MAX - 1) {
                 sb = sb + ", ";
             }
         }
         sb = sb + "]";
-        if (cl < COLOUR_MAX - 1) {
+        if (cl < SPELL_COLOUR_MAX - 1) {
             sb = sb + ", ";
         }
     }
@@ -570,6 +573,8 @@ Champion.prototype.expireSpell = function() {
         case SPELL_TRUEVIEW:
             break;
         case SPELL_VANISH:
+            break;
+        case SPELL_PROTECT:
             break;
         default:
             break;
@@ -708,17 +713,17 @@ function initChampions() {
         spellBin = spellBin + hex2bin(md.substr(28, 2));
         spellBin = spellBin + hex2bin(md.substr(30, 2));
         var spellBook = {};
-        for (pg = 0; pg < COLOUR_MAX; pg++) {
+        for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
             spellBook[pg] = {};
             var spl = getSpellBookPage(pg);
-            for (rw = 0; rw < SPELL_MAX; rw++) {
+            for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
                 spellBook[pg][rw] = {};
                 spellBook[pg][rw].learnt = false;
                 spellBook[pg][rw].castSuccessful = 0;
                 spellBook[pg][rw].ref = spl[rw];
                 spellBook[pg][rw].id = spl[rw].index;
                 spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
-                if (spellBin !== null && spellBin.substr(rw + pg * SPELL_MAX, 1) == '1') {
+                if (spellBin !== null && spellBin.substr(rw + pg * SPELL_LEVEL_MAX, 1) == '1') {
                     //spellBook[pg][rw].castSuccessful = 4;
                     spellBook[pg][rw].learnt = true;
                 }

@@ -68,12 +68,17 @@ Projectile.prototype.move = function() {
 			if(this.spell !== null) {
 				var sid = this.spell.index;
 				var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND);
-				var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_ANTIMAGE || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE);
+				var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE);
 			}
 			var pl = getPlayerAt(this.floor, this.x, this.y);
 			if(pl !== null) {
-				if(pl.getActiveSpellById(SPELL_DEFLECT).timer > 0 && isMissile) { //Deflect makes missile-shaped spells to reverse direction
-					pl.getActiveSpellById(SPELL_DEFLECT).timer -= this.power;
+				if((pl.getActiveSpellById(SPELL_DEFLECT).timer > 0 || pl.getActiveSpellById(SPELL_PROTECT).timer > 0) && isMissile) { //Deflect makes missile-shaped spells to reverse direction
+					if(pl.getActiveSpellById(SPELL_DEFLECT).timer > 0) {
+						pl.getActiveSpellById(SPELL_DEFLECT).timer -= this.power;
+					}
+					if(pl.getActiveSpellById(SPELL_PROTECT).timer > 0) {
+						pl.getActiveSpellById(SPELL_PROTECT).timer -= this.power;
+					}
 					this.d = (this.d + 2) % 2;
 					var xy = getOffsetByRotation(this.d);
 					this.x += xy.x;
@@ -348,6 +353,13 @@ Projectile.prototype.attack = function(target, prc) {
 					pwr = 0;
 					if(def2.getActiveSpellById(SPELL_ANTIMAGE).timer < 0) {
 						pwr = -def2.getActiveSpellById(SPELL_ANTIMAGE).timer;
+					}
+				}
+				if(def2.getActiveSpellById(SPELL_PROTECT).timer > 0) { //Protect decreases power of the spell
+					def2.getActiveSpellById(SPELL_PROTECT).timer -= pwr;
+					pwr = 0;
+					if(def2.getActiveSpellById(SPELL_PROTECT).timer < 0) {
+						pwr = -def2.getActiveSpellById(SPELL_PROTECT).timer;
 					}
 				}
 			}

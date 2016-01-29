@@ -5,7 +5,6 @@
  */
 
 function loadSounds(){
-
     var s = [];
     var location = "data/BW/sounds/";
     s.push(new Audio(location+"door.wav"));
@@ -15,35 +14,33 @@ function loadSounds(){
     s.push(new Audio(location+"explode.wav"));
     s.push(new Audio(location+"switch.wav"));
     s.push(new Audio(location+"pc_music.mp3"));
-
     return s;
-
 }
 
 function playSound(soundName){
-
-    audioFiles[soundName].src = audioFiles[soundName].src;
-    audioFiles[soundName].play();
-
+    if(soundEnabled) {
+        audioFiles[soundName].src = audioFiles[soundName].src;
+        audioFiles[soundName].play();
+    }
 }
 
 function playSoundLoop(soundName){
-
-    audioFiles[soundName].src = audioFiles[soundName].src;
-    audioFiles[soundName].loop = true;
-    audioFiles[soundName].volume = 0.3
-    audioFiles[soundName].play();
-
+    if(soundEnabled) {
+        audioFiles[soundName].src = audioFiles[soundName].src;
+        audioFiles[soundName].loop = true;
+        audioFiles[soundName].volume = 0.3
+        audioFiles[soundName].play();
+    }
 }
 
 function pauseSound(soundName){
-
-    audioFiles[soundName].pause();
-
+    if(soundEnabled) {
+        audioFiles[soundName].pause();
+    }
 }
 
 function resumeSound(soundName){
-
-    audioFiles[soundName].play();
-
+    if(soundEnabled) {
+        audioFiles[soundName].play();
+    }
 }
