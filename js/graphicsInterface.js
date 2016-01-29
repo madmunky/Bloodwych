@@ -617,6 +617,9 @@ function drawActiveSpell(p) {
 			case SPELL_PROTECT:
 				spellImage = UI_GFX_ICON_SPELL_13;
 				break;
+			case SPELL_ENHANCE:
+				spellImage = UI_GFX_ICON_SPELL_16;
+				break;
 		}
 		ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
 	}

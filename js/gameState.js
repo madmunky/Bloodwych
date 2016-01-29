@@ -61,7 +61,8 @@ function loadGame(g) {
 			}
 		}
 		for (var t = 0; t < 6; t++) {
-			for (var p = 0; p < projectile[t].length; p++) {
+			//for (var p = 0; p < projectile[t].length; p++) {
+			for (p in projectile[t]) {
 				projectile[t][p] = castObject(projectile[t][p], 'Projectile');
 			}
 		}

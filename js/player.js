@@ -293,6 +293,7 @@ Player.prototype.checkWoodenDoor = function(pos18) {
         } else if (this.getBinaryView(pos18, 11, 1) === '1') { //If locked, give lock message
             this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
         }
+        this.redrawViewPort = true;
         return true;
     }
     return false;
@@ -510,7 +511,9 @@ Player.prototype.doEvent = function(mr) {
                     var ds = getDungeonSpell(this.floor, this.x, this.y);
                     if (ds !== null) {
                         var prc = hex2dec(getHexToBinaryPosition(view[18], 0, 6)) / 64.0;
-                        ds.projectile.attack(this, prc);
+                        if(ds.projectile !== null) {
+                            ds.projectile.attack(this, prc);
+                        }
                     }
                 }
             }

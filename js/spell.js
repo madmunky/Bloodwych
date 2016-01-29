@@ -200,6 +200,25 @@ function getSpellPower(id) {
 			return 1;
 		case SPELL_WYCHWIND:
 			return 2;
+
+			//ancient
+		case SPELL_PROTECT:
+			return 1;
+		case SPELL_PHASE:
+			return 1;
+		case SPELL_ENHANCE:
+			return 1;
+		case SPELL_INFERNO:
+			return 2;
+		case SPELL_NULLIFY:
+			return 1;
+		case SPELL_SPRAY:
+			return 4;
+		case SPELL_VORTEX:
+			return 2;
+		case SPELL_RESTORE:
+			return 1;
+
 		default:
 			return 1;
 	}
@@ -344,10 +363,7 @@ function castSpell(s, src, pw) {
 			}
 			if (src.getBinaryView(15, 13, 3) === '7') {
 				src.setBinaryView(15, 0, 16, '0000');
-				var ds = getDungeonSpell(f, x1, y1);
-				if(ds !== null) {
-					delete ds;
-				}
+				deleteDungeonSpell(f, x1, y1);
 			}
 			break;
 		case SPELL_FIREBALL:
@@ -424,12 +440,18 @@ function castSpell(s, src, pw) {
 			newProjectile(DUNGEON_NONE, PALETTE_TELEPORT_FLASH, SOUND_FLASH, -1, 0, f, x2, y2, d, null);
 			break; 
 		case SPELL_ENHANCE:
+			ch.activateSpell(s, pow);
 			break; 
 		case SPELL_INFERNO:
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_BLAZE_BIG, SOUND_EXPLODE, s, pow, f, x, y, d, src);
 			break; 
 		case SPELL_NULLIFY:
-			break; 
+			newProjectile(DUNGEON_PROJECTILE_ARROW, PALETTE_DRAGON_ARROW, SOUND_FLASH, s, pow, f, x, y, d, src);
+			break;
 		case SPELL_SPRAY:
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, SOUND_EXPLODE, s, pow, f, x - xy.y, y - xy.x, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, SOUND_EXPLODE, s, pow, f, x, y, d, src);
+			newProjectile(DUNGEON_PROJECTILE_BIG, PALETTE_DISRUPT_BIG, SOUND_EXPLODE, s, pow, f, x + xy.y, y + xy.x, d, src);
 			break; 
 		case SPELL_VORTEX:
 			break; 
@@ -465,6 +487,16 @@ function getDungeonSpell(f, x, y) {
 	return null;
 }
 
+function deleteDungeonSpell(f, x, y) {
+	for(d in dungeonSpellList) {
+		ds = dungeonSpellList[d];
+		if(ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
+			delete dungeonSpellList[d];
+		}
+	}
+	return null;
+}
+
 function updateDungeonSpells() {
 	for (s in dungeonSpellList) {
 		var ds = dungeonSpellList[s];
@@ -486,7 +518,7 @@ function updateDungeonSpells() {
 				tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x] = setHexToBinaryPosition(hex, 0, 6, dec2hex(tm));
 			} else {
 				tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x] = setHexToBinaryPosition(hex, 0, 16, '0000');
-				delete ds;
+				delete dungeonSpellList[s];
 			}
 		}
 	}

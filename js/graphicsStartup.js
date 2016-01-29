@@ -76,7 +76,7 @@ function progressScreen(strDetails){
     clearCanvas();
 
     writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
-	writeFontImage(+strDetails+"...", 120, 80, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	writeFontImage(strDetails+"...", 120, 80, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
 
     writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
     writeFontImage("RECREATED BY MAD BONE PRODUCTIONS 2014", 10, 190, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);

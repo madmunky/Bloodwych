@@ -64,6 +64,7 @@ function calculateAttack(att, def, tof) {
 				}
 				attack = attack * (1.0 + from.stat.str / 2.0 + from.stat.agi / 4.0); //add strength and agility to attack points
 				attack += Math.floor(from.getActiveSpellById(SPELL_WARPOWER).power / 10.0);
+				attack += Math.floor(from.getActiveSpellById(SPELL_ENHANCE).power / 3.0);
 				attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
 				//hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
 			}

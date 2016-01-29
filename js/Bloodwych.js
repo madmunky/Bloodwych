@@ -154,24 +154,7 @@ function clearCanvas() {
 
 function pauseGame(ps, colourTo) {
     //colourTo = RGB HEX CODE i.e. #400000
-    if (ps){
-        pauseSound(SOUND_PCMUSIC);
-    }else{
-        resumeSound(SOUND_PCMUSIC);
-    }
-
-
-    if (ps) {
-        if(!paused) {
-            saveGame(99, 'autosave');
-        }
-    } else {
-        pausedByBrowser = false;
-        for (p in player) {
-            player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
-            player[p].message();
-        }
-    }
+    paused = ps;
     if (typeof colourTo === 'undefined') {
         if (ps) {
             var colourTo = '#400000';
@@ -179,10 +162,22 @@ function pauseGame(ps, colourTo) {
             var colourTo = '#000000';
         }
     }
-    paused = ps;
     $('html').css('background', colourTo);
     $('body').css('background', colourTo);
     canvas.style.background = colourTo;
+
+    if (ps) {
+        pauseSound(SOUND_PCMUSIC);
+        saveGame(99, 'autosave');
+    } else {
+        resumeSound(SOUND_PCMUSIC);
+        pausedByBrowser = false;
+        for (p in player) {
+            player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
+            player[p].message();
+            player[p].redrawViewPort = true;
+        }
+    }
 
     redrawUI(2);
 }

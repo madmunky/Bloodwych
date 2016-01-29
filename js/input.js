@@ -188,8 +188,8 @@ function doKeyDown(e) {
                 break;
             case KEY_5:
                 if (getGameName(99) !== '') {
-                    startGame(true, true);
                     resumeLoadGame = true;
+                    startGame(true, true);
                 }
                 break;
             case KEY_6:
@@ -593,8 +593,8 @@ function processCanvasInputMenu(x, y) {
         } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) {
             startGame(false, true);
         } else if (uiClickInArea(x, y, UI_CLICK_START_RESUME_GAME) && getGameName(99) !== '') {
-            startGame(true, true);
             resumeLoadGame = true;
+            startGame(true, true);
         }
     }
 }

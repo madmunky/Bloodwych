@@ -67,8 +67,8 @@ Projectile.prototype.move = function() {
 			var sid = null;
 			if(this.spell !== null) {
 				var sid = this.spell.index;
-				var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND);
-				var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE);
+				var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND || sid === SPELL_INFERNO || sid === SPELL_SPRAY);
+				var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE || sid === SPELL_NULLIFY || sid === SPELL_FIREPATH);
 			}
 			var pl = getPlayerAt(this.floor, this.x, this.y);
 			if(pl !== null) {
@@ -155,6 +155,7 @@ Projectile.prototype.die = function(snd) {
 	if(fromP || (snd && this.sound !== null)) {
 		playSound(this.sound);
 	}
+	for (p in player) { player[p].redrawViewPort = true;}
 }
 
 Projectile.prototype.action = function(tar) {
@@ -309,13 +310,68 @@ Projectile.prototype.event = function() {
 						return true;
 					}
 				} else {
-					var xy = getOffsetByRotation(this.d);
+					//var xy = getOffsetByRotation(this.d);
 					if (canMoveByFirepath(this.floor, this.x, this.y) && !canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
 						this.d = (this.d + 2) % 4;
 						if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
 							return true;
 						}
 					}
+				}
+				break;
+			case SPELL_INFERNO:
+				if(this.palette === PALETTE_BLAZE_BIG) {
+					if(!canMoveByFirepath(this.floor, this.x, this.y)) {
+						if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
+							setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
+							setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
+							setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
+							setDungeonSpell(this.floor, this.x, this.y, this);
+						}
+						if (obNext > OBJECT_MISC && !msc) {
+							var dNew = Math.floor(Math.random() * 2) * 2 + 1;
+							obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
+							if (obNext > OBJECT_MISC) {
+								dNew = 4 - dNew;
+								obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
+								if (obNext > OBJECT_MISC) {
+									dNew = 2;
+									obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
+									if (obNext > OBJECT_MISC) {
+										return true;
+									}
+								}
+							}
+							this.d = (this.d + dNew) % 4;
+						}
+					} else {
+						this.palette = PALETTE_DRAGON_BIG;
+						return true;
+					}
+				} else {
+					if (canMoveByFirepath(this.floor, this.x, this.y) && !canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
+						var dLast = (this.d + 2) % 4;
+						var dNew = Math.floor(Math.random() * 2) * 2 + 1;
+						this.d = (this.d + dNew) % 4;
+						if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
+							this.d = (this.d + 2) % 4;
+							if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
+								this.d = dLast;
+								if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
+									return true;
+								}
+							}
+						}
+					}
+				}
+				break;
+			case SPELL_NULLIFY:
+				if(this.setBinaryView(18, 12, 1) === '1') {
+					this.setBinaryView(18, 12, 1, '0');
+				}
+				if (this.getBinaryView(18, 13, 3) === '7') {
+					this.setBinaryView(18, 0, 16, '0000');
+					deleteDungeonSpell(this.floor, this.x, this.y);
 				}
 				break;
 			default:
@@ -363,7 +419,7 @@ Projectile.prototype.attack = function(target, prc) {
 					}
 				}
 			}
-			if (typeof this.spell !== 'number' && this.spell.index === SPELL_DISRUPT) {
+			if (typeof this.spell !== 'number' && (this.spell.index === SPELL_DISRUPT || this.spell.index === SPELL_SPRAY)) {
 				if(pwr > 1 && pwr < def.getHP()) {
 					pwr = 1;
 				}
@@ -388,6 +444,20 @@ Projectile.prototype.attack = function(target, prc) {
 		}
 	}
 }
+
+Projectile.prototype.setBinaryView = function(pos18, index, length, to) {
+    var xy = posToCoordinates(pos18, this.x, this.y, this.d);
+    tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length, to);
+}
+
+Projectile.prototype.getBinaryView = function(pos18, index, length) {
+    var xy = posToCoordinates(pos18, this.x, this.y, this.d);
+    try {
+        return getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length);
+    } catch (e) {
+        return '0001';
+    }
+};
 
 function newProjectile(type, palette, snd, s, power, f, x, y, d, m) {
 	if (typeof tower[towerThis].floor[f].Map[y] === "undefined" || typeof tower[towerThis].floor[f].Map[y][x] === "undefined") {

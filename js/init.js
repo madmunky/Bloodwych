@@ -132,7 +132,7 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
 	progressScreen("INIT PLAYERS");
     initPlayers(singlePlayer, quickStart, p1_cid, p2_cid);
 
-    if (god) {
+    if (god && !resumeLoadGame) {
             godMode();
     }
 
@@ -163,7 +163,7 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
     //saveGame(99, 'autosave');
     
     if(resumeLoadGame) {
-            loadGame(99);
+        loadGame(99);
     }
 	
     progressScreen("RUN GAME");
