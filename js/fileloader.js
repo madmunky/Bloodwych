@@ -1,70 +1,74 @@
-function getFileData(file_name, callback, t, type, length) {
-    console.log("Reading file" + file_name);
-    dataLoaded.count++;
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState === 200 || xmlhttp.readyState === 4 || xmlhttp.readyState === "complete") {
-            switch (type) {
-                case "monsterPalette":
-                    monsterPaletteData = callback(this.response, length);
-                    break;
-                case "monsterPaletteMeta":
-                    monsterPaletteMetaData = callback(this.response, length);
-                    break;
-                case "monsterHeads":
-                    monsterHeadsData = callback(this.response, length);
-                    break;
-                case "monsterBodies":
-                    monsterBodiesData = callback(this.response, length);
-                    break;
-                case "floor":
-                    t.floor = callback(this.response, length);
-                    break;
-                case "switches":
-                    t.switches = callback(this.response, length);
-                    break;
-                case "triggers":
-                    t.triggers = callback(this.response, length);
-                    break;
-                case "monsterData":
-                    t.monsterData = callback(this.response, length);
-                    break;
-                case "championData":
-                    championData = callback(this.response, length);
-                    break;
-                case "championPocketData":
-                    championPocketData = callback(this.response, length);
-                    break;
-                case "towerSwitchesData":
-                    towerSwitchesData = callback(this.response, length);
-                    break;
-                case "itemData":
-                    t.itemData = callback(this.response, length);
-                    break;
-                case "scrollData":
-                    scrollData = callback(this.response);
-                    break;
-                case "gemSwitchesData":
-                    gemSwitchesData = callback(this.response, length);
-                    break;
-                case "crystalSwitchesData":
-                    crystalSwitchesData = callback(this.response, length);
-                    break;
-                case "armourData":
-                    armourData = callback(this.response, length);
-                    break;
-                case "monsterItemData":
-                    monsterItemData = callback(this.response, length);
-                    break;
-                default:
-                    break;
-            }
-            checkAllDataLoaded();
-        }
-    };
-    xmlhttp.open("GET", file_name, true);
-    xmlhttp.responseType = "arraybuffer";
-    xmlhttp.send();
+function loadBinaryFiles(item){
+	
+	loadingScreen(item);
+	if (typeof item.towerData !== 'undefined'){
+	
+		var type = item.id.split("_")[1];	
+		getFileData(item.callback,item.id,getTowerByName(item.towerData),type,parseInt(item.length));
+	
+	}else{
+		getFileData(item.callback,item.id,null,item.id,parseInt(item.length));
+	}
+}
+
+function getFileData(callback, id, t, type, length) {
+
+	switch (type) {
+		case "monsterPalette":
+			monsterPaletteData = window[callback](preload.getResult(id), length);
+			break;
+		case "monsterPaletteMeta":
+			monsterPaletteMetaData = window[callback](preload.getResult(id), length);
+			break;
+		case "monsterHeads":
+			monsterHeadsData = window[callback](preload.getResult(id), length);
+			break;
+		case "monsterBodies":
+			monsterBodiesData = window[callback](preload.getResult(id), length);
+			break;
+		case "map":
+			t.floor = window[callback](preload.getResult(id), length);
+			break;
+		case "switches":
+			t.switches = window[callback](preload.getResult(id), length);
+			break;
+		case "triggers":
+			t.triggers = window[callback](preload.getResult(id), length);
+			break;
+		case "monsters":
+			t.monsterData = window[callback](preload.getResult(id), length);
+			break;
+		case "championData":
+			championData = window[callback](preload.getResult(id), length);
+			break;
+		case "championPocketData":
+			championPocketData = window[callback](preload.getResult(id), length);
+			break;
+		case "towerSwitchesData":
+			towerSwitchesData = window[callback](preload.getResult(id), length);
+			break;
+		case "objects":
+			t.itemData = window[callback](preload.getResult(id), length);
+			break;
+		case "scrollData":
+			scrollData = window[callback](preload.getResult(id));
+			break;
+		case "gemSwitchesData":
+			gemSwitchesData = window[callback](preload.getResult(id), length);
+			break;
+		case "crystalSwitchesData":
+			crystalSwitchesData = window[callback](preload.getResult(id), length);
+			break;
+		case "armourData":
+			armourData = window[callback](preload.getResult(id), length);
+			break;
+		case "monsterItemData":
+			monsterItemData = window[callback](preload.getResult(id), length);
+			break;
+		default:
+			break;
+	}
+     
 }
 
 function checkAllDataLoaded() {
@@ -184,16 +188,14 @@ function readMonsterItems(evt){
 
 function processMonsterItems(){
     var ttmon = []
-    for (t in tower){
-        if (t >= 6){
-            for (m in monster[t]){
-                if (monster[t][m].type === MON_TYPE_DROPPER){
-                    if (monster[t][m].dropsSpecificItem){
-                        ttmon.push(monster[t][m])
-                    }
-                }
-            }
-        }
+    for (t in tower){        
+		for (m in monster[t]){
+			if (monster[t][m].type === MON_TYPE_DROPPER){
+				if (monster[t][m].dropsSpecificItem){
+					ttmon.push(monster[t][m])
+				}
+			}
+		}
     }
 
     for (m in ttmon) {

@@ -1,7 +1,19 @@
-function Tower(id, start) {
-	var t = this;
-	t.id = id;
-	loadTowerData(t, start);
+function initTowers() {
+	for (i in tower){
+		projectile[i] = new Array();
+		TOWER_NAME.push(tower[i].name);
+	};
+}
+
+function getTowerByName(strName){
+
+	for (t in tower){
+		if (tower[t].name === strName){
+			return tower[t];
+		}
+	}
+	
+	return null;
 }
 
 function Map(Width, Height, xOff, yOff) {

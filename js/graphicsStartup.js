@@ -1,7 +1,7 @@
 function startScreen() {
     $('canvas').attr('data-game-status', 'menu');
     canvas.addEventListener('keydown', doKeyDown, true);
-    checkClickEvents();
+    //checkClickEvents();
     canvas.focus();
 
     configCanvas();
@@ -15,6 +15,69 @@ function startScreen() {
     if(getGameName(99) !== '') {
         writeFontImage(" 5   RESUME LAST GAME", 34, 130, COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_LEFT);
     }
+    writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
+    writeFontImage("RECREATED BY MAD BONE PRODUCTIONS 2014", 10, 190, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
+
+}
+
+function preStartScreen() {
+    $('canvas').attr('data-game-status', 'menu');
+    canvas.addEventListener('keydown', doKeyDown, true);
+    checkClickEvents();
+    canvas.focus();
+
+    configCanvas();
+    clearCanvas();
+
+    writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    1   BLOODWYCH", 34, 50, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    2   EXTENDED LEVELS (WIP)", 34, 66, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    3   BOOK OF SKULLS (WIP)", 34, 90, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    4   CUSTOM DATA SET (WIP)", 34, 106, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    5   MAP VIEWER/EDITOR (WIP)", 34, 129, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
+
+    writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
+    writeFontImage("RECREATED BY MAD BONE PRODUCTIONS 2014", 10, 190, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
+
+}
+
+function loadingScreen(objProgress){
+
+	//$('canvas').attr('data-game-status', 'menu');
+    canvas.addEventListener('keydown', doKeyDown, true);
+    canvas.focus();
+
+    configCanvas();
+    clearCanvas();
+
+    writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
+	if (objProgress.type === "fileprogress"){
+		writeFontImage("LOADING DATA...", 122, 80, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+		writeFontImage("   FILE: " + objProgress.item.src, 34, 100, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	}else{
+		writeFontImage("PROCESSING DATA...", 120, 80, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+		writeFontImage("   FILE: " + objProgress.src, 34, 100, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	}
+    
+	//writeFontImage(" PROGRESS: " + objProgress.progress, 34, 140, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+
+    writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
+    writeFontImage("RECREATED BY MAD BONE PRODUCTIONS 2014", 10, 190, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
+
+}
+
+function progressScreen(strDetails){
+
+	//$('canvas').attr('data-game-status', 'menu');
+    canvas.addEventListener('keydown', doKeyDown, true);
+    canvas.focus();
+
+    configCanvas();
+    clearCanvas();
+
+    writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
+	writeFontImage(+strDetails+"...", 120, 80, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+
     writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
     writeFontImage("RECREATED BY MAD BONE PRODUCTIONS 2014", 10, 190, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
 

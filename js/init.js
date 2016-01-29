@@ -3,34 +3,70 @@
 function initGame() {
     $('canvas').attr('data-game-status', 'loading');
     loadGfxUIData();
-    watch(gfxLoaded, "done", function(prop, action, newvalue, oldvalue) {
-        if (typeof tower[towerThis] === 'undefined') {
-            tower[towerThis] = new Tower(towerThis, true);
-            projectile[towerThis] = new Array();
-            updateLoadingScreen("Loading File Data", 30);
-        }
-    });
+    uiClickArea = uiClickAreas();
 
-    watch(dataLoaded, "done", function(prop, action, newvalue, oldvalue) {
-        if (newvalue === 1) {
-            for (var i = 1; i < TOWER_NAME.length; i++) {
-                tower[i] = new Tower(i);
-                projectile[i] = new Array();
-            }
-            updateLoadingScreen("Loading Tower Data", 50);
-        } else if (newvalue === 2) {
-            initData();
+	preload.on("fileprogress", handleFileProgress);
+    preload.on("error", handleError);
+    preload.on("complete", handleComplete);
+}
 
-            if (typeof game === "undefined") {
-                //Run();
-                startScreen();
-            } else {
-                //updateLoadingScreen("Starting Game", 100);
-            }
+function loadManifest() {
+
+    var path;
+
+    switch(gameType){
+
+        case GAME_BLOODWYCH:path = "/data/BW/data.json";break;
+        case GAME_EXTENDED_LEVELS:path = "/data/EXT/data.json";break;
+        case GAME_BOOK_OF_SKULLS:path = "/data/BOS/data.json";break;
+        case GAME_CUSTOM:path = "/data/CUSTOM/data.json";break;
+
+    }
+
+    preload.loadManifest({src: path, callback: "loadGfx", type: "manifest"}, true);
+}
+
+function stop() {
+    if (preload != null) {
+        preload.close();
+    }
+}
+
+function loadGraphicsData2(event){
+    preload.loadManifest(event.manifest,true,event.path);
+}
+
+function handleFileProgress(event){
+	loadingScreen(event);
+}
+
+function handleError(event){
+
+     var tmp = "";
+}
+
+function handleComplete(event){
+
+    var items = preload.getItems();
+    for (i in items){
+        var item = items[i].item;
+        if (debug){
+            console.log("Loaded File: " + item.src);
         }
-    });
-    updateLoadingScreen("Loading Graphics", 0);
-    loadGfxData();
+
+        switch (item.type){
+
+            case createjs.AbstractLoader.IMAGE: gfxLoadImages(item);break;
+            case createjs.AbstractLoader.BINARY: loadBinaryFiles(item);break;
+
+        }
+    }
+
+    initMenuData();
+}
+
+function loadBinaryData(event){
+    preload.loadManifest(event.manifest,true,"/data/");
 }
 
 function updateLoadingScreen(msg, percent) {
@@ -38,140 +74,39 @@ function updateLoadingScreen(msg, percent) {
     ctx.font = "normal 14px \"Bookman Old Style\", verdana, sans-serif";
     ctx.fillStyle = "#FFF";
     ctx.fillText(percent + "% - " + msg + "...", 0, 15);
-    //clearInterval(loadingIntervalTimer);
-    //loadingIntervalTimer = setTimeout(function() {
-    //	refreshLoadingScreen(msg, percent);
-    //}, 10);
 }
 
 function loadGfxUIData() {
-    //Misc
-    gfxLoadImage("misc", "separator");
     gfxLoadImage("misc", "font", "", null);
-    gfxLoadImage("misc", "uistuff", "", null);
-
-    //Items
-    gfxLoadImage("dungeon", "items2", "");
-
-    //Characters
-    gfxLoadImage("character", "heads", "");
-    gfxLoadImage("character", "arms", "");
-    gfxLoadImage("character", "torsos", "");
-    gfxLoadImage("character", "legs", "");
-    gfxLoadImage("character", "minis", "");
-
-    //Monsters
-    gfxLoadImage("character", "behemoth", "");
-    gfxLoadImage("character", "crab", "");
-    gfxLoadImage("character", "dragon", "");
-    gfxLoadImage("character", "floater", "");
-    gfxLoadImage("character", "nastyfloater", "");
-    gfxLoadImage("character", "summon", "");
 }
 
-function loadGfxData() {
-    //Background
-    gfxLoadImage("dungeon", "background");
-
-    //Stone wall and shelf
-    gfxLoadImage("dungeon", "stone", "wall");
-    gfxLoadImage("dungeon", "stone", "wall2");
-    gfxLoadImage("dungeon", "stone", "shelf");
-
-    //Wall decorations, banners, wall buttons and gem slots
-    gfxLoadImage("dungeon", "deco", "serpent-head");
-    gfxLoadImage("dungeon", "deco", "moon-head");
-    gfxLoadImage("dungeon", "deco", "dragon-head");
-    gfxLoadImage("dungeon", "deco", "chaos-head");
-    gfxLoadImage("dungeon", "deco", "switch", 6);
-    gfxLoadImage("dungeon", "deco", "switch-off", 6);
-    gfxLoadImage("dungeon", "deco", "gem", 7);
-    gfxLoadImage("dungeon", "deco", "gem-off", 7);
-    gfxLoadImage("dungeon", "deco", "script", 7);
-    gfxLoadImage("dungeon", "deco", "banner", 7);
-
-    //Wooden walls and doors
-    gfxLoadImage("dungeon", "wood", "wall");
-    gfxLoadImage("dungeon", "wood", "door");
-    gfxLoadImage("dungeon", "wood", "door-open");
-
-    //Miscellaneous
-    gfxLoadImage("dungeon", "misc", "pillar");
-    gfxLoadImage("dungeon", "misc", "bed");
-
-    //Solid doors
-    gfxLoadImage("dungeon", "door", "solid", 8);
-    gfxLoadImage("dungeon", "door", "gate", 8);
-    gfxLoadImage("dungeon", "door", "open", 8);
-
-    //Stairs
-    gfxLoadImage("dungeon", "stairs", "down");
-    gfxLoadImage("dungeon", "stairs", "up");
-
-    //Floors
-    gfxLoadImage("dungeon", "floor", "pit-down");
-    gfxLoadImage("dungeon", "floor", "pit-up");
-    gfxLoadImage("dungeon", "floor", "path", 2);
-
-    //MapViewer
-//    gfxLoadImage("map", "Floor");
-//    gfxLoadImage("map", "StoneWall");
-//    gfxLoadImage("map", "Bed");
-//    gfxLoadImage("map", "ChromaticDoor");
-//    gfxLoadImage("map", "FloorPad");
-//    gfxLoadImage("map", "FloorPit");
-//    gfxLoadImage("map", "IronDoor");
-//    gfxLoadImage("map", "IronDoorOpen");
-//    gfxLoadImage("map", "MagicItem");
-//    gfxLoadImage("map", "Pillar");
-//    gfxLoadImage("map", "PlayerPosTrans");
-//    gfxLoadImage("map", "Shelf");
-//    gfxLoadImage("map", "WoodenWall");
-//    gfxLoadImage("map", "Stairs");
-//    gfxLoadImage("map", "Monster");
-//    gfxLoadImage("map", "Champion");
-
+function loadTowerData(event) {
+    tower = event.towers;
+	initTowers();    
+    preload.loadManifest(event.manifest,true,"/data/");
 }
 
-function loadTowerData(t, start) {
-    var id = t.id;
+function initMenuData(){
 
-    if (typeof start === "boolean" && start) {
-        getFileData('data/charstats.data', readSimpleDataHex, t, "championData", 32);
-        getFileData('data/charpockets.data', readSimpleDataHex, t, "championPocketData", 16);
-        getFileData('data/heads.monsters', readSimpleData, null, "monsterHeads", 1);
-        getFileData('data/bodies.monsters', readSimpleData, null, "monsterBodies", 1);
-        getFileData('data/palette.monsters', readSimpleData, null, "monsterPalette", 4);
-        getFileData('data/palette_meta.monsters', readSimpleData, null, "monsterPaletteMeta", 8);
-        getFileData('data/tower.switches', readSimpleData, t, "towerSwitchesData", 25);
-        getFileData('data/scroll.data', readScrollData, t, "scrollData");
-        getFileData('data/gem.switches', readSimpleData, null, "gemSwitchesData", 2);
-        getFileData('data/crystal.switches', readSimpleData, null, "crystalSwitchesData", 0);
-        getFileData('data/palette.armours', readSimpleData, null, "armourData", 4);
-        getFileData('data/monsterItems.data', readMonsterItems, null, "monsterItemData", 4);
+    projectile[towerThis] = new Array();
+    initData();
+
+    if (typeof game === "undefined") {
+        startScreen();
     }
-
-    getFileData('data/' + TOWER_NAME[id] + '.MAP', readMapData, t, "floor");
-    getFileData('data/' + TOWER_NAME[id] + '.switches', readSimpleData, t, "switches", 4);
-    getFileData('data/' + TOWER_NAME[id] + '.triggers', readSimpleData, t, "triggers", 4);
-    getFileData('data/' + TOWER_NAME[id] + '.monsters', readSimpleDataHex, t, "monsterData", 6);
-    getFileData('data/' + TOWER_NAME[id] + '.ob', readSimpleData, t, "itemData", 0);
-
 
 }
 
 function initData() {
-    //if (gfx['character']['torsos'].width > 0 && gfx['character']['arms'].width > 0 && gfx['character']['heads'].width > 0 && gfx['character']['legs'].width > 0 && gfx['character']['minis'].width > 0 && championData.length > 0 && gfx['misc']['font'].width > 0) {
-    gfx['character']['heads'].onload = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
-    gfx['character']['legs'].onload = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 27, 17);
-    gfx['character']['arms'].onload = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 19, 13);
-    gfx['character']['minis'].onload = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
-    gfx['character']['torsos'].onload = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
+
+    gfx['character']['heads'] = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
+    gfx['character']['legs'] = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 27, 17);
+    gfx['character']['arms'] = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 19, 13);
+    gfx['character']['minis'] = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
+    gfx['character']['torsos'] = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
 
     gfxUI = grabUISprites(gfx['misc']['uistuff']);
     itemsGfxD = initItemsGfxD();
-    font = grabFont();
-    uiClickArea = uiClickAreas();
     audioFiles = loadSounds();
     initMonsterPalettes();
     initArmourGfx();
@@ -179,26 +114,30 @@ function initData() {
 
     initSpells();
     initItemRefs();
-    for (var i = 0; i < TOWER_NAME.length; i++) {
+    for (var i = 0; i < tower.length; i++) {
         initItems(tower[i]);
     }
 
     initChampions();
-
 }
 
 function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
 
+	progressScreen("STARTING GAME");
+
     if (typeof god === "undefined") {
         god = false;
     }
+	
+	progressScreen("INIT PLAYERS");
     initPlayers(singlePlayer, quickStart, p1_cid, p2_cid);
 
     if (god) {
             godMode();
     }
 
-    initTowerSwitches();
+    progressScreen("INIT TOWER SWITCHES");
+	initTowerSwitches();
     switchTower(0);
 //        if (isMobile){
 //            var mon = getMonstersInTower(towerThis, true);
@@ -207,7 +146,8 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
 //            }
 //        }
     gameStarted = true;
-
+	
+	progressScreen("PROCESSING CHAMPIONS");
     for (pl in championSelect) {
         if (championSelect[pl].champID > -1) {
             champion[championSelect[pl].champID].selectedSpell = null;
@@ -221,12 +161,22 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
     //		player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
     //	}
     //saveGame(99, 'autosave');
-    setTimeout(function() {
-        if(resumeLoadGame) {
+    
+    if(resumeLoadGame) {
             loadGame(99);
-        }
-        Run();
-    }, 500);
+    }
+	
+    progressScreen("RUN GAME");
+	Run();
+		
+	switch(gameType){
+
+		case GAME_BLOODWYCH:;break;
+		case GAME_EXTENDED_LEVELS:startExtendedLevel();break;
+		case GAME_BOOK_OF_SKULLS:startBOS();break;
+		case GAME_CUSTOM:;break;
+
+	}
 
     if (debug && MapEnabled){
         setTimeout(function() {
@@ -234,6 +184,6 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
         }, 1500);
     }
 
-    setTimeout(function() {playSoundLoop(SOUND_PCMUSIC);}, 500);
+    //setTimeout(function() {playSoundLoop(SOUND_PCMUSIC);}, 500);
 
 }

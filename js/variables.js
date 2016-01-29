@@ -10,6 +10,9 @@ if(isMobile) {
     debug = false;
 }
 
+//Preloader stuff
+var preload = new createjs.LoadQueue(false);
+
 //Declare Arrays for the Graphics
 var gfx = [];
 window.player = new Array();
@@ -23,6 +26,10 @@ var paused = false;
 var pausedByBrowser = false;
 var checkStarted = true;
 var resumeLoadGame = false;
+var gfxStage = 0;
+var startMenu = true;
+var BOS = false;
+var WTW = false;
 
 //Setup some global variables for needed
 var ExtLvl = false;
@@ -55,6 +62,15 @@ var uiClickArea = [];
 var itemsGfxD = [];
 var redrawPlayerUiFlag = 0;
 var audioFiles = [];
+var gameType = GAME_BLOODWYCH;
+var DataLocationPrefix;
+
+//GAME MODES
+var GAME_BLOODWYCH = 0,
+	GAME_EXTENDED_LEVELS = 1,
+	GAME_BOOK_OF_SKULLS = 2,
+	GAME_CUSTOM = 3;
+
 
 //sounds
 var SOUND_DOOR = 0,
@@ -273,18 +289,15 @@ var OBJECT_NONE = 0,
     OBJECT_WOOD_DOOR_OPEN = 16;
 
 //Towers
-var TOWER_NAME = ["MOD0", "SERP", "MOON", "DRAGON", "CHAOS", "ZENDIK", "serpex", "chaosex", "moonex", "dragex" ];
+var TOWER_NAME = [];
+
 var TOWER_MOD0 = 0,
     TOWER_SERPENT = 1,
     TOWER_MOON = 2,
     TOWER_DRAGON = 3,
     TOWER_CHAOS = 4,
     TOWER_ZENDIK = 5,
-    TOWER_EXT_SERPENT = 6,
-    TOWER_EXT_CHAOS = 7,
-    TOWER_EXT_MOON = 8,
-    TOWER_EXT_DRAGON = 9,
-    TOWER_CHAMPIONS = 10 //dummy tower to store champions
+    TOWER_CHAMPIONS = 6; //dummy tower to store champions
 var towerThis = TOWER_MOD0;
 
 //Background gfx
@@ -603,6 +616,39 @@ var SWITCH_FLOOR_NONE = 0,
     SWITCH_FLOOR_GAME_COMPLETION_PAD = 58, // **
     SWITCH_FLOOR_REMOVE_PILLAR_OTHER_EVENT = 60, // (X/Y) **
     SWITCH_FLOOR_TELEPORT_MONSTER = 62
+
+var switchName = ["SWITCH_FLOOR_NONE",
+    "SWITCH_FLOOR_SPIN_180",
+    "SWITCH_FLOOR_SPIN_RANDOM",
+    "SWITCH_FLOOR_OPEN_VOID_LOCK_DOOR",
+    "SWITCH_FLOOR_VIVIFY_MACHINE_EXTERNAL",
+    "SWITCH_FLOOR_VIVIFY_MACHINE_INTERNAL",
+    "SWITCH_FLOOR_WOOD_DOOR_CLOSER_1",
+    "SWITCH_FLOOR_WOOD_DOOR_CLOSER_2",
+    "SWITCH_FLOOR_TRADER_DOOR",
+    "SWITCH_FLOOR_TOWER_ENTRANCE_SIDE_PAD",
+    "SWITCH_FLOOR_TOWER_ENTRANCE",
+    "SWITCH_FLOOR_REMOVE",
+    "SWITCH_FLOOR_CLOSE_VOID_LOCK_DOOR",
+    "SWITCH_FLOOR_TOGGLE_PILLAR",
+    "SWITCH_FLOOR_CREATE_SPINNER",
+    "SWITCH_FLOOR_OPEN_CREATE_WALL_WITH_SWITCHES",
+    "SWITCH_FLOOR_CREATE_PAD",
+    "SWITCH_FLOOR_MOVE_PILLAR_AT_PLAYER",
+    "SWITCH_FLOOR_CREATE_PILLAR",
+    "SWITCH_FLOOR_KEEP_ENTRANCE_SIDEPAD",
+    "SWITCH_FLOOR_KEEP_ENTRANCE_CENTRAL_PAD",
+    "SWITCH_FLOOR_FLASH_TELEPORT",
+    "SWITCH_FLOOR_ROTATE_STONE_WALL",
+    "SWITCH_FLOOR_TOGGLE_WALL",
+    "SWITCH_FLOOR_SPINNER",
+    "SWITCH_FLOOR_CLICK_TELEPORT",
+    "SWITCH_FLOOR_TOGGLE_GREEN_PAD",
+    "SWITCH_FLOOR_ROTATE_WOOD_WALL_COUNTER_CLOCKWISE",
+    "SWITCH_FLOOR_TOGGLE_HOLE",
+    "SWITCH_FLOOR_GAME_COMPLETION_PAD",
+    "SWITCH_FLOOR_REMOVE_PILLAR_OTHER_EVENT",
+    "SWITCH_FLOOR_TELEPORT_MONSTER"];
 
 var UI_GFX_POCKET_EMPTY = 0,
     UI_GFX_POCKET_COIN = 1,

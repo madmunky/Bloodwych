@@ -1,0 +1,122 @@
+loadGfx({
+    "path": "images/",
+    "manifest": [
+		//Misc
+		{"id":"misc_separator", "src":"misc/separator.png"},
+		{"id":"misc_uistuff", "src":"misc/uistuff.png"},
+		
+		//Items
+		{"id":"dungeon_items2", "src":"dungeon/items2.png"},
+		
+		//Characters
+		{"id":"character_heads", "src":"character/heads.png"},
+		{"id":"character_arms", "src":"character/arms.png"},
+		{"id":"character_torsos", "src":"character/torsos.png"},
+		{"id":"character_legs", "src":"character/legs.png"},
+		{"id":"character_minis", "src":"character/minis.png"},
+		
+		//Monsters
+		{"id":"character_behemoth", "src":"character/behemoth.png"},
+		{"id":"character_crab", "src":"character/crab.png"},
+		{"id":"character_dragon", "src":"character/dragon.png"},
+		{"id":"character_floater", "src":"character/floater.png"},
+		{"id":"character_summon", "src":"character/summon.png"},
+		{"id":"character_nastyfloater", "src":"character/nastyfloater.png"},
+		
+        {"id":"dungeon_background", "src":"dungeon/background.png"},
+        {"id":"dungeon_stone_wall", "src":"dungeon/stone-wall.png"},
+        {"id":"dungeon_stone_wall2", "src":"dungeon/stone-wall2.png"},
+        {"id":"dungeon_stone_shelf", "src":"dungeon/stone-shelf.png"},
+
+        {"id":"dungeon_deco_serpent-head", "src":"dungeon/deco-serpent-head.png"},
+        {"id":"dungeon_deco_moon-head", "src":"dungeon/deco-moon-head.png"},
+        {"id":"dungeon_deco_dragon-head", "src":"dungeon/deco-dragon-head.png"},
+        {"id":"dungeon_deco_chaos-head", "src":"dungeon/deco-chaos-head.png"},
+        {"id":"dungeon_deco_switch_6", "src":"dungeon/deco-switch.png"},
+        {"id":"dungeon_deco_switch-off_6", "src":"dungeon/deco-switch-off.png"},
+        {"id":"dungeon_deco_gem_7", "src":"dungeon/deco-gem.png"},
+        {"id":"dungeon_deco_gem-off_7", "src":"dungeon/deco-gem-off.png"},
+        {"id":"dungeon_deco_script_7", "src":"dungeon/deco-script.png"},
+        {"id":"dungeon_deco_banner_7", "src":"dungeon/deco-banner.png"},
+
+        {"id":"dungeon_wood_wall", "src":"dungeon/wood-wall.png"},
+        {"id":"dungeon_wood_door", "src":"dungeon/wood-door.png"},
+        {"id":"dungeon_wood_door-open", "src":"dungeon/wood-door-open.png"},
+
+        {"id":"dungeon_misc_pillar", "src":"dungeon/misc-pillar.png"},
+        {"id":"dungeon_misc_bed", "src":"dungeon/misc-bed.png"},
+
+        {"id":"dungeon_door_solid_8", "src":"dungeon/door-solid.png"},
+        {"id":"dungeon_door_gate_8", "src":"dungeon/door-gate.png"},
+        {"id":"dungeon_door_open_8", "src":"dungeon/door-open.png"},
+
+        {"id":"dungeon_stairs_down", "src":"dungeon/stairs-down.png"},
+        {"id":"dungeon_stairs_up", "src":"dungeon/stairs-up.png"},
+
+        {"id":"dungeon_floor_pit-down", "src":"dungeon/floor-pit-down.png"},
+        {"id":"dungeon_floor_pit-up", "src":"dungeon/floor-pit-up.png"},
+        {"id":"dungeon_floor_path_2", "src":"dungeon/floor-path.png"}
+    ]
+});
+
+loadTowerData({
+    "path": "data/",
+	"towers": [{"id":0, "name":"Mod0"}, {"id":1, "name":"Serpent"}, {"id":2, "name":"Moon"}, {"id":3, "name":"Dragon"}, {"id":4, "name":"Chaos"}, {"id":5, "name":"Zendik"}],
+    "manifest": [
+		//Chaos Tower
+		{"id":"chaos_map", "src":"BOS/chaos.map", "callback":"readMapData", "type":"binary", "length":"null", "towerData":"Chaos"},
+		{"id":"chaos_switches", "src":"BOS/chaos.switches", "callback":"readSimpleData", "type":"binary", "length":"4", "towerData":"Chaos"},
+		{"id":"chaos_triggers", "src":"BOS/chaos.triggers", "callback":"readSimpleData", "type":"binary", "length":"4", "towerData":"Chaos"},
+		{"id":"chaos_monsters", "src":"BOS/chaos.monsters", "callback":"readSimpleDataHex", "type":"binary", "length":"6", "towerData":"Chaos"},
+		{"id":"chaos_objects", "src":"BOS/chaos.ob", "callback":"readSimpleData", "type":"binary", "length":"0", "towerData":"Chaos"},
+		
+		//Mod0 Tower
+		{"id":"mod0_map", "src":"BOS/mod0.map", "callback":"readMapData", "type":"binary", "length":"null", "towerData":"Mod0"},
+		{"id":"mod0_switches", "src":"BOS/mod0.switches", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Mod0"},
+		{"id":"mod0_triggers", "src":"BOS/mod0.triggers", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Mod0"},
+		{"id":"mod0_monsters", "src":"BOS/mod0.monsters", "callback":"readSimpleDataHex", "type":"binary", "length":"6","towerData":"Mod0"},
+		{"id":"mod0_objects", "src":"BOS/mod0.ob", "callback":"readSimpleData", "type":"binary", "length":"0","towerData":"Mod0"},
+		
+		//Dragon Tower
+		{"id":"dragon_map", "src":"BOS/drag.map", "callback":"readMapData", "type":"binary", "length":"null","towerData":"Dragon"},
+		{"id":"dragon_switches", "src":"BOS/drag.switches", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Dragon"},
+		{"id":"dragon_triggers", "src":"BOS/drag.triggers", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Dragon"},
+		{"id":"dragon_monsters", "src":"BOS/drag.monsters", "callback":"readSimpleDataHex", "type":"binary", "length":"6","towerData":"Dragon"},
+		{"id":"dragon_objects", "src":"BOS/drag.ob", "callback":"readSimpleData", "type":"binary", "length":"0","towerData":"Dragon"},
+		
+		//Moon Tower
+		{"id":"moon_map", "src":"BOS/moon.map", "callback":"readMapData", "type":"binary", "length":"null","towerData":"Moon"},
+		{"id":"moon_switches", "src":"BOS/moon.switches", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Moon"},
+		{"id":"moon_triggers", "src":"BOS/moon.triggers", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Moon"},
+		{"id":"moon_monsters", "src":"BOS/moon.monsters", "callback":"readSimpleDataHex", "type":"binary", "length":"6","towerData":"Moon"},
+		{"id":"moon_objects", "src":"BOS/moon.ob", "callback":"readSimpleData", "type":"binary", "length":"0","towerData":"Moon"},
+		
+		//Serpent Tower
+		{"id":"serp_map", "src":"BOS/serp.map", "callback":"readMapData", "type":"binary", "length":"null","towerData":"Serpent"},
+		{"id":"serp_switches", "src":"BOS/serp.switches", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Serpent"},
+		{"id":"serp_triggers", "src":"BOS/serp.triggers", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Serpent"},
+		{"id":"serp_monsters", "src":"BOS/serp.monsters", "callback":"readSimpleDataHex", "type":"binary", "length":"6","towerData":"Serpent"},
+		{"id":"serp_objects", "src":"BOS/serp.ob", "callback":"readSimpleData", "type":"binary", "length":"0","towerData":"Serpent"},
+		
+		//Zendik Tower
+		{"id":"zendik_map", "src":"BOS/zendik.map", "callback":"readMapData", "type":"binary", "length":"null","towerData":"Zendik"},
+		{"id":"zendik_switches", "src":"BOS/zendik.switches", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Zendik"},
+		{"id":"zendik_triggers", "src":"BOS/zendik.triggers", "callback":"readSimpleData", "type":"binary", "length":"4","towerData":"Zendik"},
+		{"id":"zendik_monsters", "src":"BOS/zendik.monsters", "callback":"readSimpleDataHex", "type":"binary", "length":"6","towerData":"Zendik"},
+		{"id":"zendik_objects", "src":"BOS/zendik.ob", "callback":"readSimpleData", "type":"binary", "length":"0","towerData":"Zendik"},
+		
+		//Shared Data
+		{"id":"championData", "src":"BOS/charstats.data", "callback":"readSimpleDataHex", "type":"binary", "length":"32"},
+		{"id":"championPocketData", "src":"BOS/charpockets.data", "callback":"readSimpleDataHex", "type":"binary", "length":"16"},
+		{"id":"monsterHeads", "src":"BOS/heads.monsters", "callback":"readSimpleData", "type":"binary", "length":"1"},
+		{"id":"monsterBodies", "src":"BOS/bodies.monsters", "callback":"readSimpleData", "type":"binary", "length":"1"},
+		{"id":"monsterPalette", "src":"BOS/palette.monsters", "callback":"readSimpleData", "type":"binary", "length":"4"},
+		{"id":"monsterPaletteMeta", "src":"BOS/palette_meta.monsters", "callback":"readSimpleData", "type":"binary", "length":"8"},
+		{"id":"towerSwitchesData", "src":"BOS/tower.switches", "callback":"readSimpleData", "type":"binary", "length":"25"},
+		{"id":"scrollData", "src":"BOS/scroll.data", "callback":"readScrollData", "type":"binary", "length":"0"},
+		{"id":"gemSwitchesData", "src":"BOS/gem.switches", "callback":"readSimpleData", "type":"binary", "length":"2"},
+		{"id":"crystalSwitchesData", "src":"BOS/crystal.switches", "callback":"readSimpleData", "type":"binary", "length":"0"},
+		{"id":"armourData", "src":"BOS/palette.armours", "callback":"readSimpleData", "type":"binary", "length":"4"}
+		//{"id":"monsterItemData", "src":"BOS/monsterItems.data", "callback":"readMonsterItems", "type":"binary", "length":"4"}
+    ]
+});

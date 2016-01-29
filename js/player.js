@@ -360,7 +360,7 @@ Player.prototype.move = function(d) {
         this.lastX = this.x;
         this.lastY = this.y;
         this.attack(null, false);
-        if (this.canMove(d) || debug) {
+        if (this.canMove(d) || WTW) {
             xy = getOffsetByRotation((this.d + d) % 4);
             this.x = this.x + xy.x;
             this.y = this.y + xy.y;

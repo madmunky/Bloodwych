@@ -96,7 +96,8 @@ function setViewportScale(sp) {
         if (navigator.userAgent.match(/(iPad)/g) ? true : false){
             scaleReal = 1.06;
         }else if (navigator.userAgent.match(/(iPhone|iPod)/g) ? true : false){
-            scaleReal = 0.7;
+            //scaleReal = 0.7; //iPhone 6
+            scaleReal = 0.5;
         }else{
             var zoom = 1;
             scaleReal = 3;
@@ -224,6 +225,54 @@ function gfxColourSubs(folder, type, item, sub) {
 //item: the object itself, e.g. bed, switch, shelf
 //sub: define this to the number of color variations you wish to add for this type of object. Currently maximum of 8
 
+function gfxLoadImages(img) {
+    //console.log("LoadImage: " + folder + " " + type + " " + item + " " + sub);
+
+	var data = img.id.split('_');
+	folder = data[0];
+	type = data[1];
+	var item = undefined;
+	if (typeof data[2] !== 'undefined'){
+		item = data[2];
+	}
+	var sub = undefined;
+	if (typeof data[3] !== 'undefined'){
+		sub = parseInt(data[3]);
+	}
+	if (folder === "character"){
+		var match = true;
+	}
+
+	if (typeof type === 'string') {
+		var id = '';
+		if (typeof gfx[folder] === 'undefined') {
+			gfx[folder] = {};
+		}
+		if (typeof gfx[folder][type] === 'undefined') {
+			gfx[folder][type] = {};
+		}
+		if (typeof sub === 'number' && sub != null && (typeof gfx[folder][type][item] === 'undefined')) {
+			gfx[folder][type][item] = {};
+		}
+		id = img.id;
+
+		if (typeof sub === 'number' && sub != null) {
+			if (item != '') {
+				gfx[folder][type][item][0] = preload.getResult(id);
+				gfxColourSubs(folder, type, item, sub);
+			} else {
+				gfx[folder][type][0] = preload.getResult(id);
+				gfxColourSubs(folder, type, '', sub);
+			}
+		} else if (typeof item === 'string' && item != '') {
+			gfx[folder][type][item] = preload.getResult(id);
+		} else {
+			gfx[folder][type] = preload.getResult(id);
+		}
+	}    
+
+}
+
 function gfxLoadImage(folder, type, item, sub) {
     //console.log("LoadImage: " + folder + " " + type + " " + item + " " + sub);
     if (typeof type === 'string') {
@@ -277,8 +326,14 @@ function gfxLoadImage(folder, type, item, sub) {
 function checkAllGfxLoaded() {
     gfxLoaded.max++;
     if (gfxLoaded.count === gfxLoaded.max) {
+        gfxStage++;
         console.log("All Graphics processed");
-        gfxLoaded.done = true;
+        if (gfxStage > 1){
+          gfxLoaded.done = true;
+        }else{
+            font = grabFont();
+            preStartScreen();
+        }
     }
 }
 

@@ -31,7 +31,17 @@ function startExtendedLevel(){
     player[0].x = 1;
     player[0].y = 22;
     player[0].floor = 4;
-    towerThis = 6;
+    towerThis = 0;
+    player[0].redrawViewPort = true;
+
+}
+
+function startBOS(){
+
+    player[0].x = 6;
+    player[0].y = 16;
+    player[0].floor = 3;
+    towerThis = 0;
     player[0].redrawViewPort = true;
 
 }

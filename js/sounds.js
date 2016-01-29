@@ -7,7 +7,7 @@
 function loadSounds(){
 
     var s = [];
-    var location = "data/sounds/";
+    var location = "data/BW/sounds/";
     s.push(new Audio(location+"door.wav"));
     s.push(new Audio(location+"attack.wav"));
     s.push(new Audio(location+"flash.wav"));

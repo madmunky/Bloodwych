@@ -20,6 +20,7 @@ function doKeyDown(e) {
                         break; //6
                     case KEYPAD_7:
                         if (!player[1].frozen) player[1].rotate(-1);
+                        if (!player[1].frozen) player[1].rotate(-1);
                         break; //7
                     case KEYPAD_9:
                         if (!player[1].frozen) player[1].rotate(1);
@@ -558,22 +559,44 @@ function processCanvasInput(pid, x, y) {
 function processCanvasInputMenu(x, y) {
 
     //var t = $(this).find('canvas');
+    if (startMenu){
+        if (uiClickInArea(x, y, UI_CLICK_START_ONE_PLAYER)) { //BLOODWYCH
+            gameType = GAME_BLOODWYCH;
+			loadManifest();
+            startMenu = false;
+        } else if (uiClickInArea(x, y, UI_CLICK_START_TWO_PLAYER)) { //EXTENDED LEVELS
+            gameType = GAME_EXTENDED_LEVELS;
+			loadManifest();
+            startMenu = false;
+        } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_ONE_PLAYER)) { //BOOK OF SKULLS
+			gameType = GAME_BOOK_OF_SKULLS;
+			loadManifest();
+            startMenu = false;
+        } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) { //CUSTOM DATA
+			gameType = CUSTOM;
+			loadManifest();
+            startMenu = false;
+        } else if (uiClickInArea(x, y, UI_CLICK_START_RESUME_GAME)) { //MAP VIEWER
 
-    if (uiClickInArea(x, y, UI_CLICK_START_ONE_PLAYER)) {
-        $('canvas').attr('data-game-status', 'menu-champions');
-        players = 1;
-        drawQuickStartUI(0);
-    } else if (uiClickInArea(x, y, UI_CLICK_START_TWO_PLAYER)) {
-        $('canvas').attr('data-game-status', 'menu-champions');
-        players = 2;
-        drawQuickStartUI(0);
-    } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_ONE_PLAYER)) {
-        startGame(true, true);
-    } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) {
-        startGame(false, true);
-    } else if (uiClickInArea(x, y, UI_CLICK_START_RESUME_GAME) && getGameName(99) !== '') {
-        startGame(true, true);
-        resumeLoadGame = true;
+        }
+    }else{
+
+        if (uiClickInArea(x, y, UI_CLICK_START_ONE_PLAYER)) {
+            $('canvas').attr('data-game-status', 'menu-champions');
+            players = 1;
+            drawQuickStartUI(0);
+        } else if (uiClickInArea(x, y, UI_CLICK_START_TWO_PLAYER)) {
+            $('canvas').attr('data-game-status', 'menu-champions');
+            players = 2;
+            drawQuickStartUI(0);
+        } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_ONE_PLAYER)) {
+            startGame(true, true);
+        } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) {
+            startGame(false, true);
+        } else if (uiClickInArea(x, y, UI_CLICK_START_RESUME_GAME) && getGameName(99) !== '') {
+            startGame(true, true);
+            resumeLoadGame = true;
+        }
     }
 }
 

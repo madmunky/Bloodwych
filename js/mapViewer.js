@@ -24,11 +24,11 @@ function init() {
     // enabled mouse over / out events
     stage.enableMouseOver(10);
     stage.mouseMoveOutside = true; // keep tracking the mouse even when it leaves the canvas
-    
+
     // create hit area
     hit = new createjs.Shape();
     hit.graphics.beginFill("#000").rect(0, 0, intBlockSize, intBlockSize);
-    
+
 
     loadImages();
 }
@@ -119,17 +119,13 @@ function createImageBlock(imgImage,intPosX,intPosY,intRotation){
 
         var hex = window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Map[xx][yy];
         $('#BlockData').text("X:" + xx + " Y:" + yy + " Block: " + hex +" Binary: " + window.opener.hex2bin(hex));
-        
-        try {
-            $('#BlockData').append('</br><p>Scroll Data: '+getScrollText(hex)+'</p>');
-        }catch (e){
-            
-        }
-        
+
+        getBlockData(hex);
+
         //document.getElementById('previewCanvas').getContext('2d').clearRect(0, 0, document.getElementById('previewCanvas').width, document.getElementById('previewCanvas').height);
         //document.getElementById('previewCanvas').getContext('2d').drawImage(copyCanvasRegionToBuffer(window.opener.getImage(hex, 2, 6,window.opener.player[0], 12)),0,0)
 
-        
+
     });
 
     // the pressmove event is dispatched when the mouse moves after a mousedown on the target until the mouse is released.
@@ -155,13 +151,14 @@ function createImageBlock(imgImage,intPosX,intPosY,intRotation){
 function drawMap() {
 
     //Grab the canvas so we can draw to it
-    canvas.width = intBlockSize*window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Width;
-    canvas.height = intBlockSize*window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Height;
+    canvas.width = intBlockSize*window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Height;
+    canvas.height = intBlockSize*window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Width;
 
 
     for (y = 0;y < window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Height;y++){
         for (x = 0;x < window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Width;x++){
             mapGetTileImage(window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Map[x][y]);
+            //drawTileBoarder(x,y);
         }
     }
 
@@ -230,63 +227,63 @@ function getFloorTile(strHexCode){
 }
 
 function getWallTile(strHexCode){
-    
+
     //Get the bit to check if the wall has something on it like a scroll or banner
     var tmp = parseInt(window.opener.hex2bin(strHexCode.substr(2,2)).substr(0,1));
     createImageBlock(queue.getResult("StoneWall"),x*intBlockSize,y*intBlockSize,0);
-    
+
     if (tmp === 0){
         //If the wall has nothing on it draw the plain wall and return
         return;
     }
-    
+
     var WallType = "StoneWall";
-    
+
     if (window.opener.getHexToBinaryPosition(strHexCode, 6, 2) === '0' && (window.opener.getHexToBinaryPosition(strHexCode, 12) === '0')) { //Shelf
-        
+
         WallType = "Shelf";
-        
+
     }else if (window.opener.getHexToBinaryPosition(strHexCode, 6, 2) === '1') { //Sign
         WallType = "ScrollBanner";
         var col = parseInt(window.opener.getHexToBinaryPosition(strHexCode, 0, 6)); //Sign colour
-        
+
         switch (col){
-                
+
             case 0:{WallType = "RandomBanner";};break; //Random Color
             case 1:{WallType = "SerpentBanner";};break; //Serpent Flag
             case 2:{WallType = "DragonBanner";};break; //Dragon Flag
             case 3:{WallType = "MoonBanner";};break; //Moon Flag
             case 4:{WallType = "ChaosBanner";};break; //Chaos Flag
-                
+
         }
-        
+
     } else if (window.opener.getHexToBinaryPosition(strHexCode, 6, 2) === '2') { //Switch
-        
+
         if (window.opener.getHexToBinaryPosition(strHexCode, 0, 5) === '0') { // Black switch
-		} else if (window.opener.getHexToBinaryPosition(strHexCode, 5) === '1') { // Off switch
+        } else if (window.opener.getHexToBinaryPosition(strHexCode, 5) === '1') { // Off switch
         } else { // On switch
         }
-        
+
     } else if (window.opener.getHexToBinaryPosition(strHexCode, 6, 2) === '3') { //Crystal Gem
         var col = parseInt(window.opener.getHexToBinaryPosition(strHexCode, 2, 3)); //Gem colour
-        if (window.opener.getHexToBinaryPosition(strHexCode, 5) === '1') { 
+        if (window.opener.getHexToBinaryPosition(strHexCode, 5) === '1') {
         } else {//Gem Slot
         }
     }
-    
+
     if (WallType !== "StoneWall"){
-        
+
         switch (parseInt(window.opener.hex2bin(strHexCode.substr(2,1)).substr(1,3),2)){
-                
+
             case 0:{createImageBlock(queue.getResult(WallType),x*intBlockSize,y*intBlockSize,0);};break;
             case 1:{createImageBlock(queue.getResult(WallType),x*intBlockSize,y*intBlockSize,90);};break;
             case 2:{createImageBlock(queue.getResult(WallType),x*intBlockSize,y*intBlockSize,180);};break;
             case 3:{createImageBlock(queue.getResult(WallType),x*intBlockSize,y*intBlockSize,270);};break;
-                
+
         }
-        
+
     }
-    
+
 }
 
 function getWoodenTile(strHexCode){
@@ -396,36 +393,36 @@ function getMagicTile(ctx,intBlockSize){
 }
 
 function drawOpenWoodenDoor(intDir){
-    
+
     switch (intDir){
         case 0:{createImageBlock(queue.getResult("WoodenDoorOpen"),x*intBlockSize,y*intBlockSize,0);};break;
         case 1:{createImageBlock(queue.getResult("WoodenDoorOpen"),x*intBlockSize,y*intBlockSize,90);};break;
         case 2:{createImageBlock(queue.getResult("WoodenDoorOpen"),x*intBlockSize,y*intBlockSize,180);};break;
-        case 3:{createImageBlock(queue.getResult("WoodenDoorOpen"),x*intBlockSize,y*intBlockSize,270);};break;       
+        case 3:{createImageBlock(queue.getResult("WoodenDoorOpen"),x*intBlockSize,y*intBlockSize,270);};break;
     }
 }
 
 function drawClosedWoodenDoor(intDir){
-    
+
     var hex = window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Map[x][y];
     var locked = parseInt(window.opener.hex2bin(hex.substr(2,1)).substr(3,1));
     var strDoorType = "WoodenDoor";
-    
+
     if (locked === 1){
         strDoorType = "WoodenDoorLocked";
     }
-    
-    
+
+
     switch (intDir){
         case 0:{createImageBlock(queue.getResult(strDoorType),x*intBlockSize,y*intBlockSize,0);};break;
         case 1:{createImageBlock(queue.getResult(strDoorType),x*intBlockSize,y*intBlockSize,90);};break;
         case 2:{createImageBlock(queue.getResult(strDoorType),x*intBlockSize,y*intBlockSize,180);};break;
-        case 3:{createImageBlock(queue.getResult(strDoorType),x*intBlockSize,y*intBlockSize,270);};break;       
+        case 3:{createImageBlock(queue.getResult(strDoorType),x*intBlockSize,y*intBlockSize,270);};break;
     }
 }
 
 function drawWoodenWall(intDir){
-    
+
     switch (intDir){
         case 0:{createImageBlock(queue.getResult("WoodenWall"),x*intBlockSize,y*intBlockSize,0);};break;
         case 1:{createImageBlock(queue.getResult("WoodenWall"),x*intBlockSize,y*intBlockSize,90);};break;
@@ -484,19 +481,32 @@ function copyCanvasRegionToBuffer(img, PosAry){
 }
 
 function getScrollText(strHex){
-    
-		var f = window.opener.player[0].floor,
+
+        var f = window.opener.player[0].floor,
             off = [0, 21, 33, 41, 49, 59],
             A = parseInt(strHex.substring(0, 1), 16),
             B = parseInt(strHex.substring(1, 2), 16),
             scrollRef = Math.floor((((A * 16) + B) / 4) - 4) - 1 + off[window.opener.towerThis];
 
-    var rtnData = window.opener.scrollData[scrollRef];
-    
+    var rtnData = "RefID: " + scrollRef + " - " + window.opener.scrollData[scrollRef];
+
     if (typeof rtnData === 'undefined'){
         return "";
     }else{
         return rtnData;
     }
-    
+
+}
+
+function getBlockData(strHex){
+
+    try {
+            $('#BlockData').append('</br><p>Scroll Data: '+getScrollText(strHex)+'</p>');
+        }catch (e){}
+
+        try{
+            var triggerActionID = window.opener.tower[window.opener.towerThis].triggers[parseInt(window.opener.getHexToBinaryPosition(strHex, 0, 5),16).toString(10)][0]/2;
+            $('#BlockData').append('<p>Switch Event: '+window.opener.switchName[triggerActionID]+'</p>');
+        }catch(e){}
+
 }
