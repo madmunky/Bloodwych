@@ -163,7 +163,6 @@ function drawMap() {
     }
 
     drawMonsterPositions();
-
     //drawPlayersPosition(context,intBlockSize);
 
 

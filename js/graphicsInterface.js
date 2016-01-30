@@ -1,1499 +1,1504 @@
 function drawUI(p) {
-	if (p.redrawLeftRightUiFlag > -1 && redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
-		if (typeof gfxUI !== "undefined" && gfxUI !== null) {
-			if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
-					ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
-					leftUI(p);
-				}
-			} else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_COMMAND) {
-					ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
-					commandUI(p);
-				}
-			}
+    if (p.redrawLeftRightUiFlag > -1 && redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
+        if (typeof gfxUI !== "undefined" && gfxUI !== null) {
+            if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
+                if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
+                    ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
+                    leftUI(p);
+                }
+            } else if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
+                if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_COMMAND) {
+                    ctx.clearRect(p.ScreenX * scale, (p.ScreenY - 3) * scale, 94 * scale, 89 * scale);
+                    commandUI(p);
+                }
+            }
 
-			if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
-					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					rightUI(p);
-				}
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_ACTIVESPELL) {
-					drawActiveSpell(p);
-				}
-			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_POCKETS) {
-					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					drawPocketUI(p);
-				}
-			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
-				if (p.timerSpellBookTurn === 0) {
-					if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_SPELLBOOK) {
-						ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-						drawSpellBook(p);
-					}
-				}
-			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
-					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					drawStatsPage(p);
-				}
-			} else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
-				if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
-					ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
-					drawWallScroll(p);
-				}
-			}
-			if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL) {
-				if (typeof player[1] !== 'undefined') {
-					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
-				} else {
-					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY + 96]);
-					myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY - 20]);
-				}
-			}
-			p.redrawLeftRightUiFlag = -1;
-			return true;
-		}
-	}
-	return false;
+            if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
+                if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
+                    ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+                    rightUI(p);
+                }
+                if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_ACTIVESPELL) {
+                    drawActiveSpell(p);
+                }
+            } else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
+                if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_POCKETS) {
+                    ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+                    drawPocketUI(p);
+                }
+            } else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SPELLBOOK) {
+                if (p.timerSpellBookTurn === 0) {
+                    if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_SPELLBOOK) {
+                        ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+                        drawSpellBook(p);
+                    }
+                }
+            } else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_STATS) {
+                if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
+                    ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+                    drawStatsPage(p);
+                }
+            } else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_SCROLL) {
+                if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_RIGHT) {
+                    ctx.clearRect((p.ScreenX + 225) * scale, (p.ScreenY - 3) * scale, 95 * scale, 89 * scale);
+                    drawWallScroll(p);
+                }
+            }
+            if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL) {
+                if (typeof player[1] !== 'undefined') {
+                    myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, 96]);
+                } else {
+                    myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY + 96]);
+                    myDIx(ctx, gfx["misc"]["separator"], [0, 0, 320, 7, 0, player[0].ScreenY - 20]);
+                }
+            }
+            p.redrawLeftRightUiFlag = -1;
+            return true;
+        }
+    }
+    return false;
 }
 
 function redrawUI(p, lr) {
-	if (redrawPlayerUiFlag === 0 || (redrawPlayerUiFlag & (p + 1)) !== (p + 1)) {
-		redrawPlayerUiFlag = redrawPlayerUiFlag + (p + 1);
-	}
-	if (typeof lr === "undefined") {
-		lr = 0;
-	}
-	if (p === 2) {
-		if (typeof player[0] !== "undefined") {
-			if (player[0].redrawLeftRightUiFlag > -1 && player[0].redrawLeftRightUiFlag !== lr) {
-				player[0].redrawLeftRightUiFlag = UI_REDRAW_ALL;
-			} else {
-				player[0].redrawLeftRightUiFlag = lr;
-			}
-		}
-		if (typeof player[1] !== "undefined") {
-			if (player[1].redrawLeftRightUiFlag > -1 && player[1].redrawLeftRightUiFlag !== lr) {
-				player[1].redrawLeftRightUiFlag = UI_REDRAW_ALL;
-			} else {
-				player[1].redrawLeftRightUiFlag = lr;
-			}
-		}
-	} else {
-		if (typeof player[p] !== "undefined") {
-			if (player[p].redrawLeftRightUiFlag > -1 && player[p].redrawLeftRightUiFlag !== lr) {
-				player[p].redrawLeftRightUiFlag = UI_REDRAW_ALL;
-			} else {
-				player[p].redrawLeftRightUiFlag = lr;
-			}
-		}
-	}
+    if (redrawPlayerUiFlag === 0 || (redrawPlayerUiFlag & (p + 1)) !== (p + 1)) {
+        redrawPlayerUiFlag = redrawPlayerUiFlag + (p + 1);
+    }
+    if (typeof lr === "undefined") {
+        lr = 0;
+    }
+    if (p === 2) {
+        if (typeof player[0] !== "undefined") {
+            if (player[0].redrawLeftRightUiFlag > -1 && player[0].redrawLeftRightUiFlag !== lr) {
+                player[0].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+            } else {
+                player[0].redrawLeftRightUiFlag = lr;
+            }
+        }
+        if (typeof player[1] !== "undefined") {
+            if (player[1].redrawLeftRightUiFlag > -1 && player[1].redrawLeftRightUiFlag !== lr) {
+                player[1].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+            } else {
+                player[1].redrawLeftRightUiFlag = lr;
+            }
+        }
+    } else {
+        if (typeof player[p] !== "undefined") {
+            if (player[p].redrawLeftRightUiFlag > -1 && player[p].redrawLeftRightUiFlag !== lr) {
+                player[p].redrawLeftRightUiFlag = UI_REDRAW_ALL;
+            } else {
+                player[p].redrawLeftRightUiFlag = lr;
+            }
+        }
+    }
 }
 
 function grabUISprites(spriteSheetIMG) {
 
-	var ImageArray = [];
-	var i = 0;
-	var extraColours = [];
-	//Grab the ICONS
-	for (y = 0; y < 6; y++) {
-		for (x = 0; x < 20; x++) {
-			if (i > 74 && i < 79) {
-				extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_SERPENT));
-				extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_CHAOS));
-				extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_DRAGON));
-				extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_MOON));
-				extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_SELECTED));
-				ImageArray.push(extraColours);
-				extraColours = [];
-			} else {
-				ImageArray.push(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false));
-			}
-			i++;
-		}
-	}
+    var ImageArray = [];
+    var i = 0;
+    var extraColours = [];
+    //Grab the ICONS
+    for (y = 0; y < 6; y++) {
+        for (x = 0; x < 20; x++) {
+            if (i > 74 && i < 79) {
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_SERPENT));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_CHAOS));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_DRAGON));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_MOON));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_SELECTED));
+                ImageArray.push(extraColours);
+                extraColours = [];
+            } else {
+                ImageArray.push(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false));
+            }
+            i++;
+        }
+    }
 
-	//Remove the blank images
-	for (x = 0; x < 7; x++) {
-		ImageArray.pop();
-	}
+    //Remove the blank images
+    for (x = 0; x < 7; x++) {
+        ImageArray.pop();
+    }
 
-	//Grab the SpellBook
-	//var SpellBookAnim = [];
-	for (x = 0; x < 5; x++) {
-		ImageArray.push(grabImageAt(spriteSheetIMG, x * 94, 97, 94, 62, false));
-	}
+    //Grab the SpellBook
+    //var SpellBookAnim = [];
+    for (x = 0; x < 5; x++) {
+        ImageArray.push(grabImageAt(spriteSheetIMG, x * 94, 97, 94, 62, false));
+    }
 
-	//ImageArray.push(SpellBookAnim);
+    //ImageArray.push(SpellBookAnim);
 
-	//Grab the rest of the UI
-	ImageArray.push(grabImageAt(spriteSheetIMG, 0, 161, 30, 41, false)); //Shield  
-	ImageArray.push(grabImageAt(spriteSheetIMG, 31, 162, 37, 22, false)); //SpellBook Icon
-	ImageArray.push(grabImageAt(spriteSheetIMG, 69, 161, 22, 22, false)); //Scroll
-	ImageArray.push(grabImageAt(spriteSheetIMG, 92, 162, 28, 11, false)); //Attack
-	ImageArray.push(grabImageAt(spriteSheetIMG, 123, 161, 6, 37, false)); //Chain
-	ImageArray.push(grabImageAt(spriteSheetIMG, 406, 0, 43, 44, false)); //Stats
-	ImageArray.push(grabImageAt(spriteSheetIMG, 131, 168, 60, 31, false)); //Red Actions
-	ImageArray.push(grabImageAt(spriteSheetIMG, 193, 168, 60, 31, false)); //Blue Actions
+    //Grab the rest of the UI
+    ImageArray.push(grabImageAt(spriteSheetIMG, 0, 161, 30, 41, false)); //Shield
+    ImageArray.push(grabImageAt(spriteSheetIMG, 31, 162, 37, 22, false)); //SpellBook Icon
+    ImageArray.push(grabImageAt(spriteSheetIMG, 69, 161, 22, 22, false)); //Scroll
+    ImageArray.push(grabImageAt(spriteSheetIMG, 92, 162, 28, 11, false)); //Attack
+    ImageArray.push(grabImageAt(spriteSheetIMG, 123, 161, 6, 37, false)); //Chain
+    ImageArray.push(grabImageAt(spriteSheetIMG, 406, 0, 43, 44, false)); //Stats
+    ImageArray.push(grabImageAt(spriteSheetIMG, 131, 168, 60, 31, false)); //Red Actions
+    ImageArray.push(grabImageAt(spriteSheetIMG, 193, 168, 60, 31, false)); //Blue Actions
 
-	ImageArray.push(grabImageAt(spriteSheetIMG, 254, 161, 30, 41, false)); //Filled Shield
-	ImageArray.push(grabImageAt(spriteSheetIMG, 287, 194, 92, 6, false)); //Long Chain
-	ImageArray.push(grabImageAt(spriteSheetIMG, 324, 1, 48, 44, false)); //Character Box
-	ImageArray.push(grabImageAt(spriteSheetIMG, 373, 1, 32, 24, false)); //Pocket Box
-	ImageArray.push(grabImageAt(spriteSheetIMG, 324, 46, 94, 19, false)); //Blue Name Box
-	ImageArray.push(grabImageAt(spriteSheetIMG, 324, 66, 94, 19, false)); //Red Name Box
+    ImageArray.push(grabImageAt(spriteSheetIMG, 254, 161, 30, 41, false)); //Filled Shield
+    ImageArray.push(grabImageAt(spriteSheetIMG, 287, 194, 92, 6, false)); //Long Chain
+    ImageArray.push(grabImageAt(spriteSheetIMG, 324, 1, 48, 44, false)); //Character Box
+    ImageArray.push(grabImageAt(spriteSheetIMG, 373, 1, 32, 24, false)); //Pocket Box
+    ImageArray.push(grabImageAt(spriteSheetIMG, 324, 46, 94, 19, false)); //Blue Name Box
+    ImageArray.push(grabImageAt(spriteSheetIMG, 324, 66, 94, 19, false)); //Red Name Box
 
-	ImageArray.push(grabImageAt(spriteSheetIMG, 381, 160, 30, 41, false)); //Red Shield
-	ImageArray.push(grabImageAt(spriteSheetIMG, 412, 160, 30, 41, false)); //Blue Shield
+    ImageArray.push(grabImageAt(spriteSheetIMG, 381, 160, 30, 41, false)); //Red Shield
+    ImageArray.push(grabImageAt(spriteSheetIMG, 412, 160, 30, 41, false)); //Blue Shield
 
-	//Grab the character Portraits
-	var ImagePortraits = [];
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 210, 32, 29, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 240, 32, 30, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 271, 32, 31, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 303, 32, 30, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 334, 32, 30, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 365, 32, 29, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 210, 32, 29, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 240, 32, 30, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 271, 32, 31, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 303, 32, 30, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 334, 32, 30, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 365, 32, 29, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 66, 210, 32, 29, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 66, 240, 32, 30, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 66, 271, 32, 31, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 66, 303, 32, 30, false));
+    //Grab the character Portraits
+    var ImagePortraits = [];
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 210, 32, 29, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 240, 32, 30, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 271, 32, 31, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 303, 32, 30, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 334, 32, 30, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 0, 365, 32, 29, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 210, 32, 29, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 240, 32, 30, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 271, 32, 31, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 303, 32, 30, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 334, 32, 30, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 33, 365, 32, 29, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 66, 210, 32, 29, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 66, 240, 32, 30, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 66, 271, 32, 31, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 66, 303, 32, 30, false));
 
-	ImageArray.push(ImagePortraits);
-	ImagePortraits = [];
+    ImageArray.push(ImagePortraits);
+    ImagePortraits = [];
 
-	//Grab the grey bar for the amour stat
-	ImageArray.push(grabImageAt(spriteSheetIMG, 285, 201, 95, 8, false));
+    //Grab the grey bar for the amour stat
+    ImageArray.push(grabImageAt(spriteSheetIMG, 285, 201, 95, 8, false));
 
-	//Grab the character Shields    
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 210, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 227, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 244, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 261, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 278, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 295, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 312, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 329, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 210, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 227, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 244, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 261, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 278, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 295, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 312, 30, 16, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 329, 30, 16, false));
-	ImageArray.push(ImagePortraits);
-	ImagePortraits = [];
+    //Grab the character Shields
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 210, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 227, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 244, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 261, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 278, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 295, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 312, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 100, 329, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 210, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 227, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 244, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 261, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 278, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 295, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 312, 30, 16, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 133, 329, 30, 16, false));
+    ImageArray.push(ImagePortraits);
+    ImagePortraits = [];
 
-	//Grab the shield type (heart, spade etc..)
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 165, 210, 28, 11, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 165, 224, 28, 11, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 165, 238, 28, 11, false));
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 165, 252, 28, 11, false));
-	ImageArray.push(ImagePortraits);
-	ImagePortraits = [];
+    //Grab the shield type (heart, spade etc..)
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 165, 210, 28, 11, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 165, 224, 28, 11, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 165, 238, 28, 11, false));
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 165, 252, 28, 11, false));
+    ImageArray.push(ImagePortraits);
+    ImagePortraits = [];
 
-	//Grab the bottom and top of the shield
-	ImageArray.push(grabImageAt(spriteSheetIMG, 170, 269, 20, 9, false));
-	ImageArray.push(grabImageAt(spriteSheetIMG, 164, 279, 30, 5, false));
+    //Grab the bottom and top of the shield
+    ImageArray.push(grabImageAt(spriteSheetIMG, 170, 269, 20, 9, false));
+    ImageArray.push(grabImageAt(spriteSheetIMG, 164, 279, 30, 5, false));
 
-	ImageArray.push(grabImageAt(spriteSheetIMG, 197, 212, 94, 87, false));
+    ImageArray.push(grabImageAt(spriteSheetIMG, 197, 212, 94, 87, false));
 
-	//Grab Fairys
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 303, 215, 31, 41, false)); //Default Fairy
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 335, 215, 31, 41, false)); //Serpent Fairy
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 367, 215, 31, 41, false)); //Chaos Fairy
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 399, 215, 31, 41, false)); //Dragon Fairy
-	ImagePortraits.push(grabImageAt(spriteSheetIMG, 431, 215, 31, 41, false)); //Moon Fairy
-	ImageArray.push(ImagePortraits);
-	ImagePortraits = [];
+    //Grab Fairys
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 303, 215, 31, 41, false)); //Default Fairy
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 335, 215, 31, 41, false)); //Serpent Fairy
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 367, 215, 31, 41, false)); //Chaos Fairy
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 399, 215, 31, 41, false)); //Dragon Fairy
+    ImagePortraits.push(grabImageAt(spriteSheetIMG, 431, 215, 31, 41, false)); //Moon Fairy
+    ImageArray.push(ImagePortraits);
+    ImagePortraits = [];
 
-	ImageArray.push(grabImageAt(spriteSheetIMG, 93, 176, 4, 3, false)); //Food Bar Pointer
+    ImageArray.push(grabImageAt(spriteSheetIMG, 93, 176, 4, 3, false)); //Food Bar Pointer
 
-	//Movement Highlights
-	ImageArray.push(grabImageAt(spriteSheetIMG, 170, 311, 12, 10, false)); //Rotate Left
-	ImageArray.push(grabImageAt(spriteSheetIMG, 187, 311, 16, 9, false)); //Move Forward
-	ImageArray.push(grabImageAt(spriteSheetIMG, 206, 311, 12, 10, false)); //Rotate Right
-	ImageArray.push(grabImageAt(spriteSheetIMG, 170, 326, 11, 11, false)); //Move Left
-	ImageArray.push(grabImageAt(spriteSheetIMG, 186, 326, 18, 9, false)); //Move Back
-	ImageArray.push(grabImageAt(spriteSheetIMG, 207, 326, 11, 11, false)); //Move Right
+    //Movement Highlights
+    ImageArray.push(grabImageAt(spriteSheetIMG, 170, 311, 12, 10, false)); //Rotate Left
+    ImageArray.push(grabImageAt(spriteSheetIMG, 187, 311, 16, 9, false)); //Move Forward
+    ImageArray.push(grabImageAt(spriteSheetIMG, 206, 311, 12, 10, false)); //Rotate Right
+    ImageArray.push(grabImageAt(spriteSheetIMG, 170, 326, 11, 11, false)); //Move Left
+    ImageArray.push(grabImageAt(spriteSheetIMG, 186, 326, 18, 9, false)); //Move Back
+    ImageArray.push(grabImageAt(spriteSheetIMG, 207, 326, 11, 11, false)); //Move Right
 
-	ImageArray.push(grabImageAt(spriteSheetIMG, 304, 261, 152, 16, false)); //Character Select Name Blue
-	ImageArray.push(grabImageAt(spriteSheetIMG, 304, 278, 152, 16, false)); //Character Select Name Red
-	ImageArray.push(grabImageAt(spriteSheetIMG, 304, 295, 48, 20, false)); //Character Select Boxes
-	ImageArray.push(grabImageAt(spriteSheetIMG, 356, 296, 94, 73, false)); //Character Select Scroll
+    ImageArray.push(grabImageAt(spriteSheetIMG, 304, 261, 152, 16, false)); //Character Select Name Blue
+    ImageArray.push(grabImageAt(spriteSheetIMG, 304, 278, 152, 16, false)); //Character Select Name Red
+    ImageArray.push(grabImageAt(spriteSheetIMG, 304, 295, 48, 20, false)); //Character Select Boxes
+    ImageArray.push(grabImageAt(spriteSheetIMG, 356, 296, 94, 73, false)); //Character Select Scroll
 
-	ImageArray.push(grabImageAt(spriteSheetIMG, 308, 319, 14, 3, false)); //Script Wave
+    ImageArray.push(grabImageAt(spriteSheetIMG, 308, 319, 14, 3, false)); //Script Wave
 
-	return ImageArray;
+    //Grab Datadisk Images
+    for (x = 0; x < 17; x++) {
+        ImageArray.push(grabImageAt(spriteSheetIMG, x * 16, 400, 16, 16, false, 0 ,0));
+    }
+
+    return ImageArray;
 
 }
 
 function drawSpellBook(p, ui, dr) {
-	ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
 
-	var ch;
-	var start = false;
+    var ch;
+    var start = false;
 
-	if (championSelect[currentPlayer].champID >= 0) {
-		ch = champion[championSelect[currentPlayer].champID];
-		start = true;
-	} else {
-		ch = p.getChampion(p.championLeader);
-	}
+    if (championSelect[currentPlayer].champID >= 0) {
+        ch = champion[championSelect[currentPlayer].champID];
+        start = true;
+    } else {
+        ch = p.getChampion(p.championLeader);
+    }
 
-	//var ch = champion[p.champion[p.championLeader]];
+    //var ch = champion[p.champion[p.championLeader]];
 
-	for (x = 0; x < 8; x++) {
-		var pg = ch.spellBookPage;
-		if (typeof dr !== "undefined" && typeof ui !== "undefined") {
-			if (x >= 4 && dr && ui <= 3) {
-				pg = (pg + 1) % SPELL_PAGE_MAX;
-			} else if (x < 4 && !dr && ui >= 1) {
-				pg = (pg + SPELL_PAGE_MAX - 1) % SPELL_PAGE_MAX;
-			} else if (x >= 4 && !dr && ui >= 4) {
-				pg = (pg + SPELL_PAGE_MAX - 1) % SPELL_PAGE_MAX;
-			}
-		}
-		var sym = ch.spellBook[pg][x].ref.symbols;
-		var col = getClassColour(ch.spellBook[pg][x].ref.colour, true);
+    for (x = 0; x < 8; x++) {
+        var pg = ch.spellBookPage;
+        if (typeof dr !== "undefined" && typeof ui !== "undefined") {
+            if (x >= 4 && dr && ui <= 3) {
+                pg = (pg + 1) % SPELL_PAGE_MAX;
+            } else if (x < 4 && !dr && ui >= 1) {
+                pg = (pg + SPELL_PAGE_MAX - 1) % SPELL_PAGE_MAX;
+            } else if (x >= 4 && !dr && ui >= 4) {
+                pg = (pg + SPELL_PAGE_MAX - 1) % SPELL_PAGE_MAX;
+            }
+        }
+        var sym = ch.spellBook[pg][x].ref.symbols;
+        var col = getClassColour(ch.spellBook[pg][x].ref.colour, true);
 
-		if (!ch.spellBook[pg][x].learnt) {
-			col = COLOUR[COLOUR_GREY_DARKEST];
-		}
-		if (ch.selectedSpell === ch.spellBook[pg][x]) {
-			col = COLOUR[COLOUR_WHITE];
-		}
+        if (!ch.spellBook[pg][x].learnt) {
+            col = COLOUR[COLOUR_GREY_DARKEST];
+        }
+        if (ch.selectedSpell === ch.spellBook[pg][x]) {
+            col = COLOUR[COLOUR_WHITE];
+        }
 
-		if (x < 4) {
-			writeSpellFont(sym.substring(0, 3), p.ScreenX + 234, (p.ScreenY + 15) + (x * 8), col);
-			writeSpellFont(sym.substring(3, 4), p.ScreenX + 258, (p.ScreenY + 14) + (x * 8), col);
-		} else {
-			writeSpellFont(sym.substring(0, 1), p.ScreenX + 282, (p.ScreenY + 14) + ((x - 4) * 8), col);
-			writeSpellFont(sym.substring(1, 4), p.ScreenX + 290, (p.ScreenY + 15) + ((x - 4) * 8), col);
-		}
-	}
+        if (x < 4) {
+            writeSpellFont(sym.substring(0, 3), p.ScreenX + 234, (p.ScreenY + 15) + (x * 8), col);
+            writeSpellFont(sym.substring(3, 4), p.ScreenX + 258, (p.ScreenY + 14) + (x * 8), col);
+        } else {
+            writeSpellFont(sym.substring(0, 1), p.ScreenX + 282, (p.ScreenY + 14) + ((x - 4) * 8), col);
+            writeSpellFont(sym.substring(1, 4), p.ScreenX + 290, (p.ScreenY + 15) + ((x - 4) * 8), col);
+        }
+    }
 
-	if (ch.selectedSpell === null && !start) {
+    if (ch.selectedSpell === null && !start) {
 
-		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT], p.ScreenX + 257 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-		drawPocketInfo(p);
-	} else if (ch.selectedSpell !== null && start) { //start screen
-		if (currentPlayer === 0) {
-			drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
-		} else {
-			drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
-		}
-		writeFontImage(ch.selectedSpell.ref.name, 170, (player[0].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
-	} else if (ch.selectedSpell !== null) {
-		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-		writeFontImage(ch.selectedSpell.ref.name, p.ScreenX + 242, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
-		writeFontImage("COST " + doubleDigits(ch.selectedSpell.cost), p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
-		t = recolourUiGfx(font[94], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED]);
-		ctx.drawImage(t, (p.ScreenX + 274) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
-		t = flipImageVert(t);
-		ctx.drawImage(t, (p.ScreenX + 298) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-		if (!p.showSpellText) {
-			var ch = champion[p.champion[p.championLeader]];
-			ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 88 - 10) * scale, 128 * scale, 8 * scale);
-			writeFontImage("CAST % ", p.ScreenX + 96 + 2, (p.ScreenY + 79), COLOUR[COLOUR_YELLOW]);
-			var cst = ch.getSpellCastChance();
-			var t = showStatusBar(cst, 1.0, 62, COLOUR[COLOUR_RED]);
-			ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
-		}
-	} else if (ch.selectedSpell === null && start) { //start screen
-		if (currentPlayer === 0) {
-			drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
-		} else {
-			drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
-		}
-		writeFontImage(ch.getName(), 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
-	}
+        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT], p.ScreenX + 257 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+        drawPocketInfo(p);
+    } else if (ch.selectedSpell !== null && start) { //start screen
+        if (currentPlayer === 0) {
+            drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+        } else {
+            drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+        }
+        writeFontImage(ch.selectedSpell.ref.name, 170, (player[0].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
+    } else if (ch.selectedSpell !== null) {
+        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+        writeFontImage(ch.selectedSpell.ref.name, p.ScreenX + 242, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
+        writeFontImage("COST " + doubleDigits(ch.selectedSpell.cost), p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
+        t = recolourUiGfx(font[94], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED]);
+        ctx.drawImage(t, (p.ScreenX + 274) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
+        t = flipImageVert(t);
+        ctx.drawImage(t, (p.ScreenX + 298) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+        if (!p.showSpellText) {
+            var ch = champion[p.champion[p.championLeader]];
+            ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 88 - 10) * scale, 128 * scale, 8 * scale);
+            writeFontImage("CAST % ", p.ScreenX + 96 + 2, (p.ScreenY + 79), COLOUR[COLOUR_YELLOW]);
+            var cst = ch.getSpellCastChance();
+            var t = showStatusBar(cst, 1.0, 62, COLOUR[COLOUR_RED]);
+            ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
+        }
+    } else if (ch.selectedSpell === null && start) { //start screen
+        if (currentPlayer === 0) {
+            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+        } else {
+            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+        }
+        writeFontImage(ch.getName(), 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
+    }
 
-	if (!start) {
-		writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
-		writeFontImage(getSpellNotation(p.getChampion(p.championLeader).stat.sp) + "/" + getSpellNotation(p.getChampion(p.championLeader).stat.spMax), p.ScreenX + 282, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
-	} else {
-		writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
-		writeFontImage(getSpellNotation(champion[championSelect[currentPlayer].champID].stat.sp) + "/" + getSpellNotation(champion[championSelect[currentPlayer].champID].stat.spMax), p.ScreenX + 282, (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
-	}
+    if (!start) {
+        writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
+        writeFontImage(getSpellNotation(p.getChampion(p.championLeader).stat.sp) + "/" + getSpellNotation(p.getChampion(p.championLeader).stat.spMax), p.ScreenX + 282, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
+    } else {
+        writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
+        writeFontImage(getSpellNotation(champion[championSelect[currentPlayer].champID].stat.sp) + "/" + getSpellNotation(champion[championSelect[currentPlayer].champID].stat.spMax), p.ScreenX + 282, (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+    }
 }
 
 function changeSpellBookPage(p, dr) {
-	if (p.timerSpellBookTurn === 0) {
-		if (dr) {
-			drawSpellBookPageTurn(p, 4, dr, 150);
-			drawSpellBookPageTurn(p, 3, dr, 300);
-			drawSpellBookPageTurn(p, 2, dr, 450);
-			drawSpellBookPageTurn(p, 1, dr, 600, true);
-		} else {
-			drawSpellBookPageTurn(p, 1, dr, 150);
-			drawSpellBookPageTurn(p, 2, dr, 300);
-			drawSpellBookPageTurn(p, 3, dr, 450);
-			drawSpellBookPageTurn(p, 4, dr, 600, true);
-		}
-	}
+    if (p.timerSpellBookTurn === 0) {
+        if (dr) {
+            drawSpellBookPageTurn(p, 4, dr, 150);
+            drawSpellBookPageTurn(p, 3, dr, 300);
+            drawSpellBookPageTurn(p, 2, dr, 450);
+            drawSpellBookPageTurn(p, 1, dr, 600, true);
+        } else {
+            drawSpellBookPageTurn(p, 1, dr, 150);
+            drawSpellBookPageTurn(p, 2, dr, 300);
+            drawSpellBookPageTurn(p, 3, dr, 450);
+            drawSpellBookPageTurn(p, 4, dr, 600, true);
+        }
+    }
 }
 
 function drawSpellBookPageTurn(p, ui, dr, timer, stop, full) {
-	if (typeof stop === "undefined") {
-		stop = false;
-	}
-	if (typeof full === "undefined") {
-		full = true;
-	}
-	(function(p, ui, dr, stop) {
-		p.timerSpellBookTurn = setTimeout(function() {
-			drawSpellBook(p, ui, dr);
-			if (dr) {
-				ctx.drawImage(colourSpellPage(true, champion[p.champion[p.championLeader]], gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
-			} else {
-				ctx.drawImage(colourSpellPage(false, champion[p.champion[p.championLeader]], gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
-			}
-			if (stop) {
-				(function(p, dr) {
-					p.timerSpellBookTurn = setTimeout(function() {
-						var ch = p.getChampion(p.championLeader);
-						p.timerSpellBookTurn = 0;
-						if (dr) {
-							ch.spellBookPage = (ch.spellBookPage + 1) % SPELL_PAGE_MAX;
-						} else {
-							ch.spellBookPage = (ch.spellBookPage + SPELL_PAGE_MAX - 1) % SPELL_PAGE_MAX;
-						}
-						if (championSelect[0].champID > -1) {
-							drawSpellBook(p);
-						} else {
-							redrawUI(p.id, UI_REDRAW_SPELLBOOK);
-						}
+    if (typeof stop === "undefined") {
+        stop = false;
+    }
+    if (typeof full === "undefined") {
+        full = true;
+    }
+    (function(p, ui, dr, stop) {
+        p.timerSpellBookTurn = setTimeout(function() {
+            drawSpellBook(p, ui, dr);
+            if (dr) {
+                ctx.drawImage(colourSpellPage(true, champion[p.champion[p.championLeader]], gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
+            } else {
+                ctx.drawImage(colourSpellPage(false, champion[p.champion[p.championLeader]], gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
+            }
+            if (stop) {
+                (function(p, dr) {
+                    p.timerSpellBookTurn = setTimeout(function() {
+                        var ch = p.getChampion(p.championLeader);
+                        p.timerSpellBookTurn = 0;
+                        if (dr) {
+                            ch.spellBookPage = (ch.spellBookPage + 1) % SPELL_PAGE_MAX;
+                        } else {
+                            ch.spellBookPage = (ch.spellBookPage + SPELL_PAGE_MAX - 1) % SPELL_PAGE_MAX;
+                        }
+                        if (championSelect[0].champID > -1) {
+                            drawSpellBook(p);
+                        } else {
+                            redrawUI(p.id, UI_REDRAW_SPELLBOOK);
+                        }
 
-					}, 100);
-				})(p, dr);
-			}
-		}, timer);
-	})(p, ui, dr, stop);
+                    }, 100);
+                })(p, dr);
+            }
+        }, timer);
+    })(p, ui, dr, stop);
 }
 
 function leftUI(p) {
 
-	ctx.drawImage(gfxUI[UI_GFX_STATSBOX], (p.ScreenX + 51) * scale, p.ScreenY * scale, gfxUI[UI_GFX_STATSBOX].width * scale, gfxUI[UI_GFX_STATSBOX].height * scale);
-	leftUIStats(p);
+    ctx.drawImage(gfxUI[UI_GFX_STATSBOX], (p.ScreenX + 51) * scale, p.ScreenY * scale, gfxUI[UI_GFX_STATSBOX].width * scale, gfxUI[UI_GFX_STATSBOX].height * scale);
+    leftUIStats(p);
 
-	ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 
-	var c1 = p.getOrderedChampionIds(true);
-	for (c = 0; c < p.champion.length; c++) {
-		var c2 = c1[c];
-		var cid = p.champion[c2];
-		var ch = p.getChampion(c2);
-		if (ch !== null) {
-			if (c === 0) {
-				if (p.uiLeftPanel.champs[c].opened) {
-					ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
-					var t = drawCharacter(monster[TOWER_CHAMPIONS][cid], 0, 0, p, {
-						x: 0,
-						y: -1
-					}, true, false);
-					ctx.drawImage(t, (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, t.width * scale, t.height * scale);
-					ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 43 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
-					if (p.uiLeftPanel.champs[c].damage > 0) {
-						ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + 13) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
-						writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + 28, p.ScreenY + 10, COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_CENTER);
-					}
-				} else {
-					ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
-					ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][cid], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][cid].width * scale, gfxUI[UI_GFX_PORTRAITS][cid].height * scale);
-					if (ch.activeSpell.id > -1) {
-						var sp = getSpellById(ch.activeSpell.id);
-						drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
-					}
-				}
-			} else {
-				var t;
-				if (ch.getMonster() !== null && ch.getMonster().dead) {
-					t = createShield(cid, ch.prof, 4);
-					ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
-				} else if (p.uiLeftPanel.champs[c].opened) {
-					ctx.drawImage(gfxUI[UI_GFX_SHIELD], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD].width * scale, gfxUI[UI_GFX_SHIELD].height * scale);
-					t = drawCharacter(monster[TOWER_CHAMPIONS][cid], 0, 1, p, {
-						x: 0,
-						y: 0
-					}, true, false);
-					ctx.drawImage(t, ((c - 1) * 32 * scale) + (p.ScreenX * scale) - 49 * scale, (p.ScreenY + 45) * scale - 37 * scale, t.width * scale, t.height * scale);
-					if (p.uiLeftPanel.champs[c].damage > 0) {
-						ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + (c - 1) * 32 + 1) * scale, (p.ScreenY + 53) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
-						writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + ((c - 1) * 32 + 16), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_CENTER);
-					}
-				} else {
-					t = createShield(cid, ch.prof, ch.colour);
-					ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
-				}
-			}
-		} else {
-			if (p === player[1]) {
-				ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_RED].width * scale, gfxUI[UI_GFX_SHIELD_RED].height * scale);
-			} else {
-				ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
-			}
-		}
-	}
+    var c1 = p.getOrderedChampionIds(true);
+    for (c = 0; c < p.champion.length; c++) {
+        var c2 = c1[c];
+        var cid = p.champion[c2];
+        var ch = p.getChampion(c2);
+        if (ch !== null) {
+            if (c === 0) {
+                if (p.uiLeftPanel.champs[c].opened) {
+                    ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
+                    var t = drawCharacter(monster[TOWER_CHAMPIONS][cid], 0, 0, p, {
+                        x: 0,
+                        y: -1
+                    }, true, false);
+                    ctx.drawImage(t, (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, t.width * scale, t.height * scale);
+                    ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 43 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
+                    if (p.uiLeftPanel.champs[c].damage > 0) {
+                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + 13) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                        writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + 28, p.ScreenY + 10, COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_CENTER);
+                    }
+                } else {
+                    ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
+                    ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][cid], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][cid].width * scale, gfxUI[UI_GFX_PORTRAITS][cid].height * scale);
+                    if (ch.activeSpell.id > -1) {
+                        var sp = getSpellById(ch.activeSpell.id);
+                        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
+                    }
+                }
+            } else {
+                var t;
+                if (ch.getMonster() !== null && ch.getMonster().dead) {
+                    t = createShield(cid, ch.prof, 4);
+                    ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
+                } else if (p.uiLeftPanel.champs[c].opened) {
+                    ctx.drawImage(gfxUI[UI_GFX_SHIELD], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD].width * scale, gfxUI[UI_GFX_SHIELD].height * scale);
+                    t = drawCharacter(monster[TOWER_CHAMPIONS][cid], 0, 1, p, {
+                        x: 0,
+                        y: 0
+                    }, true, false);
+                    ctx.drawImage(t, ((c - 1) * 32 * scale) + (p.ScreenX * scale) - 49 * scale, (p.ScreenY + 45) * scale - 37 * scale, t.width * scale, t.height * scale);
+                    if (p.uiLeftPanel.champs[c].damage > 0) {
+                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + (c - 1) * 32 + 1) * scale, (p.ScreenY + 53) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                        writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + ((c - 1) * 32 + 16), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_CENTER);
+                    }
+                } else {
+                    t = createShield(cid, ch.prof, ch.colour);
+                    ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
+                }
+            }
+        } else {
+            if (p === player[1]) {
+                ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_RED].width * scale, gfxUI[UI_GFX_SHIELD_RED].height * scale);
+            } else {
+                ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
+            }
+        }
+    }
 }
 
 function leftUIStats(p) {
-	if (p.uiLeftPanel.champs[0].opened) {
-		var ch = p.getOrderedChampionIds(true);
-		for (c = 0; c < p.champion.length; c++) {
-			var c1 = ch[c];
-			var champ = p.getChampion(c1);
-			if (champ !== null) {
-				var rgb = getClassColour(champ.colour);
-				var hp = Math.floor(21 * champ.stat.hp / champ.stat.hpMax);
-				if (hp < 0) {
-					hp = 0;
-				}
-				ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
-				ctx.fillRect((p.ScreenX + 55 + c * 9) * scale, (p.ScreenY + 35 - hp) * scale, 7 * scale, hp * scale);
-			}
-		}
-	} else {
-		var champ = p.getChampion(p.championLeader);
-		if (champ !== null) {
-			var rgb;
-			var hp = Math.floor(35 * champ.stat.hp / champ.stat.hpMax);
-			var vit = Math.floor(35 * champ.stat.vit / champ.stat.vitMax);
-			var sp = Math.floor(35 * champ.stat.sp / champ.stat.spMax);
-			if (hp < 0) {
-				hp = 0;
-			}
-			if (vit < 0) {
-				vit = 0;
-			}
-			if (sp < 0) {
-				sp = 0;
-			}
-			if (p === player[0]) {
-				rgb = getClassColour(CLASS_COLOUR_MOON);
-			} else {
-				rgb = getClassColour(CLASS_COLOUR_DRAG);
-			}
-			ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
-			ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 15) * scale, hp * scale, 5 * scale);
-			ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 22) * scale, vit * scale, 5 * scale);
-			ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 29) * scale, sp * scale, 5 * scale);
-		}
-	}
+    if (p.uiLeftPanel.champs[0].opened) {
+        var ch = p.getOrderedChampionIds(true);
+        for (c = 0; c < p.champion.length; c++) {
+            var c1 = ch[c];
+            var champ = p.getChampion(c1);
+            if (champ !== null) {
+                var rgb = getClassColour(champ.colour);
+                var hp = Math.floor(21 * champ.stat.hp / champ.stat.hpMax);
+                if (hp < 0) {
+                    hp = 0;
+                }
+                ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+                ctx.fillRect((p.ScreenX + 55 + c * 9) * scale, (p.ScreenY + 35 - hp) * scale, 7 * scale, hp * scale);
+            }
+        }
+    } else {
+        var champ = p.getChampion(p.championLeader);
+        if (champ !== null) {
+            var rgb;
+            var hp = Math.floor(35 * champ.stat.hp / champ.stat.hpMax);
+            var vit = Math.floor(35 * champ.stat.vit / champ.stat.vitMax);
+            var sp = Math.floor(35 * champ.stat.sp / champ.stat.spMax);
+            if (hp < 0) {
+                hp = 0;
+            }
+            if (vit < 0) {
+                vit = 0;
+            }
+            if (sp < 0) {
+                sp = 0;
+            }
+            if (p === player[0]) {
+                rgb = getClassColour(CLASS_COLOUR_MOON);
+            } else {
+                rgb = getClassColour(CLASS_COLOUR_DRAG);
+            }
+            ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+            ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 15) * scale, hp * scale, 5 * scale);
+            ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 22) * scale, vit * scale, 5 * scale);
+            ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 29) * scale, sp * scale, 5 * scale);
+        }
+    }
 }
 
 function getClassColour(c, palette) {
 
-	if (typeof palette === 'undefined') {
-		palette = false;
-	}
+    if (typeof palette === 'undefined') {
+        palette = false;
+    }
 
-	var red = 255,
-		grn = 255,
-		blu = 255,
-		aph = 255;
+    var red = 255,
+        grn = 255,
+        blu = 255,
+        aph = 255;
 
-	switch (c) {
-		case CLASS_COLOUR_SERP:
-			red = COLOUR[COLOUR_GREEN][0];
-			grn = COLOUR[COLOUR_GREEN][1];
-			blu = COLOUR[COLOUR_GREEN][2];
-			break;
-		case CLASS_COLOUR_CHAOS:
-			red = COLOUR[COLOUR_YELLOW][0];
-			grn = COLOUR[COLOUR_YELLOW][1];
-			blu = COLOUR[COLOUR_YELLOW][2];
-			break;
-		case CLASS_COLOUR_DRAG:
-			red = COLOUR[COLOUR_RED][0];
-			grn = COLOUR[COLOUR_RED][1];
-			blu = COLOUR[COLOUR_RED][2];
-			break;
-		case CLASS_COLOUR_MOON:
-			red = COLOUR[COLOUR_BLUE_DARK][0];
-			grn = COLOUR[COLOUR_BLUE_DARK][1];
-			blu = COLOUR[COLOUR_BLUE_DARK][2];
-			break;
-		case CLASS_COLOUR_ANCIENT:
-			red = COLOUR[COLOUR_PINK][0];
-			grn = COLOUR[COLOUR_PINK][1];
-			blu = COLOUR[COLOUR_PINK][2];
-			break;
-		default:
-			break;
-	}
-	if (palette) {
-		return new Array(red, grn, blu, aph);
-	}
-	return {
-		r: red,
-		g: grn,
-		b: blu
-	};
+    switch (c) {
+        case CLASS_COLOUR_SERP:
+            red = COLOUR[COLOUR_GREEN][0];
+            grn = COLOUR[COLOUR_GREEN][1];
+            blu = COLOUR[COLOUR_GREEN][2];
+            break;
+        case CLASS_COLOUR_CHAOS:
+            red = COLOUR[COLOUR_YELLOW][0];
+            grn = COLOUR[COLOUR_YELLOW][1];
+            blu = COLOUR[COLOUR_YELLOW][2];
+            break;
+        case CLASS_COLOUR_DRAG:
+            red = COLOUR[COLOUR_RED][0];
+            grn = COLOUR[COLOUR_RED][1];
+            blu = COLOUR[COLOUR_RED][2];
+            break;
+        case CLASS_COLOUR_MOON:
+            red = COLOUR[COLOUR_BLUE_DARK][0];
+            grn = COLOUR[COLOUR_BLUE_DARK][1];
+            blu = COLOUR[COLOUR_BLUE_DARK][2];
+            break;
+        case CLASS_COLOUR_ANCIENT:
+            red = COLOUR[COLOUR_PINK][0];
+            grn = COLOUR[COLOUR_PINK][1];
+            blu = COLOUR[COLOUR_PINK][2];
+            break;
+        default:
+            break;
+    }
+    if (palette) {
+        return new Array(red, grn, blu, aph);
+    }
+    return {
+        r: red,
+        g: grn,
+        b: blu
+    };
 }
 
 function commandUI(p) {
-	var ch = p.getChampion(p.championLeader);
-	ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].height * scale);
-	if (ch.activeSpell.id > -1) {
-		var sp = getSpellById(ch.activeSpell.id);
-		drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
-	}
-	ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
-	ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    var ch = p.getChampion(p.championLeader);
+    ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].height * scale);
+    if (ch.activeSpell.id > -1) {
+        var sp = getSpellById(ch.activeSpell.id);
+        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
+    }
+    ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
+    ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 
-	ctx.fillStyle = "#606060";
-	ctx.fillRect((p.ScreenX + 50) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
-	ctx.fillRect((p.ScreenX + 52) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
-	ctx.fillRect((p.ScreenX + 93) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
-	ctx.fillRect((p.ScreenX + 91) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
+    ctx.fillStyle = "#606060";
+    ctx.fillRect((p.ScreenX + 50) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
+    ctx.fillRect((p.ScreenX + 52) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
+    ctx.fillRect((p.ScreenX + 93) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
+    ctx.fillRect((p.ScreenX + 91) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
 
-	ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
-	drawCommunicationBox(p, p.communication.highlighted, true);
+    ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
+    drawCommunicationBox(p, p.communication.highlighted, true);
 }
 
 function drawActiveSpell(p) {
-	var ch = p.getChampion(p.championLeader);
-	var id = ch.activeSpell.id;
-	if (id !== -1) {
-		var spellImage;
+    var ch = p.getChampion(p.championLeader);
+    var id = ch.activeSpell.id;
+    if (id !== -1) {
+        var spellImage;
 
-		switch (id) {
-			case SPELL_ARMOUR:
-				spellImage = UI_GFX_ICON_SPELL_ARMOUR;
-				break;
-			case SPELL_COMPASS:
-				switch (p.d) {
-					case DIRECTION_NORTH:
-						spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;
-						break;
-					case DIRECTION_EAST:
-						spellImage = UI_GFX_ICON_SPELL_COMPASS_EAST;
-						break;
-					case DIRECTION_SOUTH:
-						spellImage = UI_GFX_ICON_SPELL_COMPASS_SOUTH;
-						break;
-					case DIRECTION_WEST:
-						spellImage = UI_GFX_ICON_SPELL_COMPASS_WEST;
-						break;
-				}
-				break;
-			case SPELL_LEVITATE:
-				spellImage = UI_GFX_ICON_SPELL_LEVITATE;
-				break;
-			case SPELL_WARPOWER:
-				spellImage = UI_GFX_ICON_SPELL_WARPOWER;
-				break;
-			case SPELL_DEFLECT:
-				spellImage = UI_GFX_ICON_SPELL_DEFLECT;
-				break;
-			case SPELL_VANISH:
-				spellImage = UI_GFX_ICON_SPELL_VANISH;
-				break;
-			case SPELL_ANTIMAGE:
-				spellImage = UI_GFX_ICON_SPELL_ANTIMAGE;
-				break;
-			case SPELL_TRUEVIEW:
-				spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;
-				break;
-			case SPELL_PROTECT:
-				spellImage = UI_GFX_ICON_SPELL_13;
-				break;
-			case SPELL_ENHANCE:
-				spellImage = UI_GFX_ICON_SPELL_16;
-				break;
-		}
-		ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
-	}
+        switch (id) {
+            case SPELL_ARMOUR:
+                spellImage = UI_GFX_ICON_SPELL_ARMOUR;
+                break;
+            case SPELL_COMPASS:
+                switch (p.d) {
+                    case DIRECTION_NORTH:
+                        spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;
+                        break;
+                    case DIRECTION_EAST:
+                        spellImage = UI_GFX_ICON_SPELL_COMPASS_EAST;
+                        break;
+                    case DIRECTION_SOUTH:
+                        spellImage = UI_GFX_ICON_SPELL_COMPASS_SOUTH;
+                        break;
+                    case DIRECTION_WEST:
+                        spellImage = UI_GFX_ICON_SPELL_COMPASS_WEST;
+                        break;
+                }
+                break;
+            case SPELL_LEVITATE:
+                spellImage = UI_GFX_ICON_SPELL_LEVITATE;
+                break;
+            case SPELL_WARPOWER:
+                spellImage = UI_GFX_ICON_SPELL_WARPOWER;
+                break;
+            case SPELL_DEFLECT:
+                spellImage = UI_GFX_ICON_SPELL_DEFLECT;
+                break;
+            case SPELL_VANISH:
+                spellImage = UI_GFX_ICON_SPELL_VANISH;
+                break;
+            case SPELL_ANTIMAGE:
+                spellImage = UI_GFX_ICON_SPELL_ANTIMAGE;
+                break;
+            case SPELL_TRUEVIEW:
+                spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;
+                break;
+            case SPELL_PROTECT:
+                spellImage = UI_GFX_ICON_SPELL_13;
+                break;
+            case SPELL_ENHANCE:
+                spellImage = UI_GFX_ICON_SPELL_16;
+                break;
+        }
+        ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
+    }
 }
 
 function rightUI(p) {
 
-	var ch = champion[p.champion[p.championLeader]];
+    var ch = champion[p.champion[p.championLeader]];
 
-	if (p === player[0]) {
-		ctx.drawImage(gfxUI[UI_GFX_NAME_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_BLUE].width * scale, gfxUI[UI_GFX_NAME_BLUE].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].width * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].height * scale);
+    if (p === player[0]) {
+        ctx.drawImage(gfxUI[UI_GFX_NAME_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_BLUE].width * scale, gfxUI[UI_GFX_NAME_BLUE].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].width * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].height * scale);
 
-	} else {
-		ctx.drawImage(gfxUI[UI_GFX_NAME_RED], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_RED].width * scale, gfxUI[UI_GFX_NAME_RED].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
-	}
+    } else {
+        ctx.drawImage(gfxUI[UI_GFX_NAME_RED], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_RED].width * scale, gfxUI[UI_GFX_NAME_RED].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
+    }
 
-	writeFontImage(p.getChampion(p.championLeader).firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].width * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SCROLL].width * scale, gfxUI[UI_GFX_ICON_SCROLL].height * scale);
-	ctx.drawImage(gfxUI[UI_GFX_POCKETBOX], p.ScreenX + 288 * scale, (p.ScreenY + 21) * scale, gfxUI[UI_GFX_POCKETBOX].width * scale, gfxUI[UI_GFX_POCKETBOX].height * scale);
+    writeFontImage(p.getChampion(p.championLeader).firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
+    ctx.drawImage(gfxUI[UI_GFX_ICON_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].width * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SCROLL].width * scale, gfxUI[UI_GFX_ICON_SCROLL].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_POCKETBOX], p.ScreenX + 288 * scale, (p.ScreenY + 21) * scale, gfxUI[UI_GFX_POCKETBOX].width * scale, gfxUI[UI_GFX_POCKETBOX].height * scale);
 
-	if (ch.activeSpell.id !== -1) {
-		//drawActiveSpell(ch.activeSpell.id,p);
-	} else {
-		if (ch.selectedSpell === null) {
-			ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_OPENDOOR].width * scale, gfxUI[UI_GFX_ICON_OPENDOOR].height * scale);
-		} else {
-			ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-		}
-	}
-	ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
-	for (c = 0; c < p.champion.length; c++) {
-		var ca = [0, 1, 3, 2];
-		var c1 = ca[c];
-		var ch = p.getChampion(c1);
-		if (ch !== null) {
-			var a = ch.prof;
-			var b = ch.colour;
-			if (!monster[TOWER_CHAMPIONS][ch.id].dead && ch.recruitment.attached) {
-				if (c1 === p.championHighlite) {
-					ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][4], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-				} else {
-					ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-				}
-			}
-			if (c1 === p.championLeader) {
-				drawRect(p.ScreenX + 289 + (c % 2) * 16, p.ScreenY + 46 + Math.floor(c / 2) * 15, 15 - (c % 2), 13, COLOUR[COLOUR_BLUE_DARK]);
-				//if (c % 2 === 0) {
-				//	ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
-				//} else {
-				//	ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 288 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
-				//}
+    if (ch.activeSpell.id !== -1) {
+        //drawActiveSpell(ch.activeSpell.id,p);
+    } else {
+        if (ch.selectedSpell === null) {
+            ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_OPENDOOR].width * scale, gfxUI[UI_GFX_ICON_OPENDOOR].height * scale);
+        } else {
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+        }
+    }
+    ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
+    for (c = 0; c < p.champion.length; c++) {
+        var ca = [0, 1, 3, 2];
+        var c1 = ca[c];
+        var ch = p.getChampion(c1);
+        if (ch !== null) {
+            var a = ch.prof;
+            var b = ch.colour;
+            if (!monster[TOWER_CHAMPIONS][ch.id].dead && ch.recruitment.attached) {
+                if (c1 === p.championHighlite) {
+                    ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][4], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                } else {
+                    ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                }
+            }
+            if (c1 === p.championLeader) {
+                drawRect(p.ScreenX + 289 + (c % 2) * 16, p.ScreenY + 46 + Math.floor(c / 2) * 15, 15 - (c % 2), 13, COLOUR[COLOUR_BLUE_DARK]);
+                //if (c % 2 === 0) {
+                //	ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
+                //} else {
+                //	ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 288 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
+                //}
 
-			}
-		}
-	}
-	drawPocketInfo(p);
+            }
+        }
+    }
+    drawPocketInfo(p);
 
-	ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
+    ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 
 }
 
 function drawPocketInfo(p, chp) {
-	if (!p.attacking && !p.showSpellText) {
-		ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 78) * scale, 128 * scale, 8 * scale);
-		if (p.pocket.id > 0) {
-			writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
-			if (typeof chp !== 'undefined' && p.pocket.type === ITEM_TYPE_FOOD) {
-				var t = showStatusBar(chp.getFood(), 200, 69);
-				ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
-			}
-		}
-	}
+    if (!p.attacking && !p.showSpellText) {
+        ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 78) * scale, 128 * scale, 8 * scale);
+        if (p.pocket.id > 0) {
+            writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
+            if (typeof chp !== 'undefined' && p.pocket.type === ITEM_TYPE_FOOD) {
+                var t = showStatusBar(chp.getFood(), 200, 69);
+                ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
+            }
+        }
+    }
 }
 
 function drawPocketUI(p, chp, start) {
-	if (typeof chp === 'undefined') {
-		chp = p.getActivePocketChampion();
-		start = false;
-	}
+    if (typeof chp === 'undefined') {
+        chp = p.getActivePocketChampion();
+        start = false;
+    }
 
-	if (!start) {
-		if (p === player[0]) {
-			ctx.drawImage(gfxUI[UI_GFX_NAME_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_BLUE].width * scale, gfxUI[UI_GFX_NAME_BLUE].height * scale);
-		} else {
-			ctx.drawImage(gfxUI[UI_GFX_NAME_RED], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_RED].width * scale, gfxUI[UI_GFX_NAME_RED].height * scale);
-		}
-		writeFontImage(chp.firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
-	}
+    if (!start) {
+        if (p === player[0]) {
+            ctx.drawImage(gfxUI[UI_GFX_NAME_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_BLUE].width * scale, gfxUI[UI_GFX_NAME_BLUE].height * scale);
+        } else {
+            ctx.drawImage(gfxUI[UI_GFX_NAME_RED], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_RED].width * scale, gfxUI[UI_GFX_NAME_RED].height * scale);
+        }
+        writeFontImage(chp.firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
+    }
 
-	var i = 0;
-	for (y = 0; y < 2; y++) {
-		for (x = 0; x < 6; x++) {
-			var pocket = chp.pocket[i];
-			var pocketId = pocket.id;
-			if (pocketId === 0) {
-				pocketId = UI_GFX_POCKET_EMPTY;
-				if (y === 0) {
-					switch (x) {
-						case 0:
-							pocketId = UI_GFX_POCKET_EMPTY_LEFT_HAND;
-							break;
-						case 1:
-							pocketId = UI_GFX_POCKET_EMPTY_RIGHT_HAND;
-							break;
-						case 2:
-							pocketId = UI_GFX_POCKET_EMPTY_ARMOUR;
-							break;
-						case 3:
-							if (chp.prof === PROFESSION_WARRIOR || chp.prof === PROFESSION_ADVENTURER) {
-								pocketId = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
-							} else {
-								pocketId = UI_GFX_POCKET_EMPTY_SMALL_SHIELD;
-							}
-							break;
-						default:
-							break;
-					}
-				}
-				if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
-					ctx.drawImage(flipImageVert(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-				} else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
-					ctx.drawImage(flipImageVert(flipImage(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-				} else {
-					ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-				}
-			} else {
-				ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
-			}
+    var i = 0;
+    for (y = 0; y < 2; y++) {
+        for (x = 0; x < 6; x++) {
+            var pocket = chp.pocket[i];
+            var pocketId = pocket.id;
+            if (pocketId === 0) {
+                pocketId = UI_GFX_POCKET_EMPTY;
+                if (y === 0) {
+                    switch (x) {
+                        case 0:
+                            pocketId = UI_GFX_POCKET_EMPTY_LEFT_HAND;
+                            break;
+                        case 1:
+                            pocketId = UI_GFX_POCKET_EMPTY_RIGHT_HAND;
+                            break;
+                        case 2:
+                            pocketId = UI_GFX_POCKET_EMPTY_ARMOUR;
+                            break;
+                        case 3:
+                            if (chp.prof === PROFESSION_WARRIOR || chp.prof === PROFESSION_ADVENTURER) {
+                                pocketId = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
+                            } else {
+                                pocketId = UI_GFX_POCKET_EMPTY_SMALL_SHIELD;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
+                    ctx.drawImage(flipImageVert(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                } else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
+                    ctx.drawImage(flipImageVert(flipImage(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                } else {
+                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                }
+            } else {
+                ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
+            }
 
-			if (pocket.type === ITEM_TYPE_STACKABLE) {
-				var qty = pocket.quantity;
-				if (pocketId < 3) {
-					writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
-				} else {
-					writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 31) + (y * 16)), COLOUR[COLOUR_GREEN]);
-				}
+            if (pocket.type === ITEM_TYPE_STACKABLE) {
+                var qty = pocket.quantity;
+                if (pocketId < 3) {
+                    writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
+                } else {
+                    writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 31) + (y * 16)), COLOUR[COLOUR_GREEN]);
+                }
 
-			}
-			i++;
-		}
-	}
+            }
+            i++;
+        }
+    }
 
-	if (start) {
-		ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 7) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
-		ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 14) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
-		writeFontImage(TEXT_INVENTORY, p.ScreenX / scale + 234, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
-		ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
-	}
+    if (start) {
+        ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 7) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
+        ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 14) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
+        writeFontImage(TEXT_INVENTORY, p.ScreenX / scale + 234, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
+        ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
+    }
 
-	ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 54) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
-	var ac = getArmourNotation(chp.getArmourClass());
-	writeFontImage(TEXT_ARMOUR + ":", p.ScreenX / scale + 234, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-	writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), COLOUR[COLOUR_WHITE]);
+    ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 54) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
+    var ac = getArmourNotation(chp.getArmourClass());
+    writeFontImage(TEXT_ARMOUR + ":", p.ScreenX / scale + 234, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), COLOUR[COLOUR_WHITE]);
 
-	if (!start) {
+    if (!start) {
 
-		var c1 = p.getOrderedChampionIds();
-		for (c = 0; c < 6; c++) {
-			var cid = c1[c];
-			var g;
-			var ch = p.getChampion(cid);
+        var c1 = p.getOrderedChampionIds();
+        for (c = 0; c < 6; c++) {
+            var cid = c1[c];
+            var g;
+            var ch = p.getChampion(cid);
 
-			if (c < 4 && ch !== null) {
-				g = ch.prof + UI_GFX_POCKET_SPADE;
-			}
+            if (c < 4 && ch !== null) {
+                g = ch.prof + UI_GFX_POCKET_SPADE;
+            }
 
-			switch (c) {
+            switch (c) {
 
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-					if (ch !== null) {
-						if (ch.recruitment.attached) {
-							ctx.drawImage(gfxUI[g][ch.colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-						}
-						if (chp.recruitment.playerId > -1 && c === p.uiRightPanel.activePocket) {
-							drawRect(((p.ScreenX + 225) + (c * 16)), ((p.ScreenY + 63)), 15, 14, COLOUR[COLOUR_YELLOW]);
-							//ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
-						}
-					}
-					break
-				case 4:
-					{
-						//pid = itemID(p.pocket.id);
-						ctx.drawImage(itemRef[p.pocket.id].gfx, ((p.ScreenX + 226) + (c * 16)) * scale, (p.ScreenY + 63) * scale, itemRef[p.pocket.id].gfx.width * scale, itemRef[p.pocket.id].gfx.height * scale);
-						if (p.pocket.type === ITEM_TYPE_STACKABLE) {
-							var qty = p.pocket.quantity;
-							if (p.pocket.id < 3) {
-								writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
-							} else {
-								writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
-							}
-						}
-						drawPocketInfo(p, chp);
-						//ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY], ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-					};
-					break
-				case 5:
-					{
-						ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
-					};
-					break
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    if (ch !== null) {
+                        if (ch.recruitment.attached) {
+                            ctx.drawImage(gfxUI[g][ch.colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                        }
+                        if (chp.recruitment.playerId > -1 && c === p.uiRightPanel.activePocket) {
+                            drawRect(((p.ScreenX + 225) + (c * 16)), ((p.ScreenY + 63)), 15, 14, COLOUR[COLOUR_YELLOW]);
+                            //ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
+                        }
+                    }
+                    break
+                case 4:
+                    {
+                        //pid = itemID(p.pocket.id);
+                        ctx.drawImage(itemRef[p.pocket.id].gfx, ((p.ScreenX + 226) + (c * 16)) * scale, (p.ScreenY + 63) * scale, itemRef[p.pocket.id].gfx.width * scale, itemRef[p.pocket.id].gfx.height * scale);
+                        if (p.pocket.type === ITEM_TYPE_STACKABLE) {
+                            var qty = p.pocket.quantity;
+                            if (p.pocket.id < 3) {
+                                writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+                            } else {
+                                writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
+                            }
+                        }
+                        drawPocketInfo(p, chp);
+                        //ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY], ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    };
+                    break
+                case 5:
+                    {
+                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    };
+                    break
 
-			}
-		}
-	}
+            }
+        }
+    }
 }
 
 function highliteMovementArrow(p, m) {
-	if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
-		var c = m + UI_CLICK_ROTATE_LEFT;
-		var g = m + UI_GFX_MOVEMENT_ROTATE_LEFT;
-		switch (m) {
-			case 0:
-				x = 228;
-				y = 49;
-				break;
-			case 1:
-				x = 239;
-				y = 49;
-				break;
-			case 2:
-				x = 254;
-				y = 49;
-				break;
-			case 3:
-				x = 226;
-				y = 61;
-				break;
-			case 4:
-				x = 238;
-				y = 63;
-				break;
-			case 5:
-				x = 257;
-				y = 61;
-				break;
-			default:
-				break;
-		}
-		ctx.drawImage(gfxUI[g], (p.ScreenX + x) * scale, (p.ScreenY + y) * scale, gfxUI[g].width * scale, gfxUI[g].height * scale);
-		setTimeout(function() {
-			if (p === player[0]) {
-				ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].width * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].height * scale);
-			} else {
-				ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
-			}
-		}, 150);
-	}
+    if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
+        var c = m + UI_CLICK_ROTATE_LEFT;
+        var g = m + UI_GFX_MOVEMENT_ROTATE_LEFT;
+        switch (m) {
+            case 0:
+                x = 228;
+                y = 49;
+                break;
+            case 1:
+                x = 239;
+                y = 49;
+                break;
+            case 2:
+                x = 254;
+                y = 49;
+                break;
+            case 3:
+                x = 226;
+                y = 61;
+                break;
+            case 4:
+                x = 238;
+                y = 63;
+                break;
+            case 5:
+                x = 257;
+                y = 61;
+                break;
+            default:
+                break;
+        }
+        ctx.drawImage(gfxUI[g], (p.ScreenX + x) * scale, (p.ScreenY + y) * scale, gfxUI[g].width * scale, gfxUI[g].height * scale);
+        setTimeout(function() {
+            if (p === player[0]) {
+                ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].width * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].height * scale);
+            } else {
+                ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
+            }
+        }, 150);
+    }
 }
 
 function drawStatsPage(p, ch, start) {
-	if (typeof ch === 'undefined') {
-		ch = p.getChampion(p.championLeader);
-	}
-	if (typeof start === 'undefined') {
-		start = false;
-	}
+    if (typeof ch === 'undefined') {
+        ch = p.getChampion(p.championLeader);
+    }
+    if (typeof start === 'undefined') {
+        start = false;
+    }
 
-	//var ch = p.getChampion(p.championLeader);
-	if (ch !== null) {
-		if (start) {
-			ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
-		} else {
-			ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
-		}
+    //var ch = p.getChampion(p.championLeader);
+    if (ch !== null) {
+        if (start) {
+            ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
+        } else {
+            ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+        }
 
-		writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
-		ctx.drawImage(gfxUI[UI_GFX_SCROLL_WAVE], (p.ScreenX + 282) * scale, (p.ScreenY + 17) * scale, gfxUI[UI_GFX_SCROLL_WAVE].width * scale, gfxUI[UI_GFX_SCROLL_WAVE].height * scale);
-		//writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage(doubleDigits(ch.level), p.ScreenX + 297, (p.ScreenY + 15), COLOUR[COLOUR_WHITE]);
+        writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
+        ctx.drawImage(gfxUI[UI_GFX_SCROLL_WAVE], (p.ScreenX + 282) * scale, (p.ScreenY + 17) * scale, gfxUI[UI_GFX_SCROLL_WAVE].width * scale, gfxUI[UI_GFX_SCROLL_WAVE].height * scale);
+        //writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), COLOUR[COLOUR_GREY_DARKEST]);
+        writeFontImage(doubleDigits(ch.level), p.ScreenX + 297, (p.ScreenY + 15), COLOUR[COLOUR_WHITE]);
 
-		writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);
-		writeFontImage(ch.stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 23), COLOUR[COLOUR_YELLOW]);
-		writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 23), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);
-		writeFontImage(ch.stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 23), COLOUR[COLOUR_YELLOW]);
+        writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);
+        writeFontImage(ch.stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 23), COLOUR[COLOUR_YELLOW]);
+        writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 23), COLOUR[COLOUR_GREY_DARKEST]);
+        writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);
+        writeFontImage(ch.stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 23), COLOUR[COLOUR_YELLOW]);
 
-		writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 31), COLOUR[COLOUR_BLUE_DARK]);
-		writeFontImage(ch.stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 31), COLOUR[COLOUR_YELLOW]);
-		writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 31), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 31), COLOUR[COLOUR_BLUE_DARK]);
-		writeFontImage(ch.stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 31), COLOUR[COLOUR_YELLOW]);
+        writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 31), COLOUR[COLOUR_BLUE_DARK]);
+        writeFontImage(ch.stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 31), COLOUR[COLOUR_YELLOW]);
+        writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 31), COLOUR[COLOUR_GREY_DARKEST]);
+        writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 31), COLOUR[COLOUR_BLUE_DARK]);
+        writeFontImage(ch.stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 31), COLOUR[COLOUR_YELLOW]);
 
-		writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 39), COLOUR[COLOUR_BLACK]);
-		writeFontImage(ch.stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 39), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-		writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 39), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage(ch.stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 39), COLOUR[COLOUR_GREEN]);
+        writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 39), COLOUR[COLOUR_BLACK]);
+        writeFontImage(ch.stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 39), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+        writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 39), COLOUR[COLOUR_GREY_DARKEST]);
+        writeFontImage(ch.stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 39), COLOUR[COLOUR_GREEN]);
 
-		writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 47), COLOUR[COLOUR_BLACK]);
-		writeFontImage(ch.stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-		writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_GREY_DARKEST]);
-		writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 47), COLOUR[COLOUR_GREEN]);
+        writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 47), COLOUR[COLOUR_BLACK]);
+        writeFontImage(ch.stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
+        writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_GREY_DARKEST]);
+        writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 47), COLOUR[COLOUR_GREEN]);
 
-		if (!start) {
-			writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-			var t = showStatusBar(ch.getFood(), 200, 62, COLOUR[COLOUR_RED_DARK]);
-			ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
-		}
-	}
-	//drawPocketInfo(p);
+        if (!start) {
+            writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
+            var t = showStatusBar(ch.getFood(), 200, 62, COLOUR[COLOUR_RED_DARK]);
+            ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
+        }
+    }
+    //drawPocketInfo(p);
 }
 
 function createShield(id, type, colour) {
 
-	//ID = Characters ID i.e. 0 = Blodwyn
-	//Type = 0 to 3 = Spade,Heart
+    //ID = Characters ID i.e. 0 = Blodwyn
+    //Type = 0 to 3 = Spade,Heart
 
-	switch (colour) {
+    switch (colour) {
 
-		case 0:
-			{
-				colour = PALETTE_SERPENT;
-			};
-			break;
-		case 1:
-			{
-				colour = PALETTE_CHAOS;
-			};
-			break;
-		case 2:
-			{
-				colour = PALETTE_DRAGON;
-			};
-			break;
-		case 3:
-			{
-				colour = PALETTE_MOON;
-			};
-			break;
-		default:
-			{
-				colour = PALETTE_DEAD;
-			}
+        case 0:
+            {
+                colour = PALETTE_SERPENT;
+            };
+            break;
+        case 1:
+            {
+                colour = PALETTE_CHAOS;
+            };
+            break;
+        case 2:
+            {
+                colour = PALETTE_DRAGON;
+            };
+            break;
+        case 3:
+            {
+                colour = PALETTE_MOON;
+            };
+            break;
+        default:
+            {
+                colour = PALETTE_DEAD;
+            }
 
-	}
+    }
 
-	var can = document.createElement('canvas');
-	can.width = 30;
-	can.height = 41;
-	var context = can.getContext("2d");
-	if (colour === PALETTE_DEAD) {
-		context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 0, 0);
-		context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 0, 5);
-		context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
-		context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 5, 32);
-	} else {
-		context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 0, 0);
-		context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 0, 5);
-		context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
-		context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 5, 32);
-	}
+    var can = document.createElement('canvas');
+    can.width = 30;
+    can.height = 41;
+    var context = can.getContext("2d");
+    if (colour === PALETTE_DEAD) {
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 0, 5);
+        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 5, 32);
+    } else {
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 0, 5);
+        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 5, 32);
+    }
 
-	context.save();
-	return can;
+    context.save();
+    return can;
 
 }
 
 function toggleChampUI(i, p, set) {
-	if (typeof set === "undefined") {
-		if (p.uiLeftPanel.champs[i].opened) {
-			p.uiLeftPanel.champs[i].opened = false;
-		} else {
-			p.uiLeftPanel.champs[i].opened = true;
-		}
-	} else {
-		p.uiLeftPanel.champs[i].opened = set;
-	}
+    if (typeof set === "undefined") {
+        if (p.uiLeftPanel.champs[i].opened) {
+            p.uiLeftPanel.champs[i].opened = false;
+        } else {
+            p.uiLeftPanel.champs[i].opened = true;
+        }
+    } else {
+        p.uiLeftPanel.champs[i].opened = set;
+    }
 }
 
 function recolourUiGfx(img, colourFrom, colourTo) {
 
-	var can = document.createElement('canvas');
-	can.width = img.width;
-	can.height = img.height;
-	var canContent = can.getContext("2d");
-	canContent.drawImage(img, 0, 0);
-	var imageData = canContent.getImageData(0, 0, can.width, can.height);
+    var can = document.createElement('canvas');
+    can.width = img.width;
+    can.height = img.height;
+    var canContent = can.getContext("2d");
+    canContent.drawImage(img, 0, 0);
+    var imageData = canContent.getImageData(0, 0, can.width, can.height);
 
-	for (var i = 0; i < imageData.data.length; i += 4) {
-		// is this pixel the old rgb?
-		if (imageData.data[i] === colourFrom[0] &&
-			imageData.data[i + 1] === colourFrom[1] &&
-			imageData.data[i + 2] === colourFrom[2]
-		) {
-			// change to your new rgb
-			imageData.data[i] = colourTo[0];
-			imageData.data[i + 1] = colourTo[1];
-			imageData.data[i + 2] = colourTo[2];
-		}
-	}
+    for (var i = 0; i < imageData.data.length; i += 4) {
+        // is this pixel the old rgb?
+        if (imageData.data[i] === colourFrom[0] &&
+            imageData.data[i + 1] === colourFrom[1] &&
+            imageData.data[i + 2] === colourFrom[2]
+        ) {
+            // change to your new rgb
+            imageData.data[i] = colourTo[0];
+            imageData.data[i + 1] = colourTo[1];
+            imageData.data[i + 2] = colourTo[2];
+        }
+    }
 
-	canContent.putImageData(imageData, 0, 0);
-	canContent.save();
-	return can;
+    canContent.putImageData(imageData, 0, 0);
+    canContent.save();
+    return can;
 }
 
 function showStatusBar(thisVal, maxVal, width, colour) {
 
-	if (typeof colour === "undefined") {
-		colour = COLOUR[COLOUR_RED_DARK];
-	}
+    if (typeof colour === "undefined") {
+        colour = COLOUR[COLOUR_RED_DARK];
+    }
 
-	var can = document.createElement('canvas');
-	can.width = width;
-	can.height = 5;
-	var canContent = can.getContext("2d");
-	var t = Math.floor(thisVal / maxVal * (width - 12));
-	canContent.drawImage(gfxUI[UI_GFX_FOOD_POINTER], 0, 1);
-	canContent.fillStyle = 'rgb(' + colour[0] + ',' + colour[1] + ',' + colour[2] + ')';
-	canContent.fillRect(6, 0, t, 5);
-	canContent.drawImage(flipImage(gfxUI[UI_GFX_FOOD_POINTER]), width - 4, 1);
-	canContent.save();
-	return can;
+    var can = document.createElement('canvas');
+    can.width = width;
+    can.height = 5;
+    var canContent = can.getContext("2d");
+    var t = Math.floor(thisVal / maxVal * (width - 12));
+    canContent.drawImage(gfxUI[UI_GFX_FOOD_POINTER], 0, 1);
+    canContent.fillStyle = 'rgb(' + colour[0] + ',' + colour[1] + ',' + colour[2] + ')';
+    canContent.fillRect(6, 0, t, 5);
+    canContent.drawImage(flipImage(gfxUI[UI_GFX_FOOD_POINTER]), width - 4, 1);
+    canContent.save();
+    return can;
 }
 
 function showEndGame(p) {
 
     coverViewPort(p);
 
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME) {
-		p.message(TEXT_ACCURSED_BLOODWYCH, COLOUR[COLOUR_GREEN]);
-		writeFontImage(TEXT_CONGRATS, (p.ScreenX +33) * scale, (p.ScreenY +26) * scale, COLOUR[COLOUR_PINK]);
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME) {
+        p.message(TEXT_ACCURSED_BLOODWYCH, COLOUR[COLOUR_GREEN]);
+        writeFontImage(TEXT_CONGRATS, (p.ScreenX +33) * scale, (p.ScreenY +26) * scale, COLOUR[COLOUR_PINK]);
                 initMonsterGfxNew(monster[TOWER_MOD0][6]);
                 var t = drawMonster(monster[TOWER_MOD0][6], 0, 3, p, [0,0],true);
-                ctx.drawImage(t,0,0,t.width,t.height);	
-	} 
+                ctx.drawImage(t,0,0,t.width,t.height);
+    }
 
 }
 
 function gotoFairyMode(p, m) {
-	if (p.uiCenterPanel.mode !== m) {
-		var ch = p.fairyDetails.champ;
-		if (m === UI_CENTER_PANEL_FAIRY) {
-			p.message(ch.firstName + TEXT_MAY_BUY_SPELL, COLOUR[COLOUR_GREEN], false, 0);
-		} else if (m === UI_CENTER_PANEL_FAIRY_SERPENT || m === UI_CENTER_PANEL_FAIRY_CHAOS || m === UI_CENTER_PANEL_FAIRY_DRAGON || m === UI_CENTER_PANEL_FAIRY_MOON) {
+    if (p.uiCenterPanel.mode !== m) {
+        var ch = p.fairyDetails.champ;
+        if (m === UI_CENTER_PANEL_FAIRY) {
+            p.message(ch.firstName + TEXT_MAY_BUY_SPELL, COLOUR[COLOUR_GREEN], false, 0);
+        } else if (m === UI_CENTER_PANEL_FAIRY_SERPENT || m === UI_CENTER_PANEL_FAIRY_CHAOS || m === UI_CENTER_PANEL_FAIRY_DRAGON || m === UI_CENTER_PANEL_FAIRY_MOON) {
 
-		} else if (m === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
+        } else if (m === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
 
-		}
-		p.uiCenterPanel.mode = m;
-		showFairy(ch, p);
-	}
+        }
+        p.uiCenterPanel.mode = m;
+        showFairy(ch, p);
+    }
 }
 
 function showFairy(c, p) {
 
-	//ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 6 * scale);
-	coverViewPort(p);
+    //ctx.clearRect(p.ScreenX * scale, (p.ScreenY -10) * scale, 320 * scale, 6 * scale);
+    coverViewPort(p);
 
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY) {
-		//ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
-		//p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 3000);
-		//writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
-		p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
-		for (x = 0; x < 5; x++) {
-			if (x < 4) {
-				p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
-			} else {
-				p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
-			}
-		}
-	} else {
-		//writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
-	}
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT) {
-		showFairySpellScreen(0, p, c);
-	}
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_CHAOS) {
-		showFairySpellScreen(1, p, c);
-	}
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_DRAGON) {
-		showFairySpellScreen(2, p, c);
-	}
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON) {
-		showFairySpellScreen(3, p, c);
-	}
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
-		showFairySpellDetailsScreen(p.fairyDetails.spell, p, c);
-	}
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY) {
+        //ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
+        //p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 3000);
+        //writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+        p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
+        for (x = 0; x < 5; x++) {
+            if (x < 4) {
+                p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+            } else {
+                p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+            }
+        }
+    } else {
+        //writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT) {
+        showFairySpellScreen(0, p, c);
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_CHAOS) {
+        showFairySpellScreen(1, p, c);
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_DRAGON) {
+        showFairySpellScreen(2, p, c);
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_MOON) {
+        showFairySpellScreen(3, p, c);
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
+        showFairySpellDetailsScreen(p.fairyDetails.spell, p, c);
+    }
 
 }
 
 function showFairySpellScreen(spellClass, p, c) {
 
-	p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass + 1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].height * scale);
+    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass + 1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].height * scale);
 
-	var mySpells = c.getUnlearntSpellsByColour(spellClass);
-	var spellColour = null;
+    var mySpells = c.getUnlearntSpellsByColour(spellClass);
+    var spellColour = null;
 
-	switch (spellClass) {
+    switch (spellClass) {
 
-		case 0:
-			{
-				spellColour = COLOUR[COLOUR_GREEN];
-			};
-			break
-		case 1:
-			{
-				spellColour = COLOUR[COLOUR_YELLOW];
-			};
-			break
-		case 2:
-			{
-				spellColour = COLOUR[COLOUR_RED];
-			};
-			break
-		case 3:
-			{
-				spellColour = COLOUR[COLOUR_BLUE];
-			};
-			break
+        case 0:
+            {
+                spellColour = COLOUR[COLOUR_GREEN];
+            };
+            break
+        case 1:
+            {
+                spellColour = COLOUR[COLOUR_YELLOW];
+            };
+            break
+        case 2:
+            {
+                spellColour = COLOUR[COLOUR_RED];
+            };
+            break
+        case 3:
+            {
+                spellColour = COLOUR[COLOUR_BLUE];
+            };
+            break
 
-	}
-	if (mySpells.length > 0) {
-		p.message(TEXT_SELECT_SPELL + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
-		writeFontImage(mySpells[0].name, 43, 12, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
-		if (mySpells.length > 1) {
-			writeFontImage(mySpells[1].name, 43, 22, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
-		}
-	} else {
-		p.message(TEXT_ALL_I_HAVE + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
-	}
-	p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    }
+    if (mySpells.length > 0) {
+        p.message(TEXT_SELECT_SPELL + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+        writeFontImage(mySpells[0].name, 43, 12, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
+        if (mySpells.length > 1) {
+            writeFontImage(mySpells[1].name, 43, 22, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
+        }
+    } else {
+        p.message(TEXT_ALL_I_HAVE + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+    }
+    p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 }
 
 function showFairySpellDetailsScreen(spell, p, c) {
 
-	var spellColour = [];
-	var spellClass = spell.colour;
+    var spellColour = [];
+    var spellClass = spell.colour;
 
-	p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass + 1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].height * scale);
+    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass + 1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].height * scale);
 
-	/*switch (spellClass) {
+    /*switch (spellClass) {
 
-		case 0:
-			{
-				spellColour = COLOUR[COLOUR_GREEN];
-			};
-			break
-		case 1:
-			{
-				spellColour = COLOUR[COLOUR_YELLOW];
-			};
-			break
-		case 2:
-			{
-				spellColour = COLOUR[COLOUR_RED];
-			};
-			break
-		case 3:
-			{
-				spellColour = COLOUR[COLOUR_BLUE];
-			};
-		case 4:
-			{
-				spellColour = COLOUR[COLOUR_PINK];
-			};
-			break
+        case 0:
+            {
+                spellColour = COLOUR[COLOUR_GREEN];
+            };
+            break
+        case 1:
+            {
+                spellColour = COLOUR[COLOUR_YELLOW];
+            };
+            break
+        case 2:
+            {
+                spellColour = COLOUR[COLOUR_RED];
+            };
+            break
+        case 3:
+            {
+                spellColour = COLOUR[COLOUR_BLUE];
+            };
+        case 4:
+            {
+                spellColour = COLOUR[COLOUR_PINK];
+            };
+            break
 
-	}*/
+    }*/
 
-	writeFontImage(spell.name, 43, 12, CLASS_COLOUR[spellClass], FONT_ALIGNMENT_LEFT, p.Portal);
-	writeFontImage("LEVEL " + spell.level, 43, 23, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
-	writeFontImage(spell.cost + " GOLD", 43, 31, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
-	p.message(spell.description, COLOUR[COLOUR_GREEN], false, 0);
+    writeFontImage(spell.name, 43, 12, CLASS_COLOUR[spellClass], FONT_ALIGNMENT_LEFT, p.Portal);
+    writeFontImage("LEVEL " + spell.level, 43, 23, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
+    writeFontImage(spell.cost + " GOLD", 43, 31, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
+    p.message(spell.description, COLOUR[COLOUR_GREEN], false, 0);
 
-	for (x = 0; x < 5; x++) {
-		if (x < 4) {
-			if (x === spellClass) {
-				p.Portal.drawImage(gfxUI[80 + x], 17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
-			}
-		} else {
-			p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
-		}
-	}
+    for (x = 0; x < 5; x++) {
+        if (x < 4) {
+            if (x === spellClass) {
+                p.Portal.drawImage(gfxUI[80 + x], 17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+            }
+        } else {
+            p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+        }
+    }
 
-	writeFontImage("OK ?", 43, 55, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
+    writeFontImage("OK ?", 43, 55, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
 
 }
 
 function colourSpellPage(dr, ch, img) {
 
-	//dr = Direction - False = Backwards 
-	var pal = [];
-	var page = null;
+    //dr = Direction - False = Backwards
+    var pal = [];
+    var page = null;
 
-	if (dr) {
-		var page = (ch.spellBookPage + 1) % SPELL_PAGE_MAX;
-	} else {
-		var page = ch.spellBookPage;
-	}
+    if (dr) {
+        var page = (ch.spellBookPage + 1) % SPELL_PAGE_MAX;
+    } else {
+        var page = ch.spellBookPage;
+    }
 
-	for (x = 0; x < SPELL_PAGE_MAX; x++) {
-		if (ch.spellBook[page][x].learnt) {
-			if (ch.spellBook[page][x] === getSpellById(ch.selectedSpell)) {
-				pal.push(COLOUR[COLOUR_WHITE]);
-			} else {
-				pal.push(getClassColour(ch.spellBook[page][x].ref.colour, true));
+    for (x = 0; x < SPELL_PAGE_MAX; x++) {
+        if (ch.spellBook[page][x].learnt) {
+            if (ch.spellBook[page][x] === getSpellById(ch.selectedSpell)) {
+                pal.push(COLOUR[COLOUR_WHITE]);
+            } else {
+                pal.push(getClassColour(ch.spellBook[page][x].ref.colour, true));
 
-			}
-		} else {
-			pal.push(COLOUR[COLOUR_GREY_DARKEST]);
-		}
-	}
+            }
+        } else {
+            pal.push(COLOUR[COLOUR_GREY_DARKEST]);
+        }
+    }
 
-	return recolourSprite(img, MON_PALETTE_DEFAULT, pal);
+    return recolourSprite(img, MON_PALETTE_DEFAULT, pal);
 
 }
 
 function drawWallScroll(p) {
-	try {
+    try {
 
-		var pos = 15;
-		var xy = posToCoordinates(pos, p.x, p.y, p.d);
-		var f = p.floor,
-			x = xy.x,
-			y = xy.y;
+        var pos = 15;
+        var xy = posToCoordinates(pos, p.x, p.y, p.d);
+        var f = p.floor,
+            x = xy.x,
+            y = xy.y;
 
-		if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
-			var off = [0, 21, 33, 41, 49, 59],
-				hex = tower[towerThis].floor[f].Map[y][x],
-				A = parseInt(hex.substring(0, 1), 16),
-				B = parseInt(hex.substring(1, 2), 16),
-				scrollRef = Math.floor((((A * 16) + B) / 4) - 4) - 1 + off[towerThis];
+        if (x >= 0 && x < tower[towerThis].floor[f].Height && y >= 0 && y < tower[towerThis].floor[f].Width) {
+            var off = [0, 21, 33, 41, 49, 59],
+                hex = tower[towerThis].floor[f].Map[y][x],
+                A = parseInt(hex.substring(0, 1), 16),
+                B = parseInt(hex.substring(1, 2), 16),
+                scrollRef = Math.floor((((A * 16) + B) / 4) - 4) - 1 + off[towerThis];
 
-			drawScroll(scrollData[scrollRef], p.ScreenX + 226, p.ScreenY - 1);
-		}
-	} catch (e) {
-		p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
-		redrawUI(p.id, UI_REDRAW_SCROLL);
-	};
+            drawScroll(scrollData[scrollRef], p.ScreenX + 226, p.ScreenY - 1);
+        }
+    } catch (e) {
+        p.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
+        redrawUI(p.id, UI_REDRAW_SCROLL);
+    };
 }
 
 function drawScroll(text, x, y, small) {
-	if (typeof small === 'undefined') {
-		var small = false;
-	}
-	if (small) {
-		var rm = 5;
-		ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], x * scale, y * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
-	} else {
-		var rm = 7;
-		ctx.drawImage(gfxUI[UI_GFX_SCRIPT], x * scale, y * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
-	}
+    if (typeof small === 'undefined') {
+        var small = false;
+    }
+    if (small) {
+        var rm = 5;
+        ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], x * scale, y * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
+    } else {
+        var rm = 7;
+        ctx.drawImage(gfxUI[UI_GFX_SCRIPT], x * scale, y * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+    }
 
-	//Scroll page can hold 7 (or 5 for small scrolls) Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
-	var l = Math.floor((rm - text.length) / 2);
+    //Scroll page can hold 7 (or 5 for small scrolls) Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
+    var l = Math.floor((rm - text.length) / 2);
 
-	for (var r = 0; r < text.length; r++) {
-		var col = COLOUR[COLOUR_BLACK];
-		if (r === 0 && small) {
-			col = COLOUR[COLOUR_YELLOW];
-		}
-		writeFontImage(text[r], x + 52, y + 16 + (l * 8), col, FONT_ALIGNMENT_CENTER);
-		l++;
-	}
+    for (var r = 0; r < text.length; r++) {
+        var col = COLOUR[COLOUR_BLACK];
+        if (r === 0 && small) {
+            col = COLOUR[COLOUR_YELLOW];
+        }
+        writeFontImage(text[r], x + 52, y + 16 + (l * 8), col, FONT_ALIGNMENT_CENTER);
+        l++;
+    }
 }
 
 function drawCommunicationBox(p, item, forced) {
 
-	//We meed the commincation box to be drawn on its own and not with the UI as this will be updated more offern
-	//we can do a check on the player.communication.highlighted and see if it matches the current x/y then redraw if needed to hightligh the new word
+    //We meed the commincation box to be drawn on its own and not with the UI as this will be updated more offern
+    //we can do a check on the player.communication.highlighted and see if it matches the current x/y then redraw if needed to hightligh the new word
 
-	//Check if we actually need to redraw...
-	if (typeof item === "undefined") {
-		item === null;
-	}
-	if (typeof forced === "undefined") {
-		forced === false;
-	}
+    //Check if we actually need to redraw...
+    if (typeof item === "undefined") {
+        item === null;
+    }
+    if (typeof forced === "undefined") {
+        forced === false;
+    }
 
-	if (p.communication.highlighted !== item || forced) {
+    if (p.communication.highlighted !== item || forced) {
 
-		if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1) {
-			ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP], (p.ScreenX + 57) * scale, (p.ScreenY + 32) * scale, gfxUI[UI_GFX_ICON_SCROLL_UP].width * scale, gfxUI[UI_GFX_ICON_SCROLL_UP].height * scale);
-			ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN], (p.ScreenX + 72) * scale, (p.ScreenY + 32) * scale, gfxUI[UI_GFX_ICON_SCROLL_DOWN].width * scale, gfxUI[UI_GFX_ICON_SCROLL_DOWN].height * scale);
-		} else {
-			ctx.clearRect((p.ScreenX + 57) * scale, (p.ScreenY + 32) * scale, 30 * scale, 14 * scale);
-		}
+        if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1) {
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP], (p.ScreenX + 57) * scale, (p.ScreenY + 32) * scale, gfxUI[UI_GFX_ICON_SCROLL_UP].width * scale, gfxUI[UI_GFX_ICON_SCROLL_UP].height * scale);
+            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN], (p.ScreenX + 72) * scale, (p.ScreenY + 32) * scale, gfxUI[UI_GFX_ICON_SCROLL_DOWN].width * scale, gfxUI[UI_GFX_ICON_SCROLL_DOWN].height * scale);
+        } else {
+            ctx.clearRect((p.ScreenX + 57) * scale, (p.ScreenY + 32) * scale, 30 * scale, 14 * scale);
+        }
 
-		//if (p.communication.mode !== COMMUNICATION_PAGE_NAMES) {
+        //if (p.communication.mode !== COMMUNICATION_PAGE_NAMES) {
 
-		var myPage = p.communication.mode;
-		for (r = 0; r < TEXT_COMMUNICATION_COMMANDS[myPage].length; r++) {
-			ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARK][0] + ', ' + COLOUR[COLOUR_GREY_DARK][1] + ', ' + COLOUR[COLOUR_GREY_DARK][2] + ')';
-			var myColour = COLOUR[COLOUR_YELLOW];
+        var myPage = p.communication.mode;
+        for (r = 0; r < TEXT_COMMUNICATION_COMMANDS[myPage].length; r++) {
+            ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARK][0] + ', ' + COLOUR[COLOUR_GREY_DARK][1] + ', ' + COLOUR[COLOUR_GREY_DARK][2] + ')';
+            var myColour = COLOUR[COLOUR_YELLOW];
 
-			if (r === item) {
-				ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_BLUE_DARK][0] + ', ' + COLOUR[COLOUR_BLUE_DARK][1] + ', ' + COLOUR[COLOUR_BLUE_DARK][2] + ')';
-				myColour = COLOUR[COLOUR_WHITE];
-			}
+            if (r === item) {
+                ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_BLUE_DARK][0] + ', ' + COLOUR[COLOUR_BLUE_DARK][1] + ', ' + COLOUR[COLOUR_BLUE_DARK][2] + ')';
+                myColour = COLOUR[COLOUR_WHITE];
+            }
 
-			if (TEXT_COMMUNICATION_COMMANDS[myPage][r].left) {
-				var x = (p.ScreenX + 1);
-				var al = FONT_ALIGNMENT_LEFT;
-				var t = 1;
-			} else {
-				var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION_COMMANDS[myPage][r - 1].width + 1);
-				var al = FONT_ALIGNMENT_RIGHT;
-				var t = TEXT_COMMUNICATION_COMMANDS[myPage][r].width + 2;
-			}
-			var y = (p.ScreenY + 47) + (TEXT_COMMUNICATION_COMMANDS[myPage][r].row * 8);
-			ctx.fillRect(x * scale, y * scale, TEXT_COMMUNICATION_COMMANDS[myPage][r].width * scale, 7 * scale);
-			if (myPage === COMMUNICATION_PAGE_NAMES) {
-				var c1 = p.getOrderedChampionIds();
-				var c2 = c1[r + 1];
-				var cid = p.champion[c2];
-				var ch = p.getChampion(c2);
-				if (ch !== null) {
-					writeFontImage(ch.firstName, (x + 1), y, myColour, al);
-				}
-			} else {
-				writeFontImage(TEXT_COMMUNICATION_COMMANDS[myPage][r].text, (x + t), y, myColour, al);
-			}
-		}
-		p.communication.highlighted = item;
-	}
+            if (TEXT_COMMUNICATION_COMMANDS[myPage][r].left) {
+                var x = (p.ScreenX + 1);
+                var al = FONT_ALIGNMENT_LEFT;
+                var t = 1;
+            } else {
+                var x = (p.ScreenX + 1) + (TEXT_COMMUNICATION_COMMANDS[myPage][r - 1].width + 1);
+                var al = FONT_ALIGNMENT_RIGHT;
+                var t = TEXT_COMMUNICATION_COMMANDS[myPage][r].width + 2;
+            }
+            var y = (p.ScreenY + 47) + (TEXT_COMMUNICATION_COMMANDS[myPage][r].row * 8);
+            ctx.fillRect(x * scale, y * scale, TEXT_COMMUNICATION_COMMANDS[myPage][r].width * scale, 7 * scale);
+            if (myPage === COMMUNICATION_PAGE_NAMES) {
+                var c1 = p.getOrderedChampionIds();
+                var c2 = c1[r + 1];
+                var cid = p.champion[c2];
+                var ch = p.getChampion(c2);
+                if (ch !== null) {
+                    writeFontImage(ch.firstName, (x + 1), y, myColour, al);
+                }
+            } else {
+                writeFontImage(TEXT_COMMUNICATION_COMMANDS[myPage][r].text, (x + t), y, myColour, al);
+            }
+        }
+        p.communication.highlighted = item;
+    }
 
 
 }
 
 function showGameStateMenu(p) {
 
-	gameStateSelectGrid = [];
+    gameStateSelectGrid = [];
 
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
-		coverViewPort(p);
-		writeFontImage("LOAD GAME", 30, 16, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 100, 14, 120, 16, null);
-		writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 100, 30, 120, 16, null);
-		writeFontImage("RESTART", 38, 56, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 100, 54, 120, 16, null);
-		//pauseGame(false)
-	}
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
-		createStateGrid(p, "SAVE");
-	}
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-		createStateGrid(p, "LOAD");
-	}
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
+        coverViewPort(p);
+        writeFontImage("LOAD GAME", 30, 16, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+        createSelectGrid(gameStateSelectGrid, 100, 14, 120, 16, null);
+        writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+        createSelectGrid(gameStateSelectGrid, 100, 30, 120, 16, null);
+        writeFontImage("RESTART", 38, 56, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
+        createSelectGrid(gameStateSelectGrid, 100, 54, 120, 16, null);
+        //pauseGame(false)
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
+        createStateGrid(p, "SAVE");
+    }
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+        createStateGrid(p, "LOAD");
+    }
 
 }
 
 function createStateGrid(p, state) {
-	coverViewPort(p);
-	p.message(state + " GAME - PLEASE SELECT A SLOT...", COLOUR[COLOUR_GREEN], false, 0);
-	//writeFontImage(state + " GAME", 28, 2, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
-	for (var x = 0; x < 8; x++) {
-		var clr = COLOUR[COLOUR_GREY_LIGHT];
-		var name = getGameName(x);
-		if (name === '') {
-			clr = COLOUR[COLOUR_GREY_DARKEST];
-			name = 'EMPTY SLOT';
-		}
-		writeFontImage((x + 1) + '.' + name, 8, x * 8 + 6, clr, FONT_ALIGNMENT_LEFT, p.Portal);
-		createSelectGrid(gameStateSelectGrid, 100, x * 8 + 7, 120, 8, null);
-	}
+    coverViewPort(p);
+    p.message(state + " GAME - PLEASE SELECT A SLOT...", COLOUR[COLOUR_GREEN], false, 0);
+    //writeFontImage(state + " GAME", 28, 2, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+    for (var x = 0; x < 8; x++) {
+        var clr = COLOUR[COLOUR_GREY_LIGHT];
+        var name = getGameName(x);
+        if (name === '') {
+            clr = COLOUR[COLOUR_GREY_DARKEST];
+            name = 'EMPTY SLOT';
+        }
+        writeFontImage((x + 1) + '.' + name, 8, x * 8 + 6, clr, FONT_ALIGNMENT_LEFT, p.Portal);
+        createSelectGrid(gameStateSelectGrid, 100, x * 8 + 7, 120, 8, null);
+    }
 }
 
 /*function uiGameStateMenu(x, y, p) {
 
-	if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
-		for (var slot = 0; slot < 8; slot++) {
-			if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
-				p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", COLOUR[COLOUR_GREEN], false, 0);
-				var inp = $('input.save-game');
-				inp.val(getGameName(slot));
-				inp.data('player-id', p.id);
-				inp.data('slot-id', slot);
-				inp.show();
-				inp.trigger('click');
-				return;
-			}
-		}
-	} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
-		for (var slot = 0; slot < 8; slot++) {
-			if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
-				if (getGameName(slot) !== '') {
-					pauseGame(false);
-					loadGame(slot);
-					redrawUI(2);
-					return;
-				}
-			}
-		}
-	} else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
-		if (uiClickInArea(x, y, 0, p, gameStateSelectGrid)) {
-			p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
-			showGameStateMenu(p);
-		} else if (uiClickInArea(x, y, 1, p, gameStateSelectGrid)) {
-			p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
-			showGameStateMenu(p);
-		} else if (uiClickInArea(x, y, 2, p, gameStateSelectGrid)) {
-			location.reload();
-		}
-	}
+    if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
+        for (var slot = 0; slot < 8; slot++) {
+            if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
+                p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", COLOUR[COLOUR_GREEN], false, 0);
+                var inp = $('input.save-game');
+                inp.val(getGameName(slot));
+                inp.data('player-id', p.id);
+                inp.data('slot-id', slot);
+                inp.show();
+                inp.trigger('click');
+                return;
+            }
+        }
+    } else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_LOAD) {
+        for (var slot = 0; slot < 8; slot++) {
+            if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
+                if (getGameName(slot) !== '') {
+                    pauseGame(false);
+                    loadGame(slot);
+                    redrawUI(2);
+                    return;
+                }
+            }
+        }
+    } else if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
+        if (uiClickInArea(x, y, 0, p, gameStateSelectGrid)) {
+            p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_LOAD;
+            showGameStateMenu(p);
+        } else if (uiClickInArea(x, y, 1, p, gameStateSelectGrid)) {
+            p.uiCenterPanel.mode = UI_CENTER_PANEL_GAMESTATE_SAVE;
+            showGameStateMenu(p);
+        } else if (uiClickInArea(x, y, 2, p, gameStateSelectGrid)) {
+            location.reload();
+        }
+    }
 
 
 }*/
 
 function uiChampSelectArea(x, y, pl) {
 
-	var px = 0;
-	var py = 0;
+    var px = 0;
+    var py = 0;
 
-	for (ui = 0; ui < champSelectGrid.length; ui++) {
-		if (x >= (px + champSelectGrid[ui].x) * 1 && x < (px + champSelectGrid[ui].x + champSelectGrid[ui].width) * 1 && y >= (py + champSelectGrid[ui].y) * 1 && y < (py + champSelectGrid[ui].y + champSelectGrid[ui].height) * 1) {
-			if (debug) {
-				ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
-				ctx.fillRect((px + champSelectGrid[ui].x) * scale, (py + champSelectGrid[ui].y) * scale, champSelectGrid[ui].width * scale, champSelectGrid[ui].height * scale);
-			}
+    for (ui = 0; ui < champSelectGrid.length; ui++) {
+        if (x >= (px + champSelectGrid[ui].x) * 1 && x < (px + champSelectGrid[ui].x + champSelectGrid[ui].width) * 1 && y >= (py + champSelectGrid[ui].y) * 1 && y < (py + champSelectGrid[ui].y + champSelectGrid[ui].height) * 1) {
+            if (debug) {
+                ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
+                ctx.fillRect((px + champSelectGrid[ui].x) * scale, (py + champSelectGrid[ui].y) * scale, champSelectGrid[ui].width * scale, champSelectGrid[ui].height * scale);
+            }
 
-			if (players === 2 && currentPlayer === 1 && champSelectGrid[ui].champID === championSelect[0].champID) {
-				//championSelect[pl].champID = champSelectGrid[ui].champID;
-			} else {
-				championSelect[pl].champID = champSelectGrid[ui].champID;
-				if (players === 1) {
-					player[0] = new Player(0, 0, 50);
-					player[0].champion[0] = champSelectGrid[ui].champID;
-				} else {
-					if (currentPlayer === 0) {
-						player[0] = new Player(0, 0, 50);
-						player[0].champion[0] = champSelectGrid[ui].champID;
-					} else {
-						player[1] = new Player(0, 0, 50);
-						player[1].champion[0] = champSelectGrid[ui].champID;
-					}
-				}
-				drawQuickStartUI(pl);
-			}
-		}
-	}
+            if (players === 2 && currentPlayer === 1 && champSelectGrid[ui].champID === championSelect[0].champID) {
+                //championSelect[pl].champID = champSelectGrid[ui].champID;
+            } else {
+                championSelect[pl].champID = champSelectGrid[ui].champID;
+                if (players === 1) {
+                    player[0] = new Player(0, 0, 50);
+                    player[0].champion[0] = champSelectGrid[ui].champID;
+                } else {
+                    if (currentPlayer === 0) {
+                        player[0] = new Player(0, 0, 50);
+                        player[0].champion[0] = champSelectGrid[ui].champID;
+                    } else {
+                        player[1] = new Player(0, 0, 50);
+                        player[1].champion[0] = champSelectGrid[ui].champID;
+                    }
+                }
+                drawQuickStartUI(pl);
+            }
+        }
+    }
 
-	if (uiClickInArea(x, y, UI_CLICK_CHAMPION_SELECT_1_PLAYER_ACTION)) {
-		var t = (championSelect[pl].mode + 1) % 3;
-		championSelect[pl].mode = t;
-		drawQuickStartUI(pl);
-	} else if (uiClickInArea(x, y, UI_CLICK_CHAMPION_SELECT_1_START)) {
-		if (players === 2 && currentPlayer === 0) {
-			currentPlayer = 1;
-			drawQuickStartUI(1);
-		} else {
-			championSelect[pl].mode = UI_CHARACTER_SELECT_START_GAME;
-			drawQuickStartUI(pl);
-			if (players === 2 && currentPlayer === 1) {
-				startGame(false, false, championSelect[0].champID, championSelect[1].champID);
-			} else {
-				startGame(true, false, championSelect[0].champID);
-			}
-		}
-	}
+    if (uiClickInArea(x, y, UI_CLICK_CHAMPION_SELECT_1_PLAYER_ACTION)) {
+        var t = (championSelect[pl].mode + 1) % 3;
+        championSelect[pl].mode = t;
+        drawQuickStartUI(pl);
+    } else if (uiClickInArea(x, y, UI_CLICK_CHAMPION_SELECT_1_START)) {
+        if (players === 2 && currentPlayer === 0) {
+            currentPlayer = 1;
+            drawQuickStartUI(1);
+        } else {
+            championSelect[pl].mode = UI_CHARACTER_SELECT_START_GAME;
+            drawQuickStartUI(pl);
+            if (players === 2 && currentPlayer === 1) {
+                startGame(false, false, championSelect[0].champID, championSelect[1].champID);
+            } else {
+                startGame(true, false, championSelect[0].champID);
+            }
+        }
+    }
 }
 
 function drawHitDamage(p, myCh, hitPt) {
-	var c1 = p.getOrderedChampionIds();
-	for (c = 0; c < p.champion.length; c++) {
-		var c2 = c1[c];
-		var ch = p.getChampion(c2);
-		if (ch !== null) {
-			if (p.uiLeftPanel.champs[c].opened === true) {
-				if (ch.id === myCh) {
-					if (c === 0) {
-						ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
-					} else {
-						ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
-					}
-				}
-			}
-		}
-	}
+    var c1 = p.getOrderedChampionIds();
+    for (c = 0; c < p.champion.length; c++) {
+        var c2 = c1[c];
+        var ch = p.getChampion(c2);
+        if (ch !== null) {
+            if (p.uiLeftPanel.champs[c].opened === true) {
+                if (ch.id === myCh) {
+                    if (c === 0) {
+                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                    } else {
+                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                    }
+                }
+            }
+        }
+    }
 }
