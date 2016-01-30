@@ -234,7 +234,7 @@ function grabUISprites(spriteSheetIMG) {
     ImageArray.push(grabImageAt(spriteSheetIMG, 308, 319, 14, 3, false)); //Script Wave
 
     //Grab Datadisk Images
-    for (x = 0; x < 18; x++) {
+    for (x = 0; x < 19; x++) {
         ImageArray.push(grabImageAt(spriteSheetIMG, x * 16, 400, 16, 16, false, 0 ,0));
     }
 
@@ -635,7 +635,7 @@ function drawActiveSpell(p) {
                 spellImage = UI_GFX_ICON_SPELL_PROTECT;
                 break;
             case SPELL_ENHANCE:
-                spellImage = UI_GFX_ICON_SPELL_16;
+                spellImage = UI_GFX_ICON_SPELL_ENHANCE;
                 break;
         }
         ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
