@@ -234,7 +234,7 @@ function grabUISprites(spriteSheetIMG) {
     ImageArray.push(grabImageAt(spriteSheetIMG, 308, 319, 14, 3, false)); //Script Wave
 
     //Grab Datadisk Images
-    for (x = 0; x < 17; x++) {
+    for (x = 0; x < 18; x++) {
         ImageArray.push(grabImageAt(spriteSheetIMG, x * 16, 400, 16, 16, false, 0 ,0));
     }
 
@@ -632,7 +632,7 @@ function drawActiveSpell(p) {
                 spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;
                 break;
             case SPELL_PROTECT:
-                spellImage = UI_GFX_ICON_SPELL_13;
+                spellImage = UI_GFX_ICON_SPELL_PROTECT;
                 break;
             case SPELL_ENHANCE:
                 spellImage = UI_GFX_ICON_SPELL_16;
