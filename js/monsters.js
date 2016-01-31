@@ -698,7 +698,7 @@ function initMonsters() {
     processMonsterItems();
     //setTimeout(function() {processMonsterItems();},3000);
     //TESTING!!! REMOVE AFTER
-    /*var testType = MON_FORM_BEHEMOTH;
+    var testType = MON_FORM_BEHEMOTH;
     var end = monster[TOWER_MOD0].length;
     monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 15, 18, 0, CHAR_FRONT_SOLO, true, 0);
     max++;end++;
@@ -707,7 +707,7 @@ function initMonsters() {
     monster[TOWER_MOD0][end] = new Monster(max, 6, 0, testType, TOWER_MOD0, 3, 14, 16, 2, CHAR_FRONT_SOLO, true, 0);
     max++;end++;
     monster[TOWER_MOD0][end] = new Monster(max, 9, 0, testType, TOWER_MOD0, 3, 11, 20, 0, CHAR_FRONT_SOLO, true, 0);
-    max++;end++;*/
+    max++;end++;
 }
 
 function initMonsterPalettes() {

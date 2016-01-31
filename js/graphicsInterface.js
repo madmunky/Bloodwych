@@ -1,5 +1,5 @@
 function drawUI(p) {
-    if (p.redrawLeftRightUiFlag > -1 && redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
+    if (redrawPlayerUiFlag === p.id + 1 || redrawPlayerUiFlag === 3) {
         if (typeof gfxUI !== "undefined" && gfxUI !== null) {
             if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_STATS) {
                 if (p.redrawLeftRightUiFlag === UI_REDRAW_ALL || p.redrawLeftRightUiFlag === UI_REDRAW_LEFT || p.redrawLeftRightUiFlag === UI_REDRAW_STATS) {
@@ -243,6 +243,14 @@ function grabUISprites(spriteSheetIMG) {
 }
 
 function drawSpellBook(p, ui, dr) {
+
+    //Check if the have the image stored in the buffer and use that unless we need to redraw it.
+//    if (p.spellBookCanvas == null || p.redrawSpellBook){
+//        var img = p.spellBookCanvas.getContext('2d');
+//    }else{
+//
+//    }
+
     ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
 
     var ch;
@@ -1062,11 +1070,11 @@ function showEndGame(p) {
     coverViewPort(p);
 
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME) {
-        p.message(TEXT_ACCURSED_BLOODWYCH, COLOUR[COLOUR_GREEN]);
-        writeFontImage(TEXT_CONGRATS, (p.ScreenX +33) * scale, (p.ScreenY +26) * scale, COLOUR[COLOUR_PINK]);
-                initMonsterGfxNew(monster[TOWER_MOD0][6]);
-                var t = drawMonster(monster[TOWER_MOD0][6], 0, 3, p, [0,0],true);
-                ctx.drawImage(t,0,0,t.width,t.height);
+        p.message(TEXT_ACCURSED_BLOODWYCH, COLOUR[COLOUR_GREEN],0,100000);
+        writeFontImage(TEXT_CONGRATS, (p.ScreenX+32.4) * scale, (p.ScreenY+6.5) * scale, COLOUR[COLOUR_PINK]);
+        var t = drawMonster(getMonsterById(478),0,0,player[0],{x:0,y:10},true)
+        p.Portal.drawImage(t,0*scale,0*scale,t.width,t.height);
+        p.Portal.save()
     }
 
 }

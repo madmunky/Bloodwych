@@ -28,8 +28,8 @@ var checkStarted = true;
 var resumeLoadGame = false;
 var gfxStage = 0;
 var startMenu = true;
-var BOS = false;
-var WTW = false;
+//var BOS = false;
+var WalkThroughWalls = false;
 
 //Setup some global variables for needed
 var VERSION = 0.50;
@@ -62,7 +62,7 @@ var itemsGfxD = [];
 var redrawPlayerUiFlag = 0;
 var audioFiles = [];
 var gameType = GAME_BLOODWYCH;
-var DataLocationPrefix;
+//var DataLocationPrefix;
 
 //GAME MODES
 var GAME_BLOODWYCH = 0,
@@ -72,7 +72,7 @@ var GAME_BLOODWYCH = 0,
 
 
 //sounds
-var soundEnabled = true;
+var soundEnabled = false;
 var SOUND_DOOR = 0,
     SOUND_ATTACK = 1,
     SOUND_FLASH = 2,
@@ -849,7 +849,7 @@ var UI_CENTER_PANEL_SLEEPING = 0,
     UI_CENTER_PANEL_GAMESTATE_MENU = 9,
     UI_CENTER_PANEL_GAMESTATE_SAVE = 10,
     UI_CENTER_PANEL_GAMESTATE_LOAD = 11,
-        UI_CENTER_PANEL_ENDGAME = 12;
+    UI_CENTER_PANEL_ENDGAME = 12;
 
 
 var UI_CHARACTER_SELECT_SCROLL = 0,
@@ -1040,8 +1040,8 @@ var TEXT_PLAYER = "PLAYER",
     TEXT_INVENTORY = "INVENTORY",
     TEXT_WAITS = " WAITS",
     TEXT_REJOINS_THE_PARTY = " REJOINS THE PARTY",
-        TEXT_CONGRATS = "CONGRATULATIONS!",
-        TEXT_ACCURSED_BLOODWYCH = "ACCURSED BLOODWYCH! WE SHALL MEET AGAIN";
+    TEXT_CONGRATS = "CONGRATULATIONS!",
+    TEXT_ACCURSED_BLOODWYCH = "ACCURSED BLOODWYCH! WE SHALL MEET AGAIN";
 
 //communication
 var COMMUNICATION_PAGE_MAIN = 0,

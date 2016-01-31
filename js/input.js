@@ -122,7 +122,7 @@ function doKeyDown(e) {
                         break;
                     case KEY_PLUS:
                         player[0].uiCenterPanel.mode = UI_CENTER_PANEL_ENDGAME;
-                                                showEndGame(player[0]);
+                        showEndGame(player[0]);
                         break;
                     case KEY_MINUS:
                         game.fps = game.fps -1;
@@ -561,19 +561,19 @@ function processCanvasInputMenu(x, y) {
     if (startMenu){
         if (uiClickInArea(x, y, UI_CLICK_START_ONE_PLAYER)) { //BLOODWYCH
             gameType = GAME_BLOODWYCH;
-			loadManifest();
+            loadManifest();
             startMenu = false;
         } else if (uiClickInArea(x, y, UI_CLICK_START_TWO_PLAYER)) { //EXTENDED LEVELS
             gameType = GAME_EXTENDED_LEVELS;
-			loadManifest();
+            loadManifest();
             startMenu = false;
         } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_ONE_PLAYER)) { //BOOK OF SKULLS
-			gameType = GAME_BOOK_OF_SKULLS;
-			loadManifest();
+            gameType = GAME_BOOK_OF_SKULLS;
+            loadManifest();
             startMenu = false;
         } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) { //CUSTOM DATA
-			gameType = CUSTOM;
-			loadManifest();
+            gameType = CUSTOM;
+            loadManifest();
             startMenu = false;
         } else if (uiClickInArea(x, y, UI_CLICK_START_RESUME_GAME)) { //MAP VIEWER
 

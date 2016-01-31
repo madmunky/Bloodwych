@@ -84,6 +84,8 @@ function Player(id, ScreenX, ScreenY) {
     this.PlayerCanvas.getContext("2d").font = "bold 20px Calibri";
 
     this.Portal = this.PlayerCanvas.getContext("2d");
+    this.spellBookCanvas = document.createElement('canvas');
+    this.redrawSpellBook = true;
 }
 
 Types.Player = Player;
@@ -361,7 +363,7 @@ Player.prototype.move = function(d) {
         this.lastX = this.x;
         this.lastY = this.y;
         this.attack(null, false);
-        if (this.canMove(d) || WTW) {
+        if (this.canMove(d) || WalkThroughWalls) {
             xy = getOffsetByRotation((this.d + d) % 4);
             this.x = this.x + xy.x;
             this.y = this.y + xy.y;
