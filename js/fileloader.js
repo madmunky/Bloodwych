@@ -186,20 +186,22 @@ function readMonsterItems(evt){
     return new Uint8Array(evt);
 }
 
-function processMonsterItems(){
-    var ttmon = []
+function processMonsterItems() {
+    //var ttmon = [];
+    var j = 0;
     for (t in tower){        
 		for (m in monster[t]){
 			if (monster[t][m].type === MON_TYPE_DROPPER){
 				if (monster[t][m].dropsSpecificItem){
-					ttmon.push(monster[t][m])
+					//ttmon.push(monster[t][m])
+                    monster[t][m].pocket[POCKET_SLOT_0].setPocketItem(monsterItemData[j], 1);
+                    j++;
 				}
 			}
 		}
     }
-
-    for (m in ttmon) {
-        ttmon[m].holdingItemId = monsterItemData[m]
-    }
+    //for (m in ttmon) {
+    //    ttmon[m].holdingItemId = monsterItemData[m]
+    //}
 
 }
