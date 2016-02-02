@@ -100,7 +100,7 @@ function setViewportScale(sp) {
             scaleReal = 0.5;
         }else{
             var zoom = 1;
-            scaleReal = 3;
+            //scaleReal = 3;
             if(isMobile) {
                     zoom = 2;
                     if (typeof sp !== "undefined" && sp) {
@@ -287,9 +287,7 @@ function gfxLoadImage(folder, type, item, sub) {
         } else {
             id = type;
         }
-
-        $('body').append('<img id="' + id + '" src="images/' + folder + '/' + id + '.png" class="gfx" />');
-        //console.log('<img id="' + id + '" src="images/' + folder + '/' + id + '.png" class="gfx" />');
+        $('body').append('<img id="' + id + '" src="' + GAME_ID[gameType] + '/images/' + folder + '/' + id + '.png" class="gfx" onerror="this.src=\'images/' + folder + '/' + id + '.png\';"/>');
         if (typeof sub === 'number' && sub != null) {
             if (item != '') {
                 gfx[folder][type][item][0] = document.getElementById(id);

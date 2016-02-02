@@ -733,7 +733,7 @@ function initChampions() {
             }
         }
         //spellBook[0][1].learnt = true;
-        monster[TOWER_CHAMPIONS][ch] = new Monster(ch, level, 2, ch, TOWER_MOD0, floor, x, y, d, d, true, 0, ch);
+        monster[TOWER_CHAMPIONS][ch] = new Monster(ch, level, 2, ch, TOWER_MOD0, floor, x, y, d, d, 0, ch);
         champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBook, slot);
         PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
     }

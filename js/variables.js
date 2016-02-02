@@ -37,7 +37,7 @@ var versionThis = 0.50;
 var Types = {};
 var gameStarted = false;
 var scale = 3;
-var scaleReal = 3;
+var scaleReal = scale;
 var debugWindow;
 var game;
 var characterGfx = [null, null, null, null, null];
@@ -69,10 +69,10 @@ var GAME_BLOODWYCH = 0,
     GAME_EXTENDED_LEVELS = 1,
     GAME_BOOK_OF_SKULLS = 2,
     GAME_CUSTOM = 3;
-
+var GAME_ID = ['BW', 'EXT', 'BOS', 'CUSTOM'];
 
 //sounds
-var soundEnabled = false;
+var soundEnabled = true;
 var SOUND_DOOR = 0,
     SOUND_ATTACK = 1,
     SOUND_FLASH = 2,

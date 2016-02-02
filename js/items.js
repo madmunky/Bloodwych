@@ -312,6 +312,14 @@ function newPocketItem(id, q) {
     });
 }
 
+function createPocketSlots() {
+    var pocket = new Array();
+    for (j = 0; j <= POCKET_GLOVES; j++) {
+        pocket[j] = newPocketItem();
+    }
+    return pocket;
+}
+
 //new dungeon item
 
 function dropItem(id, q, f, x, y, s) {

@@ -29,6 +29,7 @@ function loadGame(g) {
 		monsterTeamIdMax = save.gameData.variables.monsterTeamIdMax;
 		dungeonSpellTimer = save.gameData.variables.dungeonSpellTimer;
 		dungeonSpellList = save.gameData.variables.dungeonSpellList;
+		soundEnabled = save.gameData.variables.soundEnabled;
 	//	activeSpellTimer = save.gameData.variables.activeSpellTimer;
 
 		clearCanvas();
@@ -107,6 +108,7 @@ function saveGame(g, name) {
 			monsterTeamIdMax: monsterTeamIdMax,
 			dungeonSpellTimer: dungeonSpellTimer,
 			dungeonSpellList: dungeonSpellList,
+			soundEnabled: soundEnabled
 //			activeSpellTimer: activeSpellTimer
 		}
 	};
