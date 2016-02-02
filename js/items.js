@@ -526,7 +526,7 @@ function initItemsGfxD() {
         dItems.push(i);
         i = [];
 
-        var i = [];
+        //var i = [];
         i.push(grabImageAt(spriteSheetIMG, 353, 0, 39, 33, false));
         i.push(grabImageAt(spriteSheetIMG, 363, 33, 22, 19, false));
         i.push(grabImageAt(spriteSheetIMG, 366, 52, 16, 12, false));
@@ -534,11 +534,18 @@ function initItemsGfxD() {
         dItems.push(i);
         i = [];
 
-        var i = [];
+        //var i = [];
         i.push(grabImageAt(spriteSheetIMG, 311, 63, 31, 27, false));
         i.push(grabImageAt(spriteSheetIMG, 319, 91, 15, 15, false));
         i.push(grabImageAt(spriteSheetIMG, 321, 107, 11, 11, false));
         i.push(grabImageAt(spriteSheetIMG, 323, 119, 7, 7, false));
+        dItems.push(i);
+        i = [];
+
+        i.push(grabImageAt(spriteSheetIMG, 412, 1, 24, 21, false));
+        i.push(grabImageAt(spriteSheetIMG, 412, 23, 20, 17, false));
+        i.push(grabImageAt(spriteSheetIMG, 412, 42, 15, 13, false));
+        i.push(grabImageAt(spriteSheetIMG, 412, 56, 13, 11, false));
         dItems.push(i);
         i = [];
 

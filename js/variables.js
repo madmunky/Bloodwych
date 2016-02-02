@@ -1838,7 +1838,8 @@ var projectile = new Array();
 var DUNGEON_PROJECTILE_BIG = 27,
     DUNGEON_PROJECTILE_EXPLODE = 28,
     DUNGEON_PROJECTILE_ARROW = 29,
-    DUNGEON_NONE = 30;
+    DUNGEON_NONE = 30,
+    DUNGEON_PROJECTILE_SPHERE = 31;
 
 var championSelect = [{
     champID: -1,
