@@ -14,6 +14,7 @@ if(isMobile) {
 var preload = new createjs.LoadQueue(false);
 var defaultManifest;
 
+
 //Declare Arrays for the Graphics
 var gfx = [];
 window.player = new Array();
