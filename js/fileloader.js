@@ -1,83 +1,83 @@
 function loadBinaryFiles(item){
-	
-	loadingScreen(item);
-	if (typeof item.towerData !== 'undefined'){
-	
-		var type = item.id.split("_")[1];	
-		getFileData(item.callback,item.id,getTowerByName(item.towerData),type,parseInt(item.length));
-	
-	}else{
-		getFileData(item.callback,item.id,null,item.id,parseInt(item.length));
-	}
+
+    loadingScreen(item);
+    if (typeof item.towerData !== 'undefined'){
+
+        var type = item.id.split("_")[1];
+        getFileData(item.callback,item.id,getTowerByName(item.towerData),type,parseInt(item.length));
+
+    }else{
+        getFileData(item.callback,item.id,null,item.id,parseInt(item.length));
+    }
 }
 
 function getFileData(callback, id, t, type, length) {
 
-	switch (type) {
-		case "monsterPalette":
-			monsterPaletteData = window[callback](preload.getResult(id), length);
-			break;
-		case "monsterPaletteMeta":
-			monsterPaletteMetaData = window[callback](preload.getResult(id), length);
-			break;
-		case "monsterHeads":
-			monsterHeadsData = window[callback](preload.getResult(id), length);
-			break;
-		case "monsterBodies":
-			monsterBodiesData = window[callback](preload.getResult(id), length);
-			break;
-		case "map":
-			t.floor = window[callback](preload.getResult(id), length);
-			break;
-		case "switches":
-			t.switches = window[callback](preload.getResult(id), length);
-			break;
-		case "triggers":
-			t.triggers = window[callback](preload.getResult(id), length);
-			break;
-		case "monsters":
-			t.monsterData = window[callback](preload.getResult(id), length);
-			break;
-		case "championData":
-			championData = window[callback](preload.getResult(id), length);
-			break;
-		case "championPocketData":
-			championPocketData = window[callback](preload.getResult(id), length);
-			break;
-		case "towerSwitchesData":
-			towerSwitchesData = window[callback](preload.getResult(id), length);
-			break;
-		case "objects":
-			t.itemData = window[callback](preload.getResult(id), length);
-			break;
-		case "scrollData":
-			scrollData = window[callback](preload.getResult(id));
-			break;
-		case "gemSwitchesData":
-			gemSwitchesData = window[callback](preload.getResult(id), length);
-			break;
-		case "crystalSwitchesData":
-			crystalSwitchesData = window[callback](preload.getResult(id), length);
-			break;
-		case "armourData":
-			armourData = window[callback](preload.getResult(id), length);
-			break;
-		case "monsterItemData":
-			monsterItemData = window[callback](preload.getResult(id), length);
-			break;
-		default:
-			break;
-	}
-     
+    if (debug){
+
+        console.log("Processing:" + callback);
+
+    }
+
+    switch (type) {
+        case "monsterPalette":
+            monsterPaletteData = window[callback](preload.getResult(id), length);
+            break;
+        case "monsterPaletteMeta":
+            monsterPaletteMetaData = window[callback](preload.getResult(id), length);
+            break;
+        case "monsterHeads":
+            monsterHeadsData = window[callback](preload.getResult(id), length);
+            break;
+        case "monsterBodies":
+            monsterBodiesData = window[callback](preload.getResult(id), length);
+            break;
+        case "map":
+            t.floor = window[callback](preload.getResult(id), length);
+            break;
+        case "switches":
+            t.switches = window[callback](preload.getResult(id), length);
+            break;
+        case "triggers":
+            t.triggers = window[callback](preload.getResult(id), length);
+            break;
+        case "monsters":
+            t.monsterData = window[callback](preload.getResult(id), length);
+            break;
+        case "championData":
+            championData = window[callback](preload.getResult(id), length);
+            break;
+        case "championPocketData":
+            championPocketData = window[callback](preload.getResult(id), length);
+            break;
+        case "towerSwitchesData":
+            towerSwitchesData = window[callback](preload.getResult(id), length);
+            break;
+        case "objects":
+            t.itemData = window[callback](preload.getResult(id), length);
+            break;
+        case "scrollData":
+            scrollData = window[callback](preload.getResult(id));
+            break;
+        case "gemSwitchesData":
+            gemSwitchesData = window[callback](preload.getResult(id), length);
+            break;
+        case "crystalSwitchesData":
+            crystalSwitchesData = window[callback](preload.getResult(id), length);
+            break;
+        case "armourData":
+            armourData = window[callback](preload.getResult(id), length);
+            break;
+        case "monsterItemData":
+            monsterItemData = window[callback](preload.getResult(id), length);
+            break;
+        default:
+            break;
+    }
+
 }
 
-function checkAllDataLoaded() {
-    dataLoaded.max++;
-    if (dataLoaded.count === dataLoaded.max) {
-        dataLoaded.done++;
-        loadGfxUIData();
-    }
-}
+
 
 function readMapData(evt) {
 
