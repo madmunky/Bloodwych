@@ -291,6 +291,10 @@ var OBJECT_NONE = 0,
     OBJECT_DOOR_OPEN = 15,
     OBJECT_WOOD_DOOR_OPEN = 16;
 
+//JSON
+var colourData = [],
+    itemData = [];
+
 //Towers
 var TOWER_NAME = [];
 

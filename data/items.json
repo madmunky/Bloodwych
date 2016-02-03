@@ -1,54 +1,53 @@
-loadItemData({
-	"__comment": "
-		DUNGEON_ITEM_POTION = 0,
-	    DUNGEON_ITEM_RIP = 1,
-	    DUNGEON_ITEM_SMALL_SHIELD = 2,
-	    DUNGEON_ITEM_KEY = 3,
-	    DUNGEON_ITEM_COIN = 4,
-	    DUNGEON_ITEM_AMOUR = 5,
-	    DUNGEON_ITEM_APPLE = 6,
-	    DUNGEON_ITEM_BISCUIT = 7,
-	    DUNGEON_ITEM_CHICKEN = 8,
-	    DUNGEON_ITEM_SWORD = 9,
-	    DUNGEON_ITEM_AXE = 10,
-	    DUNGEON_ITEM_BOW = 11,
-	    DUNGEON_ITEM_CROSS_BOW = 12,
-	    DUNGEON_ITEM_ARROW = 13,
-	    DUNGEON_ITEM_STAFF = 14,
-	    DUNGEON_ITEM_DAGGER = 15,
-	    DUNGEON_ITEM_LARGE_SHIELD = 16,
-	    DUNGEON_ITEM_DRINK = 17,
-	    DUNGEON_ITEM_RING = 18,
-	    DUNGEON_ITEM_GEM = 19,
-	    DUNGEON_ITEM_GLOVE = 20,
-	    DUNGEON_ITEM_PERMIT = 21,
-	    DUNGEON_ITEM_BOOK_OF_SKULLS = 22,
-	    DUNGEON_ITEM_BONE = 23,
-	    DUNGEON_ITEM_WAND = 24,
-	    DUNGEON_ITEM_NEGG = 25,
-	    DUNGEON_ITEM_APPLE_HALF = 26;
+/*
+DUNGEON_ITEM_POTION = 0,
+DUNGEON_ITEM_RIP = 1,
+DUNGEON_ITEM_SMALL_SHIELD = 2,
+DUNGEON_ITEM_KEY = 3,
+DUNGEON_ITEM_COIN = 4,
+DUNGEON_ITEM_AMOUR = 5,
+DUNGEON_ITEM_APPLE = 6,
+DUNGEON_ITEM_BISCUIT = 7,
+DUNGEON_ITEM_CHICKEN = 8,
+DUNGEON_ITEM_SWORD = 9,
+DUNGEON_ITEM_AXE = 10,
+DUNGEON_ITEM_BOW = 11,
+DUNGEON_ITEM_CROSS_BOW = 12,
+DUNGEON_ITEM_ARROW = 13,
+DUNGEON_ITEM_STAFF = 14,
+DUNGEON_ITEM_DAGGER = 15,
+DUNGEON_ITEM_LARGE_SHIELD = 16,
+DUNGEON_ITEM_DRINK = 17,
+DUNGEON_ITEM_RING = 18,
+DUNGEON_ITEM_GEM = 19,
+DUNGEON_ITEM_GLOVE = 20,
+DUNGEON_ITEM_PERMIT = 21,
+DUNGEON_ITEM_BOOK_OF_SKULLS = 22,
+DUNGEON_ITEM_BONE = 23,
+DUNGEON_ITEM_WAND = 24,
+DUNGEON_ITEM_NEGG = 25,
+DUNGEON_ITEM_APPLE_HALF = 26;
 
-		ITEM_TYPE_EMPTY = 0,
-	    ITEM_TYPE_STACKABLE = 1,
-	    ITEM_TYPE_FOOD = 2,
-	    ITEM_TYPE_POTION = 3,
-	    ITEM_TYPE_ARMOUR = 4,
-	    ITEM_TYPE_SHIELD = 5,
-	    ITEM_TYPE_GLOVES = 6,
-	    ITEM_TYPE_WEAPON = 7,
-	    ITEM_TYPE_RIP = 8,
-	    ITEM_TYPE_KEY = 9,
-	    ITEM_TYPE_WAND = 10,
-	    ITEM_TYPE_BOW = 11,
-	    ITEM_TYPE_PERMIT = 12,
-	    ITEM_TYPE_CRYSTAL = 13,
-	    ITEM_TYPE_GEM = 14,
-	    ITEM_TYPE_RING = 15,
-	    ITEM_TYPE_BOOK = 16,
-	    ITEM_TYPE_SCROLL = 17
-	",
-	"path": "data/",
-	"items": [
+ITEM_TYPE_EMPTY = 0,
+ITEM_TYPE_STACKABLE = 1,
+ITEM_TYPE_FOOD = 2,
+ITEM_TYPE_POTION = 3,
+ITEM_TYPE_ARMOUR = 4,
+ITEM_TYPE_SHIELD = 5,
+ITEM_TYPE_GLOVES = 6,
+ITEM_TYPE_WEAPON = 7,
+ITEM_TYPE_RIP = 8,
+ITEM_TYPE_KEY = 9,
+ITEM_TYPE_WAND = 10,
+ITEM_TYPE_BOW = 11,
+ITEM_TYPE_PERMIT = 12,
+ITEM_TYPE_CRYSTAL = 13,
+ITEM_TYPE_GEM = 14,
+ITEM_TYPE_RING = 15,
+ITEM_TYPE_BOOK = 16,
+ITEM_TYPE_SCROLL = 17
+*/
+{"items":
+	[
 		{
 			"__id": 0,
 			"id": "ITEM_EMPTY"
@@ -117,6 +116,7 @@ loadItemData({
 				}
 			},
 			"onAttack": {
+				"decreaseStack": 1,
 				"mandatoryWithType": "ITEM_TYPE_BOW",
 				"powerFactor": 1.0,
 				"shootAsProjectile": {
@@ -149,6 +149,7 @@ loadItemData({
 				}
 			},
 			"onAttack": {
+				"decreaseStack": 1,
 				"mandatoryWithType": "ITEM_TYPE_BOW",
 				"powerFactor": 1.2,
 				"shootAsProjectile": {
@@ -283,6 +284,146 @@ loadItemData({
 				"changeToItem": "ITEM_EMPTY",
 				"addFood": 16
 			}
+		},
+		{
+			"__id": 12,
+			"id": "ITEM_CHICKEN_2",
+			"displayName": "FOOD",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx": {
+				"icon": {
+					"id": "UI_GFX_POCKET_CHICKEN_2"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_CHICKEN"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_CHICKEN_1",
+				"addFood": 16
+			}
+		},
+		{
+			"__id": 13,
+			"id": "ITEM_CHICKEN",
+			"displayName": "FOOD",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx": {
+				"icon": {
+					"id": "UI_GFX_POCKET_CHICKEN_3"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_CHICKEN"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_CHICKEN_2",
+				"addFood": 16
+			}
+		},
+		{
+			"__id": 14,
+			"id": "ITEM_MEAD_1",
+			"displayName": "FOOD",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx": {
+				"icon": {
+					"id": "UI_GFX_POCKET_WATER_1",
+					"color": {
+						"from": [
+							"COLOUR_GREEN"
+						],
+						"to": [
+							"COLOUR_PINK"
+						]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_DRINK"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_EMPTY",
+				"addFood": 10
+			}
+		},
+		{
+			"__id": 15,
+			"id": "ITEM_MEAD_2",
+			"displayName": "MEAD",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx": {
+				"icon": {
+					"id": "UI_GFX_POCKET_WATER_2",
+					"color": {
+						"from": [
+							"COLOUR_GREEN"
+						],
+						"to": [
+							"COLOUR_PINK"
+						]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_DRINK"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_MEAD_1",
+				"addFood": 10
+			}
+		},
+		{
+			"__id": 16,
+			"id": "ITEM_MEAD",
+			"displayName": "MEAD",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx": {
+				"icon": {
+					"id": "UI_GFX_POCKET_WATER_3",
+					"color": {
+						"from": [
+							"COLOUR_GREEN"
+						],
+						"to": [
+							"COLOUR_PINK"
+						]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_DRINK"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_MEAD_2",
+				"addFood": 10
+			}
+		},
+		{
+			"__id": 17,
+			"id": "ITEM_WATER_1",
+			"displayName": "WATER",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx": {
+				"icon": {
+					"id": "UI_GFX_POCKET_WATER_1",
+					"color": {
+						"from": [
+							"COLOUR_GREEN"
+						],
+						"to": [
+							"COLOUR_BLUE_DARK"
+						]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_DRINK"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_EMPTY",
+				"addFood": 10
+			}
 		}
 	]
-})
+};

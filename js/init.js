@@ -9,11 +9,16 @@ function initGame() {
 }
 
 function loadGFXData() {
-
     preload.loadFile({
         src: 'data/data.json',
         callback: "loadJSONData",
         type: "manifest",
+        loadTimeout: 1000
+    }, true);
+    preload.loadFile({
+        src: 'data/colours.json',
+        callback: "colours",
+        type: "json",
         loadTimeout: 1000
     }, true);
 
@@ -37,7 +42,7 @@ function loadCustomGfx(event){
 
     for (i in event.manifest){
         for (x in defaultManifest.manifest){
-            if (defaultManifest.manifest[x].id == event.manifest[i].id){
+            if (defaultManifest.manifest[x].id === event.manifest[i].id){
                 defaultManifest.manifest[x] = event.manifest[i];
             }
         }
@@ -83,6 +88,9 @@ function handleComplete(event) {
 			case createjs.AbstractLoader.BINARY:
 				loadBinaryFiles(item);
 				break;
+			case createjs.AbstractLoader.JSON:
+				loadJSONFiles(item);
+				break;
 		}
 	}
 	initMenuData();
@@ -125,6 +133,11 @@ function initData() {
 		initItems(tower[i]);
 	}
 	initChampions();
+}
+
+function initJSONData(oncomplete) {
+	var c = loadJSONFile("data/colours.json");
+	colourData = c.colours;
 }
 
 function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
@@ -188,4 +201,8 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
 	setTimeout(function() {
 		playSoundLoop(SOUND_PCMUSIC);
 	}, 500);
+}
+
+function loadJSONFiles(item) {
+	console.log(item);
 }
