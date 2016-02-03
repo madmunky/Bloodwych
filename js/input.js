@@ -561,19 +561,19 @@ function processCanvasInputMenu(x, y) {
     if (startMenu){
         if (uiClickInArea(x, y, UI_CLICK_START_ONE_PLAYER)) { //BLOODWYCH
             gameType = GAME_BLOODWYCH;
-            loadManifest();
+            loadGFXData();
             startMenu = false;
         } else if (uiClickInArea(x, y, UI_CLICK_START_TWO_PLAYER)) { //EXTENDED LEVELS
             gameType = GAME_EXTENDED_LEVELS;
-            loadManifest();
+            loadGFXData();
             startMenu = false;
         } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_ONE_PLAYER)) { //BOOK OF SKULLS
             gameType = GAME_BOOK_OF_SKULLS;
-            loadManifest();
+            loadGFXData();
             startMenu = false;
         } else if (uiClickInArea(x, y, UI_CLICK_START_QUICK_TWO_PLAYER)) { //CUSTOM DATA
             gameType = CUSTOM;
-            loadManifest();
+            loadGFXData();
             startMenu = false;
         } else if (uiClickInArea(x, y, UI_CLICK_START_RESUME_GAME)) { //MAP VIEWER
 

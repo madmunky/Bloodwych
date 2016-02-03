@@ -287,7 +287,7 @@ function gfxLoadImage(folder, type, item, sub) {
         } else {
             id = type;
         }
-        $('body').append('<img id="' + id + '" src="' + GAME_ID[gameType] + '/images/' + folder + '/' + id + '.png" class="gfx" onerror="this.src=\'images/' + folder + '/' + id + '.png\';"/>');
+        $('body').append('<img id="' + id + '" src="images/' + folder + '/' + id + '.png" class="gfx"/>');
         if (typeof sub === 'number' && sub != null) {
             if (item != '') {
                 gfx[folder][type][item][0] = document.getElementById(id);

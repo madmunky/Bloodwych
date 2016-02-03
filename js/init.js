@@ -8,13 +8,25 @@ function initGame() {
 	preload.on("complete", handleComplete);
 }
 
-function loadManifest() {
+function loadGFXData() {
+	var srcD = 'data/data.json';
 	var src = 'data/' + GAME_ID[gameType] + '/data.json';
+	preload.loadManifest({
+		src: srcD,
+		callback: "loadGfxD",
+		type: "manifest"
+	}, true);
 	preload.loadManifest({
 		src: src,
 		callback: "loadGfx",
 		type: "manifest"
 	}, true);
+}
+
+function loadTowerData(event) {
+	tower = event.towers;
+	initTowers();
+	preload.loadManifest(event.manifest, true, event.path);
 }
 
 function stop() {
@@ -32,6 +44,7 @@ function handleError(event) {
 }
 
 function handleComplete(event) {
+	console.log("Loading Files...");
 	var items = preload.getItems();
 	for (i in items) {
 		var item = items[i].item;
@@ -59,12 +72,6 @@ function updateLoadingScreen(msg, percent) {
 
 function loadGfxUIData() {
 	gfxLoadImage("misc", "font", "", null);
-}
-
-function loadTowerData(event) {
-	tower = event.towers;
-	initTowers();
-	preload.loadManifest(event.manifest, true, "data/");
 }
 
 function initMenuData() {

@@ -127,7 +127,7 @@ Projectile.prototype.move = function() {
 		if(this.spell !== null && typeof this.spell === 'number') { //item
 			if(getMonsterAt(this.floor, this.x, this.y) === null) {
 				if(msc) {
-					var d1 = [ 3, 0, 1, 2 ];
+					var d1 = [ CHAR_BACK_LEFT, CHAR_FRONT_LEFT, CHAR_FRONT_RIGHT, CHAR_BACK_RIGHT ];
 					dropItem(this.spell, 1, this.floor, this.x, this.y, d1[this.d]);
 				} else {
 					dropItem(this.spell, 1, this.floor, this.x, this.y, this.d);
@@ -135,6 +135,7 @@ Projectile.prototype.move = function() {
 			}
 		}
 		this.dead = 2;
+		for (p in player) { player[p].redrawViewPort = true;}
 		return false;
 	}
 	var xy = getOffsetByRotation(this.d);
