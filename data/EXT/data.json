@@ -1,8 +1,8 @@
-loadGfx({
-    "path": "data/EXT/images/",
+loadCustomGfx({
+    "path": "",
     "manifest": [
 		//Misc
-        {"id":"dungeon_misc_bed", "src":"dungeon/misc-bed.png"}
+        {"id":"dungeon_misc_bed", "src":"data/EXT/images/dungeon/misc-bed.png"}
     ]
 });
 

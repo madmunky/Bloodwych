@@ -9,18 +9,43 @@ function initGame() {
 }
 
 function loadGFXData() {
-	var srcD = 'data/data.json';
-	var src = 'data/' + GAME_ID[gameType] + '/data.json';
-	preload.loadManifest({
-		src: srcD,
-		callback: "loadGfxD",
-		type: "manifest"
-	}, true);
-	preload.loadManifest({
-		src: src,
-		callback: "loadGfx",
-		type: "manifest"
-	}, true);
+
+    preload.loadFile({
+        src: 'data/data.json',
+        callback: "loadJSONData",
+        type: "manifest",
+        loadTimeout: 1000
+    }, true);
+
+}
+
+function loadDefaultGfx(event){
+
+    defaultManifest = event;
+
+    preload = new createjs.LoadQueue(false);
+    var src = 'data/' + GAME_ID[gameType] + '/data.json';
+    preload.loadFile({
+            src: src,
+            callback: "loadJSONData1",
+            type: "manifest",
+            loadTimeout: 1000
+        },true);
+}
+
+function loadCustomGfx(event){
+
+    for (i in event.manifest){
+        for (x in defaultManifest.manifest){
+            if (defaultManifest.manifest[x].id == event.manifest[i].id){
+                defaultManifest.manifest[x] = event.manifest[i];
+            }
+        }
+    }
+
+    preload = new createjs.LoadQueue(false);
+    preload.loadManifest(defaultManifest, true);
+	
 }
 
 function loadTowerData(event) {
@@ -40,7 +65,7 @@ function handleFileProgress(event) {
 }
 
 function handleError(event) {
-	var tmp = "";
+	console.log("Preload "+event.title+": " + event.data.id)
 }
 
 function handleComplete(event) {

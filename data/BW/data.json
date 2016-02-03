@@ -1,61 +1,8 @@
-loadGfx({
-    "path": "images/",
+loadCustomGfx({
+    "path": "",
     "manifest": [
 		//Misc
-		{"id":"misc_separator", "src":"misc/separator.png"},
-		{"id":"misc_uistuff", "src":"misc/uistuff.png"},
 		
-		//Items
-		{"id":"dungeon_items2", "src":"dungeon/items2.png"},
-		
-		//Characters
-		{"id":"character_heads", "src":"character/heads.png"},
-		{"id":"character_arms", "src":"character/arms.png"},
-		{"id":"character_torsos", "src":"character/torsos.png"},
-		{"id":"character_legs", "src":"character/legs.png"},
-		{"id":"character_minis", "src":"character/minis.png"},
-		
-		//Monsters
-		{"id":"character_behemoth", "src":"character/behemoth.png"},
-		{"id":"character_crab", "src":"character/crab.png"},
-		{"id":"character_dragon", "src":"character/dragon.png"},
-		{"id":"character_floater", "src":"character/floater.png"},
-		{"id":"character_summon", "src":"character/summon.png"},
-		{"id":"character_nastyfloater", "src":"character/nastyfloater.png"},
-		
-        {"id":"dungeon_background", "src":"dungeon/background.png"},
-        {"id":"dungeon_stone_wall", "src":"dungeon/stone-wall.png"},
-        {"id":"dungeon_stone_wall2", "src":"dungeon/stone-wall2.png"},
-        {"id":"dungeon_stone_shelf", "src":"dungeon/stone-shelf.png"},
-
-        {"id":"dungeon_deco_serpent-head", "src":"dungeon/deco-serpent-head.png"},
-        {"id":"dungeon_deco_moon-head", "src":"dungeon/deco-moon-head.png"},
-        {"id":"dungeon_deco_dragon-head", "src":"dungeon/deco-dragon-head.png"},
-        {"id":"dungeon_deco_chaos-head", "src":"dungeon/deco-chaos-head.png"},
-        {"id":"dungeon_deco_switch_6", "src":"dungeon/deco-switch.png"},
-        {"id":"dungeon_deco_switch-off_6", "src":"dungeon/deco-switch-off.png"},
-        {"id":"dungeon_deco_gem_7", "src":"dungeon/deco-gem.png"},
-        {"id":"dungeon_deco_gem-off_7", "src":"dungeon/deco-gem-off.png"},
-        {"id":"dungeon_deco_script_7", "src":"dungeon/deco-script.png"},
-        {"id":"dungeon_deco_banner_7", "src":"dungeon/deco-banner.png"},
-
-        {"id":"dungeon_wood_wall", "src":"dungeon/wood-wall.png"},
-        {"id":"dungeon_wood_door", "src":"dungeon/wood-door.png"},
-        {"id":"dungeon_wood_door-open", "src":"dungeon/wood-door-open.png"},
-
-        {"id":"dungeon_misc_pillar", "src":"dungeon/misc-pillar.png"},
-        {"id":"dungeon_misc_bed", "src":"dungeon/misc-bed.png"},
-
-        {"id":"dungeon_door_solid_8", "src":"dungeon/door-solid.png"},
-        {"id":"dungeon_door_gate_8", "src":"dungeon/door-gate.png"},
-        {"id":"dungeon_door_open_8", "src":"dungeon/door-open.png"},
-
-        {"id":"dungeon_stairs_down", "src":"dungeon/stairs-down.png"},
-        {"id":"dungeon_stairs_up", "src":"dungeon/stairs-up.png"},
-
-        {"id":"dungeon_floor_pit-down", "src":"dungeon/floor-pit-down.png"},
-        {"id":"dungeon_floor_pit-up", "src":"dungeon/floor-pit-up.png"},
-        {"id":"dungeon_floor_path_2", "src":"dungeon/floor-path.png"}
     ]
 });
 
