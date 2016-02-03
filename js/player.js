@@ -240,12 +240,12 @@ Player.prototype.action = function() {
             if (this.getBinaryView(15, 13, 3) === '5' && this.getBinaryView(15, 4) === '0') {
                 var keylock = parseInt(this.getBinaryView(15, 1, 3));
                 if (keylock > 0) {
-                    if (this.pocket.id === keylock + 79) { //Use key
+                    if (getItemType(this.pocket.id) === ITEM_TYPE_KEY && this.pocket.id === keylock + ITEM_BRONZE_KEY - 1) { //Use key
                         this.consumeItemInHand();
                         this.setBinaryView(15, 11, 1);
                         this.setBinaryView(15, 1, 3, '0');
                     }
-                } else if (this.pocket.id === ITEM_KEY) { //Use common key
+                } else if (this.pocket.id === ITEM_COMMON_KEYS) { //Use common key
                     this.consumeItemInHand();
                     this.setBinaryView(15, 11, 1);
                 }
@@ -285,7 +285,7 @@ Player.prototype.checkWoodenDoor = function(pos18) {
         d = 0;
     }
     if (this.getBinaryView(pos18, 13, 3) === '2' && this.getBinaryView(pos18, ((5 + d - this.d) % 4) * 2) === '1') {
-        if (this.pocket.id === ITEM_KEY) { //Use common key
+        if (this.pocket.id === ITEM_COMMON_KEYS) { //Use common key
             this.consumeItemInHand();
             this.setBinaryView(pos18, 11, 1);
         }
