@@ -36,7 +36,8 @@ function loadCustomGfx(event) {
     }
     var preload = new createjs.LoadQueue(false);
     preload.maintainScriptOrder = true;
-    loadDefaultJSONFiles();
+    loadDefaultJSONFiles(GAME_ID[gameType]+"/json/");
+    loadDefaultJSONFiles("");
     preload.loadManifest(defaultManifest, false);
     preload.on("fileprogress", handleFileProgress);
     preload.on("error", handleError);
@@ -45,7 +46,7 @@ function loadCustomGfx(event) {
 }
 
 function loadTowerData(event) {
-	jsonDataLoaded = 0;
+    jsonDataLoaded = 0;
     tower = event.towers;
     initTowers();
     preload.on("fileprogress", handleFileProgress);
@@ -248,49 +249,49 @@ function processJSONFiles(item, result) {
     };
     jsonDataLoaded++;
     if(jsonDataLoaded >= '10') {
-    	initJSONData();
+        initJSONData();
     }
 }
 
-function loadDefaultJSONFiles() {
+function loadDefaultJSONFiles(path) {
     defaultManifest.manifest.unshift({
-        src: 'data/colours.json',
+        src: 'data/'+path+'colours.json',
         type: "json",
         typeID: "Colours"
     }, {
-        src: 'data/palettes.json',
+        src: 'data/'+path+'palettes.json',
         type: "json",
         typeID: "Palettes"
     }, {
-        src: 'data/characters.json',
+        src: 'data/'+path+'characters.json',
         type: "json",
         typeID: "Characters"
     }, {
-        src: 'data/communication.json',
+        src: 'data/'+path+'communication.json',
         type: "json",
         typeID: "Communication"
     }, {
-        src: 'data/input.json',
+        src: 'data/'+path+'input.json',
         type: "json",
         typeID: "Input"
     }, {
-        src: 'data/items.json',
+        src: 'data/'+path+'items.json',
         type: "json",
         typeID: "Items"
     }, {
-        src: 'data/sounds.json',
+        src: 'data/'+path+'sounds.json',
         type: "json",
         typeID: "Sounds"
     }, {
-        src: 'data/spells.json',
+        src: 'data/'+path+'spells.json',
         type: "json",
         typeID: "Spells"
     }, {
-        src: 'data/text.json',
+        src: 'data/'+path+'text.json',
         type: "json",
         typeID: "Text"
     }, {
-        src: 'data/ui.json',
+        src: 'data/'+path+'ui.json',
         type: "json",
         typeID: "UI"
     });
