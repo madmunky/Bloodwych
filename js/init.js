@@ -35,33 +35,28 @@ function loadCustomGfx(event) {
             }
         }
     }
-    preload = new createjs.LoadQueue(false);
+    var preload = new createjs.LoadQueue(false);
+    preload.maintainScriptOrder = true;
+
+    loadDefaultJSONFiles();
+    preload.loadManifest(defaultManifest, false);
 
     preload.on("fileprogress", handleFileProgress);
     preload.on("error", handleError);
-    preload.on("complete", handleComplete);
+    preload.on("fileload", handleFileLoad);
 
-    preload.loadManifest(defaultManifest, true);
-    preload.loadManifest([{
-        src: 'data/colours.json',
-        callback: "colours",
-        type: "json",
-        typeID: "Colours"
-//    }//, {
-//        src: 'data/file2.json',
-//        callback: "file2",
-//        type: "json",
-//        typeID: "SomethingElse"
-//    }, {
-//        src: 'data/file3.json',
-//        callback: "file3",
-//        type: "json"
-    }], true);
+    preload.load();
+
 }
 
 function loadTowerData(event) {
     tower = event.towers;
     initTowers();
+
+    preload.on("fileprogress", handleFileProgress);
+    preload.on("error", handleError);
+    preload.on("fileload", handleFileLoad);
+    preload.on("complete", handleComplete);
     preload.loadManifest(event.manifest, true, event.path);
 }
 
@@ -79,26 +74,30 @@ function handleError(event) {
     console.log("Preload " + event.title + ": " + event.data.id)
 }
 
-function handleComplete(event) {
-    console.log("Loading Files...");
-    var items = preload.getItems();
-    for (i in items) {
-        var item = items[i].item;
+function handleFileLoad(event){
+
+
+        var item = event.item;
         if (debug) {
             console.log("Loaded File: " + item.src);
         }
         switch (item.type) {
             case createjs.AbstractLoader.IMAGE:
-                gfxLoadImages(item);
+                gfxLoadImages(item,event.result);
                 break;
             case createjs.AbstractLoader.BINARY:
-                loadBinaryFiles(item);
+                loadBinaryFiles(item,event.result);
                 break;
             case createjs.AbstractLoader.JSON:
-                loadJSONFiles(item);
+                processJSONFiles(item,event.result);
                 break;
         }
-    }
+
+
+
+}
+
+function handleComplete(event) {
 
     loadingScreen({src:"Creating Towers..."});
     setTimeout(function(){ initMenuData(); }, 1000);
@@ -212,7 +211,7 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
     }, 500);
 }
 
-function loadJSONFiles(item) {
+function processJSONFiles(item) {
     switch (item.callback) {
         case 'colours':
             col = preload.getResult(item.src).colours;
@@ -220,7 +219,68 @@ function loadJSONFiles(item) {
                 COLOUR[c] = col[c].value;
             }
             break;
-        case 'SomethingElse':
+        case 'Characters':
+            break;
+        case 'Communication':
+            break;
+        case 'Input':
+            break;
+        case 'Items':
+            break;
+        case 'Palettes':
+            break;
+        case 'Sounds':
+            break;
+        case 'Spells':
+            break;
+        case 'Text':
+            break;
+        case 'UI':
             break;
     };
+}
+
+function loadDefaultJSONFiles(){
+
+    defaultManifest.manifest.push({
+        src: 'data/colours.json',
+        type: "json",
+        typeID: "Colours"
+    }, {
+        src: 'data/characters.json',
+        type: "json",
+        typeID: "Characters"
+    }, {
+        src: 'data/communication.json',
+        type: "json",
+        typeID: "Communication"
+    }, {
+        src: 'data/input.json',
+        type: "json",
+        typeID: "Input"
+    }, {
+        src: 'data/items.json',
+        type: "json",
+        typeID: "Items"
+    }, {
+        src: 'data/palettes.json',
+        type: "json",
+        typeID: "Palettes"
+    }, {
+        src: 'data/sounds.json',
+        type: "json",
+        typeID: "Sounds"
+    }, {
+        src: 'data/spells.json',
+        type: "json",
+        typeID: "Spells"
+    }, {
+        src: 'data/text.json',
+        type: "json",
+        typeID: "Text"
+    }, {
+        src: 'data/ui.json',
+        type: "json",
+        typeID: "UI"
+    });
 }

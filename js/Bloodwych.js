@@ -220,51 +220,51 @@ function gfxColourSubs(folder, type, item, sub) {
 //item: the object itself, e.g. bed, switch, shelf
 //sub: define this to the number of color variations you wish to add for this type of object. Currently maximum of 8
 
-function gfxLoadImages(img) {
+function gfxLoadImages(img, result) {
     //console.log("LoadImage: " + folder + " " + type + " " + item + " " + sub);
 
-	var data = img.id.split('_');
-	folder = data[0];
-	type = data[1];
-	var item = undefined;
-	if (typeof data[2] !== 'undefined'){
-		item = data[2];
-	}
-	var sub = undefined;
-	if (typeof data[3] !== 'undefined'){
-		sub = parseInt(data[3]);
-	}
-	if (folder === "character"){
-		var match = true;
-	}
+    var data = img.id.split('_');
+    folder = data[0];
+    type = data[1];
+    var item = undefined;
+    if (typeof data[2] !== 'undefined'){
+        item = data[2];
+    }
+    var sub = undefined;
+    if (typeof data[3] !== 'undefined'){
+        sub = parseInt(data[3]);
+    }
+    if (folder === "character"){
+        var match = true;
+    }
 
-	if (typeof type === 'string') {
-		var id = '';
-		if (typeof gfx[folder] === 'undefined') {
-			gfx[folder] = {};
-		}
-		if (typeof gfx[folder][type] === 'undefined') {
-			gfx[folder][type] = {};
-		}
-		if (typeof sub === 'number' && sub != null && (typeof gfx[folder][type][item] === 'undefined')) {
-			gfx[folder][type][item] = {};
-		}
-		id = img.id;
+    if (typeof type === 'string') {
+        var id = '';
+        if (typeof gfx[folder] === 'undefined') {
+            gfx[folder] = {};
+        }
+        if (typeof gfx[folder][type] === 'undefined') {
+            gfx[folder][type] = {};
+        }
+        if (typeof sub === 'number' && sub != null && (typeof gfx[folder][type][item] === 'undefined')) {
+            gfx[folder][type][item] = {};
+        }
+        id = img.id;
 
-		if (typeof sub === 'number' && sub != null) {
-			if (item != '') {
-				gfx[folder][type][item][0] = preload.getResult(id);
-				gfxColourSubs(folder, type, item, sub);
-			} else {
-				gfx[folder][type][0] = preload.getResult(id);
-				gfxColourSubs(folder, type, '', sub);
-			}
-		} else if (typeof item === 'string' && item != '') {
-			gfx[folder][type][item] = preload.getResult(id);
-		} else {
-			gfx[folder][type] = preload.getResult(id);
-		}
-	}    
+        if (typeof sub === 'number' && sub != null) {
+            if (item != '') {
+                gfx[folder][type][item][0] = result;
+                gfxColourSubs(folder, type, item, sub);
+            } else {
+                gfx[folder][type][0] = result;
+                gfxColourSubs(folder, type, '', sub);
+            }
+        } else if (typeof item === 'string' && item != '') {
+            gfx[folder][type][item] = result;
+        } else {
+            gfx[folder][type] = result;
+        }
+    }
 
 }
 

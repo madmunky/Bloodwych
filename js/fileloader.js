@@ -14,9 +14,7 @@ function loadBinaryFiles(item){
 function getFileData(callback, id, t, type, length) {
 
     if (debug){
-
-        console.log("Processing:" + callback);
-
+        console.log("Processing:" + type);
     }
 
     switch (type) {
