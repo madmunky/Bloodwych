@@ -96,8 +96,8 @@ function setViewportScale(sp) {
         if (navigator.userAgent.match(/(iPad)/g) ? true : false){
             scaleReal = 1.06;
         }else if (navigator.userAgent.match(/(iPhone|iPod)/g) ? true : false){
-            //scaleReal = 0.7; //iPhone 6
-            scaleReal = 0.5;
+            scaleReal = 0.7; //iPhone 6
+            //scaleReal = 0.5;
         }else{
             var zoom = 1;
             //scaleReal = 3;
