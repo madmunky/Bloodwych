@@ -1358,6 +1358,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
         } else if (!s) {
             writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, COLOUR[COLOUR_RED]);
         }
+        for (p in player) { player[p].redrawViewPort = true;}
     }
 }
 
