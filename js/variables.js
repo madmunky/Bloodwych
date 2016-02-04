@@ -294,7 +294,7 @@ var OBJECT_NONE = 0,
 
 //JSON
 var colourData = [],
-    itemData = [];
+    paletteData = [];
 
 //Towers
 var TOWER_NAME = [];

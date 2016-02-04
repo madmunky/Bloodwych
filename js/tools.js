@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 String.prototype.replaceAt = function(index, character) {
 	return this.substr(0, index) + character + this.substr(index + character.length);
 };
-
 //Sets a hex value at a certain index
-
 function setHexToBinaryPosition(s, index, length, to) {
 	var bin = hex2bin(s);
 	if (typeof to === "undefined" || to === '') {
@@ -22,9 +19,7 @@ function setHexToBinaryPosition(s, index, length, to) {
 	var ret = bin2hex(bin);
 	return ret;
 }
-
 //Gets a hex value at a certain index, and a certain length
-
 function getHexToBinaryPosition(s, index, length) {
 	if (typeof length === 'undefined') {
 		length = 1;
@@ -53,7 +48,6 @@ function hex2dec(num) {
 	var ret = parseInt(num, 16).toString(10).toUpperCase();
 	return ret;
 }
-
 
 function dec2hex(num) {
 	var ret = parseInt(num, 10).toString(16).toUpperCase();
@@ -89,13 +83,10 @@ function getSpellNotation(num) {
 function seededRandom(seed) {
 	max = 1.0;
 	min = 0.0;
-
 	seed = (seed * 9301 + 49297) % 233280;
 	var rnd = seed / 233280.0;
-
 	return min + rnd * (max - min);
 }
-
 /*
 1  3  4  2  0
 
@@ -110,7 +101,6 @@ function seededRandom(seed) {
      19
 */
 //Given a specific position (0 - 19) relative to an x, y and d(irection), return the x and y coordinates
-
 function posToCoordinates(pos, x, y, d) {
 	var newx, newy;
 	xy = getOffsetByRotation(d);
@@ -203,10 +193,8 @@ function posToCoordinates(pos, x, y, d) {
 		y: newy
 	};
 }
-
 //Given a specific x and y, relative to another x, y and d(irection), return the position
 //Returns -1 when not in range of 0-19
-
 function coordinatesToPos(xt, yt, x, y, d) {
 	var pos = -1;
 	xy = getOffsetByRotation(d);
@@ -308,39 +296,28 @@ function grabImageAt(image, startX, startY, width, height, flip, offsetX, offset
 };
 
 function flipImage(image) {
-
 	var can = document.createElement('canvas');
 	can.width = image.width;
 	can.height = image.height;
 	var flipcontext = can.getContext("2d");
-
 	flipcontext.translate(image.width, 0);
 	flipcontext.scale(-1, 1);
-
 	flipcontext.drawImage(image, 0, 0, image.width, image.height);
 	flipcontext.save();
-
 	return can;
-
 };
 
 function flipImageVert(image) {
-
 	var can = document.createElement('canvas');
 	can.width = image.width;
 	can.height = image.height;
 	var flipcontext = can.getContext("2d");
-
 	//flipcontext.translate(image.width, 0);
 	flipcontext.scale(1, -1);
-
 	flipcontext.drawImage(image, 0, (image.height * -1), image.width, image.height);
 	flipcontext.save();
-
 	return can;
-
 };
-
 String.prototype.contains = function(it) {
 	return this.indexOf(it) !== -1;
 };
@@ -356,13 +333,11 @@ function mathSign(n) {
 }
 
 function doubleDigits(v) {
-
 	if (v < 10) {
 		return "0" + v.toString();
 	} else {
 		return v.toString();
 	}
-
 }
 
 function isCyclic(obj) {
@@ -383,32 +358,42 @@ function isCyclic(obj) {
 		}
 		return false;
 	}
-
 	return detect(obj);
 }
 
 function dropClasses(o) {
-
 	for (var p in o) {
 		if (o[p] instanceof jQuery || o[p] instanceof HTMLElement) {
 			o[p] = null;
-		} else if (typeof o[p] === 'object')
-			dropClasses(o[p]);
+		} else if (typeof o[p] === 'object') dropClasses(o[p]);
 	}
 	return o;
 };
 
 function hexToRgb(hex) {
-    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-        return r + r + g + g + b + b;
-    });
+	// Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+	var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+	hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+		return r + r + g + g + b + b;
+	});
+	var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+	return result ? {
+		r: parseInt(result[1], 16),
+		g: parseInt(result[2], 16),
+		b: parseInt(result[3], 16)
+	} : null;
+}
 
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-        r: parseInt(result[1], 16),
-        g: parseInt(result[2], 16),
-        b: parseInt(result[3], 16)
-    } : null;
+function getObjectByKey(obj, key, val) {
+	var ret = [];
+	for (i in obj) {
+		if (obj.hasOwnProperty(i)) {
+			if (typeof obj[i] === 'object') {
+				ret = ret.concat(getObjectByKey(obj[i], key, val));
+			} else if (i == key && (typeof val === "undefined" || obj[key] == val)) {
+				ret.push(obj);
+			}
+		}
+	}
+	return ret;
 }

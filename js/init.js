@@ -212,11 +212,17 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
 }
 
 function processJSONFiles(item) {
-    switch (item.callback) {
-        case 'colours':
-            col = preload.getResult(item.src).colours;
-            for(c in col) {
-                COLOUR[c] = col[c].value;
+    switch (item.typeID) {
+        case 'Colours':
+            colourData = preload.getResult(item.src).colours;
+            for(c in colourData) {
+                COLOUR[c] = colourData[c].value;
+            }
+            break;
+        case 'Palettes':
+            paletteData = preload.getResult(item.src).palettes;
+            for(c in paletteData) {
+                foo = paletteData[c].value;
             }
             break;
         case 'Characters':
@@ -226,8 +232,6 @@ function processJSONFiles(item) {
         case 'Input':
             break;
         case 'Items':
-            break;
-        case 'Palettes':
             break;
         case 'Sounds':
             break;
