@@ -823,8 +823,8 @@ function coverViewPort(p) {
 
 	p.Portal.fillStyle = 'rgb(0, 0, 0)';
 	p.Portal.fillRect(0.5, 0.5, 128 * scale, 76 * scale);
-	drawRect(1, 0, 125, 74, COLOUR[COLOUR_GREY_DARK], p);
-	drawRect(0, 0, 127, 75, COLOUR[COLOUR_GREY_LIGHT], p);
-	drawRect(2, 1, 123, 72, COLOUR[COLOUR_GREY_LIGHT], p);
+	drawRect(1, 0, 125, 74, colourData['GREY_DARK'], p);
+	drawRect(0, 0, 127, 75, colourData['GREY_LIGHT'], p);
+	drawRect(2, 1, 123, 72, colourData['GREY_LIGHT'], p);
 	p.Portal.save()
 }

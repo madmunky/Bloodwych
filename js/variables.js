@@ -14,10 +14,6 @@ if(isMobile) {
 var preload = new createjs.LoadQueue(false);
 var defaultManifest;
 
-//JSON
-var colourData = [],
-    paletteData = [];
-
 //Declare Arrays for the Graphics
 var gfx = [];
 window.player = new Array();
@@ -117,45 +113,23 @@ var PROFESSION_MAX = 4,
     PROFESSION_ADVENTURER = 2,
     PROFESSION_CUTPURSE = 3;
 
-var COLOUR_BLACK = 0,
-    COLOUR_GREY_DARKEST = 1,
-    COLOUR_GREY_DARK = 2,
-    COLOUR_GREY_MEDIUM = 3,
-    COLOUR_GREY_LIGHT = 4,
-    COLOUR_GREEN_DARK = 5,
-    COLOUR_GREEN = 6,
-    COLOUR_BLUE_DARK = 7,
-    COLOUR_BLUE = 8,
-    COLOUR_RED_DARK = 9,
-    COLOUR_BROWN = 10,
-    COLOUR_PINK = 11,
-    COLOUR_RED = 12,
-    COLOUR_YELLOW = 13,
-    COLOUR_WHITE = 14,
-    COLOUR_TRANSPARENT = 15;
-
-var COLOUR = new Array();
-COLOUR[COLOUR_BLACK] = [0, 0, 0, 255];
-COLOUR[COLOUR_GREY_DARKEST] = [64, 64, 64, 255];
-COLOUR[COLOUR_GREY_DARK] = [96, 96, 96, 255];
-COLOUR[COLOUR_GREY_MEDIUM] = [128, 128, 128, 255];
-COLOUR[COLOUR_GREY_LIGHT] = [160, 160, 160, 255];
-COLOUR[COLOUR_GREEN_DARK] = [32, 144, 32, 255];
-COLOUR[COLOUR_GREEN] = [16, 192, 16, 255];
-COLOUR[COLOUR_BLUE_DARK] = [0, 0, 224, 255];
-COLOUR[COLOUR_BLUE] = [64, 128, 224, 255];
-COLOUR[COLOUR_RED_DARK] = [128, 32, 16, 255];
-COLOUR[COLOUR_BROWN] = [160, 64, 32, 255];
-//COLOUR[COLOUR_BROWN] = [176, 48, 16, 255];
-COLOUR[COLOUR_PINK] = [224, 144, 96, 255];
-COLOUR[COLOUR_RED] = [208, 0, 0, 255];
-COLOUR[COLOUR_YELLOW] = [224, 192, 0, 255];
-COLOUR[COLOUR_WHITE] = [224, 224, 224, 255];
-COLOUR[COLOUR_TRANSPARENT] = [0, 0, 0, 0];
-
-var COLOUR_PLAYER = new Array();
-COLOUR_PLAYER[0] = [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK]];
-COLOUR_PLAYER[1] = [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK]];
+var colourData = [];
+colourData['BLACK'] = [0, 0, 0, 255];
+colourData['GREY_DARKEST'] = [64, 64, 64, 255];
+colourData['GREY_DARK'] = [96, 96, 96, 255];
+colourData['GREY_MEDIUM'] = [128, 128, 128, 255];
+colourData['GREY_LIGHT'] = [160, 160, 160, 255];
+colourData['GREEN_DARK'] = [32, 144, 32, 255];
+colourData['GREEN'] = [16, 192, 16, 255];
+colourData['BLUE_DARK'] = [0, 0, 224, 255];
+colourData['BLUE'] = [64, 128, 224, 255];
+colourData['RED_DARK'] = [128, 32, 16, 255];
+colourData['BROWN'] = [160, 64, 32, 255];
+colourData['PINK'] = [224, 144, 96, 255];
+colourData['RED'] = [208, 0, 0, 255];
+colourData['YELLOW'] = [224, 192, 0, 255];
+colourData['WHITE'] = [224, 224, 224, 255];
+colourData['TRANSPARENT'] = [0, 0, 0, 0];
 
 var CLASS_COLOUR_SERP = 0,
     CLASS_COLOUR_CHAOS = 1,
@@ -164,11 +138,11 @@ var CLASS_COLOUR_SERP = 0,
     CLASS_COLOUR_ANCIENT = 4;
 
 var CLASS_COLOUR = new Array();
-CLASS_COLOUR[CLASS_COLOUR_SERP] = COLOUR[COLOUR_GREEN],
-CLASS_COLOUR[CLASS_COLOUR_CHAOS] = COLOUR[COLOUR_YELLOW],
-CLASS_COLOUR[CLASS_COLOUR_DRAG] = COLOUR[COLOUR_RED],
-CLASS_COLOUR[CLASS_COLOUR_MOON] = COLOUR[COLOUR_BLUE],
-CLASS_COLOUR[CLASS_COLOUR_ANCIENT] = COLOUR[COLOUR_PINK];
+CLASS_COLOUR['CLASS_COLOUR_SERP'] = colourData['GREEN'],
+CLASS_COLOUR['CLASS_COLOUR_CHAOS'] = colourData['YELLOW'],
+CLASS_COLOUR['CLASS_COLOUR_DRAG'] = colourData['RED'],
+CLASS_COLOUR['CLASS_COLOUR_MOON'] = colourData['BLUE'],
+CLASS_COLOUR['CLASS_COLOUR_ANCIENT'] = colourData['PINK'];
 
 var COLOUR_DOOR_NORMAL = 0,
     COLOUR_DOOR_BRONZE = 1,
@@ -230,52 +204,52 @@ var CHAR_FRONT_SOLO = -1,
 
 var objectPalette = {};
 objectPalette["switch"] = new Array();
-objectPalette["switch"]["default"] = [COLOUR[COLOUR_RED], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_LIGHT], null];
-objectPalette["switch"]["default-off"] = [COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_RED], null, COLOUR[COLOUR_BLUE]];
-objectPalette["switch"][COLOUR_SWITCH_SERPENT] = [COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["switch"][COLOUR_SWITCH_CHAOS] = [COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["switch"][COLOUR_SWITCH_DRAGON] = [COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["switch"][COLOUR_SWITCH_MOON] = [COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_BLACK]];
-objectPalette["switch"][COLOUR_SWITCH_GREY] = [COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["switch"][COLOUR_SWITCH_BROWN] = [COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["switch"][COLOUR_SWITCH_BLACK] = [COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK]];
+objectPalette["switch"]["default"] = [colourData['RED'], colourData['BLUE'], colourData['GREY_LIGHT'], null];
+objectPalette["switch"]["default-off"] = [colourData['GREY_LIGHT'], colourData['RED'], null, colourData['BLUE']];
+objectPalette["switch"][COLOUR_SWITCH_SERPENT] = [colourData['GREEN'], colourData['GREEN_DARK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["switch"][COLOUR_SWITCH_CHAOS] = [colourData['YELLOW'], colourData['PINK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["switch"][COLOUR_SWITCH_DRAGON] = [colourData['RED'], colourData['RED_DARK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["switch"][COLOUR_SWITCH_MOON] = [colourData['BLUE'], colourData['BLUE_DARK'], colourData['YELLOW'], colourData['BLACK']];
+objectPalette["switch"][COLOUR_SWITCH_GREY] = [colourData['GREY_MEDIUM'], colourData['GREY_DARK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["switch"][COLOUR_SWITCH_BROWN] = [colourData['BROWN'], colourData['RED_DARK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["switch"][COLOUR_SWITCH_BLACK] = [colourData['BLACK'], colourData['BLACK'], colourData['BLACK'], colourData['BLACK']];
 objectPalette["gem"] = new Array();
-objectPalette["gem"]["default"] = [COLOUR[COLOUR_RED], COLOUR[COLOUR_BLUE], null, null];
-objectPalette["gem"]["default-off"] = [null, COLOUR[COLOUR_BLUE], null, COLOUR[COLOUR_RED]];
-objectPalette["gem"][COLOUR_GEM_SERPENT] = [COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["gem"][COLOUR_GEM_CHAOS] = [COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["gem"][COLOUR_GEM_DRAGON] = [COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["gem"][COLOUR_GEM_MOON] = [COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_BLACK]];
-objectPalette["gem"][COLOUR_GEM_GREY] = [COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["gem"][COLOUR_GEM_BLUEISH] = [COLOUR[COLOUR_GREEN], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["gem"][COLOUR_GEM_BROWN] = [COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
-objectPalette["gem"][COLOUR_GEM_TAN] = [COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]];
+objectPalette["gem"]["default"] = [colourData['RED'], colourData['BLUE'], null, null];
+objectPalette["gem"]["default-off"] = [null, colourData['BLUE'], null, colourData['RED']];
+objectPalette["gem"][COLOUR_GEM_SERPENT] = [colourData['GREEN'], colourData['GREEN_DARK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["gem"][COLOUR_GEM_CHAOS] = [colourData['YELLOW'], colourData['PINK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["gem"][COLOUR_GEM_DRAGON] = [colourData['RED'], colourData['RED_DARK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["gem"][COLOUR_GEM_MOON] = [colourData['BLUE'], colourData['BLUE_DARK'], colourData['YELLOW'], colourData['BLACK']];
+objectPalette["gem"][COLOUR_GEM_GREY] = [colourData['GREY_MEDIUM'], colourData['GREY_DARK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["gem"][COLOUR_GEM_BLUEISH] = [colourData['GREEN'], colourData['BLUE'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["gem"][COLOUR_GEM_BROWN] = [colourData['BROWN'], colourData['RED_DARK'], colourData['WHITE'], colourData['BLACK']];
+objectPalette["gem"][COLOUR_GEM_TAN] = [colourData['PINK'], colourData['BROWN'], colourData['WHITE'], colourData['BLACK']];
 objectPalette["deco"] = new Array();
-objectPalette["deco"]["default"] = [COLOUR[COLOUR_RED], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_LIGHT]];
-objectPalette["deco"][COLOUR_DECO_BRONZE] = [COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK]];
-objectPalette["deco"][COLOUR_DECO_SERPENT] = [COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK]];
-objectPalette["deco"][COLOUR_DECO_DRAGON] = [COLOUR[COLOUR_PINK], COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK]];
-objectPalette["deco"][COLOUR_DECO_MOON] = [COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK]];
-objectPalette["deco"][COLOUR_DECO_CHAOS] = [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK]];
-objectPalette["deco"][COLOUR_DECO_IRON] = [COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_DARK]];
-objectPalette["deco"][COLOUR_DECO_BROWN] = [COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN]];
-objectPalette["deco"][COLOUR_DECO_TAN] = [COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_RED_DARK]];
+objectPalette["deco"]["default"] = [colourData['RED'], colourData['BLUE'], colourData['GREY_LIGHT']];
+objectPalette["deco"][COLOUR_DECO_BRONZE] = [colourData['PINK'], colourData['BROWN'], colourData['RED_DARK']];
+objectPalette["deco"][COLOUR_DECO_SERPENT] = [colourData['YELLOW'], colourData['GREEN'], colourData['GREEN_DARK']];
+objectPalette["deco"][COLOUR_DECO_DRAGON] = [colourData['PINK'], colourData['RED'], colourData['RED_DARK']];
+objectPalette["deco"][COLOUR_DECO_MOON] = [colourData['GREY_LIGHT'], colourData['BLUE'], colourData['BLUE_DARK']];
+objectPalette["deco"][COLOUR_DECO_CHAOS] = [colourData['WHITE'], colourData['YELLOW'], colourData['PINK']];
+objectPalette["deco"][COLOUR_DECO_IRON] = [colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['GREY_DARK']];
+objectPalette["deco"][COLOUR_DECO_BROWN] = [colourData['YELLOW'], colourData['PINK'], colourData['BROWN']];
+objectPalette["deco"][COLOUR_DECO_TAN] = [colourData['YELLOW'], colourData['PINK'], colourData['RED_DARK']];
 objectPalette["door"] = new Array();
-objectPalette["door"]["default"] = COLOUR[COLOUR_BLUE];
-objectPalette["door"][COLOUR_DOOR_NORMAL] = COLOUR[COLOUR_GREY_DARKEST];
-objectPalette["door"][COLOUR_DOOR_BRONZE] = COLOUR[COLOUR_RED_DARK];
-objectPalette["door"][COLOUR_DOOR_IRON] = COLOUR[COLOUR_GREY_LIGHT];
-objectPalette["door"][COLOUR_DOOR_SERPENT] = COLOUR[COLOUR_GREEN];
-objectPalette["door"][COLOUR_DOOR_CHAOS] = COLOUR[COLOUR_YELLOW];
-objectPalette["door"][COLOUR_DOOR_DRAGON] = COLOUR[COLOUR_RED];
-objectPalette["door"][COLOUR_DOOR_MOON] = COLOUR[COLOUR_BLUE];
-objectPalette["door"][COLOUR_DOOR_CHROMATIC] = COLOUR[COLOUR_WHITE];
-objectPalette["door"][COLOUR_DOOR_VOID] = COLOUR[COLOUR_BLACK];
+objectPalette["door"]["default"] = colourData['BLUE'];
+objectPalette["door"][COLOUR_DOOR_NORMAL] = colourData['GREY_DARKEST'];
+objectPalette["door"][COLOUR_DOOR_BRONZE] = colourData['RED_DARK'];
+objectPalette["door"][COLOUR_DOOR_IRON] = colourData['GREY_LIGHT'];
+objectPalette["door"][COLOUR_DOOR_SERPENT] = colourData['GREEN'];
+objectPalette["door"][COLOUR_DOOR_CHAOS] = colourData['YELLOW'];
+objectPalette["door"][COLOUR_DOOR_DRAGON] = colourData['RED'];
+objectPalette["door"][COLOUR_DOOR_MOON] = colourData['BLUE'];
+objectPalette["door"][COLOUR_DOOR_CHROMATIC] = colourData['WHITE'];
+objectPalette["door"][COLOUR_DOOR_VOID] = colourData['BLACK'];
 objectPalette["floor"] = new Array();
-objectPalette["floor"]["default"] = [COLOUR[COLOUR_RED], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK]];
-objectPalette["floor"][COLOUR_FLOOR_SWITCH] = [COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_DARKEST]];
-objectPalette["floor"][COLOUR_FLOOR_FIRE] = [COLOUR[COLOUR_RED], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_RED_DARK]];
-objectPalette["floor"][COLOUR_FLOOR_FIRE_DIM] = [COLOUR[COLOUR_BROWN], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_RED_DARK]];
+objectPalette["floor"]["default"] = [colourData['RED'], colourData['BLUE'], colourData['GREY_LIGHT'], colourData['BLACK']];
+objectPalette["floor"][COLOUR_FLOOR_SWITCH] = [colourData['GREEN_DARK'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['GREY_DARKEST']];
+objectPalette["floor"][COLOUR_FLOOR_FIRE] = [colourData['RED'], colourData['YELLOW'], colourData['PINK'], colourData['RED_DARK']];
+objectPalette["floor"][COLOUR_FLOOR_FIRE_DIM] = [colourData['BROWN'], colourData['YELLOW'], colourData['PINK'], colourData['RED_DARK']];
 
 var OBJECT_NONE = 0,
     OBJECT_PATH = 1,
@@ -452,36 +426,40 @@ var MON_FORM_VENDOR_1 = 21,
     MON_FORM_DRAGON_SMALL = 106,
     MON_FORM_BEHEMOTH = 107;
 
+var paletteData = [];
+paletteData['PLAYER'] = [];
+paletteData['PLAYER'][0] = [colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK']];
+paletteData['PLAYER'][1] = [colourData['WHITE'], colourData['RED'], colourData['RED_DARK']];
 
-paletteData['SERPENT'] = new Array(COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_WHITE]),
-paletteData['MOON'] = new Array(COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE]),
-paletteData['DRAGON'] = new Array(COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_RED], COLOUR[COLOUR_RED], COLOUR[COLOUR_WHITE]),
-paletteData['CHAOS'] = new Array(COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_WHITE]),
-paletteData['DEAD'] = new Array(COLOUR[COLOUR_BLACK], COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREY_DARKEST]),
-paletteData['SELECTED'] = new Array(COLOUR[COLOUR_BLACK], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_MEDIUM]),
+paletteData['SERPENT'] = new Array(colourData['GREY_LIGHT'], colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREEN'], colourData['WHITE']),
+paletteData['MOON'] = new Array(colourData['GREY_LIGHT'], colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLUE'], colourData['WHITE']),
+paletteData['DRAGON'] = new Array(colourData['GREY_LIGHT'], colourData['YELLOW'], colourData['PINK'], colourData['RED'], colourData['RED'], colourData['WHITE']),
+paletteData['CHAOS'] = new Array(colourData['GREY_LIGHT'], colourData['WHITE'], colourData['YELLOW'], colourData['PINK'], colourData['YELLOW'], colourData['WHITE']),
+paletteData['DEAD'] = new Array(colourData['BLACK'], colourData['GREY_MEDIUM'], colourData['GREY_DARK'], colourData['GREY_DARKEST']),
+paletteData['SELECTED'] = new Array(colourData['BLACK'], colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM']),
 
-paletteData['SERPENT_ARROW'] = new Array(COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_GREEN]),
-paletteData['MOON_ARROW'] = new Array(COLOUR[COLOUR_WHITE], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLUE_DARK]),
-paletteData['DRAGON_ARROW'] = new Array(COLOUR[COLOUR_WHITE], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_RED]),
-paletteData['CHAOS_ARROW'] = new Array(COLOUR[COLOUR_WHITE], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_PINK], COLOUR[COLOUR_YELLOW]),
-paletteData['BRONZE_ARROW'] = new Array(COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK]),
-paletteData['GREEN_ARROW'] = new Array(COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREY_DARKEST]),
-paletteData['GOLD_ARROW'] = new Array(COLOUR[COLOUR_WHITE], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_YELLOW]),
+paletteData['SERPENT_ARROW'] = new Array(colourData['YELLOW'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_DARK'], colourData['YELLOW'], colourData['GREEN']),
+paletteData['MOON_ARROW'] = new Array(colourData['WHITE'], colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLACK'], colourData['BLUE_DARK']),
+paletteData['DRAGON_ARROW'] = new Array(colourData['WHITE'], colourData['YELLOW'], colourData['PINK'], colourData['RED']),
+paletteData['CHAOS_ARROW'] = new Array(colourData['WHITE'], colourData['WHITE'], colourData['YELLOW'], colourData['PINK'], colourData['PINK'], colourData['YELLOW']),
+paletteData['BRONZE_ARROW'] = new Array(colourData['PINK'], colourData['BROWN'], colourData['BROWN'], colourData['RED_DARK']),
+paletteData['GREEN_ARROW'] = new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_DARK'], colourData['GREY_DARKEST']),
+paletteData['GOLD_ARROW'] = new Array(colourData['WHITE'], colourData['YELLOW'], colourData['PINK'], colourData['BROWN'], colourData['BROWN'], colourData['YELLOW']),
 
-paletteData['SERPENT_BIG'] = new Array(COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_WHITE]),
-paletteData['MOON_BIG'] = new Array(COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE]),
-paletteData['DRAGON_BIG'] = new Array(COLOUR[COLOUR_RED], COLOUR[COLOUR_PINK], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_RED], COLOUR[COLOUR_WHITE]),
-paletteData['CHAOS_BIG'] = new Array(COLOUR[COLOUR_PINK], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_WHITE]),
-paletteData['DISRUPT_BIG'] = new Array(COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_BLACK], COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_BLACK]),
-paletteData['BLAZE_BIG'] = new Array(COLOUR[COLOUR_YELLOW], COLOUR[COLOUR_PINK], COLOUR[COLOUR_RED], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_RED], COLOUR[COLOUR_WHITE]),
+paletteData['SERPENT_BIG'] = new Array(colourData['GREEN_DARK'], colourData['GREEN'], colourData['YELLOW'], colourData['GREY_DARK'], colourData['GREEN'], colourData['WHITE']),
+paletteData['MOON_BIG'] = new Array(colourData['BLUE_DARK'], colourData['BLUE'], colourData['GREEN'], colourData['GREY_DARK'], colourData['BLUE'], colourData['WHITE']),
+paletteData['DRAGON_BIG'] = new Array(colourData['RED'], colourData['PINK'], colourData['YELLOW'], colourData['RED_DARK'], colourData['RED'], colourData['WHITE']),
+paletteData['CHAOS_BIG'] = new Array(colourData['PINK'], colourData['YELLOW'], colourData['WHITE'], colourData['BROWN'], colourData['YELLOW'], colourData['WHITE']),
+paletteData['DISRUPT_BIG'] = new Array(colourData['BLACK'], colourData['BLACK'], colourData['BLACK'], colourData['BLACK'], colourData['YELLOW'], colourData['BLACK']),
+paletteData['BLAZE_BIG'] = new Array(colourData['YELLOW'], colourData['PINK'], colourData['RED'], colourData['RED_DARK'], colourData['RED'], colourData['WHITE']),
 
-paletteData['PIT_FLASH'] = new Array(null, null, null, null, COLOUR[COLOUR_GREY_MEDIUM], null),
-paletteData['TELEPORT_FLASH'] = new Array(null, null, null, null, COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLACK]),
+paletteData['PIT_FLASH'] = new Array(null, null, null, null, colourData['GREY_MEDIUM'], null),
+paletteData['TELEPORT_FLASH'] = new Array(null, null, null, null, colourData['WHITE'], colourData['BLACK']),
 
-paletteData['DEFAULT_MON'] = [COLOUR[COLOUR_BLACK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_RED]],
-paletteData['DEFAULT_SHIELD'] = new Array([255, 0, 255, 255], COLOUR[COLOUR_RED], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLUE]),
-paletteData['DEFAULT_ITEM'] = new Array(COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLUE]),
-paletteData['DEFAULT_ITEM_DUN'] = new Array(COLOUR[COLOUR_RED], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLACK]);
+paletteData['DEFAULT_MON'] = [colourData['BLACK'], colourData['GREY_LIGHT'], colourData['BLUE'], colourData['RED']],
+paletteData['DEFAULT_SHIELD'] = new Array([255, 0, 255, 255], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLUE']),
+paletteData['DEFAULT_ITEM'] = new Array(colourData['GREEN'], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLUE']),
+paletteData['DEFAULT_ITEM_DUN'] = new Array(colourData['RED'], colourData['BLUE'], colourData['GREY_LIGHT'], colourData['BLACK']);
 
 var monsterPaletteData;
 var monsterPaletteMetaData;
@@ -1853,12 +1831,12 @@ var championSelect = [{
 }];
 
 //armour palettes
-//var paletteData['DEFAULT_MON'] = [COLOUR[COLOUR_BLACK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_RED]],
+//var paletteData['DEFAULT_MON'] = [colourData['BLACK'], colourData['GREY_LIGHT'], colourData['BLUE'], colourData['RED']],
 var	CLASS_ARMOUR = [
-    [COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], null, COLOUR[COLOUR_GREEN]],
-    [COLOUR[COLOUR_PINK], COLOUR[COLOUR_YELLOW], null, COLOUR[COLOUR_YELLOW]],
-    [COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_RED], COLOUR[COLOUR_RED], COLOUR[COLOUR_RED]],
-    [COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], null, COLOUR[COLOUR_BLUE]]
+    [colourData['GREEN_DARK'], colourData['GREEN'], null, colourData['GREEN']],
+    [colourData['PINK'], colourData['YELLOW'], null, colourData['YELLOW']],
+    [colourData['RED_DARK'], colourData['RED'], colourData['RED'], colourData['RED']],
+    [colourData['BLUE_DARK'], colourData['BLUE'], null, colourData['BLUE']]
 ];
 
 var CHA_ARMOUR = [
@@ -1867,203 +1845,203 @@ var CHA_ARMOUR = [
         //Male
         [
             //Legs
-            [COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], COLOUR[COLOUR_PINK]],
+            [colourData['RED_DARK'], colourData['BROWN'], colourData['PINK'], colourData['PINK']],
             //Torso
-            [COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], null],
+            [colourData['RED_DARK'], colourData['BROWN'], colourData['PINK'], null],
             //Arms
-            [null, COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK]],
+            [null, colourData['RED_DARK'], colourData['BROWN'], colourData['PINK']],
             //Minis
-            [null, COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK]]
+            [null, colourData['RED_DARK'], colourData['BROWN'], colourData['RED_DARK']]
         ],
         //Female
         [
             [null, null, null, null],
-            [COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], null],
+            [colourData['RED_DARK'], colourData['BROWN'], colourData['PINK'], null],
             [null, null, null, null],
-            [COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_RED_DARK], null, COLOUR[COLOUR_BROWN]]
+            [colourData['RED_DARK'], colourData['RED_DARK'], null, colourData['BROWN']]
         ],
         //Blodwyn
         [
-            [COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_PINK]],
-            [COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_PINK]],
-            [null, COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK]],
-            [null, COLOUR[COLOUR_BROWN], COLOUR[COLOUR_RED_DARK], COLOUR[COLOUR_RED_DARK]]
+            [colourData['PINK'], colourData['BROWN'], colourData['RED_DARK'], colourData['PINK']],
+            [colourData['PINK'], colourData['BROWN'], colourData['RED_DARK'], colourData['PINK']],
+            [null, colourData['RED_DARK'], colourData['BROWN'], colourData['PINK']],
+            [null, colourData['BROWN'], colourData['RED_DARK'], colourData['RED_DARK']]
         ]
     ],
 
     //Chain Mail
     [
         [
-            [null, COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_DARK], null],
-            [null, COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_DARK], null],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_LIGHT]]
+            [null, colourData['GREY_LIGHT'], colourData['GREY_DARK'], null],
+            [null, colourData['GREY_LIGHT'], colourData['GREY_DARK'], null],
+            [null, colourData['GREY_DARK'], colourData['GREY_LIGHT'], colourData['WHITE']],
+            [null, colourData['GREY_DARK'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT']]
         ],
         [
-            [null, COLOUR[COLOUR_GREY_LIGHT], null, null],
-            [COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE], null],
+            [null, colourData['GREY_LIGHT'], null, null],
+            [colourData['GREY_DARK'], colourData['GREY_LIGHT'], colourData['WHITE'], null],
             [null, null, null, null],
-            [null, COLOUR[COLOUR_GREY_LIGHT], null, COLOUR[COLOUR_WHITE]]
+            [null, colourData['GREY_LIGHT'], null, colourData['WHITE']]
         ],
         [
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_WHITE]],
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_LIGHT]]
+            [colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_DARK'], colourData['WHITE']],
+            [colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_DARK'], colourData['WHITE']],
+            [null, colourData['GREY_DARK'], colourData['GREY_LIGHT'], colourData['WHITE']],
+            [null, colourData['GREY_DARK'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT']]
         ]
     ],
 
     //Plate Mail
     [
         [
-            [null, COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_LIGHT], null],
-            [null, COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_LIGHT], null],
-            [null, COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_LIGHT]]
+            [null, colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], null],
+            [null, colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], null],
+            [null, colourData['GREY_MEDIUM'], colourData['GREY_LIGHT'], colourData['WHITE']],
+            [null, colourData['GREY_MEDIUM'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT']]
         ],
         [
-            [null, COLOUR[COLOUR_GREY_LIGHT], null, COLOUR[COLOUR_RED]],
-            [COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE], null],
-            [null, COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_LIGHT]],
-            [null, COLOUR[COLOUR_GREY_LIGHT], null, null]
+            [null, colourData['GREY_LIGHT'], null, colourData['RED']],
+            [colourData['GREY_MEDIUM'], colourData['GREY_LIGHT'], colourData['WHITE'], null],
+            [null, colourData['GREY_MEDIUM'], colourData['GREY_MEDIUM'], colourData['GREY_LIGHT']],
+            [null, colourData['GREY_LIGHT'], null, null]
         ],
         [
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_WHITE]],
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_MEDIUM], COLOUR[COLOUR_GREY_LIGHT], COLOUR[COLOUR_GREY_LIGHT]]
+            [colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['WHITE']],
+            [colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['WHITE']],
+            [null, colourData['GREY_MEDIUM'], colourData['GREY_LIGHT'], colourData['WHITE']],
+            [null, colourData['GREY_MEDIUM'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT']]
         ]
     ],
 
     //Mithril Chain
     [
         [
-            [null, COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_DARK], null],
-            [null, COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_DARK], null],
-            [null, COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_LIGHT]]
+            [null, colourData['BLUE'], colourData['GREY_DARK'], null],
+            [null, colourData['BLUE'], colourData['GREY_DARK'], null],
+            [null, colourData['BLUE_DARK'], colourData['BLUE'], colourData['WHITE']],
+            [null, colourData['GREY_DARK'], colourData['BLUE'], colourData['GREY_LIGHT']]
         ],
         [
-            [null, COLOUR[COLOUR_BLUE], null, null],
-            [COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE], null],
+            [null, colourData['BLUE'], null, null],
+            [colourData['BLUE_DARK'], colourData['BLUE'], colourData['WHITE'], null],
             [null, null, null, null],
-            [null, COLOUR[COLOUR_BLUE], null, COLOUR[COLOUR_WHITE]]
+            [null, colourData['BLUE'], null, colourData['WHITE']]
         ],
         [
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_WHITE]],
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_BLUE_DARK]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_LIGHT]]
+            [colourData['WHITE'], colourData['BLUE'], colourData['GREY_DARK'], colourData['WHITE']],
+            [colourData['WHITE'], colourData['BLUE'], colourData['GREY_DARK'], colourData['BLUE_DARK']],
+            [null, colourData['GREY_DARK'], colourData['BLUE'], colourData['WHITE']],
+            [null, colourData['GREY_DARK'], colourData['BLUE'], colourData['GREY_LIGHT']]
         ]
     ],
 
     //Mithril Plate
     [
         [
-            [null, COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE], null],
-            [null, COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE], null],
-            [null, COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_LIGHT]]
+            [null, colourData['BLUE'], colourData['BLUE'], null],
+            [null, colourData['BLUE'], colourData['BLUE'], null],
+            [null, colourData['BLUE'], colourData['BLUE'], colourData['WHITE']],
+            [null, colourData['BLUE_DARK'], colourData['BLUE'], colourData['GREY_LIGHT']]
         ],
         [
-            [null, COLOUR[COLOUR_BLUE], null, COLOUR[COLOUR_RED]],
-            [COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE], null],
-            [null, COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE]],
-            [null, COLOUR[COLOUR_BLUE], null, null]
+            [null, colourData['BLUE'], null, colourData['RED']],
+            [colourData['BLUE_DARK'], colourData['BLUE'], colourData['WHITE'], null],
+            [null, colourData['BLUE_DARK'], colourData['BLUE_DARK'], colourData['BLUE']],
+            [null, colourData['BLUE'], null, null]
         ],
         [
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_WHITE]],
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE_DARK]],
-            [null, COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_BLUE_DARK], COLOUR[COLOUR_BLUE], COLOUR[COLOUR_GREY_LIGHT]]
+            [colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['WHITE']],
+            [colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLUE_DARK']],
+            [null, colourData['BLUE_DARK'], colourData['BLUE'], colourData['WHITE']],
+            [null, colourData['BLUE_DARK'], colourData['BLUE'], colourData['GREY_LIGHT']]
         ]
     ],
 
     //Adamant Chain
     [
         [
-            [null, COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_DARK], null],
-            [null, COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_DARK], null],
-            [null, COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_LIGHT]]
+            [null, colourData['GREEN'], colourData['GREY_DARK'], null],
+            [null, colourData['GREEN'], colourData['GREY_DARK'], null],
+            [null, colourData['GREEN_DARK'], colourData['GREEN'], colourData['WHITE']],
+            [null, colourData['GREY_DARK'], colourData['GREEN'], colourData['GREY_LIGHT']]
         ],
         [
-            [null, COLOUR[COLOUR_GREEN], null, null],
-            [COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_WHITE], null],
+            [null, colourData['GREEN'], null, null],
+            [colourData['GREEN_DARK'], colourData['GREEN'], colourData['WHITE'], null],
             [null, null, null, null],
-            [null, COLOUR[COLOUR_GREEN], null, COLOUR[COLOUR_WHITE]]
+            [null, colourData['GREEN'], null, colourData['WHITE']]
         ],
         [
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_WHITE]],
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREEN_DARK]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_LIGHT]]
+            [colourData['WHITE'], colourData['GREEN'], colourData['GREY_DARK'], colourData['WHITE']],
+            [colourData['WHITE'], colourData['GREEN'], colourData['GREY_DARK'], colourData['GREEN_DARK']],
+            [null, colourData['GREY_DARK'], colourData['GREEN'], colourData['WHITE']],
+            [null, colourData['GREY_DARK'], colourData['GREEN'], colourData['GREY_LIGHT']]
         ]
     ],
 
     //Adamant Plate
     [
         [
-            [null, COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN], null],
-            [null, COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN], null],
-            [null, COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_LIGHT]]
+            [null, colourData['GREEN'], colourData['GREEN'], null],
+            [null, colourData['GREEN'], colourData['GREEN'], null],
+            [null, colourData['GREEN'], colourData['GREEN'], colourData['WHITE']],
+            [null, colourData['GREEN_DARK'], colourData['GREEN'], colourData['GREY_LIGHT']]
         ],
         [
-            [null, COLOUR[COLOUR_GREEN], null, COLOUR[COLOUR_RED]],
-            [COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_WHITE], null],
-            [null, COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN]],
-            [null, COLOUR[COLOUR_GREEN], null, null]
+            [null, colourData['GREEN'], null, colourData['RED']],
+            [colourData['GREEN_DARK'], colourData['GREEN'], colourData['WHITE'], null],
+            [null, colourData['GREEN_DARK'], colourData['GREEN_DARK'], colourData['GREEN']],
+            [null, colourData['GREEN'], null, null]
         ],
         [
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_WHITE]],
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN_DARK]],
-            [null, COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREEN_DARK], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_GREY_LIGHT]]
+            [colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['WHITE']],
+            [colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREEN_DARK']],
+            [null, colourData['GREEN_DARK'], colourData['GREEN'], colourData['WHITE']],
+            [null, colourData['GREEN_DARK'], colourData['GREEN'], colourData['GREY_LIGHT']]
         ]
     ],
 
     //Crystal Chain
     [
         [
-            [null, COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_DARK], null],
-            [null, COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_DARK], null],
-            [null, COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_LIGHT]]
+            [null, colourData['PINK'], colourData['GREY_DARK'], null],
+            [null, colourData['PINK'], colourData['GREY_DARK'], null],
+            [null, colourData['BROWN'], colourData['PINK'], colourData['WHITE']],
+            [null, colourData['GREY_DARK'], colourData['PINK'], colourData['GREY_LIGHT']]
         ],
         [
-            [null, COLOUR[COLOUR_PINK], null, null],
-            [COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], COLOUR[COLOUR_WHITE], null],
+            [null, colourData['PINK'], null, null],
+            [colourData['BROWN'], colourData['PINK'], colourData['WHITE'], null],
             [null, null, null, null],
-            [null, COLOUR[COLOUR_PINK], null, COLOUR[COLOUR_WHITE]]
+            [null, colourData['PINK'], null, colourData['WHITE']]
         ],
         [
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_WHITE]],
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_BROWN]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_PINK], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_GREY_DARK], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_LIGHT]]
+            [colourData['WHITE'], colourData['PINK'], colourData['GREY_DARK'], colourData['WHITE']],
+            [colourData['WHITE'], colourData['PINK'], colourData['GREY_DARK'], colourData['BROWN']],
+            [null, colourData['GREY_DARK'], colourData['PINK'], colourData['WHITE']],
+            [null, colourData['GREY_DARK'], colourData['PINK'], colourData['GREY_LIGHT']]
         ]
     ],
 
     //Crystal Plate
     [
         [
-            [null, COLOUR[COLOUR_PINK], COLOUR[COLOUR_PINK], null],
-            [null, COLOUR[COLOUR_PINK], COLOUR[COLOUR_PINK], null],
-            [null, COLOUR[COLOUR_PINK], COLOUR[COLOUR_PINK], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_LIGHT]]
+            [null, colourData['PINK'], colourData['PINK'], null],
+            [null, colourData['PINK'], colourData['PINK'], null],
+            [null, colourData['PINK'], colourData['PINK'], colourData['WHITE']],
+            [null, colourData['BROWN'], colourData['PINK'], colourData['GREY_LIGHT']]
         ],
         [
-            [null, COLOUR[COLOUR_PINK], null, COLOUR[COLOUR_RED]],
-            [COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], COLOUR[COLOUR_WHITE], null],
-            [null, COLOUR[COLOUR_BROWN], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK]],
-            [null, COLOUR[COLOUR_PINK], null, null]
+            [null, colourData['PINK'], null, colourData['RED']],
+            [colourData['BROWN'], colourData['PINK'], colourData['WHITE'], null],
+            [null, colourData['BROWN'], colourData['BROWN'], colourData['PINK']],
+            [null, colourData['PINK'], null, null]
         ],
         [
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_WHITE]],
-            [COLOUR[COLOUR_WHITE], COLOUR[COLOUR_PINK], COLOUR[COLOUR_BROWN], COLOUR[COLOUR_BROWN]],
-            [null, COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], COLOUR[COLOUR_WHITE]],
-            [null, COLOUR[COLOUR_BROWN], COLOUR[COLOUR_PINK], COLOUR[COLOUR_GREY_LIGHT]]
+            [colourData['WHITE'], colourData['PINK'], colourData['BROWN'], colourData['WHITE']],
+            [colourData['WHITE'], colourData['PINK'], colourData['BROWN'], colourData['BROWN']],
+            [null, colourData['BROWN'], colourData['PINK'], colourData['WHITE']],
+            [null, colourData['BROWN'], colourData['PINK'], colourData['GREY_LIGHT']]
         ]
     ]
 ];

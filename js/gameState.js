@@ -85,7 +85,7 @@ function loadGame(g) {
                             initMonsterGfxNew(champion[id].getMonster());
                         }
                 }
-		player[0].message(TEXT_GAME_LOADED, COLOUR[COLOUR_GREEN]);
+		player[0].message(TEXT_GAME_LOADED, colourData['GREEN']);
 	}
 };
 
@@ -114,7 +114,7 @@ function saveGame(g, name) {
 	};
 	localStorage.setItem(save.fileName, JSON.stringify(save.gameData));
 	if(g < 99) {
-		player[0].message(TEXT_GAME_SAVED, COLOUR[COLOUR_GREEN]);
+		player[0].message(TEXT_GAME_SAVED, colourData['GREEN']);
 	}
 };
 

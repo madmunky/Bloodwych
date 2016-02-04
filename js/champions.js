@@ -320,7 +320,7 @@ Champion.prototype.gainLevel = function() {
             //}
             var p = this.recruitment.playerId;
             if (p > -1) {
-                player[p].message(this.firstName + TEXT_GAINED_LEVEL, COLOUR[COLOUR_RED]);
+                player[p].message(this.firstName + TEXT_GAINED_LEVEL, colourData['RED']);
             }
         }
         this.levelUp--;
@@ -413,7 +413,7 @@ Champion.prototype.buySpell = function(sp) {
             this.spellUp--;
             p.sleep();
         } else {
-            p.message(TEXT_PAUPER, COLOUR[COLOUR_GREEN], false, 0);
+            p.message(TEXT_PAUPER, colourData['GREEN'], false, 0);
         }
     }
 }
@@ -470,21 +470,21 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
                 break;
         }
         ctx.clearRect((p.ScreenX + x - 8) * scale, (p.ScreenY + y - 10) * scale, w * scale, 8 * scale);
-        writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x + 2), (p.ScreenY + y - 9), CLASS_COLOUR[this.colour]);
+        writeFontImage(String.fromCharCode(this.prof + 3), (p.ScreenX + x + 2), (p.ScreenY + y - 9), CLASS_COLOUR['this.colour']);
         if (typeof def === "undefined" || def === false) {
             if (typeof pwr === 'number') {
                 if (pwr > 0) {
-                    writeFontImage(TEXT_HITS_FOR + pwr, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+                    writeFontImage(TEXT_HITS_FOR + pwr, (p.ScreenX + x + 10), (p.ScreenY + y - 9), colourData['YELLOW']);
                 } else {
-                    writeFontImage(TEXT_MISSES, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+                    writeFontImage(TEXT_MISSES, (p.ScreenX + x + 10), (p.ScreenY + y - 9), colourData['YELLOW']);
                 }
             } else if (pwr === 'spell') {
-                writeFontImage(TEXT_CASTS_SPELL, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+                writeFontImage(TEXT_CASTS_SPELL, (p.ScreenX + x + 10), (p.ScreenY + y - 9), colourData['YELLOW']);
             } else if (pwr === 'shoot') {
-                writeFontImage(TEXT_SHOOTS, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+                writeFontImage(TEXT_SHOOTS, (p.ScreenX + x + 10), (p.ScreenY + y - 9), colourData['YELLOW']);
             }
         } else {
-            writeFontImage(TEXT_DEFENDS, (p.ScreenX + x + 10), (p.ScreenY + y - 9), COLOUR[COLOUR_YELLOW]);
+            writeFontImage(TEXT_DEFENDS, (p.ScreenX + x + 10), (p.ScreenY + y - 9), colourData['YELLOW']);
         }
         (function(p, x, y, w) {
             setTimeout(function() {

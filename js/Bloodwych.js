@@ -468,12 +468,12 @@ $(function() {
                     t.trigger('focusout');
                 } else {
                     var pp = player[p].Portal;
-                    pp.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARKEST][0] + ', ' + COLOUR[COLOUR_GREY_DARKEST][1] + ', ' + COLOUR[COLOUR_GREY_DARKEST][2] + ')';
+                    pp.fillStyle = 'rgb(' + colourData['GREY_DARKEST'][0] + ', ' + colourData['GREY_DARKEST'][1] + ', ' + colourData['GREY_DARKEST'][2] + ')';
                     pp.fillRect(4 * scale, (slot * 8 + 5) * scale, 120 * scale, 9 * scale);
-                    writeFontImage((slot + 1) + '.' + name, 8, slot * 8 + 6, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT, pp);
+                    writeFontImage((slot + 1) + '.' + name, 8, slot * 8 + 6, colourData['WHITE'], FONT_ALIGNMENT_LEFT, pp);
                     var crt = t.caret();
                     var off = scale * 0.5;
-                    pp.strokeStyle = 'rgb(' + COLOUR[COLOUR_GREY_LIGHT][0] + ', ' + COLOUR[COLOUR_GREY_LIGHT][1] + ', ' + COLOUR[COLOUR_GREY_LIGHT][2] + ')';
+                    pp.strokeStyle = 'rgb(' + colourData['GREY_LIGHT'][0] + ', ' + colourData['GREY_LIGHT'][1] + ', ' + colourData['GREY_LIGHT'][2] + ')';
                     pp.beginPath();
                     pp.moveTo((23 + crt * 8) * scale + off, (slot * 8 + 5) * scale);
                     pp.lineTo((23 + crt * 8) * scale + off, (slot * 8 + 14) * scale);
@@ -494,7 +494,7 @@ $(function() {
                 if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
                     for (var slot = 0; slot < 8; slot++) {
                         if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
-                            p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", COLOUR[COLOUR_GREEN], false, 0);
+                            p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", colourData['GREEN'], false, 0);
                             var inp = $('input.save-game');
                             inp.trigger('focusout');
                             inp.val(getGameName(slot));

@@ -136,14 +136,25 @@ function initData() {
 }
 
 function initJSONData() {
-	for (c in colourData) {
-		COLOUR[c] = colourData[c];
+	var i = 0;
+	for(c in colourData) {
+		colourData[i] = colourData[c];
+		i++;
 	}
-	for (c in paletteData) {
-		for (i in paletteData[c])
-			if (typeof paletteData[c][i] === 'string') {
-				paletteData[c][i] = colourData[i];
+	parseJSONValues(paletteData, colourData);
+}
+
+//finds absolute value defined in obj, from o2
+function parseJSONValues(obj, o2) {
+	for(c in obj) {
+		if(typeof obj[c] === 'string') {
+			var val = o2[obj[c]];
+			if(typeof val !== "undefined") {
+				obj[c] = val;
 			}
+		} else {
+			parseJSONValues(obj[c], o2);
+		}
 	}
 }
 
@@ -176,9 +187,9 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
 	}
 	$('canvas').attr('data-game-status', 'started');
 	//for (p in player) {
-	//      player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", COLOUR[COLOUR_YELLOW], true);
-	//      player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", COLOUR[COLOUR_YELLOW], true);
-	//      player[p].message("          WWW.BLOODWYCH.CO.UK           ", COLOUR[COLOUR_YELLOW], true);
+	//      player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", colourData['YELLOW'], true);
+	//      player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", colourData['YELLOW'], true);
+	//      player[p].message("          WWW.BLOODWYCH.CO.UK           ", colourData['YELLOW'], true);
 	//  }
 	//saveGame(99, 'autosave');
 	if (resumeLoadGame) {
@@ -213,10 +224,10 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
 function processJSONFiles(item, result) {
 	switch (item.typeID) {
 		case 'Colours':
-			var colourData = result.colours;
+			colourData = result.colours;
 			break;
 		case 'Palettes':
-			var paletteData = result.palettes;
+			paletteData = result.palettes;
 			break;
 		case 'Characters':
 			break;

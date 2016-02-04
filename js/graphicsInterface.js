@@ -280,10 +280,10 @@ function drawSpellBook(p, ui, dr) {
         var col = getClassColour(ch.spellBook[pg][x].ref.colour, true);
 
         if (!ch.spellBook[pg][x].learnt) {
-            col = COLOUR[COLOUR_GREY_DARKEST];
+            col = colourData['GREY_DARKEST'];
         }
         if (ch.selectedSpell === ch.spellBook[pg][x]) {
-            col = COLOUR[COLOUR_WHITE];
+            col = colourData['WHITE'];
         }
 
         if (x < 4) {
@@ -306,11 +306,11 @@ function drawSpellBook(p, ui, dr) {
         drawPocketInfo(p);
     } else if (ch.selectedSpell !== null && start) { //start screen
         if (currentPlayer === 0) {
-            drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+            drawFillRect(168, player[0].ScreenY + 79, 155, 8, colourData['BLUE_DARK']);
         } else {
-            drawFillRect(168, player[0].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+            drawFillRect(168, player[0].ScreenY + 79, 155, 8, colourData['RED_DARK']);
         }
-        writeFontImage(ch.selectedSpell.ref.name, 170, (player[0].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
+        writeFontImage(ch.selectedSpell.ref.name, 170, (player[0].ScreenY + 80), colourData['YELLOW']);
     } else if (ch.selectedSpell !== null) {
 
         if (UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour == 84){
@@ -319,9 +319,9 @@ function drawSpellBook(p, ui, dr) {
             ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
         }
 
-        writeFontImage(ch.selectedSpell.ref.name, p.ScreenX + 242, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
-        writeFontImage("COST " + doubleDigits(ch.selectedSpell.cost), p.ScreenX + 242, (p.ScreenY + 71), COLOUR[COLOUR_YELLOW]);
-        t = recolourUiGfx(font[94], COLOUR[COLOUR_GREEN], COLOUR[COLOUR_RED]);
+        writeFontImage(ch.selectedSpell.ref.name, p.ScreenX + 242, (p.ScreenY + 63), colourData['PINK']);
+        writeFontImage("COST " + doubleDigits(ch.selectedSpell.cost), p.ScreenX + 242, (p.ScreenY + 71), colourData['YELLOW']);
+        t = recolourUiGfx(font[94], colourData['GREEN'], colourData['RED']);
         ctx.drawImage(t, (p.ScreenX + 274) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
         t = flipImageVert(t);
         ctx.drawImage(t, (p.ScreenX + 298) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
@@ -335,26 +335,26 @@ function drawSpellBook(p, ui, dr) {
         if (!p.showSpellText) {
             var ch = champion[p.champion[p.championLeader]];
             ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 88 - 10) * scale, 128 * scale, 8 * scale);
-            writeFontImage("CAST % ", p.ScreenX + 96 + 2, (p.ScreenY + 79), COLOUR[COLOUR_YELLOW]);
+            writeFontImage("CAST % ", p.ScreenX + 96 + 2, (p.ScreenY + 79), colourData['YELLOW']);
             var cst = ch.getSpellCastChance();
-            var t = showStatusBar(cst, 1.0, 62, COLOUR[COLOUR_RED]);
+            var t = showStatusBar(cst, 1.0, 62, colourData['RED']);
             ctx.drawImage(t, (p.ScreenX + 154) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
         }
     } else if (ch.selectedSpell === null && start) { //start screen
         if (currentPlayer === 0) {
-            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, colourData['BLUE_DARK']);
         } else {
-            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, colourData['RED_DARK']);
         }
-        writeFontImage(ch.getName(), 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
+        writeFontImage(ch.getName(), 170, (player[currentPlayer].ScreenY + 80), colourData['YELLOW']);
     }
 
     if (!start) {
-        writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), COLOUR[COLOUR_PINK]);
-        writeFontImage(getSpellNotation(p.getChampion(p.championLeader).stat.sp) + "/" + getSpellNotation(p.getChampion(p.championLeader).stat.spMax), p.ScreenX + 282, (p.ScreenY + 79), COLOUR[COLOUR_GREEN]);
+        writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 79), colourData['PINK']);
+        writeFontImage(getSpellNotation(p.getChampion(p.championLeader).stat.sp) + "/" + getSpellNotation(p.getChampion(p.championLeader).stat.spMax), p.ScreenX + 282, (p.ScreenY + 79), colourData['GREEN']);
     } else {
-        writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 63), COLOUR[COLOUR_PINK]);
-        writeFontImage(getSpellNotation(champion[championSelect[currentPlayer].champID].stat.sp) + "/" + getSpellNotation(champion[championSelect[currentPlayer].champID].stat.spMax), p.ScreenX + 282, (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+        writeFontImage(TEXT_SP_PTS, p.ScreenX + 226, (p.ScreenY + 63), colourData['PINK']);
+        writeFontImage(getSpellNotation(champion[championSelect[currentPlayer].champID].stat.sp) + "/" + getSpellNotation(champion[championSelect[currentPlayer].champID].stat.spMax), p.ScreenX + 282, (p.ScreenY + 63), colourData['GREEN']);
     }
 }
 
@@ -436,14 +436,14 @@ function leftUI(p) {
                     ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 43 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
                     if (p.uiLeftPanel.champs[c].damage > 0) {
                         ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + 13) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
-                        writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + 28, p.ScreenY + 10, COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_CENTER);
+                        writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + 28, p.ScreenY + 10, colourData['YELLOW'], FONT_ALIGNMENT_CENTER);
                     }
                 } else {
                     ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
                     ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][cid], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][cid].width * scale, gfxUI[UI_GFX_PORTRAITS][cid].height * scale);
                     if (ch.activeSpell.id > -1) {
                         var sp = getSpellById(ch.activeSpell.id);
-                        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
+                        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR['sp.colour']);
                     }
                 }
             } else {
@@ -460,7 +460,7 @@ function leftUI(p) {
                     ctx.drawImage(t, ((c - 1) * 32 * scale) + (p.ScreenX * scale) - 49 * scale, (p.ScreenY + 45) * scale - 37 * scale, t.width * scale, t.height * scale);
                     if (p.uiLeftPanel.champs[c].damage > 0) {
                         ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + (c - 1) * 32 + 1) * scale, (p.ScreenY + 53) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
-                        writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + ((c - 1) * 32 + 16), (p.ScreenY + 55), COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_CENTER);
+                        writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + ((c - 1) * 32 + 16), (p.ScreenY + 55), colourData['YELLOW'], FONT_ALIGNMENT_CENTER);
                     }
                 } else {
                     t = createShield(cid, ch.prof, ch.colour);
@@ -535,29 +535,29 @@ function getClassColour(c, palette) {
 
     switch (c) {
         case CLASS_COLOUR_SERP:
-            red = COLOUR[COLOUR_GREEN][0];
-            grn = COLOUR[COLOUR_GREEN][1];
-            blu = COLOUR[COLOUR_GREEN][2];
+            red = colourData['GREEN'][0];
+            grn = colourData['GREEN'][1];
+            blu = colourData['GREEN'][2];
             break;
         case CLASS_COLOUR_CHAOS:
-            red = COLOUR[COLOUR_YELLOW][0];
-            grn = COLOUR[COLOUR_YELLOW][1];
-            blu = COLOUR[COLOUR_YELLOW][2];
+            red = colourData['YELLOW'][0];
+            grn = colourData['YELLOW'][1];
+            blu = colourData['YELLOW'][2];
             break;
         case CLASS_COLOUR_DRAG:
-            red = COLOUR[COLOUR_RED][0];
-            grn = COLOUR[COLOUR_RED][1];
-            blu = COLOUR[COLOUR_RED][2];
+            red = colourData['RED'][0];
+            grn = colourData['RED'][1];
+            blu = colourData['RED'][2];
             break;
         case CLASS_COLOUR_MOON:
-            red = COLOUR[COLOUR_BLUE_DARK][0];
-            grn = COLOUR[COLOUR_BLUE_DARK][1];
-            blu = COLOUR[COLOUR_BLUE_DARK][2];
+            red = colourData['BLUE_DARK'][0];
+            grn = colourData['BLUE_DARK'][1];
+            blu = colourData['BLUE_DARK'][2];
             break;
         case CLASS_COLOUR_ANCIENT:
-            red = COLOUR[COLOUR_PINK][0];
-            grn = COLOUR[COLOUR_PINK][1];
-            blu = COLOUR[COLOUR_PINK][2];
+            red = colourData['PINK'][0];
+            grn = colourData['PINK'][1];
+            blu = colourData['PINK'][2];
             break;
         default:
             break;
@@ -578,12 +578,12 @@ function commandUI(p) {
     ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].height * scale);
     if (ch.activeSpell.id > -1) {
         var sp = getSpellById(ch.activeSpell.id);
-        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR[sp.colour]);
+        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR['sp.colour']);
     }
     ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
-    ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 
     ctx.fillStyle = "#606060";
     ctx.fillRect((p.ScreenX + 50) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
@@ -663,7 +663,7 @@ function rightUI(p) {
         ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
     }
 
-    writeFontImage(p.getChampion(p.championLeader).firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
+    writeFontImage(p.getChampion(p.championLeader).firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), colourData['YELLOW']);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].width * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SCROLL].width * scale, gfxUI[UI_GFX_ICON_SCROLL].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_POCKETBOX], p.ScreenX + 288 * scale, (p.ScreenY + 21) * scale, gfxUI[UI_GFX_POCKETBOX].width * scale, gfxUI[UI_GFX_POCKETBOX].height * scale);
@@ -693,7 +693,7 @@ function rightUI(p) {
                 }
             }
             if (c1 === p.championLeader) {
-                drawRect(p.ScreenX + 289 + (c % 2) * 16, p.ScreenY + 46 + Math.floor(c / 2) * 15, 15 - (c % 2), 13, COLOUR[COLOUR_BLUE_DARK]);
+                drawRect(p.ScreenX + 289 + (c % 2) * 16, p.ScreenY + 46 + Math.floor(c / 2) * 15, 15 - (c % 2), 13, colourData['BLUE_DARK']);
                 //if (c % 2 === 0) {
                 //	ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
                 //} else {
@@ -713,7 +713,7 @@ function drawPocketInfo(p, chp) {
     if (!p.attacking && !p.showSpellText) {
         ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 78) * scale, 128 * scale, 8 * scale);
         if (p.pocket.id > 0) {
-            writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, COLOUR[COLOUR_GREEN]);
+            writeFontImage(itemRef[p.pocket.id].name, p.ScreenX + 98, p.ScreenY + 79, colourData['GREEN']);
             if (typeof chp !== 'undefined' && p.pocket.type === ITEM_TYPE_FOOD) {
                 var t = showStatusBar(chp.getFood(), 200, 69);
                 ctx.drawImage(t, (p.ScreenX + 146) * scale, (p.ScreenY + 80) * scale, t.width * scale, t.height * scale);
@@ -734,7 +734,7 @@ function drawPocketUI(p, chp, start) {
         } else {
             ctx.drawImage(gfxUI[UI_GFX_NAME_RED], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_RED].width * scale, gfxUI[UI_GFX_NAME_RED].height * scale);
         }
-        writeFontImage(chp.firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), COLOUR[COLOUR_YELLOW]);
+        writeFontImage(chp.firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), colourData['YELLOW']);
     }
 
     var i = 0;
@@ -767,11 +767,11 @@ function drawPocketUI(p, chp, start) {
                     }
                 }
                 if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
-                    ctx.drawImage(flipImageVert(itemRef[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                    ctx.drawImage(flipImageVert(itemRef[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                 } else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
-                    ctx.drawImage(flipImageVert(flipImage(itemRef[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                    ctx.drawImage(flipImageVert(flipImage(itemRef[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                 } else {
-                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                 }
             } else {
                 ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
@@ -780,9 +780,9 @@ function drawPocketUI(p, chp, start) {
             if (pocket.type === ITEM_TYPE_STACKABLE) {
                 var qty = pocket.quantity;
                 if (pocketId < 3) {
-                    writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), COLOUR[COLOUR_GREEN]);
+                    writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 23) + (y * 16)), colourData['GREEN']);
                 } else {
-                    writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 31) + (y * 16)), COLOUR[COLOUR_GREEN]);
+                    writeFontImage(doubleDigits(qty), ((p.ScreenX + 225) + (x * 16)), ((p.ScreenY + 31) + (y * 16)), colourData['GREEN']);
                 }
 
             }
@@ -793,14 +793,14 @@ function drawPocketUI(p, chp, start) {
     if (start) {
         ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 7) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
         ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 14) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
-        writeFontImage(TEXT_INVENTORY, p.ScreenX / scale + 234, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
+        writeFontImage(TEXT_INVENTORY, p.ScreenX / scale + 234, (p.ScreenY + 15), colourData['YELLOW']);
         ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
     }
 
     ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 54) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
     var ac = getArmourNotation(chp.getArmourClass());
-    writeFontImage(TEXT_ARMOUR + ":", p.ScreenX / scale + 234, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-    writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), COLOUR[COLOUR_WHITE]);
+    writeFontImage(TEXT_ARMOUR + ":", p.ScreenX / scale + 234, (p.ScreenY + 55), colourData['YELLOW']);
+    writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), colourData['WHITE']);
 
     if (!start) {
 
@@ -825,7 +825,7 @@ function drawPocketUI(p, chp, start) {
                             ctx.drawImage(gfxUI[g][ch.colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                         }
                         if (chp.recruitment.playerId > -1 && c === p.uiRightPanel.activePocket) {
-                            drawRect(((p.ScreenX + 225) + (c * 16)), ((p.ScreenY + 63)), 15, 14, COLOUR[COLOUR_YELLOW]);
+                            drawRect(((p.ScreenX + 225) + (c * 16)), ((p.ScreenY + 63)), 15, 14, colourData['YELLOW']);
                             //ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
                         }
                     }
@@ -837,9 +837,9 @@ function drawPocketUI(p, chp, start) {
                         if (p.pocket.type === ITEM_TYPE_STACKABLE) {
                             var qty = p.pocket.quantity;
                             if (p.pocket.id < 3) {
-                                writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 63), COLOUR[COLOUR_GREEN]);
+                                writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 63), colourData['GREEN']);
                             } else {
-                                writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 71), COLOUR[COLOUR_GREEN]);
+                                writeFontImage(doubleDigits(qty), ((p.ScreenX + 226) + (c * 16)), (p.ScreenY + 71), colourData['GREEN']);
                             }
                         }
                         drawPocketInfo(p, chp);
@@ -848,7 +848,7 @@ function drawPocketUI(p, chp, start) {
                     break
                 case 5:
                     {
-                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                     };
                     break
 
@@ -916,36 +916,36 @@ function drawStatsPage(p, ch, start) {
             ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
         }
 
-        writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), COLOUR[COLOUR_YELLOW]);
+        writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), colourData['YELLOW']);
         ctx.drawImage(gfxUI[UI_GFX_SCROLL_WAVE], (p.ScreenX + 282) * scale, (p.ScreenY + 17) * scale, gfxUI[UI_GFX_SCROLL_WAVE].width * scale, gfxUI[UI_GFX_SCROLL_WAVE].height * scale);
-        //writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), COLOUR[COLOUR_GREY_DARKEST]);
-        writeFontImage(doubleDigits(ch.level), p.ScreenX + 297, (p.ScreenY + 15), COLOUR[COLOUR_WHITE]);
+        //writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), colourData['GREY_DARKEST']);
+        writeFontImage(doubleDigits(ch.level), p.ScreenX + 297, (p.ScreenY + 15), colourData['WHITE']);
 
-        writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);
-        writeFontImage(ch.stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 23), COLOUR[COLOUR_YELLOW]);
-        writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 23), COLOUR[COLOUR_GREY_DARKEST]);
-        writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 23), COLOUR[COLOUR_BLUE_DARK]);
-        writeFontImage(ch.stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 23), COLOUR[COLOUR_YELLOW]);
+        writeFontImage(TEXT_ST, p.ScreenX + 242, (p.ScreenY + 23), colourData['BLUE_DARK']);
+        writeFontImage(ch.stat.str.toString(), p.ScreenX + 258, (p.ScreenY + 23), colourData['YELLOW']);
+        writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 23), colourData['GREY_DARKEST']);
+        writeFontImage(TEXT_AG, p.ScreenX + 281, (p.ScreenY + 23), colourData['BLUE_DARK']);
+        writeFontImage(ch.stat.agi.toString(), p.ScreenX + 297, (p.ScreenY + 23), colourData['YELLOW']);
 
-        writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 31), COLOUR[COLOUR_BLUE_DARK]);
-        writeFontImage(ch.stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 31), COLOUR[COLOUR_YELLOW]);
-        writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 31), COLOUR[COLOUR_GREY_DARKEST]);
-        writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 31), COLOUR[COLOUR_BLUE_DARK]);
-        writeFontImage(ch.stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 31), COLOUR[COLOUR_YELLOW]);
+        writeFontImage(TEXT_IN, p.ScreenX + 242, (p.ScreenY + 31), colourData['BLUE_DARK']);
+        writeFontImage(ch.stat.int.toString(), p.ScreenX + 258, (p.ScreenY + 31), colourData['YELLOW']);
+        writeFontImage("-", p.ScreenX + 274, (p.ScreenY + 31), colourData['GREY_DARKEST']);
+        writeFontImage(TEXT_CH, (p.ScreenX + 281), (p.ScreenY + 31), colourData['BLUE_DARK']);
+        writeFontImage(ch.stat.cha.toString(), p.ScreenX + 297, (p.ScreenY + 31), colourData['YELLOW']);
 
-        writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 39), COLOUR[COLOUR_BLACK]);
-        writeFontImage(ch.stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 39), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-        writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 39), COLOUR[COLOUR_GREY_DARKEST]);
-        writeFontImage(ch.stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 39), COLOUR[COLOUR_GREEN]);
+        writeFontImage(TEXT_HP, p.ScreenX + 242, (p.ScreenY + 39), colourData['BLACK']);
+        writeFontImage(ch.stat.hp.toString(), p.ScreenX + 282, (p.ScreenY + 39), colourData['WHITE'], FONT_ALIGNMENT_RIGHT);
+        writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 39), colourData['GREY_DARKEST']);
+        writeFontImage(ch.stat.hpMax.toString(), p.ScreenX + 290, (p.ScreenY + 39), colourData['GREEN']);
 
-        writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 47), COLOUR[COLOUR_BLACK]);
-        writeFontImage(ch.stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_RIGHT);
-        writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 47), COLOUR[COLOUR_GREY_DARKEST]);
-        writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 47), COLOUR[COLOUR_GREEN]);
+        writeFontImage(TEXT_VI, p.ScreenX + 242, (p.ScreenY + 47), colourData['BLACK']);
+        writeFontImage(ch.stat.vit.toString(), p.ScreenX + 282, (p.ScreenY + 47), colourData['WHITE'], FONT_ALIGNMENT_RIGHT);
+        writeFontImage("/", p.ScreenX + 282, (p.ScreenY + 47), colourData['GREY_DARKEST']);
+        writeFontImage(ch.stat.vitMax.toString(), p.ScreenX + 290, (p.ScreenY + 47), colourData['GREEN']);
 
         if (!start) {
-            writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), COLOUR[COLOUR_YELLOW]);
-            var t = showStatusBar(ch.getFood(), 200, 62, COLOUR[COLOUR_RED_DARK]);
+            writeFontImage("FOOD", p.ScreenX + 258, (p.ScreenY + 55), colourData['YELLOW']);
+            var t = showStatusBar(ch.getFood(), 200, 62, colourData['RED_DARK']);
             ctx.drawImage(t, (p.ScreenX + 242) * scale, (p.ScreenY + 64) * scale, t.width * scale, t.height * scale);
         }
     }
@@ -991,15 +991,15 @@ function createShield(id, type, colour) {
     can.height = 41;
     var context = can.getContext("2d");
     if (colour === paletteData['DEAD']) {
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_BLACK]), 0, 0);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_BLACK]), 0, 5);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], paletteData['DEFAULT_SHIELD'][0], colourData['BLACK']), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], paletteData['DEFAULT_SHIELD'][0], colourData['BLACK']), 0, 5);
         context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], paletteData['DEFAULT_SHIELD'], colour), 1, 21);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_BLACK]), 5, 32);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], paletteData['DEFAULT_SHIELD'][0], colourData['BLACK']), 5, 32);
     } else {
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_GREY_LIGHT]), 0, 0);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_GREY_LIGHT]), 0, 5);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], paletteData['DEFAULT_SHIELD'][0], colourData['GREY_LIGHT']), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], paletteData['DEFAULT_SHIELD'][0], colourData['GREY_LIGHT']), 0, 5);
         context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], paletteData['DEFAULT_SHIELD'], colour), 1, 21);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_GREY_LIGHT]), 5, 32);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], paletteData['DEFAULT_SHIELD'][0], colourData['GREY_LIGHT']), 5, 32);
     }
 
     context.save();
@@ -1049,7 +1049,7 @@ function recolourUiGfx(img, colourFrom, colourTo) {
 function showStatusBar(thisVal, maxVal, width, colour) {
 
     if (typeof colour === "undefined") {
-        colour = COLOUR[COLOUR_RED_DARK];
+        colour = colourData['RED_DARK'];
     }
 
     var can = document.createElement('canvas');
@@ -1070,8 +1070,8 @@ function showEndGame(p) {
     coverViewPort(p);
 
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_ENDGAME) {
-        p.message(TEXT_ACCURSED_BLOODWYCH, COLOUR[COLOUR_GREEN],0,100000);
-        writeFontImage(TEXT_CONGRATS, (p.ScreenX+32.4) * scale, (p.ScreenY+6.5) * scale, COLOUR[COLOUR_PINK]);
+        p.message(TEXT_ACCURSED_BLOODWYCH, colourData['GREEN'],0,100000);
+        writeFontImage(TEXT_CONGRATS, (p.ScreenX+32.4) * scale, (p.ScreenY+6.5) * scale, colourData['PINK']);
         var t = drawMonster(getMonsterById(478),0,0,player[0],{x:0,y:10},true)
         p.Portal.drawImage(t,0*scale,0*scale,t.width,t.height);
         p.Portal.save()
@@ -1083,7 +1083,7 @@ function gotoFairyMode(p, m) {
     if (p.uiCenterPanel.mode !== m) {
         var ch = p.fairyDetails.champ;
         if (m === UI_CENTER_PANEL_FAIRY) {
-            p.message(ch.firstName + TEXT_MAY_BUY_SPELL, COLOUR[COLOUR_GREEN], false, 0);
+            p.message(ch.firstName + TEXT_MAY_BUY_SPELL, colourData['GREEN'], false, 0);
         } else if (m === UI_CENTER_PANEL_FAIRY_SERPENT || m === UI_CENTER_PANEL_FAIRY_CHAOS || m === UI_CENTER_PANEL_FAIRY_DRAGON || m === UI_CENTER_PANEL_FAIRY_MOON) {
 
         } else if (m === UI_CENTER_PANEL_FAIRY_SPELLDETAILS) {
@@ -1101,18 +1101,18 @@ function showFairy(c, p) {
 
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY) {
         //ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
-        //p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", COLOUR[COLOUR_GREEN], false, 3000);
-        //writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+        //p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", colourData['GREEN'], false, 3000);
+        //writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, colourData['GREEN']);
         p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
         for (x = 0; x < 5; x++) {
             if (x < 4) {
                 p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
             } else {
-                p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+                p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
             }
         }
     } else {
-        //writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, COLOUR[COLOUR_GREEN]);
+        //writeFontImage("SELECT THY NEW SPELL, "+c.firstName, p.ScreenX, (p.ScreenY -10) * scale, colourData['GREEN']);
     }
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_FAIRY_SERPENT) {
         showFairySpellScreen(0, p, c);
@@ -1143,36 +1143,36 @@ function showFairySpellScreen(spellClass, p, c) {
 
         case 0:
             {
-                spellColour = COLOUR[COLOUR_GREEN];
+                spellColour = colourData['GREEN'];
             };
             break
         case 1:
             {
-                spellColour = COLOUR[COLOUR_YELLOW];
+                spellColour = colourData['YELLOW'];
             };
             break
         case 2:
             {
-                spellColour = COLOUR[COLOUR_RED];
+                spellColour = colourData['RED'];
             };
             break
         case 3:
             {
-                spellColour = COLOUR[COLOUR_BLUE];
+                spellColour = colourData['BLUE'];
             };
             break
 
     }
     if (mySpells.length > 0) {
-        p.message(TEXT_SELECT_SPELL + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+        p.message(TEXT_SELECT_SPELL + ch.firstName, colourData['GREEN'], false, 0);
         writeFontImage(mySpells[0].name, 43, 12, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
         if (mySpells.length > 1) {
             writeFontImage(mySpells[1].name, 43, 22, spellColour, FONT_ALIGNMENT_LEFT, p.Portal);
         }
     } else {
-        p.message(TEXT_ALL_I_HAVE + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
+        p.message(TEXT_ALL_I_HAVE + ch.firstName, colourData['GREEN'], false, 0);
     }
-    p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 }
 
 function showFairySpellDetailsScreen(spell, p, c) {
@@ -1186,35 +1186,35 @@ function showFairySpellDetailsScreen(spell, p, c) {
 
         case 0:
             {
-                spellColour = COLOUR[COLOUR_GREEN];
+                spellColour = colourData['GREEN'];
             };
             break
         case 1:
             {
-                spellColour = COLOUR[COLOUR_YELLOW];
+                spellColour = colourData['YELLOW'];
             };
             break
         case 2:
             {
-                spellColour = COLOUR[COLOUR_RED];
+                spellColour = colourData['RED'];
             };
             break
         case 3:
             {
-                spellColour = COLOUR[COLOUR_BLUE];
+                spellColour = colourData['BLUE'];
             };
         case 4:
             {
-                spellColour = COLOUR[COLOUR_PINK];
+                spellColour = colourData['PINK'];
             };
             break
 
     }*/
 
-    writeFontImage(spell.name, 43, 12, CLASS_COLOUR[spellClass], FONT_ALIGNMENT_LEFT, p.Portal);
-    writeFontImage("LEVEL " + spell.level, 43, 23, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
-    writeFontImage(spell.cost + " GOLD", 43, 31, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_LEFT, p.Portal);
-    p.message(spell.description, COLOUR[COLOUR_GREEN], false, 0);
+    writeFontImage(spell.name, 43, 12, CLASS_COLOUR['spellClass'], FONT_ALIGNMENT_LEFT, p.Portal);
+    writeFontImage("LEVEL " + spell.level, 43, 23, colourData['GREY_LIGHT'], FONT_ALIGNMENT_LEFT, p.Portal);
+    writeFontImage(spell.cost + " GOLD", 43, 31, colourData['GREY_LIGHT'], FONT_ALIGNMENT_LEFT, p.Portal);
+    p.message(spell.description, colourData['GREEN'], false, 0);
 
     for (x = 0; x < 5; x++) {
         if (x < 4) {
@@ -1222,11 +1222,11 @@ function showFairySpellDetailsScreen(spell, p, c) {
                 p.Portal.drawImage(gfxUI[80 + x], 17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
             }
         } else {
-            p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+            p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
         }
     }
 
-    writeFontImage("OK ?", 43, 55, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
+    writeFontImage("OK ?", 43, 55, colourData['RED'], FONT_ALIGNMENT_LEFT, p.Portal);
 
 }
 
@@ -1245,13 +1245,13 @@ function colourSpellPage(dr, ch, img) {
     for (x = 0; x < SPELL_PAGE_MAX; x++) {
         if (ch.spellBook[page][x].learnt) {
             if (ch.spellBook[page][x] === getSpellById(ch.selectedSpell)) {
-                pal.push(COLOUR[COLOUR_WHITE]);
+                pal.push(colourData['WHITE']);
             } else {
                 pal.push(getClassColour(ch.spellBook[page][x].ref.colour, true));
 
             }
         } else {
-            pal.push(COLOUR[COLOUR_GREY_DARKEST]);
+            pal.push(colourData['GREY_DARKEST']);
         }
     }
 
@@ -1299,9 +1299,9 @@ function drawScroll(text, x, y, small) {
     var l = Math.floor((rm - text.length) / 2);
 
     for (var r = 0; r < text.length; r++) {
-        var col = COLOUR[COLOUR_BLACK];
+        var col = colourData['BLACK'];
         if (r === 0 && small) {
-            col = COLOUR[COLOUR_YELLOW];
+            col = colourData['YELLOW'];
         }
         writeFontImage(text[r], x + 52, y + 16 + (l * 8), col, FONT_ALIGNMENT_CENTER);
         l++;
@@ -1334,12 +1334,12 @@ function drawCommunicationBox(p, item, forced) {
 
         var myPage = p.communication.mode;
         for (r = 0; r < TEXT_COMMUNICATION_COMMANDS[myPage].length; r++) {
-            ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_GREY_DARK][0] + ', ' + COLOUR[COLOUR_GREY_DARK][1] + ', ' + COLOUR[COLOUR_GREY_DARK][2] + ')';
-            var myColour = COLOUR[COLOUR_YELLOW];
+            ctx.fillStyle = 'rgb(' + colourData['GREY_DARK'][0] + ', ' + colourData['GREY_DARK'][1] + ', ' + colourData['GREY_DARK'][2] + ')';
+            var myColour = colourData['YELLOW'];
 
             if (r === item) {
-                ctx.fillStyle = 'rgb(' + COLOUR[COLOUR_BLUE_DARK][0] + ', ' + COLOUR[COLOUR_BLUE_DARK][1] + ', ' + COLOUR[COLOUR_BLUE_DARK][2] + ')';
-                myColour = COLOUR[COLOUR_WHITE];
+                ctx.fillStyle = 'rgb(' + colourData['BLUE_DARK'][0] + ', ' + colourData['BLUE_DARK'][1] + ', ' + colourData['BLUE_DARK'][2] + ')';
+                myColour = colourData['WHITE'];
             }
 
             if (TEXT_COMMUNICATION_COMMANDS[myPage][r].left) {
@@ -1377,11 +1377,11 @@ function showGameStateMenu(p) {
 
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_MENU) {
         coverViewPort(p);
-        writeFontImage("LOAD GAME", 30, 16, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+        writeFontImage("LOAD GAME", 30, 16, colourData['GREEN'], FONT_ALIGNMENT_LEFT, p.Portal);
         createSelectGrid(gameStateSelectGrid, 100, 14, 120, 16, null);
-        writeFontImage("SAVE GAME", 30, 32, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+        writeFontImage("SAVE GAME", 30, 32, colourData['GREEN'], FONT_ALIGNMENT_LEFT, p.Portal);
         createSelectGrid(gameStateSelectGrid, 100, 30, 120, 16, null);
-        writeFontImage("RESTART", 38, 56, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT, p.Portal);
+        writeFontImage("RESTART", 38, 56, colourData['RED'], FONT_ALIGNMENT_LEFT, p.Portal);
         createSelectGrid(gameStateSelectGrid, 100, 54, 120, 16, null);
         //pauseGame(false)
     }
@@ -1396,13 +1396,13 @@ function showGameStateMenu(p) {
 
 function createStateGrid(p, state) {
     coverViewPort(p);
-    p.message(state + " GAME - PLEASE SELECT A SLOT...", COLOUR[COLOUR_GREEN], false, 0);
-    //writeFontImage(state + " GAME", 28, 2, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT, p.Portal);
+    p.message(state + " GAME - PLEASE SELECT A SLOT...", colourData['GREEN'], false, 0);
+    //writeFontImage(state + " GAME", 28, 2, colourData['GREEN'], FONT_ALIGNMENT_LEFT, p.Portal);
     for (var x = 0; x < 8; x++) {
-        var clr = COLOUR[COLOUR_GREY_LIGHT];
+        var clr = colourData['GREY_LIGHT'];
         var name = getGameName(x);
         if (name === '') {
-            clr = COLOUR[COLOUR_GREY_DARKEST];
+            clr = colourData['GREY_DARKEST'];
             name = 'EMPTY SLOT';
         }
         writeFontImage((x + 1) + '.' + name, 8, x * 8 + 6, clr, FONT_ALIGNMENT_LEFT, p.Portal);
@@ -1415,7 +1415,7 @@ function createStateGrid(p, state) {
     if (p.uiCenterPanel.mode === UI_CENTER_PANEL_GAMESTATE_SAVE) {
         for (var slot = 0; slot < 8; slot++) {
             if (uiClickInArea(x, y, slot, p, gameStateSelectGrid)) {
-                p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", COLOUR[COLOUR_GREEN], false, 0);
+                p.message("SAVE GAME - CHANGE NAME OR ENTER TO SAVE", colourData['GREEN'], false, 0);
                 var inp = $('input.save-game');
                 inp.val(getGameName(slot));
                 inp.data('player-id', p.id);

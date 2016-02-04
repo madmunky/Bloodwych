@@ -23,7 +23,7 @@ function testing(p){
 //
    // ctx.drawImage(colourSpellPage(true,p.champion[p.championLeader],gfxUI[UI_GFX_SPELLBOOK+1]),(p.PortalX + 60),(p.PortalY + 201),itemRef[x].gfxD[y].width * scale,itemRef[x].gfxD[y].height * scale);
 //
-//writeSpellFont(spell[0][0].symbols,0,0,COLOUR[COLOUR_GREEN]);
+//writeSpellFont(spell[0][0].symbols,0,0,colourData['GREEN']);
 }
 
 function startExtendedLevel(){
@@ -51,18 +51,18 @@ function testSummon(){
 
     var tmpPalettes = [];
 
-    var testP0 = new Array(COLOUR[0],COLOUR[0],COLOUR[7],COLOUR[8]),
-        testP1 = new Array(COLOUR[0],COLOUR[8],COLOUR[4],COLOUR[14]),
-        testP2 = new Array(COLOUR[0],COLOUR[5],COLOUR[6],COLOUR[14]),
-        testP3 = new Array(COLOUR[0],COLOUR[9],COLOUR[12],COLOUR[11]),
-        testP4 = new Array(COLOUR[0],COLOUR[10],COLOUR[11],COLOUR[13]),
-        testP5 = new Array(COLOUR[0],COLOUR[11],COLOUR[13],COLOUR[14]),
-        testP6 = new Array(COLOUR[0],COLOUR[12],COLOUR[11],COLOUR[14]),
-        testP7 = new Array(COLOUR[0],COLOUR[2],COLOUR[3],COLOUR[14]),
-        testP8 = new Array(COLOUR[0],COLOUR[8],COLOUR[4],COLOUR[13]),
-        testP9 = new Array(COLOUR[0],COLOUR[5],COLOUR[6],COLOUR[13]),
-        testP10 = new Array(COLOUR[0],COLOUR[7],COLOUR[8],COLOUR[4]),
-        testP11 = new Array(COLOUR[0],COLOUR[7],COLOUR[8],COLOUR[13]);
+    var testP0 = new Array(colourData['0'],colourData['0'],colourData['7'],colourData['8']),
+        testP1 = new Array(colourData['0'],colourData['8'],colourData['4'],colourData['14']),
+        testP2 = new Array(colourData['0'],colourData['5'],colourData['6'],colourData['14']),
+        testP3 = new Array(colourData['0'],colourData['9'],colourData['12'],colourData['11']),
+        testP4 = new Array(colourData['0'],colourData['10'],colourData['11'],colourData['13']),
+        testP5 = new Array(colourData['0'],colourData['11'],colourData['13'],colourData['14']),
+        testP6 = new Array(colourData['0'],colourData['12'],colourData['11'],colourData['14']),
+        testP7 = new Array(colourData['0'],colourData['2'],colourData['3'],colourData['14']),
+        testP8 = new Array(colourData['0'],colourData['8'],colourData['4'],colourData['13']),
+        testP9 = new Array(colourData['0'],colourData['5'],colourData['6'],colourData['13']),
+        testP10 = new Array(colourData['0'],colourData['7'],colourData['8'],colourData['4']),
+        testP11 = new Array(colourData['0'],colourData['7'],colourData['8'],colourData['13']);
 
         tmpPalettes.push(testP0,testP1,testP2,testP3,testP4,testP5,testP6,testP7,testP8,testP9,testP10,testP11)
         var myTmp = 6;}

@@ -123,7 +123,7 @@ function writeSpellInfoFont(p, t, c) {
 		var t = "";
 	}
 	if (typeof c === "undefined") {
-		var c = COLOUR[COLOUR_GREEN];
+		var c = colourData['GREEN'];
 	}
 	var ch = champion[p.champion[p.championLeader]];
 	ctx.clearRect((p.ScreenX + 96) * scale, (p.ScreenY + 78) * scale, 128 * scale, 8 * scale);

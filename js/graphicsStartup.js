@@ -7,16 +7,16 @@ function startScreen() {
     configCanvas();
     clearCanvas();
 
-    writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
-    writeFontImage(" 1   START ONE PLAYER GAME", 34, 50, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-    writeFontImage(" 2   START TWO PLAYER GAME", 34, 66, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-    writeFontImage(" 3   QUICKSTART ONE PLAYER GAME", 34, 90, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-    writeFontImage(" 4   QUICKSTART TWO PLAYER GAME", 34, 106, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+    writeFontImage("BLOODWYCH HTML", 122, 18, colourData['RED'], FONT_ALIGNMENT_LEFT);
+    writeFontImage(" 1   START ONE PLAYER GAME", 34, 50, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
+    writeFontImage(" 2   START TWO PLAYER GAME", 34, 66, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
+    writeFontImage(" 3   QUICKSTART ONE PLAYER GAME", 34, 90, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
+    writeFontImage(" 4   QUICKSTART TWO PLAYER GAME", 34, 106, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
     if(getGameName(99) !== '') {
-        writeFontImage(" 5   RESUME LAST GAME", 34, 130, COLOUR[COLOUR_YELLOW], FONT_ALIGNMENT_LEFT);
+        writeFontImage(" 5   RESUME LAST GAME", 34, 130, colourData['YELLOW'], FONT_ALIGNMENT_LEFT);
     }
-    writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
-    writeFontImage("RECREATED BY MAD BONE 2016", 74, 190, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
+    writeFontImage("MIRRORSOFT 1989", 114, 178, colourData['GREY_DARK'], FONT_ALIGNMENT_LEFT);
+    writeFontImage("RECREATED BY MAD BONE 2016", 74, 190, colourData['WHITE'], FONT_ALIGNMENT_LEFT);
 
 }
 
@@ -29,15 +29,15 @@ function preStartScreen() {
     configCanvas();
     clearCanvas();
 
-    writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
-    writeFontImage("    1   BLOODWYCH", 34, 50, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-    writeFontImage("    2   EXTENDED LEVELS (WIP)", 34, 66, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-    writeFontImage("    3   BOOK OF SKULLS (WIP)", 34, 90, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-    writeFontImage("    4   CUSTOM DATA SET (WIP)", 34, 106, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
-    writeFontImage("    5   MAP VIEWER/EDITOR (WIP)", 34, 129, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
+    writeFontImage("BLOODWYCH HTML", 122, 18, colourData['RED'], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    1   BLOODWYCH", 34, 50, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    2   EXTENDED LEVELS (WIP)", 34, 66, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    3   BOOK OF SKULLS (WIP)", 34, 90, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    4   CUSTOM DATA SET (WIP)", 34, 106, colourData['GREY_DARK'], FONT_ALIGNMENT_LEFT);
+    writeFontImage("    5   MAP VIEWER/EDITOR (WIP)", 34, 129, colourData['GREY_DARK'], FONT_ALIGNMENT_LEFT);
 
-    writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
-    writeFontImage("RECREATED BY MAD BONE 2016", 74, 190, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
+    writeFontImage("MIRRORSOFT 1989", 114, 178, colourData['GREY_DARK'], FONT_ALIGNMENT_LEFT);
+    writeFontImage("RECREATED BY MAD BONE 2016", 74, 190, colourData['WHITE'], FONT_ALIGNMENT_LEFT);
 
 }
 
@@ -50,19 +50,19 @@ function loadingScreen(objProgress){
     configCanvas();
     clearCanvas();
 
-    writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
+    writeFontImage("BLOODWYCH HTML", 122, 18, colourData['RED'], FONT_ALIGNMENT_LEFT);
 	if (objProgress.type === "fileprogress"){
-		writeFontImage("LOADING DATA...", 122, 80, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-		writeFontImage("   FILE: " + objProgress.item.src, 34, 100, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+		writeFontImage("LOADING DATA...", 122, 80, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
+		writeFontImage("   FILE: " + objProgress.item.src, 34, 100, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
 	}else{
-		writeFontImage("PROCESSING DATA...", 120, 80, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
-		writeFontImage("   FILE: " + objProgress.src, 34, 100, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+		writeFontImage("PROCESSING DATA...", 120, 80, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
+		writeFontImage("   FILE: " + objProgress.src, 34, 100, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
 	}
     
-	//writeFontImage(" PROGRESS: " + objProgress.progress, 34, 140, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+	//writeFontImage(" PROGRESS: " + objProgress.progress, 34, 140, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
 
-    writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
-    writeFontImage("RECREATED BY MAD BONE 2016", 74, 190, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
+    writeFontImage("MIRRORSOFT 1989", 114, 178, colourData['GREY_DARK'], FONT_ALIGNMENT_LEFT);
+    writeFontImage("RECREATED BY MAD BONE 2016", 74, 190, colourData['WHITE'], FONT_ALIGNMENT_LEFT);
 
 }
 
@@ -75,11 +75,11 @@ function progressScreen(strDetails){
     configCanvas();
     clearCanvas();
 
-    writeFontImage("BLOODWYCH HTML", 122, 18, COLOUR[COLOUR_RED], FONT_ALIGNMENT_LEFT);
-	writeFontImage(strDetails+"...", 120, 80, COLOUR[COLOUR_GREEN], FONT_ALIGNMENT_LEFT);
+    writeFontImage("BLOODWYCH HTML", 122, 18, colourData['RED'], FONT_ALIGNMENT_LEFT);
+	writeFontImage(strDetails+"...", 120, 80, colourData['GREEN'], FONT_ALIGNMENT_LEFT);
 
-    writeFontImage("MIRRORSOFT 1989", 114, 178, COLOUR[COLOUR_GREY_DARK], FONT_ALIGNMENT_LEFT);
-    writeFontImage("RECREATED BY MAD BONE 2016", 74, 190, COLOUR[COLOUR_WHITE], FONT_ALIGNMENT_LEFT);
+    writeFontImage("MIRRORSOFT 1989", 114, 178, colourData['GREY_DARK'], FONT_ALIGNMENT_LEFT);
+    writeFontImage("RECREATED BY MAD BONE 2016", 74, 190, colourData['WHITE'], FONT_ALIGNMENT_LEFT);
 
 }
 
@@ -87,9 +87,9 @@ function drawQuickStartUI(pl) {
 
     clearCanvas();
     if (currentPlayer === 1) {
-        writeFontImage("PLAYER 2, " + TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
+        writeFontImage("PLAYER 2, " + TEXT_SELECT_CHAMPION, 2, 0, colourData['GREEN']);
     } else {
-        writeFontImage(TEXT_SELECT_CHAMPION, 2, 0, COLOUR[COLOUR_GREEN]);
+        writeFontImage(TEXT_SELECT_CHAMPION, 2, 0, colourData['GREEN']);
     }
     var chN = 0;
 
@@ -160,18 +160,18 @@ function showCharacterDetails(ch, pl) {
     switch (championSelect[pl].mode) {
 
         case UI_CHARACTER_SELECT_SPELLBOOK:
-            writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
+            writeFontImage(ch.getName(), 170, (myY + 80), colourData['YELLOW']);
             drawSpellBook(player[pl]);
             ctx.drawImage(gfxUI[UI_GFX_ICON_UNKNOWN], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
             break;
         case UI_CHARACTER_SELECT_POCKET:
             drawPocketUI(player[pl], champion[ch.id], true);
-            writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
+            writeFontImage(ch.getName(), 170, (myY + 80), colourData['YELLOW']);
             ctx.drawImage(gfxUI[UI_GFX_ICON_BOOKOFSKULLS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
             break;
         case UI_CHARACTER_SELECT_SCROLL:
             drawStatsPage(player[pl], champion[ch.id], true);
-            writeFontImage(ch.getName(), 170, (myY + 80), COLOUR[COLOUR_YELLOW]);
+            writeFontImage(ch.getName(), 170, (myY + 80), colourData['YELLOW']);
             ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], 174 * scale, (myY + 56) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
             break;
         case UI_CHARACTER_SELECT_START_GAME:

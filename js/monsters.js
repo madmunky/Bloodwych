@@ -159,7 +159,7 @@ Monster.prototype.canInteract = function() {
             ch.recruitment.called = false;
             pl.updateChampions();
             redrawUI(ply);
-            pl.message(ch.firstName + TEXT_REJOINS_THE_PARTY, COLOUR[COLOUR_GREEN]);
+            pl.message(ch.firstName + TEXT_REJOINS_THE_PARTY, colourData['GREEN']);
             return ply;
         }
     } else { //vendor and communicating monsters
@@ -738,11 +738,11 @@ function initMonsterPalettes() {
             torso: body.torso,
             arm: body.arm,
             mini: body.mini,
-            headPalette: [COLOUR[monsterPaletteData[j][0]], COLOUR[monsterPaletteData[j][1]], COLOUR[monsterPaletteData[j][2]], COLOUR[monsterPaletteData[j][3]]],
-            legPalette: [COLOUR[monsterPaletteData[j + 1][0]], COLOUR[monsterPaletteData[j + 1][1]], COLOUR[monsterPaletteData[j + 1][2]], COLOUR[monsterPaletteData[j + 1][3]]],
-            torsoPalette: [COLOUR[monsterPaletteData[j + 2][0]], COLOUR[monsterPaletteData[j + 2][1]], COLOUR[monsterPaletteData[j + 2][2]], COLOUR[monsterPaletteData[j + 2][3]]],
-            armPalette: [COLOUR[monsterPaletteData[j + 3][0]], COLOUR[monsterPaletteData[j + 3][1]], COLOUR[monsterPaletteData[j + 3][2]], COLOUR[monsterPaletteData[j + 3][3]]],
-            miniPalette: [COLOUR[monsterPaletteData[j + 4][0]], COLOUR[monsterPaletteData[j + 4][1]], COLOUR[monsterPaletteData[j + 4][2]], COLOUR[monsterPaletteData[j + 4][3]]],
+            headPalette: [colourData[monsterPaletteData[j][0]], colourData[monsterPaletteData[j][1]], colourData[monsterPaletteData[j][2]], colourData[monsterPaletteData[j][3]]],
+            legPalette: [colourData[monsterPaletteData[j + 1][0]], colourData[monsterPaletteData[j + 1][1]], colourData[monsterPaletteData[j + 1][2]], colourData[monsterPaletteData[j + 1][3]]],
+            torsoPalette: [colourData[monsterPaletteData[j + 2][0]], colourData[monsterPaletteData[j + 2][1]], colourData[monsterPaletteData[j + 2][2]], colourData[monsterPaletteData[j + 2][3]]],
+            armPalette: [colourData[monsterPaletteData[j + 3][0]], colourData[monsterPaletteData[j + 3][1]], colourData[monsterPaletteData[j + 3][2]], colourData[monsterPaletteData[j + 3][3]]],
+            miniPalette: [colourData[monsterPaletteData[j + 4][0]], colourData[monsterPaletteData[j + 4][1]], colourData[monsterPaletteData[j + 4][2]], colourData[monsterPaletteData[j + 4][3]]],
             bodyId: monsterBodiesData[i][0]
         };
     }
@@ -752,11 +752,11 @@ function initMonsterPalettes() {
         for (j = 0; j < 8; j++) { //palettes
             var k = 431;
             var b = monsterPaletteMetaData[i][j];
-            monsterBigPalette[i][j] = [COLOUR[monsterPaletteData[k + b][0]], COLOUR[monsterPaletteData[k + b][1]], COLOUR[monsterPaletteData[k + b][2]], COLOUR[monsterPaletteData[k + b][3]]];
+            monsterBigPalette[i][j] = [colourData[monsterPaletteData[k + b][0]], colourData[monsterPaletteData[k + b][1]], colourData[monsterPaletteData[k + b][2]], colourData[monsterPaletteData[k + b][3]]];
             //PrintLog("Loading Big Monster Palette: " + i.toString() + " - " + j.toString());
         }
         var b = monsterPaletteMetaData[i][0];
-        monsterBigPalette[i][8] = [COLOUR[monsterPaletteData[430 + b][0]], COLOUR[monsterPaletteData[430 + b][1]], COLOUR[monsterPaletteData[430 + b][2]], COLOUR[monsterPaletteData[430 + b][3]]];
+        monsterBigPalette[i][8] = [colourData[monsterPaletteData[430 + b][0]], colourData[monsterPaletteData[430 + b][1]], colourData[monsterPaletteData[430 + b][2]], colourData[monsterPaletteData[430 + b][3]]];
     }
 
 

@@ -227,11 +227,11 @@ function checkClickEvents() {
                     if (uiClickInArea(x, y, s, player[currentPlayer])) {
                         var it = champion[championSelect[currentPlayer].champID].pocket[(s - UI_CLICK_POCKET_SLOT_1)];
                         if (currentPlayer === 0) {
-                            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_BLUE_DARK]);
+                            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, colourData['BLUE_DARK']);
                         } else {
-                            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, COLOUR[COLOUR_RED_DARK]);
+                            drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, colourData['RED_DARK']);
                         }
-                        writeFontImage(itemRef[it.id].name, 170, (player[currentPlayer].ScreenY + 80), COLOUR[COLOUR_YELLOW]);
+                        writeFontImage(itemRef[it.id].name, 170, (player[currentPlayer].ScreenY + 80), colourData['YELLOW']);
                     }
                 }
             } else if (championSelect[currentPlayer].mode === UI_CHARACTER_SELECT_SPELLBOOK) {

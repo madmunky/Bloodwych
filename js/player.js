@@ -254,7 +254,7 @@ Player.prototype.action = function() {
                     playSound(SOUND_DOOR);
                     //this.setBinaryView(15, 1, 3, '000'); //Will set the door to 'normal'
                 } else { //If locked, give lock message
-                    this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
+                    this.message(TEXT_DOOR_LOCKED, colourData['GREEN']);
                 }
             }
             this.redrawViewPort = true;
@@ -293,7 +293,7 @@ Player.prototype.checkWoodenDoor = function(pos18) {
             this.setBinaryView(pos18, ((5 + d - this.d) % 4) * 2 + 1, 1);
             playSound(SOUND_DOOR);
         } else if (this.getBinaryView(pos18, 11, 1) === '1') { //If locked, give lock message
-            this.message(TEXT_DOOR_LOCKED, COLOUR[COLOUR_GREEN]);
+            this.message(TEXT_DOOR_LOCKED, colourData['GREEN']);
         }
         this.redrawViewPort = true;
         return true;
@@ -729,8 +729,8 @@ Player.prototype.sleep = function() {
         this.doneCommunication();
         this.attack(null, false);
         coverViewPort(this);
-        writeFontImage(TEXT_THOU_ART, 64, 21, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
-        writeFontImage(TEXT_ASLEEP, 64, 37, COLOUR[COLOUR_BROWN], FONT_ALIGNMENT_CENTER, this.Portal);
+        writeFontImage(TEXT_THOU_ART, 64, 21, colourData['BROWN'], FONT_ALIGNMENT_CENTER, this.Portal);
+        writeFontImage(TEXT_ASLEEP, 64, 37, colourData['BROWN'], FONT_ALIGNMENT_CENTER, this.Portal);
         redrawUI(this.id);
     }
 }
@@ -776,8 +776,8 @@ Player.prototype.checkDead = function() {
 
             this.uiCenterPanel.mode = UI_CENTER_PANEL_DEAD;
             coverViewPort(this);
-            writeFontImage(TEXT_THOU, 64, 21, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER, this.Portal);
-            writeFontImage(TEXT_ART_DEAD, 64, 37, COLOUR[COLOUR_GREY_LIGHT], FONT_ALIGNMENT_CENTER, this.Portal);
+            writeFontImage(TEXT_THOU, 64, 21, colourData['GREY_LIGHT'], FONT_ALIGNMENT_CENTER, this.Portal);
+            writeFontImage(TEXT_ART_DEAD, 64, 37, colourData['GREY_LIGHT'], FONT_ALIGNMENT_CENTER, this.Portal);
         }
     }
 }
@@ -1335,7 +1335,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
             ch.addSP(-sb.cost);
             ch.addVit(-sb.cost);
             if (this.doFizzle()) {
-                writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, COLOUR[COLOUR_BLUE_DARK]);
+                writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, colourData['BLUE_DARK']);
             } else if (Math.random() < ch.getSpellCastChance()) {
                 castSpell(sb.id, ch.getMonster(), ch.getSpellPower() * 10 + ch.level * 4);
                 sb.castSuccessful++;
@@ -1348,7 +1348,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
                 this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
                 this.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
             } else if (!s) {
-                writeSpellInfoFont(this, TEXT_SPELL_FAILED, COLOUR[COLOUR_GREY_LIGHT]);
+                writeSpellInfoFont(this, TEXT_SPELL_FAILED, colourData['GREY_LIGHT']);
             } else {
                 ch.writeAttackPoints('spell');
             }
@@ -1356,7 +1356,7 @@ Player.prototype.castSpell = function(sb, ch, s) {
             ch.selectedSpell = null;
             ch.getMonster().doGesture(CHA_GESTURE_SPELLCASTING);
         } else if (!s) {
-            writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, COLOUR[COLOUR_RED]);
+            writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, colourData['RED']);
         }
         for (p in player) { player[p].redrawViewPort = true;}
     }
@@ -1430,7 +1430,7 @@ Player.prototype.message = function(txt, col, wait, delay) {
         txt = '';
     }
     if (typeof col === "undefined") {
-        col = COLOUR[COLOUR_GREEN];
+        col = colourData['GREEN'];
     }
     if (typeof delay === "undefined") {
         delay = 3000;
@@ -1546,7 +1546,7 @@ Player.prototype.doCommunication = function(text) {
                             this.communication.mode = COMMUNICATION_PAGE_MAIN;
                             this.communication.text = null;
                             redrawUI(this.id);
-                            this.message(this.getChampion(c2).firstName + TEXT_WAITS, COLOUR[COLOUR_GREEN]);
+                            this.message(this.getChampion(c2).firstName + TEXT_WAITS, colourData['GREEN']);
                         }
                         break;
                     case COMMUNICATION_DISMISS:
@@ -1576,7 +1576,7 @@ Player.prototype.doCommunication = function(text) {
 
 Player.prototype.doCommunicationAnswer = function() {
     var ans = this.communication.answer;
-    this.message(ans, COLOUR[COLOUR_RED]);
+    this.message(ans, colourData['RED']);
     var mon = this.communication.monster;
     if (this.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0) {
         if (this.communication.text === COMMUNICATION_RECRUIT && ans === 'YES') {
@@ -1593,9 +1593,9 @@ Player.prototype.doCommunicationAnswer = function() {
 Player.prototype.determineCommunicationQuestionAnswer = function(mode, text) {
     var c = this.getCommunication(mode, text);
     if (typeof c !== 'undefined') {
-        var myColour = COLOUR[COLOUR_GREEN];
+        var myColour = colourData['GREEN'];
         if (this.id === 1) {
-            myColour = COLOUR[COLOUR_PINK];
+            myColour = colourData['PINK'];
         }
         var q = Math.floor(Math.random() * c.question.length);
         this.message(c.question[q], myColour);
@@ -1610,7 +1610,7 @@ Player.prototype.determineCommunicationQuestionAnswer = function(mode, text) {
                 }
             } else if (typeof player[1] !== 'undefined' && mon.isRecruitedBy() === player[1 - this.id]) { //other player
                 p1 = player[1 - this.id];
-                p1.message(c.question[q], COLOUR[COLOUR_RED]);
+                p1.message(c.question[q], colourData['RED']);
             }
             this.communication.charisma += 5;
         }
