@@ -761,28 +761,28 @@ function recolorImage(img, colour, folder, type, item) {
 		if (type === "deco") {
 			if (item === "switch" || item === "switch-off") { //Switches
 				if (item === "switch") {
-					palletDefault = objectPalette["switch"]["default"];
+					palletDefault = paletteData["switch"]["default"];
 				} else {
-					palletDefault = objectPalette["switch"]["default-off"];
+					palletDefault = paletteData["switch"]["default-off"];
 				}
-				pallet = objectPalette["switch"][colour];
+				pallet = paletteData["switch"]["colours"][colour];
 			} else if(item === "gem" || item === "gem-off") { //Gems
 				if(item === "gem") {
-					palletDefault = objectPalette["gem"]["default"];
+					palletDefault = paletteData["gem"]["default"];
 				} else {
-					palletDefault = objectPalette["gem"]["default-off"];
+					palletDefault = paletteData["gem"]["default-off"];
 				}
-				pallet = objectPalette["gem"][colour];
+				pallet = paletteData["gem"]["colours"][colour];
 			} else { //Banners
-				palletDefault = objectPalette["deco"]["default"];
-				pallet = objectPalette["deco"][colour];
+				palletDefault = paletteData["deco"]["default"];
+				pallet = paletteData["deco"]["colours"][colour];
 			}
 		} else if (type === "door") { //Doors
-			palletDefault = objectPalette["door"]["default"];
-			pallet = objectPalette["door"][colour];
+			palletDefault = paletteData["door"]["default"];
+			pallet = paletteData["door"]["colours"][colour];
 		} else if (type === "floor" && item === "path") { //Floor switches
-			palletDefault = objectPalette["floor"]["default"];
-			pallet = objectPalette["floor"][colour];
+			palletDefault = paletteData["floor"]["default"];
+			pallet = paletteData["floor"]["colours"][colour];
 		}
 	}
 	for (var i = 0; i < imageData.data.length; i += 4) {
