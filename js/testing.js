@@ -28,9 +28,8 @@ function testing(p){
 
 function startExtendedLevel(){
 
-    player[0].x = 1;
-    player[0].y = 22;
-    player[0].floor = 4;
+
+    player[0].setPlayerPosition(4, 1, 22);
     towerThis = 0;
     player[0].redrawViewPort = true;
 
@@ -38,9 +37,7 @@ function startExtendedLevel(){
 
 function startBOS(){
 
-    player[0].x = 6;
-    player[0].y = 16;
-    player[0].floor = 3;
+    player[0].setPlayerPosition(3, 6, 16);
     towerThis = 0;
     player[0].redrawViewPort = true;
 
