@@ -248,7 +248,7 @@ function processJSONFiles(item, result) {
             break;
     };
     jsonDataLoaded++;
-    if(jsonDataLoaded >= '10') {
+    if(jsonDataLoaded >= 10) {
         initJSONData();
     }
 }

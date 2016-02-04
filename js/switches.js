@@ -61,7 +61,7 @@ function floorActionType(trig, p) {
     } else if(p.doFizzle()) {
         return;
     }
-    tar = tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]];
+    tar = tower[towerThis].floor[trig[1]].Map[trig[3]][trig[2]];
 
     switch (trig[0]) {
         case SWITCH_FLOOR_NONE:
