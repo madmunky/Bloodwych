@@ -277,7 +277,7 @@ function drawSpellBook(p, ui, dr) {
             }
         }
         var sym = ch.spellBook[pg][x].ref.symbols;
-        var col = getClassColour(ch.spellBook[pg][x].ref.colour, true);
+        var col = getClassColour(ch.spellBook[pg][x].ref.colour);
 
         if (!ch.spellBook[pg][x].learnt) {
             col = colourData['GREY_DARKEST'];
@@ -443,7 +443,7 @@ function leftUI(p) {
                     ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][cid], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][cid].width * scale, gfxUI[UI_GFX_PORTRAITS][cid].height * scale);
                     if (ch.activeSpell.id > -1) {
                         var sp = getSpellById(ch.activeSpell.id);
-                        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR['sp.colour']);
+                        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, paletteData['CLASS'][sp.colour]);
                     }
                 }
             } else {
@@ -489,7 +489,7 @@ function leftUIStats(p) {
                 if (hp < 0) {
                     hp = 0;
                 }
-                ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+                ctx.fillStyle = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
                 ctx.fillRect((p.ScreenX + 55 + c * 9) * scale, (p.ScreenY + 35 - hp) * scale, 7 * scale, hp * scale);
             }
         }
@@ -510,11 +510,11 @@ function leftUIStats(p) {
                 sp = 0;
             }
             if (p === player[0]) {
-                rgb = getClassColour(CLASS_COLOUR_MOON);
+                rgb = paletteData['PLAYER'][0][2];
             } else {
-                rgb = getClassColour(CLASS_COLOUR_DRAG);
+                rgb = paletteData['PLAYER'][1][1];
             }
-            ctx.fillStyle = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+            ctx.fillStyle = 'rgb(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
             ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 15) * scale, hp * scale, 5 * scale);
             ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 22) * scale, vit * scale, 5 * scale);
             ctx.fillRect((p.ScreenX + 55) * scale, (p.ScreenY + 29) * scale, sp * scale, 5 * scale);
@@ -522,9 +522,9 @@ function leftUIStats(p) {
     }
 }
 
-function getClassColour(c, palette) {
-
-    if (typeof palette === 'undefined') {
+function getClassColour(c) {
+    return paletteData['CLASS'][c];
+/*    if (typeof palette === 'undefined') {
         palette = false;
     }
 
@@ -569,7 +569,7 @@ function getClassColour(c, palette) {
         r: red,
         g: grn,
         b: blu
-    };
+    };*/
 }
 
 function commandUI(p) {
@@ -578,7 +578,7 @@ function commandUI(p) {
     ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].height * scale);
     if (ch.activeSpell.id > -1) {
         var sp = getSpellById(ch.activeSpell.id);
-        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, CLASS_COLOUR['sp.colour']);
+        drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, paletteData['CLASS'][sp.colour]);
     }
     ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
@@ -1211,7 +1211,7 @@ function showFairySpellDetailsScreen(spell, p, c) {
 
     }*/
 
-    writeFontImage(spell.name, 43, 12, CLASS_COLOUR['spellClass'], FONT_ALIGNMENT_LEFT, p.Portal);
+    writeFontImage(spell.name, 43, 12, paletteData['CLASS'][spellClass], FONT_ALIGNMENT_LEFT, p.Portal);
     writeFontImage("LEVEL " + spell.level, 43, 23, colourData['GREY_LIGHT'], FONT_ALIGNMENT_LEFT, p.Portal);
     writeFontImage(spell.cost + " GOLD", 43, 31, colourData['GREY_LIGHT'], FONT_ALIGNMENT_LEFT, p.Portal);
     p.message(spell.description, colourData['GREEN'], false, 0);
@@ -1247,7 +1247,7 @@ function colourSpellPage(dr, ch, img) {
             if (ch.spellBook[page][x] === getSpellById(ch.selectedSpell)) {
                 pal.push(colourData['WHITE']);
             } else {
-                pal.push(getClassColour(ch.spellBook[page][x].ref.colour, true));
+                pal.push(getClassColour(ch.spellBook[page][x].ref.colour));
 
             }
         } else {

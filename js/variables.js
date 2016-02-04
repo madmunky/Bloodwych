@@ -113,6 +113,8 @@ var PROFESSION_MAX = 4,
     PROFESSION_ADVENTURER = 2,
     PROFESSION_CUTPURSE = 3;
 
+var jsonDataLoaded = 0;
+
 var colourData = [];
 colourData['BLACK'] = [0, 0, 0, 255];
 colourData['GREY_DARKEST'] = [64, 64, 64, 255];
@@ -130,19 +132,6 @@ colourData['RED'] = [208, 0, 0, 255];
 colourData['YELLOW'] = [224, 192, 0, 255];
 colourData['WHITE'] = [224, 224, 224, 255];
 colourData['TRANSPARENT'] = [0, 0, 0, 0];
-
-var CLASS_COLOUR_SERP = 0,
-    CLASS_COLOUR_CHAOS = 1,
-    CLASS_COLOUR_DRAG = 2,
-    CLASS_COLOUR_MOON = 3,
-    CLASS_COLOUR_ANCIENT = 4;
-
-var CLASS_COLOUR = new Array();
-CLASS_COLOUR['CLASS_COLOUR_SERP'] = colourData['GREEN'],
-CLASS_COLOUR['CLASS_COLOUR_CHAOS'] = colourData['YELLOW'],
-CLASS_COLOUR['CLASS_COLOUR_DRAG'] = colourData['RED'],
-CLASS_COLOUR['CLASS_COLOUR_MOON'] = colourData['BLUE'],
-CLASS_COLOUR['CLASS_COLOUR_ANCIENT'] = colourData['PINK'];
 
 var COLOUR_DOOR_NORMAL = 0,
     COLOUR_DOOR_BRONZE = 1,
@@ -180,6 +169,12 @@ var COLOUR_GEM_SERPENT = 0,
     COLOUR_GEM_BROWN = 6,
     COLOUR_GEM_TAN = 7;
 
+var CLASS_COLOUR_SERP = 0,
+    CLASS_COLOUR_CHAOS = 1,
+    CLASS_COLOUR_DRAG = 2,
+    CLASS_COLOUR_MOON = 3,
+    CLASS_COLOUR_ANCIENT = 4;
+
 var COLOUR_FLOOR_SWITCH = 0,
     COLOUR_FLOOR_FIRE = 1,
     COLOUR_FLOOR_FIRE_DIM = 2;
@@ -206,6 +201,14 @@ var paletteData = [];
 paletteData['PLAYER'] = [];
 paletteData['PLAYER'][0] = [colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK']];
 paletteData['PLAYER'][1] = [colourData['WHITE'], colourData['RED'], colourData['RED_DARK']];
+
+paletteData['CLASS'] = new Array();
+paletteData['CLASS'][CLASS_COLOUR_SERP] = colourData['GREEN'],
+paletteData['CLASS'][CLASS_COLOUR_CHAOS] = colourData['YELLOW'],
+paletteData['CLASS'][CLASS_COLOUR_DRAG] = colourData['RED'],
+paletteData['CLASS'][CLASS_COLOUR_MOON] = colourData['BLUE'],
+paletteData['CLASS'][CLASS_COLOUR_ANCIENT] = colourData['PINK'];
+
 paletteData['SERPENT'] = new Array(colourData['GREY_LIGHT'], colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREEN'], colourData['WHITE']),
 paletteData['MOON'] = new Array(colourData['GREY_LIGHT'], colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLUE'], colourData['WHITE']),
 paletteData['DRAGON'] = new Array(colourData['GREY_LIGHT'], colourData['YELLOW'], colourData['PINK'], colourData['RED'], colourData['RED'], colourData['WHITE']),

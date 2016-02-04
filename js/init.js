@@ -45,6 +45,7 @@ function loadCustomGfx(event) {
 }
 
 function loadTowerData(event) {
+	jsonDataLoaded = 0;
     tower = event.towers;
     initTowers();
     preload.on("fileprogress", handleFileProgress);
@@ -115,7 +116,6 @@ function initMenuData() {
 }
 
 function initData() {
-    initJSONData();
     gfx['character']['heads'] = getCharacterSprite(NUMBER_OF_HEADS, 'character', 'heads', 13, 13, 16);
     gfx['character']['legs'] = getCharacterSprite(NUMBER_OF_LEGS, 'character', 'legs', 17, 27, 17);
     gfx['character']['arms'] = getCharacterSprite(NUMBER_OF_ARMS, 'character', 'arms', 13, 19, 13);
@@ -246,6 +246,10 @@ function processJSONFiles(item, result) {
         case 'UI':
             break;
     };
+    jsonDataLoaded++;
+    if(jsonDataLoaded >= '10') {
+    	initJSONData();
+    }
 }
 
 function loadDefaultJSONFiles() {

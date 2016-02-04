@@ -1,9 +1,10 @@
 {
 	"palettes": {
 		"PLAYER": [
-			["WHITE", "BLUE", "GREEN_BLUE"],
+			["WHITE", "BLUE", "BLUE_DARK"],
 			["WHITE", "RED", "RED_DARK"]
 		],
+		"CLASS": ["GREEN", "YELLOW", "RED", "BLUE_DARK", "PINK"],
 		"SERPENT": ["GREY_LIGHT", "WHITE", "GREEN", "GREEN_DARK", "GREEN", "WHITE"],
 		"MOON": ["GREY_LIGHT", "WHITE", "BLUE", "BLUE_DARK", "BLUE", "WHITE"],
 		"DRAGON": ["GREY_LIGHT", "YELLOW", "PINK", "RED", "RED", "WHITE"],
@@ -72,7 +73,7 @@
 		"door": {
 			"default": "BLUE",
 			"colours": [
-				"BLUE",
+				"GREY_DARKEST",
 				"RED_DARK",
 				"GREY_LIGHT",
 				"GREEN",
