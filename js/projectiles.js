@@ -298,7 +298,7 @@ Projectile.prototype.event = function() {
 				}
 				break;
 			case SPELL_BLAZE:
-				if(this.palette === PALETTE_BLAZE_BIG) {
+				if(this.palette === paletteData['BLAZE_BIG']) {
 					if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
 						setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
 						setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
@@ -306,7 +306,7 @@ Projectile.prototype.event = function() {
 						setDungeonSpell(this.floor, this.x, this.y, this);
 					}
 					if (obNext > OBJECT_NONE) {
-						this.palette = PALETTE_DRAGON_BIG;
+						this.palette = paletteData['DRAGON_BIG'];
 						this.d = (this.d + 2) % 4;
 						return true;
 					}
@@ -321,7 +321,7 @@ Projectile.prototype.event = function() {
 				}
 				break;
 			case SPELL_INFERNO:
-				if(this.palette === PALETTE_BLAZE_BIG) {
+				if(this.palette === paletteData['BLAZE_BIG']) {
 					if(!canMoveByFirepath(this.floor, this.x, this.y)) {
 						if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
 							setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
@@ -346,7 +346,7 @@ Projectile.prototype.event = function() {
 							this.d = (this.d + dNew) % 4;
 						}
 					} else {
-						this.palette = PALETTE_DRAGON_BIG;
+						this.palette = paletteData['DRAGON_BIG'];
 						return true;
 					}
 				} else {
@@ -473,6 +473,7 @@ function newProjectile(type, palette, snd, s, power, f, x, y, d, m) {
 	} else {
 		projectile[towerThis][pmax] = new Projectile(pmax, type, palette, snd, s, power, towerThis, f, x, y, d, m);
 	}
+	console.log('Firing at: ' + f +', ' + x +', ' + y);
 	return true;
 }
 

@@ -87,9 +87,9 @@ function writeFontImage(fontString, locationX, locationY, paletteTo, alignment, 
 
 			for (var i = 0; i < imageData.data.length; i += 4) {
 				// is this pixel the old rgb?
-				if (imageData.data[i] === ITEM_PALETTE_DEFAULT[0][0] &&
-					imageData.data[i + 1] === ITEM_PALETTE_DEFAULT[0][1] &&
-					imageData.data[i + 2] === ITEM_PALETTE_DEFAULT[0][2]
+				if (imageData.data[i] === paletteData['DEFAULT_ITEM'][0][0] &&
+					imageData.data[i + 1] === paletteData['DEFAULT_ITEM'][0][1] &&
+					imageData.data[i + 2] === paletteData['DEFAULT_ITEM'][0][2]
 				) {
 					// change to your new rgb
 					imageData.data[i] = paletteTo[0];
@@ -261,9 +261,9 @@ function writeSpellFont(fontString, locationX, locationY, paletteTo, alignment, 
 
 			for (var i = 0; i < imageData.data.length; i += 4) {
 				// is this pixel the old rgb?
-				if (imageData.data[i] === ITEM_PALETTE_DEFAULT[0][0] &&
-					imageData.data[i + 1] === ITEM_PALETTE_DEFAULT[0][1] &&
-					imageData.data[i + 2] === ITEM_PALETTE_DEFAULT[0][2]
+				if (imageData.data[i] === paletteData['DEFAULT_ITEM'][0][0] &&
+					imageData.data[i + 1] === paletteData['DEFAULT_ITEM'][0][1] &&
+					imageData.data[i + 2] === paletteData['DEFAULT_ITEM'][0][2]
 				) {
 					// change to your new rgb
 					imageData.data[i] = paletteTo[0];

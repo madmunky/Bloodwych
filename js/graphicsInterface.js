@@ -101,11 +101,11 @@ function grabUISprites(spriteSheetIMG) {
     for (y = 0; y < 6; y++) {
         for (x = 0; x < 20; x++) {
             if (i > 74 && i < 79) {
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_SERPENT));
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_CHAOS));
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_DRAGON));
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_MOON));
-                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), ITEM_PALETTE_DEFAULT, PALETTE_SELECTED));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), paletteData['DEFAULT_ITEM'], paletteData['SERPENT']));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), paletteData['DEFAULT_ITEM'], paletteData['CHAOS']));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), paletteData['DEFAULT_ITEM'], paletteData['DRAGON']));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), paletteData['DEFAULT_ITEM'], paletteData['MOON']));
+                extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), paletteData['DEFAULT_ITEM'], paletteData['SELECTED']));
                 ImageArray.push(extraColours);
                 extraColours = [];
             } else {
@@ -583,7 +583,7 @@ function commandUI(p) {
     ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
     ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
-    ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 
     ctx.fillStyle = "#606060";
     ctx.fillRect((p.ScreenX + 50) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
@@ -767,11 +767,11 @@ function drawPocketUI(p, chp, start) {
                     }
                 }
                 if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
-                    ctx.drawImage(flipImageVert(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                    ctx.drawImage(flipImageVert(itemRef[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                 } else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].type === ITEM_TYPE_GLOVES) {
-                    ctx.drawImage(flipImageVert(flipImage(itemRef[chp.pocket[12].id].gfx, ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                    ctx.drawImage(flipImageVert(flipImage(itemRef[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                 } else {
-                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
+                    ctx.drawImage(recolourUiGfx(gfxUI[pocketId], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                 }
             } else {
                 ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
@@ -848,7 +848,7 @@ function drawPocketUI(p, chp, start) {
                     break
                 case 5:
                     {
-                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
                     };
                     break
 
@@ -961,27 +961,27 @@ function createShield(id, type, colour) {
 
         case 0:
             {
-                colour = PALETTE_SERPENT;
+                colour = paletteData['SERPENT'];
             };
             break;
         case 1:
             {
-                colour = PALETTE_CHAOS;
+                colour = paletteData['CHAOS'];
             };
             break;
         case 2:
             {
-                colour = PALETTE_DRAGON;
+                colour = paletteData['DRAGON'];
             };
             break;
         case 3:
             {
-                colour = PALETTE_MOON;
+                colour = paletteData['MOON'];
             };
             break;
         default:
             {
-                colour = PALETTE_DEAD;
+                colour = paletteData['DEAD'];
             }
 
     }
@@ -990,16 +990,16 @@ function createShield(id, type, colour) {
     can.width = 30;
     can.height = 41;
     var context = can.getContext("2d");
-    if (colour === PALETTE_DEAD) {
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 0, 0);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 0, 5);
-        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_BLACK]), 5, 32);
+    if (colour === paletteData['DEAD']) {
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_BLACK]), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_BLACK]), 0, 5);
+        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], paletteData['DEFAULT_SHIELD'], colour), 1, 21);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_BLACK]), 5, 32);
     } else {
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 0, 0);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 0, 5);
-        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], SHIELD_PALETTE_DEFAULT, colour), 1, 21);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], SHIELD_PALETTE_DEFAULT[0], COLOUR[COLOUR_GREY_LIGHT]), 5, 32);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_GREY_LIGHT]), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_GREY_LIGHT]), 0, 5);
+        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], paletteData['DEFAULT_SHIELD'], colour), 1, 21);
+        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], paletteData['DEFAULT_SHIELD'][0], COLOUR[COLOUR_GREY_LIGHT]), 5, 32);
     }
 
     context.save();
@@ -1108,7 +1108,7 @@ function showFairy(c, p) {
             if (x < 4) {
                 p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
             } else {
-                p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+                p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
             }
         }
     } else {
@@ -1172,7 +1172,7 @@ function showFairySpellScreen(spellClass, p, c) {
     } else {
         p.message(TEXT_ALL_I_HAVE + ch.firstName, COLOUR[COLOUR_GREEN], false, 0);
     }
-    p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
 }
 
 function showFairySpellDetailsScreen(spell, p, c) {
@@ -1222,7 +1222,7 @@ function showFairySpellDetailsScreen(spell, p, c) {
                 p.Portal.drawImage(gfxUI[80 + x], 17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
             }
         } else {
-            p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], ITEM_PALETTE_DEFAULT[0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+            p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], COLOUR_PLAYER[p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
         }
     }
 
@@ -1255,7 +1255,7 @@ function colourSpellPage(dr, ch, img) {
         }
     }
 
-    return recolourSprite(img, MON_PALETTE_DEFAULT, pal);
+    return recolourSprite(img, paletteData['DEFAULT_MON'], pal);
 
 }
 

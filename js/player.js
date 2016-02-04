@@ -539,7 +539,7 @@ Player.prototype.doPit = function() {
         setTimeout(function() {
             self.doEvent(true);
         }, 300);
-        newProjectile(DUNGEON_NONE, PALETTE_PIT_FLASH, null, -1, 0, floor, x, y, 0, null);
+        newProjectile(DUNGEON_NONE, paletteData['PIT_FLASH'], null, -1, 0, floor, x, y, 0, null);
         return true;
     }
     return false;
@@ -1082,7 +1082,7 @@ Player.prototype.drawProjectile = function(pr, distance, offset) {
     if (typeof pGfx !== "undefined") {
         var offx = 64 - Math.floor(pGfx.width * 0.5) + offset.x;
         var offy = 77 - Math.floor(pGfx.height * 0.5) - offset.y;
-        this.Portal.drawImage(recolourSprite(pGfx, DUN_ITEM_PALETTE_DEFAULT, pr.palette), offx * scale, offy * scale, pGfx.width * scale, pGfx.height * scale);
+        this.Portal.drawImage(recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette), offx * scale, offy * scale, pGfx.width * scale, pGfx.height * scale);
     }
 }
 
@@ -1370,9 +1370,9 @@ Player.prototype.shootArrow = function(ch) {
         } else if (ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS) {
             var arr = ch.pocket[POCKET_RIGHT_HAND];
         }
-        var col = PALETTE_BRONZE_ARROW;
+        var col = paletteData['BRONZE_ARROW'];
         if (arr.id === ITEM_ELF_ARROWS) {
-            col = PALETTE_GREEN_ARROW;
+            col = paletteData['GREEN_ARROW'];
         }
         arr.setPocketItem(arr.id, arr.quantity - 1);
         newProjectile(DUNGEON_PROJECTILE_ARROW, col, SOUND_ATTACK, arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());

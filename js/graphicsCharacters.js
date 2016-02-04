@@ -325,7 +325,7 @@ function grabCharacter(form, part, dir, dist) {
             var miniId = monsterPalette[form].mini;
             var tmpPalette = monsterPalette[form].miniPalette;
             var d = [0, 2, 3, 1];
-            var mini = recolourSprite(characterGfx[IMAGE_CHA_MINI][miniId][dist - 4][d[dir]], MON_PALETTE_DEFAULT, tmpPalette);
+            var mini = recolourSprite(characterGfx[IMAGE_CHA_MINI][miniId][dist - 4][d[dir]], paletteData['DEFAULT_MON'], tmpPalette);
             return mini;
         }
     } else if (dist < 4 && part !== IMAGE_CHA_MINI) {
@@ -365,7 +365,7 @@ function grabCharacter(form, part, dir, dist) {
             var torso = characterGfx[IMAGE_CHA_TORSO][monsterPalette[form].torso][dist][d[dir2]];
             var arm = characterGfx[IMAGE_CHA_ARM][monsterPalette[form].arm][dist][d[dir]];
             var leg = characterGfx[IMAGE_CHA_LEG][monsterPalette[form].leg][dist][d[dir2]];
-            var partSprite = recolourSprite(characterGfx[part][paletteType][dist][d[dir6]], MON_PALETTE_DEFAULT, palette);
+            var partSprite = recolourSprite(characterGfx[part][paletteType][dist][d[dir6]], paletteData['DEFAULT_MON'], palette);
 
             var height = Math.floor(head.height * 0.65) + torso.height + leg.height,
                 width = 65; //arm.width + torso.width + arm.width;
@@ -460,7 +460,7 @@ function grabCharacterArmour(id, gen, part, dir, dist) {
                 var miniId = monsterPalette[form].mini;
                 var tmpPalette = monsterPalette[form].miniPalette;
                 var d = [0, 2, 3, 1];
-                var mini = recolourSprite(characterGfx[IMAGE_CHA_MINI][miniId][dist - 4][d[dir]], MON_PALETTE_DEFAULT, tmpPalette);
+                var mini = recolourSprite(characterGfx[IMAGE_CHA_MINI][miniId][dist - 4][d[dir]], paletteData['DEFAULT_MON'], tmpPalette);
                 return mini;
             }*/
         } else if (dist < 4 && part !== IMAGE_CHA_MINI) {
@@ -743,8 +743,8 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
                                 palette[pl] = car[pl];
                             }
                         }
-                        gfx1 = recolourSprite(gfx1, MON_PALETTE_DEFAULT, palette);
-                        if (dir2 > -1) gfx2 = recolourSprite(gfx2, MON_PALETTE_DEFAULT, palette);
+                        gfx1 = recolourSprite(gfx1, paletteData['DEFAULT_MON'], palette);
+                        if (dir2 > -1) gfx2 = recolourSprite(gfx2, paletteData['DEFAULT_MON'], palette);
                     }
                 }
                 var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
@@ -1447,7 +1447,7 @@ function grabMonster(form, level) {
                         var pal = form - MON_FORM_SUMMON;
                         var lvl = level;
                     }
-                    ImageArray[i][j][k] = recolourSprite(ImageArray[i][j][k], MON_PALETTE_DEFAULT, monsterBigPalette[pal][lvl]);
+                    ImageArray[i][j][k] = recolourSprite(ImageArray[i][j][k], paletteData['DEFAULT_MON'], monsterBigPalette[pal][lvl]);
                 }
             }
         }

@@ -79,7 +79,7 @@ ITEM_TYPE_SCROLL = 17
 				"dungeon": {
 					"id": "DUNGEON_ITEM_KEY",
 					"color": {
-						"from": "DUN_ITEM_PALETTE_DEFAULT",
+						"from": "PALETTE_DEFAULT_ITEM_DUN",
 						"to": [
 							"COLOUR_PINK",
 							"COLOUR_PINK",
@@ -105,7 +105,7 @@ ITEM_TYPE_SCROLL = 17
 				"dungeon": {
 					"id": "DUNGEON_ITEM_ARROW",
 					"color": {
-						"from": "DUN_ITEM_PALETTE_DEFAULT",
+						"from": "PALETTE_DEFAULT_ITEM_DUN",
 						"to": [
 							"COLOUR_WHITE",
 							"COLOUR_RED",
@@ -138,7 +138,7 @@ ITEM_TYPE_SCROLL = 17
 				"dungeon": {
 					"id": "DUNGEON_ITEM_ARROW",
 					"color": {
-						"from": "DUN_ITEM_PALETTE_DEFAULT",
+						"from": "PALETTE_DEFAULT_ITEM_DUN",
 						"to": [
 							"COLOUR_YELLOW",
 							"COLOUR_GREEN",

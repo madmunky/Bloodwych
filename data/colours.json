@@ -1,51 +1,20 @@
 {
-	"colours": [{
-		"id": "COLOUR_BLACK",
-		"value": [0, 0, 0, 255]
-	}, {
-		"id": "COLOUR_GREY_DARKEST",
-		"value": [64, 64, 64, 255]
-	}, {
-		"id": "COLOUR_GREY_DARK",
-		"value": [96, 96, 96, 255]
-	}, {
-		"id": "COLOUR_GREY_MEDIUM",
-		"value": [128, 128, 128, 255]
-	}, {
-		"id": "COLOUR_GREY_LIGHT",
-		"value": [160, 160, 160, 255]
-	}, {
-		"id": "COLOUR_GREEN_DARK",
-		"value": [32, 144, 32, 255]
-	}, {
-		"id": "COLOUR_GREEN",
-		"value": [16, 192, 16, 255]
-	}, {
-		"id": "COLOUR_BLUE_DARK",
-		"value": [0, 0, 224, 255]
-	}, {
-		"id": "COLOUR_BLUE",
-		"value": [64, 128, 224, 255]
-	}, {
-		"id": "COLOUR_RED_DARK",
-		"value": [128, 32, 16, 255]
-	}, {
-		"id": "COLOUR_BROWN",
-		"value": [160, 64, 32, 255]
-	}, {
-		"id": "COLOUR_PINK",
-		"value": [224, 144, 96, 255]
-	}, {
-		"id": "COLOUR_RED",
-		"value": [208, 0, 0, 255]
-	}, {
-		"id": "COLOUR_YELLOW",
-		"value": [224, 192, 0, 255]
-	}, {
-		"id": "COLOUR_WHITE",
-		"value": [224, 224, 224, 255]
-	}, {
-		"id": "COLOUR_TRANSPARENT",
-		"value": [0, 0, 0, 0]
-	}]
+	"colours": {
+		"COLOUR_BLACK": [0, 0, 0, 255],
+		"COLOUR_GREY_DARKEST": [64, 64, 64, 255],
+		"COLOUR_GREY_DARK": [96, 96, 96, 255],
+		"COLOUR_GREY_MEDIUM": [128, 128, 128, 255],
+		"COLOUR_GREY_LIGHT": [160, 160, 160, 255],
+		"COLOUR_GREEN_DARK": [32, 144, 32, 255],
+		"COLOUR_GREEN": [16, 192, 16, 255],
+		"COLOUR_BLUE_DARK": [0, 0, 224, 255],
+		"COLOUR_BLUE": [64, 128, 224, 255],
+		"COLOUR_RED_DARK": [128, 32, 16, 255],
+		"COLOUR_BROWN": [160, 64, 32, 255],
+		"COLOUR_PINK": [224, 144, 96, 255],
+		"COLOUR_RED": [208, 0, 0, 255],
+		"COLOUR_YELLOW": [224, 192, 0, 255],
+		"COLOUR_WHITE": [224, 224, 224, 255],
+		"COLOUR_TRANSPARENT": [0, 0, 0, 0]
+	}
 }

@@ -72,9 +72,9 @@ function testSummon(){
 //
 //        var testGfx = gfxSummon;
 //
-//        ctx.drawImage(recolourSprite(testGfx[testMon1][testDistance][testDirection], MON_PALETTE_DEFAULT, tmpPalettes[myTmp]),145*scale,25*scale,testGfx[testMon1][testDistance][testDirection].width*scale,testGfx[testMon1][testDistance][testDirection].height*scale);
-//        ctx.drawImage(recolourSprite(testGfx[1][0][4], MON_PALETTE_DEFAULT, tmpPalettes[myTmp]),133*scale,24*scale,testGfx[1][0][4].width*scale,testGfx[1][0][4].height*scale);
-//        ctx.drawImage(recolourSprite(testGfx[1][0][5], MON_PALETTE_DEFAULT, tmpPalettes[myTmp]),170*scale,24*scale,testGfx[1][0][5].width*scale,testGfx[1][0][5].height*scale);
+//        ctx.drawImage(recolourSprite(testGfx[testMon1][testDistance][testDirection], paletteData['DEFAULT_MON'], tmpPalettes[myTmp]),145*scale,25*scale,testGfx[testMon1][testDistance][testDirection].width*scale,testGfx[testMon1][testDistance][testDirection].height*scale);
+//        ctx.drawImage(recolourSprite(testGfx[1][0][4], paletteData['DEFAULT_MON'], tmpPalettes[myTmp]),133*scale,24*scale,testGfx[1][0][4].width*scale,testGfx[1][0][4].height*scale);
+//        ctx.drawImage(recolourSprite(testGfx[1][0][5], paletteData['DEFAULT_MON'], tmpPalettes[myTmp]),170*scale,24*scale,testGfx[1][0][5].width*scale,testGfx[1][0][5].height*scale);
 //        }
 //    }catch(e){}
 
