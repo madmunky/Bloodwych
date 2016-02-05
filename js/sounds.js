@@ -13,7 +13,7 @@ function loadSounds(){
     s.push(new Audio(location+"death.wav"));
     s.push(new Audio(location+"explode.wav"));
     s.push(new Audio(location+"switch.wav"));
-    s.push(new Audio(location+"pc_music.mp3"));
+    s.push(new Audio(location+"pc_music_roland.mp3"));
     return s;
 }
 
