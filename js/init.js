@@ -148,6 +148,8 @@ function initJSONData() {
         i++;
     }
     parseJSONValues(paletteData, colourData);
+    parseJSONValues(itemData, paletteData, 'recolour');
+    parseJSONValues(itemData, colourData, 'recolour');
 
     preload = new createjs.LoadQueue(false);
         preload.loadFile({
@@ -156,19 +158,26 @@ function initJSONData() {
             type: "manifest",
             loadTimeout: 1000
     }, true);
-
 }
 
 //finds absolute value defined in obj, from o2
-function parseJSONValues(obj, o2) {
+function parseJSONValues(obj, o2, from) {
+    if(typeof from === "undefined") {
+        var from = '';
+    }
     for(c in obj) {
         if(typeof obj[c] === 'string') {
-            var val = o2[obj[c]];
-            if(typeof val !== "undefined") {
-                obj[c] = val;
+            if(from === '') {
+                var val = o2[obj[c]];
+                if(typeof val !== "undefined") {
+                    obj[c] = val;
+                }
             }
         } else {
-            parseJSONValues(obj[c], o2);
+            if(from === c) {
+                from = '';
+            }
+            parseJSONValues(obj[c], o2, from);
         }
     }
 }
@@ -251,6 +260,7 @@ function processJSONFiles(item, result) {
         case 'Input':
             break;
         case 'Items':
+            itemData = result.items;
             break;
         case 'Sounds':
             break;

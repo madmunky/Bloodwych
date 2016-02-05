@@ -1589,6 +1589,7 @@ var DUNGEON_ITEM_POTION = 0,
     DUNGEON_ITEM_APPLE_HALF = 26;
 
 //items
+var itemData = [];
 window.item = new Array();
 var itemGfxD = new Array();
 var itemRef = new Array(109);

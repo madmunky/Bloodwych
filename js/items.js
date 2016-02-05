@@ -430,6 +430,7 @@ function initItemRefs() {
     createItemRef(33, "Adamant Plate", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_PLATE], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['BLACK'])));
     createItemRef(34, "Crystal Chain", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_CHAIN], colourData['GREEN'], colourData['PINK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['PINK'], colourData['GREY_DARK'], colourData['BLACK'])));
     createItemRef(35, "Crystal Plate", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_PLATE], colourData['GREEN'], colourData['PINK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['PINK'], colourData['BROWN'], colourData['BLACK'])));
+
     createItemRef(43, "Chaos Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GLOVE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['YELLOW'], colourData['PINK'], colourData['BLACK'])));
     createItemRef(44, "Battle Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE], colourData['GREEN'], colourData['GREY_LIGHT']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GLOVE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_DARK'], colourData['BLACK'])));
     createItemRef(45, "Mithril Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GLOVE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLACK'])));
@@ -437,6 +438,7 @@ function initItemRefs() {
     createItemRef(47, "Crystal Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE], colourData['GREEN'], colourData['PINK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GLOVE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['PINK'], colourData['BROWN'], colourData['BLACK'])));
     createItemRef(48, "Dagger", gfxUI[UI_GFX_POCKET_DAGGER], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_DAGGER], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
     createItemRef(49, "Stealth Blade", gfxUI[UI_GFX_POCKET_SHORT_SWORD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_DAGGER], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['BLACK'])));
+
     createItemRef(61, "Staff", recolourUiGfx(gfxUI[UI_GFX_POCKET_STAFF], colourData['GREEN'], colourData['GREY_DARKEST']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_STAFF], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_MEDIUM'], colourData['GREY_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
     createItemRef(62, "Battle Staff", recolourUiGfx(gfxUI[UI_GFX_POCKET_STAFF], colourData['GREEN'], colourData['GREY_DARK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_STAFF], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['BLACK'])));
     createItemRef(63, "Power Staff", recolourUiGfx(gfxUI[UI_GFX_POCKET_STAFF], colourData['GREEN'], colourData['PINK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_STAFF], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['BROWN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
@@ -492,13 +494,38 @@ function initItemRefs() {
 }
 
 //Read out the items here
-
 function createItemRef(id, name, gfx, gfxD) {
-    itemRef[id] = {
-        name: name,
-        gfx: gfx,
-        gfxD: gfxD
-    };
+    if(typeof itemData[id] !== "undefined") {
+        itemRef[id] = itemData[id];
+        if(typeof itemData[id].gfx2 !== "undefined") {
+            if(typeof itemData[id].gfx2.icon !== "undefined" && typeof itemData[id].gfx2.icon.id !== "undefined") {
+                eval('gfx = gfxUI[' + itemData[id].gfx2.icon.id + ']');
+                if(typeof itemData[id].gfx2.icon.recolour !== "undefined" && typeof itemData[id].gfx2.icon.recolour.from !== "undefined" && typeof itemData[id].gfx2.icon.recolour.to !== "undefined") {
+                    var from = itemData[id].gfx2.icon.recolour.from;
+                    var to = itemData[id].gfx2.icon.recolour.to;
+                    for(f in from) {
+                        gfx = recolourUiGfx(gfx, from[f], to[f]);
+                    }
+                }
+            }
+            if(typeof itemData[id].gfx2.dungeon !== "undefined" && typeof itemData[id].gfx2.dungeon.id !== "undefined") {
+                eval('gfxD = itemsGfxD[' + itemData[id].gfx2.dungeon.id + ']');
+                if(typeof itemData[id].gfx2.dungeon.recolour !== "undefined" && typeof itemData[id].gfx2.dungeon.recolour.from !== "undefined" && typeof itemData[id].gfx2.dungeon.recolour.to !== "undefined") {
+                    var from = itemData[id].gfx2.dungeon.recolour.from;
+                    var to = itemData[id].gfx2.dungeon.recolour.to;
+                    gfxD = recolourSpriteArray(gfxD, from, to);
+                }
+            }
+        }
+        itemRef[id].gfx = gfx;
+        itemRef[id].gfxD = gfxD;
+    } else {
+        itemRef[id] = {
+            name: name,
+            gfx: gfx,
+            gfxD: gfxD
+        }
+    }
 }
 
 //id starts at 0 (= ITEM_LEATHER_ARMOUR)

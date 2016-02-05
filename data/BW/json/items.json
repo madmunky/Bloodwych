@@ -1,90 +1,47 @@
-/*
-DUNGEON_ITEM_POTION = 0,
-DUNGEON_ITEM_RIP = 1,
-DUNGEON_ITEM_SMALL_SHIELD = 2,
-DUNGEON_ITEM_KEY = 3,
-DUNGEON_ITEM_COIN = 4,
-DUNGEON_ITEM_AMOUR = 5,
-DUNGEON_ITEM_APPLE = 6,
-DUNGEON_ITEM_BISCUIT = 7,
-DUNGEON_ITEM_CHICKEN = 8,
-DUNGEON_ITEM_SWORD = 9,
-DUNGEON_ITEM_AXE = 10,
-DUNGEON_ITEM_BOW = 11,
-DUNGEON_ITEM_CROSS_BOW = 12,
-DUNGEON_ITEM_ARROW = 13,
-DUNGEON_ITEM_STAFF = 14,
-DUNGEON_ITEM_DAGGER = 15,
-DUNGEON_ITEM_LARGE_SHIELD = 16,
-DUNGEON_ITEM_DRINK = 17,
-DUNGEON_ITEM_RING = 18,
-DUNGEON_ITEM_GEM = 19,
-DUNGEON_ITEM_GLOVE = 20,
-DUNGEON_ITEM_PERMIT = 21,
-DUNGEON_ITEM_BOOK_OF_SKULLS = 22,
-DUNGEON_ITEM_BONE = 23,
-DUNGEON_ITEM_WAND = 24,
-DUNGEON_ITEM_NEGG = 25,
-DUNGEON_ITEM_APPLE_HALF = 26;
-
-ITEM_TYPE_EMPTY = 0,
-ITEM_TYPE_STACKABLE = 1,
-ITEM_TYPE_FOOD = 2,
-ITEM_TYPE_POTION = 3,
-ITEM_TYPE_ARMOUR = 4,
-ITEM_TYPE_SHIELD = 5,
-ITEM_TYPE_GLOVES = 6,
-ITEM_TYPE_WEAPON = 7,
-ITEM_TYPE_RIP = 8,
-ITEM_TYPE_KEY = 9,
-ITEM_TYPE_WAND = 10,
-ITEM_TYPE_BOW = 11,
-ITEM_TYPE_PERMIT = 12,
-ITEM_TYPE_CRYSTAL = 13,
-ITEM_TYPE_GEM = 14,
-ITEM_TYPE_RING = 15,
-ITEM_TYPE_BOOK = 16,
-ITEM_TYPE_SCROLL = 17
-*/
 {"items":
 	[
 		{
-			"__id": 0,
 			"id": "ITEM_EMPTY"
 		},
 		{
-			"__id": 1,
 			"id": "COINAGE",
-			"displayName": "COINAGE",
+			"name": "MONEYYYY!",
 			"type": "ITEM_TYPE_STACKABLE",
-			"gfx": {
+			"gfx2": {
 				"icon": {
-					"id": "UI_GFX_POCKET_COIN"
+					"id": "UI_GFX_POCKET_COIN",
+					"recolour": {
+						"from": ["PINK", "YELLOW", "WHITE"],
+						"to": ["BLUE_DARK", "BLUE", "WHITE"]
+					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_COIN"
+					"id": "DUNGEON_ITEM_COIN",
+					"recolour": {
+						"from": ["PINK", "YELLOW", "WHITE"],
+						"to": ["BLUE_DARK", "BLUE", "WHITE"]
+					}
 				}
 			},
 			"currency": 1
 		},
 		{
-			"__id": 2,
 			"id": "ITEM_COMMON_KEYS",
-			"displayName": "COMMON KEYS",
+			"name": "COMMON KEYS",
 			"type": "ITEM_TYPE_STACKABLE",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_COMMON_KEY"
 				},
 				"dungeon": {
 					"id": "DUNGEON_ITEM_KEY",
-					"color": {
-						"from": "PALETTE_DEFAULT_ITEM_DUN",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
 						"to": [
-							"COLOUR_PINK",
-							"COLOUR_PINK",
-							"COLOUR_PINK",
-							"COLOUR_BLACK"
+							"PINK",
+							"PINK",
+							"PINK",
+							"BLACK"
 						]
 					}
 				}
@@ -94,23 +51,22 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 3,
 			"id": "ITEM_ARROWS",
-			"displayName": "ARROWS",
+			"name": "ARROWS",
 			"type": "ITEM_TYPE_STACKABLE",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_ARROW"
 				},
 				"dungeon": {
 					"id": "DUNGEON_ITEM_ARROW",
-					"color": {
-						"from": "PALETTE_DEFAULT_ITEM_DUN",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
 						"to": [
-							"COLOUR_WHITE",
-							"COLOUR_RED",
-							"COLOUR_BROWN",
-							"COLOUR_BLACK"
+							"WHITE",
+							"RED",
+							"BROWN",
+							"BLACK"
 						]
 					}
 				}
@@ -120,30 +76,32 @@ ITEM_TYPE_SCROLL = 17
 				"mandatoryWithType": "ITEM_TYPE_BOW",
 				"powerFactor": 1.0,
 				"shootAsProjectile": {
-					"gfx": "DUNGEON_PROJECTILE_ARROW",
-					"color": "PALETTE_BRONZE_ARROW",
+					"gfx2": "DUNGEON_PROJECTILE_ARROW",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "BRONZE_ARROW"
+					},
 					"sound": "SOUND_ATTACK"
 				}
 			}
 		},
 		{
-			"__id": 4,
 			"id": "ITEM_ELF_ARROWS",
-			"displayName": "ELF ARROWS",
+			"name": "ELF ARROWS",
 			"type": "ITEM_TYPE_STACKABLE",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_ELF_ARROW"
 				},
 				"dungeon": {
 					"id": "DUNGEON_ITEM_ARROW",
-					"color": {
-						"from": "PALETTE_DEFAULT_ITEM_DUN",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
 						"to": [
-							"COLOUR_YELLOW",
-							"COLOUR_GREEN",
-							"COLOUR_GREY_LIGHT",
-							"COLOUR_BLACK"
+							"YELLOW",
+							"GREEN",
+							"GREY_LIGHT",
+							"BLACK"
 						]
 					}
 				}
@@ -153,18 +111,17 @@ ITEM_TYPE_SCROLL = 17
 				"mandatoryWithType": "ITEM_TYPE_BOW",
 				"powerFactor": 1.2,
 				"shootAsProjectile": {
-					"gfx": "DUNGEON_PROJECTILE_ARROW",
-					"color": "PALETTE_GREEN_ARROW",
+					"gfx2": "DUNGEON_PROJECTILE_ARROW",
+					"recolour": "GREEN_ARROW",
 					"sound": "SOUND_ATTACK"
 				}
 			}
 		},
 		{
-			"__id": 5,
 			"id": "ITEM_APPLE_1",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_APPLE_1"
 				},
@@ -178,11 +135,10 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 6,
 			"id": "ITEM_APPLE_2",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_APPLE_2"
 				},
@@ -196,11 +152,10 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 7,
 			"id": "ITEM_APPLE",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_APPLE_3"
 				},
@@ -214,11 +169,10 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 8,
 			"id": "ITEM_BISCUIT_1",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_BISCUIT_1"
 				},
@@ -232,11 +186,10 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 9,
 			"id": "ITEM_BISCUIT_2",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_BISCUIT_2"
 				},
@@ -250,11 +203,10 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 10,
 			"id": "ITEM_BISCUIT",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_BISCUIT_3"
 				},
@@ -268,11 +220,10 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 11,
 			"id": "ITEM_CHICKEN_1",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_CHICKEN_1"
 				},
@@ -286,11 +237,10 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 12,
 			"id": "ITEM_CHICKEN_2",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_CHICKEN_2"
 				},
@@ -304,11 +254,10 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 13,
 			"id": "ITEM_CHICKEN",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_CHICKEN_3"
 				},
@@ -322,19 +271,18 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 14,
 			"id": "ITEM_MEAD_1",
-			"displayName": "FOOD",
+			"name": "FOOD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_WATER_1",
-					"color": {
+					"recolour": {
 						"from": [
-							"COLOUR_GREEN"
+							"GREEN"
 						],
 						"to": [
-							"COLOUR_PINK"
+							"PINK"
 						]
 					}
 				},
@@ -348,19 +296,18 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 15,
 			"id": "ITEM_MEAD_2",
-			"displayName": "MEAD",
+			"name": "MEAD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_WATER_2",
-					"color": {
+					"recolour": {
 						"from": [
-							"COLOUR_GREEN"
+							"GREEN"
 						],
 						"to": [
-							"COLOUR_PINK"
+							"PINK"
 						]
 					}
 				},
@@ -374,19 +321,18 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 16,
 			"id": "ITEM_MEAD",
-			"displayName": "MEAD",
+			"name": "MEAD",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_WATER_3",
-					"color": {
+					"recolour": {
 						"from": [
-							"COLOUR_GREEN"
+							"GREEN"
 						],
 						"to": [
-							"COLOUR_PINK"
+							"PINK"
 						]
 					}
 				},
@@ -400,19 +346,18 @@ ITEM_TYPE_SCROLL = 17
 			}
 		},
 		{
-			"__id": 17,
 			"id": "ITEM_WATER_1",
-			"displayName": "WATER",
+			"name": "WATER",
 			"type": "ITEM_TYPE_FOOD",
-			"gfx": {
+			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_WATER_1",
-					"color": {
+					"recolour": {
 						"from": [
-							"COLOUR_GREEN"
+							"GREEN"
 						],
 						"to": [
-							"COLOUR_BLUE_DARK"
+							"BLUE_DARK"
 						]
 					}
 				},
@@ -424,6 +369,90 @@ ITEM_TYPE_SCROLL = 17
 				"changeToItem": "ITEM_EMPTY",
 				"addFood": 10
 			}
+		},
+		{
+			"id": "ITEM_WATER_2",
+			"name": "WATER",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_WATER_2",
+					"recolour": {
+						"from": [
+							"GREEN"
+						],
+						"to": [
+							"BLUE_DARK"
+						]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_DRINK"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_WATER_1",
+				"addFood": 10
+			}
+		},
+		{
+			"id": "ITEM_WATER",
+			"name": "WATER",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_WATER_3",
+					"recolour": {
+						"from": [
+							"GREEN"
+						],
+						"to": [
+							"BLUE_DARK"
+						]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_DRINK"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_WATER_2",
+				"addFood": 10
+			}
+		},
+		{
+			"id": "ITEM_NEGG_GREEN",
+			"name": "N'EGG",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_NEGG",
+					"recolour": {
+						"from": [
+							"GREEN"
+						],
+						"to": [
+							"GREEN"
+						]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_NEGG",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": [
+							"GREEN_DARK",
+							"GREEN_DARK",
+							"GREEN_DARK",
+							"BLACK"
+						]
+					}
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_EMPTY",
+				"addFood": 50
+			}
 		}
 	]
-};
+}
