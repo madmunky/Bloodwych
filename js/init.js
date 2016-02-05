@@ -7,7 +7,7 @@ function initGame() {
 
 function loadGFXData() {
     preload.loadFile({
-        src: 'data/data.json',
+        src: 'data/' + GAME_ID[GAME_BLOODWYCH] + '/json/data.json',
         callback: "loadJSONData",
         type: "manifest",
         loadTimeout: 1000
@@ -15,30 +15,35 @@ function loadGFXData() {
 }
 
 function loadDefaultGfx(event) {
-    defaultManifest = event;
-    preload = new createjs.LoadQueue(false);
-    var src = 'data/' + GAME_ID[gameType] + '/data.json';
-    preload.loadFile({
-        src: src,
-        callback: "loadJSONData1",
-        type: "manifest",
-        loadTimeout: 1000
-    }, true);
+    defaultEvent = event;
+    if(gameType !== GAME_BLOODWYCH) {
+        preload = new createjs.LoadQueue(false);
+        preload.loadFile({
+            src: 'data/' + GAME_ID[gameType] + '/json/data.json',
+            callback: "loadJSONData1",
+            type: "manifest",
+            loadTimeout: 1000
+        }, true);
+    } else {
+        loadCustomGfx(event);
+    }
 }
 
 function loadCustomGfx(event) {
     for (i in event.manifest) {
-        for (x in defaultManifest.manifest) {
-            if (defaultManifest.manifest[x].id === event.manifest[i].id) {
-                defaultManifest.manifest[x] = event.manifest[i];
+        for (x in defaultEvent.manifest) {
+            if (defaultEvent.manifest[x].id === event.manifest[i].id) {
+                defaultEvent.manifest[x] = event.manifest[i];
             }
         }
     }
     var preload = new createjs.LoadQueue(false);
     preload.maintainScriptOrder = true;
-    loadDefaultJSONFiles(GAME_ID[gameType]+"/json/");
-    loadDefaultJSONFiles("");
-    preload.loadManifest(defaultManifest, false);
+    if(gameType !== GAME_BLOODWYCH) {
+        loadDefaultJSONFiles(event, GAME_ID[gameType]);
+    }
+    loadDefaultJSONFiles(defaultEvent, GAME_ID[GAME_BLOODWYCH]);
+    preload.loadManifest(event.manifest, false, event.path);
     preload.on("fileprogress", handleFileProgress);
     preload.on("error", handleError);
     preload.on("fileload", handleFileLoad);
@@ -253,45 +258,45 @@ function processJSONFiles(item, result) {
     }
 }
 
-function loadDefaultJSONFiles(path) {
-    defaultManifest.manifest.unshift({
-        src: 'data/'+path+'colours.json',
+function loadDefaultJSONFiles(event, path) {
+    event.manifest.unshift({
+        src: 'data/'+path+'/json/colours.json',
         type: "json",
         typeID: "Colours"
     }, {
-        src: 'data/'+path+'palettes.json',
+        src: 'data/'+path+'/json/palettes.json',
         type: "json",
         typeID: "Palettes"
     }, {
-        src: 'data/'+path+'characters.json',
+        src: 'data/'+path+'/json/characters.json',
         type: "json",
         typeID: "Characters"
     }, {
-        src: 'data/'+path+'communication.json',
+        src: 'data/'+path+'/json/communication.json',
         type: "json",
         typeID: "Communication"
     }, {
-        src: 'data/'+path+'input.json',
+        src: 'data/'+path+'/json/input.json',
         type: "json",
         typeID: "Input"
     }, {
-        src: 'data/'+path+'items.json',
+        src: 'data/'+path+'/json/items.json',
         type: "json",
         typeID: "Items"
     }, {
-        src: 'data/'+path+'sounds.json',
+        src: 'data/'+path+'/json/sounds.json',
         type: "json",
         typeID: "Sounds"
     }, {
-        src: 'data/'+path+'spells.json',
+        src: 'data/'+path+'/json/spells.json',
         type: "json",
         typeID: "Spells"
     }, {
-        src: 'data/'+path+'text.json',
+        src: 'data/'+path+'/json/text.json',
         type: "json",
         typeID: "Text"
     }, {
-        src: 'data/'+path+'ui.json',
+        src: 'data/'+path+'/json/ui.json',
         type: "json",
         typeID: "UI"
     });

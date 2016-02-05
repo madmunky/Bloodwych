@@ -12,7 +12,7 @@ if(isMobile) {
 
 //Preloader stuff
 var preload = new createjs.LoadQueue(false);
-var defaultManifest;
+var defaultEvent;
 
 //Declare Arrays for the Graphics
 var gfx = [];
@@ -101,18 +101,6 @@ var cursorBlue = 0,
     cursorRed = 1;
 
 //COLOURS AND PALETTES
-var COLOUR_SERP = 0,
-    COLOUR_DRAG = 1,
-    COLOUR_MOON = 2,
-    COLOUR_CHAOS = 3,
-    COLOUR_ANCIENT = 4;
-
-var PROFESSION_MAX = 4,
-    PROFESSION_WARRIOR = 0,
-    PROFESSION_WIZARD = 1,
-    PROFESSION_ADVENTURER = 2,
-    PROFESSION_CUTPURSE = 3;
-
 var jsonDataLoaded = 0;
 
 var colourData = [];
@@ -346,6 +334,12 @@ var CHA_BLODWYN = 0,
     CHA_ZASTAPH = 13,
     CHA_HENGIST = 14,
     CHA_THAI_CHANG = 15;
+
+var PROFESSION_MAX = 4,
+    PROFESSION_WARRIOR = 0,
+    PROFESSION_WIZARD = 1,
+    PROFESSION_ADVENTURER = 2,
+    PROFESSION_CUTPURSE = 3;
 
 var championData = new Array();
 var chamionPocketData = [];

@@ -32,7 +32,7 @@ function createDebugWindow(){
 $(function() {
     initGame();
 
-    canvas.style.cursor = "url('images/misc/cursor0.png'),auto";
+    canvas.style.cursor = "url('data/" + GAME_ID[GAME_BLOODWYCH] + "/images/misc/cursor0.png'),auto";
 
     document.addEventListener("deviceready", onDeviceReady, false);
     // PhoneGap is loaded and it is now safe to make calls PhoneGap methods
@@ -287,7 +287,7 @@ function gfxLoadImage(folder, type, item, sub) {
         } else {
             id = type;
         }
-        $('body').append('<img id="' + id + '" src="images/' + folder + '/' + id + '.png" class="gfx"/>');
+        $('body').append('<img id="' + id + '" src="data/' + GAME_ID[GAME_BLOODWYCH] + '/images/' + folder + '/' + id + '.png" class="gfx"/>');
         if (typeof sub === 'number' && sub != null) {
             if (item != '') {
                 gfx[folder][type][item][0] = document.getElementById(id);

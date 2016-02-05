@@ -620,18 +620,18 @@ function mouseXY(e) {
                     cursorType = cursorBlue;
                     if (currentColour !== cursorType) {
                         if (cursorType === cursorRed) {
-                            canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+                            canvas.style.cursor = "url(" + GAME_ID[GAME_BLOODWYCH] + "/images/misc/cursor1.png'),auto";
                         } else {
-                            canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+                            canvas.style.cursor = "url(" + GAME_ID[GAME_BLOODWYCH] + "/images/misc/cursor0.png'),auto";
                         }
                     }
                 } else {
                     cursorType = cursorRed;
                     if (currentColour !== cursorType) {
                         if (cursorType === cursorRed) {
-                            canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+                            canvas.style.cursor = "url(" + GAME_ID[GAME_BLOODWYCH] + "/images/misc/cursor1.png'),auto";
                         } else {
-                            canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+                            canvas.style.cursor = "url(" + GAME_ID[GAME_BLOODWYCH] + "/images/misc/cursor0.png'),auto";
                         }
                     }
                 }
@@ -643,9 +643,9 @@ function mouseXY(e) {
                 }
                 if (currentColour !== cursorType) {
                     if (cursorType === cursorRed) {
-                        canvas.style.cursor = "url('./images/misc/cursor1.png'),auto";
+                        canvas.style.cursor = "url(" + GAME_ID[GAME_BLOODWYCH] + "/images/misc/cursor1.png'),auto";
                     } else {
-                        canvas.style.cursor = "url('./images/misc/cursor0.png'),auto";
+                        canvas.style.cursor = "url(" + GAME_ID[GAME_BLOODWYCH] + "/images/misc/cursor0.png'),auto";
                     }
                 }
             }
