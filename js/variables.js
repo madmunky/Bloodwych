@@ -12,7 +12,7 @@ if(isMobile) {
 
 //Preloader stuff
 var preload = new createjs.LoadQueue(false);
-var defaultEvent;
+var defaultManifest;
 
 //Declare Arrays for the Graphics
 var gfx = [];

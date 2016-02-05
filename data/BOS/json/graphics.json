@@ -1,0 +1,6 @@
+loadCustomGfx({
+    "path": "data/BOS/",
+    "manifest": [
+		{"id":"dungeon_misc_bed", "src":"images/dungeon/misc-bed.png"}
+    ]
+});

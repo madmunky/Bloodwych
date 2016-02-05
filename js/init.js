@@ -7,7 +7,7 @@ function initGame() {
 
 function loadGFXData() {
     preload.loadFile({
-        src: 'data/' + GAME_ID[GAME_BLOODWYCH] + '/json/data.json',
+        src: 'data/' + GAME_ID[GAME_BLOODWYCH] + '/json/graphics.json',
         callback: "loadJSONData",
         type: "manifest",
         loadTimeout: 1000
@@ -15,11 +15,11 @@ function loadGFXData() {
 }
 
 function loadDefaultGfx(event) {
-    defaultEvent = event;
+    defaultManifest = event;
     if(gameType !== GAME_BLOODWYCH) {
         preload = new createjs.LoadQueue(false);
         preload.loadFile({
-            src: 'data/' + GAME_ID[gameType] + '/json/data.json',
+            src: 'data/' + GAME_ID[gameType] + '/json/graphics.json',
             callback: "loadJSONData1",
             type: "manifest",
             loadTimeout: 1000
@@ -31,19 +31,19 @@ function loadDefaultGfx(event) {
 
 function loadCustomGfx(event) {
     for (i in event.manifest) {
-        for (x in defaultEvent.manifest) {
-            if (defaultEvent.manifest[x].id === event.manifest[i].id) {
-                defaultEvent.manifest[x] = event.manifest[i];
+        for (x in defaultManifest.manifest) {
+            if (defaultManifest.manifest[x].id === event.manifest[i].id) {
+                defaultManifest.manifest[x] = event.manifest[i];
             }
         }
     }
     var preload = new createjs.LoadQueue(false);
     preload.maintainScriptOrder = true;
     if(gameType !== GAME_BLOODWYCH) {
-        loadDefaultJSONFiles(event, GAME_ID[gameType]);
+        loadDefaultJSONFiles(GAME_ID[gameType]);
     }
-    loadDefaultJSONFiles(defaultEvent, GAME_ID[GAME_BLOODWYCH]);
-    preload.loadManifest(event.manifest, false, event.path);
+    loadDefaultJSONFiles(GAME_ID[GAME_BLOODWYCH]);
+    preload.loadManifest(defaultManifest.manifest, false, defaultManifest.path);
     preload.on("fileprogress", handleFileProgress);
     preload.on("error", handleError);
     preload.on("fileload", handleFileLoad);
@@ -148,6 +148,15 @@ function initJSONData() {
         i++;
     }
     parseJSONValues(paletteData, colourData);
+
+    preload = new createjs.LoadQueue(false);
+        preload.loadFile({
+            src: 'data/' + GAME_ID[gameType] + '/json/tower.json',
+            callback: "loadJSONData2",
+            type: "manifest",
+            loadTimeout: 1000
+    }, true);
+
 }
 
 //finds absolute value defined in obj, from o2
@@ -258,8 +267,8 @@ function processJSONFiles(item, result) {
     }
 }
 
-function loadDefaultJSONFiles(event, path) {
-    event.manifest.unshift({
+function loadDefaultJSONFiles(path) {
+    defaultManifest.manifest.unshift({
         src: 'data/'+path+'/json/colours.json',
         type: "json",
         typeID: "Colours"

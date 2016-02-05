@@ -1,0 +1,60 @@
+loadDefaultGfx({
+    "path": "",
+    "manifest": [
+		//Misc
+		{"id":"misc_separator", "src":"data/BW/images/misc/separator.png"},
+		{"id":"misc_uistuff", "src":"data/BW/images/misc/uistuff.png"},
+		
+		//Items
+		{"id":"dungeon_items2", "src":"data/BW/images/dungeon/items2.png"},
+		
+		//Characters
+		{"id":"character_heads", "src":"data/BW/images/character/heads.png"},
+		{"id":"character_arms", "src":"data/BW/images/character/arms.png"},
+		{"id":"character_torsos", "src":"data/BW/images/character/torsos.png"},
+		{"id":"character_legs", "src":"data/BW/images/character/legs.png"},
+		{"id":"character_minis", "src":"data/BW/images/character/minis.png"},
+		
+		//Monsters
+		{"id":"character_behemoth", "src":"data/BW/images/character/behemoth.png"},
+		{"id":"character_crab", "src":"data/BW/images/character/crab.png"},
+		{"id":"character_dragon", "src":"data/BW/images/character/dragon.png"},
+		{"id":"character_floater", "src":"data/BW/images/character/floater.png"},
+		{"id":"character_summon", "src":"data/BW/images/character/summon.png"},
+		{"id":"character_nastyfloater", "src":"data/BW/images/character/nastyfloater.png"},
+		
+        {"id":"dungeon_background", "src":"data/BW/images/dungeon/background.png"},
+        {"id":"dungeon_stone_wall", "src":"data/BW/images/dungeon/stone-wall.png"},
+        {"id":"dungeon_stone_wall2", "src":"data/BW/images/dungeon/stone-wall2.png"},
+        {"id":"dungeon_stone_shelf", "src":"data/BW/images/dungeon/stone-shelf.png"},
+
+        {"id":"dungeon_deco_serpent-head", "src":"data/BW/images/dungeon/deco-serpent-head.png"},
+        {"id":"dungeon_deco_moon-head", "src":"data/BW/images/dungeon/deco-moon-head.png"},
+        {"id":"dungeon_deco_dragon-head", "src":"data/BW/images/dungeon/deco-dragon-head.png"},
+        {"id":"dungeon_deco_chaos-head", "src":"data/BW/images/dungeon/deco-chaos-head.png"},
+        {"id":"dungeon_deco_switch_6", "src":"data/BW/images/dungeon/deco-switch.png"},
+        {"id":"dungeon_deco_switch-off_6", "src":"data/BW/images/dungeon/deco-switch-off.png"},
+        {"id":"dungeon_deco_gem_7", "src":"data/BW/images/dungeon/deco-gem.png"},
+        {"id":"dungeon_deco_gem-off_7", "src":"data/BW/images/dungeon/deco-gem-off.png"},
+        {"id":"dungeon_deco_script_7", "src":"data/BW/images/dungeon/deco-script.png"},
+        {"id":"dungeon_deco_banner_7", "src":"data/BW/images/dungeon/deco-banner.png"},
+
+        {"id":"dungeon_wood_wall", "src":"data/BW/images/dungeon/wood-wall.png"},
+        {"id":"dungeon_wood_door", "src":"data/BW/images/dungeon/wood-door.png"},
+        {"id":"dungeon_wood_door-open", "src":"data/BW/images/dungeon/wood-door-open.png"},
+
+        {"id":"dungeon_misc_pillar", "src":"data/BW/images/dungeon/misc-pillar.png"},
+        {"id":"dungeon_misc_bed", "src":"data/BW/images/dungeon/misc-bed.png"},
+
+        {"id":"dungeon_door_solid_8", "src":"data/BW/images/dungeon/door-solid.png"},
+        {"id":"dungeon_door_gate_8", "src":"data/BW/images/dungeon/door-gate.png"},
+        {"id":"dungeon_door_open_8", "src":"data/BW/images/dungeon/door-open.png"},
+
+        {"id":"dungeon_stairs_down", "src":"data/BW/images/dungeon/stairs-down.png"},
+        {"id":"dungeon_stairs_up", "src":"data/BW/images/dungeon/stairs-up.png"},
+
+        {"id":"dungeon_floor_pit-down", "src":"data/BW/images/dungeon/floor-pit-down.png"},
+        {"id":"dungeon_floor_pit-up", "src":"data/BW/images/dungeon/floor-pit-up.png"},
+        {"id":"dungeon_floor_path_2", "src":"data/BW/images/dungeon/floor-path.png"}
+    ]
+});

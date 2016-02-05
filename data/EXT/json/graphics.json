@@ -1,0 +1,7 @@
+loadCustomGfx({
+    "path": "",
+    "manifest": [
+		//Misc
+        {"id":"misc_uistuff", "src":"data/EXT/images/misc/uistuff.png"}
+    ]
+});

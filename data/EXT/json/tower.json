@@ -1,11 +1,3 @@
-loadCustomGfx({
-    "path": "data/EXT/",
-    "manifest": [
-		//Misc
-        {"id":"misc_uistuff", "src":"images/misc/uistuff.png"}
-    ]
-});
-
 loadTowerData({
     "path": "data/EXT/",
 	"towers": [{"id":0, "name":"Serpent"}, {"id":1, "name":"Chaos"}, {"id":2, "name":"Moon"}, {"id":3, "name":"Dragon"}],
