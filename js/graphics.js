@@ -4,51 +4,6 @@ if (debug) {
         console.log("Loading Graphics.js");
     }
 
-
-function SpriteSheetArray() {
-
-    //Convert the graphics sprite sheets into individual images and put them in an array
-    //The Array consists of StartX,StartY,WidthX,HeightY,ScreenX,ScreenY
-
-    var ImageArray = new Array();
-
-    ImageArray[0] = new Array(15, 0, 98, 76, 15, 0);
-    ImageArray[1] = new Array(0, 0, 16, 76, 0, 0);
-    ImageArray[2] = new Array(15, 0, 98, 76, 15, 0);
-    ImageArray[3] = new Array(112, 0, 16, 76, 112, 0);
-    ImageArray[4] = new Array(128, 0, 15, 76, 0, 0);
-    ImageArray[5] = new Array(143, 0, 17, 76, 15, 0);
-    ImageArray[6] = new Array(160, 0, 64, 76, 32, 0);
-    ImageArray[7] = new Array(224, 0, 17, 76, 96, 0);
-    ImageArray[8] = new Array(241, 0, 15, 76, 113, 0);
-    ImageArray[9] = new Array(0, 76, 32, 42, 0, 14);
-    ImageArray[10] = new Array(32, 76, 8, 42, 32, 14);
-    ImageArray[11] = new Array(40, 76, 48, 42, 40, 14);
-    ImageArray[12] = new Array(88, 76, 8, 42, 88, 14);
-    ImageArray[13] = new Array(96, 76, 32, 42, 96, 14);
-    ImageArray[14] = new Array(128, 80, 40, 31, 0, 18);
-    ImageArray[15] = new Array(168, 80, 6, 31, 40, 18);
-    ImageArray[16] = new Array(174, 80, 36, 31, 46, 18);
-    ImageArray[17] = new Array(210, 80, 6, 31, 82, 18);
-    ImageArray[18] = new Array(215, 80, 41, 31, 87, 18);
-    ImageArray[19] = new Array(0, 118, 13, 28, 0, 18);
-    ImageArray[20] = new Array(12, 118, 34, 28, 12, 18);
-    ImageArray[21] = new Array(46, 118, 4, 28, 46, 18);
-    ImageArray[22] = new Array(50, 118, 4, 28, 78, 18);
-    ImageArray[23] = new Array(54, 118, 34, 28, 82, 18);
-    ImageArray[24] = new Array(87, 118, 13, 28, 115, 18);
-    ImageArray[25] = new Array(100, 118, 13, 28, 0, 18);
-    ImageArray[26] = new Array(113, 118, 10, 28, 13, 18);
-    ImageArray[27] = new Array(123, 118, 10, 28, 105, 18);
-    ImageArray[28] = new Array(133, 118, 13, 28, 115, 18);
-    ImageArray[29] = new Array(146, 111, 16, 76, 0, 0);
-    ImageArray[30] = new Array(162, 111, 96, 76, 16, 0);
-    ImageArray[31] = new Array(258, 111, 16, 76, 112, 0);
-
-    return ImageArray;
-
-}
-
 function getTimeStamp() {
     var now = new Date();
     return ((now.getMonth() + 1) + '/' + (now.getDate()) + '/' + now.getFullYear() + " " + now.getHours() + ':' + ((now.getMinutes() < 10) ? ("0" + now.getMinutes()) : (now.getMinutes())) + ':' + ((now.getSeconds() < 10) ? ("0" + now
@@ -826,4 +781,16 @@ function coverViewPort(p) {
     drawRect(0, 0, 127, 75, colourData['GREY_LIGHT'], p);
     drawRect(2, 1, 123, 72, colourData['GREY_LIGHT'], p);
     p.Portal.save()
+}
+
+function getSpriteLocations(strSpriteName){
+
+    for (i in spriteData.Sprites){
+        if (spriteData.Sprites[i].spriteSheet == strSpriteName){
+            return spriteData.Sprites[i].locations;
+        }
+    }
+
+    return null;
+
 }

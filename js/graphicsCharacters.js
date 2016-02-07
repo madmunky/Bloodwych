@@ -941,6 +941,8 @@ function grabMonster(form, level) {
                     DISTANCE_5 = [],
                     DISTANCE_6 = [];
 
+                var spriteLocations = getSpriteLocations("Summon");
+
                 DISTANCE_1.push(grabImageAt(spriteSheetIMG, 0, 0, 19, 48, false)); //Front body - distance 1
                 DISTANCE_1.push(grabImageAt(spriteSheetIMG, 21, 0, 14, 48, true)); //Right body - distance 1
                 DISTANCE_1.push(grabImageAt(spriteSheetIMG, 39, 0, 19, 48, false)); //Back body - distance 1
