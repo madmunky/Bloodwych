@@ -152,11 +152,11 @@ function initJSONData() {
     parseJSONValues(itemData, colourData, 'recolour');
 
     preload = new createjs.LoadQueue(false);
-        preload.loadFile({
-            src: 'data/' + GAME_ID[gameType] + '/json/tower.json',
-            callback: "loadJSONData2",
-            type: "manifest",
-            loadTimeout: 1000
+    preload.loadFile({
+        src: 'data/' + GAME_ID[gameType] + '/json/tower.json',
+        callback: "loadJSONData2",
+        type: "manifest",
+        loadTimeout: 1000
     }, true);
 }
 
@@ -270,9 +270,13 @@ function processJSONFiles(item, result) {
             break;
         case 'UI':
             break;
+        case 'Sprites':
+            spriteData = result;
+            gfxPos = spriteData.Sprites[0].locations;
+            break;
     };
     jsonDataLoaded++;
-    if(jsonDataLoaded >= 10) {
+    if(jsonDataLoaded >= 11) {
         initJSONData();
     }
 }
@@ -318,6 +322,10 @@ function loadDefaultJSONFiles(path) {
         src: 'data/'+path+'/json/ui.json',
         type: "json",
         typeID: "UI"
+    }, {
+        src: 'data/'+path+'/json/sprites.json',
+        type: "json",
+        typeID: "Sprites"
     });
 }
 

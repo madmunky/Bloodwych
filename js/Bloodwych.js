@@ -133,9 +133,15 @@ function setViewportScale(sp) {
     }
 }
 
+//function myDIx(canvas, img, PosAry) {
+//    if (typeof canvas.drawImage !== "undefined" && typeof img !== "undefined" && img !== null) {
+//        canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] * scale), (PosAry[5] * scale), PosAry[2] * scale, PosAry[3] * scale);
+//    }
+//}
+
 function myDIx(canvas, img, PosAry) {
     if (typeof canvas.drawImage !== "undefined" && typeof img !== "undefined" && img !== null) {
-        canvas.drawImage(img, PosAry[0], PosAry[1], PosAry[2], PosAry[3], (PosAry[4] * scale), (PosAry[5] * scale), PosAry[2] * scale, PosAry[3] * scale);
+        canvas.drawImage(img, PosAry.x, PosAry.y, PosAry.w, PosAry.h, (PosAry.sx * scale), (PosAry.sy * scale), PosAry.w * scale, PosAry.h * scale);
     }
 }
 

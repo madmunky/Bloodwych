@@ -1,0 +1,127 @@
+{"Sprites":
+ [
+    {
+    "spriteSheet": "dungeonView",
+    "locations":[
+        {"name":"DUNGEON_VIEW_17", "x":0, "y":0, "w":16, "h":76, "sx":0, "sy":0},
+        {"name":"DUNGEON_VIEW_17", "x":0, "y":0, "w":16, "h":76, "sx":0, "sy":0},
+        {"name":"DUNGEON_VIEW_15", "x":15, "y":0, "w":98, "h":76, "sx":15, "sy":0},
+        {"name":"DUNGEON_VIEW_16", "x":112, "y":0, "w":16, "h":76, "sx":112, "sy":0},
+        {"name":"DUNGEON_VIEW_14", "x":128, "y":0, "w":15, "h":76, "sx":0, "sy":0},
+        {"name":"DUNGEON_VIEW_14", "x":143, "y":0, "w":17, "h":76, "sx":15, "sy":0},
+        {"name":"DUNGEON_VIEW_12", "x":160, "y":0, "w":64, "h":76, "sx":32, "sy":0},
+        {"name":"DUNGEON_VIEW_13", "x":224, "y":0, "w":17, "h":76, "sx":96, "sy":0},
+        {"name":"DUNGEON_VIEW_13", "x":241, "y":0, "w":15, "h":76, "sx":113, "sy":0},
+        {"name":"DUNGEON_VIEW_11", "x":0, "y":76, "w":32, "h":42, "sx":0, "sy":14},
+        {"name":"DUNGEON_VIEW_11", "x":32, "y":76, "w":8, "h":42, "sx":32, "sy":14},
+        {"name":"DUNGEON_VIEW_9", "x":40, "y":76, "w":48, "h":42, "sx":40, "sy":14},
+        {"name":"DUNGEON_VIEW_10", "x":88, "y":76, "w":8, "h":42, "sx":88, "sy":14},
+        {"name":"DUNGEON_VIEW_10", "x":96, "y":76, "w":32, "h":42, "sx":96, "sy":14},
+        {"name":"DUNGEON_VIEW_8", "x":128, "y":80, "w":40, "h":31, "sx":0, "sy":18},
+        {"name":"DUNGEON_VIEW_8", "x":168, "y":80, "w":6, "h":31, "sx":40, "sy":18},
+        {"name":"DUNGEON_VIEW_4", "x":174, "y":80, "w":36, "h":31, "sx":46, "sy":18},
+        {"name":"DUNGEON_VIEW_7", "x":210, "y":80, "w":6, "h":31, "sx":82, "sy":18},
+        {"name":"DUNGEON_VIEW_7", "x":215, "y":80, "w":41, "h":31, "sx":87, "sy":18},
+        {"name":"DUNGEON_VIEW_6", "x":0, "y":118, "w":13, "h":28, "sx":0, "sy":18},
+        {"name":"DUNGEON_VIEW_3", "x":12, "y":118, "w":34, "h":28, "sx":12, "sy":18},
+        {"name":"DUNGEON_VIEW_3", "x":46, "y":118, "w":4, "h":28, "sx":46, "sy":18},
+        {"name":"DUNGEON_VIEW_2", "x":50, "y":118, "w":4, "h":28, "sx":78, "sy":18},
+        {"name":"DUNGEON_VIEW_2", "x":54, "y":118, "w":34, "h":28, "sx":82, "sy":18},
+        {"name":"DUNGEON_VIEW_5", "x":87, "y":118, "w":13, "h":28, "sx":115, "sy":18},
+        {"name":"DUNGEON_VIEW_07", "x":100, "y":118, "w":13, "h":28, "sx":0, "sy":18},
+        {"name":"DUNGEON_VIEW_06", "x":113, "y":118, "w":10, "h":28, "sx":13, "sy":18},
+        {"name":"DUNGEON_VIEW_05", "x":123, "y":118, "w":10, "h":28, "sx":105, "sy":18},
+        {"name":"DUNGEON_VIEW_04", "x":133, "y":118, "w":13, "h":28, "sx":115, "sy":18},
+        {"name":"DUNGEON_VIEW_03", "x":146, "y":111, "w":16, "h":76, "sx":0, "sy":0},
+        {"name":"DUNGEON_VIEW_02", "x":162, "y":111, "w":96, "h":76, "sx":16, "sy":0},
+        {"name":"DUNGEON_VIEW_01", "x":258, "y":111, "w":16, "h":76, "sx":112, "sy":0}
+    ]
+    },{
+    "spriteSheet": "characterHeads",
+    "locations": {}
+    },{
+    "spriteSheet": "characterArms",
+    "locations": {}
+    },{
+    "spriteSheet": "characterLegs",
+    "locations": {}
+    },{
+    "spriteSheet": "characterMinis",
+    "locations": {}
+    },{
+    "spriteSheet": "characterTorsos",
+    "locations": {}
+    },{
+    "spriteSheet": "Behemoth",
+    "locations": {}
+    },{
+    "spriteSheet": "Crab",
+    "locations": {}
+    },{
+    "spriteSheet": "Dragon",
+    "locations": {}
+    },{
+    "spriteSheet": "Floaters",
+    "locations": {}
+    },{
+    "spriteSheet": "NastyFloaters",
+    "locations": {}
+    },{
+    "spriteSheet": "Summons",
+    "locations":[
+     {"Front_body_distance_1": {"x": 0, "y": 0, "w": 19,"h": 48, "mirror":false}},
+     {"Right_body_distance_1": {"x": 21, "y": 0, "w": 14,"h": 48, "mirror":true}},
+     {"Back_body_distance_1": {"x": 39, "y": 0, "w": 19,"h": 48, "mirror":false}},
+     {"Left_body_distance_1": {"x": 21, "y": 0, "w": 14,"h": 48, "mirror":false}},
+
+     {"Front_body_distance_2": {"x": 0, "y": 48, "w": 15,"h": 39, "mirror":false}},
+     {"Right_body_distance_2": {"x": 16, "y": 48, "w": 11,"h": 39, "mirror":true}},
+     {"Back_body_distance_2": {"x":30, "y": 48, "w": 15,"h": 39, "mirror":false}},
+     {"Left_body_distance_2": {"x":16, "y": 48, "w": 11,"h": 39, "mirror":false}},
+
+     {"Front_body_distance_3": {"x": 0, "y": 88, "w": 11,"h": 32, "mirror":false}},
+     {"Right_body_distance_3": {"x": 12, "y": 88, "w": 9,"h": 32, "mirror":true}},
+     {"Back_body_distance_3": {"x":22, "y": 88, "w": 11,"h": 32, "mirror":false}},
+     {"Left_body_distance_3": {"x": 12, "y": 88, "w": 9,"h": 32, "mirror":false}},
+
+     {"Front_body_distance_4": {"x": 0, "y": 121, "w": 9,"h": 27, "mirror":false}},
+     {"Right_body_distance_4": {"x": 10, "y": 121, "w": 7,"h": 27, "mirror":true}},
+     {"Back_body_distance_4": {"x":18, "y": 121, "w": 9,"h": 27, "mirror":false}},
+     {"Left_body_distance_4": {"x":10, "y": 121, "w": 7,"h": 27, "mirror":false}},
+
+     {"Left_arm_distance_1": {"x": 69, "y": 0,"w": 7,"h": 21, "mirror": false, "ox": 24, "oy": 20}},
+     {"Side_right_arm_distance_1": {"x": 79, "y": 0,"w": 11,"h": 21, "mirror": false, "ox": 7, "oy": 20}},
+     {"Right_arm_-_distance_1": {"x": 69, "y": 0,"w": 7,"h": 21, "mirror": true, "ox": 24, "oy": 20}},
+     {"Side_left_arm_distance_1": {"x": 79, "y": 0,"w": 11,"h": 21, "mirror": true, "ox": 7, "oy": 20}},
+     {"Left_attack_arm_distance_1": {"x": 92, "y": 0,"w": 12,"h": 17, "mirror": false, "ox": 29, "oy": 35}},
+     {"Right_attack_arm_distance_1": {"x": 92, "y": 0,"w": 12,"h": 17, "mirror": true, "ox": 29, "oy": 35}},
+     {"Side_right_attack_arm_distance_1": {"x": 92, "y": 0,"w": 12,"h": 17, "mirror": false, "ox": 7, "oy": 35}},
+     {"Side_left_attack_arm_distance_1": {"x": 92, "y": 0,"w": 12,"h": 17, "mirror": true, "ox": 7, "oy": 35}},
+
+     {"Left_arm_distance_2": {"x": 71, "y": 22,"w": 5,"h": 17, "mirror": false, "ox": 18, "oy":16}},
+     {"Side_right_arm_distance_2": {"x": 79, "y": 25,"w": 9,"h": 17, "mirror": false, "ox": 6, "oy": 16}},
+     {"Right_arm_distance_2": {"x": 71, "y": 22,"w": 5,"h": 17, "mirror": true, "ox": 18, "oy": 16}},
+     {"Side_left_arm_distance_2": {"x": 79, "y": 25,"w": 9,"h": 17, "mirror": true, "ox": 6, "oy": 16}},
+     {"Left_attack_arm_distance_2": {"x": 96, "y": 25,"w": 8,"h": 12, "mirror": false, "ox": 21, "oy": 29}},
+     {"Right_attack_arm_distance_2": {"x": 96, "y": 25,"w": 8,"h": 12, "mirror": true, "ox": 21, "oy": 29}},
+     {"Side_right_attack_arm_distance_2": {"x": 96, "y": 25,"w": 8,"h": 12, "mirror": false, "ox": 6, "oy": 29}},
+     {"Side_left_attack_arm_distance_2": {"x": 96, "y": 25,"w": 8,"h": 12, "mirror": true, "ox": 6, "oy": 29}},
+
+     {"Left_arm___distance_3": {"x": 69, "y": 49,"w": 4,"h": 13, "mirror": false, "ox": 15, "oy":14}},
+     {"Side_right_arm_distance_3": {"x": 80, "y": 49,"w": 7,"h": 13, "mirror": false, "ox": 6, "oy": 14}},
+     {"Right_arm_distance_3": {"x": 69, "y": 49,"w": 4,"h": 13, "mirror": true, "ox": 15, "oy": 14}},
+     {"Side_left_arm_distance_3": {"x": 80, "y": 49,"w": 7,"h": 13, "mirror": true, "ox": 6, "oy": 14}},
+     {"Left_attack_arm_distance_3": {"x": 97, "y": 49,"w": 7,"h": 11, "mirror": false, "ox": 18, "oy": 23}},
+     {"Right_attack_arm_distance_3": {"x": 97, "y": 49,"w": 7,"h": 11, "mirror": true, "ox": 18, "oy": 23}},
+     {"Side_right_attack_arm_distance_3": {"x": 97, "y": 49,"w": 7,"h": 11, "mirror": false, "ox": 6, "oy": 23}},
+     {"Side_left_attack_arm_distance_3": {"x": 97, "y": 49,"w": 7,"h": 11, "mirror": true, "ox": 6, "oy": 23}},
+
+     {"Left_arm_distance_4": {"x": 70, "y": 68,"w": 3,"h": 12, "mirror": false, "ox": 12, "oy":11}},
+     {"Side_right_arm_distance_4": {"x": 81, "y": 68,"w": 6,"h": 12, "mirror": false, "ox": 5, "oy": 11}},
+     {"Right_arm_distance_4": {"x": 70, "y": 68,"w": 3,"h": 12, "mirror": true, "ox": 12, "oy": 11}},
+     {"Side_left_arm_distance_4": {"x": 81, "y": 68,"w": 6,"h": 12, "mirror": true, "ox": 5, "oy": 11}},
+     {"Left_attack_arm_distance_4": {"x": 98, "y": 68,"w": 6,"h": 9, "mirror": false, "ox": 15, "oy": 20}},
+     {"Right_attack_arm_distance_4": {"x": 98, "y": 68,"w": 6,"h": 9, "mirror": true, "ox": 15, "oy": 20}},
+     {"Side_right_attack_arm_distance_4": {"x": 98, "y": 68,"w": 6,"h": 9, "mirror": false, "ox": 5, "oy": 20}},
+     {"Side_left_attack_arm_distance_4": {"x": 98, "y": 68,"w": 6,"h": 9, "mirror": true, "ox": 5, "oy": 20}}
+    ]}]}

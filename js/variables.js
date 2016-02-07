@@ -15,6 +15,7 @@ var preload = new createjs.LoadQueue(false);
 var defaultManifest;
 
 //Declare Arrays for the Graphics
+var gfxPos;
 var gfx = [];
 window.player = new Array();
 window.tower = new Array();
@@ -308,8 +309,8 @@ var towerThis = TOWER_MOD0;
 
 //Background gfx
 var background = new Array();
-background[0] = new Array(0, 0, 128, 76, 0, 0);
-background[1] = new Array(128, 0, 128, 76, 0, 0);
+background[0] = {x:0, y:0, w:128, h:76, sx:0, sy:0};
+background[1] = {x:128, y:0, w:128, h:76, sx:0, sy:0};
 
 //Touch Screen Stuff
 var canvas_x;
