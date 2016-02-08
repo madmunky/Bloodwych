@@ -1,7 +1,7 @@
 //General
 var god = true;
 var debug = true;
-var mapEnabled = true;
+var mapEnabled = false;
 var iosDebug = false;
 var showFPS = false;
 var game;
