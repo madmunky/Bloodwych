@@ -232,7 +232,7 @@ function gemAction(p) {
             p.setBinaryView(15, 5, 1);
         }
     } else {
-        if(itH.type === ITEM_TYPE_CRYSTAL || itH.type === ITEM_TYPE_GEM) {
+        if(itH.type === 'ITEM_TYPE_CRYSTAL' || itH.type === 'ITEM_TYPE_GEM') {
             if(pock === gem) {
                 if(gem === 5 || gem === 7) { //gems
                     var i = towerThis * 2; // + from/to

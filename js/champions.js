@@ -213,10 +213,10 @@ Champion.prototype.getWeaponPower = function(s) {
 Champion.prototype.getBowPower = function() {
     var bow = 0;
     var arr = 1.0;
-    if (this.pocket[POCKET_LEFT_HAND].type === ITEM_TYPE_BOW && (this.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS)) {
+    if (this.pocket[POCKET_LEFT_HAND].type === 'ITEM_TYPE_BOW' && (this.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS)) {
         bow = this.pocket[POCKET_LEFT_HAND].getBowPower();
         arr = this.pocket[POCKET_RIGHT_HAND].getArrowPower();
-    } else if (this.pocket[POCKET_RIGHT_HAND].type === ITEM_TYPE_BOW && (this.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS)) {
+    } else if (this.pocket[POCKET_RIGHT_HAND].type === 'ITEM_TYPE_BOW' && (this.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS)) {
         bow = this.pocket[POCKET_RIGHT_HAND].getBowPower();
         arr = this.pocket[POCKET_LEFT_HAND].getArrowPower();
     }

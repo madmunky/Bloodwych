@@ -240,7 +240,7 @@ Player.prototype.action = function() {
             if (this.getBinaryView(15, 13, 3) === '5' && this.getBinaryView(15, 4) === '0') {
                 var keylock = parseInt(this.getBinaryView(15, 1, 3));
                 if (keylock > 0) {
-                    if (getItemType(this.pocket.id) === ITEM_TYPE_KEY && this.pocket.id === keylock + ITEM_BRONZE_KEY - 1) { //Use key
+                    if (getItemType(this.pocket.id) === 'ITEM_TYPE_KEY' && this.pocket.id === keylock + ITEM_BRONZE_KEY - 1) { //Use key
                         this.consumeItemInHand();
                         this.setBinaryView(15, 11, 1);
                         this.setBinaryView(15, 1, 3, '0');
@@ -1104,7 +1104,7 @@ Player.prototype.useItemActivePocket = function() {
         var itH = this.pocket;
         if (itH.id !== 0) {
             switch (itH.type) {
-                case ITEM_TYPE_STACKABLE:
+                case 'ITEM_TYPE_STACKABLE':
                     var i = this.findPocketItem(itH.id);
                     if (i > -1) {
                         if (itH.quantity < 99) {
@@ -1116,7 +1116,7 @@ Player.prototype.useItemActivePocket = function() {
                         }
                     }
                     break;
-                case ITEM_TYPE_FOOD:
+                case 'ITEM_TYPE_FOOD':
                     var fd = itH.getFoodValue();
                     ch.addFood(fd);
                     if (itH.id <= ITEM_WATER && itH.id % 3 !== 2) {
@@ -1125,7 +1125,7 @@ Player.prototype.useItemActivePocket = function() {
                         itH.setPocketItem();
                     }
                     break;
-                case ITEM_TYPE_POTION:
+                case 'ITEM_TYPE_POTION':
                     switch (itH.id) {
                         case ITEM_SERPENT_SLIME:
                             ch.stat.hp = ch.stat.hpMax;
@@ -1158,9 +1158,9 @@ Player.prototype.exchangeItemWithHand = function(s, q) {
     if (ch !== null) {
         var it = ch.pocket[s];
         var itH = this.pocket;
-        var allowedShield = itH.type === ITEM_TYPE_SHIELD && (ch.prof % 2 === PROFESSION_WARRIOR || itH.id <= ITEM_RUNE_SHIELD);
-        if (itH.id === 0 || ((s !== POCKET_ARMOUR || itH.type === ITEM_TYPE_ARMOUR) && (s !== POCKET_SHIELD || allowedShield))) {
-            if (it.type === ITEM_TYPE_STACKABLE && (itH.id === 0 || it.id === itH.id)) {
+        var allowedShield = itH.type === 'ITEM_TYPE_SHIELD' && (ch.prof % 2 === PROFESSION_WARRIOR || itH.id <= ITEM_RUNE_SHIELD);
+        if (itH.id === 0 || ((s !== POCKET_ARMOUR || itH.type === 'ITEM_TYPE_ARMOUR') && (s !== POCKET_SHIELD || allowedShield))) {
+            if (it.type === 'ITEM_TYPE_STACKABLE' && (itH.id === 0 || it.id === itH.id)) {
                 if (itH.id === 0) {
                     for (q1 = 0; q1 < q; q1++) {
                         itH.setPocketItem(it.id, itH.quantity + 1);
@@ -1183,7 +1183,7 @@ Player.prototype.exchangeItemWithHand = function(s, q) {
                     itH.setPocketItem(it.id, qtH);
                     it.setPocketItem(it.id, qt);
                 }
-            } else if (itH.type === ITEM_TYPE_STACKABLE && this.findPocketItem(itH.id) > -1) {
+            } else if (itH.type === 'ITEM_TYPE_STACKABLE' && this.findPocketItem(itH.id) > -1) {
                 var i = this.findPocketItem(itH.id);
                 var qty = itH.quantity + ch.pocket[i].quantity;
 
@@ -1200,7 +1200,7 @@ Player.prototype.exchangeItemWithHand = function(s, q) {
                 }
             } else {
                 if ((s === POCKET_LEFT_HAND || s === POCKET_RIGHT_HAND) && it.id === 0) {
-                    if (itH.type === ITEM_TYPE_GLOVES) {
+                    if (itH.type === 'ITEM_TYPE_GLOVES') {
                         this.exchangeItemWithHand(POCKET_GLOVES);
                     } else if (itH.id === 0) {
                         var it = ch.pocket[POCKET_GLOVES];

@@ -21,7 +21,7 @@ Item.revive = function(data) {
 }
 
 Item.prototype.getWeaponPower = function() {
-    if (this.type === ITEM_TYPE_WEAPON) {
+    if (this.type === 'ITEM_TYPE_WEAPON') {
         switch (this.id) {
             case ITEM_DAGGER:
                 return 2;
@@ -63,7 +63,7 @@ Item.prototype.getWeaponPower = function() {
 }
 
 Item.prototype.getBowPower = function() {
-    if (this.type === ITEM_TYPE_BOW) {
+    if (this.type === 'ITEM_TYPE_BOW') {
         switch (this.id) {
             case ITEM_LONG_BOW:
                 return 4;
@@ -86,7 +86,7 @@ Item.prototype.getArrowPower = function() {
 }
 
 Item.prototype.getFoodValue = function() {
-    if (this.type === ITEM_TYPE_FOOD) {
+    if (this.type === 'ITEM_TYPE_FOOD') {
         if (this.id <= ITEM_CHICKEN) {
             return 16;
         } else if (this.id <= ITEM_WATER) {
@@ -103,7 +103,7 @@ Item.prototype.getFoodValue = function() {
 }
 
 Item.prototype.getArmourClass = function() {
-    if (this.type === ITEM_TYPE_ARMOUR) {
+    if (this.type === 'ITEM_TYPE_ARMOUR') {
         switch (this.id) {
             case ITEM_LEATHER_ARMOUR:
                 return 3;
@@ -126,7 +126,7 @@ Item.prototype.getArmourClass = function() {
             default:
                 break;
         }
-    } else if (this.type === ITEM_TYPE_SHIELD) {
+    } else if (this.type === 'ITEM_TYPE_SHIELD') {
         switch (this.id) {
             case ITEM_LEATHER_SHIELD:
                 return 1;
@@ -145,7 +145,7 @@ Item.prototype.getArmourClass = function() {
             default:
                 break;
         }
-    } else if (this.type === ITEM_TYPE_GLOVES) {
+    } else if (this.type === 'ITEM_TYPE_GLOVES') {
         switch (this.id) {
             case ITEM_CHAOS_GLOVES:
                 return 0;
@@ -258,42 +258,45 @@ function initItems(t) {
 }
 
 function getItemType(id) {
-    if (id === ITEM_EMPTY) {
-        return ITEM_TYPE_EMPTY;
-    } else if (id <= ITEM_ELF_ARROWS) {
-        return ITEM_TYPE_STACKABLE;
-    } else if (id <= ITEM_NEGG_RED) {
-        return ITEM_TYPE_FOOD;
-    } else if (id <= ITEM_MOON_ELIXIR) {
-        return ITEM_TYPE_POTION;
-    } else if (id <= ITEM_CRYSTAL_PLATE) {
-        return ITEM_TYPE_ARMOUR;
-    } else if (id <= ITEM_WAR_SHIELD) {
-        return ITEM_TYPE_SHIELD;
-    } else if (id <= ITEM_CRYSTAL_GLOVES) {
-        return ITEM_TYPE_GLOVES;
-    } else if (id <= ITEM_POWER_STAFF) {
-        return ITEM_TYPE_WEAPON;
-    } else if (id <= ITEM_THAI_CHANG_RIP) {
-        return ITEM_TYPE_RIP;
-    } else if (id <= ITEM_CHROMATIC_KEY) {
-        return ITEM_TYPE_KEY;
-    } else if (id <= ITEM_HEAL_WAND) {
-        return ITEM_TYPE_WAND;
-    } else if (id <= ITEM_CROSS_BOW) {
-        return ITEM_TYPE_BOW;
-    } else if (id <= ITEM_PERMIT) {
-        return ITEM_TYPE_SCROLL;
-    } else if (id <= ITEM_MOON_CRYSTAL) {
-        return ITEM_TYPE_CRYSTAL;
-    } else if (id <= ITEM_TAN_GEM) {
-        return ITEM_TYPE_GEM;
-    } else if (id <= ITEM_MOON_RING) {
-        return ITEM_TYPE_RING;
-    } else if (id <= ITEM_BOOK_OF_SKULLS) {
-        return ITEM_TYPE_BOOK;
+    if(typeof itemData[id] !== "undefined" && typeof itemData[id].type !== "undefined") {
+        return itemData[id].type;
     }
-    return -1;
+    if (id === ITEM_EMPTY) {
+        return 'ITEM_TYPE_EMPTY';
+    } else if (id <= ITEM_ELF_ARROWS) {
+        return 'ITEM_TYPE_STACKABLE';
+    } else if (id <= ITEM_NEGG_RED) {
+        return 'ITEM_TYPE_FOOD';
+    } else if (id <= ITEM_MOON_ELIXIR) {
+        return 'ITEM_TYPE_POTION';
+    } else if (id <= ITEM_CRYSTAL_PLATE) {
+        return 'ITEM_TYPE_ARMOUR';
+    } else if (id <= ITEM_WAR_SHIELD) {
+        return 'ITEM_TYPE_SHIELD';
+    } else if (id <= ITEM_CRYSTAL_GLOVES) {
+        return 'ITEM_TYPE_GLOVES';
+    } else if (id <= ITEM_POWER_STAFF) {
+        return 'ITEM_TYPE_WEAPON';
+    } else if (id <= ITEM_THAI_CHANG_RIP) {
+        return 'ITEM_TYPE_RIP';
+    } else if (id <= ITEM_CHROMATIC_KEY) {
+        return 'ITEM_TYPE_KEY';
+    } else if (id <= ITEM_HEAL_WAND) {
+        return 'ITEM_TYPE_WAND';
+    } else if (id <= ITEM_CROSS_BOW) {
+        return 'ITEM_TYPE_BOW';
+    } else if (id <= ITEM_PERMIT) {
+        return 'ITEM_TYPE_SCROLL';
+    } else if (id <= ITEM_MOON_CRYSTAL) {
+        return 'ITEM_TYPE_CRYSTAL';
+    } else if (id <= ITEM_TAN_GEM) {
+        return 'ITEM_TYPE_GEM';
+    } else if (id <= ITEM_MOON_RING) {
+        return 'ITEM_TYPE_RING';
+    } else if (id <= ITEM_BOOK_OF_SKULLS) {
+        return 'ITEM_TYPE_BOOK';
+    }
+    return '';
 }
 
 function newPocketItem(id, q) {
@@ -324,7 +327,7 @@ function createPocketSlots() {
 
 function dropItem(id, q, f, x, y, s) {
     if(id > 0) {
-        if(getItemType(id) === ITEM_TYPE_STACKABLE) {
+        if(getItemType(id) === 'ITEM_TYPE_STACKABLE') {
             for (i = item[towerThis].length - 1; i >= 0; i--) {
                 var it = item[towerThis][i];
                 if (it.id === id) {
@@ -499,7 +502,7 @@ function createItemRef(id, name, gfx, gfxD) {
         itemRef[id] = itemData[id];
         if(typeof itemData[id].gfx2 !== "undefined") {
             if(typeof itemData[id].gfx2.icon !== "undefined" && typeof itemData[id].gfx2.icon.id !== "undefined") {
-                eval('gfx = gfxUI[' + itemData[id].gfx2.icon.id + ']');
+                eval('gfx = gfxUI[' + itemData[id].gfx2.icon.id + '];');
                 if(typeof itemData[id].gfx2.icon.recolour !== "undefined" && typeof itemData[id].gfx2.icon.recolour.from !== "undefined" && typeof itemData[id].gfx2.icon.recolour.to !== "undefined") {
                     var from = itemData[id].gfx2.icon.recolour.from;
                     var to = itemData[id].gfx2.icon.recolour.to;
@@ -509,7 +512,7 @@ function createItemRef(id, name, gfx, gfxD) {
                 }
             }
             if(typeof itemData[id].gfx2.dungeon !== "undefined" && typeof itemData[id].gfx2.dungeon.id !== "undefined") {
-                eval('gfxD = itemsGfxD[' + itemData[id].gfx2.dungeon.id + ']');
+                eval('gfxD = itemsGfxD[' + itemData[id].gfx2.dungeon.id + '];');
                 if(typeof itemData[id].gfx2.dungeon.recolour !== "undefined" && typeof itemData[id].gfx2.dungeon.recolour.from !== "undefined" && typeof itemData[id].gfx2.dungeon.recolour.to !== "undefined") {
                     var from = itemData[id].gfx2.dungeon.recolour.from;
                     var to = itemData[id].gfx2.dungeon.recolour.to;

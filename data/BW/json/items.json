@@ -5,22 +5,14 @@
 		},
 		{
 			"id": "COINAGE",
-			"name": "MONEYYYY!",
+			"name": "COINAGE",
 			"type": "ITEM_TYPE_STACKABLE",
 			"gfx2": {
 				"icon": {
-					"id": "UI_GFX_POCKET_COIN",
-					"recolour": {
-						"from": ["PINK", "YELLOW", "WHITE"],
-						"to": ["BLUE_DARK", "BLUE", "WHITE"]
-					}
+					"id": "UI_GFX_POCKET_COIN"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_COIN",
-					"recolour": {
-						"from": ["PINK", "YELLOW", "WHITE"],
-						"to": ["BLUE_DARK", "BLUE", "WHITE"]
-					}
+					"id": "DUNGEON_ITEM_COIN"
 				}
 			},
 			"currency": 1
@@ -37,12 +29,7 @@
 					"id": "DUNGEON_ITEM_KEY",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
-						"to": [
-							"PINK",
-							"PINK",
-							"PINK",
-							"BLACK"
-						]
+						"to": ["PINK", "PINK", "PINK", "BLACK"]
 					}
 				}
 			},
@@ -62,12 +49,7 @@
 					"id": "DUNGEON_ITEM_ARROW",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
-						"to": [
-							"WHITE",
-							"RED",
-							"BROWN",
-							"BLACK"
-						]
+						"to": ["WHITE", "RED", "BROWN", "BLACK"]
 					}
 				}
 			},
