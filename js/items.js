@@ -86,6 +86,10 @@ Item.prototype.getArrowPower = function() {
 }
 
 Item.prototype.getFoodValue = function() {
+    var val = getObjectByKeys(itemData[this.id], 'onUse', 'addFood');
+    if(typeof val !== "undefined") {
+        return val;
+    }
     if (this.type === 'ITEM_TYPE_FOOD') {
         if (this.id <= ITEM_CHICKEN) {
             return 16;
@@ -165,8 +169,8 @@ Item.prototype.getArmourClass = function() {
 }
 
 Item.prototype.setPocketItem = function(id, q) {
-    if (typeof id === "undefined" || id === 0 || (typeof q !== "undefined" && q <= 0)) {
-        id = 0;
+    if (typeof id === "undefined" || id === ITEM_EMPTY || (typeof q !== "undefined" && q <= 0)) {
+        id = ITEM_EMPTY;
         q = 0;
     } else if (typeof q === "undefined") {
         q = 1;
@@ -179,7 +183,6 @@ Item.prototype.setPocketItem = function(id, q) {
     this.location.y = 0;
     this.location.square = 0;
     this.type = getItemType(id);
-    //this.itemRef = itemRef[id];
 }
 
 Item.prototype.toString = function() {
@@ -500,24 +503,24 @@ function initItemRefs() {
 function createItemRef(id, name, gfx, gfxD) {
     if(typeof itemData[id] !== "undefined") {
         itemRef[id] = itemData[id];
-        if(typeof itemData[id].gfx2 !== "undefined") {
-            if(typeof itemData[id].gfx2.icon !== "undefined" && typeof itemData[id].gfx2.icon.id !== "undefined") {
-                eval('gfx = gfxUI[' + itemData[id].gfx2.icon.id + '];');
-                if(typeof itemData[id].gfx2.icon.recolour !== "undefined" && typeof itemData[id].gfx2.icon.recolour.from !== "undefined" && typeof itemData[id].gfx2.icon.recolour.to !== "undefined") {
-                    var from = itemData[id].gfx2.icon.recolour.from;
-                    var to = itemData[id].gfx2.icon.recolour.to;
-                    for(f in from) {
-                        gfx = recolourUiGfx(gfx, from[f], to[f]);
-                    }
+        var i = getObjectByKeys(itemData[id], 'icon', 'id');
+        if(typeof i !== "undefined") {
+            gfx = gfxUI[i.getVar()];
+            var iFrom = getObjectByKeys(itemData[id], 'icon', 'recolour', 'from');
+            var iTo = getObjectByKeys(itemData[id], 'icon', 'recolour', 'to');
+            if(typeof iFrom !== "undefined" && typeof iTo !== "undefined") {
+                for(f in iFrom) {
+                    gfx = recolourUiGfx(gfx, iFrom[f], iTo[f]);
                 }
             }
-            if(typeof itemData[id].gfx2.dungeon !== "undefined" && typeof itemData[id].gfx2.dungeon.id !== "undefined") {
-                eval('gfxD = itemsGfxD[' + itemData[id].gfx2.dungeon.id + '];');
-                if(typeof itemData[id].gfx2.dungeon.recolour !== "undefined" && typeof itemData[id].gfx2.dungeon.recolour.from !== "undefined" && typeof itemData[id].gfx2.dungeon.recolour.to !== "undefined") {
-                    var from = itemData[id].gfx2.dungeon.recolour.from;
-                    var to = itemData[id].gfx2.dungeon.recolour.to;
-                    gfxD = recolourSpriteArray(gfxD, from, to);
-                }
+        }
+        var d = getObjectByKeys(itemData[id], 'dungeon', 'id');
+        if(typeof d !== "undefined") {
+            gfxD = itemsGfxD[d.getVar()];
+            var dFrom = getObjectByKeys(itemData[id], 'dungeon', 'recolour', 'from');
+            var dTo = getObjectByKeys(itemData[id], 'dungeon', 'recolour', 'to');
+            if(typeof dFrom !== "undefined" && typeof dTo !== "undefined") {
+                gfxD = recolourSpriteArray(gfxD, dFrom, dTo);
             }
         }
         itemRef[id].gfx = gfx;
@@ -684,4 +687,13 @@ function getItemGfxOffset(pos, sub, sh) {
         x: x,
         y: y
     }
+}
+
+function getItemIndexById(it, id) {
+    for (i in it) {
+        if(it[i].id === id) {
+            return it[i];
+        }
+    }
+    return null;
 }

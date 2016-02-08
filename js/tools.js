@@ -384,16 +384,48 @@ function hexToRgb(hex) {
 	} : null;
 }
 
+function getIndexById(obj, id) {
+    for (i in obj) {
+        if(obj[i].id === id) {
+            return parseInt(i);
+        }
+    }
+    return null;
+}
+
 function getObjectByKey(obj, key, val) {
 	var ret = [];
 	for (i in obj) {
 		if (obj.hasOwnProperty(i)) {
-			if (typeof obj[i] === 'object') {
+			if (i == key && (typeof val === "undefined" || obj[key] == val)) {
+				ret.push(obj[i]);
+			} else if (typeof obj[i] === 'object') {
 				ret = ret.concat(getObjectByKey(obj[i], key, val));
-			} else if (i == key && (typeof val === "undefined" || obj[key] == val)) {
-				ret.push(obj);
 			}
 		}
 	}
 	return ret;
+}
+
+function getObjectByKeys(obj1, key1, key2, key3) {
+	if(typeof obj1 !== "undefined") {
+		var obj2 = getObjectByKey(obj1, key1)[0];
+		if(typeof obj2 !== "undefined" && typeof key2 !== "undefined") {
+			var obj3 = getObjectByKey(obj2, key2)[0];
+			if(typeof obj3 !== "undefined" && typeof key3 !== "undefined") {
+				return getObjectByKey(obj3, key3)[0];
+			}
+			return getObjectByKey(obj2, key2)[0];
+		}
+		return getObjectByKey(obj1, key1)[0];
+	}
+	return undefined;
+}
+
+String.prototype.getVar = function() {
+	if(typeof this !== "undefined") {
+		eval('var t = ' + this);
+		return t;
+	}
+	return undefined;
 }

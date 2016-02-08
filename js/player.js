@@ -385,24 +385,27 @@ Player.prototype.tryAttack = function(ch) {
             //if (typeof player[1] !== 'undefined' && this.floor === player[1 - this.id].floor && this.x + xy.x === player[1 - this.id].x && this.y + xy.y === player[1 - this.id].y) {
                 //attack player
                 this.attack(ch, true, player[1 - this.id]);
-                return true;
+                return 1;
             }
+        }
+        var wp = this.useItem(ch.pocket[POCKET_LEFT_HAND], 'onAttack');
+        if(!wp) {
+            wp = this.useItem(ch.pocket[POCKET_RIGHT_HAND], 'onAttack');
         }
         var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
         if (mon !== null) {
             this.attack(ch, true, mon);
-            return true;
+            return 1;
         }
-        //for (var c = 0; c < this.champion.length; c++) {
-        //var ch = this.getChampion(c);
-        if (ch.selectedSpell !== null || ch.getBowPower() > 0) {
+        if(wp) { //JSON
+            return 1;
+        } else if (ch.selectedSpell !== null || ch.getBowPower() > 0) {
             this.attack(ch, true);
-            return true;
+            return 1;
         }
-        //}
     }
-    this.attack(null, false);
-    return false;
+    //pl.attack(null, false);
+    return 0;
 };
 
 Player.prototype.attack = function(ch, attack, target) {
@@ -1072,7 +1075,10 @@ Player.prototype.drawItem = function(it, distance, offset) {
 }
 
 Player.prototype.drawProjectile = function(pr, distance, offset) {
-    if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 0) {
+    var ex = getObjectByKeys(ob1, 'dungeon', 'die').getVar();
+    if(typeof ex !== "undefined") {
+        var pGfx = itemsGfxD[ex][distance];
+    } else if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 0) {
         if (pr.type !== DUNGEON_NONE) {
             var pGfx = itemsGfxD[pr.type][distance];
         }
@@ -1082,7 +1088,10 @@ Player.prototype.drawProjectile = function(pr, distance, offset) {
     if (typeof pGfx !== "undefined") {
         var offx = 64 - Math.floor(pGfx.width * 0.5) + offset.x;
         var offy = 77 - Math.floor(pGfx.height * 0.5) - offset.y;
-        this.Portal.drawImage(recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette), offx * scale, offy * scale, pGfx.width * scale, pGfx.height * scale);
+        if(typeof pr.palette !== "undefined") {
+            pGfx = recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette);
+        }
+        this.Portal.drawImage(pGfx, offx * scale, offy * scale, pGfx.width * scale, pGfx.height * scale);
     }
 }
 
@@ -1103,51 +1112,87 @@ Player.prototype.useItemActivePocket = function() {
     if (ch !== null && !ch.dead) {
         var itH = this.pocket;
         if (itH.id !== 0) {
-            switch (itH.type) {
-                case 'ITEM_TYPE_STACKABLE':
-                    var i = this.findPocketItem(itH.id);
-                    if (i > -1) {
-                        if (itH.quantity < 99) {
-                            itH.quantity++;
-                            ch.pocket[i].quantity--;
-                            if (ch.pocket[i].quantity === 0) {
-                                ch.pocket[i].setPocketItem();
+            if(this.useItem(itH, 'onUse')) {
+                //no nothing
+            } else {
+                switch (itH.type) {
+                    case 'ITEM_TYPE_STACKABLE':
+                        var i = this.findPocketItem(itH.id);
+                        if (i > -1) {
+                            if (itH.quantity < 99) {
+                                itH.quantity++;
+                                ch.pocket[i].quantity--;
+                                if (ch.pocket[i].quantity === 0) {
+                                    ch.pocket[i].setPocketItem();
+                                }
                             }
                         }
-                    }
-                    break;
-                case 'ITEM_TYPE_FOOD':
-                    var fd = itH.getFoodValue();
-                    ch.addFood(fd);
-                    if (itH.id <= ITEM_WATER && itH.id % 3 !== 2) {
-                        itH.setPocketItem(itH.id - 1);
-                    } else {
+                        break;
+                    case 'ITEM_TYPE_FOOD':
+                        var fd = itH.getFoodValue();
+                        ch.addFood(fd);
+                        if (itH.id <= ITEM_WATER && itH.id % 3 !== 2) {
+                            itH.setPocketItem(itH.id - 1);
+                        } else {
+                            itH.setPocketItem();
+                        }
+                        break;
+                    case 'ITEM_TYPE_POTION':
+                        switch (itH.id) {
+                            case ITEM_SERPENT_SLIME:
+                                ch.stat.hp = ch.stat.hpMax;
+                                break;
+                            case ITEM_BRIMSTONE_BROTH:
+                                ch.addHP(Math.floor(ch.stat.hpMax / 2));
+                                ch.addVit(Math.floor(ch.stat.vitMax / 2));
+                                ch.addSP(Math.floor(ch.stat.spMax / 2));
+                                break;
+                            case ITEM_DRAGON_ALE:
+                                ch.stat.vit = ch.stat.vitMax;
+                                break;
+                            case ITEM_MOON_ELIXIR:
+                                ch.stat.sp = ch.stat.spMax;
+                                break;
+                        }
                         itH.setPocketItem();
-                    }
-                    break;
-                case 'ITEM_TYPE_POTION':
-                    switch (itH.id) {
-                        case ITEM_SERPENT_SLIME:
-                            ch.stat.hp = ch.stat.hpMax;
-                            break;
-                        case ITEM_BRIMSTONE_BROTH:
-                            ch.addHP(Math.floor(ch.stat.hpMax / 2));
-                            ch.addVit(Math.floor(ch.stat.vitMax / 2));
-                            ch.addSP(Math.floor(ch.stat.spMax / 2));
-                            break;
-                        case ITEM_DRAGON_ALE:
-                            ch.stat.vit = ch.stat.vitMax;
-                            break;
-                        case ITEM_MOON_ELIXIR:
-                            ch.stat.sp = ch.stat.spMax;
-                            break;
-                    }
-                    itH.setPocketItem();
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
         }
     }
+}
+
+Player.prototype.useItem = function(it, ac) {
+    var ch = this.getActivePocketChampion();
+    var res = false;
+    ob1 = getObjectByKeys(itemData[it.id], ac, 'shootAsProjectile');
+    if(typeof ob1 !=="undefined") {
+        var id = getObjectByKeys(ob1, 'dungeon', 'id');
+        var snd = getObjectByKeys(ob1, 'sound');
+        if(typeof id !== "undefined") {
+            var pow = getObjectByKeys(ob1, 'power');
+            var dFrom = getObjectByKeys(ob1, 'dungeon', 'recolour', 'from'); //***
+            var dTo = getObjectByKeys(ob1, 'dungeon', 'recolour', 'to');
+            newProjectile(id.getVar(), dTo, snd.getVar(), it.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
+            res = true;
+        }
+    }
+    var ac1 = getObjectByKeys(itemData[it.id], ac, 'changeToItem');
+    if(typeof ac1 !=="undefined") {
+        var it2 = getIndexById(itemData, ac1);
+        it.setPocketItem(it2);
+        res = true;
+    }
+    ac1 = getObjectByKeys(itemData[it.id], ac, 'addStack');
+    if(typeof ac1 !=="undefined") {
+        var it2 = getIndexById(itemData, ac1);
+        if(it.quantity + ac1 >= 0 && it.quantity + ac1 < 100) {
+            it.setPocketItem(it.id, it.quantity + ac1);
+        }
+        res = true;
+    }
+    return res;
 }
 
 Player.prototype.exchangeItemWithHand = function(s, q) {

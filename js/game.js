@@ -105,6 +105,7 @@ function timerAction() {
 				pl.doCommunicationAnswer();
 			}
 
+			var att = 0;
 			for (var c = 0; c < pl.champion.length; c++) {
 				var ch = pl.getChampion(c);
 				if (ch !== null) {
@@ -113,6 +114,9 @@ function timerAction() {
 						if (pl.attacking) {
 							pl.tryAttack(ch);
 						}
+					}
+					if(ch.getMonster().attacking) {
+						att++;
 					}
 				}
 				if (pl.uiLeftPanel.champs[c].damage > 0) {
