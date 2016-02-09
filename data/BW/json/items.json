@@ -17,17 +17,10 @@
 				}
 			},
 			"currency": 1,
-			"onAttack": {
+			"onUse": {
 				"addStack": -1,
 				"shootAsProjectile": {
-					"gfx2": {
-						"dungeon": {
-							"id": "DUNGEON_ITEM_COIN",
-							"die": "DUNGEON_ITEM_COIN"
-						}
-					},
-					"power": 6.0,
-					"sound": "SOUND_ATTACK"
+					"power": 6.0
 				}
 			}
 		},

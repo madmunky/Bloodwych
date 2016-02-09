@@ -1075,7 +1075,10 @@ Player.prototype.drawItem = function(it, distance, offset) {
 }
 
 Player.prototype.drawProjectile = function(pr, distance, offset) {
-    var ex = getObjectByKeys(ob1, 'dungeon', 'die').getVar();
+    /*var ex = getObjectByKeys(pr, 'dungeon', 'die').getVar();
+    if(typeof ex === "undefined") {
+        ex = getObjectByKeys(itemData[pr.type], 'dungeon', 'id');
+    }*/
     if(typeof ex !== "undefined") {
         var pGfx = itemsGfxD[ex][distance];
     } else if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 0) {
@@ -1170,11 +1173,17 @@ Player.prototype.useItem = function(it, ac) {
     if(typeof ob1 !=="undefined") {
         var id = getObjectByKeys(ob1, 'dungeon', 'id');
         var snd = getObjectByKeys(ob1, 'sound');
+        if(typeof id === "undefined") {
+            id = getObjectByKeys(itemData[it.id], 'dungeon', 'id');
+        }
+        if(typeof snd !== "undefined") {
+            snd = snd.getVar();
+        }
         if(typeof id !== "undefined") {
             var pow = getObjectByKeys(ob1, 'power');
             var dFrom = getObjectByKeys(ob1, 'dungeon', 'recolour', 'from'); //***
             var dTo = getObjectByKeys(ob1, 'dungeon', 'recolour', 'to');
-            newProjectile(id.getVar(), dTo, snd.getVar(), it.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
+            newProjectile(id.getVar(), dTo, snd, it.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
             res = true;
         }
     }

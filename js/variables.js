@@ -75,13 +75,14 @@ var GAME_ID = ['BW', 'EXT', 'BOS', 'CUSTOM'];
 
 //sounds
 var soundEnabled = true;
-var SOUND_DOOR = 0,
-    SOUND_ATTACK = 1,
-    SOUND_FLASH = 2,
-    SOUND_DEATH = 3,
-    SOUND_EXPLODE = 4,
-    SOUND_SWITCH = 5,
-    SOUND_PCMUSIC = 6;
+var SOUND_NONE = 0,
+    SOUND_DOOR = 1,
+    SOUND_ATTACK = 2,
+    SOUND_FLASH = 3,
+    SOUND_DEATH = 4,
+    SOUND_EXPLODE = 5,
+    SOUND_SWITCH = 6,
+    SOUND_PCMUSIC = 7;
 
 //Flags for determining whether some asycnhronous file calls were succesfully loaded (see fileloader.js "getFileData")
 //When a file is called, we increase 'count'
