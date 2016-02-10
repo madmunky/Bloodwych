@@ -473,7 +473,6 @@ function newProjectile(type, palette, snd, s, power, f, x, y, d, m) {
 	} else {
 		projectile[towerThis][pmax] = new Projectile(pmax, type, palette, snd, s, power, towerThis, f, x, y, d, m);
 	}
-	console.log('Firing at: ' + f +', ' + x +', ' + y);
 	return true;
 }
 

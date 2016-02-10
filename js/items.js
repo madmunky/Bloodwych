@@ -238,22 +238,22 @@ function initItems(t) {
         }
 
         //TESTING
-        /*if(t.id === TOWER_MOD0) {
-            item[t.id][item[t.id].length] = new Item(ITEM_COINAGE, 91, {
+        if(t.id === TOWER_MOD0) {
+            item[t.id][item[t.id].length] = new Item(ITEM_LONG_BOW, 1, {
                 tower: t.id,
                 floor: 3,
                 x: 12,
                 y: 23,
                 square: 0
             });
-            item[t.id][item[t.id].length] = new Item(ITEM_COMMON_KEYS, 78, {
+            item[t.id][item[t.id].length] = new Item(ITEM_ARROWS, 99, {
                 tower: t.id,
                 floor: 3,
                 x: 12,
                 y: 23,
-                square: 3
+                square: 1
             });
-        }*/
+        }
         //END OF TESTING
     } catch (e) {
         "Item init error: " + e.toString()

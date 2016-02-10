@@ -1075,25 +1075,50 @@ Player.prototype.drawItem = function(it, distance, offset) {
 }
 
 Player.prototype.drawProjectile = function(pr, distance, offset) {
-    /*var ex = getObjectByKeys(pr, 'dungeon', 'die').getVar();
-    if(typeof ex === "undefined") {
-        ex = getObjectByKeys(itemData[pr.type], 'dungeon', 'id');
-    }*/
-    if(typeof ex !== "undefined") {
-        var pGfx = itemsGfxD[ex][distance];
+    var id = getObjectByKeys(itemData[pr.spell], 'projectile', 'id');
+    if(typeof id === "undefined") {
+        id = getObjectByKeys(itemData[pr.spell], 'dungeon', 'id');
+    }
+    if(typeof id !== "undefined" && pr.spell !== null && typeof pr.spell === 'number') { //JSON
+        var from = getObjectByKeys(itemData[pr.spell], 'projectile', 'recolour', 'from');
+        var to = getObjectByKeys(itemData[pr.spell], 'projectile', 'recolour', 'to');
+        if(typeof from === "undefined") {
+            from = getObjectByKeys(itemData[pr.spell], 'dungeon', 'recolour', 'from');
+        }
+        if(typeof to === "undefined") {
+            to = getObjectByKeys(itemData[pr.spell], 'dungeon', 'recolour', 'to');
+        }
+        if(pr.dead > 0) {
+            if(typeof getObjectByKeys(itemData[pr.spell], 'death', 'id') !== "undefined") {
+                id = getObjectByKeys(itemData[pr.spell], 'death', 'id');
+            }
+            if(typeof getObjectByKeys(itemData[pr.spell], 'death', 'recolour', 'from') !== "undefined") {
+                from = getObjectByKeys(itemData[pr.spell], 'death', 'recolour', 'from');
+            }
+            if(typeof getObjectByKeys(itemData[pr.spell], 'death', 'recolour', 'to') !== "undefined") {
+                to = getObjectByKeys(itemData[pr.spell], 'death', 'recolour', 'to');
+            }
+        }
+        var pGfx = itemsGfxD[id.getVar()][distance];
+        if(typeof from !== "undefined" && typeof to !== "undefined") {
+            pGfx = recolourSprite(pGfx, from, to);
+        }
     } else if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 0) {
         if (pr.type !== DUNGEON_NONE) {
             var pGfx = itemsGfxD[pr.type][distance];
         }
+        if(typeof pr.palette !== "undefined") {
+            pGfx = recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette);
+        }
     } else {
         var pGfx = itemsGfxD[DUNGEON_PROJECTILE_EXPLODE][distance];
+        if(typeof pr.palette !== "undefined") {
+            pGfx = recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette);
+        }
     }
     if (typeof pGfx !== "undefined") {
         var offx = 64 - Math.floor(pGfx.width * 0.5) + offset.x;
         var offy = 77 - Math.floor(pGfx.height * 0.5) - offset.y;
-        if(typeof pr.palette !== "undefined") {
-            pGfx = recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette);
-        }
         this.Portal.drawImage(pGfx, offx * scale, offy * scale, pGfx.width * scale, pGfx.height * scale);
     }
 }
@@ -1169,10 +1194,11 @@ Player.prototype.useItemActivePocket = function() {
 Player.prototype.useItem = function(it, ac) {
     var ch = this.getActivePocketChampion();
     var res = false;
-    ob1 = getObjectByKeys(itemData[it.id], ac, 'shootAsProjectile');
-    if(typeof ob1 !=="undefined") {
-        var id = getObjectByKeys(ob1, 'dungeon', 'id');
-        var snd = getObjectByKeys(ob1, 'sound');
+    var use = getObjectByKeys(itemData[it.id], ac);
+    var ob1 = getObjectByKeys(use, 'action');
+    if(typeof ob1 !=="undefined" && ob1 === 'shoot') {
+        var id = getObjectByKeys(itemData[it.id], 'projectile', 'id');
+        var snd = getObjectByKeys(use, 'sound');
         if(typeof id === "undefined") {
             id = getObjectByKeys(itemData[it.id], 'dungeon', 'id');
         }
@@ -1180,10 +1206,17 @@ Player.prototype.useItem = function(it, ac) {
             snd = snd.getVar();
         }
         if(typeof id !== "undefined") {
-            var pow = getObjectByKeys(ob1, 'power');
-            var dFrom = getObjectByKeys(ob1, 'dungeon', 'recolour', 'from'); //***
-            var dTo = getObjectByKeys(ob1, 'dungeon', 'recolour', 'to');
+            var pow = getObjectByKeys(use, 'power');
+            var dFrom = getObjectByKeys(itemData[it.id], 'projectile', 'recolour', 'from'); //***
+            var dTo = getObjectByKeys(itemData[it.id], 'projectile', 'recolour', 'to');
+            if(typeof dFrom === "undefined") {
+                dFrom = getObjectByKeys(itemData[it.id], 'dungeon', 'recolour', 'from'); //***
+            }
+            if(typeof dTo === "undefined") {
+                dTo = getObjectByKeys(itemData[it.id], 'dungeon', 'recolour', 'to');
+            }
             newProjectile(id.getVar(), dTo, snd, it.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
+            this.redrawViewPort = true;
             res = true;
         }
     }

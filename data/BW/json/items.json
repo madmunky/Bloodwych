@@ -16,13 +16,7 @@
 					"id": "DUNGEON_ITEM_COIN"
 				}
 			},
-			"currency": 1,
-			"onUse": {
-				"addStack": -1,
-				"shootAsProjectile": {
-					"power": 6.0
-				}
-			}
+			"currency": 1
 		},
 		{
 			"id": "ITEM_COMMON_KEYS",
@@ -58,20 +52,21 @@
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "RED", "BROWN", "BLACK"]
 					}
-				}
-			},
-			"onAttack": {
-				"addStack": -1,
-				"mandatoryWithType": "ITEM_TYPE_BOW",
-				"powerFactor": 1.0,
-				"shootAsProjectile": {
-					"gfx2": "DUNGEON_PROJECTILE_ARROW",
+				},
+				"projectile": {
+					"id": "DUNGEON_PROJECTILE_ARROW",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": "BRONZE_ARROW"
-					},
-					"sound": "SOUND_ATTACK"
+					}
 				}
+			},
+			"onAttack": {
+				"action": "shoot",
+				"attackWithType": "ITEM_TYPE_BOW",
+				"addStack": -1,
+				"powerFactor": 1.0,
+				"sound": "SOUND_ATTACK"
 			}
 		},
 		{
@@ -86,24 +81,23 @@
 					"id": "DUNGEON_ITEM_ARROW",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
-						"to": [
-							"YELLOW",
-							"GREEN",
-							"GREY_LIGHT",
-							"BLACK"
-						]
+						"to": ["YELLOW", "GREEN", "GREY_LIGHT", "BLACK"]
+					}
+				},
+				"projectile": {
+					"id": "DUNGEON_PROJECTILE_ARROW",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "GREEN_ARROW"
 					}
 				}
 			},
 			"onAttack": {
+				"action": "shoot",
+				"attackWithType": "ITEM_TYPE_BOW",
 				"addStack": -1,
-				"mandatoryWithType": "ITEM_TYPE_BOW",
 				"powerFactor": 1.2,
-				"shootAsProjectile": {
-					"gfx2": "DUNGEON_PROJECTILE_ARROW",
-					"recolour": "GREEN_ARROW",
-					"sound": "SOUND_ATTACK"
-				}
+				"sound": "SOUND_ATTACK"
 			}
 		},
 		{
