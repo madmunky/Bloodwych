@@ -54,6 +54,7 @@
     },{
     "spriteSheet": "Floater",
     "locations": [
+
          {"name":"Front Body Distance 1", "x": 0, "y": 0, "w": 24,"h": 21, "mirror":false, "ox": 0, "oy": 21},
          {"name":"Right Body Distance 1", "x": 25, "y": 0, "w": 24,"h": 21, "mirror":true, "ox": 0, "oy": 21},
          {"name":"Back Body Distance 1", "x": 50, "y": 0, "w": 24,"h": 21, "mirror":false, "ox": 0, "oy": 21},
@@ -110,22 +111,208 @@
          {"name":"Front Right Arm Distance 4", "x": 107, "y": 56,"w": 6,"h": 5, "mirror": false},
          {"name":"Side Left Arm Distance 4", "x": 82, "y": 86,"w": 13,"h": 5, "mirror": false},
          {"name":"Left Attack Arm Distance 4", "x": 82, "y": 23,"w": 11,"h":4, "mirror": false, "ox": 0, "oy": 17}
+
         ]
     },{
     "spriteSheet": "Crab",
-    "locations": {}
+    "locations": [
+
+     {"name":"Front Body Distance 1", "x": 0, "y": 0, "w": 56, "h": 30, "mirror": false},
+     {"name":"Right Body Distance 1", "x": 57, "y": 0, "w": 56, "h": 30, "mirror": false},
+     {"name":"Back Body Distance 1", "x": 114, "y": 0, "w": 56, "h": 30, "mirror": false},
+     {"name":"Left Body Distance 1", "x": 57, "y": 0, "w": 56, "h": 30, "mirror": true},
+
+     {"name":"Front Body Distance 2", "x": 8, "y": 31, "w": 38, "h": 19, "mirror": false},
+     {"name":"Right Body Distance 2", "x": 65, "y": 31, "w": 41, "h": 19, "mirror": false},
+     {"name":"Back Body Distance 2", "x": 122, "y": 31, "w": 38, "h": 19, "mirror": false},
+     {"name":"Left Body Distance 2", "x": 65, "y": 31, "w": 41, "h": 19, "mirror": true},
+
+     {"name":"Front Body Distance 3", "x": 13, "y": 51, "w": 28, "h": 14, "mirror": false},
+     {"name":"Right Body Distance 3", "x": 70, "y": 51, "w": 30, "h": 13, "mirror": false},
+     {"name":"Back Body Distance 3", "x": 127, "y": 51, "w": 28, "h": 13, "mirror": false},
+     {"name":"Left Body Distance 3", "x": 70, "y": 51, "w": 30, "h": 13, "mirror": true},
+
+     {"name":"Front Body Distance 4", "x": 16, "y": 66, "w": 22, "h": 11, "mirror": false},
+     {"name":"Right Body Distance 4", "x": 73, "y": 66, "w": 24, "h": 10, "mirror": false},
+     {"name":"Back Body Distance 4", "x": 130, "y": 66, "w": 22, "h": 10, "mirror": false},
+     {"name":"Left Body Distance 4", "x": 73, "y": 66, "w": 24, "h": 10, "mirror": true},
+
+     {"name":"Front Left Arm Distance 1", "x": 180, "y": 1, "w": 16, "h": 21, "mirror": false, "ox": 32, "oy": 0},
+     {"name":"Side Right Arm Distance 1", "x": 252, "y": 7, "w": 15, "h": 9, "mirror": true, "ox": 50, "oy": 8},
+     {"name":"Front Right Arm Distance 1", "x": 180, "y": 1, "w": 16, "h": 21, "mirror": true, "ox": 32, "oy": 0},
+     {"name":"Side Left Arm Distance 1", "x": 252, "y": 7, "w": 15, "h": 9, "mirror": false, "ox": 51, "oy": 8},
+     {"name":"Left Attack Arm Distance 1", "x": 229, "y": 0, "w": 16, "h": 21, "mirror": false, "ox": 32, "oy": 14},
+     {"name":"Right Attack Arm Distance 1", "x": 229, "y": 0, "w": 16, "h": 21, "mirror": true, "ox": 32, "oy": 14},
+     {"name":"Side Right Attack Arm Distance 1", "x": 206, "y": 2, "w": 14, "h": 19, "mirror": false, "ox": 50, "oy": 14},
+     {"name":"Side Left Attack Arm Distance 1","x": 206, "y": 2, "w": 14, "h": 19, "mirror": true, "ox": 50, "oy": 14},
+
+     {"name":"Front Left Arm Distance 2", "x": 183, "y": 31, "w": 10, "h": 14, "mirror": false, "ox": 20, "oy": 0},
+     {"name":"Side Right Arm Distance 2", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": true, "ox": 37, "oy": 4},
+     {"name":"Front Right Arm Distance 2", "x": 183, "y": 31, "w": 10, "h": 14, "mirror": true, "ox": 19, "oy": 0},
+     {"name":"Side Left Arm Distance 2", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 36, "oy": 4},
+     {"name":"Left Attack Arm Distance 2", "x": 232, "y": 30, "w": 10, "h": 14, "mirror": false, "ox": 20, "oy": 8},
+     {"name":"Right Attack Arm Distance 2", "x": 232, "y": 30, "w": 10, "h": 14, "mirror": true, "ox": 20, "oy": 8},
+     {"name":"Side Right Attack Arm Distance 2", "x": 205, "y": 25, "w": 16, "h": 24, "mirror": false, "ox":23, "oy": 0},
+     {"name":"Side Left Attack Arm Distance 2", "x": 205, "y": 25, "w": 16, "h": 24, "mirror": true, "ox":24, "oy": 0},
+
+     {"name":"Front Mini Distance 1", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Left Mini Distance 1", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Left Mini Distance 3", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Right Mini Distance 3", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": true, "ox": 20, "oy": 15}
+
+    ]
     },{
     "spriteSheet": "Dragon",
-    "locations": {}
+    "locations": [
+
+     {"name":"Front Body Distance 1", "x": 0, "y": 2, "w": 63, "h": 50, "mirror": false, "ox": 0, "oy": 5},
+     {"name":"Right Body Distance 1", "x": 128, "y": 1, "w": 74, "h": 55, "mirror": true, "ox": 0, "oy": 0},
+     {"name":"Back Body Distance 1", "x": 64, "y": 1, "w": 63, "h": 55, "mirror": false, "ox": 0, "oy": 0},
+     {"name":"Left Body Distance 1", "x": 128, "y": 1, "w": 74, "h": 55, "mirror": false, "ox": 0, "oy": 0},
+
+     {"name":"Front Body Distance 2", "x": 9, "y": 58, "w": 45, "h": 37, "mirror": false, "ox": 0, "oy": 2},
+     {"name":"Right Body Distance 2", "x": 138, "y": 57, "w": 54, "h": 39, "mirror": true, "ox": 0, "oy": 0},
+     {"name":"Back Body Distance 2", "x": 73, "y": 58, "w": 45, "h": 39, "mirror": true, "ox": 0, "oy": 0},
+     {"name":"Left Body Distance 2", "x": 138, "y": 57, "w": 54, "h": 39, "mirror": false, "ox": 0, "oy": 0},
+
+     {"name":"Front Body Distance 3", "x": 16, "y": 100, "w": 31, "h": 28, "mirror": false},
+     {"name":"Right Body Distance 3", "x": 144, "y": 100, "w": 40, "h": 28, "mirror": true},
+     {"name":"Back Body Distance 3", "x": 80, "y": 100, "w": 31, "h": 28, "mirror": true},
+     {"name":"Left Body Distance 3", "x": 144, "y": 100, "w": 40, "h": 28, "mirror": false},
+
+     {"name":"Front Body Distance 4", "x": 20, "y": 134, "w": 23, "h": 21, "mirror": false},
+     {"name":"Right Body Distance 4", "x": 151, "y": 134, "w": 29, "h": 21, "mirror": true},
+     {"name":"Back Body Distance 4", "x": 84, "y": 134, "w": 23, "h": 20, "mirror": false},
+     {"name":"Left Body Distance 4", "x": 151, "y": 134, "w": 29, "h": 21, "mirror": false},
+
+     {"name":"Front Mini - Distance 5", "x": 22, "y": 160, "w": 19, "h": 16, "mirror": false},
+     {"name":"Right Mini - Distance 5", "x": 154, "y": 159, "w": 24, "h": 16, "mirror": false},
+     {"name":"Back Mini - Distance 5", "x": 86, "y": 159, "w": 19, "h": 17, "mirror": false},
+     {"name":"Left Mini - Distance 5", "x": 154, "y": 159, "w": 24, "h": 16, "mirror": false},
+
+     {"name":"Front Mini - Distance 6", "x": 22, "y": 160, "w": 19, "h": 16, "mirror": false},
+     {"name":"Right Mini - Distance 6", "x": 86, "y": 159, "w": 19, "h": 17, "mirror": true},
+     {"name":"Back Mini - Distance 6", "x": 154, "y": 159, "w": 24, "h": 16, "mirror": false},
+     {"name":"Left Mini - Distance 6", "x": 86, "y": 159, "w": 19, "h": 17, "mirror": false},
+
+     {"name":"Front Left Arm Distance 1", "x": 206, "y": 33, "w": 14, "h": 21, "mirror": false, "ox": 38, "oy": 0},
+     {"name":"Side Right Arm Distance 1", "x": 223, "y": 34, "w": 25, "h": 20, "mirror": true, "ox": 29, "oy": 0},
+     {"name":"Front Right Arm Distance 1", "x": 206, "y": 33, "w": 14, "h": 21, "mirror": true, "ox": 40, "oy": 0},
+     {"name":"Side Left Arm Distance 1", "x": 223, "y": 34, "w": 25, "h": 20, "mirror": false, "ox": 29, "oy": 0},
+     {"name":"Left Attack Arm Distance 1", "x": 251, "y": 31, "w": 15, "h": 23, "mirror": false, "ox": 38, "oy": 12},
+     {"name":"Right Attack Arm Distance 1", "x": 251, "y": 31, "w": 15, "h": 23, "mirror": true, "ox": 38, "oy": 12},
+     {"name":"Side Right Attack Arm Distance 1", "x": 269, "y": 32, "w": 23, "h": 22, "mirror": false, "ox": 24, "oy": 14},
+     {"name":"Side Left Attack Arm Distance 1", "x": 269, "y": 32, "w": 23, "h": 22, "mirror": true, "ox": 24, "oy": 14},
+
+     {"name":"Front Left Arm Distance 2", "x": 208, "y": 81, "w": 10, "h": 16, "mirror": false, "ox": 23, "oy": 0},
+     {"name":"Side Right Arm Distance 2", "x": 225, "y": 83, "w": 18, "h": 14, "mirror": true, "ox": 18, "oy": 0},
+     {"name":"Front Right Arm Distance 2", "x": 208, "y": 81, "w": 10, "h": 16, "mirror": true, "ox": 23, "oy": 0},
+     {"name":"Side Left Arm Distance 2", "x": 225, "y": 83, "w": 18, "h": 14, "mirror": false, "ox": 18, "oy": 0},
+     {"name":"Left Attack Arm Distance 2", "x": 253, "y": 81, "w": 10, "h": 16, "mirror": false, "ox": 28, "oy": 7},
+     {"name":"Right Attack Arm Distance 2", "x": 253, "y": 81, "w": 10, "h": 16, "mirror": true, "ox": 28, "oy": 7},
+     {"name":"Side Right Attack Arm Distance 2", "x": 276, "y": 82, "w": 16, "h": 15, "mirror": false, "ox": 16, "oy": 9},
+     {"name":"Side Left Attack Arm Distance 2", "x": 276, "y": 82, "w": 16, "h": 15, "mirror": true, "ox": 16, "oy": 9},
+
+     {"name":"Front Left Arm Distance 3", "x": 208, "y": 117, "w": 8, "h": 11, "mirror": false, "ox": 20, "oy": 0},
+     {"name":"Side Right Arm Distance 3", "x": 228, "y": 117, "w": 14, "h": 11, "mirror": true, "ox": 14, "oy": 0},
+     {"name":"Front Right Arm Distance 3", "x": 208, "y": 117, "w": 8, "h": 11, "mirror": true, "ox": 20, "oy": 0},
+     {"name":"Side Left Arm Distance 3", "x": 228, "y": 117, "w": 14, "h": 11, "mirror": false, "ox": 10, "oy": 0},
+     {"name":"Left Attack Arm Distance 3", "x": 254, "y": 118, "w": 8, "h": 10, "mirror": false, "ox": 21, "oy": 8},
+     {"name":"Right Attack Arm Distance 3", "x": 254, "y": 118, "w": 8, "h": 10, "mirror": true, "ox": 21, "oy": 8},
+     {"name":"Side Right Attack Arm Distance 3", "x": 280, "y": 117, "w": 12, "h": 11, "mirror": false, "ox": 12, "oy": 7},
+     {"name":"Side Left Attack Arm Distance 3", "x": 280, "y": 117, "w": 12, "h": 11, "mirror": true, "ox": 12, "oy": 6}
+
+    ]
     },{
     "spriteSheet": "Behemoth",
-    "locations": {}
+    "locations": [
+
+     {"name":"Front Body Distance 1", "x": 72, "y": 1, "w": 29, "h": 51, "mirror": false},
+     {"name":"Right Body Distance 1", "x": 30, "y": 1, "w": 40, "h": 51, "mirror": true},
+     {"name":"Back Body Distance 1", "x": 0, "y": 2, "w": 29, "h": 51, "mirror": false},
+     {"name":"Left Body Distance 1", "x": 30, "y": 1, "w": 40, "h": 51, "mirror": false},
+
+     {"name":"Front Body Distance 2", "x": 77, "y": 63, "w": 19, "h": 36, "mirror": false},
+     {"name":"Right Body Distance 2", "x": 35, "y": 63, "w": 28, "h": 36, "mirror": true},
+     {"name":"Back Body Distance 2", "x": 5, "y": 63, "w": 19, "h": 36, "mirror": false},
+     {"name":"Left Body Distance 2", "x": 35, "y": 63, "w": 28, "h": 36, "mirror": false},
+
+     {"name":"Front Body Distance 3", "x": 5, "y": 106, "w": 23, "h": 27, "mirror": false},
+     {"name":"Right Body Distance 3", "x": 39, "y": 105, "w": 20, "h": 27, "mirror": true},
+     {"name":"Back Body Distance 3", "x": 76, "y": 106, "w": 23, "h": 27, "mirror": false},
+     {"name":"Left Body Distance 3", "x": 39, "y": 105, "w": 20, "h": 27, "mirror": false},
+
+     {"name":"Front Body Distance 4", "x": 7, "y": 136, "w": 19, "h": 21, "mirror": false},
+     {"name":"Right Body Distance 4", "x": 43, "y": 136, "w": 15, "h": 21, "mirror": true},
+     {"name":"Back Body Distance 4", "x": 78, "y": 136, "w": 19, "h": 21, "mirror": false},
+     {"name":"Left Body Distance 4", "x": 43, "y": 136, "w": 15, "h": 21, "mirror": false},
+
+     {"name":"Front Left Arm Distance 1", "x": 110, "y": 2, "w": 14, "h": 26, "mirror": false, "ox": 35, "oy": 15},
+     {"name":"Side Right Arm Distance 1", "x": 110, "y": 2, "w": 14, "h": 26, "mirror": false, "ox": 4, "oy": 15},
+     {"name":"Front Right Arm Distance 1", "x": 110, "y": 2, "w": 14, "h": 26, "mirror": true, "ox": 35, "oy": 15},
+     {"name":"Side Left Arm Distance 1", "x": 110, "y": 2, "w": 14, "h": 26, "mirror": true, "ox": 4, "oy": 15},
+     {"name":"Left Attack Arm Distance 1", "x": 128, "y": 2, "w": 16, "h": 21, "mirror": false, "ox": 35, "oy": 31},
+     {"name":"Right Attack Arm Distance 1", "x": 128, "y": 2, "w": 16, "h": 21, "mirror": true, "ox": 35, "oy": 31},
+     {"name":"Side Right Attack Arm Distance 1", "x": 128, "y": 2, "w": 16, "h": 21, "mirror": false, "ox": 16, "oy": 32},
+     {"name":"Side Left Attack Arm Distance 1", "x": 128, "y": 2, "w": 16, "h": 21, "mirror": true, "ox": 16, "oy": 32},
+
+     {"name":"Front Left Arm Distance 2", "x": 112, "y": 64, "w": 10, "h": 18, "mirror": false, "ox": 23, "oy": 10},
+     {"name":"Side Right Arm Distance 2", "x": 112, "y": 64, "w": 10, "h": 18, "mirror": false, "ox": 4, "oy": 10},
+     {"name":"Front Right Arm Distance 2", "x": 112, "y": 64, "w": 10, "h": 18, "mirror": true, "ox": 24, "oy": 10},
+     {"name":"Side Left Arm Distance 2", "x": 112, "y": 64, "w": 10, "h": 18, "mirror": true, "ox": 4, "oy": 10},
+     {"name":"Left Attack Arm Distance 2", "x": 131, "y": 64, "w": 11, "h": 15, "mirror": false, "ox": 24, "oy": 22},
+     {"name":"Right Attack Arm Distance 2", "x": 131, "y": 64, "w": 11, "h": 15, "mirror": true, "ox": 24, "oy": 22},
+     {"name":"Side Right Attack Arm Distance 2", "x": 131, "y": 64, "w": 11, "h": 15, "mirror": false, "ox": 9, "oy": 22},
+     {"name":"Side Left Attack Arm Distance 2", "x": 131, "y": 64, "w": 11, "h": 15, "mirror": true, "ox": 8, "oy": 23}
+
+    ]
     },{
     "spriteSheet": "NastyFloater",
-    "locations": {}
+    "locations": [
+
+     {"name":"Front Body Distance 1", "x": 0, "y": 0, "w": 48, "h": 44, "mirror": false, "ox": 0, "oy": 6},
+     {"name":"Right Body Distance 1", "x": 99, "y": 0, "w": 48, "h": 44, "mirror": true, "ox": 0, "oy": 6},
+     {"name":"Back Body Distance 1", "x": 50, "y": 0, "w": 48, "h": 44, "mirror": true, "ox": 0, "oy": 6},
+     {"name":"Left Body Distance 1", "x": 99, "y": 0, "w": 48, "h": 44, "mirror": false, "ox": 0, "oy": 6},
+
+     {"name":"Front Body Distance 2", "x": 8, "y": 50, "w": 32, "h": 31, "mirror": false, "ox": 0, "oy": 2},
+     {"name":"Right Body Distance 2", "x": 108, "y": 50, "w": 32, "h": 30, "mirror": true, "ox": 0, "oy": 2},
+     {"name":"Back Body Distance 2", "x": 58, "y": 50, "w": 32, "h": 31, "mirror": true, "ox": 0, "oy": 2},
+     {"name":"Left Body Distance 2", "x": 108, "y": 50, "w": 32, "h": 30, "mirror": false, "ox": 0, "oy": 2},
+
+     {"name":"Front Body Distance 3", "x": 8, "y": 91, "w": 32, "h": 21, "mirror": false, "ox": 0, "oy": 3},
+     {"name":"Right Body Distance 3", "x": 113, "y": 91, "w": 23, "h": 20, "mirror": true, "ox": 0, "oy": 3},
+     {"name":"Back Body Distance 3", "x": 58, "y": 91, "w": 32, "h": 21, "mirror": true, "ox": 0, "oy": 3},
+     {"name":"Left Body Distance 3", "x": 113, "y": 91, "w": 23, "h": 20, "mirror": false, "ox": 0, "oy": 3},
+
+     {"name":"Front Body Distance 4", "x": 10, "y": 117, "w": 28, "h": 17, "mirror": false, "ox": 0, "oy": 2},
+     {"name":"Right Body Distance 4", "x": 117, "y": 117, "w": 16, "h": 16, "mirror": true, "ox": 0, "oy": 2},
+     {"name":"Back Body Distance 4", "x": 60, "y": 117, "w": 28, "h": 17, "mirror": true, "ox": 0, "oy": 2},
+     {"name":"Left Body Distance 4", "x": 117, "y": 117, "w": 16, "h": 16, "mirror": false, "ox": 0, "oy": 2},
+
+     {"name":"Front Left Arm Distance 1", "x": 159, "y": 10, "w": 16, "h": 21, "mirror": false, "ox": 56, "oy": 20},
+     {"name":"Side Right Arm Distance 1", "x": 159, "y": 10, "w": 16, "h": 21, "mirror": false, "ox": 16, "oy": 18},
+     {"name":"Front Right Arm Distance 1", "x": 159, "y": 10, "w": 16, "h": 21, "mirror": true, "ox": 55, "oy": 20},
+     {"name":"Side Left Arm Distance 1", "x": 159, "y": 10, "w": 16, "h": 21, "mirror": true, "ox": 16, "oy": 18},
+     {"name":"Left Attack Arm Distance 1", "x": 184, "y": 10, "w": 16, "h": 21, "mirror": false, "ox": 55, "oy": 36},
+     {"name":"Right Attack Arm Distance 1", "x": 184, "y": 10, "w": 16, "h": 21, "mirror": true, "ox": 55, "oy": 36},
+     {"name":"Side Right Attack Arm Distance 1", "x": 184, "y": 10, "w": 16, "h": 21, "mirror": false, "ox": 55, "oy": 36},
+     {"name":"Side Left Attack Arm Distance 1", "x": 184, "y": 10, "w": 16, "h": 21, "mirror": true, "ox": 55, "oy": 36},
+
+     {"name":"Front Left Arm Distance 2", "x": 159, "y": 62, "w": 10, "h": 14, "mirror": false, "ox": 39, "oy": 12},
+     {"name":"Side Right Arm Distance 2", "x": 159, "y": 62, "w": 10, "h": 14, "mirror": false, "ox": 10, "oy": 10},
+     {"name":"Front Right Arm Distance 2", "x": 159, "y": 62, "w": 10, "h": 14, "mirror": true, "ox": 38, "oy": 12},
+     {"name":"Side Left Arm Distance 2", "x": 159, "y": 62, "w": 10, "h": 14, "mirror": true, "ox": 10, "oy": 10},
+     {"name":"Left Attack Arm Distance 2", "x": 184, "y": 62, "w": 10, "h": 14, "mirror": false},
+     {"name":"Right Attack Arm Distance 2", "x": 184, "y": 62, "w": 10, "h": 14, "mirror": true},
+     {"name":"Side Right Attack Arm Distance 2", "x": 184, "y": 62, "w": 10, "h": 14, "mirror": false},
+     {"name":"Side Left Attack Arm Distance 2", "x": 184, "y": 62, "w": 10, "h": 14, "mirror": true}
+
+    ]
     },{
     "spriteSheet": "Summon",
     "locations":[
+
      {"name":"Front Body Distance 1", "x": 0, "y": 0, "w": 19,"h": 48, "mirror":false},
      {"name":"Right Body Distance 1", "x": 21, "y": 0, "w": 14,"h": 48, "mirror":true},
      {"name":"Back Body Distance 1", "x": 39, "y": 0, "w": 19,"h": 48, "mirror":false},
@@ -191,4 +378,5 @@
      {"name":"Right Attack Arm Distance 4", "x": 98, "y": 68,"w": 6,"h": 9, "mirror": true, "ox": 15, "oy": 20},
      {"name":"Side Right Attack Arm Distance 4", "x": 98, "y": 68,"w": 6,"h": 9, "mirror": false, "ox": 5, "oy": 20},
      {"name":"Side Left Attack Arm Distance 4", "x": 98, "y": 68,"w": 6,"h": 9, "mirror": true, "ox": 5, "oy": 20}
+
     ]}]}

@@ -709,7 +709,7 @@ function initMonsters() {
     }
 
     //TESTING!!! REMOVE AFTER
-    var testType = MON_FORM_BEHOLDER;
+    var testType = MON_FORM_CRAB;
     var end = monster[TOWER_MOD0].length;
     monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 15, 18, 0, CHAR_FRONT_SOLO, 0, null, createPocketSlots());
     monster[TOWER_MOD0][end].pocket[POCKET_SLOT_0].setPocketItem(ITEM_CRYSTAL_PLATE);
