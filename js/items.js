@@ -20,6 +20,28 @@ Item.revive = function(data) {
     return new Item(data.id, data.quantity, data.location);
 }
 
+Item.prototype.getPower = function(ac) {
+    var pw = getObjectByKeys(itemData[this.id], 'power');
+    if(typeof ac !== "undefined") {
+        pw = getObjectByKeys(itemData[this.id], ac, 'power');
+    }
+    if(typeof pw !== "undefined") {
+        return pw;
+    }
+    return 0.0;
+}
+
+Item.prototype.getPowerFactor = function(ac) {
+    var pw = getObjectByKeys(itemData[this.id], 'powerFactor');
+    if(typeof ac !== "undefined") {
+        pw = getObjectByKeys(itemData[this.id], ac, 'powerFactor');
+    }
+    if(typeof pw !== "undefined") {
+        return pw;
+    }
+    return 1.0;
+}
+
 Item.prototype.getWeaponPower = function() {
     if (this.type === 'ITEM_TYPE_WEAPON') {
         switch (this.id) {
@@ -86,10 +108,6 @@ Item.prototype.getArrowPower = function() {
 }
 
 Item.prototype.getFoodValue = function() {
-    var val = getObjectByKeys(itemData[this.id], 'onUse', 'addFood');
-    if(typeof val !== "undefined") {
-        return val;
-    }
     if (this.type === 'ITEM_TYPE_FOOD') {
         if (this.id <= ITEM_CHICKEN) {
             return 16;
@@ -107,62 +125,67 @@ Item.prototype.getFoodValue = function() {
 }
 
 Item.prototype.getArmourClass = function() {
-    if (this.type === 'ITEM_TYPE_ARMOUR') {
-        switch (this.id) {
-            case ITEM_LEATHER_ARMOUR:
-                return 3;
-            case ITEM_CHAIN_MAIL:
-                return 5;
-            case ITEM_PLATE_MAIL:
-                return 7;
-            case ITEM_MITHRIL_CHAIN:
-                return 8;
-            case ITEM_MITHRIL_PLATE:
-                return 11;
-            case ITEM_ADAMANT_CHAIN:
-                return 13;
-            case ITEM_ADAMANT_PLATE:
-                return 15;
-            case ITEM_CRYSTAL_CHAIN:
-                return 17;
-            case ITEM_CRYSTAL_PLATE:
-                return 19;
-            default:
-                break;
-        }
-    } else if (this.type === 'ITEM_TYPE_SHIELD') {
-        switch (this.id) {
-            case ITEM_LEATHER_SHIELD:
-                return 1;
-            case ITEM_BUCKLER:
-                return 2;
-            case ITEM_RUNE_SHIELD:
-                return 4;
-            case ITEM_LARGE_SHIELD:
-                return 3;
-            case ITEM_MOON_SHIELD:
-                return 4;
-            case ITEM_DRAGON_SCALE:
-                return 5;
-            case ITEM_WAR_SHIELD:
-                return 7;
-            default:
-                break;
-        }
-    } else if (this.type === 'ITEM_TYPE_GLOVES') {
-        switch (this.id) {
-            case ITEM_CHAOS_GLOVES:
-                return 0;
-            case ITEM_BATTLE_GLOVES:
-                return 1;
-            case ITEM_MITHRIL_GLOVES:
-                return 2;
-            case ITEM_ADAMANT_GLOVES:
-                return 3;
-            case ITEM_CRYSTAL_GLOVES:
-                return 4;
-            default:
-                break;
+    var ac = getObjectByKeys(itemData[this.id], 'onDefense', 'AC');
+    if(typeof ac !== "undefined") { //JSON
+        return ac;
+    } else {
+        if (this.type === 'ITEM_TYPE_ARMOUR') {
+            switch (this.id) {
+                case ITEM_LEATHER_ARMOUR:
+                    return 3;
+                case ITEM_CHAIN_MAIL:
+                    return 5;
+                case ITEM_PLATE_MAIL:
+                    return 7;
+                case ITEM_MITHRIL_CHAIN:
+                    return 8;
+                case ITEM_MITHRIL_PLATE:
+                    return 11;
+                case ITEM_ADAMANT_CHAIN:
+                    return 13;
+                case ITEM_ADAMANT_PLATE:
+                    return 15;
+                case ITEM_CRYSTAL_CHAIN:
+                    return 17;
+                case ITEM_CRYSTAL_PLATE:
+                    return 19;
+                default:
+                    break;
+            }
+        } else if (this.type === 'ITEM_TYPE_SHIELD') {
+            switch (this.id) {
+                case ITEM_LEATHER_SHIELD:
+                    return 1;
+                case ITEM_BUCKLER:
+                    return 2;
+                case ITEM_RUNE_SHIELD:
+                    return 4;
+                case ITEM_LARGE_SHIELD:
+                    return 3;
+                case ITEM_MOON_SHIELD:
+                    return 4;
+                case ITEM_DRAGON_SCALE:
+                    return 5;
+                case ITEM_WAR_SHIELD:
+                    return 7;
+                default:
+                    break;
+            }
+        } else if (this.type === 'ITEM_TYPE_GLOVES') {
+            switch (this.id) {
+                case ITEM_CHAOS_GLOVES:
+                    return 0;
+                case ITEM_BATTLE_GLOVES:
+                    return 1;
+                case ITEM_MITHRIL_GLOVES:
+                    return 2;
+                case ITEM_ADAMANT_GLOVES:
+                    return 3;
+                case ITEM_CRYSTAL_GLOVES:
+                    return 4;
+                default:
+                    break;
+            }
         }
     }
     return 0;
@@ -239,14 +262,14 @@ function initItems(t) {
 
         //TESTING
         if(t.id === TOWER_MOD0) {
-            item[t.id][item[t.id].length] = new Item(ITEM_LONG_BOW, 1, {
+            item[t.id][item[t.id].length] = new Item(ITEM_WAR_SHIELD, 1, {
                 tower: t.id,
                 floor: 3,
                 x: 12,
                 y: 23,
                 square: 0
             });
-            item[t.id][item[t.id].length] = new Item(ITEM_ARROWS, 99, {
+            item[t.id][item[t.id].length] = new Item(ITEM_RUNE_SHIELD, 1, {
                 tower: t.id,
                 floor: 3,
                 x: 12,
@@ -537,6 +560,10 @@ function createItemRef(id, name, gfx, gfxD) {
 //id starts at 0 (= ITEM_LEATHER_ARMOUR)
 //returns 0 for leather, 1 for chain and 2 for plate
 function getItemArmourType(id) {
+    var at = getObjectByKeys(itemData[this.id], 'onDefense', 'type');
+    if(typeof at !== "undefined") { //JSON
+        return at;
+    }
     var typ = [0, 1, 2, 1, 2, 1, 2, 1, 2];
     return typ[id];
 }

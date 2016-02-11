@@ -388,9 +388,9 @@ Player.prototype.tryAttack = function(ch) {
                 return 1;
             }
         }
-        var wp = this.useItem(ch.pocket[POCKET_LEFT_HAND], 'onAttack');
+        var wp = ch.useItem(ch.pocket[POCKET_LEFT_HAND], 'onAttack');
         if(!wp) {
-            wp = this.useItem(ch.pocket[POCKET_RIGHT_HAND], 'onAttack');
+            wp = ch.useItem(ch.pocket[POCKET_RIGHT_HAND], 'onAttack');
         }
         var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
         if (mon !== null) {
@@ -1140,7 +1140,7 @@ Player.prototype.useItemActivePocket = function() {
     if (ch !== null && !ch.dead) {
         var itH = this.pocket;
         if (itH.id !== 0) {
-            if(this.useItem(itH, 'onUse')) {
+            if(ch.useItem(itH, 'onUse')) {
                 //no nothing
             } else {
                 switch (itH.type) {
@@ -1189,52 +1189,6 @@ Player.prototype.useItemActivePocket = function() {
             }
         }
     }
-}
-
-Player.prototype.useItem = function(it, ac) {
-    var ch = this.getActivePocketChampion();
-    var res = false;
-    var use = getObjectByKeys(itemData[it.id], ac);
-    var ob1 = getObjectByKeys(use, 'action');
-    if(typeof ob1 !=="undefined" && ob1 === 'shoot') {
-        var id = getObjectByKeys(itemData[it.id], 'projectile', 'id');
-        var snd = getObjectByKeys(use, 'sound');
-        if(typeof id === "undefined") {
-            id = getObjectByKeys(itemData[it.id], 'dungeon', 'id');
-        }
-        if(typeof snd !== "undefined") {
-            snd = snd.getVar();
-        }
-        if(typeof id !== "undefined") {
-            var pow = getObjectByKeys(use, 'power');
-            var dFrom = getObjectByKeys(itemData[it.id], 'projectile', 'recolour', 'from'); //***
-            var dTo = getObjectByKeys(itemData[it.id], 'projectile', 'recolour', 'to');
-            if(typeof dFrom === "undefined") {
-                dFrom = getObjectByKeys(itemData[it.id], 'dungeon', 'recolour', 'from'); //***
-            }
-            if(typeof dTo === "undefined") {
-                dTo = getObjectByKeys(itemData[it.id], 'dungeon', 'recolour', 'to');
-            }
-            newProjectile(id.getVar(), dTo, snd, it.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
-            this.redrawViewPort = true;
-            res = true;
-        }
-    }
-    var ac1 = getObjectByKeys(itemData[it.id], ac, 'changeToItem');
-    if(typeof ac1 !=="undefined") {
-        var it2 = getIndexById(itemData, ac1);
-        it.setPocketItem(it2);
-        res = true;
-    }
-    ac1 = getObjectByKeys(itemData[it.id], ac, 'addStack');
-    if(typeof ac1 !=="undefined") {
-        var it2 = getIndexById(itemData, ac1);
-        if(it.quantity + ac1 >= 0 && it.quantity + ac1 < 100) {
-            it.setPocketItem(it.id, it.quantity + ac1);
-        }
-        res = true;
-    }
-    return res;
 }
 
 Player.prototype.exchangeItemWithHand = function(s, q) {

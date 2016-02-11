@@ -234,6 +234,101 @@ Champion.prototype.getArmourClass = function() {
     return 10 - arm - sld - glv;
 }
 
+Champion.prototype.useItem = function(it, ac) {
+    var res = false;
+    var use = getObjectByKeys(itemData[it.id], ac);
+    var ob1 = getObjectByKeys(use, 'action');
+    var tool = getObjectByKeys(use, 'tool');
+    var pow = 1.0;
+
+    //Use item with another item (e.g. bow and arrow)
+    if(typeof tool !== "undefined") {
+        var id = getObjectByKeys(tool, 'id');
+        var typ = getObjectByKeys(tool, 'type');
+        var req = getObjectByKeys(tool, 'required');
+        var hand = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND];
+        if(typeof id !== "undefined" || typeof typ !== "undefined") {
+            for(var h = 0; h < hand.length; h++) {
+                var it2 = this.pocket[hand[h]];
+                if((typeof id !== "undefined" && it2.id === id) || (typeof typ !== "undefined" && it2.type === typ)) {
+                    pow = it2.getPower();
+                    break;
+                }
+            }
+            if(req && pow === 1.0) { //If required item is not there, then do nothing.
+                return false;
+            }
+        }
+    }
+
+    //Shoot projectile
+    if(typeof ob1 !=="undefined" && ob1 === 'shoot') {
+        var id = getObjectByKeys(itemData[it.id], 'projectile', 'id');
+        var snd = getObjectByKeys(use, 'sound');
+        if(typeof id === "undefined") {
+            id = getObjectByKeys(itemData[it.id], 'dungeon', 'id');
+        }
+        if(typeof snd !== "undefined") {
+            snd = snd.getVar();
+        }
+        if(typeof id !== "undefined") {
+            pow = pow * it.getPowerFactor(ac);
+            var dTo = getObjectByKeys(itemData[it.id], 'projectile', 'recolour', 'to');
+            if(typeof dTo === "undefined") {
+                dTo = getObjectByKeys(itemData[it.id], 'dungeon', 'recolour', 'to');
+            }
+            newProjectile(id.getVar(), dTo, snd, it.id + 100, pow * (1.0 + this.stat.str / 4.0 + this.stat.agi / 2.0), this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
+            if (this.recruitment.playerId > -1) {
+                player[this.recruitment.playerId].redrawViewPort = true;
+            }
+            res = true;
+        }
+    }
+
+    //Food
+    var ac1 = getObjectByKeys(itemData[it.id], 'onUse', 'addFood');
+    if(typeof ac1 !== "undefined") {
+        this.addFood(ac1);
+        res = true;
+    }
+
+    //Add primary stats
+    var ac1 = getObjectByKeys(itemData[it.id], ac, 'addHPMax');
+    if(typeof ac1 !=="undefined") {
+        this.addHP(Math.floor(this.stat.hpMax * ac1));
+        res = true;
+    }
+    ac1 = getObjectByKeys(itemData[it.id], ac, 'addVitMax');
+    if(typeof ac1 !=="undefined") {
+        this.addVit(Math.floor(this.stat.vitMax * ac1));
+        res = true;
+    }
+    ac1 = getObjectByKeys(itemData[it.id], ac, 'addSPMax');
+    if(typeof ac1 !=="undefined") {
+        this.addSP(Math.floor(this.stat.spMax * ac1));
+        res = true;
+    }
+
+    //Change the stack
+    ac1 = getObjectByKeys(itemData[it.id], ac, 'changeStack');
+    if(typeof ac1 !=="undefined") {
+        var it2 = getIndexById(itemData, ac1);
+        if(it.quantity + ac1 >= 0 && it.quantity + ac1 < 100) {
+            it.setPocketItem(it.id, it.quantity + ac1);
+        }
+        res = true;
+    }
+
+    //Change item to another item
+    ac1 = getObjectByKeys(itemData[it.id], ac, 'changeToItem');
+    if(typeof ac1 !=="undefined") {
+        var it2 = getIndexById(itemData, ac1);
+        it.setPocketItem(it2);
+        res = true;
+    }
+    return res;
+}
+
 Champion.prototype.gainLevel = function() {
     if (this.levelUp > 0) {
         if(this.level < 57) {

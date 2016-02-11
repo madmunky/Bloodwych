@@ -63,8 +63,11 @@
 			},
 			"onAttack": {
 				"action": "shoot",
-				"attackWithType": "ITEM_TYPE_BOW",
-				"addStack": -1,
+				"tool": {
+					"type": "ITEM_TYPE_BOW",
+					"required": true
+				},
+				"changeStack": -1,
 				"powerFactor": 1.0,
 				"sound": "SOUND_ATTACK"
 			}
@@ -94,8 +97,11 @@
 			},
 			"onAttack": {
 				"action": "shoot",
-				"attackWithType": "ITEM_TYPE_BOW",
-				"addStack": -1,
+				"tool": {
+					"type": "ITEM_TYPE_BOW",
+					"required": true
+				},
+				"changeStack": -1,
 				"powerFactor": 1.2,
 				"sound": "SOUND_ATTACK"
 			}
@@ -188,7 +194,7 @@
 		{
 			"id": "ITEM_BISCUIT",
 			"name": "FOOD",
-			"type": "ITEM_TYPE_OTHER",
+			"type": "ITEM_TYPE_FOOD",
 			"gfx2": {
 				"icon": {
 					"id": "UI_GFX_POCKET_BISCUIT_3"
@@ -402,6 +408,518 @@
 			"onUse": {
 				"changeToItem": "ITEM_EMPTY",
 				"addFood": 50
+			}
+		},
+		{
+			"id": "ITEM_NEGG_BLUE",
+			"name": "N'EGG",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_NEGG",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["BLUE_DARK"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_NEGG",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["BLUE_DARK", "BLUE_DARK", "BLUE_DARK", "BLACK"]
+					}
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_EMPTY",
+				"addFood": 100
+			}
+		},
+		{
+			"id": "ITEM_NEGG_RED",
+			"name": "N'EGG",
+			"type": "ITEM_TYPE_FOOD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_NEGG",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["RED"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_NEGG"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_EMPTY",
+				"addFood": 200
+			}
+		},
+		{
+			"id": "ITEM_SERPENT_SLIME",
+			"name": "SERPENT SLIME",
+			"type": "ITEM_TYPE_POTION",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_POTION",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["GREEN"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_POTION",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["GREEN", "GREEN", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_EMPTY",
+				"addHPMax": 1
+			}
+		},
+		{
+			"id": "ITEM_BRIMSTONE_BROTH",
+			"name": "BRIMSTONE SLIME",
+			"type": "ITEM_TYPE_POTION",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_POTION",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["YELLOW"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_POTION",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["YELLOW", "YELLOW", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_EMPTY",
+				"addHPMax": 0.5,
+				"addVitMax": 0.5,
+				"addSPMax": 0.5
+			}
+		},
+		{
+			"id": "ITEM_DRAGON_ALE",
+			"name": "DRAGON ALE",
+			"type": "ITEM_TYPE_POTION",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_POTION",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["RED"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_POTION"
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_EMPTY",
+				"addVitMax": 1
+			}
+		},
+		{
+			"id": "ITEM_MOON_ELIXIR",
+			"name": "MOON ELIXIR",
+			"type": "ITEM_TYPE_POTION",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_POTION",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["BLUE_DARK"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_POTION",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["BLUE_DARK", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onUse": {
+				"changeToItem": "ITEM_EMPTY",
+				"addSPMax": 1
+			}
+		},
+		{
+			"id": "ITEM_LEATHER_ARMOUR",
+			"name": "LEATHER ARMOUR",
+			"type": "ITEM_TYPE_ARMOUR",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_AMOUR_LEATHER"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_AMOUR",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["PINK", "BROWN", "RED_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_ARMOUR_LEATHER",
+				"AC": 3
+			}
+		},
+		{
+			"id": "ITEM_CHAIN_MAIL",
+			"name": "CHAIN MAIL",
+			"type": "ITEM_TYPE_ARMOUR",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_AMOUR_CHAIN",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["GREY_LIGHT"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_AMOUR",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREY_LIGHT", "GREY_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_ARMOUR_CHAIN",
+				"AC": 5
+			}
+		},
+		{
+			"id": "ITEM_PLATE_MAIL",
+			"name": "CHAIN MAIL",
+			"type": "ITEM_TYPE_ARMOUR",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_AMOUR_PLATE",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["GREY_LIGHT"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_AMOUR",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_ARMOUR_PLATE",
+				"AC": 7
+			}
+		},
+		{
+			"id": "ITEM_MITHRIL_CHAIN",
+			"name": "MITHRIL CHAIN",
+			"type": "ITEM_TYPE_ARMOUR",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_AMOUR_CHAIN",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["BLUE"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_AMOUR",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "BLUE", "GREY_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_ARMOUR_CHAIN",
+				"AC": 8
+			}
+		},
+		{
+			"id": "ITEM_MITHRIL_PLATE",
+			"name": "MITHRIL PLATE",
+			"type": "ITEM_TYPE_ARMOUR",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_AMOUR_PLATE",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["BLUE"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_AMOUR",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "BLUE", "BLUE_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_ARMOUR_PLATE",
+				"AC": 11
+			}
+		},
+		{
+			"id": "ITEM_ADAMANT_CHAIN",
+			"name": "ADAMANT CHAIN",
+			"type": "ITEM_TYPE_ARMOUR",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_AMOUR_CHAIN",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["GREEN"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_AMOUR",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREEN", "GREY_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_ARMOUR_CHAIN",
+				"AC": 13
+			}
+		},
+		{
+			"id": "ITEM_ADAMANT_PLATE",
+			"name": "ADAMANT PLATE",
+			"type": "ITEM_TYPE_ARMOUR",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_AMOUR_PLATE",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["GREEN"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_AMOUR",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREEN", "GREEN_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_ARMOUR_PLATE",
+				"AC": 15
+			}
+		},
+		{
+			"id": "ITEM_CRYSTAL_CHAIN",
+			"name": "CRYSTAL CHAIN",
+			"type": "ITEM_TYPE_ARMOUR",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_AMOUR_CHAIN",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["PINK"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_AMOUR",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "PINK", "GREY_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_ARMOUR_CHAIN",
+				"AC": 17
+			}
+		},
+		{
+			"id": "ITEM_ADAMANT_PLATE",
+			"name": "ADAMANT PLATE",
+			"type": "ITEM_TYPE_ARMOUR",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_AMOUR_PLATE",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["PINK"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_AMOUR",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "PINK", "BROWN", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_ARMOUR_PLATE",
+				"AC": 19
+			}
+		},
+		{
+			"id": "ITEM_LEATHER_SHIELD",
+			"name": "LEATHER SHIELD",
+			"type": "ITEM_TYPE_SHIELD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SHIELD_2"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SMALL_SHIELD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["PINK", "BROWN", "RED_DARK", "BROWN"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_SHIELD_SMALL",
+				"AC": 1
+			}
+		},
+		{
+			"id": "ITEM_BUCKLER",
+			"name": "BUCKLER",
+			"type": "ITEM_TYPE_SHIELD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SHIELD_3"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SMALL_SHIELD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "GREY_MEDIUM"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_SHIELD_SMALL",
+				"AC": 2
+			}
+		},
+		{
+			"id": "ITEM_RUNE_SHIELD",
+			"name": "RUNE SHIELD",
+			"type": "ITEM_TYPE_SHIELD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SHIELD_1"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SMALL_SHIELD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "RED"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_SHIELD_SMALL",
+				"AC": 4
+			}
+		},
+		{
+			"id": "ITEM_LARGE_SHIELD",
+			"name": "LARGE SHIELD",
+			"type": "ITEM_TYPE_SHIELD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SHIELD_4"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_LARGE_SHIELD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_SHIELD_LARGE",
+				"AC": 3
+			}
+		},
+		{
+			"id": "ITEM_MOON_SHIELD",
+			"name": "MOON SHIELD",
+			"type": "ITEM_TYPE_SHIELD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SHIELD_5"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_LARGE_SHIELD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "BLUE", "BLUE_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_SHIELD_LARGE",
+				"AC": 4
+			}
+		},
+		{
+			"id": "ITEM_DRAGON_SCALE",
+			"name": "DRAGON SCALE",
+			"type": "ITEM_TYPE_SHIELD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SHIELD_6"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_LARGE_SHIELD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["YELLOW", "PINK", "RED_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_SHIELD_LARGE",
+				"AC": 5
+			}
+		},
+		{
+			"id": "ITEM_WAR_SHIELD",
+			"name": "WAR SHIELD",
+			"type": "ITEM_TYPE_SHIELD",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SHIELD_7"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_LARGE_SHIELD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREEN", "GREEN_DARK", "BLACK"]
+					}
+				}
+			},
+			"onDefense": {
+				"type": "ITEM_SHIELD_LARGE",
+				"AC": 7
 			}
 		}
 	]
