@@ -157,8 +157,23 @@
 
      {"name":"Front Mini Distance 1", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
      {"name":"Left Mini Distance 1", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Back Mini Distance 1", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Right Mini Distance 1", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+
+     {"name":"Front Mini Distance 2", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Left Mini Distance 2", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Back Mini Distance 2", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Right Mini Distance 2", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+
      {"name":"Left Mini Distance 3", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
-     {"name":"Right Mini Distance 3", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": true, "ox": 20, "oy": 15}
+     {"name":"Back Mini Distance 3", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Front Mini Distance 3", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Right Mini Distance 3", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": true, "ox": 20, "oy": 15},
+
+     {"name":"Front Mini Distance 4", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Left Mini Distance 4", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Back Mini Distance 4", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15},
+     {"name":"Right Mini Distance 4", "x": 255, "y": 34, "w": 9, "h": 8, "mirror": false, "ox": 20, "oy": 15}
 
     ]
     },{
