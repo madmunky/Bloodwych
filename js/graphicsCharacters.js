@@ -890,11 +890,11 @@ function drawMonster(m, dir, dist, player, offset, returnImg) {
                     }
 
 
-                    var gfx1 = getSprite(part,dist,dir1,null,m.ref.gfx);
+                    var gfx1 = getSprite(part,dist,dir1,null,m, player);
                     var gfx2;
 
                     if (dir2 > -1){
-                        var gfx2 = getSprite(part,dist,dir2,null,m.ref.gfx);
+                        var gfx2 = getSprite(part,dist,dir2,null,m, player);
                     }
 
                     var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
@@ -1002,18 +1002,21 @@ function grabMonster(form, level) {
     return ImageArray;
 }
 
-function getSprite(part,dist,dir,action, Sprite){
+function getSprite(part,dist,dir,action, monster, player){
 
-    console.log("Part:" + part + " Dist: " + dist+ " Dir:" + dir + " Action: " + action);
+    Sprite = monster.ref.gfx;
+    //console.log("Part:" + part + " Dist: " + dist+ " Dir:" + dir + " Action: " + action);
     var partName = ['Body','Arm','Mini'];
     var distName = ['Distance 1','Distance 2','Distance 3','Distance 4','Distance 5','Distance 6'];
     var dirName = ['Front','Right','Back','Left'];
+    var strGestures = ['CHA_GESTURE_NONE','CHA_GESTURE_ATTACKING','CHA_GESTURE_SPELLCASTING','CHA_GESTURE_GREETING'];
+    var strMonsterForm = ['MON_FORM_ILLUSION','MON_FORM_SUMMON','MON_FORM_BEHOLDER','MON_FORM_ENTITY','MON_FORM_CRAB','MON_FORM_DRAGON','MON_FORM_DRAGON_SMALL','MON_FORM_BEHEMOTH'];
 
     if (part == 1){
         dirName = ['Front Left Arm','Side Right Arm','Front Right Arm','Side Left Arm',"Left Attack Arm","Right Attack Arm","Side Left Attack Arm","Side Right Attack Arm"];
     }
 
-    console.log("Part: " + partName[part] + " " + distName[dist] + " " + dirName[dir]);
+
     for (i in Sprite){
         if (Sprite[i].name.indexOf(partName[part]) >-1){
             if (Sprite[i].name.indexOf(distName[dist]) >-1){
@@ -1024,4 +1027,5 @@ function getSprite(part,dist,dir,action, Sprite){
         }
     }
 
+    console.log(strMonsterForm[monster.form - 100] + " - Part: " + partName[part] + " " + distName[dist] + " " + dirName[dir] + " " + strGestures[monster.gesture]);
 }

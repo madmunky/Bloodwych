@@ -269,7 +269,7 @@ function drawPlayersView(p) {
             myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
             var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0);
             if (debug){
-                console.log("We are redawing to the Players Canvas");
+                //console.log("We are redawing to the Players Canvas");
             }
             for (x = 0; x < 19; x++) {
                 var view = p.getView();
