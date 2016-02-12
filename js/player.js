@@ -1199,8 +1199,7 @@ Player.prototype.exchangeItemWithHand = function(s, q) {
     if (ch !== null) {
         var it = ch.pocket[s];
         var itH = this.pocket;
-        var allowedShield = itH.type === 'ITEM_TYPE_SHIELD' && (ch.prof % 2 === PROFESSION_WARRIOR || itH.id <= ITEM_RUNE_SHIELD);
-        if (itH.id === 0 || ((s !== POCKET_ARMOUR || itH.type === 'ITEM_TYPE_ARMOUR') && (s !== POCKET_SHIELD || allowedShield))) {
+        if (itH.id === 0 || ch.itemAllowedOnSlot(itH, s)) { //((s !== POCKET_ARMOUR || itH.type === 'ITEM_TYPE_ARMOUR') && (s !== POCKET_SHIELD || ch.itemAllowedOnSlot(itH, s)))) {
             if (it.type === 'ITEM_TYPE_STACKABLE' && (itH.id === 0 || it.id === itH.id)) {
                 if (itH.id === 0) {
                     for (q1 = 0; q1 < q; q1++) {

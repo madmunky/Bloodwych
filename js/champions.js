@@ -202,11 +202,31 @@ Champion.prototype.addFood = function(fd) {
     }
 }
 
-Champion.prototype.getWeaponPower = function(s) {
-    var pow = this.pocket[s].getWeaponPower();
-    if (this.pocket[POCKET_GLOVES].id === ITEM_CHAOS_GLOVES && this.pocket[s].id === ITEM_ACE_OF_SWORDS) {
-        pow = pow * 1.25;
+Champion.prototype.getWeaponPower = function(s1) {
+    var pow = this.pocket[s1].getPower(); //weapon power
+    var wep = getObjectByKeys(itemData[this.pocket[s1].id], 'onAttack', 'wearing'); //check if there is bonus attack on weapon while wearing an item
+    if(typeof wep !== "undefined") {
+        var slot = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND, POCKET_ARMOUR, POCKET_SHIELD, POCKET_GLOVES]; //check these slots only
+        for(var s = 0; s < slot.length; s++) {
+            var it2 = this.pocket[slot[s]]; //item of this slot
+            var id = getObjectByKeys(wep, 'id'); //item id that should be checked
+            var typ = getObjectByKeys(wep, 'type'); //item type that should be checked
+            var sl = getObjectByKeys(itemData[it2.id], 'onEquip', 'allowedSlot'); //check in what slot this item is allowed (e.g. gloves in gloves slot)
+            if(typeof sl !== "undefined" && sl.getVar() === slot[s] && (typeof id === "undefined" || id.getVar() === it2.id) && (typeof typ === "undefined" || typ.getVar() === it2.type)) {
+                var p = getObjectByKeys(wep, 'power');
+                var pf = getObjectByKeys(wep, 'powerFactor');
+                if(typeof p !== "undefined") {
+                    pow = pow + p;
+                }
+                if(typeof pf !== "undefined") {
+                    pow = pow * pf;
+                }
+            }
+        }
     }
+    //if (this.pocket[POCKET_GLOVES].id === ITEM_CHAOS_GLOVES && this.pocket[s].id === ITEM_ACE_OF_SWORDS) {
+    //    pow = pow * 1.25;
+    //}
     return 1.0 + 0.1 * pow;
 }
 
@@ -232,6 +252,24 @@ Champion.prototype.getArmourClass = function() {
         arm = ac;
     }
     return 10 - arm - sld - glv;
+}
+
+Champion.prototype.itemAllowedOnSlot = function(it, s) {
+    var ret = true;
+    var as = getObjectByKeys(itemData[it.id], 'onEquip', 'allowedSlot');
+    var pf = getObjectByKeys(itemData[it.id], 'onEquip', 'allowedProfession');
+    //if(typeof as !== "undefined") {
+        if(typeof pf !== "undefined") {
+            pf = pf.map(function(x) {
+                return x.getVar();
+            });
+        }
+        if((s !== POCKET_ARMOUR && s !== POCKET_SHIELD && s !== POCKET_GLOVES) || (typeof as !== "undefined" && as.getVar() === s && (typeof pf === "undefined" || $.inArray(this.prof, pf) > -1))) {
+            return true;
+        }
+        return false;
+    //}
+    return true;
 }
 
 Champion.prototype.useItem = function(it, ac) {

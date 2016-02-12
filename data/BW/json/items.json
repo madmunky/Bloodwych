@@ -570,8 +570,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_ARMOUR_LEATHER",
+			"onEquip": {
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 3
 			}
 		},
@@ -595,8 +595,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_ARMOUR_CHAIN",
+			"onEquip": {
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 5
 			}
 		},
@@ -620,8 +620,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_ARMOUR_PLATE",
+			"onEquip": {
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 7
 			}
 		},
@@ -645,8 +645,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_ARMOUR_CHAIN",
+			"onEquip": {
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 8
 			}
 		},
@@ -670,8 +670,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_ARMOUR_PLATE",
+			"onEquip": {
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 11
 			}
 		},
@@ -695,8 +695,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_ARMOUR_CHAIN",
+			"onEquip": {
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 13
 			}
 		},
@@ -720,8 +720,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_ARMOUR_PLATE",
+			"onEquip": {
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 15
 			}
 		},
@@ -745,8 +745,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_ARMOUR_CHAIN",
+			"onEquip": {
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 17
 			}
 		},
@@ -770,8 +770,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_ARMOUR_PLATE",
+			"onEquip": {
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 19
 			}
 		},
@@ -791,8 +791,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_SHIELD_SMALL",
+			"onEquip": {
+				"allowedSlot": "POCKET_SHIELD",
 				"AC": 1
 			}
 		},
@@ -812,8 +812,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_SHIELD_SMALL",
+			"onEquip": {
+				"allowedSlot": "POCKET_SHIELD",
 				"AC": 2
 			}
 		},
@@ -833,8 +833,8 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_SHIELD_SMALL",
+			"onEquip": {
+				"allowedSlot": "POCKET_SHIELD",
 				"AC": 4
 			}
 		},
@@ -854,8 +854,9 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_SHIELD_LARGE",
+			"onEquip": {
+				"allowedSlot": "POCKET_SHIELD",
+				"allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
 				"AC": 3
 			}
 		},
@@ -875,8 +876,9 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_SHIELD_LARGE",
+			"onEquip": {
+				"allowedSlot": "POCKET_SHIELD",
+				"allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
 				"AC": 4
 			}
 		},
@@ -896,8 +898,9 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_SHIELD_LARGE",
+			"onEquip": {
+				"allowedSlot": "POCKET_SHIELD",
+				"allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
 				"AC": 5
 			}
 		},
@@ -917,9 +920,307 @@
 					}
 				}
 			},
-			"onDefense": {
-				"type": "ITEM_SHIELD_LARGE",
+			"onEquip": {
+				"allowedSlot": "POCKET_SHIELD",
+				"allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
 				"AC": 7
+			}
+		},
+		{
+			"id": "ITEM_CHAOS_GLOVES",
+			"name": "CHAOS GLOVES",
+			"type": "ITEM_TYPE_GLOVES",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_GLOVE",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["YELLOW"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_GLOVE",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "YELLOW", "PINK", "BLACK"]
+					}
+				}
+			},
+			"onEquip": {
+				"allowedSlot": "POCKET_GLOVES",
+				"AC": 0
+			}
+		},
+		{
+			"id": "ITEM_BATTLE_GLOVES",
+			"name": "BATTLE GLOVES",
+			"type": "ITEM_TYPE_GLOVES",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_GLOVE",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["GREY_LIGHT"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_GLOVE",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREY_LIGHT", "GREY_DARK", "BLACK"]
+					}
+				}
+			},
+			"onEquip": {
+				"allowedSlot": "POCKET_GLOVES",
+				"AC": 1
+			}
+		},
+		{
+			"id": "ITEM_MITHRIL_GLOVES",
+			"name": "MITHRIL GLOVES",
+			"type": "ITEM_TYPE_GLOVES",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_GLOVE",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["BLUE"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_GLOVE",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "BLUE", "BLUE_DARK", "BLACK"]
+					}
+				}
+			},
+			"onEquip": {
+				"allowedSlot": "POCKET_GLOVES",
+				"AC": 2
+			}
+		},
+		{
+			"id": "ITEM_ADAMANT_GLOVES",
+			"name": "ADAMANT GLOVES",
+			"type": "ITEM_TYPE_GLOVES",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_GLOVE",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["GREEN"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_GLOVE",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "GREEN", "GREEN_DARK", "BLACK"]
+					}
+				}
+			},
+			"onEquip": {
+				"allowedSlot": "POCKET_GLOVES",
+				"AC": 3
+			}
+		},
+		{
+			"id": "ITEM_CRYSTAL_GLOVES",
+			"name": "CRYSTAL GLOVES",
+			"type": "ITEM_TYPE_GLOVES",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_GLOVE",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["PINK"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_GLOVE",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["WHITE", "PINK", "BROWN", "BLACK"]
+					}
+				}
+			},
+			"onEquip": {
+				"allowedSlot": "POCKET_GLOVES",
+				"AC": 4
+			}
+		},
+		{
+			"id": "ITEM_DAGGER",
+			"name": "DAGGER",
+			"type": "ITEM_TYPE_WEAPON",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_DAGGER"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_DAGGER",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["YELLOW", "RED_DARK", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onAttack": {
+				"power": 2
+			}
+		},
+		{
+			"id": "ITEM_STEALTH_BLADE",
+			"name": "STEALTH BLADE",
+			"type": "ITEM_TYPE_WEAPON",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SHORT_SWORD"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_DAGGER",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["GREY_LIGHT", "GREY_LIGHT", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onAttack": {
+				"power": 3
+			}
+		},
+		{
+			"id": "ITEM_SHORT_SWORD",
+			"name": "SHORT SWORD",
+			"type": "ITEM_TYPE_WEAPON",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SWORD_1"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SWORD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["RED", "RED_DARK", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onAttack": {
+				"power": 4
+			}
+		},
+		{
+			"id": "ITEM_LONG_SWORD",
+			"name": "LONG SWORD",
+			"type": "ITEM_TYPE_WEAPON",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SWORD_2",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["YELLOW"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SWORD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["BROWN", "RED_DARK", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onAttack": {
+				"power": 5
+			}
+		},
+		{
+			"id": "ITEM_MITHRIL_SWORD",
+			"name": "MITHRIL SWORD",
+			"type": "ITEM_TYPE_WEAPON",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SWORD_2",
+					"recolour": {
+						"from": ["GREEN"],
+						"to": ["BLUE"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SWORD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onAttack": {
+				"power": 7
+			}
+		},
+		{
+			"id": "ITEM_FLESHBANE",
+			"name": "FLESHBANE",
+			"type": "ITEM_TYPE_WEAPON",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SWORD_3"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SWORD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onAttack": {
+				"power": 11
+			}
+		},
+		{
+			"id": "ITEM_DEMON_BLADE",
+			"name": "DEMON BLADE",
+			"type": "ITEM_TYPE_WEAPON",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SWORD_4"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SWORD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["PINK", "RED", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onAttack": {
+				"power": 14
+			}
+		},
+		{
+			"id": "ITEM_ACE_OF_SWORDS",
+			"name": "ACE OF SWORDS",
+			"type": "ITEM_TYPE_WEAPON",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SWORD_5"
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SWORD",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": ["YELLOW", "PINK", "GREY_LIGHT", "BLACK"]
+					}
+				}
+			},
+			"onAttack": {
+				"power": 14,
+				"wearing": {
+					"id": "ITEM_CHAOS_GLOVES",
+					"powerFactor": 1.25
+				}
 			}
 		}
 	]
