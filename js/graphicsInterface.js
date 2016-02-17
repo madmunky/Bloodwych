@@ -774,7 +774,8 @@ function drawPocketUI(p, chp, start) {
                     ctx.drawImage(recolourUiGfx(gfxUI[pocketId], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                 }
             } else {
-                ctx.drawImage(itemRef[pocketId].gfx, ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
+                //itemRef[pocketId].gfx
+                ctx.drawImage(pocket.getGfx(), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, itemRef[pocketId].gfx.width * scale, itemRef[pocketId].gfx.height * scale);
             }
 
             if (pocket.type === 'ITEM_TYPE_STACKABLE') {
@@ -833,7 +834,7 @@ function drawPocketUI(p, chp, start) {
                 case 4:
                     {
                         //pid = itemID(p.pocket.id);
-                        ctx.drawImage(itemRef[p.pocket.id].gfx, ((p.ScreenX + 226) + (c * 16)) * scale, (p.ScreenY + 63) * scale, itemRef[p.pocket.id].gfx.width * scale, itemRef[p.pocket.id].gfx.height * scale);
+                        ctx.drawImage(p.pocket.getGfx(), ((p.ScreenX + 226) + (c * 16)) * scale, (p.ScreenY + 63) * scale, itemRef[p.pocket.id].gfx.width * scale, itemRef[p.pocket.id].gfx.height * scale);
                         if (p.pocket.type === 'ITEM_TYPE_STACKABLE') {
                             var qty = p.pocket.quantity;
                             if (p.pocket.id < 3) {

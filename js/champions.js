@@ -204,7 +204,7 @@ Champion.prototype.addFood = function(fd) {
 
 Champion.prototype.getWeaponPower = function(s1) {
     var pow = this.pocket[s1].getPower(); //weapon power
-    var wep = getObjectByKeys(itemData[this.pocket[s1].id], 'onAttack', 'wearing'); //check if there is bonus attack on weapon while wearing an item
+    var wep = getObjectByKeys(itemData[this.pocket[s1].id], 'onAttack', 'whileWearing'); //check if there is bonus attack on weapon while wearing an item
     if(typeof wep !== "undefined") {
         var slot = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND, POCKET_ARMOUR, POCKET_SHIELD, POCKET_GLOVES]; //check these slots only
         for(var s = 0; s < slot.length; s++) {
@@ -283,9 +283,9 @@ Champion.prototype.useItem = function(it, ac) {
     if(typeof tool !== "undefined") {
         var id = getObjectByKeys(tool, 'id');
         var typ = getObjectByKeys(tool, 'type');
-        var req = getObjectByKeys(tool, 'required');
-        var hand = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND];
         if(typeof id !== "undefined" || typeof typ !== "undefined") {
+            var req = getObjectByKeys(tool, 'required');
+            var hand = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND];
             for(var h = 0; h < hand.length; h++) {
                 var it2 = this.pocket[hand[h]];
                 if((typeof id !== "undefined" && it2.id === id) || (typeof typ !== "undefined" && it2.type === typ)) {
@@ -310,12 +310,13 @@ Champion.prototype.useItem = function(it, ac) {
             snd = snd.getVar();
         }
         if(typeof id !== "undefined") {
-            pow = pow * it.getPowerFactor(ac);
+            pow = pow * (1.0 + this.stat.str / 4.0 + this.stat.agi / 2.0) * 0.5 * it.getPowerFactor(ac);
             var dTo = getObjectByKeys(itemData[it.id], 'projectile', 'recolour', 'to');
             if(typeof dTo === "undefined") {
                 dTo = getObjectByKeys(itemData[it.id], 'dungeon', 'recolour', 'to');
             }
-            newProjectile(id.getVar(), dTo, snd, it.id + 100, pow * (1.0 + this.stat.str / 4.0 + this.stat.agi / 2.0), this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
+            newProjectile(id.getVar(), dTo, snd, it.id + 100, pow, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
+            this.writeAttackPoints('shoot');
             if (this.recruitment.playerId > -1) {
                 player[this.recruitment.playerId].redrawViewPort = true;
             }
@@ -352,7 +353,7 @@ Champion.prototype.useItem = function(it, ac) {
     if(typeof ac1 !=="undefined") {
         var it2 = getIndexById(itemData, ac1);
         if(it.quantity + ac1 >= 0 && it.quantity + ac1 < 100) {
-            it.setPocketItem(it.id, it.quantity + ac1);
+            it.setQuantity(it.quantity + ac1);
         }
         res = true;
     }
@@ -369,7 +370,7 @@ Champion.prototype.useItem = function(it, ac) {
 
 Champion.prototype.gainLevel = function() {
     if (this.levelUp > 0) {
-        if(this.level < 57) {
+        if(this.level < 99) {
             var prof = this.prof;
             var stat = new Array();
             stat[PROFESSION_WARRIOR] = {
@@ -409,18 +410,17 @@ Champion.prototype.gainLevel = function() {
                 spMax: 4
             }
             stat[PROFESSION_CUTPURSE] = {
-                    str: 5,
-                    agi: 8,
-                    int: 5,
-                    cha: 4,
-                    hp: 5,
-                    hpMax: 10,
-                    vit: 10,
-                    vitMax: 20,
-                    sp: 1,
-                    spMax: 3
-                }
-                //for (l = 0; l < this.levelUp; l++) {
+                str: 5,
+                agi: 8,
+                int: 5,
+                cha: 4,
+                hp: 5,
+                hpMax: 10,
+                vit: 10,
+                vitMax: 20,
+                sp: 1,
+                spMax: 3
+            }
             this.stat.str += Math.floor(Math.random() * stat[prof].str) + 1;
             this.stat.agi += Math.floor(Math.random() * stat[prof].agi) + 1;
             this.stat.int += Math.floor(Math.random() * stat[prof].int) + 1;
@@ -428,26 +428,26 @@ Champion.prototype.gainLevel = function() {
             this.stat.hpMax += Math.floor(Math.random() * stat[prof].hpMax) + stat[prof].hp;
             this.stat.vitMax += Math.floor(Math.random() * stat[prof].vitMax) + stat[prof].vit;
             this.stat.spMax += Math.floor(Math.random() * stat[prof].spMax) + stat[prof].sp;
-            if (this.stat.str > 99) {
-                this.stat.str = 99;
+            if (this.stat.str > 999) {
+                this.stat.str = 999;
             }
-            if (this.stat.agi > 99) {
-                this.stat.agi = 99;
+            if (this.stat.agi > 999) {
+                this.stat.agi = 999;
             }
-            if (this.stat.int > 99) {
-                this.stat.int = 99;
+            if (this.stat.int > 999) {
+                this.stat.int = 999;
             }
-            if (this.stat.cha > 99) {
-                this.stat.cha = 99;
+            if (this.stat.cha > 999) {
+                this.stat.cha = 999;
             }
-            if (this.stat.hpMax > 999) {
-                this.stat.hpMax = 999;
+            if (this.stat.hpMax > 9999) {
+                this.stat.hpMax = 9999;
             }
-            if (this.stat.vitMax > 999) {
-                this.stat.vitMax = 999;
+            if (this.stat.vitMax > 9999) {
+                this.stat.vitMax = 9999;
             }
-            if (this.stat.spMax > 99) {
-                this.stat.spMax = 99;
+            if (this.stat.spMax > 999) {
+                this.stat.spMax = 999;
             }
             this.level++;
             //}
@@ -467,9 +467,29 @@ Champion.prototype.restoreStats = function() {
     }
     if (this !== null) {
         if (!monster[TOWER_CHAMPIONS][this.id].dead) {
-            this.addHP(Math.floor((Math.random() * (this.stat.str / 16)) + 1));
-            this.addVit(Math.floor((Math.random() * (this.stat.agi / 16)) + 1));
-            this.addSP(Math.floor((Math.random() * (this.stat.int / 16)) + 1));
+            var it = this.getEquippedItems();
+            var hp = 1.0;
+            var vi = 1.0;
+            var sp = 1.0;
+            for(var i = 0; i < it.length; i++) { //e.g. heal wand
+                if(typeof getObjectByKeys(itemData[it[i].id], 'onEquip', 'restoreStat') !== "undefined") {
+                    var fhp = getObjectByKeys(itemData[it[i].id], 'onEquip', 'restoreStat', 'addHPFactor');
+                    var fvi = getObjectByKeys(itemData[it[i].id], 'onEquip', 'restoreStat', 'addVitFactor');
+                    var fsp = getObjectByKeys(itemData[it[i].id], 'onEquip', 'restoreStat', 'addSPFactor');
+                    if(typeof fhp !== "undefined") {
+                        hp *= fhp;
+                    }
+                    if(typeof fvi !== "undefined") {
+                        vi *= fvi;
+                    }
+                    if(typeof fsp !== "undefined") {
+                        sp *= fsp;
+                    }
+                }
+            }
+            this.addHP(Math.floor((Math.random() * (this.stat.str / 16) + 1) * hp));
+            this.addVit(Math.floor((Math.random() * (this.stat.agi / 16) + 1) * vi));
+            this.addSP(Math.floor((Math.random() * (this.stat.int / 16) + 1) * sp));
             if (this.stat.vitMax * 0.15 > this.stat.vit) {
                 dmg = Math.ceil(this.stat.vitMax * 0.15) - this.stat.vit;
                 this.getDamage(dmg, true);
@@ -569,7 +589,8 @@ Champion.prototype.consumePocketItem = function(pk, q) {
             q = 1;
         }
         if (it.quantity - q >= 0) {
-            it.setPocketItem(it.id, it.quantity - q);
+            it.setQuantity(it.quantity - q);
+            //it.setPocketItem(it.id, it.quantity - q);
             return true;
         }
     }
@@ -627,6 +648,15 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
             }, self.getAttackSpeed(1500));
         })(p, x, y, w);
     }
+}
+
+Champion.prototype.getEquippedItems = function() {
+    var it = [];
+    var slot = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND, POCKET_ARMOUR, POCKET_SHIELD, POCKET_GLOVES];
+    for(var s = 0; s < slot.length; s++) {
+        it.push(this.pocket[slot[s]]);
+    }
+    return it;
 }
 
 Champion.prototype.getAttackSpeed = function(fac) {
@@ -805,14 +835,15 @@ function initChampions() {
             var a = hex2dec(pk[i].substr(0, 2));
             pk[i] = parseInt(a);
         }
-        for (i = 0; i < POCKET_GLOVES; i++) {
-            if (pk[i] >= 1 && pk[i] < 5) {
-                slot[i] = newPocketItem(pk[i], pk[pk[i] + 11]);
+        for (i = 0; i < POCKET_MAX - 1; i++) {
+            if (pk[i] >= ITEM_COINAGE && pk[i] <= ITEM_ELF_ARROWS) {
+                slot[i] = newPocketItem(pk[i], pk[pk[i] + POCKET_MAX - 2]);
             } else {
                 slot[i] = newPocketItem(pk[i]);
             }
         }
         slot[POCKET_GLOVES] = newPocketItem();
+        slot[POCKET_HIDDEN] = newPocketItem(ch + ITEM_BLODWYN_RIP);
         var md = championData[ch];
         var level = parseInt(hex2dec(md.substr(0, 2)));
         var str = parseInt(hex2dec(md.substr(2, 2)));

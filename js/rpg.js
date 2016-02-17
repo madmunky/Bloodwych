@@ -86,10 +86,10 @@ function calculateAttack(att, def, tof) {
 				continue;
 			}
 			fromDir = from.d;
-			attack += 25 + from.level * 4;
+			attack += 25 + from.level * 2;
 		}
 
-		//Defender calculationss
+		//Defender calculations
 		if (def instanceof Player) {
 			var ch = [];
 			var ch1 = [];
@@ -110,7 +110,7 @@ function calculateAttack(att, def, tof) {
 				}
 				if (typeof to !== "undefined") {
 					tmon = to.getMonster();
-					defense += to.stat.agi / 2.0;
+					defense += to.stat.agi / 4.0;
 					defense -= to.getArmourClass();
 					defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
 					defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);
@@ -140,7 +140,7 @@ function calculateAttack(att, def, tof) {
 						if (to.champId > -1) { //champion
 							to = champion[to.champId];
 							tmon = to.getMonster();
-							defense += to.stat.agi / 2.0;
+							defense += to.stat.agi / 4.0;
 							defense -= to.getArmourClass();
 							defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
 							defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);

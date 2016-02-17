@@ -159,11 +159,11 @@ var COLOUR_GEM_SERPENT = 0,
     COLOUR_GEM_BROWN = 6,
     COLOUR_GEM_TAN = 7;
 
-var CLASS_COLOUR_SERP = 0,
-    CLASS_COLOUR_CHAOS = 1,
-    CLASS_COLOUR_DRAG = 2,
-    CLASS_COLOUR_MOON = 3,
-    CLASS_COLOUR_ANCIENT = 4;
+var CLASS_SERPENT = 0,
+    CLASS_CHAOS = 1,
+    CLASS_DRAG = 2,
+    CLASS_MOON = 3,
+    CLASS_ANCIENT = 4;
 
 var COLOUR_FLOOR_SWITCH = 0,
     COLOUR_FLOOR_FIRE = 1,
@@ -193,11 +193,11 @@ paletteData['PLAYER'][0] = [colourData['WHITE'], colourData['BLUE'], colourData[
 paletteData['PLAYER'][1] = [colourData['WHITE'], colourData['RED'], colourData['RED_DARK']];
 
 paletteData['CLASS'] = new Array();
-paletteData['CLASS'][CLASS_COLOUR_SERP] = colourData['GREEN'],
-paletteData['CLASS'][CLASS_COLOUR_CHAOS] = colourData['YELLOW'],
-paletteData['CLASS'][CLASS_COLOUR_DRAG] = colourData['RED'],
-paletteData['CLASS'][CLASS_COLOUR_MOON] = colourData['BLUE'],
-paletteData['CLASS'][CLASS_COLOUR_ANCIENT] = colourData['PINK'];
+paletteData['CLASS'][CLASS_SERPENT] = colourData['GREEN'],
+paletteData['CLASS'][CLASS_CHAOS] = colourData['YELLOW'],
+paletteData['CLASS'][CLASS_DRAG] = colourData['RED'],
+paletteData['CLASS'][CLASS_MOON] = colourData['BLUE'],
+paletteData['CLASS'][CLASS_ANCIENT] = colourData['PINK'];
 
 paletteData['SERPENT'] = new Array(colourData['GREY_LIGHT'], colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREEN'], colourData['WHITE']),
 paletteData['MOON'] = new Array(colourData['GREY_LIGHT'], colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLUE'], colourData['WHITE']),
@@ -1596,7 +1596,8 @@ window.item = new Array();
 var itemGfxD = new Array();
 var itemRef = new Array(109);
 
-var POCKET_LEFT_HAND = 0,
+var POCKET_MAX = 13,
+    POCKET_LEFT_HAND = 0,
     POCKET_RIGHT_HAND = 1,
     POCKET_ARMOUR = 2,
     POCKET_SHIELD = 3,
@@ -1608,7 +1609,8 @@ var POCKET_LEFT_HAND = 0,
     POCKET_SLOT_5 = 9,
     POCKET_SLOT_6 = 10,
     POCKET_SLOT_7 = 11,
-    POCKET_GLOVES = 12;
+    POCKET_GLOVES = 12,
+    POCKET_HIDDEN = 13; //hidden stash (for RIP, food, keys, arrows or coinage)
 
 var ITEM_EMPTY = 0,
     ITEM_COINAGE = 1,
@@ -1720,6 +1722,15 @@ var ITEM_EMPTY = 0,
     ITEM_DRAGON_RING = 107,
     ITEM_MOON_RING = 108,
     ITEM_BOOK_OF_SKULLS = 109;
+
+var DOOR_COMMON = 0,
+    DOOR_BRONZE = 1,
+    DOOR_IRON = 2,
+    DOOR_SERPENT = 3,
+    DOOR_CHAOS = 4,
+    DOOR_DRAGON = 5,
+    DOOR_MOON = 6,
+    DOOR_CHROMATIC = 7;
 
 var MON_ITEM_DROPS = new Array();
 MON_ITEM_DROPS[0] = [ITEM_COINAGE, ITEM_COMMON_KEYS, ITEM_ARROWS, ITEM_APPLE_1, ITEM_APPLE_2, ITEM_APPLE, ITEM_BISCUIT_1, ITEM_BISCUIT_2, ITEM_BISCUIT, ITEM_MEAD_1, ITEM_MEAD_2, ITEM_MEAD, ITEM_WATER_1, ITEM_WATER_2, ITEM_WATER, ITEM_CHICKEN_1, ITEM_CHICKEN_2, ITEM_CHICKEN];

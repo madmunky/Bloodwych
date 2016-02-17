@@ -406,7 +406,7 @@ function debugText(p, txt) {
 function godMode() {
     for (c in champion) {
         var ch = champion[c];
-        ch.levelUp = 99;
+        ch.levelUp = 35;
         while (ch.levelUp > 0) {
             ch.gainLevel();
         }

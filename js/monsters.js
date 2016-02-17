@@ -1,5 +1,8 @@
 function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, champId, pocket) {
     this.id = id;
+    if(level < 0) {
+        level = 0;
+    }
     this.level = level;
     this.type = type;
     var clr = 0;
@@ -561,45 +564,21 @@ Monster.prototype.die = function() {
         if (this.champId > -1) {
             var ch = champion[this.champId];
             if (this.isRecruitedBy() === null || !ch.recruitment.attached) {
-                dropItem(ch.id + ITEM_BLODWYN_RIP, 1, this.floor, this.x, this.y, sq);
+                dropItem(ch.pocket[POCKET_HIDDEN].id, 1, this.floor, this.x, this.y, sq);
             } else {
                 playSound(SOUND_DEATH);
             }
         } else {
             newProjectile(DUNGEON_PROJECTILE_BIG, paletteData['MOON_BIG'], null, -1, 0, this.floor, this.x, this.y, 0, null);
             if (this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER) {
-                var lvl = Math.floor(this.level / 5.0);
-                if (lvl > 3) {
-                    lvl = 3;
-                }
-                if (this.form === MON_FORM_ZENDIK) {
-                    lvl = 4;
-                } else if (this.form === MON_FORM_BEHEMOTH) {
-                    lvl = 5;
-                } else if (Math.floor(Math.random() * 2) === 1 && this.type !== MON_TYPE_DROPPER) {
-                    return;
-                }
-
-                //Special monsters of type 8 can hold items
                 var it = [];
-                for (i = 0; i <= POCKET_GLOVES; i++) {
+                for (i = 0; i < POCKET_MAX + 1; i++) {
                     if (this.pocket[i].id > 0) {
                         it.push({
                             id: this.pocket[i].id,
                             quantity: this.pocket[i].quantity
                         });
                     }
-                }
-                if (it.length === 0) {
-                    var id = MON_ITEM_DROPS[lvl][Math.floor(Math.random() * MON_ITEM_DROPS[lvl].length)];
-                    var qt = 1;
-                    if (id <= ITEM_ELF_ARROWS) {
-                        qt = Math.floor(Math.random() * (this.level + 2) * 1) + 1;
-                    }
-                    it = [{
-                        id: id,
-                        quantity: qt
-                    }];
                 }
                 for (i in it) {
                     dropItem(it[i].id, it[i].quantity, this.floor, this.x, this.y, sq);
@@ -648,14 +627,9 @@ Monster.prototype.getBinaryView = function(pos18, index, length) {
     }
 }
 
-Monster.prototype.holdItem = function(intItemId) {
-    this.holding = intItemId;
+Monster.prototype.setSpecialPocketItem = function(i) {
+    this.pocket[POCKET_SLOT_0].setPocketItem(monsterItemData[i]);
 }
-
-Monster.prototype.setDropItem = function(i) {
-    this.pocket[POCKET_SLOT_0].setPocketItem(monsterItemData[i], 1);
-}
-
 
 function initMonsters() {
     var max = CHAMPION_MAX;
@@ -695,10 +669,30 @@ function initMonsters() {
                 } else {
                     square = 0;
                 }
-                monster[tw.id][i] = new Monster(max, level, type, form, tw.id, floor, x, y, 0, square, teamId, null, createPocketSlots());
+                monster[tw.id][i] = new Monster(max, level, type, form, tw.id, floor, x, y, 0, square, teamId, null, createPocketSlots(POCKET_MAX + 1));
+                var mon = monster[tw.id][i];
                 if (hi === 1) {
-                    monster[tw.id][i].setDropItem(mi);
+                    mon.setSpecialPocketItem(mi);
                     mi++;
+                } else {
+                    var lvl = Math.floor(mon.level / 5.0);
+                    if (lvl > 3) {
+                        lvl = 3;
+                    }
+                    if (mon.form === MON_FORM_ZENDIK) {
+                        lvl = 4;
+                    } else if (mon.form === MON_FORM_BEHEMOTH) {
+                        lvl = 5;
+                    }
+                    if(lvl > 3 || Math.floor(Math.random() * 2) === 1) {
+                        var id = MON_ITEM_DROPS[lvl][Math.floor(Math.random() * MON_ITEM_DROPS[lvl].length)];
+                        var qt = 1;
+                        if (getItemType(id) === 'ITEM_TYPE_STACKABLE') {
+                            qt = Math.floor(Math.random() * (mon.level + 2) * 1) + 1;
+                        }
+                        var it = mon.pocket[POCKET_HIDDEN];
+                        it.setPocketItem(id, qt);
+                    }
                 }
                 max++;
                 if (debug) {
@@ -711,7 +705,7 @@ function initMonsters() {
     //TESTING!!! REMOVE AFTER
     var testType = MON_FORM_CRAB;
     var end = monster[TOWER_MOD0].length;
-    monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 15, 18, 0, CHAR_FRONT_SOLO, 0, null, createPocketSlots());
+    monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 15, 18, 0, CHAR_FRONT_SOLO, 0, null, createPocketSlots(POCKET_MAX + 1));
     monster[TOWER_MOD0][end].pocket[POCKET_SLOT_0].setPocketItem(ITEM_CRYSTAL_PLATE);
     monster[TOWER_MOD0][end].pocket[POCKET_SLOT_1].setPocketItem(ITEM_WAR_SHIELD);
     monster[TOWER_MOD0][end].pocket[POCKET_SLOT_2].setPocketItem(ITEM_CRYSTAL_GLOVES);

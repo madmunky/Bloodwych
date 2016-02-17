@@ -3,6 +3,7 @@ function Item(id, quantity, location) {
     this.quantity = quantity;
     this.location = location;
     this.type = getItemType(id);
+
 }
 
 Types.Item = Item;
@@ -25,7 +26,7 @@ Item.prototype.getPower = function(ac) {
     if(typeof ac !== "undefined") {
         pw = getObjectByKeys(itemData[this.id], ac, 'power');
     }
-    if(typeof pw !== "undefined") {
+    if(typeof pw !== "undefined") { //JSON
         return pw;
     }
     if (this.type === 'ITEM_TYPE_WEAPON') {
@@ -187,7 +188,7 @@ Item.prototype.getArmourClass = function() {
     return 0;
 }
 
-Item.prototype.setPocketItem = function(id, q) {
+Item.prototype.setPocketItem = function(id, q, pas) {
     if (typeof id === "undefined" || id === ITEM_EMPTY || (typeof q !== "undefined" && q <= 0)) {
         id = ITEM_EMPTY;
         q = 0;
@@ -195,13 +196,62 @@ Item.prototype.setPocketItem = function(id, q) {
         q = 1;
     }
     this.id = id;
-    this.quantity = q;
+    if(typeof pas !== "undefined" && pas) {
+        this.quantity = q;
+    } else {
+        this.setQuantity(q);
+    }
     this.location.tower = -1;
     this.location.floor = 0;
     this.location.x = 0;
     this.location.y = 0;
     this.location.square = 0;
     this.type = getItemType(id);
+}
+
+Item.prototype.setQuantity = function(qty) {
+    if(typeof qty === "undefined") {
+        qty = 1;
+    } else if(qty < 0) {
+        qty = 0;
+    } else if(qty > 99) {
+        qty = 99;
+    }
+    if(this.quantity !== qty) {
+        var qt = getObjectByKeys(itemData[this.id], 'onQuantity');
+        for(var q in qt) {
+            var val = getObjectByKeys(qt[q], 'value');
+            var id2 = getObjectByKeys(qt[q], 'changeToItem');
+            var app = getObjectByKeys(qt[q], 'appearanceOnly');
+            if(typeof id2 !== "undefined" && qty === val + 1 && !app) {
+                this.setPocketItem(id2.getVar(), qty, true);
+                return true;
+            }
+        }
+    }
+    if(qty === 0) {
+        this.setPocketItem(ITEM_EMPTY, 0, true);
+        return false;
+    }
+    this.quantity = qty;
+    return true;
+}
+
+Item.prototype.getGfx = function(dun) {
+    var it = itemRef[this.id];
+    var qt = getObjectByKeys(it, 'onQuantity');
+    for(var q in qt) {
+        var val = getObjectByKeys(qt[q], 'value');
+        var id2 = getObjectByKeys(qt[q], 'changeToItem');
+        var app = getObjectByKeys(qt[q], 'appearanceOnly');
+        if(typeof id2 !== "undefined" && this.quantity === val + 1 && app) {
+            it = itemRef[id2.getVar()];
+        }
+    }
+    if(typeof dun !== "undefined" && dun) {
+        return it.gfxD;
+    }
+    return it.gfx;
 }
 
 Item.prototype.toString = function() {
@@ -251,6 +301,10 @@ function initItems(t) {
                     y: xy.y,
                     square: dr[dir]
                 });
+                var ima = getObjectByKeys(itemData[id], 'quantity');
+                if(typeof ima !== "undefined") {
+                    item[t.id][max].quantity = ima + 1;
+                }
                 //PrintLog('Loaded item: ' + item[t.id][max]);
             }
             i = i + 3 + n * 2;
@@ -258,7 +312,7 @@ function initItems(t) {
 
         //TESTING
         if(t.id === TOWER_MOD0) {
-            item[t.id][item[t.id].length] = new Item(ITEM_CHAOS_GLOVES, 1, {
+            item[t.id][item[t.id].length] = new Item(ITEM_SERPENT_RING, 4, {
                 tower: t.id,
                 floor: 3,
                 x: 12,
@@ -271,6 +325,20 @@ function initItems(t) {
                 x: 12,
                 y: 23,
                 square: 1
+            });
+            item[t.id][item[t.id].length] = new Item(ITEM_LONG_BOW, 1, {
+                tower: t.id,
+                floor: 3,
+                x: 12,
+                y: 23,
+                square: 2
+            });
+            item[t.id][item[t.id].length] = new Item(ITEM_ELF_ARROWS, 99, {
+                tower: t.id,
+                floor: 3,
+                x: 12,
+                y: 23,
+                square: 3
             });
         }
         //END OF TESTING
@@ -337,9 +405,12 @@ function newPocketItem(id, q) {
     });
 }
 
-function createPocketSlots() {
+function createPocketSlots(max) {
+    if(typeof max === "undefined") {
+        var max = POCKET_MAX;
+    }
     var pocket = new Array();
-    for (j = 0; j <= POCKET_GLOVES; j++) {
+    for (j = 0; j < max; j++) {
         pocket[j] = newPocketItem();
     }
     return pocket;
@@ -520,10 +591,10 @@ function initItemRefs() {
     createItemRef(103, "Tan Gem", gfxUI[UI_GFX_POCKET_GEM_TAN], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GEM], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['BROWN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
 
     createItemRef(104, "Grey Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING], colourData['GREEN'], colourData['GREY_DARK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(105, "Serpent Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(106, "Chaos Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['YELLOW'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(107, "Dragon Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(108, "Moon Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
+    createItemRef(105, "Serpent Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
+    createItemRef(106, "Chaos Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['YELLOW'], colourData['GREY_LIGHT'], colourData['BLACK'])));
+    createItemRef(107, "Dragon Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLACK'])));
+    createItemRef(108, "Moon Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
 
     createItemRef(109, "Book of Skulls", gfxUI[UI_GFX_ICON_BOOKOFSKULLS], itemsGfxD[DUNGEON_ITEM_BOOK_OF_SKULLS]);
 
