@@ -892,32 +892,34 @@ function drawMonster(m, dir, dist, player, offset, returnImg) {
 
                     var gfx1 = getSprite(part,dist,dir1,null,m, player);
                     var gfx2;
+                    if (typeof gfx1 !== 'undefined'){
 
-                    if (dir2 > -1){
-                        var gfx2 = getSprite(part,dist,dir2,null,m, player);
-                    }
-
-                    var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
-                    var offy = 76 - Math.floor(gfx1.height) - offset.y;
-
-                    if (dist >= 4 || part !== IMAGE_MON_MINI) {
-                        var blur = 0;
-                        if (dist <= DISTANCE_MID) {
-                            blur = m.blur;
+                        if (dir2 > -1){
+                            var gfx2 = getSprite(part,dist,dir2,null,m, player);
                         }
-                                                if (returnImg){
-                                                    charContext.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
-                                                }else{
-                                                    player.Portal.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
-                                                }
-                        if (dir2 > -1) {
-                            offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
-                            offy = 76 - Math.floor(gfx2.height) - offset.y;
-                                                        if (returnImg){
-                                                            charContext.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
-                                                        }else{
-                                                            player.Portal.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
-                                                        }
+
+                        var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
+                        var offy = 76 - Math.floor(gfx1.height) - offset.y;
+
+                        if (dist >= 4 || part !== IMAGE_MON_MINI) {
+                            var blur = 0;
+                            if (dist <= DISTANCE_MID) {
+                                blur = m.blur;
+                            }
+                                                    if (returnImg){
+                                                        charContext.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
+                                                    }else{
+                                                        player.Portal.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
+                                                    }
+                            if (dir2 > -1) {
+                                offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
+                                offy = 76 - Math.floor(gfx2.height) - offset.y;
+                                                            if (returnImg){
+                                                                charContext.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
+                                                            }else{
+                                                                player.Portal.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
+                                                            }
+                            }
                         }
                     }
                 //}
@@ -1027,5 +1029,5 @@ function getSprite(part,dist,dir,action, monster, player){
         }
     }
 
-    PrintLog(strMonsterForm[monster.form - 100] + " - Part: " + partName[part] + " " + distName[dist] + " " + dirName[dir] + " " + strGestures[monster.gesture]);
+   // PrintLog(strMonsterForm[monster.form - 100] + " - Part: " + partName[part] + " " + distName[dist] + " " + dirName[dir] + " " + strGestures[monster.gesture]);
 }
