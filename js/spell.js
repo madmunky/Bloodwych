@@ -27,7 +27,7 @@ function initSpells() {
 			var symbols = TEXT_SPELL_BOOK[id + cl * SPELL_LEVEL_MAX];
 			var level = getSpellLevel(cl, id);
 			spell[cl][id] = new Spell(cl, id, name, description, symbols, level);
-			PrintLog('Loaded spell: ' + spell[cl][id]);
+			//PrintLog(spell[cl][id], false);
 		}
 	}
 }

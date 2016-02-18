@@ -1027,5 +1027,5 @@ function getSprite(part,dist,dir,action, monster, player){
         }
     }
 
-    console.log(strMonsterForm[monster.form - 100] + " - Part: " + partName[part] + " " + distName[dist] + " " + dirName[dir] + " " + strGestures[monster.gesture]);
+    PrintLog(strMonsterForm[monster.form - 100] + " - Part: " + partName[part] + " " + distName[dist] + " " + dirName[dir] + " " + strGestures[monster.gesture]);
 }

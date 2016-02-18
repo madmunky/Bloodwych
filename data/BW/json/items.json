@@ -2439,25 +2439,32 @@
 					"id": "UI_GFX_POCKET_SWORD_2",
 					"recolour": {
 						"from": ["GREEN", "WHITE", "GREY_LIGHT", "GREY_MEDIUM"],
-						"to": ["RED", "YELLOW", "PINK", "RED"]
+						"to": ["YELLOW", "PINK", "RED", "RED_DARK"]
 					}
 				},
 				"dungeon": {
 					"id": "DUNGEON_ITEM_SWORD",
 					"recolour": {
 						"from": ["RED", "BLUE", "GREY_LIGHT", "WHITE"],
-						"to": ["BROWN", "RED_DARK", "RED", "PINK"]
+						"to": ["YELLOW", "RED_DARK", "BROWN", "RED"]
 					}
 				}
 			},
+			"quantity": 4,
 			"onAttack": {
 				"power": 16,
 				"castSpell": {
 					"id": "SPELL_FIREBALL",
 					"chance": 0.2,
-					"power": 30
+					"power": 30,
+					"addQuantity": -1
 				}
-			}
+			},
+			"onQuantity": [{
+				"value": 0,
+				"changeToItem": "ITEM_LONG_SWORD",
+				"appearanceOnly": true
+			}]
 		}
 	]
 }

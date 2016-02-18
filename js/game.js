@@ -167,6 +167,6 @@ function timerAction() {
 			}
 		}
 	}catch(err){
-		console.log("Error: " + err.toString());
+		PrintLog("Error: " + err.toString());
 	}
 }

@@ -275,56 +275,8 @@ Champion.prototype.itemAllowedOnSlot = function(it, s) {
 Champion.prototype.useItem = function(it, ac, param) {
     var suc = false;
     var use = getObjectByKeys(itemData[it.id], ac);
-    //var rpw = 1.0;
     var pow = 0.0;
     var pof = 1.0;
-
-    //Use item with another item (e.g. bow and arrow)
-    /*var tool = getObjectByKeys(use, 'tool');
-    if(typeof tool !== "undefined") {
-        var id = getObjectByKeys(tool, 'id');
-        var typ = getObjectByKeys(tool, 'type');
-        if(typeof id !== "undefined" || typeof typ !== "undefined") {
-            var req = getObjectByKeys(tool, 'required');
-            var hand = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND];
-            for(var h = 0; h < hand.length; h++) {
-                var it2 = this.pocket[hand[h]];
-                if((typeof id !== "undefined" && it2.id === id) || (typeof typ !== "undefined" && it2.type === typ)) {
-                    rpw = it2.getPower();
-                    break;
-                }
-            }
-            if(req && rpw === 1.0) { //If required item is not there, then do nothing.
-                return false;
-            }
-        }
-    }
-
-    //Shoot projectile
-    var ob1 = getObjectByKeys(use, 'action');
-    if(typeof ob1 !=="undefined" && ob1 === 'shoot') {
-        var id = getObjectByKeys(itemData[it.id], 'projectile', 'id');
-        var snd = getObjectByKeys(use, 'sound');
-        if(typeof id === "undefined") {
-            id = getObjectByKeys(itemData[it.id], 'dungeon', 'id');
-        }
-        if(typeof snd !== "undefined") {
-            snd = snd.getVar();
-        }
-        if(typeof id !== "undefined") {
-            rpw = rpw * (1.0 + this.stat.str / 4.0 + this.stat.agi / 2.0) * 0.5 * it.getPowerFactor(ac);
-            var dTo = getObjectByKeys(itemData[it.id], 'projectile', 'recolour', 'to');
-            if(typeof dTo === "undefined") {
-                dTo = getObjectByKeys(itemData[it.id], 'dungeon', 'recolour', 'to');
-            }
-            newProjectile(id.getVar(), dTo, SOUND_ATTACK, it.id + 100, rpw, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
-            this.writeAttackPoints('shoot');
-            if (this.recruitment.playerId > -1) {
-                player[this.recruitment.playerId].redrawViewPort = true;
-            }
-            suc = true;
-        }
-    }*/
 
     //Get power
     var pw2 = getObjectByKeys(use, 'power');
@@ -372,24 +324,49 @@ Champion.prototype.useItem = function(it, ac, param) {
         }
     }
 
+    //Cast spell
+    var spl = getObjectByKeys(use, 'castSpell');
+    var id = getObjectByKeys(use, 'castSpell', 'id');
+    if(typeof spl !=="undefined" && typeof id !== "undefined") {
+        var ch = getObjectByKeys(spl, 'chance');
+        if(typeof ch === "undefined" || Math.random() < ch) {
+            var irc = getObjectByKeys(spl, 'addQuantity');
+            if(it.quantity > 1 || typeof irc === "undefined" || irc >= 0) {
+                var pw = getObjectByKeys(spl, 'power');
+                if(typeof pw === "undefined") {
+                    var pw = this.getSpellPower();
+                }
+                castSpell(id.getVar(), this.getMonster(), pw);
+                if(typeof irc === "undefined") {
+                    irc = 0;
+                }
+                var q = it.quantity + irc;
+                if(q < 1) {
+                    q = 1;
+                }
+                it.setQuantity(q);
+            }
+        }
+    }
+
     //Change spell
-    if(typeof use !=="undefined" && typeof param !== "undefined" && typeof param.spell !== "undefined") {
+    if(typeof param !== "undefined" && typeof param.spell !== "undefined") {
         var sb = param.spell;
         var sp = getSpellById(sb.id);
         var iid = getObjectByKeys(use, 'changeSpell', 'id');
         var icl = getObjectByKeys(use, 'changeSpell', 'class');
         if((typeof iid !== "undefined" && iid.getVar() === sp.id) || (typeof icl !== "undefined" && icl.getVar() === sp.colour)) {
-            var ip = getObjectByKeys(use, 'changeSpell', 'power');
-            var ipf = getObjectByKeys(use, 'changeSpell', 'powerFactor');
-            if(typeof ip !== "undefined") {
-                pow += ip;
-            }
-            if(typeof ipf !== "undefined") {
-                pof *= ipf;
-            }
             var imc = getObjectByKeys(use, 'changeSpell', 'manaCostFactor');
             var irc = getObjectByKeys(use, 'changeSpell', 'addQuantity');
             if(it.quantity > 1 || typeof irc === "undefined" || irc >= 0) {
+                var ip = getObjectByKeys(use, 'changeSpell', 'power');
+                var ipf = getObjectByKeys(use, 'changeSpell', 'powerFactor');
+                if(typeof ip !== "undefined") {
+                    pow += ip;
+                }
+                if(typeof ipf !== "undefined") {
+                    pof *= ipf;
+                }
                 if(typeof irc === "undefined") {
                     irc = 0;
                 }
@@ -753,7 +730,7 @@ Champion.prototype.getAttackSpeed = function(fac) {
     return Math.floor(fac / (1.0 + 0.02 * lvl));
 }
 
-Champion.prototype.toString = function() {
+/*Champion.prototype.toString = function() {
     sb = "";
     for (cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
         sb = sb + "[";
@@ -773,7 +750,7 @@ Champion.prototype.toString = function() {
         }
     }
     return '[id:' + this.id + ', firstName:' + this.firstName + ', lastName:' + this.lastName + ', prof:' + this.prof + ', colour:' + this.colour + ', level:' + this.level + ', spellBook:[' + sb + '], stat:[str:' + this.stat.str + ', agi:' + this.stat.agi + ', int:' + this.stat.int + ', cha:' + this.stat.cha + ', hp:' + this.stat.hp + ', hpMax:' + this.stat.hpMax + ', vit:' + this.stat.vit + ', vitMax:' + this.stat.vitMax + ', hp:' + this.stat.hp + ', sp:' + this.stat.sp + ', spMax:' + this.stat.spMax + ', ac:' + this.stat.ac + ']]';
-}
+}*/
 
 Champion.prototype.activateSpell = function(s, pow) {
     this.expireSpell();
@@ -879,7 +856,7 @@ Champion.prototype.setSpellCost = function(ud) {
 }
 
 Champion.prototype.getSpellCastChance = function() {
-    var res = this.getSpellPower();
+    var res = this.getSpellPower(true);
     //PrintLog("COST: " + res + " f:" + this.spellFatigue);
     if (res > 1.0) {
         return 1.0;
@@ -889,14 +866,20 @@ Champion.prototype.getSpellCastChance = function() {
     return res;
 }
 
-Champion.prototype.getSpellPower = function() {
-    var res = (this.selectedSpell.castSuccessful * 0.015 - 6.0 / (this.selectedSpell.cost + 6.0) + (this.stat.int + 5.0) * 0.015 - this.selectedSpell.ref.level * 0.15) + this.spellFatigue; // + (this.level - 1) * 0.1;
-
+Champion.prototype.getSpellPower = function(chance) {
+    var pow = (this.selectedSpell.castSuccessful * 0.015 - 6.0 / (this.selectedSpell.cost + 6.0) + (this.stat.int + 5.0) * 0.015 - this.selectedSpell.ref.level * 0.15) + this.spellFatigue; // + (this.level - 1) * 0.1;
+    if(typeof chance === "undefined" || !chance) {
+        pow = Math.floor(pow * 10 + this.level * 4);
+        var it = this.getEquippedItems();
+        for(var i = 0; i < it.length; i++) { //wands
+            var res = this.useItem(it[i], 'onCastSpell', {spell: this.selectedSpell});
+            pow = (pow + res.power) * res.powerFactor;
+        }
+    }
     if (debug){
         PrintLog('pcast:' + this.selectedSpell.castSuccessful + ' scost:' + this.selectedSpell.cost + ' pint:' + this.stat.int + ' slvl:' + this.selectedSpell.ref.level + ' fat:' + this.spellFatigue + ' = res:' + res);
     }
-
-    return res;
+    return pow;
 }
 
 Champion.prototype.getSpeed = function(fac) {
@@ -985,6 +968,7 @@ function initChampions() {
         //spellBook[0][1].learnt = true;
         monster[TOWER_CHAMPIONS][ch] = new Monster(ch, level, 2, ch, TOWER_MOD0, floor, x, y, d, d, 0, ch);
         champion[ch] = new Champion(ch, TEXT_CHAMPION_NAME[ch], TEXT_CHAMPION_LASTNAME[ch], getChampionClass(ch), getChampionColour(ch), level, stat, spellBook, slot);
-        PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
+        //PrintLog(champion[ch], false);
+        //PrintLog('Loaded champion: ' + champion[ch] + ', as monster: ' + monster[TOWER_CHAMPIONS][ch]);
     }
 }

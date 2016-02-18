@@ -694,7 +694,6 @@ function initMonsters() {
                         if(typeof it !== "undefined") {
                             it.setPocketItem(id, qt, true);
                         }
-                        console.log(it);
                     }
                 }
                 max++;

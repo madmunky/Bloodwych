@@ -326,7 +326,7 @@ function checkAllGfxLoaded() {
     gfxLoaded.max++;
     if (gfxLoaded.count === gfxLoaded.max) {
         gfxStage++;
-        console.log("All Graphics processed");
+        PrintLog("All Graphics processed");
         if (gfxStage > 1){
           gfxLoaded.done = true;
         }else{
