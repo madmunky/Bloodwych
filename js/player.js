@@ -1319,12 +1319,7 @@ Player.prototype.castSpell = function (sb, ch, s) {
                 writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, colourData['BLUE_DARK']); //spell fizzles
             } else if (Math.random() < ch.getSpellCastChance()) {
                 var it = ch.getEquippedItems();
-                var pow = Math.floor(ch.getSpellPower() * 10 + ch.level * 4);
-                var pof = 1.0;
-                for(var i = 0; i < it.length; i++) { //wands
-                    var res = ch.useItem(it[i], 'onCastSpell', {spell: sb});
-                    pow = (pow + res.power) * res.powerFactor;
-                }
+                var pow = ch.getSpellPower();
                 castSpell(sb.id, ch.getMonster(), pow);
                 sb.castSuccessful++;
                 if (!s) {

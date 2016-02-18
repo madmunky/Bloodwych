@@ -305,6 +305,7 @@ function initItems(t) {
                 if(typeof ima !== "undefined") {
                     item[t.id][max].quantity = ima + 1;
                 }
+                //PrintLog(item[t.id][max], false);
                 //PrintLog('Loaded item: ' + item[t.id][max]);
             }
             i = i + 3 + n * 2;
@@ -312,7 +313,7 @@ function initItems(t) {
 
         //TESTING
         if(t.id === TOWER_MOD0) {
-            item[t.id][item[t.id].length] = new Item(ITEM_FLAME_SWORD, 1, {
+            item[t.id][item[t.id].length] = new Item(ITEM_FLAME_SWORD, 4, {
                 tower: t.id,
                 floor: 3,
                 x: 12,

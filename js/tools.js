@@ -259,9 +259,13 @@ function decimalToHex(d) {
 	return hex;
 }
 
-function PrintLog(myString) {
+function PrintLog(myString, log) {
 	if (debug) {
-		console.log(getTimeStamp() + " Debug: " + myString);
+		if(typeof log === "undefined" || log) {
+			console.log(getTimeStamp() + " Debug: " + myString);
+		} else {
+			console.log(myString);
+		}
 	}
 }
 
@@ -351,7 +355,7 @@ function isCyclic(obj) {
 			seenObjects.push(obj);
 			for (var key in obj) {
 				if (obj.hasOwnProperty(key) && detect(obj[key])) {
-					console.log(obj, 'cycle at ' + key);
+					PrintLog(obj, 'cycle at ' + key);
 					return true;
 				}
 			}

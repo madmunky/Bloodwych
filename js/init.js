@@ -72,13 +72,13 @@ function handleFileProgress(event) {
 }
 
 function handleError(event) {
-    console.log("Preload " + event.title + ": " + event.data.id)
+    PrintLog("Preload " + event.title + ": " + event.data.id)
 }
 
 function handleFileLoad(event) {
     var item = event.item;
     if (debug) {
-        console.log("Loaded File: " + item.src);
+        PrintLog("Loaded File: " + item.src);
     }
     switch (item.type) {
         case createjs.AbstractLoader.IMAGE:

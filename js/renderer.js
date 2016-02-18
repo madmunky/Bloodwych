@@ -19,7 +19,7 @@ Renderer.prototype = {
 		try{
 			updatePlayerViewScreen();
 		}catch(err){
-			console.log("Drawing Error: " + err.toString());
+			PrintLog("Drawing Error: " + err.toString());
 		}
 	},
 
