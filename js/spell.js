@@ -373,6 +373,19 @@ function castSpell(s, src, pw) {
 			newProjectile(DUNGEON_PROJECTILE_ARROW, paletteData['DRAGON_ARROW'], SOUND_ATTACK, s, pow, f, x, y, d, src);
 			break;
 		case SPELL_RECHARGE:
+			if(ch.recruitment.playerId > -1) {
+				var it = ch.getEquippedItems();
+	            for(var i = 0; i < it.length; i++) {
+	            	var qm = getObjectByKeys(itemData[it[i].id], 'quantity');
+	            	if(typeof qm !== "undefined" && qm > 1 && it[i].quantity < qm) {
+	            		var q = it[i].quantity + Math.ceil(pow * 0.02);
+	            		if(q > qm) {
+	            			q = qm;
+	            		}
+	            		it[i].setQuantity(q);
+	            	}
+	            }
+	        }
 			break;
 		case SPELL_BLAZE:
 			newProjectile(DUNGEON_PROJECTILE_BIG, paletteData['BLAZE_BIG'], SOUND_EXPLODE, s, pow, f, x, y, d, src);

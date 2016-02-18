@@ -369,7 +369,7 @@ Player.prototype.tryAttack = function (ch) {
             }
         }
         var wp = ch.useItem(ch.pocket[POCKET_LEFT_HAND], 'onAttack');
-        if (!wp) {
+        if (!wp.success) {
             wp = ch.useItem(ch.pocket[POCKET_RIGHT_HAND], 'onAttack');
         }
         var mon = getMonsterAt(this.floor, this.x + xy.x, this.y + xy.y);
@@ -377,7 +377,7 @@ Player.prototype.tryAttack = function (ch) {
             this.attack(ch, true, mon);
             return 1;
         }
-        if (wp) { //JSON
+        if (wp.sucess) { //JSON
             return 1;
         } else if (ch.selectedSpell !== null || ch.getBowPower() > 0) {
             this.attack(ch, true);
@@ -1083,7 +1083,7 @@ Player.prototype.useItemActivePocket = function () {
     if (ch !== null && !ch.dead) {
         var itH = this.pocket;
         if (itH.id !== 0) {
-            if (ch.useItem(itH, 'onUse')) {
+            if (ch.useItem(itH, 'onUse').success) {
                 //no nothing
             } else {
                 switch (itH.type) {
@@ -1316,44 +1316,16 @@ Player.prototype.castSpell = function (sb, ch, s) {
         var cost = sb.cost;
         if (ch.stat.sp - cost >= 0) {
             if (this.doFizzle()) {
-                writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, colourData['BLUE_DARK']);
+                writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, colourData['BLUE_DARK']); //spell fizzles
             } else if (Math.random() < ch.getSpellCastChance()) {
                 var it = ch.getEquippedItems();
-                var sp = getSpellById(sb.id);
-                var pow = 0.0;
+                var pow = Math.floor(ch.getSpellPower() * 10 + ch.level * 4);
                 var pof = 1.0;
                 for(var i = 0; i < it.length; i++) { //wands
-                    var iid = getObjectByKeys(itemData[it[i].id], 'onEquip', 'affectSpell', 'id');
-                    var icl = getObjectByKeys(itemData[it[i].id], 'onEquip', 'affectSpell', 'class');
-                    if((typeof iid !== "undefined" && iid.getVar() === sp.id) || (typeof icl !== "undefined" && icl.getVar() === sp.colour)) {
-                        var ip = getObjectByKeys(itemData[it[i].id], 'onEquip', 'affectSpell', 'power');
-                        if(typeof ip !== "undefined") {
-                            pow += parseInt(ip);
-                        }
-                        if(typeof ipf !== "undefined") {
-                            pof *= parseInt(ipf);
-                        }
-                        var imc = getObjectByKeys(itemData[it[i].id], 'onEquip', 'affectSpell', 'manaCostFactor');
-                        var irc = getObjectByKeys(itemData[it[i].id], 'onEquip', 'affectSpell', 'addQuantity');
-                        if(it[i].quantity > 1 || typeof irc === "undefined") {
-                            if(typeof imc !== "undefined") {
-                                cost *= imc;
-                            }
-                            var q = it[i].quantity + irc;
-                            if(q < 1) {
-                                q = 1;
-                            }
-                            it[i].setQuantity(q);
-                            //it[i].quantity += irc;
-                            /*if(it[i].quantity < 1) {
-                                it[i].quantity = 1;
-                            } else if(it[i].quantity > 99) {
-                                it[i].quantity = 99;
-                            }*/
-                        }
-                    }
+                    var res = ch.useItem(it[i], 'onCastSpell', {spell: sb});
+                    pow = (pow + res.power) * res.powerFactor;
                 }
-                castSpell(sb.id, ch.getMonster(), Math.floor((ch.getSpellPower() * 10 + ch.level * 4 + pow) * pof));
+                castSpell(sb.id, ch.getMonster(), pow);
                 sb.castSuccessful++;
                 if (!s) {
                     this.showSpellText = false;
@@ -1363,7 +1335,7 @@ Player.prototype.castSpell = function (sb, ch, s) {
                 }
                 this.uiRightPanel.mode = UI_RIGHT_PANEL_MAIN;
                 this.redrawLeftRightUiFlag = UI_REDRAW_RIGHT;
-            } else if (!s) {
+            } else if (!s) { //spell failed
                 writeSpellInfoFont(this, TEXT_SPELL_FAILED, colourData['GREY_LIGHT']);
             } else {
                 ch.writeAttackPoints('spell');

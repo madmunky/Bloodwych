@@ -272,14 +272,15 @@ Champion.prototype.itemAllowedOnSlot = function(it, s) {
     return true;
 }
 
-Champion.prototype.useItem = function(it, ac) {
-    var res = false;
+Champion.prototype.useItem = function(it, ac, param) {
+    var suc = false;
     var use = getObjectByKeys(itemData[it.id], ac);
-    var ob1 = getObjectByKeys(use, 'action');
-    var tool = getObjectByKeys(use, 'tool');
-    var pow = 1.0;
+    //var rpw = 1.0;
+    var pow = 0.0;
+    var pof = 1.0;
 
     //Use item with another item (e.g. bow and arrow)
+    /*var tool = getObjectByKeys(use, 'tool');
     if(typeof tool !== "undefined") {
         var id = getObjectByKeys(tool, 'id');
         var typ = getObjectByKeys(tool, 'type');
@@ -289,17 +290,18 @@ Champion.prototype.useItem = function(it, ac) {
             for(var h = 0; h < hand.length; h++) {
                 var it2 = this.pocket[hand[h]];
                 if((typeof id !== "undefined" && it2.id === id) || (typeof typ !== "undefined" && it2.type === typ)) {
-                    pow = it2.getPower();
+                    rpw = it2.getPower();
                     break;
                 }
             }
-            if(req && pow === 1.0) { //If required item is not there, then do nothing.
+            if(req && rpw === 1.0) { //If required item is not there, then do nothing.
                 return false;
             }
         }
     }
 
     //Shoot projectile
+    var ob1 = getObjectByKeys(use, 'action');
     if(typeof ob1 !=="undefined" && ob1 === 'shoot') {
         var id = getObjectByKeys(itemData[it.id], 'projectile', 'id');
         var snd = getObjectByKeys(use, 'sound');
@@ -310,42 +312,122 @@ Champion.prototype.useItem = function(it, ac) {
             snd = snd.getVar();
         }
         if(typeof id !== "undefined") {
-            pow = pow * (1.0 + this.stat.str / 4.0 + this.stat.agi / 2.0) * 0.5 * it.getPowerFactor(ac);
+            rpw = rpw * (1.0 + this.stat.str / 4.0 + this.stat.agi / 2.0) * 0.5 * it.getPowerFactor(ac);
             var dTo = getObjectByKeys(itemData[it.id], 'projectile', 'recolour', 'to');
             if(typeof dTo === "undefined") {
                 dTo = getObjectByKeys(itemData[it.id], 'dungeon', 'recolour', 'to');
             }
-            newProjectile(id.getVar(), dTo, snd, it.id + 100, pow, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
+            newProjectile(id.getVar(), dTo, SOUND_ATTACK, it.id + 100, rpw, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
             this.writeAttackPoints('shoot');
             if (this.recruitment.playerId > -1) {
                 player[this.recruitment.playerId].redrawViewPort = true;
             }
-            res = true;
+            suc = true;
+        }
+    }*/
+
+    //Get power
+    var pw2 = getObjectByKeys(use, 'power');
+    if(typeof pw2 !== "undefined") {
+        pow = pw2;
+    }
+    var pf2 = getObjectByKeys(use, 'powerFactor');
+    if(typeof pf2 !== "undefined") {
+        pof = pf2;
+    }
+
+    //Use bow to shoot arrows
+    var typ = getObjectByKeys(use, 'shootType');
+    var id = getObjectByKeys(use, 'shootId');
+    if(typeof typ !=="undefined" || typeof id !=="undefined") {
+        var hand = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND];
+        for(var h = 0; h < hand.length; h++) {
+            var it2 = this.pocket[hand[h]];
+            if((typeof id !== "undefined" && $.inArray(itemData[it2.id].id, id) > -1) || (typeof typ !== "undefined" && it2.type === typ)) {
+                var sh = getObjectByKeys(itemData[it2.id], 'onShoot');
+                if(typeof sh !== "undefined") {
+                    var res = this.useItem(it2, 'onShoot');
+                    pow += res.power;
+                    pof *= res.powerFactor;
+                    var id2 = getObjectByKeys(itemData[it2.id], 'projectile', 'id');
+                    if(typeof id2 === "undefined") {
+                        id2 = getObjectByKeys(itemData[it2.id], 'dungeon', 'id');
+                    }
+                    if(typeof id2 !== "undefined") {
+                        pow = pow * (1.0 + this.stat.str / 4.0 + this.stat.agi / 2.0) * 0.5 * pof;
+                        var dTo = getObjectByKeys(itemData[it2.id], 'projectile', 'recolour', 'to');
+                        if(typeof dTo === "undefined") {
+                            dTo = getObjectByKeys(itemData[it2.id], 'dungeon', 'recolour', 'to');
+                        }
+                        newProjectile(id2.getVar(), dTo, SOUND_ATTACK, it2.id + 100, pow, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
+                        this.writeAttackPoints('shoot');
+                        if (this.recruitment.playerId > -1) {
+                            player[this.recruitment.playerId].redrawViewPort = true;
+                        }
+                        suc = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    //Change spell
+    if(typeof use !=="undefined" && typeof param !== "undefined" && typeof param.spell !== "undefined") {
+        var sb = param.spell;
+        var sp = getSpellById(sb.id);
+        var iid = getObjectByKeys(use, 'changeSpell', 'id');
+        var icl = getObjectByKeys(use, 'changeSpell', 'class');
+        if((typeof iid !== "undefined" && iid.getVar() === sp.id) || (typeof icl !== "undefined" && icl.getVar() === sp.colour)) {
+            var ip = getObjectByKeys(use, 'changeSpell', 'power');
+            var ipf = getObjectByKeys(use, 'changeSpell', 'powerFactor');
+            if(typeof ip !== "undefined") {
+                pow += ip;
+            }
+            if(typeof ipf !== "undefined") {
+                pof *= ipf;
+            }
+            var imc = getObjectByKeys(use, 'changeSpell', 'manaCostFactor');
+            var irc = getObjectByKeys(use, 'changeSpell', 'addQuantity');
+            if(it.quantity > 1 || typeof irc === "undefined" || irc >= 0) {
+                if(typeof irc === "undefined") {
+                    irc = 0;
+                }
+                if(typeof imc !== "undefined") {
+                    cost *= imc;
+                }
+                var q = it.quantity + irc;
+                if(q < 1) {
+                    q = 1;
+                }
+                it.setQuantity(q);
+            }
+            suc = true
         }
     }
 
     //Food
-    var ac1 = getObjectByKeys(itemData[it.id], 'onUse', 'addFood');
+    var ac1 = getObjectByKeys(itemData[it.id], ac, 'addFood'); //onUse?
     if(typeof ac1 !== "undefined") {
         this.addFood(ac1);
-        res = true;
+        suc = true;
     }
 
     //Add primary stats
     var ac1 = getObjectByKeys(itemData[it.id], ac, 'addHPMax');
     if(typeof ac1 !=="undefined") {
         this.addHP(Math.floor(this.stat.hpMax * ac1));
-        res = true;
+        suc = true;
     }
     ac1 = getObjectByKeys(itemData[it.id], ac, 'addVitMax');
     if(typeof ac1 !=="undefined") {
         this.addVit(Math.floor(this.stat.vitMax * ac1));
-        res = true;
+        suc = true;
     }
     ac1 = getObjectByKeys(itemData[it.id], ac, 'addSPMax');
     if(typeof ac1 !=="undefined") {
         this.addSP(Math.floor(this.stat.spMax * ac1));
-        res = true;
+        suc = true;
     }
 
     //Change the stack
@@ -355,7 +437,7 @@ Champion.prototype.useItem = function(it, ac) {
         if(it.quantity + ac1 >= 0 && it.quantity + ac1 < 100) {
             it.setQuantity(it.quantity + ac1);
         }
-        res = true;
+        suc = true;
     }
 
     //Change item to another item
@@ -363,9 +445,13 @@ Champion.prototype.useItem = function(it, ac) {
     if(typeof ac1 !=="undefined") {
         var it2 = getIndexById(itemData, ac1);
         it.setPocketItem(it2);
-        res = true;
+        suc = true;
     }
-    return res;
+    return {
+        success: suc,
+        power: pow,
+        powerFactor: pof
+    };
 }
 
 Champion.prototype.gainLevel = function() {
@@ -440,14 +526,14 @@ Champion.prototype.gainLevel = function() {
             if (this.stat.cha > 999) {
                 this.stat.cha = 999;
             }
-            if (this.stat.hpMax > 9999) {
-                this.stat.hpMax = 9999;
+            if (this.stat.hpMax > 999) {
+                this.stat.hpMax = 999;
             }
-            if (this.stat.vitMax > 9999) {
-                this.stat.vitMax = 9999;
+            if (this.stat.vitMax > 999) {
+                this.stat.vitMax = 999;
             }
-            if (this.stat.spMax > 999) {
-                this.stat.spMax = 999;
+            if (this.stat.spMax > 99) {
+                this.stat.spMax = 99;
             }
             this.level++;
             //}

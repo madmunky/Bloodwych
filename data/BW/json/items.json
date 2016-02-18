@@ -61,15 +61,9 @@
 					}
 				}
 			},
-			"onAttack": {
-				"action": "shoot",
-				"tool": {
-					"type": "ITEM_TYPE_BOW",
-					"required": true
-				},
+			"onShoot": {
 				"changeStack": -1,
-				"powerFactor": 1.0,
-				"sound": "SOUND_ATTACK"
+				"powerFactor": 1.0
 			}
 		},
 		{
@@ -95,15 +89,9 @@
 					}
 				}
 			},
-			"onAttack": {
-				"action": "shoot",
-				"tool": {
-					"type": "ITEM_TYPE_BOW",
-					"required": true
-				},
+			"onShoot": {
 				"changeStack": -1,
-				"powerFactor": 1.2,
-				"sound": "SOUND_ATTACK"
+				"powerFactor": 1.2
 			}
 		},
 		{
@@ -1946,8 +1934,8 @@
 					}
 				}
 			},
-			"onEquip": {
-				"affectSpell": {
+			"onCastSpell": {
+				"changeSpell": {
 					"class": "CLASS_SERPENT",
 					"powerFactor": 1.5
 				}
@@ -1973,8 +1961,8 @@
 					}
 				}
 			},
-			"onEquip": {
-				"affectSpell": {
+			"onCastSpell": {
+				"changeSpell": {
 					"class": "CLASS_CHAOS",
 					"powerFactor": 1.5
 				}
@@ -2000,8 +1988,8 @@
 					}
 				}
 			},
-			"onEquip": {
-				"affectSpell": {
+			"onCastSpell": {
+				"changeSpell": {
 					"class": "CLASS_DRAGON",
 					"powerFactor": 1.5
 				}
@@ -2027,8 +2015,8 @@
 					}
 				}
 			},
-			"onEquip": {
-				"affectSpell": {
+			"onCastSpell": {
+				"changeSpell": {
 					"class": "CLASS_MOON",
 					"powerFactor": 1.5
 				}
@@ -2077,7 +2065,8 @@
 				}
 			},
 			"onAttack": {
-				"power": 4
+				"power": 4,
+				"shootId": ["ITEM_ARROWS", "ITEM_ELF_ARROWS"]
 			}
 		},
 		{
@@ -2101,7 +2090,8 @@
 				}
 			},
 			"onAttack": {
-				"power": 7
+				"power": 7,
+				"shootType": ["ITEM_ARROWS", "ITEM_ELF_ARROWS"]
 			}
 		},
 		{
@@ -2117,7 +2107,8 @@
 				}
 			},
 			"onAttack": {
-				"power": 10
+				"power": 10,
+				"shootType": ["ITEM_ARROWS", "ITEM_ELF_ARROWS"]
 			}
 		},
 		{
@@ -2310,14 +2301,14 @@
 					}
 				}
 			},
-			"onEquip": {
-				"affectSpell": {
+			"quantity": 4,
+			"onCastSpell": {
+				"changeSpell": {
 					"class": "CLASS_SERPENT",
 					"manaCostFactor": 0.0,
 					"addQuantity": -1
 				}
 			},
-			"quantity": 4,
 			"onQuantity": [{
 				"value": 0,
 				"changeToItem": "ITEM_GREY_RING",
@@ -2344,14 +2335,14 @@
 					}
 				}
 			},
-			"onEquip": {
-				"affectSpell": {
+			"quantity": 4,
+			"onCastSpell": {
+				"changeSpell": {
 					"class": "CLASS_CHAOS",
 					"manaCostFactor": 0.0,
 					"addQuantity": -1
 				}
 			},
-			"quantity": 4,
 			"onQuantity": [{
 				"value": 0,
 				"changeToItem": "ITEM_GREY_RING",
@@ -2378,14 +2369,14 @@
 					}
 				}
 			},
-			"onEquip": {
-				"affectSpell": {
+			"quantity": 4,
+			"onCastSpell": {
+				"changeSpell": {
 					"class": "CLASS_DRAGON",
 					"manaCostFactor": 0.0,
 					"addQuantity": -1
 				}
 			},
-			"quantity": 4,
 			"onQuantity": [{
 				"value": 0,
 				"changeToItem": "ITEM_GREY_RING",
@@ -2412,14 +2403,14 @@
 					}
 				}
 			},
-			"onEquip": {
-				"affectSpell": {
+			"quantity": 4,
+			"onCastSpell": {
+				"changeSpell": {
 					"class": "CLASS_MOON",
 					"manaCostFactor": 0.0,
 					"addQuantity": -1
 				}
 			},
-			"quantity": 4,
 			"onQuantity": [{
 				"value": 0,
 				"changeToItem": "ITEM_GREY_RING",
@@ -2436,6 +2427,35 @@
 				},
 				"dungeon": {
 					"id": "DUNGEON_ITEM_BOOK_OF_SKULLS"
+				}
+			}
+		},
+		{
+			"id": "ITEM_FLAME_SWORD",
+			"name": "FLAME SWORD",
+			"type": "ITEM_TYPE_WEAPON",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_SWORD_2",
+					"recolour": {
+						"from": ["GREEN", "WHITE", "GREY_LIGHT", "GREY_MEDIUM"],
+						"to": ["RED", "YELLOW", "PINK", "RED"]
+					}
+				},
+				"dungeon": {
+					"id": "DUNGEON_ITEM_SWORD",
+					"recolour": {
+						"from": ["RED", "BLUE", "GREY_LIGHT", "WHITE"],
+						"to": ["BROWN", "RED_DARK", "RED", "PINK"]
+					}
+				}
+			},
+			"onAttack": {
+				"power": 16,
+				"castSpell": {
+					"id": "SPELL_FIREBALL",
+					"chance": 0.2,
+					"power": 30
 				}
 			}
 		}

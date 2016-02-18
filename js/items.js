@@ -312,14 +312,14 @@ function initItems(t) {
 
         //TESTING
         if(t.id === TOWER_MOD0) {
-            item[t.id][item[t.id].length] = new Item(ITEM_SERPENT_RING, 4, {
+            item[t.id][item[t.id].length] = new Item(ITEM_FLAME_SWORD, 1, {
                 tower: t.id,
                 floor: 3,
                 x: 12,
                 y: 23,
                 square: 0
             });
-            item[t.id][item[t.id].length] = new Item(ITEM_ACE_OF_SWORDS, 1, {
+            item[t.id][item[t.id].length] = new Item(ITEM_CHAOS_WAND, 4, {
                 tower: t.id,
                 floor: 3,
                 x: 12,
@@ -598,6 +598,9 @@ function initItemRefs() {
 
     createItemRef(109, "Book of Skulls", gfxUI[UI_GFX_ICON_BOOKOFSKULLS], itemsGfxD[DUNGEON_ITEM_BOOK_OF_SKULLS]);
 
+    for(ir = 110; ir < itemData.length; ir++) {
+        createItemRef(ir);
+    }
     //itemsGfxD = [];
 
 }

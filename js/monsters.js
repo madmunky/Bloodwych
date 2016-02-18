@@ -628,7 +628,7 @@ Monster.prototype.getBinaryView = function(pos18, index, length) {
 }
 
 Monster.prototype.setSpecialPocketItem = function(i) {
-    this.pocket[POCKET_SLOT_0].setPocketItem(monsterItemData[i]);
+    this.pocket[POCKET_SLOT_0].setPocketItem(monsterItemData[i], 1, true);
 }
 
 function initMonsters() {
@@ -691,7 +691,10 @@ function initMonsters() {
                             qt = Math.floor(Math.random() * (mon.level + 2) * 1) + 1;
                         }
                         var it = mon.pocket[POCKET_HIDDEN];
-                        it.setPocketItem(id, qt);
+                        if(typeof it !== "undefined") {
+                            it.setPocketItem(id, qt, true);
+                        }
+                        console.log(it);
                     }
                 }
                 max++;
@@ -706,10 +709,10 @@ function initMonsters() {
     var testType = MON_FORM_CRAB;
     var end = monster[TOWER_MOD0].length;
     monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 15, 18, 0, CHAR_FRONT_SOLO, 0, null, createPocketSlots(POCKET_MAX + 1));
-    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_0].setPocketItem(ITEM_CRYSTAL_PLATE);
-    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_1].setPocketItem(ITEM_WAR_SHIELD);
-    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_2].setPocketItem(ITEM_CRYSTAL_GLOVES);
-    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_3].setPocketItem(ITEM_DEATHBRINGER);
+    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_0].setPocketItem(ITEM_CRYSTAL_PLATE, 1, true);
+    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_1].setPocketItem(ITEM_WAR_SHIELD, 1, true);
+    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_2].setPocketItem(ITEM_CRYSTAL_GLOVES, 1, true);
+    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_3].setPocketItem(ITEM_DEATHBRINGER, 1, true);
     max++;
     end++;
     /*monster[TOWER_MOD0][end] = new Monster(max, 3, 0, testType, TOWER_MOD0, 3, 13, 20, 2, CHAR_FRONT_SOLO, 0, null);

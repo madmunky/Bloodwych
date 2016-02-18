@@ -429,3 +429,12 @@ String.prototype.getVar = function() {
 	}
 	return undefined;
 }
+
+function getVarArray(arr) {
+	if(typeof arr !== "undefined") {
+		return arr.map(function(x) {
+	        return x.getVar();
+	    });
+	}
+	return undefined;
+}
