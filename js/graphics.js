@@ -448,25 +448,29 @@ function drawPlayersView(p) {
 function drawMonsterOnPos(p, pos) {
     if (pos > -1 && pos <= 15) {
         var monPos = p.getMonstersInRange(pos);
-        for (i in monPos) {
-                    if (typeof monsterRef[monPos[i].monster.form] === "undefined"){
-                        initMonsterGfxNew(monPos[i].monster);
-                    }else if (monPos[i].monster.ref === null || (typeof monPos[i].monster.ref === 'undefined')){
-                        initMonsterGfxNew(monPos[i].monster);
+        for (ii in monPos) {
+            if (typeof monPos[ii].monster !== 'undefined'){
+
+                    if (typeof monsterRef[monPos[ii].monster.form] === "undefined"){
+                        initMonsterGfxNew(monPos[ii].monster);
+                    }else if (monPos[ii].monster.ref === null || (typeof monPos[ii].monster.ref === 'undefined')){
+                        initMonsterGfxNew(monPos[ii].monster);
                     }
-            var van = false;
-            var ch1 = p.getChampion(p.championLeader);
-            if(monPos[i].monster.champId > -1) {
-                var ch2 = champion[monPos[i].monster.champId];
-                if(ch2.recruitment.playerId > -1) {
-                    var p2 = player[ch2.recruitment.playerId];
-                    if(p2.getActiveSpellById(SPELL_VANISH).timer > 0) {
-                        van = true;
+                var van = false;
+                var ch1 = p.getChampion(p.championLeader);
+
+                    if(monPos[ii].monster.champId > -1) {
+                        var ch2 = champion[monPos[ii].monster.champId];
+                        if(ch2.recruitment.playerId > -1) {
+                            var p2 = player[ch2.recruitment.playerId];
+                            if(p2.getActiveSpellById(SPELL_VANISH).timer > 0) {
+                                van = true;
+                            }
+                        }
                     }
-                }
-            }
-            if(!van || (van && ch1.prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0) {
-                            p.drawMonster(monPos[i].monster, monPos[i].distance, monPos[i].gfxCoord);
+                    if(!van || (van && ch1.prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0) {
+                                    p.drawMonster(monPos[ii].monster, monPos[ii].distance, monPos[ii].gfxCoord);
+                    }
             }
         }
     }

@@ -791,6 +791,11 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
 
 function drawMonster(m, dir, dist, player, offset, returnImg) {
     //m.doGesture(CHA_GESTURE_SPELLCASTING);
+
+    if (typeof m == 'undefined'){
+        console.log("ERROR");
+    }
+
     var charContext
     if (typeof returnImg === "undefined") {
         returnImg = false;
@@ -897,28 +902,32 @@ function drawMonster(m, dir, dist, player, offset, returnImg) {
                         var gfx2 = getSprite(part,dist,dir2,null,m, player);
                     }
 
-                    var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
-                    var offy = 76 - Math.floor(gfx1.height) - offset.y;
+                    if (typeof gfx1 !== 'undefined'){
 
-                    if (dist >= 4 || part !== IMAGE_MON_MINI) {
-                        var blur = 0;
-                        if (dist <= DISTANCE_MID) {
-                            blur = m.blur;
+                        var offx = 64 - Math.floor(gfx1.width * 0.5) + offset.x;
+                        var offy = 76 - Math.floor(gfx1.height) - offset.y;
+
+                        if (dist >= 4 || part !== IMAGE_MON_MINI) {
+                            var blur = 0;
+                            if (dist <= DISTANCE_MID) {
+                                blur = m.blur;
+                            }
+                            if (returnImg){
+                                charContext.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
+                            }else{
+                                player.Portal.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
+                            }
+                            if (dir2 > -1) {
+                                offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
+                                offy = 76 - Math.floor(gfx2.height) - offset.y;
+                                if (returnImg){
+                                    charContext.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
+                                }else{
+                                    player.Portal.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
+                                }
+                            }
                         }
-                                                if (returnImg){
-                                                    charContext.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
-                                                }else{
-                                                    player.Portal.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
-                                                }
-                        if (dir2 > -1) {
-                            offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
-                            offy = 76 - Math.floor(gfx2.height) - offset.y;
-                                                        if (returnImg){
-                                                            charContext.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
-                                                        }else{
-                                                            player.Portal.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
-                                                        }
-                        }
+
                     }
                 //}
             } catch (e) {
@@ -1004,28 +1013,30 @@ function grabMonster(form, level) {
 
 function getSprite(part,dist,dir,action, monster, player){
 
-    Sprite = monster.ref.gfx;
-    //console.log("Part:" + part + " Dist: " + dist+ " Dir:" + dir + " Action: " + action);
-    var partName = ['Body','Arm','Mini'];
-    var distName = ['Distance 1','Distance 2','Distance 3','Distance 4','Distance 5','Distance 6'];
-    var dirName = ['Front','Right','Back','Left'];
-    var strGestures = ['CHA_GESTURE_NONE','CHA_GESTURE_ATTACKING','CHA_GESTURE_SPELLCASTING','CHA_GESTURE_GREETING'];
-    var strMonsterForm = ['MON_FORM_ILLUSION','MON_FORM_SUMMON','MON_FORM_BEHOLDER','MON_FORM_ENTITY','MON_FORM_CRAB','MON_FORM_DRAGON','MON_FORM_DRAGON_SMALL','MON_FORM_BEHEMOTH'];
+    if (typeof monster !== 'undefined'){
+        Sprite = monster.ref.gfx;
+        //console.log("Part:" + part + " Dist: " + dist+ " Dir:" + dir + " Action: " + action);
+        var partName = ['Body','Arm','Mini'];
+        var distName = ['Distance 1','Distance 2','Distance 3','Distance 4','Distance 5','Distance 6'];
+        var dirName = ['Front','Right','Back','Left'];
+        var strGestures = ['CHA_GESTURE_NONE','CHA_GESTURE_ATTACKING','CHA_GESTURE_SPELLCASTING','CHA_GESTURE_GREETING'];
+        var strMonsterForm = ['MON_FORM_ILLUSION','MON_FORM_SUMMON','MON_FORM_BEHOLDER','MON_FORM_ENTITY','MON_FORM_CRAB','MON_FORM_DRAGON','MON_FORM_DRAGON_SMALL','MON_FORM_BEHEMOTH'];
 
-    if (part == 1){
-        dirName = ['Front Left Arm','Side Right Arm','Front Right Arm','Side Left Arm',"Left Attack Arm","Right Attack Arm","Side Left Attack Arm","Side Right Attack Arm"];
-    }
+        if (part == 1){
+            dirName = ['Front Left Arm','Side Right Arm','Front Right Arm','Side Left Arm',"Left Attack Arm","Right Attack Arm","Side Left Attack Arm","Side Right Attack Arm"];
+        }
 
 
-    for (i in Sprite){
-        if (Sprite[i].name.indexOf(partName[part]) >-1){
-            if (Sprite[i].name.indexOf(distName[dist]) >-1){
-                if (Sprite[i].name.indexOf(dirName[dir]) >-1){
-                     return Sprite[i].img;
+        for (i in Sprite){
+            if (Sprite[i].name.indexOf(partName[part]) >-1){
+                if (Sprite[i].name.indexOf(distName[dist]) >-1){
+                    if (Sprite[i].name.indexOf(dirName[dir]) >-1){
+                         return Sprite[i].img;
+                    }
                 }
             }
         }
     }
 
-    console.log(strMonsterForm[monster.form - 100] + " - Part: " + partName[part] + " " + distName[dist] + " " + dirName[dir] + " " + strGestures[monster.gesture]);
+    //console.log(strMonsterForm[monster.form - 100] + " - Part: " + partName[part] + " " + distName[dist] + " " + dirName[dir] + " " + strGestures[monster.gesture]);
 }
