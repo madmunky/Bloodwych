@@ -94,7 +94,7 @@ Monster.revive = function(data) {
     m.timerTerror = data.timerTerror;
     m.timerParalyze = data.timerParalyze;
     m.hp = data.hp;
-    for (p in data.pocket) {
+    for(var p in data.pocket) {
         data.pocket[p] = newPocketItem(data.pocket[p].id, data.pocket[p].quantity);
     }
     return m;
@@ -269,7 +269,7 @@ Monster.prototype.move = function() {
                     this.rotateTo((this.d + turn + 4) % 4);
                 }
             }
-            for (p in player) {
+            for(var p in player) {
                 player[p].redrawViewPort = true;
             }
         }
@@ -296,7 +296,7 @@ Monster.prototype.doEvent = function() {
 Monster.prototype.attack = function(attack, target) {
     if (attack) {
         var combat = calculateAttack(this, target);
-        for (com = 0; com < combat.length; com++) {
+        for(var com = 0; com < combat.length; com++) {
             var att = combat[com].attacker;
             var def = combat[com].defender;
             var pwr = combat[com].power;
@@ -311,13 +311,13 @@ Monster.prototype.attack = function(attack, target) {
             }
             playSound(SOUND_ATTACK);
         }
-        for (p in player) {
+        for(var p in player) {
             player[p].redrawViewPort = true;
         }
     } else {
         var team = getMonsterTeam(this.teamId);
         this.attacking = false;
-        for (i = 1; i < team.length; i++) {
+        for(var i = 1; i < team.length; i++) {
             team[i].attacking = false;
         }
     }
@@ -370,7 +370,7 @@ Monster.prototype.castSpell = function() {
             }
             castSpell(id, this, 15 + this.level);
             this.doGesture(CHA_GESTURE_SPELLCASTING);
-            for (p in player) {
+            for(var p in player) {
                 player[p].redrawViewPort = true;
             }
             return true;
@@ -572,7 +572,7 @@ Monster.prototype.die = function() {
             newProjectile(DUNGEON_PROJECTILE_BIG, paletteData['MOON_BIG'], null, -1, 0, this.floor, this.x, this.y, 0, null);
             if (this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER) {
                 var it = [];
-                for (i = 0; i < POCKET_MAX + 1; i++) {
+                for(var i = 0; i < POCKET_MAX + 1; i++) {
                     if (this.pocket[i].id > 0) {
                         it.push({
                             id: this.pocket[i].id,
@@ -580,7 +580,7 @@ Monster.prototype.die = function() {
                         });
                     }
                 }
-                for (i in it) {
+                for(var i in it) {
                     dropItem(it[i].id, it[i].quantity, this.floor, this.x, this.y, sq);
                 }
             }
@@ -639,7 +639,7 @@ function initMonsters() {
         monster[tw.id] = new Array();
         var xLast = 0;
         var square = 0;
-        for (i = 0; i < tw.monsterData.length; i++) {
+        for(var i = 0; i < tw.monsterData.length; i++) {
             var md = tw.monsterData[i];
             var level = parseInt(hex2dec(getHexToBinaryPosition(md, 24, 8)));
             var type = parseInt(hex2dec(getHexToBinaryPosition(md, 0, 4)));
@@ -724,7 +724,7 @@ function initMonsters() {
 
 function initMonsterPalettes() {
 
-    for (i = 0; i < monsterBodiesData.length; i++) {
+    for(var i = 0; i < monsterBodiesData.length; i++) {
         var body = CHA_BODY[monsterBodiesData[i][0]];
         var j = i * 5;
         monsterPalette[i] = {
@@ -743,9 +743,9 @@ function initMonsterPalettes() {
         };
     }
 
-    for (i = 0; i < 6; i++) {
+    for(var i = 0; i < 6; i++) {
         monsterBigPalette[i] = new Array();
-        for (j = 0; j < 8; j++) { //palettes
+        for(var j = 0; j < 8; j++) { //palettes
             var k = 431;
             var b = monsterPaletteMetaData[i][j];
             monsterBigPalette[i][j] = [colourData[monsterPaletteData[k + b][0]], colourData[monsterPaletteData[k + b][1]], colourData[monsterPaletteData[k + b][2]], colourData[monsterPaletteData[k + b][3]]];
@@ -760,12 +760,12 @@ function initMonsterPalettes() {
 
 //function initMonsterGfx() {
 //
-//  for (frm = 0; frm <= MON_FORM_BEHEMOTH; frm++) {
+//  for(var frm = 0; frm <= MON_FORM_BEHEMOTH; frm++) {
 //      if (frm >= MON_FORM_ILLUSION) {
 //          if (frm === MON_FORM_BEHEMOTH) {
 //              createMonsterRef(frm, 0, grabMonster(frm, 0));
 //          } else {
-//              for (l = 0; l < 8; l++) {
+//              for(var l = 0; l < 8; l++) {
 //                  createMonsterRef(frm, l, grabMonster(frm, l));
 //              }
 //          }
@@ -773,9 +773,9 @@ function initMonsterPalettes() {
 //          var dGfx = [];
 //          var disGfx = [];
 //          var pGfx = [];
-//          for (part = 0; part < 5; part++) {
-//              for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-//                  for (d = 0; d < 8; d++) {
+//          for(var part = 0; part < 5; part++) {
+//              for(var dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+//                  for(var d = 0; d < 8; d++) {
 //                      if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
 //                          dGfx.push(grabCharacter(frm, part, d, dis));
 //                      }
@@ -805,9 +805,9 @@ function initMonsterGfxNew(m) {
             var dGfx = [];
             var disGfx = [];
             var pGfx = [];
-            for (part = 0; part < 5; part++) {
-                for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-                    for (d = 0; d < 8; d++) {
+            for(var part = 0; part < 5; part++) {
+                for(var dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+                    for(var d = 0; d < 8; d++) {
                         if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
                             dGfx.push(grabCharacter(m.form, part, d, dis));
                         }
@@ -834,9 +834,9 @@ function initArmourGfx() {
     var pGfx = [];
     for (var id = 0; id < 9; id++) {
         for (var gen = 0; gen < 3; gen++) {
-            for (part = 0; part < 5; part++) {
-                for (dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
-                    for (d = 0; d < 8; d++) {
+            for(var part = 0; part < 5; part++) {
+                for(var dis = 0; dis < NUMBER_OF_DISTANCES; dis++) {
+                    for(var d = 0; d < 8; d++) {
                         if (d < 4 || part === IMAGE_CHA_ARM) { //arms have four more 'directions': 2 front attack arms and 2 side attack arms
                             dGfx.push(grabCharacterArmour(id, gen, part, d, dis));
                         }
@@ -891,7 +891,7 @@ function createArmourRef(id, gen, gfx) {
 
 function getMonsterAt(floor, x, y) {
     mon = getMonstersInTower(towerThis, true);
-    for (m in mon) {
+    for(var m in mon) {
         if (!mon[m].dead && mon[m].teamId >= 0 && mon[m].floor === floor && mon[m].x === x && mon[m].y === y) {
             return mon[m];
         }
@@ -977,7 +977,7 @@ function updateMonsterTeam(id) {
             leader.square = leader.d;
             leader.teamId = Math.abs(id);
             var s = 1;
-            for (i = 1; i < team.length; i++) {
+            for(var i = 1; i < team.length; i++) {
                 team[i].x = leader.x;
                 team[i].y = leader.y;
                 team[i].d = leader.d;
@@ -995,8 +995,8 @@ function updateMonsterTeam(id) {
 
 
 function getMonsterById(id) {
-    for (t = 0; t < 7; t++) {
-        for (m = 0; m < monster[t].length; m++) {
+    for(var t = 0; t < 7; t++) {
+        for(var m = 0; m < monster[t].length; m++) {
             if (id === monster[t][m].id) {
                 return monster[t][m];
             }
@@ -1016,12 +1016,12 @@ function getMonstersInTower(id, f) {
             f2 = player[1].floor;
         }
     }
-    for (m = 0; m < monster[id].length; m++) {
+    for(var m = 0; m < monster[id].length; m++) {
         if (f1 === null || f1 === monster[id][m].floor || (f2 !== null && f2 === monster[id][m].floor)) {
             mon.push(monster[id][m]);
         }
     }
-    for (m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
+    for(var m = 0; m < monster[TOWER_CHAMPIONS].length; m++) {
         if (monster[TOWER_CHAMPIONS][m].tower === id) {
             if (f1 === null || f1 === monster[TOWER_CHAMPIONS][m].floor || (f2 !== null && f2 === monster[TOWER_CHAMPIONS][m].floor)) {
                 mon.push(monster[TOWER_CHAMPIONS][m]);

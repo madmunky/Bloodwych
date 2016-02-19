@@ -98,8 +98,8 @@ function grabUISprites(spriteSheetIMG) {
     var i = 0;
     var extraColours = [];
     //Grab the ICONS
-    for (y = 0; y < 6; y++) {
-        for (x = 0; x < 20; x++) {
+    for(var y = 0; y < 6; y++) {
+        for(var x = 0; x < 20; x++) {
             if (i > 74 && i < 79) {
                 extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), paletteData['DEFAULT_ITEM'], paletteData['SERPENT']));
                 extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, x * 16, y * 16, 16, 16, false), paletteData['DEFAULT_ITEM'], paletteData['CHAOS']));
@@ -116,13 +116,13 @@ function grabUISprites(spriteSheetIMG) {
     }
 
     //Remove the blank images
-    for (x = 0; x < 7; x++) {
+    for(var x = 0; x < 7; x++) {
         ImageArray.pop();
     }
 
     //Grab the SpellBook
     //var SpellBookAnim = [];
-    for (x = 0; x < 5; x++) {
+    for(var x = 0; x < 5; x++) {
         ImageArray.push(grabImageAt(spriteSheetIMG, x * 94, 97, 94, 62, false));
     }
 
@@ -234,7 +234,7 @@ function grabUISprites(spriteSheetIMG) {
     ImageArray.push(grabImageAt(spriteSheetIMG, 308, 319, 14, 3, false)); //Script Wave
 
     //Grab Datadisk Images
-    for (x = 0; x < 19; x++) {
+    for(var x = 0; x < 19; x++) {
         ImageArray.push(grabImageAt(spriteSheetIMG, x * 16, 400, 16, 16, false, 0 ,0));
     }
 
@@ -265,7 +265,7 @@ function drawSpellBook(p, ui, dr) {
 
     //var ch = champion[p.champion[p.championLeader]];
 
-    for (x = 0; x < 8; x++) {
+    for(var x = 0; x < 8; x++) {
         var pg = ch.spellBookPage;
         if (typeof dr !== "undefined" && typeof ui !== "undefined") {
             if (x >= 4 && dr && ui <= 3) {
@@ -420,7 +420,7 @@ function leftUI(p) {
     ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
 
     var c1 = p.getOrderedChampionIds(true);
-    for (c = 0; c < p.champion.length; c++) {
+    for(var c = 0; c < p.champion.length; c++) {
         var c2 = c1[c];
         var cid = p.champion[c2];
         var ch = p.getChampion(c2);
@@ -480,7 +480,7 @@ function leftUI(p) {
 function leftUIStats(p) {
     if (p.uiLeftPanel.champs[0].opened) {
         var ch = p.getOrderedChampionIds(true);
-        for (c = 0; c < p.champion.length; c++) {
+        for(var c = 0; c < p.champion.length; c++) {
             var c1 = ch[c];
             var champ = p.getChampion(c1);
             if (champ !== null) {
@@ -678,7 +678,7 @@ function rightUI(p) {
         }
     }
     ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
-    for (c = 0; c < p.champion.length; c++) {
+    for(var c = 0; c < p.champion.length; c++) {
         var ca = [0, 1, 3, 2];
         var c1 = ca[c];
         var ch = p.getChampion(c1);
@@ -738,8 +738,8 @@ function drawPocketUI(p, chp, start) {
     }
 
     var i = 0;
-    for (y = 0; y < 2; y++) {
-        for (x = 0; x < 6; x++) {
+    for(var y = 0; y < 2; y++) {
+        for(var x = 0; x < 6; x++) {
             var pocket = chp.pocket[i];
             var pocketId = pocket.id;
             if (pocketId === 0) {
@@ -806,7 +806,7 @@ function drawPocketUI(p, chp, start) {
     if (!start) {
 
         var c1 = p.getOrderedChampionIds();
-        for (c = 0; c < 6; c++) {
+        for(var c = 0; c < 6; c++) {
             var cid = c1[c];
             var g;
             var ch = p.getChampion(cid);
@@ -1105,7 +1105,7 @@ function showFairy(c, p) {
         //p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", colourData['GREEN'], false, 3000);
         //writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, colourData['GREEN']);
         p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
-        for (x = 0; x < 5; x++) {
+        for(var x = 0; x < 5; x++) {
             if (x < 4) {
                 p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
             } else {
@@ -1217,7 +1217,7 @@ function showFairySpellDetailsScreen(spell, p, c) {
     writeFontImage(spell.cost + " GOLD", 43, 31, colourData['GREY_LIGHT'], FONT_ALIGNMENT_LEFT, p.Portal);
     p.message(spell.description, colourData['GREEN'], false, 0);
 
-    for (x = 0; x < 5; x++) {
+    for(var x = 0; x < 5; x++) {
         if (x < 4) {
             if (x === spellClass) {
                 p.Portal.drawImage(gfxUI[80 + x], 17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
@@ -1243,7 +1243,7 @@ function colourSpellPage(dr, ch, img) {
         var page = ch.spellBookPage;
     }
 
-    for (x = 0; x < SPELL_PAGE_MAX; x++) {
+    for(var x = 0; x < SPELL_PAGE_MAX; x++) {
         if (ch.spellBook[page][x].learnt) {
             if (ch.spellBook[page][x] === getSpellById(ch.selectedSpell)) {
                 pal.push(colourData['WHITE']);
@@ -1334,7 +1334,7 @@ function drawCommunicationBox(p, item, forced) {
         //if (p.communication.mode !== COMMUNICATION_PAGE_NAMES) {
 
         var myPage = p.communication.mode;
-        for (r = 0; r < TEXT_COMMUNICATION_COMMANDS[myPage].length; r++) {
+        for(var r = 0; r < TEXT_COMMUNICATION_COMMANDS[myPage].length; r++) {
             ctx.fillStyle = 'rgb(' + colourData['GREY_DARK'][0] + ', ' + colourData['GREY_DARK'][1] + ', ' + colourData['GREY_DARK'][2] + ')';
             var myColour = colourData['YELLOW'];
 
@@ -1457,7 +1457,7 @@ function uiChampSelectArea(x, y, pl) {
     var px = 0;
     var py = 0;
 
-    for (ui = 0; ui < champSelectGrid.length; ui++) {
+    for(var ui = 0; ui < champSelectGrid.length; ui++) {
         if (x >= (px + champSelectGrid[ui].x) * 1 && x < (px + champSelectGrid[ui].x + champSelectGrid[ui].width) * 1 && y >= (py + champSelectGrid[ui].y) * 1 && y < (py + champSelectGrid[ui].y + champSelectGrid[ui].height) * 1) {
             if (debug) {
                 ctx.fillStyle = 'rgba(255, 255, 196, 0.75)';
@@ -1507,7 +1507,7 @@ function uiChampSelectArea(x, y, pl) {
 
 function drawHitDamage(p, myCh, hitPt) {
     var c1 = p.getOrderedChampionIds();
-    for (c = 0; c < p.champion.length; c++) {
+    for(var c = 0; c < p.champion.length; c++) {
         var c2 = c1[c];
         var ch = p.getChampion(c2);
         if (ch !== null) {

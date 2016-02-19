@@ -89,7 +89,7 @@ function readMapData(evt) {
     //for falling though pits or walking down stairs.
     var floors = [];
 
-    for (x = 0; x < 8; x++) {
+    for(var x = 0; x < 8; x++) {
         myFloor = new Map(uInt8Array[x + 8], uInt8Array[x], uInt8Array[x + 32], uInt8Array[x + 40]);
         if(myFloor.Width === 0 || myFloor.Height === 0) break;
         floors.push(myFloor);
@@ -102,9 +102,9 @@ function readMapData(evt) {
         t2 = floors[i].Height;
         var mdata = [];
 
-        for (myY = 0; myY < t1; myY++) {
+        for(var myY = 0; myY < t1; myY++) {
             var r = [];
-            for (myX = 0; myX < t2; myX++) {
+            for(var myX = 0; myX < t2; myX++) {
                 r.push(decimalToHex(uInt8Array[x]) + decimalToHex(uInt8Array[x + 1]));
                 x = x + 2;
             }
@@ -124,10 +124,10 @@ function readSimpleData(evt, length) {
     if (length === 0) {
         return uInt8Array;
     } else {
-        for (x = 0; x < uInt8Array.length / length; x++) {
+        for(var x = 0; x < uInt8Array.length / length; x++) {
             //Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
             var tmp = [];
-            for (y = 0; y < length; y++) {
+            for(var y = 0; y < length; y++) {
                 tmp.push(uInt8Array[x * length + y]);
             }
             Data.push(tmp);
@@ -141,10 +141,10 @@ function readSimpleDataHex(evt, length) {
     var uInt8Array = new Uint8Array(evt);
     var Data = [];
 
-    for (x = 0; x < uInt8Array.length / length; x++) {
+    for(var x = 0; x < uInt8Array.length / length; x++) {
         //Switches.push([uInt8Array[x],uInt8Array[x+1],uInt8Array[x+3],uInt8Array[x+2]]);
         var tmp = '';
-        for (y = 0; y < length; y++) {
+        for(var y = 0; y < length; y++) {
             tmp = tmp + decimalToHex(uInt8Array[x * length + y]);
         }
         Data.push(tmp);
@@ -158,7 +158,7 @@ function readScrollData(evt) {
     var Scroll = [];
     var Line = [];
 
-    for (x = 0; x < uInt8Array.length; x++) {
+    for(var x = 0; x < uInt8Array.length; x++) {
 
         if (uInt8Array[x] === 255) {
             Scroll.push(Line.join(""));

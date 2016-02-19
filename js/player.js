@@ -431,7 +431,7 @@ Player.prototype.attack = function (ch, attack, target) {
             //})(combat, com);
         }
     } else {
-        for (c = 0; c < this.champion.length; c++) {
+        for(var c = 0; c < this.champion.length; c++) {
             var ch = this.getChampion(c);
             if (ch !== null) {
                 var m = ch.getMonster();
@@ -450,7 +450,7 @@ Player.prototype.getView = function () {
     //to either draw the players view or objects which the player are likely to interact with
     //like standing on a presure pad or stairs or if there is a door infront of the player etc..
     view = [];
-    for (pos = 0; pos < 20; pos++) {
+    for(var pos = 0; pos < 20; pos++) {
         try {
             var xy = posToCoordinates(pos, this.x, this.y, this.d);
             var newView = tower[towerThis].floor[this.floor].Map[xy.y][xy.x];
@@ -524,7 +524,7 @@ Player.prototype.doPit = function () {
 };
 Player.prototype.doFizzle = function () {
     if (this.getBinaryView(18, 13, 3) === '6' && this.getBinaryView(18, 6, 2) === '0') {
-        for (c = 0; c < this.champion.length; c++) {
+        for(var c = 0; c < this.champion.length; c++) {
             var ch = this.getChampion(c);
             if (ch.activeSpell.id > -1) {
                 ch.expireSpell();
@@ -573,14 +573,14 @@ Player.prototype.setPlayerPosition = function (floor, x, y, d) {
     }
     this.setMovementData();
     this.updateChampions();
-    for (p in player) {
+    for(var p in player) {
         player[p].redrawViewPort = true;
     }
     //this.doEvent(true);
 };
 Player.prototype.getAliveChampionCount = function () {
     var cnt = 0;
-    for (c = 0; c < this.champion.length; c++) {
+    for(var c = 0; c < this.champion.length; c++) {
         var ch = this.getChampion(c);
         if (ch !== null) {
             var dd = ch.getMonster().dead;
@@ -593,7 +593,7 @@ Player.prototype.getAliveChampionCount = function () {
 }
 Player.prototype.updateChampions = function () {
     var cnt = this.getAliveChampionCount();
-    for (c = 0; c < this.champion.length; c++) {
+    for(var c = 0; c < this.champion.length; c++) {
         var ch = this.getChampion(c);
         if (ch !== null && ch.recruitment.attached) {
             var m = ch.getMonster();
@@ -644,7 +644,7 @@ Player.prototype.exchangeChampionPosition = function (ct, c) {
 Player.prototype.getChampionsForUp = function () {
     var chs = new Array();
     var c1 = this.getOrderedChampionIds();
-    for (c = 0; c < this.champion.length; c++) {
+    for(var c = 0; c < this.champion.length; c++) {
         var ch = this.getChampion(c1[c]);
         if (ch !== null && !ch.getMonster().dead && ch.recruitment.attached && ch.recruitment.playerId > -1) {
             if (ch.levelUp > 0) {
@@ -667,7 +667,7 @@ Player.prototype.checkChampionUp = function () {
     if (this.nextChampionUp > -1 && this.fairyDetails.champ === null) {
         var nc = 0;
         cs = this.getChampionsForUp();
-        for (c in cs) {
+        for(var c in cs) {
             if (this.nextChampionUp <= nc) {
                 var ch = cs[c].champ;
                 var up = cs[c].up;
@@ -717,7 +717,7 @@ Player.prototype.checkDead = function () {
     var leader = this.getChampion(this.championLeader).getMonster();
     var deadNum = 0;
     if (leader.dead) {
-        for (c = 0; c < this.champion.length; c++) {
+        for(var c = 0; c < this.champion.length; c++) {
             var ch = this.getChampion(c);
             if (ch !== null) {
                 var m = ch.getMonster();
@@ -734,7 +734,7 @@ Player.prototype.checkDead = function () {
             this.dead = true;
             this.doneCommunication();
             this.attack(null, false);
-            for (c = 0; c < this.champion.length; c++) {
+            for(var c = 0; c < this.champion.length; c++) {
                 var ch = this.getChampion(c);
                 if (ch !== null && ch.recruitment.attached) {
                     ch.recruitment.attached = false;
@@ -821,7 +821,7 @@ Player.prototype.dismissChampion = function (c) {
 }
 Player.prototype.getChampionLength = function () {
         var l = 0;
-        for (c = 0; c < 4; c++) {
+        for(var c = 0; c < 4; c++) {
             if (typeof this.champion[c] !== 'undefined' && this.champion[c] !== -1) {
                 l++;
             }
@@ -836,7 +836,7 @@ Player.prototype.getChampion = function (loc) {
     return null;
 }
 Player.prototype.getChampionPosition = function (id) {
-        for (c = 0; c < this.champion.length; c++) {
+        for(var c = 0; c < this.champion.length; c++) {
             var ch = this.getChampion(c);
             if (ch.id === id) {
                 return c;
@@ -852,7 +852,7 @@ Player.prototype.getOrderedChampionIds = function (all) {
     }
     var c1 = new Array();
     c1.push(this.championLeader);
-    for (c = 0; c < this.champion.length; c++) {
+    for(var c = 0; c < this.champion.length; c++) {
         if (c !== this.championLeader) {
             var ch = this.getChampion(c);
             if (ch !== null && (all || ch.recruitment.attached)) {
@@ -865,7 +865,7 @@ Player.prototype.getOrderedChampionIds = function (all) {
 Player.prototype.getOrderedChampions = function (all) {
     var ch1 = new Array();
     var c1 = this.getOrderedChampionIds();
-    for (c = 0; c < this.champion.length; c++) {
+    for(var c = 0; c < this.champion.length; c++) {
         var cid = c1[c];
         var ch = this.getChampion(cid);
         if (ch !== null && (all || ch.recruitment.attached)) {
@@ -878,7 +878,7 @@ Player.prototype.gainChampionXp = function (xp, ch) {
     if (typeof ch !== "undefined") {
         gainChampionXp1();
     } else {
-        for (c = 0; c < this.champion.length; c++) {
+        for(var c = 0; c < this.champion.length; c++) {
             var ch = this.getChampion(c);
             gainChampionXp1();
         }
@@ -903,7 +903,7 @@ Player.prototype.gainChampionXp = function (xp, ch) {
 }
 Player.prototype.alertDamagedPlayer = function () {
     this.uiLeftPanel.mode = UI_LEFT_PANEL_MODE_STATS;
-    for (ch = 0; ch < this.champion.length; ch++) {
+    for(var ch = 0; ch < this.champion.length; ch++) {
         if (this.getChampion(ch) !== null && this.getChampion(ch).getMonster().dead && ch > 0) {
             toggleChampUI(ch, this, false);
         } else {
@@ -915,7 +915,7 @@ Player.prototype.alertDamagedPlayer = function () {
     }
 }
 Player.prototype.resetChampUI = function () {
-        for (ch = 0; ch < this.champion.length; ch++) {
+        for(var ch = 0; ch < this.champion.length; ch++) {
             if (this.uiLeftPanel.champs[ch].opened === true) {
                 toggleChampUI(ch, this, false);
                 redrawUI(this.id);
@@ -929,7 +929,7 @@ Player.prototype.getMonstersInRange = function (pos2) {
     var monstersInRange = [];
     var pos = -1;
     mon = getMonstersInTower(towerThis, true);
-    for (m in mon) {
+    for(var m in mon) {
         if (p.floor === mon[m].floor && !mon[m].dead) {
             pos = coordinatesToPos(mon[m].x, mon[m].y, p.x, p.y, p.d);
             var sq = CHAR_FRONT_SOLO;
@@ -1146,7 +1146,7 @@ Player.prototype.exchangeItemWithHand = function (s, q) {
         if (itH.id === 0 || ch.itemAllowedOnSlot(itH, s)) { //((s !== POCKET_ARMOUR || itH.type === 'ITEM_TYPE_ARMOUR') && (s !== POCKET_SHIELD || ch.itemAllowedOnSlot(itH, s)))) {
             if (it.type === 'ITEM_TYPE_STACKABLE' && (itH.id === 0 || it.id === itH.id)) {
                 if (itH.id === 0) {
-                    for (q1 = 0; q1 < q; q1++) {
+                    for(var q1 = 0; q1 < q; q1++) {
                         itH.setPocketItem(it.id, itH.quantity + 1);
                         //itH.setPocketItem(it.id, itH.quantity + 1);
                         if(!it.setQuantity(it.quantity - 1)) {
@@ -1204,7 +1204,7 @@ Player.prototype.exchangeItemWithHand = function (s, q) {
 Player.prototype.findPocketItem = function (i) {
     var ch = this.getActivePocketChampion();
     if (ch !== null) {
-        for (ip = 0; ip < ch.pocket.length; ip++) {
+        for(var ip = 0; ip < ch.pocket.length; ip++) {
             if (ch.pocket[ip].id === i) {
                 return ip;
             }
@@ -1249,14 +1249,14 @@ Player.prototype.actionItem = function (s) {
         if (tower[towerThis].floor[this.floor].Map[xyi.y].length >= xyi.x) {
             setDungeonHex(this.floor, xyi.x, xyi.y, 12, 1, '0');
             if (itH.id === 0) { //take item
-                for (i = item[towerThis].length - 1; i >= 0; i--) {
+                for(var i = item[towerThis].length - 1; i >= 0; i--) {
                     if (item[towerThis][i].location.tower === towerThis && item[towerThis][i].location.floor === this.floor && item[towerThis][i].location.x === xyi.x && item[towerThis][i].location.y === xyi.y && item[towerThis][i].location.square === (this.d + s) % 4) {
                         var it = item[towerThis].splice(i, 1);
                         break;
                     }
                 }
                 if (typeof it !== "undefined") {
-                    for (c = 0; c < this.champion.length; c++) { //take a RIP that is part of the group. This will make the item disappear.
+                    for(var c = 0; c < this.champion.length; c++) { //take a RIP that is part of the group. This will make the item disappear.
                         var ch = this.getChampion(c);
                         var rip = getObjectByKeys(itemData[it[0].id], 'revive');
                         if (ch !== null && typeof rip !== "undefined" && rip.getVar() === ch.id && !ch.recruitment.attached) {
@@ -1282,7 +1282,7 @@ Player.prototype.actionItem = function (s) {
 Player.prototype.getItemsInRange = function (pos2) {
     var itemsInRange = [];
     var pos = -1;
-    for (i = item[towerThis].length - 1; i >= 0; i--) {
+    for(var i = item[towerThis].length - 1; i >= 0; i--) {
         var it = item[towerThis][i];
         if (this.floor === it.location.floor) {
             pos = coordinatesToPos(it.location.x, it.location.y, this.x, this.y, this.d);
@@ -1343,7 +1343,7 @@ Player.prototype.castSpell = function (sb, ch, s) {
         } else if (!s) {
             writeSpellInfoFont(this, TEXT_COST_TOO_HIGH, colourData['RED']);
         }
-        for (p in player) {
+        for(var p in player) {
             player[p].redrawViewPort = true;
         }
     }
@@ -1373,7 +1373,7 @@ Player.prototype.getActiveSpellById = function (id) {
         power: 0,
         timer: 0
     };
-    for (c = 0; c < this.champion.length; c++) {
+    for(var c = 0; c < this.champion.length; c++) {
         var ch = this.getChampion(c);
         if (ch !== null && id === ch.activeSpell.id && ret.timer < ch.activeSpell.timer) {
             ret = ch.activeSpell;
@@ -1384,7 +1384,7 @@ Player.prototype.getActiveSpellById = function (id) {
 Player.prototype.getProjectilesInRange = function (pos2) {
     var projectilesInRange = [];
     var pos = -1;
-    for (i = 0; i < projectile[towerThis].length; i++) {
+    for(var i = 0; i < projectile[towerThis].length; i++) {
         var pr = projectile[towerThis][i];
         if (this.floor === pr.floor && pr.dead <= 1) {
             pos = coordinatesToPos(pr.x, pr.y, this.x, this.y, this.d);
@@ -1443,7 +1443,7 @@ Player.prototype.checkForMonsterInFront = function () {
 Player.prototype.startDrawHitDamage = function (cid, dmg) {
     if (dmg > 0) {
         var c1 = this.getOrderedChampionIds();
-        for (c = 0; c < this.champion.length; c++) {
+        for(var c = 0; c < this.champion.length; c++) {
             var c2 = c1[c];
             var ch = this.getChampion(c2);
             if (ch !== null && ch.id === cid && this.uiLeftPanel.champs[c].opened) {
@@ -1463,7 +1463,7 @@ Player.prototype.testMode = function (id) {
         //tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = bin2hex(hex2bin(hex).substring(2, 8) +  hex2bin(hex).substring(0, 2) + hex2bin(hex).substring(8, 16)); //ROTATE WOODEN WALL
         /*try {
             var view = this.getView();
-            for (i = 0; i < 17; i++) {
+            for(var i = 0; i < 17; i++) {
                 var t = view[i].substring(2, 4);
                 if (view[i].substring(2, 4) === "80") {
                     window.alert("Distance: " + getMonsterDistanceByPos(i) + " Code: " + view[i]);
@@ -1593,7 +1593,7 @@ Player.prototype.determineCommunicationQuestionAnswer = function (mode, text) {
 }
 Player.prototype.filterCommunicationAnswer = function (answer, mode, text) {
     var ans = new Array();
-    for (a = 0; a < answer.length; a++) {
+    for(var a = 0; a < answer.length; a++) {
         ans.push(a);
     }
     var mon = this.communication.monster;
@@ -1750,9 +1750,9 @@ function getPlayerAt(f, x, y) {
 function initPlayersStart(ch1, ch2) {
     if (typeof ch1 === "number") {
         c1 = [ch1, ch2];
-        for (p in player) {
+        for(var p in player) {
             player[p].recruitChampion(c1[p]);
-            for (i = 1; i < 4; i++) {
+            for(var i = 1; i < 4; i++) {
                 player[p].recruitChampion();
             }
             var ch = player[p].getChampion(0);
@@ -1764,8 +1764,8 @@ function initPlayersStart(ch1, ch2) {
             player[p].setPlayerPosition(f, x, y, d);
         }
     } else {
-        for (p in player) {
-            for (i = 0; i < 4; i++) {
+        for(var p in player) {
+            for(var i = 0; i < 4; i++) {
                 c1 = [ch1[i], ch2[i]];
                 player[p].recruitChampion(c1[p]);
             }

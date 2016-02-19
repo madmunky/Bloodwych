@@ -84,7 +84,7 @@ function doKeyDown(e) {
                         break;
                     case KEY_L: // THE L KEY
                         switchTower((towerThis + 1) % TOWER_NAME.length);
-                        for (p in player) { player[p].redrawViewPort = true;}
+                        for(var p in player) { player[p].redrawViewPort = true;}
                         break;
                     case KEY_T:
                         //player[0].changeUpFloor();
@@ -108,7 +108,7 @@ function doKeyDown(e) {
                             var y = player[0].y + fOff.y;
                             player[0].setPlayerPosition(floor, x, y, player[0].d);
                         }
-                        for (p in player) { player[p].redrawViewPort = true;}
+                        for(var p in player) { player[p].redrawViewPort = true;}
                         break;
                     case KEY_H:
                         if (player[0].floor > 0) {
@@ -118,7 +118,7 @@ function doKeyDown(e) {
                             var y = player[0].y + fOff.y;
                             player[0].setPlayerPosition(floor, x, y, player[0].d);
                         }
-                        for (p in player) { player[p].redrawViewPort = true;}
+                        for(var p in player) { player[p].redrawViewPort = true;}
                         break;
                     case KEY_PLUS:
                         player[0].uiCenterPanel.mode = UI_CENTER_PANEL_ENDGAME;
@@ -210,7 +210,7 @@ function checkClickEvents() {
             //	pauseGame(false);
             //}
             var p = 0;
-            for (pid in player) {
+            for(var pid in player) {
                 pid = parseInt(pid);
                 p += processCanvasInput(pid, x, y) + 1;
             }
@@ -223,7 +223,7 @@ function checkClickEvents() {
             uiChampSelectArea(x, y, currentPlayer);
 
             if (championSelect[currentPlayer].mode === UI_CHARACTER_SELECT_POCKET) {
-                for (s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
+                for(var s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
                     if (uiClickInArea(x, y, s, player[currentPlayer])) {
                         var it = champion[championSelect[currentPlayer].champID].pocket[(s - UI_CLICK_POCKET_SLOT_1)];
                         if (currentPlayer === 0) {
@@ -403,7 +403,7 @@ function processCanvasInput(pid, x, y) {
 
         } else if (p.uiRightPanel.mode === UI_RIGHT_PANEL_POCKETS) {
             if (!p.dead) {
-                for (s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
+                for(var s = UI_CLICK_POCKET_SLOT_1; s <= UI_CLICK_POCKET_SLOT_12; s++) {
                     if (uiClickInArea(x, y, s, p)) {
                         p.exchangeItemWithHand(s - UI_CLICK_POCKET_SLOT_1);
                         p.redrawLeftRightUiFlag = UI_REDRAW_POCKETS;
@@ -416,7 +416,7 @@ function processCanvasInput(pid, x, y) {
                     return pid;
                 }
             }
-            for (cid = UI_CLICK_POCKET_CHARACTER_0; cid <= UI_CLICK_POCKET_CHARACTER_3; cid++) {
+            for(var cid = UI_CLICK_POCKET_CHARACTER_0; cid <= UI_CLICK_POCKET_CHARACTER_3; cid++) {
                 if (uiClickInArea(x, y, cid, p)) {
                     var ap = cid - UI_CLICK_POCKET_CHARACTER_0;
                     var c = p.getOrderedChampionIds();
@@ -600,7 +600,7 @@ function processCanvasInputMenu(x, y) {
 }
 
 function viewportTouch(x, y, xy) {
-    for (p in player) {
+    for(var p in player) {
         xy = {
             x: Math.floor((x - player[p].PortalX) / scale / 42.67),
             y: Math.floor((y - player[p].PortalY) / scale / 38)
@@ -655,7 +655,7 @@ function mouseXY(e) {
 
         }
         if (typeof player !== 'undefined') {
-            for (p in player) {
+            for(var p in player) {
                 if (!paused) {
                     checkCommunicationArea(player[p], mouseX / (scale * scaleReal), mouseY / (scale * scaleReal), true);
                 }
@@ -703,7 +703,7 @@ function checkBackButton(p) {
 function checkCommunicationArea(p, x, y, hover) {
     if (p.uiLeftPanel.mode === UI_LEFT_PANEL_MODE_COMMAND) {
         if (uiClickInArea(x, y, UI_CLICK_COMMUNICATION_AREA, p)) {
-            for (i = 0; i < TEXT_COMMUNICATION_COMMANDS[p.communication.mode].length; i++) {
+            for(var i = 0; i < TEXT_COMMUNICATION_COMMANDS[p.communication.mode].length; i++) {
                 var com = TEXT_COMMUNICATION_COMMANDS[p.communication.mode][i];
                 if (com.left) {
                     x1 = p.ScreenX;

@@ -9,7 +9,7 @@ function getCharacterSprite(length, graphicsFolder, graphic, spriteWidth, sprite
 
     var graphicArray = [];
 
-    for (x = 0; x < length; x++) {
+    for(var x = 0; x < length; x++) {
 
         var MID = [],
             FAR = [],
@@ -601,7 +601,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
     }
 
     if (dist > -1) {
-        for (part = 0; part < 5; part++) {
+        for(var part = 0; part < 5; part++) {
             if (typeof m.ref.gfx[part] !== "undefined" && typeof m.ref.gfx[part][dist] !== "undefined" && typeof m.ref.gfx[part][dist][dir] !== "undefined") {
                 if (typeof doBlur === 'undefined') {
                     doBlur = true;
@@ -738,7 +738,7 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
                             gfx1 = armourRef[id][gen].gfx[IMAGE_CHA_MINI][dist][dir1];
                             if (dir2 > -1) gfx2 = armourRef[id][gen].gfx[IMAGE_CHA_MINI][dist][dir2];
                         }
-                        for (pl = 0; pl < 4; pl++) {
+                        for(var pl = 0; pl < 4; pl++) {
                             if (car[pl] !== null) {
                                 palette[pl] = car[pl];
                             }
@@ -809,7 +809,7 @@ function drawMonster(m, dir, dist, player, offset, returnImg) {
     }
 
     if (dist > -1) {
-        for (part1 = 0; part1 < 3; part1++) {
+        for(var part1 = 0; part1 < 3; part1++) {
             try {
                 var part = part1;
                 var armoffx = 0;
@@ -984,7 +984,7 @@ function grabMonster(form, level) {
             return null;
     }
 
-    for (i in spriteLocations){
+    for(var i in spriteLocations){
         ImageArray.push({name:spriteLocations[i].name,img:grabImageAt(spriteSheetIMG, spriteLocations[i].x, spriteLocations[i].y, spriteLocations[i].w, spriteLocations[i].h, spriteLocations[i].mirror, spriteLocations[i].ox, spriteLocations[i].oy)})
     }
 
@@ -1019,7 +1019,7 @@ function getSprite(part,dist,dir,action, monster, player){
     }
 
 
-    for (i in Sprite){
+    for(var i in Sprite){
         if (Sprite[i].name.indexOf(partName[part]) >-1){
             if (Sprite[i].name.indexOf(distName[dist]) >-1){
                 if (Sprite[i].name.indexOf(dirName[dir]) >-1){

@@ -70,7 +70,7 @@ function updatePlayerViewScreen() {
     debugText(player[0], "CURRENT TOWER: " + TOWER_NAME[towerThis]);
     //if (!paused) {
     var dr = false;
-    for (p in player) {
+    for (var p in player) {
         debugText(player[p], "T:" + TOWER_NAME[towerThis] + "  F:" + player[p].floor + "  X:" + player[p].x + "  Y:" + player[p].y + "  D:" + player[p].d);
         drawPlayersView(player[p]);
         if (drawUI(player[p])) {
@@ -116,7 +116,7 @@ function setViewportScale(sp) {
     $('html').css('zoom', scaleReal);
     $('html').css('-moz-transform', 'scale(' + scaleReal + ')');
     if (typeof player !== "undefined") {
-        for (p in player) {
+        for (var p in player) {
             player[p].PortalX = (player[p].ScreenX + 96) * scale;
             player[p].PortalY = (player[p].ScreenY + 2) * scale;
             player[p].PlayerCanvas.width = 128 * scale;
@@ -178,7 +178,7 @@ function pauseGame(ps, colourTo) {
     } else {
         resumeSound(SOUND_PCMUSIC);
         pausedByBrowser = false;
-        for (p in player) {
+        for (var p in player) {
             player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
             player[p].message();
             player[p].redrawViewPort = true;
@@ -189,6 +189,7 @@ function pauseGame(ps, colourTo) {
 }
 
 function recolourCanvas(from, to) {
+    var j = 0;
     var img = ctx.getImageData(0, 0, canvas.width, canvas.width);
     for (var i = 0; i < img.data.length; i += 4) {
         if (img.data[i] === from[0] && img.data[i + 1] === from[1] && img.data[i + 2] === from[2]) {
@@ -205,7 +206,7 @@ function recolourCanvas(from, to) {
 
 function gfxColourSubs(folder, type, item, sub) {
     if (item != "") {
-        for (i = 1; i <= sub; i++) {
+        for (var i = 1; i <= sub; i++) {
             //if (typeof gfx[folder][type][item][i] != 'undefined'){
                 gfx[folder][type][item][i] = recolorImage(gfx[folder][type][item][0], i, folder, type, item);
             //}
@@ -214,7 +215,7 @@ function gfxColourSubs(folder, type, item, sub) {
             gfx[folder][type][item][0] = recolorImage(gfx[folder][type][item][0], 0, folder, type, item);
         //}
     } else {
-        for (i = 1; i <= sub; i++) {
+        for (var i = 1; i <= sub; i++) {
             gfx[folder][type][i] = recolorImage(gfx[folder][type][0], i, folder, type, item);
         }
         gfx[folder][type][0] = recolorImage(gfx[folder][type][0], 0, folder, type, item);
@@ -404,7 +405,7 @@ function debugText(p, txt) {
 }
 
 function godMode() {
-    for (c in champion) {
+    for (var c in champion) {
         var ch = champion[c];
         ch.levelUp = 35;
         while (ch.levelUp > 0) {
@@ -413,8 +414,8 @@ function godMode() {
         ch.stat.hp = ch.stat.hpMax;
         ch.stat.vit = ch.stat.vitMax;
         ch.stat.sp = ch.stat.spMax;
-        for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
-            for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
+        for (var pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+            for (var rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
                 ch.spellBook[pg][rw].learnt = true;
             }
         }

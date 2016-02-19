@@ -1,5 +1,5 @@
 function initTowers() {
-	for (i in tower){
+	for(var i in tower){
 		projectile[i] = new Array();
 		TOWER_NAME.push(tower[i].name);
 	};
@@ -7,7 +7,7 @@ function initTowers() {
 
 function getTowerByName(strName){
 
-	for (t in tower){
+	for(var t in tower){
 		if (tower[t].name === strName){
 			return tower[t];
 		}
@@ -53,7 +53,7 @@ function switchTower(id, po) {
 	if (towerLast === TOWER_MOD0 && towerThis === TOWER_MOD0) { //from tower to tower (start of game)
 
 	} else if (towerThis !== TOWER_MOD0) { //from keep to tower
-		for (p in player) {
+		for(var p in player) {
 			var pt = Math.abs(p - po);
 			floor = player[p].towerSwitches[0][towerThis].floor;
 			x = player[p].towerSwitches[0][towerThis].x;
@@ -61,7 +61,7 @@ function switchTower(id, po) {
 			player[pt].setPlayerPosition(floor, x, y);
 		}
 	} else if (towerThis === TOWER_MOD0) { //from tower to keep
-		for (p in player) {
+		for(var p in player) {
 			var pt = Math.abs(p - po);
 			floor = player[p].towerSwitches[1][towerLast].floor;
 			x = player[p].towerSwitches[1][towerLast].x;
@@ -71,11 +71,11 @@ function switchTower(id, po) {
 	}
         if (isMobile){
             var mon = getMonstersInTower(towerThis, true);
-            for (m in mon){
+            for(var m in mon){
                 initMonsterGfxNew(monster[towerThis][m]);
             }
         }
-	//for (p in player) {
+	//for(var p in player) {
 	//	player[p].updateChampions();
 	//}
 	//$('canvas').attr('data-game-status', 'started');

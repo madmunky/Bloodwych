@@ -290,7 +290,7 @@ function initItems(t) {
             var x = ((dd % 16) * 256 + dx) / 2;
             var xy = indexToCoordinates(x, t.id);
             var n = t.itemData[i1 + 2] + 1;
-            for (di = 0; di < n; di++) {
+            for(var di = 0; di < n; di++) {
                 var max = item[t.id].length;
                 var id = t.itemData[di * 2 + i1 + 3];
                 var qt = t.itemData[di * 2 + i1 + 4];
@@ -411,7 +411,7 @@ function createPocketSlots(max) {
         var max = POCKET_MAX;
     }
     var pocket = new Array();
-    for (j = 0; j < max; j++) {
+    for(var j = 0; j < max; j++) {
         pocket[j] = newPocketItem();
     }
     return pocket;
@@ -422,7 +422,7 @@ function createPocketSlots(max) {
 function dropItem(id, q, f, x, y, s) {
     if(id > 0) {
         if(getItemType(id) === 'ITEM_TYPE_STACKABLE') {
-            for (i = item[towerThis].length - 1; i >= 0; i--) {
+            for(var i = item[towerThis].length - 1; i >= 0; i--) {
                 var it = item[towerThis][i];
                 if (it.id === id) {
                     if(it.location.floor === f && it.location.x === x && it.location.y === y && it.location.square === s) {
@@ -599,7 +599,7 @@ function initItemRefs() {
 
     createItemRef(109, "Book of Skulls", gfxUI[UI_GFX_ICON_BOOKOFSKULLS], itemsGfxD[DUNGEON_ITEM_BOOK_OF_SKULLS]);
 
-    for(ir = 110; ir < itemData.length; ir++) {
+    for(var ir = 110; ir < itemData.length; ir++) {
         createItemRef(ir);
     }
     //itemsGfxD = [];
@@ -616,7 +616,7 @@ function createItemRef(id, name, gfx, gfxD) {
             var iFrom = getObjectByKeys(itemData[id], 'icon', 'recolour', 'from');
             var iTo = getObjectByKeys(itemData[id], 'icon', 'recolour', 'to');
             if(typeof iFrom !== "undefined" && typeof iTo !== "undefined") {
-                for(f in iFrom) {
+                for(var f in iFrom) {
                     gfx = recolourUiGfx(gfx, iFrom[f], iTo[f]);
                 }
             }
@@ -657,8 +657,8 @@ function initItemsGfxD() {
     var spriteSheetIMG = gfx['dungeon']['items2'];
     var dItems = [];
 
-    for (y = 0; y < 3; y++) {
-        for (x = 0; x < 9; x++) {
+    for(var y = 0; y < 3; y++) {
+        for(var x = 0; x < 9; x++) {
             var i = [];
             var b = y * 42;
             i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 0), 33, 10, false));
@@ -712,10 +712,10 @@ function indexToCoordinates(ix, t) {
     var tw = tower[t];
     var isnext = 0;
     var is = 0;
-    for (fl = 0; fl < tw.floor.length; fl++) {
+    for(var fl = 0; fl < tw.floor.length; fl++) {
         isnext = tw.floor[fl].Width * tw.floor[fl].Height;
         if (ix < is + isnext) {
-            for (y = 0; y < tw.floor[fl].Width; y++) {
+            for(var y = 0; y < tw.floor[fl].Width; y++) {
                 isnext = tw.floor[fl].Height;
                 if (ix < is + isnext) {
                     return {
@@ -801,7 +801,7 @@ function getItemGfxOffset(pos, sub, sh) {
 }
 
 function getItemIndexById(it, id) {
-    for (i in it) {
+    for(var i in it) {
         if(it[i].id === id) {
             return it[i];
         }

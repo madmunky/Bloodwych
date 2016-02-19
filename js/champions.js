@@ -75,7 +75,7 @@ Champion.revive = function(data) {
     c.spellUp = data.spellUp;
     c.levelUp = data.levelUp;
     c.spellBook = data.spellBook;
-    for (p in data.pocket) {
+    for (var p in data.pocket) {
         data.pocket[p] = newPocketItem(data.pocket[p].id, data.pocket[p].quantity);
     }
     //        c.pocket = data.pocket;
@@ -584,8 +584,8 @@ Champion.prototype.addSpellToSpellBook = function(sp) {
 
 Champion.prototype.getUnlearntSpellsByColour = function(cl) {
     var sb = new Array();
-    for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
-        for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
+    for (var pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+        for (var rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
             var sp = this.spellBook[pg][rw];
             if (!sp.learnt && sp.ref.colour === cl) {
                 sb.push(sp.ref);
@@ -599,8 +599,8 @@ Champion.prototype.getUnlearntSpellsByColour = function(cl) {
 }
 
 Champion.prototype.getSpellInBook = function(sp) {
-    for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
-        for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
+    for (var pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+        for(var rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
             var sb = this.spellBook[pg][rw];
             if (getSpellById(sb.id) === sp) {
                 return sb;
@@ -610,8 +610,8 @@ Champion.prototype.getSpellInBook = function(sp) {
 }
 
 Champion.prototype.getSpellInBookById = function(id) {
-    for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
-        for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
+    for (var pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+        for (var rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
             var sb = this.spellBook[pg][rw];
             if (sb.id === id) {
                 return sb;
@@ -636,7 +636,7 @@ Champion.prototype.buySpell = function(sp) {
 
 //mainly used for finding coins
 Champion.prototype.findPocketItem = function(i) {
-    for (ip = 0; ip < this.pocket.length; ip++) {
+    for (var ip = 0; ip < this.pocket.length; ip++) {
         if (this.pocket[ip].id === i) {
             return ip;
         }
@@ -732,9 +732,9 @@ Champion.prototype.getAttackSpeed = function(fac) {
 
 /*Champion.prototype.toString = function() {
     sb = "";
-    for (cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
+    for (var cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
         sb = sb + "[";
-        for (i = 0; i < SPELL_LEVEL_MAX; i++) {
+        for (var i = 0; i < SPELL_LEVEL_MAX; i++) {
             if (this.spellBook[cl][i].learnt) {
                 sb = sb + "1";
             } else {
@@ -897,14 +897,14 @@ function getChampionColour(id) {
 function initChampions() {
     champion.length = 0;
     monster[TOWER_CHAMPIONS] = new Array();
-    for (ch = 0; ch < CHAMPION_MAX; ch++) {
+    for (var ch = 0; ch < CHAMPION_MAX; ch++) {
         var slot = new Array();
         var pk = championPocketData[ch].match(/.{1,2}/g);
-        for (i = 0; i < 16; i++) {
+        for (var i = 0; i < 16; i++) {
             var a = hex2dec(pk[i].substr(0, 2));
             pk[i] = parseInt(a);
         }
-        for (i = 0; i < POCKET_MAX - 1; i++) {
+        for (var i = 0; i < POCKET_MAX - 1; i++) {
             if (pk[i] >= ITEM_COINAGE && pk[i] <= ITEM_ELF_ARROWS) {
                 slot[i] = newPocketItem(pk[i], pk[pk[i] + POCKET_MAX - 2]);
             } else {
@@ -949,10 +949,10 @@ function initChampions() {
         spellBin = spellBin + hex2bin(md.substr(28, 2));
         spellBin = spellBin + hex2bin(md.substr(30, 2));
         var spellBook = {};
-        for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+        for (var pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
             spellBook[pg] = {};
             var spl = getSpellBookPage(pg);
-            for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
+            for (var rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
                 spellBook[pg][rw] = {};
                 spellBook[pg][rw].learnt = false;
                 spellBook[pg][rw].castSuccessful = 0;

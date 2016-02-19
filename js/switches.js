@@ -95,7 +95,7 @@ function floorActionType(trig, p) {
             castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x + 1, y: p.y, d: 3 });
             castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x, y: p.y - 1, d: 2 });
             castSpell(SPELL_VIVIFY, { floor: p.floor, x: p.x, y: p.y + 1, d: 0 });
-            /*for(ch = 0; ch < p.champion.length; ch++) {
+            /*for(var ch = 0; ch < p.champion.length; ch++) {
                 var champ = p.getChampion(ch);
                 if(champ !== null && champ.getMonster().dead && champ.recruitment.attached) {
                     champ.stat.hp = 0;
@@ -209,7 +209,7 @@ function floorActionType(trig, p) {
             break;
         case SWITCH_FLOOR_TELEPORT_MONSTER:
             mon = getMonstersInTower(towerThis, true);
-            for (m in mon) {
+            for(var m in mon) {
                 if(trig[2] === mon[m].x - 128 && trig[3] === mon[m].y) {
                     mon[m].x -= 128;
                     break;
@@ -254,10 +254,10 @@ function gemAction(p) {
 
                     while(i < crystalSwitchesData.length) {
                         twr = crystalSwitchesData[i++];
-                        for(c = 0; c < 4; c++) {
+                        for(var c = 0; c < 4; c++) {
                             l = crystalSwitchesData[i++];
                             trg[c] = new Array();
-                            for(s = 0; s < l; s++) {
+                            for(var s = 0; s < l; s++) {
                                 trg[c][s] = new Array();
                                 trg[c][s][0] = crystalSwitchesData[i++];
                                 trg[c][s][1] = crystalSwitchesData[i++];
@@ -289,10 +289,10 @@ function gemAction(p) {
 }
 
 function initTowerSwitches() {
-    for (p in player) { //player
-        for (i = 0; i < 2; i++) { //0: to tower, 1: to keep
+    for(var p in player) { //player
+        for(var i = 0; i < 2; i++) { //0: to tower, 1: to keep
             player[p].towerSwitches[i] = new Array();
-            for (t = 0; t < 5; t++) { //tower
+            for(var t = 0; t < 5; t++) { //tower
                 if(typeof player[1] !== 'undefined') {
                     player[p].towerSwitches[i][t + 1] = {
                         floor: towerSwitchesData[i][t],

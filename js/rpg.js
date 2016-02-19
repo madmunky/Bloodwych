@@ -9,7 +9,7 @@ function calculateAttack(att, def, tof) {
 		}
 	}
 
-	for (a = 0; a < 4; a++) {
+	for(var a = 0; a < 4; a++) {
 		var attack = 0; //attack points
 		var critChance = 1.0; //chance for a critical strike (2x hit)
 		var hit = 1.0; //chance for attacker for a successful hit
@@ -93,7 +93,7 @@ function calculateAttack(att, def, tof) {
 		if (def instanceof Player) {
 			var ch = [];
 			var ch1 = [];
-			for (d = 0; d < 2; d++) {
+			for(var d = 0; d < 2; d++) {
 				ch[0] = champion[def.champion[(7 + fromDir - def.d - d) % 4]];
 				ch[1] = champion[def.champion[(4 + fromDir - def.d + d) % 4]];
 				if (typeof ch[0] !== "undefined" && !ch[0].getMonster().dead) {
@@ -128,7 +128,7 @@ function calculateAttack(att, def, tof) {
 			} else {
 				mon[0] = def;
 			}
-			for (d = 0; d < mon.length; d++) {
+			for(var d = 0; d < mon.length; d++) {
 				if (Math.random() < 1.0 / (mon.length - d) || tof > -1) {
 					if (tof === -1) {
 						to = mon[d];

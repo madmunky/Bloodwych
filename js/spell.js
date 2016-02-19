@@ -18,9 +18,9 @@ Spell.prototype.toString = function() {
 }
 
 function initSpells() {
-	for (cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
+	for(var cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
 		spell[cl] = new Array();
-		for (id = 0; id < SPELL_LEVEL_MAX; id++) {
+		for(var id = 0; id < SPELL_LEVEL_MAX; id++) {
 			//var l = [0, 1, 1, 2, 2, 3];
 			var name = TEXT_SPELL_NAME[id + cl * SPELL_LEVEL_MAX];
 			var description = TEXT_SPELL_DESCRIPTION[id + cl * SPELL_LEVEL_MAX];
@@ -115,8 +115,8 @@ function getSpellById(id) {
 
 function getSpellBookPage(p) {
 	var sb = new Array();
-	for (cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
-		for (id = 0; id < SPELL_LEVEL_MAX; id++) {
+	for(var cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
+		for(var id = 0; id < SPELL_LEVEL_MAX; id++) {
 			var sp = spell[cl][id];
 			if (sp.page === p) {
 				sb.push(sp);
@@ -260,7 +260,7 @@ function castSpell(s, src, pw) {
 			if(ch.recruitment.playerId > -1) {
 				var pl = player[ch.recruitment.playerId];
 				var chs = pl.getOrderedChampions();
-				for (c in chs) {
+				for(var c in chs) {
 					if(chs[c].recruitment.attached) {
 						chs[c].addHP(pow);
 					}
@@ -313,10 +313,10 @@ function castSpell(s, src, pw) {
 			break;
 		case SPELL_VIVIFY:
 			newProjectile(DUNGEON_PROJECTILE_ARROW, paletteData['CHAOS'], SOUND_FLASH, s, 0, f, x, y, d, src);
-			for (p in player) {
+			for(var p in player) {
 				var pl = player[p];
 				if (!pl.dead && f === pl.floor && x === pl.x && y === pl.y) {
-					for(c = 0; c < pl.champion.length; c++) {
+					for(var c = 0; c < pl.champion.length; c++) {
 						var ch1 = pl.getChampion(c);
 						if(ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
 							ch1.stat.hp = 0;
@@ -350,7 +350,7 @@ function castSpell(s, src, pw) {
 			if(ch.recruitment.playerId > -1) {
 				var pl = player[ch.recruitment.playerId];
 				var chs = pl.getOrderedChampions();
-				for (c in chs) {
+				for(var c in chs) {
 					if(chs[c].recruitment.attached) {
 						chs[c].addVit(pow);
 					}
@@ -491,7 +491,7 @@ function setDungeonSpell(f, x, y, proj) {
 }
 
 function getDungeonSpell(f, x, y) {
-	for(d in dungeonSpellList) {
+	for(var d in dungeonSpellList) {
 		ds = dungeonSpellList[d];
 		if(ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
 			return ds;
@@ -501,7 +501,7 @@ function getDungeonSpell(f, x, y) {
 }
 
 function deleteDungeonSpell(f, x, y) {
-	for(d in dungeonSpellList) {
+	for(var d in dungeonSpellList) {
 		ds = dungeonSpellList[d];
 		if(ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
 			delete dungeonSpellList[d];
@@ -511,11 +511,11 @@ function deleteDungeonSpell(f, x, y) {
 }
 
 function updateDungeonSpells() {
-	for (s in dungeonSpellList) {
+	for(var s in dungeonSpellList) {
 		var ds = dungeonSpellList[s];
 		if (ds.tower === towerThis) {
 			if(ds.projectile !== null && typeof ds.projectile.spell !== 'number' && (ds.projectile.spell.index === SPELL_FIREPATH || ds.projectile.spell.index === SPELL_BLAZE || ds.projectile.spell.index === SPELL_INFERNO)) {
-				for (p in player) {
+				for(var p in player) {
 					if (ds.floor === player[p].floor && ds.x === player[p].x && ds.y === player[p].y) {
 						ds.projectile.attack(player[p]);
 					}

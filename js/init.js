@@ -30,8 +30,8 @@ function loadDefaultGfx(event) {
 }
 
 function loadCustomGfx(event) {
-    for (i in event.manifest) {
-        for (x in defaultManifest.manifest) {
+    for(var i in event.manifest) {
+        for(var x in defaultManifest.manifest) {
             if (defaultManifest.manifest[x].id === event.manifest[i].id) {
                 defaultManifest.manifest[x] = event.manifest[i];
             }
@@ -143,7 +143,7 @@ function initData() {
 
 function initJSONData() {
     var i = 0;
-    for(c in colourData) {
+    for(var c in colourData) {
         colourData[i] = colourData[c];
         i++;
     }
@@ -165,7 +165,7 @@ function parseJSONValues(obj, o2, from) {
     if(typeof from === "undefined") {
         var from = '';
     }
-    for(c in obj) {
+    for(var c in obj) {
         if(typeof obj[c] === 'string') {
             if(from === '') {
                 var val = o2[obj[c]];
@@ -197,20 +197,20 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
     switchTower(0);
     //        if (isMobile){
     //            var mon = getMonstersInTower(towerThis, true);
-    //            for (m in mon){
+    //            for(var m in mon){
     //                initMonsterGfxNew(monster[towerThis][m]);
     //            }
     //        }
     gameStarted = true;
     progressScreen("PROCESSING CHAMPIONS");
-    for (pl in championSelect) {
+    for(var pl in championSelect) {
         if (championSelect[pl].champID > -1) {
             champion[championSelect[pl].champID].selectedSpell = null;
             championSelect[pl].champID = -1;
         }
     }
     $('canvas').attr('data-game-status', 'started');
-    //for (p in player) {
+    //for(var p in player) {
     //      player[p].message("WELCOME THEE TRAVELLER, TO THE REMAKE OF", colourData['YELLOW'], true);
     //      player[p].message("   BLOODWYCH - REWRITTEN BY MAD BONE    ", colourData['YELLOW'], true);
     //      player[p].message("          WWW.BLOODWYCH.CO.UK           ", colourData['YELLOW'], true);

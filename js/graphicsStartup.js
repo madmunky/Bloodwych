@@ -93,8 +93,8 @@ function drawQuickStartUI(pl) {
     }
     var chN = 0;
 
-    for (col = 0; col < 4; col++) {
-        for (row = 0; row < 4; row++) {
+    for(var col = 0; col < 4; col++) {
+        for(var row = 0; row < 4; row++) {
             var ch = champion[chN];
             var t = createShield(ch.id, ch.prof, ch.colour);
             if (players === 2 && currentPlayer === 1 && ch.id === championSelect[0].champID) {

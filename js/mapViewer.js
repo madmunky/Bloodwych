@@ -155,8 +155,8 @@ function drawMap() {
     canvas.height = intBlockSize*window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Width;
 
 
-    for (y = 0;y < window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Height;y++){
-        for (x = 0;x < window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Width;x++){
+    for(var y = 0;y < window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Height;y++){
+        for(var x = 0;x < window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Width;x++){
             mapGetTileImage(window.opener.tower[window.opener.towerThis].floor[window.opener.player[0].floor].Map[x][y]);
             //drawTileBoarder(x,y);
         }
@@ -182,7 +182,7 @@ function drawLine(intStartX,intStartY,intEndX,intEndY,strColour,intLineWidth){
 function drawMonsterPositions(){
 
     var mlist = parent.opener.getMonstersInTower(parent.opener.towerThis, true);
-    for (m in mlist){
+    for(var m in mlist){
         if (mlist[m].floor == parent.opener.player[0].floor){// && ((mlist[m].x != player[0].x && mlist[m].y != player[0].y))){
             if (mlist[m].champId > -1){
                 createImageBlock(queue.getResult("Champion"),mlist[m].y*intBlockSize,mlist[m].x*intBlockSize,0);

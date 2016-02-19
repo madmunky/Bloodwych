@@ -61,7 +61,7 @@ Projectile.prototype.move = function() {
 		if (this.event()) {
 			return true;
 		}
-		for (p in player) { player[p].redrawViewPort = true;} 
+		for(var p in player) { player[p].redrawViewPort = true;} 
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		if (typeof this.monster !== "undefined") {
 			var sid = null;
@@ -135,7 +135,7 @@ Projectile.prototype.move = function() {
 			}
 		}
 		this.dead = 2;
-		for (p in player) { player[p].redrawViewPort = true;}
+		for(var p in player) { player[p].redrawViewPort = true;}
 		return false;
 	}
 	var xy = getOffsetByRotation(this.d);
@@ -156,7 +156,7 @@ Projectile.prototype.die = function(snd) {
 	if(fromP || (snd && this.sound !== null)) {
 		playSound(this.sound);
 	}
-	for (p in player) { player[p].redrawViewPort = true;}
+	for(var p in player) { player[p].redrawViewPort = true;}
 }
 
 Projectile.prototype.action = function(tar) {
@@ -209,7 +209,7 @@ Projectile.prototype.action = function(tar) {
 				break;
 			case SPELL_VIVIFY:
 				if (getMonsterAt(this.floor, this.x, this.y) === null) {
-					for (i = item[towerThis].length - 1; i >= 0; i--) {
+					for(var i = item[towerThis].length - 1; i >= 0; i--) {
 						var it = item[towerThis][i];
 						var rv = getObjectByKeys(itemData[it.id], 'revive');
 						if (typeof rv !== "undefined" && it.location.tower === towerThis && it.location.floor === this.floor && it.location.x === this.x && it.location.y === this.y) {
@@ -244,7 +244,7 @@ Projectile.prototype.action = function(tar) {
 					}
 				}
 				if(tar instanceof Player) {
-					for(c = 0; c < tar.champion.length; c++) {
+					for(var c = 0; c < tar.champion.length; c++) {
 						var ch = tar.getChampion(c);
 						if(ch !== null && ch.getMonster().dead && ch.recruitment.attached) {
 							ch.stat.hp = 0;
@@ -397,7 +397,7 @@ Projectile.prototype.attack = function(target, prc) {
 		} else {
 			var combat = calculateAttack(this, target, i);
 		}
-		for (com = 0; com < combat.length; com++) {
+		for(var com = 0; com < combat.length; com++) {
 			var att = combat[com].attacker;
 			var def = combat[com].defender;
 			var pwr = Math.floor(combat[com].power * prc);

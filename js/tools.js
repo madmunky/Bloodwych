@@ -389,7 +389,7 @@ function hexToRgb(hex) {
 }
 
 function getIndexById(obj, id) {
-    for (i in obj) {
+    for(var i in obj) {
         if(obj[i].id === id) {
             return parseInt(i);
         }
@@ -399,7 +399,7 @@ function getIndexById(obj, id) {
 
 function getObjectByKey(obj, key, val) {
 	var ret = [];
-	for (i in obj) {
+	for(var i in obj) {
 		if (obj.hasOwnProperty(i)) {
 			if (i == key && (typeof val === "undefined" || obj[key] == val)) {
 				ret.push(obj[i]);

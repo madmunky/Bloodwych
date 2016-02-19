@@ -33,14 +33,14 @@ function loadGame(g) {
 	//	activeSpellTimer = save.gameData.variables.activeSpellTimer;
 
 		clearCanvas();
-		for (p in player) {
+		for(var p in player) {
 			player[p] = castObject(player[p], 'Player');
 			redrawUI(player[p].id);                        
 		}
-		for (c in champion) {
+		for(var c in champion) {
 			champion[c] = castObject(champion[c], 'Champion');
-			for (pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
-				for (rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
+			for(var pg = 0; pg < SPELL_COLOUR_MAX; pg++) {
+				for(var rw = 0; rw < SPELL_LEVEL_MAX; rw++) {
 					champion[c].spellBook[pg][rw]["ref"] = getSpellById(champion[c].spellBook[pg][rw].id);
 				}
 			}
@@ -63,11 +63,11 @@ function loadGame(g) {
 		}
 		for (var t = 0; t < 6; t++) {
 			//for (var p = 0; p < projectile[t].length; p++) {
-			for (p in projectile[t]) {
+			for(var p in projectile[t]) {
 				projectile[t][p] = castObject(projectile[t][p], 'Projectile');
 			}
 		}
-		for (s in dungeonSpellList) {
+		for(var s in dungeonSpellList) {
 			dungeonSpellList[s].projectile = getProjectileById(dungeonSpellList[s].tower, dungeonSpellList[s].projectileId);
 		}
 
@@ -79,8 +79,8 @@ function loadGame(g) {
 				}
 			}
 		}
-                for (p in player){
-                    for (c in player[p].champion){             
+                for(var p in player){
+                    for(var c in player[p].champion){             
                         var id = champion[player[p].champion[c]].id;
                             initMonsterGfxNew(champion[id].getMonster());
                         }

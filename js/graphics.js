@@ -271,7 +271,7 @@ function drawPlayersView(p) {
             if (debug){
                 //console.log("We are redawing to the Players Canvas");
             }
-            for (x = 0; x < 19; x++) {
+            for(var x = 0; x < 19; x++) {
                 var view = p.getView();
                 var BlockType = getHexToBinaryPosition(view[x], 13, 3);
                 var spellWall = BlockType === '7' && (getHexToBinaryPosition(view[x], 6, 2) === '2' || getHexToBinaryPosition(view[x], 6, 2) === '3');
@@ -417,7 +417,7 @@ function drawPlayersView(p) {
                             case 18:
                                 {
                                     if (BlockType === '5') {
-                                        drawDoorFrame(p);
+                                        drawDoorFrame(p, x);
                                     } else if (BlockType === '1' || spellWall) {
                                         myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 1), 1, p, x), gfxPos[1]);
                                         myDIx(p.Portal, getImage(view[x], getWallDirection(p.d, 3), 3, p, x), gfxPos[3]);
@@ -448,7 +448,7 @@ function drawPlayersView(p) {
 function drawMonsterOnPos(p, pos) {
     if (pos > -1 && pos <= 15) {
         var monPos = p.getMonstersInRange(pos);
-        for (ii in monPos) {
+        for (var ii in monPos) {
             if (typeof monPos[ii].monster !== 'undefined'){
 
                     if (typeof monsterRef[monPos[ii].monster.form] === "undefined"){
@@ -479,7 +479,7 @@ function drawMonsterOnPos(p, pos) {
 function drawItemsOnPos(p, pos) {
     if ((pos > -1 && pos <= 15) || pos === 18) {
         var itPos = p.getItemsInRange(pos);
-        for (i in itPos) {
+        for (var i in itPos) {
             p.drawItem(itPos[i].item, itPos[i].distance, itPos[i].gfxCoord);
         }
     }
@@ -488,7 +488,7 @@ function drawItemsOnPos(p, pos) {
 function drawProjectileOnPos(p, pos) {
     if ((pos > -1 && pos <= 15) || pos === 18) {
         var prPos = p.getProjectilesInRange(pos);
-        for (i in prPos) {
+        for (var i in prPos) {
             if(prPos[i].position !== 18) {
                 if(prPos[i].projectile.type !== DUNGEON_NONE) {
                     p.drawProjectile(prPos[i].projectile, prPos[i].distance, prPos[i].gfxCoord);
@@ -506,7 +506,7 @@ function drawProjectileOnPos(p, pos) {
     }
 }
 
-function drawDoorFrame(p) {
+function drawDoorFrame(p, x) {
     var view = p.getView();
     var HexCode = view[18];
 
@@ -628,7 +628,7 @@ function recolourSprite(img, paletteFrom, paletteTo) {
 
     for (var i = 0; i < imageData.data.length; i += 4) {
 
-        for (j = 0; j < paletteFrom.length; j++) {
+        for(var j = 0; j < paletteFrom.length; j++) {
             if (paletteTo[j] !== null && imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
                 imageData.data[i] = paletteTo[j][0];
                 imageData.data[i + 1] = paletteTo[j][1];
@@ -657,7 +657,7 @@ function recolourSpriteArray(img, paletteFrom, paletteTo) {
 
     var newArray = [];
 
-    for (x = 0; x < img.length; x++) {
+    for(var x = 0; x < img.length; x++) {
 
         var myImg = img[x];
 
@@ -678,7 +678,7 @@ function recolourSpriteArray(img, paletteFrom, paletteTo) {
 
         for (var i = 0; i < imageData.data.length; i += 4) {
 
-            for (j = 0; j < paletteFrom.length; j++) {
+            for(var j = 0; j < paletteFrom.length; j++) {
                 if (imageData.data[i] === paletteFrom[j][0] && imageData.data[i + 1] === paletteFrom[j][1] && imageData.data[i + 2] === paletteFrom[j][2] && imageData.data[i + 3] === paletteFrom[j][3]) {
                     imageData.data[i] = paletteTo[j][0];
                     imageData.data[i + 1] = paletteTo[j][1];
@@ -745,7 +745,7 @@ function recolorImage(img, colour, folder, type, item) {
     }
     for (var i = 0; i < imageData.data.length; i += 4) {
         if (typeof pallet[0][0] !== "undefined") {
-            for (j = 0; j < pallet.length; j++) {
+            for(var j = 0; j < pallet.length; j++) {
                 if (palletDefault[j] !== null) {
                     if (imageData.data[i] === palletDefault[j][0] && imageData.data[i + 1] === palletDefault[j][1] && imageData.data[i + 2] === palletDefault[j][2] && imageData.data[i + 3] === palletDefault[j][3]) {
                         imageData.data[i] = pallet[j][0];
@@ -789,7 +789,7 @@ function coverViewPort(p) {
 
 function getSpriteLocations(strSpriteName){
 
-    for (i in spriteData.Sprites){
+    for(var i in spriteData.Sprites){
         if (spriteData.Sprites[i].spriteSheet == strSpriteName){
             return spriteData.Sprites[i].locations;
         }
