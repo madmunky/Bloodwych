@@ -211,9 +211,9 @@ Projectile.prototype.action = function(tar) {
 				if (getMonsterAt(this.floor, this.x, this.y) === null) {
 					for(var i = item[towerThis].length - 1; i >= 0; i--) {
 						var it = item[towerThis][i];
-						var rv = getObjectByKeys(itemData[it.id], 'revive');
+						var rv = getObjectByKeys(itemJson[it.id], 'revive');
 						if (typeof rv !== "undefined" && it.location.tower === towerThis && it.location.floor === this.floor && it.location.x === this.x && it.location.y === this.y) {
-							var c = rv.getVar(); //it.id - ITEM_BLODWYN_RIP;
+							var c = rv.getVar(); //it.id - 'ITEM_BLODWYN_RIP';
 							item[towerThis].splice(i, 1);
 							champion[c].stat.hp = 0;
 							champion[c].getMonster().floor = this.floor;

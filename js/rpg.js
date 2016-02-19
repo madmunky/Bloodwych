@@ -43,7 +43,7 @@ function calculateAttack(att, def, tof) {
 			if (fmon.dead) {
 				continue;
 			}
-			if(from.selectedSpell === null && from.getBowPower() === 0) {
+			if(from.selectedSpell === null && !from.hasRangedWeapon()) { //player chars in the back cannot melee
 				if (a >= 2 || typeof def === 'undefined') {
 					continue;
 				}
@@ -53,7 +53,7 @@ function calculateAttack(att, def, tof) {
 					critChance = 1.5;
 				}
 				fromDir = fmon.d;
-				if (from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === ITEM_DAGGER || from.pocket[0].id === ITEM_STEALTH_BLADE) && att2.d === def.d) { //cutpurses can cut through 50% of the defense
+				if (from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === 'ITEM_DAGGER' || from.pocket[0].id === 'ITEM_STEALTH_BLADE') && att2.d === def.d) { //cutpurses can cut through 50% of the defense
 					defChance = 0.5;
 				}
 				var wp = from.getWeaponPower(POCKET_LEFT_HAND); //weapon attack power

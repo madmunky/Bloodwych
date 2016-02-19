@@ -388,15 +388,6 @@ function hexToRgb(hex) {
 	} : null;
 }
 
-function getIndexById(obj, id) {
-    for(var i in obj) {
-        if(obj[i].id === id) {
-            return parseInt(i);
-        }
-    }
-    return null;
-}
-
 function getObjectByKey(obj, key, val) {
 	var ret = [];
 	for(var i in obj) {

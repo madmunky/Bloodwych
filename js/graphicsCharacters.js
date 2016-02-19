@@ -692,9 +692,9 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
                     var ch = m.getChampion();
                     var amr = ch.pocket[POCKET_ARMOUR];
                     var gen = ch.getGender();
-                    var id = amr.id - ITEM_LEATHER_ARMOUR;
+                    var id = amr.id - 'ITEM_LEATHER_ARMOUR';
                     var palette = new Array();
-                    if (part !== IMAGE_CHA_HEAD && amr.id >= ITEM_LEATHER_ARMOUR && amr.id <= ITEM_CRYSTAL_PLATE && typeof armourRef[id][gen] !== 'undefined') {
+                    if (part !== IMAGE_CHA_HEAD && amr.id >= 'ITEM_LEATHER_ARMOUR' && amr.id <= 'ITEM_CRYSTAL_PLATE' && typeof armourRef[id][gen] !== 'undefined') {
                         switch (part) {
                             case IMAGE_CHA_LEG:
                                 palette = CLASS_ARMOUR[ch.colour].slice(0);

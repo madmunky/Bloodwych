@@ -704,22 +704,25 @@ function initMonsters() {
         }
     }
 
-    //TESTING!!! REMOVE AFTER
-    var testType = MON_FORM_CRAB;
-    var end = monster[TOWER_MOD0].length;
-    monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 15, 18, 0, CHAR_FRONT_SOLO, 0, null, createPocketSlots(POCKET_MAX + 1));
-    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_0].setPocketItem(ITEM_CRYSTAL_PLATE, 1, true);
-    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_1].setPocketItem(ITEM_WAR_SHIELD, 1, true);
-    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_2].setPocketItem(ITEM_CRYSTAL_GLOVES, 1, true);
-    monster[TOWER_MOD0][end].pocket[POCKET_SLOT_3].setPocketItem(ITEM_DEATHBRINGER, 1, true);
-    max++;
-    end++;
-    /*monster[TOWER_MOD0][end] = new Monster(max, 3, 0, testType, TOWER_MOD0, 3, 13, 20, 2, CHAR_FRONT_SOLO, 0, null);
-    max++;end++;
-    monster[TOWER_MOD0][end] = new Monster(max, 6, 0, testType, TOWER_MOD0, 3, 14, 16, 2, CHAR_FRONT_SOLO, 0, null);
-    max++;end++;
-    monster[TOWER_MOD0][end] = new Monster(max, 9, 0, testType, TOWER_MOD0, 3, 11, 20, 0, CHAR_FRONT_SOLO, 0, null);
-    max++;end++;*/
+    //TESTING
+    if(debug) {
+        var testType = MON_FORM_CRAB;
+        var end = monster[TOWER_MOD0].length;
+        monster[TOWER_MOD0][end] = new Monster(max, 0, 0, testType, TOWER_MOD0, 3, 15, 18, 0, CHAR_FRONT_SOLO, 0, null, createPocketSlots(POCKET_MAX + 1));
+        monster[TOWER_MOD0][end].pocket[POCKET_SLOT_0].setPocketItem('ITEM_CRYSTAL_PLATE', 1, true);
+        monster[TOWER_MOD0][end].pocket[POCKET_SLOT_1].setPocketItem('ITEM_WAR_SHIELD', 1, true);
+        monster[TOWER_MOD0][end].pocket[POCKET_SLOT_2].setPocketItem('ITEM_CRYSTAL_GLOVES', 1, true);
+        monster[TOWER_MOD0][end].pocket[POCKET_SLOT_3].setPocketItem('ITEM_DEATHBRINGER', 1, true);
+        max++;
+        end++;
+        /*monster[TOWER_MOD0][end] = new Monster(max, 3, 0, testType, TOWER_MOD0, 3, 13, 20, 2, CHAR_FRONT_SOLO, 0, null);
+        max++;end++;
+        monster[TOWER_MOD0][end] = new Monster(max, 6, 0, testType, TOWER_MOD0, 3, 14, 16, 2, CHAR_FRONT_SOLO, 0, null);
+        max++;end++;
+        monster[TOWER_MOD0][end] = new Monster(max, 9, 0, testType, TOWER_MOD0, 3, 11, 20, 0, CHAR_FRONT_SOLO, 0, null);
+        max++;end++;*/
+    }
+    //END OF TESTING
 }
 
 function initMonsterPalettes() {

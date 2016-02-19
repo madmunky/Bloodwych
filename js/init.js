@@ -148,8 +148,8 @@ function initJSONData() {
         i++;
     }
     parseJSONValues(paletteData, colourData);
-    parseJSONValues(itemData, paletteData, 'recolour');
-    parseJSONValues(itemData, colourData, 'recolour');
+    parseJSONValues(itemJson, paletteData, 'recolour');
+    parseJSONValues(itemJson, colourData, 'recolour');
 
     preload = new createjs.LoadQueue(false);
     preload.loadFile({
@@ -260,7 +260,7 @@ function processJSONFiles(item, result) {
         case 'Input':
             break;
         case 'Items':
-            itemData = result.items;
+            itemJson = result.items;
             break;
         case 'Sounds':
             break;

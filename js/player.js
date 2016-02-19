@@ -223,7 +223,7 @@ Player.prototype.action = function () {
             //Doors
             if (this.getBinaryView(15, 13, 3) === '5' && this.getBinaryView(15, 4) === '0') {
                 var lck = parseInt(this.getBinaryView(15, 1, 3));
-                var key = getObjectByKeys(itemData[this.pocket.id], 'onUse', 'unlock');
+                var key = getObjectByKeys(itemJson[this.pocket.id], 'onUse', 'unlock');
                 if(typeof key !== "undefined") {
                     if (lck > 0) {
                         if (key.getVar() === lck) { //Use key
@@ -271,7 +271,7 @@ Player.prototype.checkWoodenDoor = function (pos18) {
         d = 0;
     }
     if (this.getBinaryView(pos18, 13, 3) === '2' && this.getBinaryView(pos18, ((5 + d - this.d) % 4) * 2) === '1') {
-        var key = getObjectByKeys(itemData[this.pocket.id], 'onUse', 'unlock');
+        var key = getObjectByKeys(itemJson[this.pocket.id], 'onUse', 'unlock');
         if (typeof key !== "undefined" && key.getVar() === DOOR_COMMON) { //Use common key
             this.consumeItemInHand();
             this.setBinaryView(pos18, 11, 1);
@@ -379,9 +379,9 @@ Player.prototype.tryAttack = function (ch) {
         }
         if (wp.sucess) { //JSON
             return 1;
-        } else if (ch.selectedSpell !== null || ch.getBowPower() > 0) {
-            this.attack(ch, true);
-            return 1;
+        //} else if (ch.selectedSpell !== null || ch.getBowPower() > 0) {
+        //    this.attack(ch, true);
+        //    return 1;
         }
     }
     //pl.attack(null, false);
@@ -401,7 +401,7 @@ Player.prototype.attack = function (ch, attack, target) {
             if (att.selectedSpell !== null) {
                 self.castSpell(att.selectedSpell, att, true);
                 redrawUI(self.id);
-            } else if (att.getBowPower() > 0) {
+//            } else if (att.getBowPower() > 0) {
                 /*self.shootArrow(att);
                 if (typeof target === 'undefined') {
                     self.attack(null, false);
@@ -1004,7 +1004,7 @@ Player.prototype.drawMonster = function (m, distance, offset) {
 }
 Player.prototype.drawItem = function (it, distance, offset) {
     try {
-        var iGfx = it.getGfx(true)[distance];//itemRef[it.id].gfxD[distance];
+        var iGfx = it.getGfx(true)[distance];//itemJson[it.id].gfxD[distance];
         if (typeof iGfx !== "undefined") {
             if (getObject(this.floor, it.location.x, it.location.y, this.d, 2) === OBJECT_SHELF) {
                 var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
@@ -1020,28 +1020,28 @@ Player.prototype.drawItem = function (it, distance, offset) {
     };
 }
 Player.prototype.drawProjectile = function (pr, distance, offset) {
-    var id = getObjectByKeys(itemData[pr.spell], 'projectile', 'id');
+    var id = getObjectByKeys(itemJson[pr.spell], 'projectile', 'id');
     if (typeof id === "undefined") {
-        id = getObjectByKeys(itemData[pr.spell], 'dungeon', 'id');
+        id = getObjectByKeys(itemJson[pr.spell], 'dungeon', 'id');
     }
     if (typeof id !== "undefined" && pr.spell !== null && typeof pr.spell === 'number') { //JSON
-        var from = getObjectByKeys(itemData[pr.spell], 'projectile', 'recolour', 'from');
-        var to = getObjectByKeys(itemData[pr.spell], 'projectile', 'recolour', 'to');
+        var from = getObjectByKeys(itemJson[pr.spell], 'projectile', 'recolour', 'from');
+        var to = getObjectByKeys(itemJson[pr.spell], 'projectile', 'recolour', 'to');
         if (typeof from === "undefined") {
-            from = getObjectByKeys(itemData[pr.spell], 'dungeon', 'recolour', 'from');
+            from = getObjectByKeys(itemJson[pr.spell], 'dungeon', 'recolour', 'from');
         }
         if (typeof to === "undefined") {
-            to = getObjectByKeys(itemData[pr.spell], 'dungeon', 'recolour', 'to');
+            to = getObjectByKeys(itemJson[pr.spell], 'dungeon', 'recolour', 'to');
         }
         if (pr.dead > 0) {
-            if (typeof getObjectByKeys(itemData[pr.spell], 'death', 'id') !== "undefined") {
-                id = getObjectByKeys(itemData[pr.spell], 'death', 'id');
+            if (typeof getObjectByKeys(itemJson[pr.spell], 'death', 'id') !== "undefined") {
+                id = getObjectByKeys(itemJson[pr.spell], 'death', 'id');
             }
-            if (typeof getObjectByKeys(itemData[pr.spell], 'death', 'recolour', 'from') !== "undefined") {
-                from = getObjectByKeys(itemData[pr.spell], 'death', 'recolour', 'from');
+            if (typeof getObjectByKeys(itemJson[pr.spell], 'death', 'recolour', 'from') !== "undefined") {
+                from = getObjectByKeys(itemJson[pr.spell], 'death', 'recolour', 'from');
             }
-            if (typeof getObjectByKeys(itemData[pr.spell], 'death', 'recolour', 'to') !== "undefined") {
-                to = getObjectByKeys(itemData[pr.spell], 'death', 'recolour', 'to');
+            if (typeof getObjectByKeys(itemJson[pr.spell], 'death', 'recolour', 'to') !== "undefined") {
+                to = getObjectByKeys(itemJson[pr.spell], 'death', 'recolour', 'to');
             }
         }
         var pGfx = itemsGfxD[id.getVar()][distance];
@@ -1085,7 +1085,7 @@ Player.prototype.useItemActivePocket = function () {
         if (itH.id !== 0) {
             if (ch.useItem(itH, 'onUse').success) {
                 //no nothing
-            } else {
+            }/* else {
                 switch (itH.type) {
                     case 'ITEM_TYPE_STACKABLE':
                         var i = this.findPocketItem(itH.id);
@@ -1104,7 +1104,7 @@ Player.prototype.useItemActivePocket = function () {
                     case 'ITEM_TYPE_FOOD':
                         var fd = itH.getFoodValue();
                         ch.addFood(fd);
-                        if (itH.id <= ITEM_WATER && itH.id % 3 !== 2) {
+                        if (itH.id <= 'ITEM_WATER' && itH.id % 3 !== 2) {
                             itH.setPocketItem(itH.id - 1);
                         } else {
                             itH.setPocketItem();
@@ -1112,18 +1112,18 @@ Player.prototype.useItemActivePocket = function () {
                         break;
                     case 'ITEM_TYPE_POTION':
                         switch (itH.id) {
-                            case ITEM_SERPENT_SLIME:
+                            case 'ITEM_SERPENT_SLIME':
                                 ch.stat.hp = ch.stat.hpMax;
                                 break;
-                            case ITEM_BRIMSTONE_BROTH:
+                            case 'ITEM_BRIMSTONE_BROTH':
                                 ch.addHP(Math.floor(ch.stat.hpMax / 2));
                                 ch.addVit(Math.floor(ch.stat.vitMax / 2));
                                 ch.addSP(Math.floor(ch.stat.spMax / 2));
                                 break;
-                            case ITEM_DRAGON_ALE:
+                            case 'ITEM_DRAGON_ALE':
                                 ch.stat.vit = ch.stat.vitMax;
                                 break;
-                            case ITEM_MOON_ELIXIR:
+                            case 'ITEM_MOON_ELIXIR':
                                 ch.stat.sp = ch.stat.spMax;
                                 break;
                         }
@@ -1131,7 +1131,7 @@ Player.prototype.useItemActivePocket = function () {
                     default:
                         break;
                 }
-            }
+            }*/
         }
     }
 }
@@ -1258,7 +1258,7 @@ Player.prototype.actionItem = function (s) {
                 if (typeof it !== "undefined") {
                     for(var c = 0; c < this.champion.length; c++) { //take a RIP that is part of the group. This will make the item disappear.
                         var ch = this.getChampion(c);
-                        var rip = getObjectByKeys(itemData[it[0].id], 'revive');
+                        var rip = getObjectByKeys(itemJson[it[0].id], 'revive');
                         if (ch !== null && typeof rip !== "undefined" && rip.getVar() === ch.id && !ch.recruitment.attached) {
                             ch.recruitment.attached = true;
                             return true;
@@ -1348,25 +1348,26 @@ Player.prototype.castSpell = function (sb, ch, s) {
         }
     }
 }
-Player.prototype.shootArrow = function (ch) {
-        this.doneCommunication();
-        var pow = ch.getBowPower();
-        if (pow > 0) {
-            if (ch.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || ch.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS) {
-                var arr = ch.pocket[POCKET_LEFT_HAND];
-            } else if (ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || ch.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS) {
-                var arr = ch.pocket[POCKET_RIGHT_HAND];
-            }
-            var col = paletteData['BRONZE_ARROW'];
-            if (arr.id === ITEM_ELF_ARROWS) {
-                col = paletteData['GREEN_ARROW'];
-            }
-            arr.setPocketItem(arr.id, arr.quantity - 1);
-            newProjectile(DUNGEON_PROJECTILE_ARROW, col, SOUND_ATTACK, arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
-            ch.writeAttackPoints('shoot');
+/*Player.prototype.shootArrow = function (ch) {
+    this.doneCommunication();
+    var pow = ch.getBowPower();
+    if (pow > 0) {
+        if (ch.pocket[POCKET_LEFT_HAND].id === 'ITEM_ARROWS' || ch.pocket[POCKET_LEFT_HAND].id === 'ITEM_ELF_ARROWS') {
+            var arr = ch.pocket[POCKET_LEFT_HAND];
+        } else if (ch.pocket[POCKET_RIGHT_HAND].id === 'ITEM_ARROWS' || ch.pocket[POCKET_RIGHT_HAND].id === 'ITEM_ELF_ARROWS') {
+            var arr = ch.pocket[POCKET_RIGHT_HAND];
         }
+        var col = paletteData['BRONZE_ARROW'];
+        if (arr.id === 'ITEM_ELF_ARROWS') {
+            col = paletteData['GREEN_ARROW'];
+        }
+        arr.setPocketItem(arr.id, arr.quantity - 1);
+        newProjectile(DUNGEON_PROJECTILE_ARROW, col, SOUND_ATTACK, arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
+        ch.writeAttackPoints('shoot');
     }
-    //gets active spell from any champion, when spell id matches
+}*/
+
+//gets active spell from any champion, when spell id matches
 Player.prototype.getActiveSpellById = function (id) {
     var ret = {
         id: -1,
@@ -1687,7 +1688,7 @@ Player.prototype.getCommunication = function (mode, text) {
                                 break;
                             case 'item':
                                 if (this.pocket.id > 0) {
-                                    suf = itemRef[this.pocket.id].name;
+                                    suf = itemJson[this.pocket.id].name;
                                 }
                                 break;
                         }

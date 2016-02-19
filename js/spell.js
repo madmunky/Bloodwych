@@ -296,9 +296,9 @@ function castSpell(s, src, pw) {
 		case SPELL_ALCHEMY:
 			var validItems = ['ITEM_TYPE_WEAPON', 'ITEM_TYPE_ARMOUR', 'ITEM_TYPE_SHIELD', 'ITEM_TYPE_GLOVES'];
 			if(validItems.indexOf(ch.pocket[POCKET_LEFT_HAND].type) > -1) {
-				ch.pocket[POCKET_LEFT_HAND].setPocketItem(ITEM_COINAGE, pow);
+				ch.pocket[POCKET_LEFT_HAND].setPocketItem('ITEM_COINAGE', pow);
 			} else if(validItems.indexOf(ch.pocket[POCKET_RIGHT_HAND].type) > -1) {
-				ch.pocket[POCKET_RIGHT_HAND].setPocketItem(ITEM_COINAGE, pow);
+				ch.pocket[POCKET_RIGHT_HAND].setPocketItem('ITEM_COINAGE', pow);
 			}
 			break;
 		case SPELL_SUMMON:
@@ -376,7 +376,7 @@ function castSpell(s, src, pw) {
 			if(ch.recruitment.playerId > -1) {
 				var it = ch.getEquippedItems();
 	            for(var i = 0; i < it.length; i++) {
-	            	var qm = getObjectByKeys(itemData[it[i].id], 'quantity');
+	            	var qm = getObjectByKeys(itemJson[it[i].id], 'quantity');
 	            	if(typeof qm !== "undefined" && qm > 1 && it[i].quantity < qm) {
 	            		var q = it[i].quantity + Math.ceil(pow * 0.02);
 	            		if(q > qm) {

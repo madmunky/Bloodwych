@@ -225,10 +225,10 @@ function floorActionType(trig, p) {
 function gemAction(p) {
     var itH = p.pocket;
     var gem = parseInt(p.getBinaryView(15, 2, 3));
-    var pock = itH.id - ITEM_SERPENT_CRYSTAL;
+    var pock = itH.id - 'ITEM_SERPENT_CRYSTAL';
     if(p.getBinaryView(15, 5, 1) === '0') {
         if(itH.id === 0) {
-            p.pocket.setPocketItem(gem + ITEM_SERPENT_CRYSTAL);
+            p.pocket.setPocketItem(gem + 'ITEM_SERPENT_CRYSTAL');
             p.setBinaryView(15, 5, 1);
         }
     } else {
@@ -274,11 +274,11 @@ function gemAction(p) {
                     }
                 }
                 var pal = paletteData['TELEPORT_FLASH'];
-                switch(gem + ITEM_SERPENT_CRYSTAL) {
-                    case ITEM_SERPENT_CRYSTAL: pal = paletteData['SERPENT']; break;
-                    case ITEM_MOON_CRYSTAL: pal = paletteData['MOON']; break;
-                    case ITEM_DRAGON_CRYSTAL: pal = paletteData['DRAGON']; break;
-                    case ITEM_CHAOS_CRYSTAL: pal = paletteData['CHAOS']; break;
+                switch(gem + 'ITEM_SERPENT_CRYSTAL') {
+                    case 'ITEM_SERPENT_CRYSTAL': pal = paletteData['SERPENT']; break;
+                    case 'ITEM_MOON_CRYSTAL': pal = paletteData['MOON']; break;
+                    case 'ITEM_DRAGON_CRYSTAL': pal = paletteData['DRAGON']; break;
+                    case 'ITEM_CHAOS_CRYSTAL': pal = paletteData['CHAOS']; break;
                 }
                 newProjectile(DUNGEON_NONE, pal, SOUND_FLASH, -1, 0, p.floor, p.x, p.y, 0, null);
                 p.pocket.setPocketItem();

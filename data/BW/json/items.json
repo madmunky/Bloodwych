@@ -2,7 +2,12 @@
 	"items": [
 		{
 			"id": "ITEM_EMPTY",
-			"type": "ITEM_TYPE_EMPTY"
+			"type": "ITEM_TYPE_EMPTY",
+			"gfx2": {
+				"icon": {
+					"id": "UI_GFX_POCKET_EMPTY"
+				}
+			}
 		},
 		{
 			"id": "COINAGE",
@@ -739,8 +744,8 @@
 			}
 		},
 		{
-			"id": "ITEM_ADAMANT_PLATE",
-			"name": "ADAMANT PLATE",
+			"id": "ITEM_CRYSTAL_PLATE",
+			"name": "CRYSTAL PLATE",
 			"type": "ITEM_TYPE_ARMOUR",
 			"gfx2": {
 				"icon": {
@@ -2450,21 +2455,14 @@
 					}
 				}
 			},
-			"quantity": 4,
 			"onAttack": {
 				"power": 16,
 				"castSpell": {
 					"id": "SPELL_FIREBALL",
 					"chance": 0.2,
-					"power": 30,
-					"addQuantity": -1
+					"power": 30
 				}
-			},
-			"onQuantity": [{
-				"value": 0,
-				"changeToItem": "ITEM_LONG_SWORD",
-				"appearanceOnly": true
-			}]
+			}
 		}
 	]
 }

@@ -91,14 +91,14 @@ function doKeyDown(e) {
                         var ch = player[0].getActivePocketChampion();
                         ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 1) % 110, 1);
                         redrawUI(0);
-                        PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
+                        PrintLog(itemJson[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
                         break; // T KEY
                     case KEY_G:
                         //player[0].changeDownFloor();
                         var ch = player[0].getActivePocketChampion();
                         ch.pocket[POCKET_SLOT_0].setPocketItem((ch.pocket[POCKET_SLOT_0].id + 109) % 110, 1);
                         redrawUI(0);
-                        PrintLog(itemRef[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
+                        PrintLog(itemJson[champion[player[0].championLeader].pocket[POCKET_SLOT_0].id].name + " ID: " + champion[player[0].championLeader].pocket[POCKET_SLOT_0].id.toString())
                         break; // G KEY
                     case KEY_Y:
                         if (player[0].floor < tower[towerThis].floor.length) {
@@ -231,7 +231,7 @@ function checkClickEvents() {
                         } else {
                             drawFillRect(168, player[currentPlayer].ScreenY + 79, 155, 8, colourData['RED_DARK']);
                         }
-                        writeFontImage(itemRef[it.id].name, 170, (player[currentPlayer].ScreenY + 80), colourData['YELLOW']);
+                        writeFontImage(itemJson[it.id].name, 170, (player[currentPlayer].ScreenY + 80), colourData['YELLOW']);
                     }
                 }
             } else if (championSelect[currentPlayer].mode === UI_CHARACTER_SELECT_SPELLBOOK) {

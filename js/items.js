@@ -1,5 +1,5 @@
 function Item(id, quantity, location) {
-    this.id = id;
+    this.id = parseItem(id);
     this.quantity = quantity;
     this.location = location;
     this.type = getItemType(id);
@@ -22,48 +22,48 @@ Item.revive = function(data) {
 }
 
 Item.prototype.getPower = function(ac) {
-    var pw = getObjectByKeys(itemData[this.id], 'power');
+    var pw = getObjectByKeys(itemJson[this.id], 'power');
     if(typeof ac !== "undefined") {
-        pw = getObjectByKeys(itemData[this.id], ac, 'power');
+        pw = getObjectByKeys(itemJson[this.id], ac, 'power');
     }
     if(typeof pw !== "undefined") { //JSON
         return pw;
     }
     if (this.type === 'ITEM_TYPE_WEAPON') {
         switch (this.id) {
-            case ITEM_DAGGER:
+            case 'ITEM_DAGGER':
                 return 2;
-            case ITEM_STEALTH_BLADE:
+            case 'ITEM_STEALTH_BLADE':
                 return 3;
-            case ITEM_SHORT_SWORD:
+            case 'ITEM_SHORT_SWORD':
                 return 4;
-            case ITEM_LONG_SWORD:
+            case 'ITEM_LONG_SWORD':
                 return 5;
-            case ITEM_MITHRIL_SWORD:
+            case 'ITEM_MITHRIL_SWORD':
                 return 7;
-            case ITEM_FLESHBANE:
+            case 'ITEM_FLESHBANE':
                 return 11;
-            case ITEM_DEMON_BLADE:
+            case 'ITEM_DEMON_BLADE':
                 return 14;
-            case ITEM_ACE_OF_SWORDS:
+            case 'ITEM_ACE_OF_SWORDS':
                 return 14;
 
-            case ITEM_BATTLE_AXE:
+            case 'ITEM_BATTLE_AXE':
                 return 6;
-            case ITEM_MITHRIL_AXE:
+            case 'ITEM_MITHRIL_AXE':
                 return 8;
-            case ITEM_TROLLS_AXE:
+            case 'ITEM_TROLLS_AXE':
                 return 10;
-            case ITEM_BRAINBITER:
+            case 'ITEM_BRAINBITER':
                 return 13;
-            case ITEM_DEATHBRINGER:
+            case 'ITEM_DEATHBRINGER':
                 return 16;
 
-            case ITEM_STAFF:
+            case 'ITEM_STAFF':
                 return 4;
-            case ITEM_BATTLE_STAFF:
+            case 'ITEM_BATTLE_STAFF':
                 return 7;
-            case ITEM_POWER_STAFF:
+            case 'ITEM_POWER_STAFF':
                 return 10;
         }
     }
@@ -71,9 +71,9 @@ Item.prototype.getPower = function(ac) {
 }
 
 Item.prototype.getPowerFactor = function(ac) {
-    var pw = getObjectByKeys(itemData[this.id], 'powerFactor');
+    var pw = getObjectByKeys(itemJson[this.id], 'powerFactor');
     if(typeof ac !== "undefined") {
-        pw = getObjectByKeys(itemData[this.id], ac, 'powerFactor');
+        pw = getObjectByKeys(itemJson[this.id], ac, 'powerFactor');
     }
     if(typeof pw !== "undefined") { //JSON
         return pw;
@@ -81,14 +81,14 @@ Item.prototype.getPowerFactor = function(ac) {
     return 1.0;
 }
 
-Item.prototype.getBowPower = function() {
+/*Item.prototype.getBowPower = function() {
     if (this.type === 'ITEM_TYPE_BOW') {
         switch (this.id) {
-            case ITEM_LONG_BOW:
+            case 'ITEM_LONG_BOW':
                 return 4;
-            case ITEM_FROST_BOW:
+            case 'ITEM_FROST_BOW':
                 return 7;
-            case ITEM_CROSS_BOW:
+            case 'ITEM_CROSS_BOW':
                 return 10;
         }
     }
@@ -96,101 +96,102 @@ Item.prototype.getBowPower = function() {
 }
 
 Item.prototype.getArrowPower = function() {
-    if (this.id === ITEM_ARROWS) {
+    if (this.id === 'ITEM_ARROWS') {
         return 1.0;
-    } else if (this.id === ITEM_ELF_ARROWS) {
+    } else if (this.id === 'ITEM_ELF_ARROWS') {
         return 1.2;
     }
     return 1.0;
-}
+}*/
 
-Item.prototype.getFoodValue = function() {
+/*Item.prototype.getFoodValue = function() {
     if (this.type === 'ITEM_TYPE_FOOD') {
-        if (this.id <= ITEM_CHICKEN) {
+        if (this.id <= 'ITEM_CHICKEN') {
             return 16;
-        } else if (this.id <= ITEM_WATER) {
+        } else if (this.id <= 'ITEM_WATER') {
             return 10;
-        } else if (this.id <= ITEM_NEGG_GREEN) {
+        } else if (this.id <= 'ITEM_NEGG_GREEN') {
             return 50;
-        } else if (this.id <= ITEM_NEGG_BLUE) {
+        } else if (this.id <= 'ITEM_NEGG_BLUE') {
             return 100;
-        } else if (this.id <= ITEM_NEGG_RED) {
+        } else if (this.id <= 'ITEM_NEGG_RED') {
             return 200;
         }
     }
     return 0;
-}
+}*/
 
 Item.prototype.getArmourClass = function() {
-    var ac = getObjectByKeys(itemData[this.id], 'onEquip', 'AC');
+    var ac = getObjectByKeys(itemJson[this.id], 'onEquip', 'AC');
     if(typeof ac !== "undefined") { //JSON
         return ac;
-    } else {
+    }/* else {
         if (this.type === 'ITEM_TYPE_ARMOUR') {
             switch (this.id) {
-                case ITEM_LEATHER_ARMOUR:
+                case 'ITEM_LEATHER_ARMOUR':
                     return 3;
-                case ITEM_CHAIN_MAIL:
+                case 'ITEM_CHAIN_MAIL':
                     return 5;
-                case ITEM_PLATE_MAIL:
+                case 'ITEM_PLATE_MAIL':
                     return 7;
-                case ITEM_MITHRIL_CHAIN:
+                case 'ITEM_MITHRIL_CHAIN':
                     return 8;
-                case ITEM_MITHRIL_PLATE:
+                case 'ITEM_MITHRIL_PLATE':
                     return 11;
-                case ITEM_ADAMANT_CHAIN:
+                case 'ITEM_ADAMANT_CHAIN':
                     return 13;
-                case ITEM_ADAMANT_PLATE:
+                case 'ITEM_ADAMANT_PLATE':
                     return 15;
-                case ITEM_CRYSTAL_CHAIN:
+                case 'ITEM_CRYSTAL_CHAIN':
                     return 17;
-                case ITEM_CRYSTAL_PLATE:
+                case 'ITEM_CRYSTAL_PLATE':
                     return 19;
                 default:
                     break;
             }
         } else if (this.type === 'ITEM_TYPE_SHIELD') {
             switch (this.id) {
-                case ITEM_LEATHER_SHIELD:
+                case 'ITEM_LEATHER_SHIELD':
                     return 1;
-                case ITEM_BUCKLER:
+                case 'ITEM_BUCKLER':
                     return 2;
-                case ITEM_RUNE_SHIELD:
+                case 'ITEM_RUNE_SHIELD':
                     return 4;
-                case ITEM_LARGE_SHIELD:
+                case 'ITEM_LARGE_SHIELD':
                     return 3;
-                case ITEM_MOON_SHIELD:
+                case 'ITEM_MOON_SHIELD':
                     return 4;
-                case ITEM_DRAGON_SCALE:
+                case 'ITEM_DRAGON_SCALE':
                     return 5;
-                case ITEM_WAR_SHIELD:
+                case 'ITEM_WAR_SHIELD':
                     return 7;
                 default:
                     break;
             }
         } else if (this.type === 'ITEM_TYPE_GLOVES') {
             switch (this.id) {
-                case ITEM_CHAOS_GLOVES:
+                case 'ITEM_CHAOS_GLOVES':
                     return 0;
-                case ITEM_BATTLE_GLOVES:
+                case 'ITEM_BATTLE_GLOVES':
                     return 1;
-                case ITEM_MITHRIL_GLOVES:
+                case 'ITEM_MITHRIL_GLOVES':
                     return 2;
-                case ITEM_ADAMANT_GLOVES:
+                case 'ITEM_ADAMANT_GLOVES':
                     return 3;
-                case ITEM_CRYSTAL_GLOVES:
+                case 'ITEM_CRYSTAL_GLOVES':
                     return 4;
                 default:
                     break;
             }
         }
-    }
+    }*/
     return 0;
 }
 
 Item.prototype.setPocketItem = function(id, q, pas) {
-    if (typeof id === "undefined" || id === ITEM_EMPTY || (typeof q !== "undefined" && q <= 0)) {
-        id = ITEM_EMPTY;
+    id = parseItem(id);
+    if (typeof id === "undefined" || id === 0 || (typeof q !== "undefined" && q <= 0)) {
+        id = 0;
         q = 0;
     } else if (typeof q === "undefined") {
         q = 1;
@@ -218,7 +219,7 @@ Item.prototype.setQuantity = function(qty) {
         qty = 99;
     }
     if(this.quantity !== qty) {
-        var qt = getObjectByKeys(itemData[this.id], 'onQuantity');
+        var qt = getObjectByKeys(itemJson[this.id], 'onQuantity');
         for(var q in qt) {
             var val = getObjectByKeys(qt[q], 'value');
             var id2 = getObjectByKeys(qt[q], 'changeToItem');
@@ -230,7 +231,7 @@ Item.prototype.setQuantity = function(qty) {
         }
     }
     if(qty === 0) {
-        this.setPocketItem(ITEM_EMPTY, 0, true);
+        this.setPocketItem('ITEM_EMPTY', 0, true);
         return false;
     }
     this.quantity = qty;
@@ -238,14 +239,14 @@ Item.prototype.setQuantity = function(qty) {
 }
 
 Item.prototype.getGfx = function(dun) {
-    var it = itemRef[this.id];
+    var it = itemJson[this.id];
     var qt = getObjectByKeys(it, 'onQuantity');
     for(var q in qt) {
         var val = getObjectByKeys(qt[q], 'value');
         var id2 = getObjectByKeys(qt[q], 'changeToItem');
         var app = getObjectByKeys(qt[q], 'appearanceOnly');
         if(typeof id2 !== "undefined" && this.quantity === val + 1 && app) {
-            it = itemRef[id2.getVar()];
+            it = itemJson[id2.getVar()];
         }
     }
     if(typeof dun !== "undefined" && dun) {
@@ -254,7 +255,7 @@ Item.prototype.getGfx = function(dun) {
     return it.gfx;
 }
 
-Item.prototype.toString = function() {
+/*Item.prototype.toString = function() {
     var loc = "";
     var ref = "";
     if (typeof this.location.tower !== "undefined" && this.location.tower !== -1) {
@@ -270,7 +271,7 @@ Item.prototype.toString = function() {
         ref = ", itemRef:[name:" + this.itemRef.name + "]";
     }
     return '[id:' + this.id + ', quantity:' + this.quantity + loc + ref + ']';
-}
+}*/
 
 //Dungeon items
 
@@ -301,7 +302,7 @@ function initItems(t) {
                     y: xy.y,
                     square: dr[dir]
                 });
-                var ima = getObjectByKeys(itemData[id], 'quantity');
+                var ima = getObjectByKeys(itemJson[id], 'quantity');
                 if(typeof ima !== "undefined") {
                     item[t.id][max].quantity = ima + 1;
                 }
@@ -312,35 +313,37 @@ function initItems(t) {
         }
 
         //TESTING
-        if(t.id === TOWER_MOD0) {
-            item[t.id][item[t.id].length] = new Item(ITEM_FLAME_SWORD, 4, {
-                tower: t.id,
-                floor: 3,
-                x: 12,
-                y: 23,
-                square: 0
-            });
-            item[t.id][item[t.id].length] = new Item(ITEM_CHAOS_WAND, 4, {
-                tower: t.id,
-                floor: 3,
-                x: 12,
-                y: 23,
-                square: 1
-            });
-            item[t.id][item[t.id].length] = new Item(ITEM_LONG_BOW, 1, {
-                tower: t.id,
-                floor: 3,
-                x: 12,
-                y: 23,
-                square: 2
-            });
-            item[t.id][item[t.id].length] = new Item(ITEM_ELF_ARROWS, 99, {
-                tower: t.id,
-                floor: 3,
-                x: 12,
-                y: 23,
-                square: 3
-            });
+        if(debug) {
+            if(t.id === TOWER_MOD0) {
+                item[t.id][item[t.id].length] = new Item('ITEM_DRAGON_RING', 4, {
+                    tower: t.id,
+                    floor: 3,
+                    x: 12,
+                    y: 23,
+                    square: 0
+                });
+                item[t.id][item[t.id].length] = new Item('ITEM_CHAOS_WAND', 1, {
+                    tower: t.id,
+                    floor: 3,
+                    x: 12,
+                    y: 23,
+                    square: 1
+                });
+                item[t.id][item[t.id].length] = new Item('ITEM_LONG_BOW', 1, {
+                    tower: t.id,
+                    floor: 3,
+                    x: 12,
+                    y: 23,
+                    square: 2
+                });
+                item[t.id][item[t.id].length] = new Item('ITEM_ELF_ARROWS', 99, {
+                    tower: t.id,
+                    floor: 3,
+                    x: 12,
+                    y: 23,
+                    square: 3
+                });
+            }
         }
         //END OF TESTING
     } catch (e) {
@@ -349,42 +352,42 @@ function initItems(t) {
 }
 
 function getItemType(id) {
-    if(typeof itemData[id] !== "undefined" && typeof itemData[id].type !== "undefined") {
-        return itemData[id].type;
+    if(typeof itemJson[id] !== "undefined" && typeof itemJson[id].type !== "undefined") {
+        return itemJson[id].type;
     }
-    if (id === ITEM_EMPTY) {
+    if (id === 'ITEM_EMPTY') {
         return 'ITEM_TYPE_EMPTY';
-    } else if (id <= ITEM_ELF_ARROWS) {
+    } else if (id <= 'ITEM_ELF_ARROWS') {
         return 'ITEM_TYPE_STACKABLE';
-    } else if (id <= ITEM_NEGG_RED) {
+    } else if (id <= 'ITEM_NEGG_RED') {
         return 'ITEM_TYPE_FOOD';
-    } else if (id <= ITEM_MOON_ELIXIR) {
+    } else if (id <= 'ITEM_MOON_ELIXIR') {
         return 'ITEM_TYPE_POTION';
-    } else if (id <= ITEM_CRYSTAL_PLATE) {
+    } else if (id <= 'ITEM_CRYSTAL_PLATE') {
         return 'ITEM_TYPE_ARMOUR';
-    } else if (id <= ITEM_WAR_SHIELD) {
+    } else if (id <= 'ITEM_WAR_SHIELD') {
         return 'ITEM_TYPE_SHIELD';
-    } else if (id <= ITEM_CRYSTAL_GLOVES) {
+    } else if (id <= 'ITEM_CRYSTAL_GLOVES') {
         return 'ITEM_TYPE_GLOVES';
-    } else if (id <= ITEM_POWER_STAFF) {
+    } else if (id <= 'ITEM_POWER_STAFF') {
         return 'ITEM_TYPE_WEAPON';
-    } else if (id <= ITEM_THAI_CHANG_RIP) {
+    } else if (id <= 'ITEM_THAI_CHANG_RIP') {
         return 'ITEM_TYPE_RIP';
-    } else if (id <= ITEM_CHROMATIC_KEY) {
+    } else if (id <= 'ITEM_CHROMATIC_KEY') {
         return 'ITEM_TYPE_KEY';
-    } else if (id <= ITEM_HEAL_WAND) {
+    } else if (id <= 'ITEM_HEAL_WAND') {
         return 'ITEM_TYPE_WAND';
-    } else if (id <= ITEM_CROSS_BOW) {
+    } else if (id <= 'ITEM_CROSS_BOW') {
         return 'ITEM_TYPE_BOW';
-    } else if (id <= ITEM_PERMIT) {
+    } else if (id <= 'ITEM_PERMIT') {
         return 'ITEM_TYPE_SCROLL';
-    } else if (id <= ITEM_MOON_CRYSTAL) {
+    } else if (id <= 'ITEM_MOON_CRYSTAL') {
         return 'ITEM_TYPE_CRYSTAL';
-    } else if (id <= ITEM_TAN_GEM) {
+    } else if (id <= 'ITEM_TAN_GEM') {
         return 'ITEM_TYPE_GEM';
-    } else if (id <= ITEM_MOON_RING) {
+    } else if (id <= 'ITEM_MOON_RING') {
         return 'ITEM_TYPE_RING';
-    } else if (id <= ITEM_BOOK_OF_SKULLS) {
+    } else if (id <= 'ITEM_BOOK_OF_SKULLS') {
         return 'ITEM_TYPE_BOOK';
     }
     return '';
@@ -420,6 +423,7 @@ function createPocketSlots(max) {
 //new dungeon item
 
 function dropItem(id, q, f, x, y, s) {
+    id = parseItem(id);
     if(id > 0) {
         if(getItemType(id) === 'ITEM_TYPE_STACKABLE') {
             for(var i = item[towerThis].length - 1; i >= 0; i--) {
@@ -449,7 +453,7 @@ function dropItem(id, q, f, x, y, s) {
 
 function initItemRefs() {
 
-    if (gameType === GAME_EXTENDED_LEVELS){
+    /*if (gameType === GAME_EXTENDED_LEVELS){
         createItemRef(36, "Rune Shield (Red)", gfxUI[UI_GFX_POCKET_RUNE_SHIELD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SMALL_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['BROWN'], colourData['RED_DARK'], colourData['BROWN'])));
         createItemRef(37, "Rune Shield (Green)", gfxUI[UI_GFX_POCKET_RUNE_SHIELD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SMALL_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['GREY_MEDIUM'])));
         createItemRef(38, "Rune Shield (Black)", gfxUI[UI_GFX_POCKET_RUNE_SHIELD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SMALL_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['RED'])));
@@ -597,9 +601,9 @@ function initItemRefs() {
     createItemRef(107, "Dragon Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLACK'])));
     createItemRef(108, "Moon Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
 
-    createItemRef(109, "Book of Skulls", gfxUI[UI_GFX_ICON_BOOKOFSKULLS], itemsGfxD[DUNGEON_ITEM_BOOK_OF_SKULLS]);
+    createItemRef(109, "Book of Skulls", gfxUI[UI_GFX_ICON_BOOKOFSKULLS], itemsGfxD[DUNGEON_ITEM_BOOK_OF_SKULLS]);*/
 
-    for(var ir = 110; ir < itemData.length; ir++) {
+    for(var ir = 0; ir < itemJson.length; ir++) {
         createItemRef(ir);
     }
     //itemsGfxD = [];
@@ -608,32 +612,32 @@ function initItemRefs() {
 
 //Read out the items here
 function createItemRef(id, name, gfx, gfxD) {
-    if(typeof itemData[id] !== "undefined") {
-        itemRef[id] = itemData[id];
-        var i = getObjectByKeys(itemData[id], 'icon', 'id');
+    if(typeof itemJson[id] !== "undefined") {
+        //itemJson[id] = itemJson[id];
+        var i = getObjectByKeys(itemJson[id], 'icon', 'id');
         if(typeof i !== "undefined") {
             gfx = gfxUI[i.getVar()];
-            var iFrom = getObjectByKeys(itemData[id], 'icon', 'recolour', 'from');
-            var iTo = getObjectByKeys(itemData[id], 'icon', 'recolour', 'to');
+            var iFrom = getObjectByKeys(itemJson[id], 'icon', 'recolour', 'from');
+            var iTo = getObjectByKeys(itemJson[id], 'icon', 'recolour', 'to');
             if(typeof iFrom !== "undefined" && typeof iTo !== "undefined") {
                 for(var f in iFrom) {
                     gfx = recolourUiGfx(gfx, iFrom[f], iTo[f]);
                 }
             }
         }
-        var d = getObjectByKeys(itemData[id], 'dungeon', 'id');
+        var d = getObjectByKeys(itemJson[id], 'dungeon', 'id');
         if(typeof d !== "undefined") {
             gfxD = itemsGfxD[d.getVar()];
-            var dFrom = getObjectByKeys(itemData[id], 'dungeon', 'recolour', 'from');
-            var dTo = getObjectByKeys(itemData[id], 'dungeon', 'recolour', 'to');
+            var dFrom = getObjectByKeys(itemJson[id], 'dungeon', 'recolour', 'from');
+            var dTo = getObjectByKeys(itemJson[id], 'dungeon', 'recolour', 'to');
             if(typeof dFrom !== "undefined" && typeof dTo !== "undefined") {
                 gfxD = recolourSpriteArray(gfxD, dFrom, dTo);
             }
         }
-        itemRef[id].gfx = gfx;
-        itemRef[id].gfxD = gfxD;
+        itemJson[id].gfx = gfx;
+        itemJson[id].gfxD = gfxD;
     } else {
-        itemRef[id] = {
+        itemJson[id] = {
             name: name,
             gfx: gfx,
             gfxD: gfxD
@@ -641,10 +645,10 @@ function createItemRef(id, name, gfx, gfxD) {
     }
 }
 
-//id starts at 0 (= ITEM_LEATHER_ARMOUR)
+//id starts at 0 (= 'ITEM_LEATHER_ARMOUR')
 //returns 0 for leather, 1 for chain and 2 for plate
 function getItemArmourType(id) {
-    var at = getObjectByKeys(itemData[this.id], 'onEquip', 'type');
+    var at = getObjectByKeys(itemJson[this.id], 'onEquip', 'type');
     if(typeof at !== "undefined") { //JSON
         return at;
     }
@@ -807,4 +811,26 @@ function getItemIndexById(it, id) {
         }
     }
     return null;
+}
+
+function findItemJsonIndexById(id) {
+    for(var i in itemJson) {
+        if(itemJson[i].id === id) {
+            return { index: parseInt(i), json: itemJson[i] };
+        }
+    }
+    return null;
+}
+
+function parseItem(i) {
+    id = 0;
+    if(typeof i === 'string') {
+        var it = findItemJsonIndexById(i);
+        if(it !== null) {
+            id = it.index;
+        }
+    } else if(typeof i === 'number') {
+        id = i;
+    }
+    return id;
 }

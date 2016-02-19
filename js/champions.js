@@ -204,14 +204,15 @@ Champion.prototype.addFood = function(fd) {
 
 Champion.prototype.getWeaponPower = function(s1) {
     var pow = this.pocket[s1].getPower(); //weapon power
-    var wep = getObjectByKeys(itemData[this.pocket[s1].id], 'onAttack', 'whileWearing'); //check if there is bonus attack on weapon while wearing an item
+    var wep = getObjectByKeys(itemJson[this.pocket[s1].id], 'onAttack', 'whileWearing'); //check if there is bonus attack on weapon while wearing an item
     if(typeof wep !== "undefined") {
-        var slot = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND, POCKET_ARMOUR, POCKET_SHIELD, POCKET_GLOVES]; //check these slots only
-        for(var s = 0; s < slot.length; s++) {
-            var it2 = this.pocket[slot[s]]; //item of this slot
+        var slot = this.getEquippedItems();
+        //var slot = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND, POCKET_ARMOUR, POCKET_SHIELD, POCKET_GLOVES]; //check these slots only
+        for(var s in slot) {
+            var it2 = this.pocket[slot[s].id]; //item of this slot
             var id = getObjectByKeys(wep, 'id'); //item id that should be checked
             var typ = getObjectByKeys(wep, 'type'); //item type that should be checked
-            var sl = getObjectByKeys(itemData[it2.id], 'onEquip', 'allowedSlot'); //check in what slot this item is allowed (e.g. gloves in gloves slot)
+            var sl = getObjectByKeys(itemJson[it2.id], 'onEquip', 'allowedSlot'); //check in what slot this item is allowed (e.g. gloves in gloves slot)
             if(typeof sl !== "undefined" && sl.getVar() === slot[s] && (typeof id === "undefined" || id.getVar() === it2.id) && (typeof typ === "undefined" || typ.getVar() === it2.type)) {
                 var p = getObjectByKeys(wep, 'power');
                 var pf = getObjectByKeys(wep, 'powerFactor');
@@ -224,40 +225,70 @@ Champion.prototype.getWeaponPower = function(s1) {
             }
         }
     }
-    //if (this.pocket[POCKET_GLOVES].id === ITEM_CHAOS_GLOVES && this.pocket[s].id === ITEM_ACE_OF_SWORDS) {
+    //if (this.pocket[POCKET_GLOVES].id === 'ITEM_CHAOS_GLOVES' && this.pocket[s].id === 'ITEM_ACE_OF_SWORDS') {
     //    pow = pow * 1.25;
     //}
     return 1.0 + 0.1 * pow;
 }
 
-Champion.prototype.getBowPower = function() {
+/*Champion.prototype.getBowPower = function() {
     var bow = 0;
     var arr = 1.0;
-    if (this.pocket[POCKET_LEFT_HAND].type === 'ITEM_TYPE_BOW' && (this.pocket[POCKET_RIGHT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_RIGHT_HAND].id === ITEM_ELF_ARROWS)) {
+    if (this.pocket[POCKET_LEFT_HAND].type === 'ITEM_TYPE_BOW' && (this.pocket[POCKET_RIGHT_HAND].id === 'ITEM_ARROWS' || this.pocket[POCKET_RIGHT_HAND].id === 'ITEM_ELF_ARROWS')) {
         bow = this.pocket[POCKET_LEFT_HAND].getBowPower();
         arr = this.pocket[POCKET_RIGHT_HAND].getArrowPower();
-    } else if (this.pocket[POCKET_RIGHT_HAND].type === 'ITEM_TYPE_BOW' && (this.pocket[POCKET_LEFT_HAND].id === ITEM_ARROWS || this.pocket[POCKET_LEFT_HAND].id === ITEM_ELF_ARROWS)) {
+    } else if (this.pocket[POCKET_RIGHT_HAND].type === 'ITEM_TYPE_BOW' && (this.pocket[POCKET_LEFT_HAND].id === 'ITEM_ARROWS' || this.pocket[POCKET_LEFT_HAND].id === 'ITEM_ELF_ARROWS')) {
         bow = this.pocket[POCKET_RIGHT_HAND].getBowPower();
         arr = this.pocket[POCKET_LEFT_HAND].getArrowPower();
     }
     return Math.ceil(bow * arr * 0.5);
+}*/
+
+Champion.prototype.hasRangedWeapon = function() {
+    var hand = this.getEquippedItems(true);
+    for(var s in hand) {
+        var it = itemJson[hand[s].id];
+        var typ = getObjectByKeys(it, 'onAttack', 'shootType');
+        var id = getObjectByKeys(it, 'onAttack', 'shootId');
+        if(typeof typ !== "undefined" || typeof id !== "undefined") {
+            //var hand2 = this.getEquippedItems(true);
+            //for(var h = 0; h < hand2.length; h++) {
+                var it2 = itemJson[hand[1 - s].id];//this.pocket[hand[1 - s]];
+                if((typeof id !== "undefined" && $.inArray(it2.id, id) > -1) || (typeof typ !== "undefined" && it2.type === typ)) {
+                    var sh = getObjectByKeys(it2, 'onShoot');
+                    if(typeof sh !== "undefined") {
+                        return true;
+                    }
+                }
+            //}
+        }
+    }
+    return false;
 }
 
 Champion.prototype.getArmourClass = function() {
+    var slot = this.getEquippedItems();
     var ac = this.stat.ac;
-    var arm = this.pocket[POCKET_ARMOUR].getArmourClass();
-    var sld = this.pocket[POCKET_SHIELD].getArmourClass();
-    var glv = this.pocket[POCKET_GLOVES].getArmourClass();
-    if (ac > arm) {
-        arm = ac;
+    var tac = 10 - ac;
+    var iac = 0;
+    for(var s in slot) {
+        var it = itemJson[slot[s].id];
+        var iac = slot[s].getArmourClass();
+        if (it.type === 'ITEM_TYPE_ARMOUR') {
+            iac = iac - ac;
+            if(ac >= iac) {
+                iac = 0;
+            }
+        }
+        tac -= iac;
     }
-    return 10 - arm - sld - glv;
+    return tac;
 }
 
 Champion.prototype.itemAllowedOnSlot = function(it, s) {
     var ret = true;
-    var as = getObjectByKeys(itemData[it.id], 'onEquip', 'allowedSlot');
-    var pf = getObjectByKeys(itemData[it.id], 'onEquip', 'allowedProfession');
+    var as = getObjectByKeys(itemJson[it.id], 'onEquip', 'allowedSlot');
+    var pf = getObjectByKeys(itemJson[it.id], 'onEquip', 'allowedProfession');
     //if(typeof as !== "undefined") {
         if(typeof pf !== "undefined") {
             pf = pf.map(function(x) {
@@ -274,7 +305,7 @@ Champion.prototype.itemAllowedOnSlot = function(it, s) {
 
 Champion.prototype.useItem = function(it, ac, param) {
     var suc = false;
-    var use = getObjectByKeys(itemData[it.id], ac);
+    var use = getObjectByKeys(itemJson[it.id], ac);
     var pow = 0.0;
     var pof = 1.0;
 
@@ -295,21 +326,21 @@ Champion.prototype.useItem = function(it, ac, param) {
         var hand = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND];
         for(var h = 0; h < hand.length; h++) {
             var it2 = this.pocket[hand[h]];
-            if((typeof id !== "undefined" && $.inArray(itemData[it2.id].id, id) > -1) || (typeof typ !== "undefined" && it2.type === typ)) {
-                var sh = getObjectByKeys(itemData[it2.id], 'onShoot');
+            if((typeof id !== "undefined" && $.inArray(itemJson[it2.id].id, id) > -1) || (typeof typ !== "undefined" && it2.type === typ)) {
+                var sh = getObjectByKeys(itemJson[it2.id], 'onShoot');
                 if(typeof sh !== "undefined") {
                     var res = this.useItem(it2, 'onShoot');
                     pow += res.power;
                     pof *= res.powerFactor;
-                    var id2 = getObjectByKeys(itemData[it2.id], 'projectile', 'id');
+                    var id2 = getObjectByKeys(itemJson[it2.id], 'projectile', 'id');
                     if(typeof id2 === "undefined") {
-                        id2 = getObjectByKeys(itemData[it2.id], 'dungeon', 'id');
+                        id2 = getObjectByKeys(itemJson[it2.id], 'dungeon', 'id');
                     }
                     if(typeof id2 !== "undefined") {
                         pow = pow * (1.0 + this.stat.str / 4.0 + this.stat.agi / 2.0) * 0.5 * pof;
-                        var dTo = getObjectByKeys(itemData[it2.id], 'projectile', 'recolour', 'to');
+                        var dTo = getObjectByKeys(itemJson[it2.id], 'projectile', 'recolour', 'to');
                         if(typeof dTo === "undefined") {
-                            dTo = getObjectByKeys(itemData[it2.id], 'dungeon', 'recolour', 'to');
+                            dTo = getObjectByKeys(itemJson[it2.id], 'dungeon', 'recolour', 'to');
                         }
                         newProjectile(id2.getVar(), dTo, SOUND_ATTACK, it2.id + 100, pow, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
                         this.writeAttackPoints('shoot');
@@ -384,33 +415,32 @@ Champion.prototype.useItem = function(it, ac, param) {
     }
 
     //Food
-    var ac1 = getObjectByKeys(itemData[it.id], ac, 'addFood'); //onUse?
+    var ac1 = getObjectByKeys(itemJson[it.id], ac, 'addFood'); //onUse?
     if(typeof ac1 !== "undefined") {
         this.addFood(ac1);
         suc = true;
     }
 
     //Add primary stats
-    var ac1 = getObjectByKeys(itemData[it.id], ac, 'addHPMax');
+    var ac1 = getObjectByKeys(itemJson[it.id], ac, 'addHPMax');
     if(typeof ac1 !=="undefined") {
         this.addHP(Math.floor(this.stat.hpMax * ac1));
         suc = true;
     }
-    ac1 = getObjectByKeys(itemData[it.id], ac, 'addVitMax');
+    ac1 = getObjectByKeys(itemJson[it.id], ac, 'addVitMax');
     if(typeof ac1 !=="undefined") {
         this.addVit(Math.floor(this.stat.vitMax * ac1));
         suc = true;
     }
-    ac1 = getObjectByKeys(itemData[it.id], ac, 'addSPMax');
+    ac1 = getObjectByKeys(itemJson[it.id], ac, 'addSPMax');
     if(typeof ac1 !=="undefined") {
         this.addSP(Math.floor(this.stat.spMax * ac1));
         suc = true;
     }
 
     //Change the stack
-    ac1 = getObjectByKeys(itemData[it.id], ac, 'changeStack');
+    ac1 = getObjectByKeys(itemJson[it.id], ac, 'changeStack');
     if(typeof ac1 !=="undefined") {
-        var it2 = getIndexById(itemData, ac1);
         if(it.quantity + ac1 >= 0 && it.quantity + ac1 < 100) {
             it.setQuantity(it.quantity + ac1);
         }
@@ -418,12 +448,12 @@ Champion.prototype.useItem = function(it, ac, param) {
     }
 
     //Change item to another item
-    ac1 = getObjectByKeys(itemData[it.id], ac, 'changeToItem');
+    ac1 = getObjectByKeys(itemJson[it.id], ac, 'changeToItem');
     if(typeof ac1 !=="undefined") {
-        var it2 = getIndexById(itemData, ac1);
-        it.setPocketItem(it2);
+        it.setPocketItem(ac1.getVar());
         suc = true;
     }
+    
     return {
         success: suc,
         power: pow,
@@ -535,10 +565,10 @@ Champion.prototype.restoreStats = function() {
             var vi = 1.0;
             var sp = 1.0;
             for(var i = 0; i < it.length; i++) { //e.g. heal wand
-                if(typeof getObjectByKeys(itemData[it[i].id], 'onEquip', 'restoreStat') !== "undefined") {
-                    var fhp = getObjectByKeys(itemData[it[i].id], 'onEquip', 'restoreStat', 'addHPFactor');
-                    var fvi = getObjectByKeys(itemData[it[i].id], 'onEquip', 'restoreStat', 'addVitFactor');
-                    var fsp = getObjectByKeys(itemData[it[i].id], 'onEquip', 'restoreStat', 'addSPFactor');
+                if(typeof getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreStat') !== "undefined") {
+                    var fhp = getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreStat', 'addHPFactor');
+                    var fvi = getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreStat', 'addVitFactor');
+                    var fsp = getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreStat', 'addSPFactor');
                     if(typeof fhp !== "undefined") {
                         hp *= fhp;
                     }
@@ -623,7 +653,7 @@ Champion.prototype.getSpellInBookById = function(id) {
 Champion.prototype.buySpell = function(sp) {
     if (this.recruitment.playerId > -1) {
         var p = player[this.recruitment.playerId];
-        var pk = this.findPocketItem(ITEM_COINAGE);
+        var pk = this.findPocketItem('ITEM_COINAGE');
         if (this.consumePocketItem(pk, p.fairyDetails.spell.cost)) {
             this.addSpellToSpellBook(sp);
             this.spellUp--;
@@ -713,11 +743,14 @@ Champion.prototype.writeAttackPoints = function(pwr, def) {
     }
 }
 
-Champion.prototype.getEquippedItems = function() {
+Champion.prototype.getEquippedItems = function(hand) {
     var it = [];
     var slot = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND, POCKET_ARMOUR, POCKET_SHIELD, POCKET_GLOVES];
     for(var s = 0; s < slot.length; s++) {
         it.push(this.pocket[slot[s]]);
+        if(typeof hand !== "undefined" && hand && s >= 1) {
+            break;
+        }
     }
     return it;
 }
@@ -905,14 +938,14 @@ function initChampions() {
             pk[i] = parseInt(a);
         }
         for (var i = 0; i < POCKET_MAX - 1; i++) {
-            if (pk[i] >= ITEM_COINAGE && pk[i] <= ITEM_ELF_ARROWS) {
+            if (pk[i] >= 'ITEM_COINAGE' && pk[i] <= 'ITEM_ELF_ARROWS') {
                 slot[i] = newPocketItem(pk[i], pk[pk[i] + POCKET_MAX - 2]);
             } else {
                 slot[i] = newPocketItem(pk[i]);
             }
         }
         slot[POCKET_GLOVES] = newPocketItem();
-        slot[POCKET_HIDDEN] = newPocketItem(ch + ITEM_BLODWYN_RIP);
+        slot[POCKET_HIDDEN] = newPocketItem(ch + 'ITEM_BLODWYN_RIP');
         var md = championData[ch];
         var level = parseInt(hex2dec(md.substr(0, 2)));
         var str = parseInt(hex2dec(md.substr(2, 2)));
