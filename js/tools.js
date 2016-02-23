@@ -402,6 +402,20 @@ function getObjectByKey(obj, key, val) {
 	return ret;
 }
 
+function getObjectRootByKey(obj, key, val) {
+	var ret = [];
+	for(var i in obj) {
+		if (obj.hasOwnProperty(i)) {
+			if (i == key && (typeof val === "undefined" || obj[key] == val)) {
+				ret.push(obj);
+			} else if (typeof obj[i] === 'object') {
+				ret = ret.concat(getObjectRootByKey(obj[i], key, val));
+			}
+		}
+	}
+	return ret;
+}
+
 function getObjectByKeys(obj1, key1, key2, key3) {
 	if(typeof obj1 !== "undefined") {
 		var obj2 = getObjectByKey(obj1, key1)[0];
@@ -410,9 +424,9 @@ function getObjectByKeys(obj1, key1, key2, key3) {
 			if(typeof obj3 !== "undefined" && typeof key3 !== "undefined") {
 				return getObjectByKey(obj3, key3)[0];
 			}
-			return getObjectByKey(obj2, key2)[0];
+			return obj3;
 		}
-		return getObjectByKey(obj1, key1)[0];
+		return obj2;
 	}
 	return undefined;
 }

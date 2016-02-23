@@ -238,7 +238,13 @@ function grabUISprites(spriteSheetIMG) {
         ImageArray.push(grabImageAt(spriteSheetIMG, x * 16, 400, 16, 16, false, 0 ,0));
     }
 
-    return ImageArray;
+    var ret = [];
+    for(var i = 0; i < ImageArray.length; i++) {
+        var ui = UI_GFX_ID[i];
+        ret[ui] = ImageArray[i];
+    }
+
+    return ret;
 
 }
 
@@ -251,7 +257,7 @@ function drawSpellBook(p, ui, dr) {
 //
 //    }
 
-    ctx.drawImage(gfxUI[UI_GFX_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK].width * scale, gfxUI[UI_GFX_SPELLBOOK].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_SPELLBOOK_0'], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI['UI_GFX_SPELLBOOK_0'].width * scale, gfxUI['UI_GFX_SPELLBOOK_0'].height * scale);
 
     var ch;
     var start = false;
@@ -297,12 +303,12 @@ function drawSpellBook(p, ui, dr) {
 
     if (ch.selectedSpell === null && !start) {
 
-        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT].height * scale);
-        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT], p.ScreenX + 257 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_LEFT].height * scale);
-        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_RIGHT].height * scale);
-        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].width * scale, gfxUI[UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT].height * scale);
-        ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_ICON_SPELL_0'], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI['UI_GFX_ICON_SPELL_0'].width * scale, gfxUI['UI_GFX_ICON_SPELL_0'].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT'], p.ScreenX + 241 * scale, (p.ScreenY + 63) * scale, gfxUI['UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT'].width * scale, gfxUI['UI_GFX_ICON_SPELL_BOOK_DRAGON_LEFT'].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_ICON_SPELL_BOOK_LEFT'], p.ScreenX + 257 * scale, (p.ScreenY + 63) * scale, gfxUI['UI_GFX_ICON_SPELL_BOOK_LEFT'].width * scale, gfxUI['UI_GFX_ICON_SPELL_BOOK_LEFT'].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_ICON_SPELL_BOOK_RIGHT'], p.ScreenX + 273 * scale, (p.ScreenY + 63) * scale, gfxUI['UI_GFX_ICON_SPELL_BOOK_RIGHT'].width * scale, gfxUI['UI_GFX_ICON_SPELL_BOOK_RIGHT'].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT'], p.ScreenX + 289 * scale, (p.ScreenY + 63) * scale, gfxUI['UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT'].width * scale, gfxUI['UI_GFX_ICON_SPELL_BOOK_DRAGON_RIGHT'].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_ICON_SPELL_0'], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI['UI_GFX_ICON_SPELL_0'].width * scale, gfxUI['UI_GFX_ICON_SPELL_0'].height * scale);
         drawPocketInfo(p);
     } else if (ch.selectedSpell !== null && start) { //start screen
         if (currentPlayer === 0) {
@@ -312,12 +318,12 @@ function drawSpellBook(p, ui, dr) {
         }
         writeFontImage(ch.selectedSpell.ref.name, 170, (player[0].ScreenY + 80), colourData['YELLOW']);
     } else if (ch.selectedSpell !== null) {
-
-        if (UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour == 84){
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_ANCIENT], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-        }else{
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-        }
+        //var ic = $.inArray('UI_GFX_ICON_SPELL_0', UI_GFX_ID) + 1 + ch.selectedSpell.ref.colour;
+        //if (ch.selectedSpell.ref.colour == 4){
+            ctx.drawImage(gfxUI['UI_GFX_ICON_SPELL_' + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI['UI_GFX_ICON_SPELL_0'].width * scale, gfxUI['UI_GFX_ICON_SPELL_0'].height * scale);
+        //}else{
+        //    ctx.drawImage(gfxUI[ic], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI['UI_GFX_ICON_SPELL_0'].width * scale, gfxUI['UI_GFX_ICON_SPELL_0'].height * scale);
+        //}
 
         writeFontImage(ch.selectedSpell.ref.name, p.ScreenX + 242, (p.ScreenY + 63), colourData['PINK']);
         writeFontImage("COST " + doubleDigits(ch.selectedSpell.cost), p.ScreenX + 242, (p.ScreenY + 71), colourData['YELLOW']);
@@ -326,11 +332,11 @@ function drawSpellBook(p, ui, dr) {
         t = flipImageVert(t);
         ctx.drawImage(t, (p.ScreenX + 298) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
 
-        if (UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour == 84){
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_ANCIENT], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-        }else{
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
-        }
+        //if (ch.selectedSpell.ref.colour == 4){
+            ctx.drawImage(gfxUI['UI_GFX_ICON_SPELL_' + ch.selectedSpell.ref.colour], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI['UI_GFX_ICON_SPELL_0'].width * scale, gfxUI['UI_GFX_ICON_SPELL_0'].height * scale);
+        //}else{
+        //    ctx.drawImage(gfxUI[ic], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI['UI_GFX_ICON_SPELL_0'].width * scale, gfxUI['UI_GFX_ICON_SPELL_0'].height * scale);
+        //}
 
         if (!p.showSpellText) {
             var ch = champion[p.champion[p.championLeader]];
@@ -384,10 +390,11 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop, full) {
     (function(p, ui, dr, stop) {
         p.timerSpellBookTurn = setTimeout(function() {
             drawSpellBook(p, ui, dr);
+            var sb = 'UI_GFX_SPELLBOOK_' + ui;
             if (dr) {
-                ctx.drawImage(colourSpellPage(true, champion[p.champion[p.championLeader]], gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
+                ctx.drawImage(colourSpellPage(true, champion[p.champion[p.championLeader]], gfxUI[sb]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[sb].width * scale, gfxUI[sb].height * scale);
             } else {
-                ctx.drawImage(colourSpellPage(false, champion[p.champion[p.championLeader]], gfxUI[UI_GFX_SPELLBOOK + ui]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SPELLBOOK + ui].width * scale, gfxUI[UI_GFX_SPELLBOOK + ui].height * scale);
+                ctx.drawImage(colourSpellPage(false, champion[p.champion[p.championLeader]], gfxUI[sb]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[sb].width * scale, gfxUI[sb].height * scale);
             }
             if (stop) {
                 (function(p, dr) {
@@ -414,10 +421,10 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop, full) {
 
 function leftUI(p) {
 
-    ctx.drawImage(gfxUI[UI_GFX_STATSBOX], (p.ScreenX + 51) * scale, p.ScreenY * scale, gfxUI[UI_GFX_STATSBOX].width * scale, gfxUI[UI_GFX_STATSBOX].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_STATSBOX'], (p.ScreenX + 51) * scale, p.ScreenY * scale, gfxUI['UI_GFX_STATSBOX'].width * scale, gfxUI['UI_GFX_STATSBOX'].height * scale);
     leftUIStats(p);
 
-    ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_CHAIN_LONG'], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI['UI_GFX_CHAIN_LONG'].width * scale, gfxUI['UI_GFX_CHAIN_LONG'].height * scale);
 
     var c1 = p.getOrderedChampionIds(true);
     for(var c = 0; c < p.champion.length; c++) {
@@ -427,20 +434,20 @@ function leftUI(p) {
         if (ch !== null) {
             if (c === 0) {
                 if (p.uiLeftPanel.champs[c].opened) {
-                    ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
+                    ctx.drawImage(gfxUI['UI_GFX_CHAIN_VERT'], (c + 2 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI['UI_GFX_CHAIN_VERT'].width * scale, gfxUI['UI_GFX_CHAIN_VERT'].height * scale);
                     var t = drawCharacter(monster[TOWER_CHAMPIONS][cid], 0, 0, p, {
                         x: 0,
                         y: -1
                     }, true, false);
                     ctx.drawImage(t, (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, t.width * scale, t.height * scale);
-                    ctx.drawImage(gfxUI[UI_GFX_CHAIN_VERT], (c + 43 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI[UI_GFX_CHAIN_VERT].width * scale, gfxUI[UI_GFX_CHAIN_VERT].height * scale);
+                    ctx.drawImage(gfxUI['UI_GFX_CHAIN_VERT'], (c + 43 * scale) + (p.ScreenX * scale), (p.ScreenY + 5) * scale, gfxUI['UI_GFX_CHAIN_VERT'].width * scale, gfxUI['UI_GFX_CHAIN_VERT'].height * scale);
                     if (p.uiLeftPanel.champs[c].damage > 0) {
-                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + 13) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                        ctx.drawImage(gfxUI['UI_GFX_ICON_ATTACK'], (p.ScreenX + 13) * scale, (p.ScreenY + 8) * scale, gfxUI['UI_GFX_ICON_ATTACK'].width * scale, gfxUI['UI_GFX_ICON_ATTACK'].height * scale);
                         writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + 28, p.ScreenY + 10, colourData['YELLOW'], FONT_ALIGNMENT_CENTER);
                     }
                 } else {
-                    ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
-                    ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][cid], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][cid].width * scale, gfxUI[UI_GFX_PORTRAITS][cid].height * scale);
+                    ctx.drawImage(gfxUI['UI_GFX_CHARACTER_BOX'], p.ScreenX * scale, p.ScreenY * scale, gfxUI['UI_GFX_CHARACTER_BOX'].width * scale, gfxUI['UI_GFX_CHARACTER_BOX'].height * scale);
+                    ctx.drawImage(gfxUI['UI_GFX_PORTRAITS'][cid], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI['UI_GFX_PORTRAITS'][cid].width * scale, gfxUI['UI_GFX_PORTRAITS'][cid].height * scale);
                     if (ch.activeSpell.id > -1) {
                         var sp = getSpellById(ch.activeSpell.id);
                         drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, paletteData['CLASS'][sp.colour]);
@@ -452,14 +459,14 @@ function leftUI(p) {
                     t = createShield(cid, ch.prof, 4);
                     ctx.drawImage(t, (((c - 1) * 32 + p.ScreenX) * scale), (p.ScreenY + 45) * scale, t.width * scale, t.height * scale);
                 } else if (p.uiLeftPanel.champs[c].opened) {
-                    ctx.drawImage(gfxUI[UI_GFX_SHIELD], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD].width * scale, gfxUI[UI_GFX_SHIELD].height * scale);
+                    ctx.drawImage(gfxUI['UI_GFX_SHIELD'], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI['UI_GFX_SHIELD'].width * scale, gfxUI['UI_GFX_SHIELD'].height * scale);
                     t = drawCharacter(monster[TOWER_CHAMPIONS][cid], 0, 1, p, {
                         x: 0,
                         y: 0
                     }, true, false);
                     ctx.drawImage(t, ((c - 1) * 32 * scale) + (p.ScreenX * scale) - 49 * scale, (p.ScreenY + 45) * scale - 37 * scale, t.width * scale, t.height * scale);
                     if (p.uiLeftPanel.champs[c].damage > 0) {
-                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (p.ScreenX + (c - 1) * 32 + 1) * scale, (p.ScreenY + 53) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                        ctx.drawImage(gfxUI['UI_GFX_ICON_ATTACK'], (p.ScreenX + (c - 1) * 32 + 1) * scale, (p.ScreenY + 53) * scale, gfxUI['UI_GFX_ICON_ATTACK'].width * scale, gfxUI['UI_GFX_ICON_ATTACK'].height * scale);
                         writeFontImage(p.uiLeftPanel.champs[c].damage, p.ScreenX / scale + ((c - 1) * 32 + 16), (p.ScreenY + 55), colourData['YELLOW'], FONT_ALIGNMENT_CENTER);
                     }
                 } else {
@@ -469,9 +476,9 @@ function leftUI(p) {
             }
         } else {
             if (p === player[1]) {
-                ctx.drawImage(gfxUI[UI_GFX_SHIELD_RED], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_RED].width * scale, gfxUI[UI_GFX_SHIELD_RED].height * scale);
+                ctx.drawImage(gfxUI['UI_GFX_SHIELD_RED'], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI['UI_GFX_SHIELD_RED'].width * scale, gfxUI['UI_GFX_SHIELD_RED'].height * scale);
             } else {
-                ctx.drawImage(gfxUI[UI_GFX_SHIELD_BLUE], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_SHIELD_BLUE].width * scale, gfxUI[UI_GFX_SHIELD_BLUE].height * scale);
+                ctx.drawImage(gfxUI['UI_GFX_SHIELD_BLUE'], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI['UI_GFX_SHIELD_BLUE'].width * scale, gfxUI['UI_GFX_SHIELD_BLUE'].height * scale);
             }
         }
     }
@@ -574,16 +581,16 @@ function getClassColour(c) {
 
 function commandUI(p) {
     var ch = p.getChampion(p.championLeader);
-    ctx.drawImage(gfxUI[UI_GFX_CHARACTER_BOX], p.ScreenX * scale, p.ScreenY * scale, gfxUI[UI_GFX_CHARACTER_BOX].width * scale, gfxUI[UI_GFX_CHARACTER_BOX].height * scale);
-    ctx.drawImage(gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].width * scale, gfxUI[UI_GFX_PORTRAITS][p.champion[p.championLeader]].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_CHARACTER_BOX'], p.ScreenX * scale, p.ScreenY * scale, gfxUI['UI_GFX_CHARACTER_BOX'].width * scale, gfxUI['UI_GFX_CHARACTER_BOX'].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_PORTRAITS'][p.champion[p.championLeader]], (p.ScreenX + 8) * scale, (p.ScreenY + 8) * scale, gfxUI['UI_GFX_PORTRAITS'][p.champion[p.championLeader]].width * scale, gfxUI['UI_GFX_PORTRAITS'][p.champion[p.championLeader]].height * scale);
     if (ch.activeSpell.id > -1) {
         var sp = getSpellById(ch.activeSpell.id);
         drawRect(p.ScreenX + 6, p.ScreenY + 5, 35, 33, paletteData['CLASS'][sp.colour]);
     }
-    ctx.drawImage(gfxUI[UI_GFX_ICON_PAUSE], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI[UI_GFX_ICON_PAUSE].width * scale, gfxUI[UI_GFX_ICON_PAUSE].height * scale);
-    ctx.drawImage(gfxUI[UI_GFX_ICON_SAVE], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI[UI_GFX_ICON_SAVE].width * scale, gfxUI[UI_GFX_ICON_SAVE].height * scale);
-    ctx.drawImage(gfxUI[UI_GFX_ICON_SLEEP], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_SLEEP].width * scale, gfxUI[UI_GFX_ICON_SLEEP].height * scale);
-    ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_ICON_PAUSE'], (p.ScreenX + 57) * scale, p.ScreenY * scale, gfxUI['UI_GFX_ICON_PAUSE'].width * scale, gfxUI['UI_GFX_ICON_PAUSE'].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_ICON_SAVE'], (p.ScreenX + 72) * scale, (p.ScreenY) * scale, gfxUI['UI_GFX_ICON_SAVE'].width * scale, gfxUI['UI_GFX_ICON_SAVE'].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_ICON_SLEEP'], (p.ScreenX + 57) * scale, (p.ScreenY + 16) * scale, gfxUI['UI_GFX_ICON_SLEEP'].width * scale, gfxUI['UI_GFX_ICON_SLEEP'].height * scale);
+    ctx.drawImage(recolourUiGfx(gfxUI['UI_GFX_ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (p.ScreenX + 73) * scale, (p.ScreenY + 16) * scale, gfxUI['UI_GFX_ICON_BACK'].width * scale, gfxUI['UI_GFX_ICON_BACK'].height * scale);
 
     ctx.fillStyle = "#606060";
     ctx.fillRect((p.ScreenX + 50) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
@@ -591,7 +598,7 @@ function commandUI(p) {
     ctx.fillRect((p.ScreenX + 93) * scale, (p.ScreenY) * scale, 1 * scale, 44 * scale);
     ctx.fillRect((p.ScreenX + 91) * scale, (p.ScreenY + 1) * scale, 1 * scale, 42 * scale);
 
-    ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_CHAIN_LONG'], (p.ScreenX + 1) * scale, (p.ScreenY + 80) * scale, gfxUI['UI_GFX_CHAIN_LONG'].width * scale, gfxUI['UI_GFX_CHAIN_LONG'].height * scale);
     drawCommunicationBox(p, p.communication.highlighted, true);
 }
 
@@ -599,51 +606,51 @@ function drawActiveSpell(p) {
     var ch = p.getChampion(p.championLeader);
     var id = ch.activeSpell.id;
     if (id !== -1) {
-        var spellImage;
+        var spellImage = '';
 
         switch (id) {
             case SPELL_ARMOUR:
-                spellImage = UI_GFX_ICON_SPELL_ARMOUR;
+                spellImage = 'UI_GFX_ICON_SPELL_ARMOUR';
                 break;
             case SPELL_COMPASS:
                 switch (p.d) {
                     case DIRECTION_NORTH:
-                        spellImage = UI_GFX_ICON_SPELL_COMPASS_NORTH;
+                        spellImage = 'UI_GFX_ICON_SPELL_COMPASS_NORTH';
                         break;
                     case DIRECTION_EAST:
-                        spellImage = UI_GFX_ICON_SPELL_COMPASS_EAST;
+                        spellImage = 'UI_GFX_ICON_SPELL_COMPASS_EAST';
                         break;
                     case DIRECTION_SOUTH:
-                        spellImage = UI_GFX_ICON_SPELL_COMPASS_SOUTH;
+                        spellImage = 'UI_GFX_ICON_SPELL_COMPASS_SOUTH';
                         break;
                     case DIRECTION_WEST:
-                        spellImage = UI_GFX_ICON_SPELL_COMPASS_WEST;
+                        spellImage = 'UI_GFX_ICON_SPELL_COMPASS_WEST';
                         break;
                 }
                 break;
             case SPELL_LEVITATE:
-                spellImage = UI_GFX_ICON_SPELL_LEVITATE;
+                spellImage = 'UI_GFX_ICON_SPELL_LEVITATE';
                 break;
             case SPELL_WARPOWER:
-                spellImage = UI_GFX_ICON_SPELL_WARPOWER;
+                spellImage = 'UI_GFX_ICON_SPELL_WARPOWER';
                 break;
             case SPELL_DEFLECT:
-                spellImage = UI_GFX_ICON_SPELL_DEFLECT;
+                spellImage = 'UI_GFX_ICON_SPELL_DEFLECT';
                 break;
             case SPELL_VANISH:
-                spellImage = UI_GFX_ICON_SPELL_VANISH;
+                spellImage = 'UI_GFX_ICON_SPELL_VANISH';
                 break;
             case SPELL_ANTIMAGE:
-                spellImage = UI_GFX_ICON_SPELL_ANTIMAGE;
+                spellImage = 'UI_GFX_ICON_SPELL_ANTIMAGE';
                 break;
             case SPELL_TRUEVIEW:
-                spellImage = UI_GFX_ICON_SPELL_TRUEVIEW;
+                spellImage = 'UI_GFX_ICON_SPELL_TRUEVIEW';
                 break;
             case SPELL_PROTECT:
-                spellImage = UI_GFX_ICON_SPELL_PROTECT;
+                spellImage = 'UI_GFX_ICON_SPELL_PROTECT';
                 break;
             case SPELL_ENHANCE:
-                spellImage = UI_GFX_ICON_SPELL_ENHANCE;
+                spellImage = 'UI_GFX_ICON_SPELL_ENHANCE';
                 break;
         }
         ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
@@ -655,29 +662,29 @@ function rightUI(p) {
     var ch = champion[p.champion[p.championLeader]];
 
     if (p === player[0]) {
-        ctx.drawImage(gfxUI[UI_GFX_NAME_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_BLUE].width * scale, gfxUI[UI_GFX_NAME_BLUE].height * scale);
-        ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].width * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_NAME_BLUE'], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI['UI_GFX_NAME_BLUE'].width * scale, gfxUI['UI_GFX_NAME_BLUE'].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_ICON_ARROWS_BLUE'], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI['UI_GFX_ICON_ARROWS_BLUE'].width * scale, gfxUI['UI_GFX_ICON_ARROWS_BLUE'].height * scale);
 
     } else {
-        ctx.drawImage(gfxUI[UI_GFX_NAME_RED], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_RED].width * scale, gfxUI[UI_GFX_NAME_RED].height * scale);
-        ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_NAME_RED'], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI['UI_GFX_NAME_RED'].width * scale, gfxUI['UI_GFX_NAME_RED'].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_ICON_ARROWS_RED'], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI['UI_GFX_ICON_ARROWS_RED'].width * scale, gfxUI['UI_GFX_ICON_ARROWS_RED'].height * scale);
     }
 
     writeFontImage(p.getChampion(p.championLeader).firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), colourData['YELLOW']);
-    ctx.drawImage(gfxUI[UI_GFX_ICON_SPELLBOOK], p.ScreenX + 226 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].width * scale, gfxUI[UI_GFX_ICON_SPELLBOOK].height * scale);
-    ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SCROLL].width * scale, gfxUI[UI_GFX_ICON_SCROLL].height * scale);
-    ctx.drawImage(gfxUI[UI_GFX_POCKETBOX], p.ScreenX + 288 * scale, (p.ScreenY + 21) * scale, gfxUI[UI_GFX_POCKETBOX].width * scale, gfxUI[UI_GFX_POCKETBOX].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_ICON_SPELLBOOK'], p.ScreenX + 226 * scale, (p.ScreenY + 22) * scale, gfxUI['UI_GFX_ICON_SPELLBOOK'].width * scale, gfxUI['UI_GFX_ICON_SPELLBOOK'].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_ICON_SCROLL'], p.ScreenX + 265 * scale, (p.ScreenY + 22) * scale, gfxUI['UI_GFX_ICON_SCROLL'].width * scale, gfxUI['UI_GFX_ICON_SCROLL'].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_POCKETBOX'], p.ScreenX + 288 * scale, (p.ScreenY + 21) * scale, gfxUI['UI_GFX_POCKETBOX'].width * scale, gfxUI['UI_GFX_POCKETBOX'].height * scale);
 
     if (ch.activeSpell.id !== -1) {
         //drawActiveSpell(ch.activeSpell.id,p);
     } else {
         if (ch.selectedSpell === null) {
-            ctx.drawImage(gfxUI[UI_GFX_ICON_OPENDOOR], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_OPENDOOR].width * scale, gfxUI[UI_GFX_ICON_OPENDOOR].height * scale);
+            ctx.drawImage(gfxUI['UI_GFX_ICON_OPENDOOR'], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI['UI_GFX_ICON_OPENDOOR'].width * scale, gfxUI['UI_GFX_ICON_OPENDOOR'].height * scale);
         } else {
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SPELL_GREY + 1 + ch.selectedSpell.ref.colour], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].width * scale, gfxUI[UI_GFX_ICON_SPELL_GREY].height * scale);
+            ctx.drawImage(gfxUI['UI_GFX_ICON_SPELL_' + (1 + ch.selectedSpell.ref.colour)], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI['UI_GFX_ICON_SPELL_0'].width * scale, gfxUI['UI_GFX_ICON_SPELL_0'].height * scale);
         }
     }
-    ctx.drawImage(gfxUI[UI_GFX_ICON_POCKETS], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI[UI_GFX_ICON_POCKETS].width * scale, gfxUI[UI_GFX_ICON_POCKETS].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_ICON_POCKETS'], (p.ScreenX + 305) * scale, (p.ScreenY + 22) * scale, gfxUI['UI_GFX_ICON_POCKETS'].width * scale, gfxUI['UI_GFX_ICON_POCKETS'].height * scale);
     for(var c = 0; c < p.champion.length; c++) {
         var ca = [0, 1, 3, 2];
         var c1 = ca[c];
@@ -687,17 +694,17 @@ function rightUI(p) {
             var b = ch.colour;
             if (!monster[TOWER_CHAMPIONS][ch.id].dead && ch.recruitment.attached) {
                 if (c1 === p.championHighlite) {
-                    ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][4], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    ctx.drawImage(gfxUI['UI_GFX_POCKET_' + a][4], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI['UI_GFX_POCKET_EMPTY'].width * scale, gfxUI['UI_GFX_POCKET_EMPTY'].height * scale);
                 } else {
-                    ctx.drawImage(gfxUI[UI_GFX_POCKET_SPADE + a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                    ctx.drawImage(gfxUI['UI_GFX_POCKET_' + a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI['UI_GFX_POCKET_EMPTY'].width * scale, gfxUI['UI_GFX_POCKET_EMPTY'].height * scale);
                 }
             }
             if (c1 === p.championLeader) {
                 drawRect(p.ScreenX + 289 + (c % 2) * 16, p.ScreenY + 46 + Math.floor(c / 2) * 15, 15 - (c % 2), 13, colourData['BLUE_DARK']);
                 //if (c % 2 === 0) {
-                //	ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
+                //	ctx.drawImage(gfxUI['UI_GFX_ICON_SELECTED'], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI['UI_GFX_ICON_SELECTED'].width * scale, gfxUI['UI_GFX_ICON_SELECTED'].height * scale);
                 //} else {
-                //	ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], (p.ScreenX + 288 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
+                //	ctx.drawImage(gfxUI['UI_GFX_ICON_SELECTED'], (p.ScreenX + 288 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI['UI_GFX_ICON_SELECTED'].width * scale, gfxUI['UI_GFX_ICON_SELECTED'].height * scale);
                 //}
 
             }
@@ -705,7 +712,7 @@ function rightUI(p) {
     }
     drawPocketInfo(p);
 
-    ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 80) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_CHAIN_LONG'], (p.ScreenX + 226) * scale, (p.ScreenY + 80) * scale, gfxUI['UI_GFX_CHAIN_LONG'].width * scale, gfxUI['UI_GFX_CHAIN_LONG'].height * scale);
 
 }
 
@@ -730,9 +737,9 @@ function drawPocketUI(p, chp, start) {
 
     if (!start) {
         if (p === player[0]) {
-            ctx.drawImage(gfxUI[UI_GFX_NAME_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_BLUE].width * scale, gfxUI[UI_GFX_NAME_BLUE].height * scale);
+            ctx.drawImage(gfxUI['UI_GFX_NAME_BLUE'], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI['UI_GFX_NAME_BLUE'].width * scale, gfxUI['UI_GFX_NAME_BLUE'].height * scale);
         } else {
-            ctx.drawImage(gfxUI[UI_GFX_NAME_RED], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI[UI_GFX_NAME_RED].width * scale, gfxUI[UI_GFX_NAME_RED].height * scale);
+            ctx.drawImage(gfxUI['UI_GFX_NAME_RED'], p.ScreenX + 226 * scale, (p.ScreenY + 0) * scale, gfxUI['UI_GFX_NAME_RED'].width * scale, gfxUI['UI_GFX_NAME_RED'].height * scale);
         }
         writeFontImage(chp.firstName, p.ScreenX / scale + 226, (p.ScreenY + 7), colourData['YELLOW']);
     }
@@ -743,32 +750,32 @@ function drawPocketUI(p, chp, start) {
             var pocket = chp.pocket[i];
             var pocketId = pocket.id;
             if (pocketId === 0) {
-                pocketId = UI_GFX_POCKET_EMPTY;
+                pocketId = 'UI_GFX_POCKET_EMPTY';
                 if (y === 0) {
                     switch (x) {
                         case 0:
-                            pocketId = UI_GFX_POCKET_EMPTY_LEFT_HAND;
+                            pocketId = 'UI_GFX_POCKET_EMPTY_LEFT_HAND';
                             break;
                         case 1:
-                            pocketId = UI_GFX_POCKET_EMPTY_RIGHT_HAND;
+                            pocketId = 'UI_GFX_POCKET_EMPTY_RIGHT_HAND';
                             break;
                         case 2:
-                            pocketId = UI_GFX_POCKET_EMPTY_ARMOUR;
+                            pocketId = 'UI_GFX_POCKET_EMPTY_ARMOUR';
                             break;
                         case 3:
                             if (chp.prof === PROFESSION_WARRIOR || chp.prof === PROFESSION_ADVENTURER) {
-                                pocketId = UI_GFX_POCKET_EMPTY_LARGE_SHIELD;
+                                pocketId = 'UI_GFX_POCKET_EMPTY_LARGE_SHIELD';
                             } else {
-                                pocketId = UI_GFX_POCKET_EMPTY_SMALL_SHIELD;
+                                pocketId = 'UI_GFX_POCKET_EMPTY_SMALL_SHIELD';
                             }
                             break;
                         default:
                             break;
                     }
                 }
-                if (pocketId === UI_GFX_POCKET_EMPTY_LEFT_HAND && chp.pocket[12].type === 'ITEM_TYPE_GLOVES') {
+                if (pocketId === 'UI_GFX_POCKET_EMPTY_LEFT_HAND' && chp.pocket[12].type === 'ITEM_TYPE_GLOVES') {
                     ctx.drawImage(flipImageVert(itemJson[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-                } else if (pocketId === UI_GFX_POCKET_EMPTY_RIGHT_HAND && chp.pocket[12].type === 'ITEM_TYPE_GLOVES') {
+                } else if (pocketId === 'UI_GFX_POCKET_EMPTY_RIGHT_HAND' && chp.pocket[12].type === 'ITEM_TYPE_GLOVES') {
                     ctx.drawImage(flipImageVert(flipImage(itemJson[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                 } else {
                     ctx.drawImage(recolourUiGfx(gfxUI[pocketId], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
@@ -792,13 +799,13 @@ function drawPocketUI(p, chp, start) {
     }
 
     if (start) {
-        ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 7) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
-        ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 14) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_CHAIN_LONG'], (p.ScreenX + 226) * scale, (p.ScreenY + 7) * scale, gfxUI['UI_GFX_CHAIN_LONG'].width * scale, gfxUI['UI_GFX_CHAIN_LONG'].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_GRAY_BAR'], (p.ScreenX + 225) * scale, (p.ScreenY + 14) * scale, gfxUI['UI_GFX_GRAY_BAR'].width * scale, gfxUI['UI_GFX_GRAY_BAR'].height * scale);
         writeFontImage(TEXT_INVENTORY, p.ScreenX / scale + 234, (p.ScreenY + 15), colourData['YELLOW']);
-        ctx.drawImage(gfxUI[UI_GFX_CHAIN_LONG], (p.ScreenX + 226) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_CHAIN_LONG].width * scale, gfxUI[UI_GFX_CHAIN_LONG].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_CHAIN_LONG'], (p.ScreenX + 226) * scale, (p.ScreenY + 63) * scale, gfxUI['UI_GFX_CHAIN_LONG'].width * scale, gfxUI['UI_GFX_CHAIN_LONG'].height * scale);
     }
 
-    ctx.drawImage(gfxUI[UI_GFX_GRAY_BAR], (p.ScreenX + 225) * scale, (p.ScreenY + 54) * scale, gfxUI[UI_GFX_GRAY_BAR].width * scale, gfxUI[UI_GFX_GRAY_BAR].height * scale);
+    ctx.drawImage(gfxUI['UI_GFX_GRAY_BAR'], (p.ScreenX + 225) * scale, (p.ScreenY + 54) * scale, gfxUI['UI_GFX_GRAY_BAR'].width * scale, gfxUI['UI_GFX_GRAY_BAR'].height * scale);
     var ac = getArmourNotation(chp.getArmourClass());
     writeFontImage(TEXT_ARMOUR + ":", p.ScreenX / scale + 234, (p.ScreenY + 55), colourData['YELLOW']);
     writeFontImage(ac, p.ScreenX / scale + 289, (p.ScreenY + 55), colourData['WHITE']);
@@ -812,7 +819,7 @@ function drawPocketUI(p, chp, start) {
             var ch = p.getChampion(cid);
 
             if (c < 4 && ch !== null) {
-                g = ch.prof + UI_GFX_POCKET_SPADE;
+                g = 'UI_GFX_POCKET_' + ch.prof;
             }
 
             switch (c) {
@@ -823,11 +830,11 @@ function drawPocketUI(p, chp, start) {
                 case 3:
                     if (ch !== null) {
                         if (ch.recruitment.attached) {
-                            ctx.drawImage(gfxUI[g][ch.colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                            ctx.drawImage(gfxUI[g][ch.colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI['UI_GFX_POCKET_EMPTY'].width * scale, gfxUI['UI_GFX_POCKET_EMPTY'].height * scale);
                         }
                         if (chp.recruitment.playerId > -1 && c === p.uiRightPanel.activePocket) {
                             drawRect(((p.ScreenX + 225) + (c * 16)), ((p.ScreenY + 63)), 15, 14, colourData['YELLOW']);
-                            //ctx.drawImage(gfxUI[UI_GFX_ICON_SELECTED], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_ICON_SELECTED].width * scale, gfxUI[UI_GFX_ICON_SELECTED].height * scale);
+                            //ctx.drawImage(gfxUI['UI_GFX_ICON_SELECTED'], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI['UI_GFX_ICON_SELECTED'].width * scale, gfxUI['UI_GFX_ICON_SELECTED'].height * scale);
                         }
                     }
                     break
@@ -846,12 +853,12 @@ function drawPocketUI(p, chp, start) {
                             }
                         }
                         drawPocketInfo(p, chp);
-                        //ctx.drawImage(gfxUI[UI_GFX_POCKET_EMPTY], ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                        //ctx.drawImage(gfxUI['UI_GFX_POCKET_EMPTY'], ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI['UI_GFX_POCKET_EMPTY'].width * scale, gfxUI['UI_GFX_POCKET_EMPTY'].height * scale);
                     };
                     break
                 case 5:
                     {
-                        ctx.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI[UI_GFX_POCKET_EMPTY].width * scale, gfxUI[UI_GFX_POCKET_EMPTY].height * scale);
+                        ctx.drawImage(recolourUiGfx(gfxUI['UI_GFX_ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI['UI_GFX_POCKET_EMPTY'].width * scale, gfxUI['UI_GFX_POCKET_EMPTY'].height * scale);
                     };
                     break
 
@@ -862,8 +869,8 @@ function drawPocketUI(p, chp, start) {
 
 function highliteMovementArrow(p, m) {
     if (p.uiRightPanel.mode === UI_RIGHT_PANEL_MAIN) {
-        var c = m + UI_CLICK_ROTATE_LEFT;
-        var g = m + UI_GFX_MOVEMENT_ROTATE_LEFT;
+        var c = UI_CLICK_ROTATE_LEFT + m;
+        var g = 'UI_GFX_MOVEMENT_' + m;
         switch (m) {
             case 0:
                 x = 228;
@@ -895,9 +902,9 @@ function highliteMovementArrow(p, m) {
         ctx.drawImage(gfxUI[g], (p.ScreenX + x) * scale, (p.ScreenY + y) * scale, gfxUI[g].width * scale, gfxUI[g].height * scale);
         setTimeout(function() {
             if (p === player[0]) {
-                ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_BLUE], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].width * scale, gfxUI[UI_GFX_ICON_ARROWS_BLUE].height * scale);
+                ctx.drawImage(gfxUI['UI_GFX_ICON_ARROWS_BLUE'], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI['UI_GFX_ICON_ARROWS_BLUE'].width * scale, gfxUI['UI_GFX_ICON_ARROWS_BLUE'].height * scale);
             } else {
-                ctx.drawImage(gfxUI[UI_GFX_ICON_ARROWS_RED], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].width * scale, gfxUI[UI_GFX_ICON_ARROWS_RED].height * scale);
+                ctx.drawImage(gfxUI['UI_GFX_ICON_ARROWS_RED'], p.ScreenX + 226 * scale, (p.ScreenY + 45) * scale, gfxUI['UI_GFX_ICON_ARROWS_RED'].width * scale, gfxUI['UI_GFX_ICON_ARROWS_RED'].height * scale);
             }
         }, 150);
     }
@@ -914,13 +921,13 @@ function drawStatsPage(p, ch, start) {
     //var ch = p.getChampion(p.championLeader);
     if (ch !== null) {
         if (start) {
-            ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
+            ctx.drawImage(gfxUI['UI_GFX_CHARACTER_SCROLL'], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI['UI_GFX_CHARACTER_SCROLL'].width * scale, gfxUI['UI_GFX_CHARACTER_SCROLL'].height * scale);
         } else {
-            ctx.drawImage(gfxUI[UI_GFX_SCRIPT], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+            ctx.drawImage(gfxUI['UI_GFX_SCRIPT'], (p.ScreenX + 226) * scale, (p.ScreenY - 1) * scale, gfxUI['UI_GFX_SCRIPT'].width * scale, gfxUI['UI_GFX_SCRIPT'].height * scale);
         }
 
         writeFontImage(TEXT_LEVEL, p.ScreenX + 242, (p.ScreenY + 15), colourData['YELLOW']);
-        ctx.drawImage(gfxUI[UI_GFX_SCROLL_WAVE], (p.ScreenX + 282) * scale, (p.ScreenY + 17) * scale, gfxUI[UI_GFX_SCROLL_WAVE].width * scale, gfxUI[UI_GFX_SCROLL_WAVE].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_SCROLL_WAVE'], (p.ScreenX + 282) * scale, (p.ScreenY + 17) * scale, gfxUI['UI_GFX_SCROLL_WAVE'].width * scale, gfxUI['UI_GFX_SCROLL_WAVE'].height * scale);
         //writeFontImage("~", p.ScreenX + 285, (p.ScreenY + 15), colourData['GREY_DARKEST']);
         writeFontImage(doubleDigits(ch.level), p.ScreenX + 297, (p.ScreenY + 15), colourData['WHITE']);
 
@@ -994,15 +1001,15 @@ function createShield(id, type, colour) {
     can.height = 41;
     var context = can.getContext("2d");
     if (colour === paletteData['DEAD']) {
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], paletteData['DEFAULT_SHIELD'][0], colourData['BLACK']), 0, 0);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], paletteData['DEFAULT_SHIELD'][0], colourData['BLACK']), 0, 5);
-        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], paletteData['DEFAULT_SHIELD'], colour), 1, 21);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], paletteData['DEFAULT_SHIELD'][0], colourData['BLACK']), 5, 32);
+        context.drawImage(recolourUiGfx(gfxUI['UI_GFX_SHIELD_TOP'], paletteData['DEFAULT_SHIELD'][0], colourData['BLACK']), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI['UI_GFX_SHIELD_CHARACTERS'][id], paletteData['DEFAULT_SHIELD'][0], colourData['BLACK']), 0, 5);
+        context.drawImage(recolourSprite(gfxUI['UI_GFX_SHIELD_TYPES'][type], paletteData['DEFAULT_SHIELD'], colour), 1, 21);
+        context.drawImage(recolourUiGfx(gfxUI['UI_GFX_SHIELD_BOTTOM'], paletteData['DEFAULT_SHIELD'][0], colourData['BLACK']), 5, 32);
     } else {
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_TOP], paletteData['DEFAULT_SHIELD'][0], colourData['GREY_LIGHT']), 0, 0);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_CHARACTERS][id], paletteData['DEFAULT_SHIELD'][0], colourData['GREY_LIGHT']), 0, 5);
-        context.drawImage(recolourSprite(gfxUI[UI_GFX_SHIELD_TYPES][type], paletteData['DEFAULT_SHIELD'], colour), 1, 21);
-        context.drawImage(recolourUiGfx(gfxUI[UI_GFX_SHIELD_BOTTOM], paletteData['DEFAULT_SHIELD'][0], colourData['GREY_LIGHT']), 5, 32);
+        context.drawImage(recolourUiGfx(gfxUI['UI_GFX_SHIELD_TOP'], paletteData['DEFAULT_SHIELD'][0], colourData['GREY_LIGHT']), 0, 0);
+        context.drawImage(recolourUiGfx(gfxUI['UI_GFX_SHIELD_CHARACTERS'][id], paletteData['DEFAULT_SHIELD'][0], colourData['GREY_LIGHT']), 0, 5);
+        context.drawImage(recolourSprite(gfxUI['UI_GFX_SHIELD_TYPES'][type], paletteData['DEFAULT_SHIELD'], colour), 1, 21);
+        context.drawImage(recolourUiGfx(gfxUI['UI_GFX_SHIELD_BOTTOM'], paletteData['DEFAULT_SHIELD'][0], colourData['GREY_LIGHT']), 5, 32);
     }
 
     context.save();
@@ -1060,10 +1067,10 @@ function showStatusBar(thisVal, maxVal, width, colour) {
     can.height = 5;
     var canContent = can.getContext("2d");
     var t = Math.floor(thisVal / maxVal * (width - 12));
-    canContent.drawImage(gfxUI[UI_GFX_FOOD_POINTER], 0, 1);
+    canContent.drawImage(gfxUI['UI_GFX_FOOD_POINTER'], 0, 1);
     canContent.fillStyle = 'rgb(' + colour[0] + ',' + colour[1] + ',' + colour[2] + ')';
     canContent.fillRect(6, 0, t, 5);
-    canContent.drawImage(flipImage(gfxUI[UI_GFX_FOOD_POINTER]), width - 4, 1);
+    canContent.drawImage(flipImage(gfxUI['UI_GFX_FOOD_POINTER']), width - 4, 1);
     canContent.save();
     return can;
 }
@@ -1106,12 +1113,12 @@ function showFairy(c, p) {
         //ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
         //p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", colourData['GREEN'], false, 3000);
         //writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, colourData['GREEN']);
-        p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][0], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][0].width * scale, gfxUI[UI_GFX_FAIRIES][0].height * scale);
+        p.Portal.drawImage(gfxUI['UI_GFX_FAIRIES'][0], 8 * scale, 5 * scale, gfxUI['UI_GFX_FAIRIES'][0].width * scale, gfxUI['UI_GFX_FAIRIES'][0].height * scale);
         for(var x = 0; x < 5; x++) {
             if (x < 4) {
                 p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
             } else {
-                p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+                p.Portal.drawImage(recolourUiGfx(gfxUI['UI_GFX_ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI['UI_GFX_ICON_BACK'].width * scale, gfxUI['UI_GFX_ICON_BACK'].height * scale);
             }
         }
     } else {
@@ -1137,7 +1144,7 @@ function showFairy(c, p) {
 
 function showFairySpellScreen(spellClass, p, c) {
 
-    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass + 1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].height * scale);
+    p.Portal.drawImage(gfxUI['UI_GFX_FAIRIES'][spellClass + 1], 8 * scale, 5 * scale, gfxUI['UI_GFX_FAIRIES'][spellClass + 1].width * scale, gfxUI['UI_GFX_FAIRIES'][spellClass + 1].height * scale);
 
     var mySpells = c.getUnlearntSpellsByColour(spellClass);
     var spellColour = null;
@@ -1175,7 +1182,7 @@ function showFairySpellScreen(spellClass, p, c) {
     } else {
         p.message(TEXT_ALL_I_HAVE + ch.firstName, colourData['GREEN'], false, 0);
     }
-    p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+    p.Portal.drawImage(recolourUiGfx(gfxUI['UI_GFX_ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI['UI_GFX_ICON_BACK'].width * scale, gfxUI['UI_GFX_ICON_BACK'].height * scale);
 }
 
 function showFairySpellDetailsScreen(spell, p, c) {
@@ -1183,7 +1190,7 @@ function showFairySpellDetailsScreen(spell, p, c) {
     var spellColour = [];
     var spellClass = spell.colour;
 
-    p.Portal.drawImage(gfxUI[UI_GFX_FAIRIES][spellClass + 1], 8 * scale, 5 * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].width * scale, gfxUI[UI_GFX_FAIRIES][spellClass + 1].height * scale);
+    p.Portal.drawImage(gfxUI['UI_GFX_FAIRIES'][spellClass + 1], 8 * scale, 5 * scale, gfxUI['UI_GFX_FAIRIES'][spellClass + 1].width * scale, gfxUI['UI_GFX_FAIRIES'][spellClass + 1].height * scale);
 
     /*switch (spellClass) {
 
@@ -1225,7 +1232,7 @@ function showFairySpellDetailsScreen(spell, p, c) {
                 p.Portal.drawImage(gfxUI[80 + x], 17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
             }
         } else {
-            p.Portal.drawImage(recolourUiGfx(gfxUI[UI_GFX_ICON_BACK], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI[UI_GFX_ICON_BACK].width * scale, gfxUI[UI_GFX_ICON_BACK].height * scale);
+            p.Portal.drawImage(recolourUiGfx(gfxUI['UI_GFX_ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI['UI_GFX_ICON_BACK'].width * scale, gfxUI['UI_GFX_ICON_BACK'].height * scale);
         }
     }
 
@@ -1292,10 +1299,10 @@ function drawScroll(text, x, y, small) {
     }
     if (small) {
         var rm = 5;
-        ctx.drawImage(gfxUI[UI_GFX_CHARACTER_SCROLL], x * scale, y * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].width * scale, gfxUI[UI_GFX_CHARACTER_SCROLL].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_CHARACTER_SCROLL'], x * scale, y * scale, gfxUI['UI_GFX_CHARACTER_SCROLL'].width * scale, gfxUI['UI_GFX_CHARACTER_SCROLL'].height * scale);
     } else {
         var rm = 7;
-        ctx.drawImage(gfxUI[UI_GFX_SCRIPT], x * scale, y * scale, gfxUI[UI_GFX_SCRIPT].width * scale, gfxUI[UI_GFX_SCRIPT].height * scale);
+        ctx.drawImage(gfxUI['UI_GFX_SCRIPT'], x * scale, y * scale, gfxUI['UI_GFX_SCRIPT'].width * scale, gfxUI['UI_GFX_SCRIPT'].height * scale);
     }
 
     //Scroll page can hold 7 (or 5 for small scrolls) Lines, im sure Jorg can do some math to make the start Y be the center if scrollData[scrollRef].length < 7
@@ -1327,8 +1334,8 @@ function drawCommunicationBox(p, item, forced) {
     if (p.communication.highlighted !== item || forced) {
 
         if (p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_0 || p.communication.mode === COMMUNICATION_PAGE_COMMUNICATE_1) {
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_UP], (p.ScreenX + 57) * scale, (p.ScreenY + 32) * scale, gfxUI[UI_GFX_ICON_SCROLL_UP].width * scale, gfxUI[UI_GFX_ICON_SCROLL_UP].height * scale);
-            ctx.drawImage(gfxUI[UI_GFX_ICON_SCROLL_DOWN], (p.ScreenX + 72) * scale, (p.ScreenY + 32) * scale, gfxUI[UI_GFX_ICON_SCROLL_DOWN].width * scale, gfxUI[UI_GFX_ICON_SCROLL_DOWN].height * scale);
+            ctx.drawImage(gfxUI['UI_GFX_ICON_SCROLL_UP'], (p.ScreenX + 57) * scale, (p.ScreenY + 32) * scale, gfxUI['UI_GFX_ICON_SCROLL_UP'].width * scale, gfxUI['UI_GFX_ICON_SCROLL_UP'].height * scale);
+            ctx.drawImage(gfxUI['UI_GFX_ICON_SCROLL_DOWN'], (p.ScreenX + 72) * scale, (p.ScreenY + 32) * scale, gfxUI['UI_GFX_ICON_SCROLL_DOWN'].width * scale, gfxUI['UI_GFX_ICON_SCROLL_DOWN'].height * scale);
         } else {
             ctx.clearRect((p.ScreenX + 57) * scale, (p.ScreenY + 32) * scale, 30 * scale, 14 * scale);
         }
@@ -1516,9 +1523,9 @@ function drawHitDamage(p, myCh, hitPt) {
             if (p.uiLeftPanel.champs[c].opened === true) {
                 if (ch.id === myCh) {
                     if (c === 0) {
-                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                        ctx.drawImage(gfxUI['UI_GFX_ICON_ATTACK'], (c - 38 * scale) + (p.ScreenX * scale) * scale, (p.ScreenY - 32) * scale, gfxUI['UI_GFX_ICON_ATTACK'].width * scale, gfxUI['UI_GFX_ICON_ATTACK'].height * scale);
                     } else {
-                        ctx.drawImage(gfxUI[UI_GFX_ICON_ATTACK], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI[UI_GFX_ICON_ATTACK].width * scale, gfxUI[UI_GFX_ICON_ATTACK].height * scale);
+                        ctx.drawImage(gfxUI['UI_GFX_ICON_ATTACK'], ((c - 1) * 32 * scale) + (p.ScreenX * scale), (p.ScreenY + 45) * scale, gfxUI['UI_GFX_ICON_ATTACK'].width * scale, gfxUI['UI_GFX_ICON_ATTACK'].height * scale);
                     }
                 }
             }

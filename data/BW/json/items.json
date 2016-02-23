@@ -1,4 +1,12 @@
 {
+	"itemDrops": [
+		["ITEM_COINAGE", "ITEM_COMMON_KEYS", "ITEM_ARROWS", "ITEM_APPLE_1", "ITEM_APPLE_2", "ITEM_APPLE", "ITEM_BISCUIT_1", "ITEM_BISCUIT_2", "ITEM_BISCUIT", "ITEM_MEAD_1", "ITEM_MEAD_2", "ITEM_MEAD", "ITEM_WATER_1", "ITEM_WATER_2", "ITEM_WATER", "ITEM_CHICKEN_1", "ITEM_CHICKEN_2", "ITEM_CHICKEN"],
+		["ITEM_COINAGE", "ITEM_COMMON_KEYS", "ITEM_ARROWS", "ITEM_ELF_ARROWS", "ITEM_APPLE", "ITEM_BISCUIT", "ITEM_MEAD", "ITEM_WATER", "ITEM_CHICKEN", "ITEM_NEGG_GREEN"],
+		["ITEM_COINAGE", "ITEM_COMMON_KEYS", "ITEM_ARROWS", "ITEM_ELF_ARROWS", "ITEM_APPLE", "ITEM_BISCUIT", "ITEM_MEAD", "ITEM_WATER", "ITEM_CHICKEN", "ITEM_NEGG_GREEN", "ITEM_NEGG_BLUE"],
+		["ITEM_COINAGE", "ITEM_COMMON_KEYS", "ITEM_ARROWS", "ITEM_ELF_ARROWS", "ITEM_NEGG_GREEN", "ITEM_NEGG_BLUE", "ITEM_NEGG_RED"],
+		["ITEM_ACE_OF_SWORDS"],
+		["ITEM_CHROMATIC_KEY"]
+	],
 	"items": [
 		{
 			"id": "ITEM_EMPTY",
@@ -18,7 +26,7 @@
 					"id": "UI_GFX_POCKET_COIN"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_COIN"
+					"id": "ITEM_COIN"
 				}
 			},
 			"currency": 1
@@ -32,7 +40,7 @@
 					"id": "UI_GFX_POCKET_COMMON_KEY"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_KEY",
+					"id": "ITEM_KEY",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["PINK", "PINK", "PINK", "BLACK"]
@@ -52,14 +60,14 @@
 					"id": "UI_GFX_POCKET_ARROW"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_ARROW",
+					"id": "ITEM_ARROW",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "RED", "BROWN", "BLACK"]
 					}
 				},
 				"projectile": {
-					"id": "DUNGEON_PROJECTILE_ARROW",
+					"id": "PROJECTILE_ARROW",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": "BRONZE_ARROW"
@@ -80,14 +88,14 @@
 					"id": "UI_GFX_POCKET_ELF_ARROW"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_ARROW",
+					"id": "ITEM_ARROW",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "GREEN", "GREY_LIGHT", "BLACK"]
 					}
 				},
 				"projectile": {
-					"id": "DUNGEON_PROJECTILE_ARROW",
+					"id": "PROJECTILE_ARROW",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": "GREEN_ARROW"
@@ -108,7 +116,7 @@
 					"id": "UI_GFX_POCKET_APPLE_1"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_APPLE_HALF"
+					"id": "ITEM_APPLE_HALF"
 				}
 			},
 			"onUse": {
@@ -125,7 +133,7 @@
 					"id": "UI_GFX_POCKET_APPLE_2"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_APPLE_HALF"
+					"id": "ITEM_APPLE_HALF"
 				}
 			},
 			"onUse": {
@@ -142,7 +150,7 @@
 					"id": "UI_GFX_POCKET_APPLE_3"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_APPLE"
+					"id": "ITEM_APPLE"
 				}
 			},
 			"onUse": {
@@ -159,7 +167,7 @@
 					"id": "UI_GFX_POCKET_BISCUIT_1"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_BISCUIT"
+					"id": "ITEM_BISCUIT"
 				}
 			},
 			"onUse": {
@@ -176,7 +184,7 @@
 					"id": "UI_GFX_POCKET_BISCUIT_2"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_BISCUIT"
+					"id": "ITEM_BISCUIT"
 				}
 			},
 			"onUse": {
@@ -193,7 +201,7 @@
 					"id": "UI_GFX_POCKET_BISCUIT_3"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_BISCUIT"
+					"id": "ITEM_BISCUIT"
 				}
 			},
 			"onUse": {
@@ -210,7 +218,7 @@
 					"id": "UI_GFX_POCKET_CHICKEN_1"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_BONE"
+					"id": "ITEM_BONE"
 				}
 			},
 			"onUse": {
@@ -227,7 +235,7 @@
 					"id": "UI_GFX_POCKET_CHICKEN_2"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_CHICKEN"
+					"id": "ITEM_CHICKEN"
 				}
 			},
 			"onUse": {
@@ -244,7 +252,7 @@
 					"id": "UI_GFX_POCKET_CHICKEN_3"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_CHICKEN"
+					"id": "ITEM_CHICKEN"
 				}
 			},
 			"onUse": {
@@ -265,7 +273,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_DRINK"
+					"id": "ITEM_DRINK"
 				}
 			},
 			"onUse": {
@@ -286,7 +294,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_DRINK"
+					"id": "ITEM_DRINK"
 				}
 			},
 			"onUse": {
@@ -307,7 +315,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_DRINK"
+					"id": "ITEM_DRINK"
 				}
 			},
 			"onUse": {
@@ -328,7 +336,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_DRINK"
+					"id": "ITEM_DRINK"
 				}
 			},
 			"onUse": {
@@ -349,7 +357,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_DRINK"
+					"id": "ITEM_DRINK"
 				}
 			},
 			"onUse": {
@@ -370,7 +378,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_DRINK"
+					"id": "ITEM_DRINK"
 				}
 			},
 			"onUse": {
@@ -391,7 +399,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_NEGG",
+					"id": "ITEM_NEGG",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN_DARK", "GREEN_DARK", "GREEN_DARK", "BLACK"]
@@ -416,7 +424,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_NEGG",
+					"id": "ITEM_NEGG",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE_DARK", "BLUE_DARK", "BLUE_DARK", "BLACK"]
@@ -441,7 +449,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_NEGG"
+					"id": "ITEM_NEGG"
 				}
 			},
 			"onUse": {
@@ -462,7 +470,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_POTION",
+					"id": "ITEM_POTION",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN", "GREY_LIGHT", "BLACK"]
@@ -487,7 +495,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_POTION",
+					"id": "ITEM_POTION",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "YELLOW", "GREY_LIGHT", "BLACK"]
@@ -514,7 +522,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_POTION"
+					"id": "ITEM_POTION"
 				}
 			},
 			"onUse": {
@@ -535,7 +543,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_POTION",
+					"id": "ITEM_POTION",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE_DARK", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
@@ -556,7 +564,7 @@
 					"id": "UI_GFX_POCKET_AMOUR_LEATHER"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AMOUR",
+					"id": "ITEM_AMOUR",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["PINK", "BROWN", "RED_DARK", "BLACK"]
@@ -581,7 +589,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AMOUR",
+					"id": "ITEM_AMOUR",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREY_LIGHT", "GREY_DARK", "BLACK"]
@@ -606,7 +614,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AMOUR",
+					"id": "ITEM_AMOUR",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "BLACK"]
@@ -631,7 +639,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AMOUR",
+					"id": "ITEM_AMOUR",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "BLUE", "GREY_DARK", "BLACK"]
@@ -656,7 +664,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AMOUR",
+					"id": "ITEM_AMOUR",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "BLUE", "BLUE_DARK", "BLACK"]
@@ -681,7 +689,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AMOUR",
+					"id": "ITEM_AMOUR",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREEN", "GREY_DARK", "BLACK"]
@@ -706,7 +714,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AMOUR",
+					"id": "ITEM_AMOUR",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREEN", "GREEN_DARK", "BLACK"]
@@ -731,7 +739,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AMOUR",
+					"id": "ITEM_AMOUR",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "PINK", "GREY_DARK", "BLACK"]
@@ -756,7 +764,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AMOUR",
+					"id": "ITEM_AMOUR",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "PINK", "BROWN", "BLACK"]
@@ -777,7 +785,7 @@
 					"id": "UI_GFX_POCKET_SHIELD_2"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SMALL_SHIELD",
+					"id": "ITEM_SMALL_SHIELD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["PINK", "BROWN", "RED_DARK", "BROWN"]
@@ -798,7 +806,7 @@
 					"id": "UI_GFX_POCKET_SHIELD_3"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SMALL_SHIELD",
+					"id": "ITEM_SMALL_SHIELD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "GREY_MEDIUM"]
@@ -819,7 +827,7 @@
 					"id": "UI_GFX_POCKET_SHIELD_1"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SMALL_SHIELD",
+					"id": "ITEM_SMALL_SHIELD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "RED"]
@@ -840,7 +848,7 @@
 					"id": "UI_GFX_POCKET_SHIELD_4"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_LARGE_SHIELD",
+					"id": "ITEM_LARGE_SHIELD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "BLACK"]
@@ -862,7 +870,7 @@
 					"id": "UI_GFX_POCKET_SHIELD_5"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_LARGE_SHIELD",
+					"id": "ITEM_LARGE_SHIELD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "BLUE", "BLUE_DARK", "BLACK"]
@@ -884,7 +892,7 @@
 					"id": "UI_GFX_POCKET_SHIELD_6"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_LARGE_SHIELD",
+					"id": "ITEM_LARGE_SHIELD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "PINK", "RED_DARK", "BLACK"]
@@ -906,7 +914,7 @@
 					"id": "UI_GFX_POCKET_SHIELD_7"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_LARGE_SHIELD",
+					"id": "ITEM_LARGE_SHIELD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREEN", "GREEN_DARK", "BLACK"]
@@ -932,7 +940,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GLOVE",
+					"id": "ITEM_GLOVE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "YELLOW", "PINK", "BLACK"]
@@ -957,7 +965,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GLOVE",
+					"id": "ITEM_GLOVE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREY_LIGHT", "GREY_DARK", "BLACK"]
@@ -982,7 +990,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GLOVE",
+					"id": "ITEM_GLOVE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "BLUE", "BLUE_DARK", "BLACK"]
@@ -1007,7 +1015,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GLOVE",
+					"id": "ITEM_GLOVE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREEN", "GREEN_DARK", "BLACK"]
@@ -1032,7 +1040,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GLOVE",
+					"id": "ITEM_GLOVE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "PINK", "BROWN", "BLACK"]
@@ -1053,7 +1061,7 @@
 					"id": "UI_GFX_POCKET_DAGGER"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_DAGGER",
+					"id": "ITEM_DAGGER",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "RED_DARK", "GREY_LIGHT", "BLACK"]
@@ -1073,7 +1081,7 @@
 					"id": "UI_GFX_POCKET_SHORT_SWORD"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_DAGGER",
+					"id": "ITEM_DAGGER",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREY_LIGHT", "GREY_LIGHT", "GREY_LIGHT", "BLACK"]
@@ -1093,7 +1101,7 @@
 					"id": "UI_GFX_POCKET_SWORD_1"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SWORD",
+					"id": "ITEM_SWORD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "RED_DARK", "GREY_LIGHT", "BLACK"]
@@ -1117,7 +1125,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SWORD",
+					"id": "ITEM_SWORD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BROWN", "RED_DARK", "GREY_LIGHT", "BLACK"]
@@ -1141,7 +1149,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SWORD",
+					"id": "ITEM_SWORD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
@@ -1161,7 +1169,7 @@
 					"id": "UI_GFX_POCKET_SWORD_3"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SWORD",
+					"id": "ITEM_SWORD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
@@ -1181,7 +1189,7 @@
 					"id": "UI_GFX_POCKET_SWORD_4"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SWORD",
+					"id": "ITEM_SWORD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["PINK", "RED", "GREY_LIGHT", "BLACK"]
@@ -1201,7 +1209,7 @@
 					"id": "UI_GFX_POCKET_SWORD_5"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SWORD",
+					"id": "ITEM_SWORD",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "PINK", "GREY_LIGHT", "BLACK"]
@@ -1229,7 +1237,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AXE",
+					"id": "ITEM_AXE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED_DARK", "PINK", "GREY_LIGHT", "BLACK"]
@@ -1253,7 +1261,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AXE",
+					"id": "ITEM_AXE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE", "GREEN", "GREY_LIGHT", "BLACK"]
@@ -1273,7 +1281,7 @@
 					"id": "UI_GFX_POCKET_AXE_2"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AXE",
+					"id": "ITEM_AXE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
@@ -1293,7 +1301,7 @@
 					"id": "UI_GFX_POCKET_AXE_3"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AXE",
+					"id": "ITEM_AXE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
@@ -1313,7 +1321,7 @@
 					"id": "UI_GFX_POCKET_AXE_4"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_AXE",
+					"id": "ITEM_AXE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREY_LIGHT", "GREY_MEDIUM", "GREY_LIGHT", "BLACK"]
@@ -1337,7 +1345,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_STAFF",
+					"id": "ITEM_STAFF",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREY_MEDIUM", "GREY_DARK", "GREY_LIGHT", "BLACK"]
@@ -1361,7 +1369,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_STAFF",
+					"id": "ITEM_STAFF",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["WHITE", "GREY_LIGHT", "GREY_LIGHT", "BLACK"]
@@ -1385,7 +1393,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_STAFF",
+					"id": "ITEM_STAFF",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["PINK", "BROWN", "GREY_LIGHT", "BLACK"]
@@ -1412,7 +1420,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
@@ -1434,7 +1442,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "PINK", "GREY_LIGHT", "BLACK"]
@@ -1456,7 +1464,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "RED_DARK", "GREY_LIGHT", "BLACK"]
@@ -1478,7 +1486,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
@@ -1500,7 +1508,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "PINK", "GREY_LIGHT", "BLACK"]
@@ -1522,7 +1530,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "RED_DARK", "GREY_LIGHT", "BLACK"]
@@ -1544,7 +1552,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
@@ -1566,7 +1574,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
@@ -1588,7 +1596,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "RED_DARK", "GREY_LIGHT", "BLACK"]
@@ -1610,7 +1618,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
@@ -1632,7 +1640,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
@@ -1654,7 +1662,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "PINK", "GREY_LIGHT", "BLACK"]
@@ -1676,7 +1684,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
@@ -1698,7 +1706,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
@@ -1720,7 +1728,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "PINK", "GREY_LIGHT", "BLACK"]
@@ -1742,7 +1750,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RIP",
+					"id": "ITEM_RIP",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "RED_DARK", "GREY_LIGHT", "BLACK"]
@@ -1764,7 +1772,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_KEY",
+					"id": "ITEM_KEY",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "BROWN", "GREY_LIGHT", "BLACK"]
@@ -1788,7 +1796,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_KEY",
+					"id": "ITEM_KEY",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "GREY_LIGHT", "GREY_LIGHT", "BLACK"]
@@ -1812,7 +1820,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_KEY",
+					"id": "ITEM_KEY",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "GREEN", "GREY_LIGHT", "BLACK"]
@@ -1836,7 +1844,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_KEY",
+					"id": "ITEM_KEY",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "YELLOW", "GREY_LIGHT", "BLACK"]
@@ -1860,7 +1868,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_KEY",
+					"id": "ITEM_KEY",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "RED", "GREY_LIGHT", "BLACK"]
@@ -1884,7 +1892,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_KEY",
+					"id": "ITEM_KEY",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "BLUE", "GREY_LIGHT", "BLACK"]
@@ -1908,7 +1916,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_KEY",
+					"id": "ITEM_KEY",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "WHITE", "GREY_LIGHT", "BLACK"]
@@ -1932,7 +1940,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_WAND",
+					"id": "ITEM_WAND",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "GREEN", "GREY_LIGHT", "BLACK"]
@@ -1959,7 +1967,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_WAND",
+					"id": "ITEM_WAND",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "YELLOW", "GREY_LIGHT", "BLACK"]
@@ -1986,7 +1994,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_WAND",
+					"id": "ITEM_WAND",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "RED", "GREY_LIGHT", "BLACK"]
@@ -2013,7 +2021,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_WAND",
+					"id": "ITEM_WAND",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "BLUE", "GREY_LIGHT", "BLACK"]
@@ -2040,7 +2048,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_WAND",
+					"id": "ITEM_WAND",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "WHITE", "GREY_LIGHT", "BLACK"]
@@ -2062,7 +2070,7 @@
 					"id": "UI_GFX_POCKET_BOW"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_BOW",
+					"id": "ITEM_BOW",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
@@ -2087,7 +2095,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_BOW",
+					"id": "ITEM_BOW",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREY_LIGHT", "WHITE", "GREY_LIGHT", "BLACK"]
@@ -2108,7 +2116,7 @@
 					"id": "UI_GFX_POCKET_CROSS_BOW"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_CROSS_BOW"
+					"id": "ITEM_CROSS_BOW"
 				}
 			},
 			"onAttack": {
@@ -2125,7 +2133,7 @@
 					"id": "UI_GFX_POCKET_PERMIT"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_PERMIT"
+					"id": "ITEM_PERMIT"
 				}
 			}
 		},
@@ -2138,7 +2146,7 @@
 					"id": "UI_GFX_POCKET_GEM_SERPENT"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GEM",
+					"id": "ITEM_GEM",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
@@ -2155,7 +2163,7 @@
 					"id": "UI_GFX_POCKET_GEM_CHAOS"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GEM",
+					"id": "ITEM_GEM",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "PINK", "GREY_LIGHT", "BLACK"]
@@ -2172,7 +2180,7 @@
 					"id": "UI_GFX_POCKET_GEM_DRAGON"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GEM",
+					"id": "ITEM_GEM",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "RED_DARK", "GREY_LIGHT", "BLACK"]
@@ -2189,7 +2197,7 @@
 					"id": "UI_GFX_POCKET_GEM_MOON"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GEM",
+					"id": "ITEM_GEM",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
@@ -2206,7 +2214,7 @@
 					"id": "UI_GFX_POCKET_GEM_GREY"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GEM",
+					"id": "ITEM_GEM",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREY_LIGHT", "GREY_MEDIUM", "GREY_LIGHT", "BLACK"]
@@ -2223,7 +2231,7 @@
 					"id": "UI_GFX_POCKET_GEM_GREENISH"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GEM",
+					"id": "ITEM_GEM",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "BLUE", "GREY_LIGHT", "BLACK"]
@@ -2240,7 +2248,7 @@
 					"id": "UI_GFX_POCKET_GEM_BROWN"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GEM",
+					"id": "ITEM_GEM",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BROWN", "RED_DARK", "GREY_LIGHT", "BLACK"]
@@ -2257,7 +2265,7 @@
 					"id": "UI_GFX_POCKET_GEM_TAN"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_GEM",
+					"id": "ITEM_GEM",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["PINK", "BROWN", "GREY_LIGHT", "BLACK"]
@@ -2278,7 +2286,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RING",
+					"id": "ITEM_RING",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREY_LIGHT", "GREY_LIGHT", "GREY_LIGHT", "BLACK"]
@@ -2299,7 +2307,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RING",
+					"id": "ITEM_RING",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["GREEN", "GREEN", "GREY_LIGHT", "BLACK"]
@@ -2333,7 +2341,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RING",
+					"id": "ITEM_RING",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["YELLOW", "YELLOW", "GREY_LIGHT", "BLACK"]
@@ -2367,7 +2375,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RING",
+					"id": "ITEM_RING",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["RED", "RED", "GREY_LIGHT", "BLACK"]
@@ -2401,7 +2409,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_RING",
+					"id": "ITEM_RING",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": ["BLUE", "BLUE", "GREY_LIGHT", "BLACK"]
@@ -2431,7 +2439,7 @@
 					"id": "UI_GFX_ICON_BOOKOFSKULLS"
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_BOOK_OF_SKULLS"
+					"id": "ITEM_BOOK_OF_SKULLS"
 				}
 			}
 		},
@@ -2448,7 +2456,7 @@
 					}
 				},
 				"dungeon": {
-					"id": "DUNGEON_ITEM_SWORD",
+					"id": "ITEM_SWORD",
 					"recolour": {
 						"from": ["RED", "BLUE", "GREY_LIGHT", "WHITE"],
 						"to": ["YELLOW", "RED_DARK", "BROWN", "RED"]

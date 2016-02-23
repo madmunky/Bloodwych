@@ -21,7 +21,7 @@ function testing(p){
 //    var x = testMon1,
 //            y = 0;
 //
-   // ctx.drawImage(colourSpellPage(true,p.champion[p.championLeader],gfxUI[UI_GFX_SPELLBOOK+1]),(p.PortalX + 60),(p.PortalY + 201),itemJson[x].gfxD[y].width * scale,itemJson[x].gfxD[y].height * scale);
+   // ctx.drawImage(colourSpellPage(true,p.champion[p.championLeader],gfxUI['UI_GFX_SPELLBOOK+1']),(p.PortalX + 60),(p.PortalY + 201),itemJson[x].gfxD[y].width * scale,itemJson[x].gfxD[y].height * scale);
 //
 //writeSpellFont(spell[0][0].symbols,0,0,colourData['GREEN']);
 }

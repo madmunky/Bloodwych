@@ -490,7 +490,7 @@ function drawProjectileOnPos(p, pos) {
         var prPos = p.getProjectilesInRange(pos);
         for (var i in prPos) {
             if(prPos[i].position !== 18) {
-                if(prPos[i].projectile.type !== DUNGEON_NONE) {
+                if(prPos[i].projectile.type !== 'NONE') {
                     p.drawProjectile(prPos[i].projectile, prPos[i].distance, prPos[i].gfxCoord);
                 }
             } else if(typeof prPos[i].projectile.palette !== "undefined") {

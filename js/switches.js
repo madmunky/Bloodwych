@@ -103,7 +103,7 @@ function floorActionType(trig, p) {
                     redrawUI(p.id);
                 }
             }
-            newProjectile(DUNGEON_PROJECTILE_ARROW, paletteData['CHAOS'], -1, 0, p.floor, p.x, p.y, 1, null);*/
+            newProjectile('PROJECTILE_ARROW', paletteData['CHAOS'], -1, 0, p.floor, p.x, p.y, 1, null);*/
             break;
         case SWITCH_FLOOR_WOOD_DOOR_CLOSER_1:
             tower[towerThis].floor[p.floor].Map[p.y][p.x + 1] = setHexToBinaryPosition(tower[towerThis].floor[p.floor].Map[p.y][p.x + 1], 5, 1, '1');
@@ -166,7 +166,7 @@ function floorActionType(trig, p) {
             break;
         case SWITCH_FLOOR_FLASH_TELEPORT:
             p.setPlayerPosition(trig[1], trig[2], trig[3]);
-            newProjectile(DUNGEON_NONE, paletteData['TELEPORT_FLASH'], SOUND_FLASH, -1, 0, p.floor, p.x, p.y, p.d, null);
+            newProjectile('NONE', paletteData['TELEPORT_FLASH'], SOUND_FLASH, -1, 0, p.floor, p.x, p.y, p.d, null);
             break;
         case SWITCH_FLOOR_ROTATE_STONE_WALL:
             tower[towerThis].floor[p.floor].Map[trig[3]][trig[2]] = setHexToBinaryPosition(tar, 10, 2, '' + ((parseInt(getHexToBinaryPosition(tar, 10, 2)) + 1) % 4));
@@ -280,7 +280,7 @@ function gemAction(p) {
                     case 'ITEM_DRAGON_CRYSTAL': pal = paletteData['DRAGON']; break;
                     case 'ITEM_CHAOS_CRYSTAL': pal = paletteData['CHAOS']; break;
                 }
-                newProjectile(DUNGEON_NONE, pal, SOUND_FLASH, -1, 0, p.floor, p.x, p.y, 0, null);
+                newProjectile('NONE', pal, SOUND_FLASH, -1, 0, p.floor, p.x, p.y, 0, null);
                 p.pocket.setPocketItem();
                 p.setBinaryView(15, 5, 1);
             }

@@ -202,47 +202,42 @@ Champion.prototype.addFood = function(fd) {
     }
 }
 
-Champion.prototype.getWeaponPower = function(s1) {
-    var pow = this.pocket[s1].getPower(); //weapon power
-    var wep = getObjectByKeys(itemJson[this.pocket[s1].id], 'onAttack', 'whileWearing'); //check if there is bonus attack on weapon while wearing an item
-    if(typeof wep !== "undefined") {
-        var slot = this.getEquippedItems();
-        //var slot = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND, POCKET_ARMOUR, POCKET_SHIELD, POCKET_GLOVES]; //check these slots only
-        for(var s in slot) {
-            var it2 = this.pocket[slot[s].id]; //item of this slot
-            var id = getObjectByKeys(wep, 'id'); //item id that should be checked
-            var typ = getObjectByKeys(wep, 'type'); //item type that should be checked
-            var sl = getObjectByKeys(itemJson[it2.id], 'onEquip', 'allowedSlot'); //check in what slot this item is allowed (e.g. gloves in gloves slot)
-            if(typeof sl !== "undefined" && sl.getVar() === slot[s] && (typeof id === "undefined" || id.getVar() === it2.id) && (typeof typ === "undefined" || typ.getVar() === it2.type)) {
-                var p = getObjectByKeys(wep, 'power');
-                var pf = getObjectByKeys(wep, 'powerFactor');
-                if(typeof p !== "undefined") {
-                    pow = pow + p;
-                }
-                if(typeof pf !== "undefined") {
-                    pow = pow * pf;
+Champion.prototype.getWeaponPower = function() {
+    var pow = 0.0;
+    var pof = 1.0;
+    var slot = this.getEquippedItems(); //check all equipped items for attack power
+    for(var s in slot) {
+        var it = this.pocket[s];
+        var sl = getObjectByKeys(itemJson[it.id], 'onEquip', 'allowedSlot');
+        if(typeof sl === "undefined" || sl.getVar() === slot[s]) {
+            if(parseInt(s) !== POCKET_RIGHT_HAND || pow === 0.0 || pof === 1.0) { //don't add power to right hand if left hand power is already added
+                pow += it.getPower(); //weapon power
+                pof *= it.getPowerFactor(); //weapon power factor
+                var ww = getObjectByKeys(itemJson[it.id], 'onAttack', 'whileWearing'); //check if there is bonus attack on weapon while wearing an item
+                if(typeof ww !== "undefined") {
+                    var slot2 = this.getEquippedItems();
+                    for(var s2 in slot2) {
+                        var it2 = this.pocket[slot2[s2].id]; //item of this slot
+                        var id = getObjectByKeys(ww, 'id'); //item id that should be checked
+                        var typ = getObjectByKeys(ww, 'type'); //item type that should be checked
+                        var sl2 = getObjectByKeys(itemJson[it2.id], 'onEquip', 'allowedSlot'); //check in what slot this item is allowed (e.g. gloves in gloves slot)
+                        if((typeof sl2 === "undefined" || sl2.getVar() === slot2[s2]) && (typeof id === "undefined" || id.getVar() === it2.id) && (typeof typ === "undefined" || typ.getVar() === it2.type)) {
+                            var p = getObjectByKeys(ww, 'power');
+                            var pf = getObjectByKeys(ww, 'powerFactor');
+                            if(typeof p !== "undefined") {
+                                pow += p;
+                            }
+                            if(typeof pf !== "undefined") {
+                                pof *= pf;
+                            }
+                        }
+                    }
                 }
             }
         }
     }
-    //if (this.pocket[POCKET_GLOVES].id === 'ITEM_CHAOS_GLOVES' && this.pocket[s].id === 'ITEM_ACE_OF_SWORDS') {
-    //    pow = pow * 1.25;
-    //}
-    return 1.0 + 0.1 * pow;
+    return (1.0 + 0.1 * pow) * pof;
 }
-
-/*Champion.prototype.getBowPower = function() {
-    var bow = 0;
-    var arr = 1.0;
-    if (this.pocket[POCKET_LEFT_HAND].type === 'ITEM_TYPE_BOW' && (this.pocket[POCKET_RIGHT_HAND].id === 'ITEM_ARROWS' || this.pocket[POCKET_RIGHT_HAND].id === 'ITEM_ELF_ARROWS')) {
-        bow = this.pocket[POCKET_LEFT_HAND].getBowPower();
-        arr = this.pocket[POCKET_RIGHT_HAND].getArrowPower();
-    } else if (this.pocket[POCKET_RIGHT_HAND].type === 'ITEM_TYPE_BOW' && (this.pocket[POCKET_LEFT_HAND].id === 'ITEM_ARROWS' || this.pocket[POCKET_LEFT_HAND].id === 'ITEM_ELF_ARROWS')) {
-        bow = this.pocket[POCKET_RIGHT_HAND].getBowPower();
-        arr = this.pocket[POCKET_LEFT_HAND].getArrowPower();
-    }
-    return Math.ceil(bow * arr * 0.5);
-}*/
 
 Champion.prototype.hasRangedWeapon = function() {
     var hand = this.getEquippedItems(true);
@@ -251,16 +246,13 @@ Champion.prototype.hasRangedWeapon = function() {
         var typ = getObjectByKeys(it, 'onAttack', 'shootType');
         var id = getObjectByKeys(it, 'onAttack', 'shootId');
         if(typeof typ !== "undefined" || typeof id !== "undefined") {
-            //var hand2 = this.getEquippedItems(true);
-            //for(var h = 0; h < hand2.length; h++) {
-                var it2 = itemJson[hand[1 - s].id];//this.pocket[hand[1 - s]];
-                if((typeof id !== "undefined" && $.inArray(it2.id, id) > -1) || (typeof typ !== "undefined" && it2.type === typ)) {
-                    var sh = getObjectByKeys(it2, 'onShoot');
-                    if(typeof sh !== "undefined") {
-                        return true;
-                    }
+            var it2 = itemJson[hand[1 - s].id];//this.pocket[hand[1 - s]];
+            if((typeof id !== "undefined" && $.inArray(it2.id, id) > -1) || (typeof typ !== "undefined" && it2.type === typ)) {
+                var sh = getObjectByKeys(it2, 'onShoot');
+                if(typeof sh !== "undefined") {
+                    return true;
                 }
-            //}
+            }
         }
     }
     return false;
@@ -342,7 +334,7 @@ Champion.prototype.useItem = function(it, ac, param) {
                         if(typeof dTo === "undefined") {
                             dTo = getObjectByKeys(itemJson[it2.id], 'dungeon', 'recolour', 'to');
                         }
-                        newProjectile(id2.getVar(), dTo, SOUND_ATTACK, it2.id + 100, pow, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
+                        newProjectile(id2, dTo, SOUND_ATTACK, it2.id + 100, pow, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
                         this.writeAttackPoints('shoot');
                         if (this.recruitment.playerId > -1) {
                             player[this.recruitment.playerId].redrawViewPort = true;
@@ -601,7 +593,7 @@ Champion.prototype.restoreStats = function() {
 }
 
 Champion.prototype.addHunger = function() {
-    if (this.recruitment.playerId > -1 && this.id !== CHA_MR_FLAY) {
+    if (this.recruitment.playerId > -1 && CHAMPION_ID[this.id] !== 'CHA_MR_FLAY') {
         if (this.addFood(-1)) {
             this.addVit(-Math.floor(Math.random() * 9) + 3)
         }
@@ -938,14 +930,17 @@ function initChampions() {
             pk[i] = parseInt(a);
         }
         for (var i = 0; i < POCKET_MAX - 1; i++) {
-            if (pk[i] >= 'ITEM_COINAGE' && pk[i] <= 'ITEM_ELF_ARROWS') {
+            if (itemJson[pk[i]].type === 'ITEM_TYPE_STACKABLE') {
                 slot[i] = newPocketItem(pk[i], pk[pk[i] + POCKET_MAX - 2]);
             } else {
                 slot[i] = newPocketItem(pk[i]);
             }
         }
+        rip = getObjectRootByKey(itemJson, 'revive', CHAMPION_ID[ch]);
         slot[POCKET_GLOVES] = newPocketItem();
-        slot[POCKET_HIDDEN] = newPocketItem(ch + 'ITEM_BLODWYN_RIP');
+        if(typeof rip !== "undefind" && rip.length > 0) {
+            slot[POCKET_HIDDEN] = newPocketItem(rip[0].id);
+        }
         var md = championData[ch];
         var level = parseInt(hex2dec(md.substr(0, 2)));
         var str = parseInt(hex2dec(md.substr(2, 2)));

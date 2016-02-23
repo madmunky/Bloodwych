@@ -211,35 +211,37 @@ Projectile.prototype.action = function(tar) {
 				if (getMonsterAt(this.floor, this.x, this.y) === null) {
 					for(var i = item[towerThis].length - 1; i >= 0; i--) {
 						var it = item[towerThis][i];
-						var rv = getObjectByKeys(itemJson[it.id], 'revive');
-						if (typeof rv !== "undefined" && it.location.tower === towerThis && it.location.floor === this.floor && it.location.x === this.x && it.location.y === this.y) {
-							var c = rv.getVar(); //it.id - 'ITEM_BLODWYN_RIP';
-							item[towerThis].splice(i, 1);
-							champion[c].stat.hp = 0;
-							champion[c].getMonster().floor = this.floor;
-							champion[c].getMonster().x = this.x;
-							champion[c].getMonster().y = this.y;
-							champion[c].getMonster().d = this.d;
-							champion[c].getMonster().hp = 0;
-							champion[c].getMonster().dead = false;
-							if (!champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
-								var p = player[champion[c].recruitment.playerId];
-								if (p.dead) {
-									champion[c].recruitment.attached = true;
-									var i = p.getChampionPosition(c);
-									p.exchangeChampionPosition(0, i);
-									p.championLeader = 0;
-									p.tower = towerThis;
-									p.floor = this.floor;
-									p.x = this.x;
-									p.y = this.y;
-									p.d = this.d;
-									p.dead = false;
-									p.updateChampions();
-									redrawUI(2);
+						if(it.location.tower === towerThis && it.location.floor === this.floor && it.location.x === this.x && it.location.y === this.y) {
+							var rv = itemJson[it.id].revive;
+							if (typeof rv !== "undefined") {
+								var c = CHAMPION_ID[rv.getVar()]; //it.id - 'ITEM_BLODWYN_RIP';
+								item[towerThis].splice(i, 1);
+								champion[c].stat.hp = 0;
+								champion[c].getMonster().floor = this.floor;
+								champion[c].getMonster().x = this.x;
+								champion[c].getMonster().y = this.y;
+								champion[c].getMonster().d = this.d;
+								champion[c].getMonster().hp = 0;
+								champion[c].getMonster().dead = false;
+								if (!champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
+									var p = player[champion[c].recruitment.playerId];
+									if (p.dead) {
+										champion[c].recruitment.attached = true;
+										var i = p.getChampionPosition(c);
+										p.exchangeChampionPosition(0, i);
+										p.championLeader = 0;
+										p.tower = towerThis;
+										p.floor = this.floor;
+										p.x = this.x;
+										p.y = this.y;
+										p.d = this.d;
+										p.dead = false;
+										p.updateChampions();
+										redrawUI(2);
+									}
 								}
+								return;
 							}
-							return;
 						}
 					}
 				}

@@ -29,44 +29,6 @@ Item.prototype.getPower = function(ac) {
     if(typeof pw !== "undefined") { //JSON
         return pw;
     }
-    if (this.type === 'ITEM_TYPE_WEAPON') {
-        switch (this.id) {
-            case 'ITEM_DAGGER':
-                return 2;
-            case 'ITEM_STEALTH_BLADE':
-                return 3;
-            case 'ITEM_SHORT_SWORD':
-                return 4;
-            case 'ITEM_LONG_SWORD':
-                return 5;
-            case 'ITEM_MITHRIL_SWORD':
-                return 7;
-            case 'ITEM_FLESHBANE':
-                return 11;
-            case 'ITEM_DEMON_BLADE':
-                return 14;
-            case 'ITEM_ACE_OF_SWORDS':
-                return 14;
-
-            case 'ITEM_BATTLE_AXE':
-                return 6;
-            case 'ITEM_MITHRIL_AXE':
-                return 8;
-            case 'ITEM_TROLLS_AXE':
-                return 10;
-            case 'ITEM_BRAINBITER':
-                return 13;
-            case 'ITEM_DEATHBRINGER':
-                return 16;
-
-            case 'ITEM_STAFF':
-                return 4;
-            case 'ITEM_BATTLE_STAFF':
-                return 7;
-            case 'ITEM_POWER_STAFF':
-                return 10;
-        }
-    }
     return 0;
 }
 
@@ -81,110 +43,11 @@ Item.prototype.getPowerFactor = function(ac) {
     return 1.0;
 }
 
-/*Item.prototype.getBowPower = function() {
-    if (this.type === 'ITEM_TYPE_BOW') {
-        switch (this.id) {
-            case 'ITEM_LONG_BOW':
-                return 4;
-            case 'ITEM_FROST_BOW':
-                return 7;
-            case 'ITEM_CROSS_BOW':
-                return 10;
-        }
-    }
-    return 0;
-}
-
-Item.prototype.getArrowPower = function() {
-    if (this.id === 'ITEM_ARROWS') {
-        return 1.0;
-    } else if (this.id === 'ITEM_ELF_ARROWS') {
-        return 1.2;
-    }
-    return 1.0;
-}*/
-
-/*Item.prototype.getFoodValue = function() {
-    if (this.type === 'ITEM_TYPE_FOOD') {
-        if (this.id <= 'ITEM_CHICKEN') {
-            return 16;
-        } else if (this.id <= 'ITEM_WATER') {
-            return 10;
-        } else if (this.id <= 'ITEM_NEGG_GREEN') {
-            return 50;
-        } else if (this.id <= 'ITEM_NEGG_BLUE') {
-            return 100;
-        } else if (this.id <= 'ITEM_NEGG_RED') {
-            return 200;
-        }
-    }
-    return 0;
-}*/
-
 Item.prototype.getArmourClass = function() {
     var ac = getObjectByKeys(itemJson[this.id], 'onEquip', 'AC');
     if(typeof ac !== "undefined") { //JSON
         return ac;
-    }/* else {
-        if (this.type === 'ITEM_TYPE_ARMOUR') {
-            switch (this.id) {
-                case 'ITEM_LEATHER_ARMOUR':
-                    return 3;
-                case 'ITEM_CHAIN_MAIL':
-                    return 5;
-                case 'ITEM_PLATE_MAIL':
-                    return 7;
-                case 'ITEM_MITHRIL_CHAIN':
-                    return 8;
-                case 'ITEM_MITHRIL_PLATE':
-                    return 11;
-                case 'ITEM_ADAMANT_CHAIN':
-                    return 13;
-                case 'ITEM_ADAMANT_PLATE':
-                    return 15;
-                case 'ITEM_CRYSTAL_CHAIN':
-                    return 17;
-                case 'ITEM_CRYSTAL_PLATE':
-                    return 19;
-                default:
-                    break;
-            }
-        } else if (this.type === 'ITEM_TYPE_SHIELD') {
-            switch (this.id) {
-                case 'ITEM_LEATHER_SHIELD':
-                    return 1;
-                case 'ITEM_BUCKLER':
-                    return 2;
-                case 'ITEM_RUNE_SHIELD':
-                    return 4;
-                case 'ITEM_LARGE_SHIELD':
-                    return 3;
-                case 'ITEM_MOON_SHIELD':
-                    return 4;
-                case 'ITEM_DRAGON_SCALE':
-                    return 5;
-                case 'ITEM_WAR_SHIELD':
-                    return 7;
-                default:
-                    break;
-            }
-        } else if (this.type === 'ITEM_TYPE_GLOVES') {
-            switch (this.id) {
-                case 'ITEM_CHAOS_GLOVES':
-                    return 0;
-                case 'ITEM_BATTLE_GLOVES':
-                    return 1;
-                case 'ITEM_MITHRIL_GLOVES':
-                    return 2;
-                case 'ITEM_ADAMANT_GLOVES':
-                    return 3;
-                case 'ITEM_CRYSTAL_GLOVES':
-                    return 4;
-                default:
-                    break;
-            }
-        }
-    }*/
+    }
     return 0;
 }
 
@@ -274,7 +137,6 @@ Item.prototype.getGfx = function(dun) {
 }*/
 
 //Dungeon items
-
 function initItems(t) {
     try {
         item[t.id] = new Array();
@@ -394,7 +256,7 @@ function getItemType(id) {
 }
 
 function newPocketItem(id, q) {
-    if (typeof id === "undefined" || id === 0) {
+    if (typeof id === "undefined" || id === 0 || id === '') {
         id = 0;
         q = 0;
     } else if (typeof q === "undefined") {
@@ -450,173 +312,13 @@ function dropItem(id, q, f, x, y, s) {
 
 //This is the big item list
 //itemGfx was the former gfxUI, but only for pocket items
-
 function initItemRefs() {
-
-    /*if (gameType === GAME_EXTENDED_LEVELS){
-        createItemRef(36, "Rune Shield (Red)", gfxUI[UI_GFX_POCKET_RUNE_SHIELD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SMALL_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['BROWN'], colourData['RED_DARK'], colourData['BROWN'])));
-        createItemRef(37, "Rune Shield (Green)", gfxUI[UI_GFX_POCKET_RUNE_SHIELD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SMALL_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['GREY_MEDIUM'])));
-        createItemRef(38, "Rune Shield (Black)", gfxUI[UI_GFX_POCKET_RUNE_SHIELD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SMALL_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['RED'])));
-        createItemRef(39, "War Shield", gfxUI[UI_GFX_POCKET_WAR_SHIELD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_LARGE_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['BLACK'])));
-        createItemRef(40, "Demon Scale", gfxUI[UI_GFX_POCKET_DEMON_SCALE], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_LARGE_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLACK'])));
-        createItemRef(41, "Battle Soul", gfxUI[UI_GFX_POCKET_BATTLE_SOUL], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_LARGE_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['PINK'], colourData['RED_DARK'], colourData['BLACK'])));
-        createItemRef(42, "Chromatic Plate", gfxUI[UI_GFX_POCKET_CHROMATIC_PLATE], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_LARGE_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['BLACK'])));
-
-        createItemRef(50, "Adamant Sword", gfxUI[UI_GFX_POCKET_ADAMANT_SWORD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(51, "Fleshbane", recolourUiGfx(gfxUI[UI_GFX_POCKET_FLESHBANE], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BROWN'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(52, "Demon Blade", recolourUiGfx(gfxUI[UI_GFX_POCKET_DEMON_BLADE], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(53, "Rune Sword", gfxUI[UI_GFX_POCKET_RUNE_SWORD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(54, "Soul Sucker", gfxUI[UI_GFX_POCKET_SOUL_SUCKER], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(55, "Adamant Axe", gfxUI[UI_GFX_POCKET_ADAMANT_AXE], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['PINK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(56, "Battle Axe", recolourUiGfx(gfxUI[UI_GFX_POCKET_BATTLE_AXE], colourData['GREEN'], colourData['GREY_LIGHT']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED_DARK'], colourData['PINK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(57, "Ogre's Axe", recolourUiGfx(gfxUI[UI_GFX_POCKET_OGRES_AXE], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(58, "Deathbringer", gfxUI[UI_GFX_POCKET_DEATHBRINGER], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(59, "Dragon Axe", gfxUI[UI_GFX_POCKET_DRAGON_AXE], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(60, "Grey Axe", gfxUI[UI_GFX_POCKET_GREY_AXE], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    }else{
-        createItemRef(36, "Leather Shield", gfxUI[UI_GFX_POCKET_SHIELD_2], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SMALL_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['BROWN'], colourData['RED_DARK'], colourData['BROWN'])));
-        createItemRef(37, "Buckler", gfxUI[UI_GFX_POCKET_SHIELD_3], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SMALL_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['GREY_MEDIUM'])));
-        createItemRef(38, "Rune Shield", gfxUI[UI_GFX_POCKET_SHIELD_1], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SMALL_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['RED'])));
-        createItemRef(39, "Large Shield", gfxUI[UI_GFX_POCKET_SHIELD_4], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_LARGE_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['BLACK'])));
-        createItemRef(40, "Moon Shield", gfxUI[UI_GFX_POCKET_SHIELD_5], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_LARGE_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLACK'])));
-        createItemRef(41, "Dragon Scale", gfxUI[UI_GFX_POCKET_SHIELD_6], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_LARGE_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['PINK'], colourData['RED_DARK'], colourData['BLACK'])));
-        createItemRef(42, "War Shield", gfxUI[UI_GFX_POCKET_SHIELD_7], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_LARGE_SHIELD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['BLACK'])));
-
-        createItemRef(50, "Short Sword", gfxUI[UI_GFX_POCKET_SWORD_1], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(51, "Long Sword", recolourUiGfx(gfxUI[UI_GFX_POCKET_SWORD_2], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BROWN'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(52, "Mithril Sword", recolourUiGfx(gfxUI[UI_GFX_POCKET_SWORD_2], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(53, "Fleshbane", gfxUI[UI_GFX_POCKET_SWORD_3], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(54, "Demon Blade", gfxUI[UI_GFX_POCKET_SWORD_4], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(55, "Ace of Swords", gfxUI[UI_GFX_POCKET_SWORD_5], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_SWORD], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['PINK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(56, "Battle Axe", recolourUiGfx(gfxUI[UI_GFX_POCKET_AXE_1], colourData['GREEN'], colourData['GREY_LIGHT']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED_DARK'], colourData['PINK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(57, "Mithril Axe", recolourUiGfx(gfxUI[UI_GFX_POCKET_AXE_1], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(58, "Troll's Axe", gfxUI[UI_GFX_POCKET_AXE_2], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(59, "Brainbiter", gfxUI[UI_GFX_POCKET_AXE_3], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-        createItemRef(60, "Deathbringer", gfxUI[UI_GFX_POCKET_AXE_4], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AXE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    }
-
-    createItemRef(0, "Empty Item", gfxUI[UI_GFX_POCKET_EMPTY], null);
-    createItemRef(1, "Coinage", gfxUI[UI_GFX_POCKET_COIN], itemsGfxD[DUNGEON_ITEM_COIN]);
-    createItemRef(2, "Common Keys", gfxUI[UI_GFX_POCKET_COMMON_KEY], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_KEY], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['PINK'], colourData['PINK'], colourData['BLACK'])));
-    createItemRef(3, "Arrows", gfxUI[UI_GFX_POCKET_ARROW], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_ARROW], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['RED'], colourData['BROWN'], colourData['BLACK'])));
-    createItemRef(4, "Elf Arrows", gfxUI[UI_GFX_POCKET_ELF_ARROW], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_ARROW], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-
-    createItemRef(5, "Food", gfxUI[UI_GFX_POCKET_APPLE_1], itemsGfxD[DUNGEON_ITEM_APPLE_HALF]);
-    createItemRef(6, "Food", gfxUI[UI_GFX_POCKET_APPLE_2], itemsGfxD[DUNGEON_ITEM_APPLE_HALF]);
-    createItemRef(7, "Food", gfxUI[UI_GFX_POCKET_APPLE_3], itemsGfxD[DUNGEON_ITEM_APPLE]);
-    createItemRef(8, "Food", gfxUI[UI_GFX_POCKET_BISCUIT_1], itemsGfxD[DUNGEON_ITEM_BISCUIT]);
-    createItemRef(9, "Food", gfxUI[UI_GFX_POCKET_BISCUIT_2], itemsGfxD[DUNGEON_ITEM_BISCUIT]);
-    createItemRef(10, "Food", gfxUI[UI_GFX_POCKET_BISCUIT_3], itemsGfxD[DUNGEON_ITEM_BISCUIT]);
-    createItemRef(11, "Food", gfxUI[UI_GFX_POCKET_CHICKEN_1], itemsGfxD[DUNGEON_ITEM_BONE]);
-    createItemRef(12, "Food", gfxUI[UI_GFX_POCKET_CHICKEN_2], itemsGfxD[DUNGEON_ITEM_CHICKEN]);
-    createItemRef(13, "Food", gfxUI[UI_GFX_POCKET_CHICKEN_3], itemsGfxD[DUNGEON_ITEM_CHICKEN]);
-    createItemRef(14, "Mead", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_1], colourData['GREEN'], colourData['PINK']), itemsGfxD[DUNGEON_ITEM_DRINK]);
-    createItemRef(15, "Mead", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_2], colourData['GREEN'], colourData['PINK']), itemsGfxD[DUNGEON_ITEM_DRINK]);
-    createItemRef(16, "Mead", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_3], colourData['GREEN'], colourData['PINK']), itemsGfxD[DUNGEON_ITEM_DRINK]);
-    createItemRef(17, "Water", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_1], colourData['GREEN'], colourData['BLUE_DARK']), itemsGfxD[DUNGEON_ITEM_DRINK]);
-    createItemRef(18, "Water", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_2], colourData['GREEN'], colourData['BLUE_DARK']), itemsGfxD[DUNGEON_ITEM_DRINK]);
-    createItemRef(19, "Water", recolourUiGfx(gfxUI[UI_GFX_POCKET_WATER_3], colourData['GREEN'], colourData['BLUE_DARK']), itemsGfxD[DUNGEON_ITEM_DRINK]);
-    createItemRef(20, "N'egg", recolourUiGfx(gfxUI[UI_GFX_POCKET_NEGG], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_NEGG], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN_DARK'], colourData['GREEN_DARK'], colourData['GREEN_DARK'], colourData['BLACK'])));
-    createItemRef(21, "N'egg", recolourUiGfx(gfxUI[UI_GFX_POCKET_NEGG], colourData['GREEN'], colourData['BLUE_DARK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_NEGG], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE_DARK'], colourData['BLUE_DARK'], colourData['BLUE_DARK'], colourData['BLACK'])));
-    createItemRef(22, "N'egg", recolourUiGfx(gfxUI[UI_GFX_POCKET_NEGG], colourData['GREEN'], colourData['RED']), itemsGfxD[DUNGEON_ITEM_NEGG]);
-
-    createItemRef(23, "Serpent Slime", recolourUiGfx(gfxUI[UI_GFX_POCKET_POTION], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_POTION], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(24, "Brimstone Broth", recolourUiGfx(gfxUI[UI_GFX_POCKET_POTION], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_POTION], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['YELLOW'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(25, "Dragon Ale", recolourUiGfx(gfxUI[UI_GFX_POCKET_POTION], colourData['GREEN'], colourData['RED']), itemsGfxD[DUNGEON_ITEM_POTION]);
-    createItemRef(26, "Moon Elixir", recolourUiGfx(gfxUI[UI_GFX_POCKET_POTION], colourData['GREEN'], colourData['BLUE_DARK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_POTION], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE_DARK'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
- 
-    createItemRef(27, "Leather Armour", gfxUI[UI_GFX_POCKET_AMOUR_LEATHER], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['BROWN'], colourData['RED_DARK'], colourData['BLACK'])));
-    createItemRef(28, "Chain Mail", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_CHAIN], colourData['GREEN'], colourData['GREY_LIGHT']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_DARK'], colourData['BLACK'])));
-    createItemRef(29, "Plate Mail", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_PLATE], colourData['GREEN'], colourData['GREY_LIGHT']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['BLACK'])));
-    createItemRef(30, "Mithril Chain", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_CHAIN], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['BLUE'], colourData['GREY_DARK'], colourData['BLACK'])));
-    createItemRef(31, "Mithril Plate", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_PLATE], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLACK'])));
-    createItemRef(32, "Adamant Chain", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_CHAIN], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREEN'], colourData['GREY_DARK'], colourData['BLACK'])));
-    createItemRef(33, "Adamant Plate", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_PLATE], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['BLACK'])));
-    createItemRef(34, "Crystal Chain", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_CHAIN], colourData['GREEN'], colourData['PINK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['PINK'], colourData['GREY_DARK'], colourData['BLACK'])));
-    createItemRef(35, "Crystal Plate", recolourUiGfx(gfxUI[UI_GFX_POCKET_AMOUR_PLATE], colourData['GREEN'], colourData['PINK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_AMOUR], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['PINK'], colourData['BROWN'], colourData['BLACK'])));
-
-    createItemRef(43, "Chaos Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GLOVE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['YELLOW'], colourData['PINK'], colourData['BLACK'])));
-    createItemRef(44, "Battle Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE], colourData['GREEN'], colourData['GREY_LIGHT']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GLOVE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_DARK'], colourData['BLACK'])));
-    createItemRef(45, "Mithril Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GLOVE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['BLUE'], colourData['BLUE_DARK'], colourData['BLACK'])));
-    createItemRef(46, "Adamant Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GLOVE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREEN'], colourData['GREEN_DARK'], colourData['BLACK'])));
-    createItemRef(47, "Crystal Gloves", recolourUiGfx(gfxUI[UI_GFX_POCKET_GLOVE], colourData['GREEN'], colourData['PINK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GLOVE], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['PINK'], colourData['BROWN'], colourData['BLACK'])));
-
-    createItemRef(48, "Dagger", gfxUI[UI_GFX_POCKET_DAGGER], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_DAGGER], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(49, "Stealth Blade", gfxUI[UI_GFX_POCKET_SHORT_SWORD], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_DAGGER], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-
-    createItemRef(61, "Staff", recolourUiGfx(gfxUI[UI_GFX_POCKET_STAFF], colourData['GREEN'], colourData['GREY_DARKEST']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_STAFF], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_MEDIUM'], colourData['GREY_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(62, "Battle Staff", recolourUiGfx(gfxUI[UI_GFX_POCKET_STAFF], colourData['GREEN'], colourData['GREY_DARK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_STAFF], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['WHITE'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(63, "Power Staff", recolourUiGfx(gfxUI[UI_GFX_POCKET_STAFF], colourData['GREEN'], colourData['PINK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_STAFF], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['BROWN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-
-    createItemRef(64, "Blodwyn (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(65, "Murlock (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['PINK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(66, "Eleanor (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(67, "Rosanne (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(68, "Astroth (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['PINK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(69, "Zothen (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(70, "Baldrick (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(71, "Elfric (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(72, "Sir Edward (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(73, "Megrim (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(74, "Sethra (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(75, "Mr. Flay (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['PINK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(76, "Ulrich (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(77, "Zastaph (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(78, "Hengist (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['PINK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(79, "Thai-Chang (RIP)", recolourUiGfx(gfxUI[UI_GFX_POCKET_BONES], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RIP], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-
-    createItemRef(80, "Bronze Key", recolourUiGfx(gfxUI[UI_GFX_POCKET_KEY], colourData['GREEN'], colourData['BROWN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_KEY], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['BROWN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(81, "Iron Key", recolourUiGfx(gfxUI[UI_GFX_POCKET_KEY], colourData['GREEN'], colourData['GREY_LIGHT']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_KEY], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(82, "Serpent Key", recolourUiGfx(gfxUI[UI_GFX_POCKET_KEY], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_KEY], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(83, "Chaos Key", recolourUiGfx(gfxUI[UI_GFX_POCKET_KEY], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_KEY], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['YELLOW'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(84, "Dragon Key", recolourUiGfx(gfxUI[UI_GFX_POCKET_KEY], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_KEY], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(85, "Moon Key", recolourUiGfx(gfxUI[UI_GFX_POCKET_KEY], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_KEY], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['BLUE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(86, "Chromatic Key", recolourUiGfx(gfxUI[UI_GFX_POCKET_KEY], colourData['GREEN'], colourData['WHITE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_KEY], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['WHITE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-
-    createItemRef(87, "Serpent Wand", recolourUiGfx(gfxUI[UI_GFX_POCKET_WAND], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_WAND], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(88, "Chaos Wand", recolourUiGfx(gfxUI[UI_GFX_POCKET_WAND], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_WAND], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['YELLOW'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(89, "Dragon Wand", recolourUiGfx(gfxUI[UI_GFX_POCKET_WAND], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_WAND], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(90, "Moon Wand", recolourUiGfx(gfxUI[UI_GFX_POCKET_WAND], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_WAND], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['BLUE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(91, "Heal Wand", recolourUiGfx(gfxUI[UI_GFX_POCKET_WAND], colourData['GREEN'], colourData['PINK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_WAND], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['WHITE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-
-    createItemRef(92, "Long Bow", gfxUI[UI_GFX_POCKET_BOW], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_BOW], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(93, "Frost Bow", recolourUiGfx(gfxUI[UI_GFX_POCKET_BOW], colourData['GREEN'], colourData['WHITE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_BOW], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_LIGHT'], colourData['WHITE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(94, "Cross Bow", gfxUI[UI_GFX_POCKET_CROSS_BOW], itemsGfxD[DUNGEON_ITEM_CROSS_BOW]);
-
-    createItemRef(95, "Permit", gfxUI[UI_GFX_POCKET_PERMIT], itemsGfxD[DUNGEON_ITEM_PERMIT]);
-
-    createItemRef(96, "Serpent Crystal", gfxUI[UI_GFX_POCKET_GEM_SERPENT], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GEM], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(97, "Chaos Crystal", gfxUI[UI_GFX_POCKET_GEM_CHAOS], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GEM], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['PINK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(98, "Dragon Crystal", gfxUI[UI_GFX_POCKET_GEM_DRAGON], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GEM], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(99, "Moon Crystal", gfxUI[UI_GFX_POCKET_GEM_MOON], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GEM], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-
-    createItemRef(100, "Grey Gem", gfxUI[UI_GFX_POCKET_GEM_GREY], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GEM], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_LIGHT'], colourData['GREY_MEDIUM'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(101, "Bluish Gem", gfxUI[UI_GFX_POCKET_GEM_GREENISH], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GEM], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['BLUE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(102, "Brown Gem", gfxUI[UI_GFX_POCKET_GEM_BROWN], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GEM], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BROWN'], colourData['RED_DARK'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(103, "Tan Gem", gfxUI[UI_GFX_POCKET_GEM_TAN], recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_GEM], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['PINK'], colourData['BROWN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-
-    createItemRef(104, "Grey Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING], colourData['GREEN'], colourData['GREY_DARK']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(105, "Serpent Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['GREEN']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['GREEN'], colourData['GREEN'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(106, "Chaos Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['YELLOW']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['YELLOW'], colourData['YELLOW'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(107, "Dragon Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['RED']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['RED'], colourData['RED'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-    createItemRef(108, "Moon Ring", recolourUiGfx(gfxUI[UI_GFX_POCKET_RING_SHINNY], colourData['GREEN'], colourData['BLUE']), recolourSpriteArray(itemsGfxD[DUNGEON_ITEM_RING], paletteData['DEFAULT_ITEM_DUN'], new Array(colourData['BLUE'], colourData['BLUE'], colourData['GREY_LIGHT'], colourData['BLACK'])));
-
-    createItemRef(109, "Book of Skulls", gfxUI[UI_GFX_ICON_BOOKOFSKULLS], itemsGfxD[DUNGEON_ITEM_BOOK_OF_SKULLS]);*/
-
-    for(var ir = 0; ir < itemJson.length; ir++) {
-        createItemRef(ir);
-    }
-    //itemsGfxD = [];
-
-}
-
-//Read out the items here
-function createItemRef(id, name, gfx, gfxD) {
-    if(typeof itemJson[id] !== "undefined") {
-        //itemJson[id] = itemJson[id];
+    var gfx;
+    var gfxD;
+    for(var id = 0; id < itemJson.length; id++) {
         var i = getObjectByKeys(itemJson[id], 'icon', 'id');
         if(typeof i !== "undefined") {
-            gfx = gfxUI[i.getVar()];
+            gfx = gfxUI[i];
             var iFrom = getObjectByKeys(itemJson[id], 'icon', 'recolour', 'from');
             var iTo = getObjectByKeys(itemJson[id], 'icon', 'recolour', 'to');
             if(typeof iFrom !== "undefined" && typeof iTo !== "undefined") {
@@ -627,7 +329,7 @@ function createItemRef(id, name, gfx, gfxD) {
         }
         var d = getObjectByKeys(itemJson[id], 'dungeon', 'id');
         if(typeof d !== "undefined") {
-            gfxD = itemsGfxD[d.getVar()];
+            gfxD = itemGfxD[d];
             var dFrom = getObjectByKeys(itemJson[id], 'dungeon', 'recolour', 'from');
             var dTo = getObjectByKeys(itemJson[id], 'dungeon', 'recolour', 'to');
             if(typeof dFrom !== "undefined" && typeof dTo !== "undefined") {
@@ -636,12 +338,6 @@ function createItemRef(id, name, gfx, gfxD) {
         }
         itemJson[id].gfx = gfx;
         itemJson[id].gfxD = gfxD;
-    } else {
-        itemJson[id] = {
-            name: name,
-            gfx: gfx,
-            gfxD: gfxD
-        }
     }
 }
 
@@ -656,56 +352,62 @@ function getItemArmourType(id) {
     return typ[id];
 }
 
-function initItemsGfxD() {
-
+function initItemGfxD() {
     var spriteSheetIMG = gfx['dungeon']['items2'];
-    var dItems = [];
-
+    var i = [];
+    var j = {};
+    var k = 0;
     for(var y = 0; y < 3; y++) {
         for(var x = 0; x < 9; x++) {
-            var i = [];
+            i = [];
+            var k1 = DUNGEON_GFX_ID[k];
             var b = y * 42;
             i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 0), 33, 10, false));
             i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 10), 33, 12, false));
             i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 22), 33, 8, false));
             i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 30), 33, 7, false));
             i.push(grabImageAt(spriteSheetIMG, x * 33, b + (y + 37), 33, 6, false));
-            dItems.push(i);
+            j[k1] = i;
+            k++;
         }
     }
 
-        var i = [];
-        i.push(grabImageAt(spriteSheetIMG, 305, 0, 29, 26, false));
-        i.push(grabImageAt(spriteSheetIMG, 312, 27, 16, 16, false));
-        i.push(grabImageAt(spriteSheetIMG, 315, 43, 12, 11, false));
-        i.push(grabImageAt(spriteSheetIMG, 317, 54, 8, 8, false));
-        dItems.push(i);
-        i = [];
+    i = [];
+    var k1 = DUNGEON_GFX_ID[k];
+    i.push(grabImageAt(spriteSheetIMG, 305, 0, 29, 26, false));
+    i.push(grabImageAt(spriteSheetIMG, 312, 27, 16, 16, false));
+    i.push(grabImageAt(spriteSheetIMG, 315, 43, 12, 11, false));
+    i.push(grabImageAt(spriteSheetIMG, 317, 54, 8, 8, false));
+    j[k1] = i;
+    k++;
 
-        //var i = [];
-        i.push(grabImageAt(spriteSheetIMG, 353, 0, 39, 33, false));
-        i.push(grabImageAt(spriteSheetIMG, 363, 33, 22, 19, false));
-        i.push(grabImageAt(spriteSheetIMG, 366, 52, 16, 12, false));
-        i.push(grabImageAt(spriteSheetIMG, 369, 65, 11, 9, false));
-        dItems.push(i);
-        i = [];
+    i = [];
+    var k1 = DUNGEON_GFX_ID[k];
+    i.push(grabImageAt(spriteSheetIMG, 353, 0, 39, 33, false));
+    i.push(grabImageAt(spriteSheetIMG, 363, 33, 22, 19, false));
+    i.push(grabImageAt(spriteSheetIMG, 366, 52, 16, 12, false));
+    i.push(grabImageAt(spriteSheetIMG, 369, 65, 11, 9, false));
+    j[k1] = i;
+    k++;
 
-        //var i = [];
-        i.push(grabImageAt(spriteSheetIMG, 311, 63, 31, 27, false));
-        i.push(grabImageAt(spriteSheetIMG, 319, 91, 15, 15, false));
-        i.push(grabImageAt(spriteSheetIMG, 321, 107, 11, 11, false));
-        i.push(grabImageAt(spriteSheetIMG, 323, 119, 7, 7, false));
-        dItems.push(i);
-        i = [];
+    i = [];
+    var k1 = DUNGEON_GFX_ID[k];
+    i.push(grabImageAt(spriteSheetIMG, 311, 63, 31, 27, false));
+    i.push(grabImageAt(spriteSheetIMG, 319, 91, 15, 15, false));
+    i.push(grabImageAt(spriteSheetIMG, 321, 107, 11, 11, false));
+    i.push(grabImageAt(spriteSheetIMG, 323, 119, 7, 7, false));
+    j[k1] = i;
+    k++;
 
-        i.push(grabImageAt(spriteSheetIMG, 412, 1, 24, 21, false));
-        i.push(grabImageAt(spriteSheetIMG, 412, 23, 20, 17, false));
-        i.push(grabImageAt(spriteSheetIMG, 412, 42, 15, 13, false));
-        i.push(grabImageAt(spriteSheetIMG, 412, 56, 13, 11, false));
-        dItems.push(i);
-        i = [];
+    i = [];
+    var k1 = DUNGEON_GFX_ID[k];
+    i.push(grabImageAt(spriteSheetIMG, 412, 1, 24, 21, false));
+    i.push(grabImageAt(spriteSheetIMG, 412, 23, 20, 17, false));
+    i.push(grabImageAt(spriteSheetIMG, 412, 42, 15, 13, false));
+    i.push(grabImageAt(spriteSheetIMG, 412, 56, 13, 11, false));
+    j[k1] = i;
 
-    return dItems;
+    return j;
 }
 
 //used for indexed items

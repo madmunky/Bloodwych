@@ -128,7 +128,7 @@ function initData() {
     gfx['character']['minis'] = getCharacterSprite(NUMBER_OF_MINIS, 'character', 'minis', 13, 22, 16);
     gfx['character']['torsos'] = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
     gfxUI = grabUISprites(gfx['misc']['uistuff']);
-    itemsGfxD = initItemsGfxD();
+    itemGfxD = initItemGfxD();
     audioFiles = loadSounds();
     initMonsterPalettes();
     initArmourGfx();
@@ -261,6 +261,7 @@ function processJSONFiles(item, result) {
             break;
         case 'Items':
             itemJson = result.items;
+            itemDropsJson = result.itemDrops;
             break;
         case 'Sounds':
             break;

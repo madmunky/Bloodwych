@@ -43,7 +43,7 @@ Game.prototype = {
 
 function timerAction() {
 
-	try{
+	//try {
 	
 		cutpurseTrueview = (Math.floor(Math.random() * 10) === 0);
 		var tmf = 1.0;
@@ -166,7 +166,7 @@ function timerAction() {
 				}
 			}
 		}
-	}catch(err){
-		PrintLog("Error: " + err.toString());
-	}
+	//} catch(err){
+	//	PrintLog("Game Error: " + err.toString());
+	//}
 }

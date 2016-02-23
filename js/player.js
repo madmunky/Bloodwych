@@ -517,7 +517,7 @@ Player.prototype.doPit = function () {
         setTimeout(function () {
             self.doEvent(true);
         }, 300);
-        newProjectile(DUNGEON_NONE, paletteData['PIT_FLASH'], null, -1, 0, floor, x, y, 0, null);
+        newProjectile('NONE', paletteData['PIT_FLASH'], null, -1, 0, floor, x, y, 0, null);
         return true;
     }
     return false;
@@ -1044,19 +1044,19 @@ Player.prototype.drawProjectile = function (pr, distance, offset) {
                 to = getObjectByKeys(itemJson[pr.spell], 'death', 'recolour', 'to');
             }
         }
-        var pGfx = itemsGfxD[id.getVar()][distance];
+        var pGfx = itemGfxD[id][distance];
         if (typeof from !== "undefined" && typeof to !== "undefined") {
             pGfx = recolourSprite(pGfx, from, to);
         }
-    } else if (pr.type === DUNGEON_PROJECTILE_ARROW || pr.dead <= 0) {
-        if (pr.type !== DUNGEON_NONE) {
-            var pGfx = itemsGfxD[pr.type][distance];
+    } else if (pr.type === 'PROJECTILE_ARROW' || pr.dead <= 0) {
+        if (pr.type !== 'NONE') {
+            var pGfx = itemGfxD[pr.type][distance];
         }
         if (typeof pr.palette !== "undefined") {
             pGfx = recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette);
         }
     } else {
-        var pGfx = itemsGfxD[DUNGEON_PROJECTILE_EXPLODE][distance];
+        var pGfx = itemGfxD['PROJECTILE_EXPLODE'][distance];
         if (typeof pr.palette !== "undefined") {
             pGfx = recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette);
         }
@@ -1076,62 +1076,13 @@ Player.prototype.getActivePocketChampion = function () {
 }
 Player.prototype.consumeItemInHand = function () {
     this.pocket.setQuantity(this.pocket.quantity - 1);
-    //this.pocket.setPocketItem(this.pocket.id, this.pocket.quantity - 1);
 }
 Player.prototype.useItemActivePocket = function () {
     var ch = this.getActivePocketChampion();
     if (ch !== null && !ch.dead) {
         var itH = this.pocket;
         if (itH.id !== 0) {
-            if (ch.useItem(itH, 'onUse').success) {
-                //no nothing
-            }/* else {
-                switch (itH.type) {
-                    case 'ITEM_TYPE_STACKABLE':
-                        var i = this.findPocketItem(itH.id);
-                        if (i > -1) {
-                            if (itH.quantity < 99) {
-                                itH.setQuantity(itH.quantity + 1);
-                                //itH.quantity++;
-                                ch.pocket[i].setQuantity(ch.pocket[i].quantity - 1);
-                                //ch.pocket[i].quantity--;
-                                //if (ch.pocket[i].quantity === 0) {
-                                //    ch.pocket[i].setPocketItem();
-                                //}
-                            }
-                        }
-                        break;
-                    case 'ITEM_TYPE_FOOD':
-                        var fd = itH.getFoodValue();
-                        ch.addFood(fd);
-                        if (itH.id <= 'ITEM_WATER' && itH.id % 3 !== 2) {
-                            itH.setPocketItem(itH.id - 1);
-                        } else {
-                            itH.setPocketItem();
-                        }
-                        break;
-                    case 'ITEM_TYPE_POTION':
-                        switch (itH.id) {
-                            case 'ITEM_SERPENT_SLIME':
-                                ch.stat.hp = ch.stat.hpMax;
-                                break;
-                            case 'ITEM_BRIMSTONE_BROTH':
-                                ch.addHP(Math.floor(ch.stat.hpMax / 2));
-                                ch.addVit(Math.floor(ch.stat.vitMax / 2));
-                                ch.addSP(Math.floor(ch.stat.spMax / 2));
-                                break;
-                            case 'ITEM_DRAGON_ALE':
-                                ch.stat.vit = ch.stat.vitMax;
-                                break;
-                            case 'ITEM_MOON_ELIXIR':
-                                ch.stat.sp = ch.stat.spMax;
-                                break;
-                        }
-                        itH.setPocketItem();
-                    default:
-                        break;
-                }
-            }*/
+            ch.useItem(itH, 'onUse');
         }
     }
 }
@@ -1148,13 +1099,8 @@ Player.prototype.exchangeItemWithHand = function (s, q) {
                 if (itH.id === 0) {
                     for(var q1 = 0; q1 < q; q1++) {
                         itH.setPocketItem(it.id, itH.quantity + 1);
-                        //itH.setPocketItem(it.id, itH.quantity + 1);
                         if(!it.setQuantity(it.quantity - 1)) {
-                            //it.quantity--;
-                            //if (it.quantity === 0) {
-                            //    it.setPocketItem();
                             break;
-                            //}
                       }
                     }
                 } else if (it.id === itH.id) {
@@ -1168,9 +1114,7 @@ Player.prototype.exchangeItemWithHand = function (s, q) {
                         qt = 99;
                     }
                     itH.setPocketItem(it.id, qtH);
-                    //itH.setPocketItem(it.id, qtH);
                     it.setQuantity(qt);
-                    //it.setPocketItem(it.id, qt);
                 }
             } else if (itH.type === 'ITEM_TYPE_STACKABLE' && this.findPocketItem(itH.id) > -1) {
                 var i = this.findPocketItem(itH.id);
@@ -1259,7 +1203,7 @@ Player.prototype.actionItem = function (s) {
                     for(var c = 0; c < this.champion.length; c++) { //take a RIP that is part of the group. This will make the item disappear.
                         var ch = this.getChampion(c);
                         var rip = getObjectByKeys(itemJson[it[0].id], 'revive');
-                        if (ch !== null && typeof rip !== "undefined" && rip.getVar() === ch.id && !ch.recruitment.attached) {
+                        if (ch !== null && typeof rip !== "undefined" && rip === CHAMPION_ID[ch.id] && !ch.recruitment.attached) {
                             ch.recruitment.attached = true;
                             return true;
                         }
@@ -1362,7 +1306,7 @@ Player.prototype.castSpell = function (sb, ch, s) {
             col = paletteData['GREEN_ARROW'];
         }
         arr.setPocketItem(arr.id, arr.quantity - 1);
-        newProjectile(DUNGEON_PROJECTILE_ARROW, col, SOUND_ATTACK, arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
+        newProjectile('PROJECTILE_ARROW', col, SOUND_ATTACK, arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
         ch.writeAttackPoints('shoot');
     }
 }*/

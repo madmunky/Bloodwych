@@ -569,7 +569,7 @@ Monster.prototype.die = function() {
                 playSound(SOUND_DEATH);
             }
         } else {
-            newProjectile(DUNGEON_PROJECTILE_BIG, paletteData['MOON_BIG'], null, -1, 0, this.floor, this.x, this.y, 0, null);
+            newProjectile('PROJECTILE_BIG', paletteData['MOON_BIG'], null, -1, 0, this.floor, this.x, this.y, 0, null);
             if (this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER) {
                 var it = [];
                 for(var i = 0; i < POCKET_MAX + 1; i++) {
@@ -685,7 +685,7 @@ function initMonsters() {
                         lvl = 5;
                     }
                     if(lvl > 3 || Math.floor(Math.random() * 2) === 1) {
-                        var id = MON_ITEM_DROPS[lvl][Math.floor(Math.random() * MON_ITEM_DROPS[lvl].length)];
+                        var id = itemDropsJson[lvl][Math.floor(Math.random() * itemDropsJson[lvl].length)];
                         var qt = 1;
                         if (getItemType(id) === 'ITEM_TYPE_STACKABLE') {
                             qt = Math.floor(Math.random() * (mon.level + 2) * 1) + 1;
