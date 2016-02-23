@@ -245,6 +245,35 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
     }, 500);
 }
 
+function checkMergeJSON(objStorage, objNewData){
+
+    if (typeof objStorage !== 'undefined'){
+        if (objStorage.length > 0){
+            var newItems = new Array();
+            for (var i in objNewData){
+                var matched = false;
+                for (var x in objStorage){
+                    if (objStorage[x].id === objNewData[i].id){
+                        objStorage[i] = objNewData[x];
+                        matched = true;
+                    }
+                }
+                if (!matched){
+                    newItems.push(objNewData[x]);
+                }
+            }
+            objStorage.concat(newItems);
+        }else{
+            objStorage = objNewData;
+        }
+    }else{
+        objStorage = objNewData;
+    }
+
+    return objStorage;
+
+}
+
 function processJSONFiles(item, result) {
     switch (item.typeID) {
         case 'Colours':
@@ -260,8 +289,8 @@ function processJSONFiles(item, result) {
         case 'Input':
             break;
         case 'Items':
-            itemJson = result.items;
-            itemDropsJson = result.itemDrops;
+            itemJson = checkMergeJSON(itemJson, result.items);
+            itemDropsJson = checkMergeJSON(itemDropsJson, result.itemDrops);
             break;
         case 'Sounds':
             break;
@@ -272,7 +301,8 @@ function processJSONFiles(item, result) {
         case 'UI':
             break;
         case 'Sprites':
-            spriteData = result;
+            spriteData = checkMergeJSON(spriteData, result);
+//            spriteData = result;
             gfxPos = spriteData.Sprites[0].locations;
             break;
     };

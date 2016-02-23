@@ -63,6 +63,7 @@ var uiClickArea = [];
 var redrawPlayerUiFlag = 0;
 var audioFiles = [];
 var gameType = GAME_BLOODWYCH;
+var spriteData = [];
 //var DataLocationPrefix;
 
 //GAME MODES
