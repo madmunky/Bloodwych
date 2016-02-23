@@ -27,6 +27,16 @@ div.logo {
 div.canvas-wrapper {
 	position: relative;
 }
+/*div.canvas-wrapper:after {
+	content: "";
+	background: url(../images/interlace.gif) top left repeat;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+}*/
 input.save-game {
 	position: absolute;
 	left: -1000px;

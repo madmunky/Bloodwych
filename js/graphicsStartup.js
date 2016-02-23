@@ -102,7 +102,7 @@ function drawQuickStartUI(pl) {
             } else {
                 if (championSelect[pl].champID !== -1) {
                     if (championSelect[pl].champID !== -1 && ch.id === championSelect[pl].champID) {
-                        showCharacterDetails(ch, pl);
+                        showCharacterDetails(ch, pl, col, row);
                     } else {
                         ctx.drawImage(t, (col * 40) * scale, ((row * 48) + 15) * scale, t.width * scale, t.height * scale);
                     }
@@ -120,9 +120,9 @@ function drawQuickStartUI(pl) {
     var imageColour;
 
     if (pl === 0) {
-        imageColour = UI_GFX_CHARACTER_NAME_BLUE;
+        imageColour = 'UI_GFX_CHARACTER_NAME_BLUE';
     } else {
-        imageColour = UI_GFX_CHARACTER_NAME_RED;
+        imageColour = 'UI_GFX_CHARACTER_NAME_RED';
     }
     if (championSelect[pl].champID === -1) {
         var myY = 50,
@@ -136,7 +136,7 @@ function drawQuickStartUI(pl) {
 
 }
 
-function showCharacterDetails(ch, pl) {
+function showCharacterDetails(ch, pl, col, row) {
 
     var myY = 50,
         myX = 0;
