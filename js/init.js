@@ -47,7 +47,14 @@ function loadCustomGfx(event) {
     preload.on("fileprogress", handleFileProgress);
     preload.on("error", handleError);
     preload.on("fileload", handleFileLoad);
+    preload.on("complete", checkCompleted);
     preload.load();
+}
+
+function checkCompleted(event){
+
+//    initJSONData();
+
 }
 
 function loadTowerData(event) {
@@ -82,6 +89,10 @@ function handleFileLoad(event) {
     }
     switch (item.type) {
         case createjs.AbstractLoader.IMAGE:
+            if (!jsonLoaded){
+                initJSONData();
+                jsonLoaded = true;
+            }
             gfxLoadImages(item, event.result);
             break;
         case createjs.AbstractLoader.BINARY:
@@ -254,7 +265,7 @@ function checkMergeJSON(objStorage, objNewData){
                 var matched = false;
                 for (var x in objStorage){
                     if (objStorage[x].id === objNewData[i].id){
-                        objStorage[i] = objNewData[x];
+                        objStorage[x] = objNewData[i];
                         matched = true;
                     }
                 }
@@ -289,6 +300,8 @@ function processJSONFiles(item, result) {
         case 'Input':
             break;
         case 'Items':
+//            itemJson = result.items;
+//            itemDropsJson = result.itemDrops;
             itemJson = checkMergeJSON(itemJson, result.items);
             itemDropsJson = checkMergeJSON(itemDropsJson, result.itemDrops);
             break;
@@ -306,10 +319,13 @@ function processJSONFiles(item, result) {
             gfxPos = spriteData.Sprites[0].locations;
             break;
     };
-    jsonDataLoaded++;
-    if(jsonDataLoaded >= 11) {
-        initJSONData();
-    }
+//    jsonDataLoaded++;
+//    if (debug){
+//        console.log(jsonDataLoaded);
+//    }
+//    if(jsonDataLoaded >= 12) {
+////        initJSONData();
+//    }
 }
 
 function loadDefaultJSONFiles(path) {
