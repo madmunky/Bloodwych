@@ -1,1 +1,8 @@
-//All spell information here, e.g. TEXT_SPELL_NAME, TEXT_SPELL_BOOK, TEXT_SPELL_DESCRIPTION, SPELL_ARMOUR, 
+{
+	"spells": [
+		{
+			"id": "SPELL_ARMOUR",
+			
+		}
+	]
+}

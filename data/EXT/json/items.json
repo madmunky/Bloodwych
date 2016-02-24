@@ -8,7 +8,7 @@
 			"type": "ITEM_TYPE_WEAPON",
 			"gfx2": {
 				"icon": {
-					"id": "UI_GFX_POCKET_SWORD_1"
+					"id": "POCKET_SWORD_1"
 				},
 				"dungeon": {
 					"id": "ITEM_SWORD",
@@ -28,7 +28,7 @@
 			"type": "ITEM_TYPE_WEAPON",
 			"gfx2": {
 				"icon": {
-					"id": "UI_GFX_POCKET_SWORD_2",
+					"id": "POCKET_SWORD_2",
 					"recolour": {
 						"from": ["GREEN"],
 						"to": ["YELLOW"]
