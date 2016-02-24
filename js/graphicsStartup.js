@@ -144,7 +144,7 @@ function showCharacterDetails(ch, pl, col, row) {
     var a = ch.prof;
     var b = ch.colour;
 
-    ctx.drawImage(gfxUI['POCKET_' + a][b], 198 * scale, (myY + 57) * scale, gfxUI['POCKET_EMPTY'].width * scale, gfxUI['POCKET_EMPTY'].height * scale);
+    ctx.drawImage(gfxUI['ITEM_' + a][b], 198 * scale, (myY + 57) * scale, gfxUI['ITEM_EMPTY'].width * scale, gfxUI['ITEM_EMPTY'].height * scale);
     if (pl === 0) {
         ctx.drawImage(gfxUI['SHIELD_BLUE'], (col * 40) * scale, ((row * 48) + 15) * scale, gfxUI['SHIELD_BLUE'].width * scale, gfxUI['SHIELD_BLUE'].height * scale);
         ctx.drawImage(gfxUI['CHARACTER_NAME_BLUE'], 168 * scale, (myY + 75) * scale, gfxUI['CHARACTER_NAME_BLUE'].width * scale, gfxUI['CHARACTER_NAME_BLUE'].height * scale);

@@ -66,7 +66,7 @@ Projectile.prototype.move = function() {
 		if (typeof this.monster !== "undefined") {
 			var sid = null;
 			if(this.spell !== null) {
-				var sid = this.spell.index;
+				var sid = this.spell.id;
 				var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND || sid === SPELL_INFERNO || sid === SPELL_SPRAY);
 				var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE || sid === SPELL_NULLIFY || sid === SPELL_FIREPATH);
 			}
@@ -162,7 +162,7 @@ Projectile.prototype.die = function(snd) {
 Projectile.prototype.action = function(tar) {
 	var combat = calculateAttack(this, tar);
 	if(combat.length > 0) {
-		switch (this.spell.index) {
+		switch (this.spell.id) {
 			case SPELL_PARALYZE:
 				if(tar instanceof Monster) {
 					tar.timerParalyze = combat[0].power;
@@ -273,7 +273,7 @@ Projectile.prototype.event = function() {
 		var ob = getObject(this.floor, this.x, this.y, this.d);
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
-		switch (this.spell.index) {
+		switch (this.spell.id) {
 			case SPELL_ARC_BOLT:
 				if (obNext > OBJECT_MISC && !msc) {
 					var dNew = Math.floor(Math.random() * 2) * 2 + 1;
@@ -390,7 +390,7 @@ Projectile.prototype.attack = function(target, prc) {
 		var prc = 1.0;
 	}
 	single = false;
-	if (typeof this.spell === 'number' || this.spell.index === SPELL_MISSILE) {
+	if (typeof this.spell === 'number' || this.spell.id === SPELL_MISSILE) {
 		single = true;
 	}
 	for (var i = 3; i >= 0; i--) {
@@ -423,7 +423,7 @@ Projectile.prototype.attack = function(target, prc) {
 					}
 				}
 			}
-			if (typeof this.spell !== 'number' && (this.spell.index === SPELL_DISRUPT || this.spell.index === SPELL_SPRAY)) {
+			if (typeof this.spell !== 'number' && (this.spell.id === SPELL_DISRUPT || this.spell.id === SPELL_SPRAY)) {
 				if(pwr > 1 && pwr < def.getHP()) {
 					pwr = 1;
 				}

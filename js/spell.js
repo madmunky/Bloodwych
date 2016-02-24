@@ -1,38 +1,45 @@
-function Spell(colour, id, name, description, symbols, level) {
+function Spell(colour, grade, name, description, symbols, level) {
 	this.colour = colour;
-	this.id = id;
-	this.index = id + colour * 8;
+	this.grade = grade;
+	this.id = grade + colour * SPELL_LEVEL_MAX;
 	this.name = name;
 	this.description = description;
 	this.symbols = symbols;
 	this.level = level;
-	this.cost = this.level * 5;
-	var pr = getSpellPageAndRow(colour, id);
+	this.cost = this.level * SPELL_COLOUR_MAX;
+	var pr = getSpellPageAndRow(colour, grade);
 	this.page = pr.page;
 	this.row = pr.row;
-	this.power = getSpellPower(this.index);
+	this.power = getSpellPower(this.id);
 }
 
 Spell.prototype.toString = function() {
-	return '[colour:' + this.colour + ', id:' + this.id + ', name:' + this.name + ', description:' + this.description + ', level:' + this.level + ', cost:' + this.cost + ']';
+	return '[colour:' + this.colour + ', grade:' + this.grade + ', name:' + this.name + ', description:' + this.description + ', level:' + this.level + ', cost:' + this.cost + ']';
 }
 
 function initSpells() {
 	for(var cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
 		spell[cl] = new Array();
 		for(var id = 0; id < SPELL_LEVEL_MAX; id++) {
-			//var l = [0, 1, 1, 2, 2, 3];
 			var name = TEXT_SPELL_NAME[id + cl * SPELL_LEVEL_MAX];
 			var description = TEXT_SPELL_DESCRIPTION[id + cl * SPELL_LEVEL_MAX];
 			var symbols = TEXT_SPELL_BOOK[id + cl * SPELL_LEVEL_MAX];
-			var level = getSpellLevel(cl, id);
+			var level = getSpellLevel(id + cl * SPELL_LEVEL_MAX);
 			spell[cl][id] = new Spell(cl, id, name, description, symbols, level);
-			//PrintLog(spell[cl][id], false);
 		}
+	}
+	for(var id = 0; id < spellJson.length; id++) {
+		var c = spellJson[id].name;
+		var i = spellJson[id].description;
+		var s = spellJson[id].book.code;
 	}
 }
 
-function getSpellLevel(c, i) {
+function getSpellLevel(id) {
+	var s = spellJson[id];
+	if(typeof s !== "undefined") { //JSON
+		return s.level;
+	}
 	var sl = [
 		[1, 2, 2, 2, 3, 3, 4, 5],
 		[1, 2, 4, 5, 5, 6, 7, 8],
@@ -40,7 +47,7 @@ function getSpellLevel(c, i) {
 		[1, 2, 2, 3, 3, 4, 4, 7],
 		[6, 7, 7, 8, 8, 10, 12, 18]
 	];
-	return sl[c][i];
+	return sl[Math.floor(id / SPELL_LEVEL_MAX)][id % SPELL_LEVEL_MAX];
 }
 
 /*
@@ -104,8 +111,8 @@ function getSpellPageAndRow(c, i) {
 
 function getSpellById(id) {
 	if (id > -1) {
-		var cl = Math.floor(id / 8);
-		var s = id % 8;
+		var cl = Math.floor(id / SPELL_LEVEL_MAX);
+		var s = id % SPELL_LEVEL_MAX;
 		if (typeof spell[cl] !== "undefined" && typeof spell[cl][s] !== "undefined") {
 			return spell[cl][s];
 		}
@@ -514,7 +521,7 @@ function updateDungeonSpells() {
 	for(var s in dungeonSpellList) {
 		var ds = dungeonSpellList[s];
 		if (ds.tower === towerThis) {
-			if(ds.projectile !== null && typeof ds.projectile.spell !== 'number' && (ds.projectile.spell.index === SPELL_FIREPATH || ds.projectile.spell.index === SPELL_BLAZE || ds.projectile.spell.index === SPELL_INFERNO)) {
+			if(ds.projectile !== null && typeof ds.projectile.spell !== 'number' && (ds.projectile.spell.id === SPELL_FIREPATH || ds.projectile.spell.id === SPELL_BLAZE || ds.projectile.spell.id === SPELL_INFERNO)) {
 				for(var p in player) {
 					if (ds.floor === player[p].floor && ds.x === player[p].x && ds.y === player[p].y) {
 						ds.projectile.attack(player[p]);

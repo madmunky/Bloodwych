@@ -165,7 +165,7 @@ function initItems(t) {
                     square: dr[dir]
                 });
                 var ima = getObjectByKeys(itemJson[id], 'quantity');
-                if(typeof ima !== "undefined") {
+                if(typeof ima !== "undefined") { //JSON
                     item[t.id][max].quantity = ima + 1;
                 }
                 //PrintLog(item[t.id][max], false);
@@ -310,8 +310,7 @@ function dropItem(id, q, f, x, y, s) {
     }
 }
 
-//This is the big item list
-//itemGfx was the former gfxUI, but only for pocket items
+//item references
 function initItemRefs() {
     var gfx;
     var gfxD;

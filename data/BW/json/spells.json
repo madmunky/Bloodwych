@@ -2,7 +2,19 @@
 	"spells": [
 		{
 			"id": "SPELL_ARMOUR",
-			
+			"name": "ARMOUR",
+			"description": "WEAR THIS SPELL WITH PRIDE",
+			"class": "CLASS_SERPENT",
+			"grade": 0,
+			"book": {
+				"code": "MARY",
+				"page": 0,
+				"row": 0
+			},
+			"level": 1,
+			"power": 1,
+			"enchant": "ICON_SPELL_ARMOUR",
+			"defenseFactor": 0.1
 		}
 	]
 }

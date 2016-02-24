@@ -985,7 +985,7 @@ function initChampions() {
                 spellBook[pg][rw].learnt = false;
                 spellBook[pg][rw].castSuccessful = 0;
                 spellBook[pg][rw].ref = spl[rw];
-                spellBook[pg][rw].id = spl[rw].index;
+                spellBook[pg][rw].id = spl[rw].id;
                 spellBook[pg][rw].cost = 2 + spl[rw].level * 2;
                 if (spellBin !== null && spellBin.substr(rw + pg * SPELL_LEVEL_MAX, 1) == '1') {
                     //spellBook[pg][rw].castSuccessful = 4;

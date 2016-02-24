@@ -300,14 +300,13 @@ function processJSONFiles(item, result) {
         case 'Input':
             break;
         case 'Items':
-//            itemJson = result.items;
-//            itemDropsJson = result.itemDrops;
             itemJson = checkMergeJSON(itemJson, result.items);
             itemDropsJson = checkMergeJSON(itemDropsJson, result.itemDrops);
             break;
         case 'Sounds':
             break;
         case 'Spells':
+            spellJson = checkMergeJSON(spellJson, result.spells);
             break;
         case 'Text':
             break;
@@ -315,17 +314,9 @@ function processJSONFiles(item, result) {
             break;
         case 'Sprites':
             spriteData = checkMergeJSON(spriteData, result);
-//            spriteData = result;
             gfxPos = spriteData.Sprites[0].locations;
             break;
     };
-//    jsonDataLoaded++;
-//    if (debug){
-//        console.log(jsonDataLoaded);
-//    }
-//    if(jsonDataLoaded >= 12) {
-////        initJSONData();
-//    }
 }
 
 function loadDefaultJSONFiles(path) {

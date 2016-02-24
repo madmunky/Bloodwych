@@ -320,7 +320,7 @@ function drawSpellBook(p, ui, dr) {
     } else if (ch.selectedSpell !== null) {
         //var ic = $.inArray('ICON_SPELL_0', UI_GFX_ID) + 1 + ch.selectedSpell.ref.colour;
         //if (ch.selectedSpell.ref.colour == 4){
-            ctx.drawImage(gfxUI['ICON_SPELL_' + ch.selectedSpell.ref.colour], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI['ICON_SPELL_0'].width * scale, gfxUI['ICON_SPELL_0'].height * scale);
+            ctx.drawImage(gfxUI['ICON_SPELL_' + (ch.selectedSpell.ref.colour + 1)], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI['ICON_SPELL_0'].width * scale, gfxUI['ICON_SPELL_0'].height * scale);
         //}else{
         //    ctx.drawImage(gfxUI[ic], p.ScreenX + 225 * scale, (p.ScreenY + 62) * scale, gfxUI['ICON_SPELL_0'].width * scale, gfxUI['ICON_SPELL_0'].height * scale);
         //}
@@ -333,7 +333,7 @@ function drawSpellBook(p, ui, dr) {
         ctx.drawImage(t, (p.ScreenX + 298) * scale, (p.ScreenY + 71) * scale, t.width * scale, t.height * scale);
 
         //if (ch.selectedSpell.ref.colour == 4){
-            ctx.drawImage(gfxUI['ICON_SPELL_' + ch.selectedSpell.ref.colour], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI['ICON_SPELL_0'].width * scale, gfxUI['ICON_SPELL_0'].height * scale);
+            ctx.drawImage(gfxUI['ICON_SPELL_' + (ch.selectedSpell.ref.colour + 1)], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI['ICON_SPELL_0'].width * scale, gfxUI['ICON_SPELL_0'].height * scale);
         //}else{
         //    ctx.drawImage(gfxUI[ic], p.ScreenX + 305 * scale, (p.ScreenY + 62) * scale, gfxUI['ICON_SPELL_0'].width * scale, gfxUI['ICON_SPELL_0'].height * scale);
         //}
@@ -694,9 +694,9 @@ function rightUI(p) {
             var b = ch.colour;
             if (!monster[TOWER_CHAMPIONS][ch.id].dead && ch.recruitment.attached) {
                 if (c1 === p.championHighlite) {
-                    ctx.drawImage(gfxUI['POCKET_' + a][4], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI['POCKET_EMPTY'].width * scale, gfxUI['POCKET_EMPTY'].height * scale);
+                    ctx.drawImage(gfxUI['ITEM_' + a][4], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI['ITEM_EMPTY'].width * scale, gfxUI['ITEM_EMPTY'].height * scale);
                 } else {
-                    ctx.drawImage(gfxUI['POCKET_' + a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI['POCKET_EMPTY'].width * scale, gfxUI['POCKET_EMPTY'].height * scale);
+                    ctx.drawImage(gfxUI['ITEM_' + a][b], (p.ScreenX + 289 + (c % 2) * 16) * scale, (p.ScreenY + 46 + Math.floor(c / 2) * 15) * scale, gfxUI['ITEM_EMPTY'].width * scale, gfxUI['ITEM_EMPTY'].height * scale);
                 }
             }
             if (c1 === p.championLeader) {
@@ -750,32 +750,32 @@ function drawPocketUI(p, chp, start) {
             var pocket = chp.pocket[i];
             var pocketId = pocket.id;
             if (pocketId === 0) {
-                pocketId = 'POCKET_EMPTY';
+                pocketId = 'ITEM_EMPTY';
                 if (y === 0) {
                     switch (x) {
                         case 0:
-                            pocketId = 'POCKET_EMPTY_LEFT_HAND';
+                            pocketId = 'ITEM_EMPTY_LEFT_HAND';
                             break;
                         case 1:
-                            pocketId = 'POCKET_EMPTY_RIGHT_HAND';
+                            pocketId = 'ITEM_EMPTY_RIGHT_HAND';
                             break;
                         case 2:
-                            pocketId = 'POCKET_EMPTY_ARMOUR';
+                            pocketId = 'ITEM_EMPTY_ARMOUR';
                             break;
                         case 3:
                             if (chp.prof === PROFESSION_WARRIOR || chp.prof === PROFESSION_ADVENTURER) {
-                                pocketId = 'POCKET_EMPTY_LARGE_SHIELD';
+                                pocketId = 'ITEM_EMPTY_LARGE_SHIELD';
                             } else {
-                                pocketId = 'POCKET_EMPTY_SMALL_SHIELD';
+                                pocketId = 'ITEM_EMPTY_SMALL_SHIELD';
                             }
                             break;
                         default:
                             break;
                     }
                 }
-                if (pocketId === 'POCKET_EMPTY_LEFT_HAND' && chp.pocket[12].type === 'ITEM_TYPE_GLOVES') {
+                if (pocketId === 'ITEM_EMPTY_LEFT_HAND' && chp.pocket[12].type === 'ITEM_TYPE_GLOVES') {
                     ctx.drawImage(flipImageVert(itemJson[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 224) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
-                } else if (pocketId === 'POCKET_EMPTY_RIGHT_HAND' && chp.pocket[12].type === 'ITEM_TYPE_GLOVES') {
+                } else if (pocketId === 'ITEM_EMPTY_RIGHT_HAND' && chp.pocket[12].type === 'ITEM_TYPE_GLOVES') {
                     ctx.drawImage(flipImageVert(flipImage(itemJson[chp.pocket[12].id].gfx, paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1])), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 21) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
                 } else {
                     ctx.drawImage(recolourUiGfx(gfxUI[pocketId], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 225) + (x * 16)) * scale, ((p.ScreenY + 23) + (y * 16)) * scale, gfxUI[pocketId].width * scale, gfxUI[pocketId].height * scale);
@@ -819,7 +819,7 @@ function drawPocketUI(p, chp, start) {
             var ch = p.getChampion(cid);
 
             if (c < 4 && ch !== null) {
-                g = 'POCKET_' + ch.prof;
+                g = 'ITEM_' + ch.prof;
             }
 
             switch (c) {
@@ -830,7 +830,7 @@ function drawPocketUI(p, chp, start) {
                 case 3:
                     if (ch !== null) {
                         if (ch.recruitment.attached) {
-                            ctx.drawImage(gfxUI[g][ch.colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI['POCKET_EMPTY'].width * scale, gfxUI['POCKET_EMPTY'].height * scale);
+                            ctx.drawImage(gfxUI[g][ch.colour], ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI['ITEM_EMPTY'].width * scale, gfxUI['ITEM_EMPTY'].height * scale);
                         }
                         if (chp.recruitment.playerId > -1 && c === p.uiRightPanel.activePocket) {
                             drawRect(((p.ScreenX + 225) + (c * 16)), ((p.ScreenY + 63)), 15, 14, colourData['YELLOW']);
@@ -853,12 +853,12 @@ function drawPocketUI(p, chp, start) {
                             }
                         }
                         drawPocketInfo(p, chp);
-                        //ctx.drawImage(gfxUI['POCKET_EMPTY'], ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI['POCKET_EMPTY'].width * scale, gfxUI['POCKET_EMPTY'].height * scale);
+                        //ctx.drawImage(gfxUI['ITEM_EMPTY'], ((p.ScreenX + 225) + (c * 16)) * scale, (p.ScreenY + 63) * scale, gfxUI['ITEM_EMPTY'].width * scale, gfxUI['ITEM_EMPTY'].height * scale);
                     };
                     break
                 case 5:
                     {
-                        ctx.drawImage(recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI['POCKET_EMPTY'].width * scale, gfxUI['POCKET_EMPTY'].height * scale);
+                        ctx.drawImage(recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), ((p.ScreenX + 225) + (c * 16)) * scale, ((p.ScreenY + 63)) * scale, gfxUI['ITEM_EMPTY'].width * scale, gfxUI['ITEM_EMPTY'].height * scale);
                     };
                     break
 
