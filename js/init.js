@@ -161,6 +161,8 @@ function initJSONData() {
     parseJSONValues(paletteData, colourData);
     parseJSONValues(itemJson, paletteData, 'recolour');
     parseJSONValues(itemJson, colourData, 'recolour');
+    parseJSONValues(spellJson, paletteData, 'recolour');
+    parseJSONValues(spellJson, colourData, 'recolour');
 
     preload = new createjs.LoadQueue(false);
     preload.loadFile({

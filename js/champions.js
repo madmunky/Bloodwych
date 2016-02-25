@@ -782,9 +782,17 @@ Champion.prototype.activateSpell = function(s, pow) {
     this.activeSpell.id = s;
     this.activeSpell.timer = pow * 5;
     this.activeSpell.power = pow;
-    //if (this.recruitment.playerId > -1) {
-    //	redrawUI(this.recruitment.playerId);
-    //}
+    var sp = spellJson[s];
+    if(typeof sp !== "undefined") { //JSON
+        var ac = sp.action;
+        if(typeof ac !== "undefined") {
+            var dur = ac.durationFactor;
+            if(typeof dur !== "undefind") {
+                this.activeSpell.timer = pow * dur;
+            }
+            this.activeSpell.action = sp.action;
+        }
+    }
 }
 
 Champion.prototype.checkSpell = function() {
@@ -832,19 +840,36 @@ Champion.prototype.expireSpell = function() {
     }
     this.activeSpell.id = -1;
     this.activeSpell.power = 0;
+    this.activeSpell.action = undefined;
     redrawUI(p, UI_REDRAW_RIGHT);
 }
 
 //gets active spell, when spell id matches
+//If no id passed, the current active spell is returned
 Champion.prototype.getActiveSpellById = function(id) {
-    if (id === this.activeSpell.id) {
+    if(typeof id !== "undefined") {
+        if (id === this.activeSpell.id) {
+            return this.activeSpell;
+        }
+    } else {
         return this.activeSpell;
     }
     return {
         id: -1,
         power: 0,
         timer: 0
-    };
+    }
+}
+
+Champion.prototype.getActiveSpellActionValue = function(ac) {
+    var sp = this.activeSpell;
+    if(sp.id > -1) {
+        var act = sp.action;
+        if(typeof act !== "undefined") {
+            return act[ac];
+        }
+    }
+    return 0;
 }
 
 Champion.prototype.selectSpell = function(id) {

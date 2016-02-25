@@ -6,15 +6,46 @@
 			"description": "WEAR THIS SPELL WITH PRIDE",
 			"class": "CLASS_SERPENT",
 			"grade": 0,
+			"level": 1,
+			"power": 1,
 			"book": {
-				"code": "MARY",
+				"symbols": "MARY",
 				"page": 0,
 				"row": 0
 			},
-			"level": 1,
-			"power": 1,
-			"enchant": "ICON_SPELL_ARMOUR",
-			"defenseFactor": 0.1
+			"action": {
+				"type": "self",
+				"enchant": "ICON_SPELL_ARMOUR",
+				"durationFactor": 5.0,
+				"defenseFactor": 1
+			}
+		},
+		{
+			"id": "SPELL_PARALYZE",
+			"name": "PARALYZE",
+			"description": "A FROZEN LIFE MAY WELL BE A SHORT ONE",
+			"class": "CLASS_SERPENT",
+			"grade": 1,
+			"level": 2,
+			"power": 4,
+			"book": {
+				"symbols": "ZEDN",
+				"page": 1,
+				"row": 2
+			},
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_ARROW",
+					"type": "MISSILE",
+					"sound": "SOUND_FLASH",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "SERPENT_ARROW"
+					}
+				},
+				"paralyze": true
+			}
 		}
 	]
 }

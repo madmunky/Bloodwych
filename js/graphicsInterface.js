@@ -607,51 +607,58 @@ function drawActiveSpell(p) {
     var id = ch.activeSpell.id;
     if (id !== -1) {
         var spellImage = '';
-
-        switch (id) {
-            case SPELL_ARMOUR:
-                spellImage = 'ICON_SPELL_ARMOUR';
-                break;
-            case SPELL_COMPASS:
-                switch (p.d) {
-                    case DIRECTION_NORTH:
-                        spellImage = 'ICON_SPELL_COMPASS_NORTH';
-                        break;
-                    case DIRECTION_EAST:
-                        spellImage = 'ICON_SPELL_COMPASS_EAST';
-                        break;
-                    case DIRECTION_SOUTH:
-                        spellImage = 'ICON_SPELL_COMPASS_SOUTH';
-                        break;
-                    case DIRECTION_WEST:
-                        spellImage = 'ICON_SPELL_COMPASS_WEST';
-                        break;
-                }
-                break;
-            case SPELL_LEVITATE:
-                spellImage = 'ICON_SPELL_LEVITATE';
-                break;
-            case SPELL_WARPOWER:
-                spellImage = 'ICON_SPELL_WARPOWER';
-                break;
-            case SPELL_DEFLECT:
-                spellImage = 'ICON_SPELL_DEFLECT';
-                break;
-            case SPELL_VANISH:
-                spellImage = 'ICON_SPELL_VANISH';
-                break;
-            case SPELL_ANTIMAGE:
-                spellImage = 'ICON_SPELL_ANTIMAGE';
-                break;
-            case SPELL_TRUEVIEW:
-                spellImage = 'ICON_SPELL_TRUEVIEW';
-                break;
-            case SPELL_PROTECT:
-                spellImage = 'ICON_SPELL_PROTECT';
-                break;
-            case SPELL_ENHANCE:
-                spellImage = 'ICON_SPELL_ENHANCE';
-                break;
+        ac = ch.activeSpell.action;
+        if(typeof ac !== "undefined") {
+            var en = ac.enchant;
+            if(typeof en !== "undefined") {
+                spellImage = en;
+            }
+        } else {
+            switch (id) {
+                case SPELL_ARMOUR:
+                    spellImage = 'ICON_SPELL_ARMOUR';
+                    break;
+                case SPELL_COMPASS:
+                    switch (p.d) {
+                        case DIRECTION_NORTH:
+                            spellImage = 'ICON_SPELL_COMPASS_NORTH';
+                            break;
+                        case DIRECTION_EAST:
+                            spellImage = 'ICON_SPELL_COMPASS_EAST';
+                            break;
+                        case DIRECTION_SOUTH:
+                            spellImage = 'ICON_SPELL_COMPASS_SOUTH';
+                            break;
+                        case DIRECTION_WEST:
+                            spellImage = 'ICON_SPELL_COMPASS_WEST';
+                            break;
+                    }
+                    break;
+                case SPELL_LEVITATE:
+                    spellImage = 'ICON_SPELL_LEVITATE';
+                    break;
+                case SPELL_WARPOWER:
+                    spellImage = 'ICON_SPELL_WARPOWER';
+                    break;
+                case SPELL_DEFLECT:
+                    spellImage = 'ICON_SPELL_DEFLECT';
+                    break;
+                case SPELL_VANISH:
+                    spellImage = 'ICON_SPELL_VANISH';
+                    break;
+                case SPELL_ANTIMAGE:
+                    spellImage = 'ICON_SPELL_ANTIMAGE';
+                    break;
+                case SPELL_TRUEVIEW:
+                    spellImage = 'ICON_SPELL_TRUEVIEW';
+                    break;
+                case SPELL_PROTECT:
+                    spellImage = 'ICON_SPELL_PROTECT';
+                    break;
+                case SPELL_ENHANCE:
+                    spellImage = 'ICON_SPELL_ENHANCE';
+                    break;
+            }
         }
         ctx.drawImage(gfxUI[spellImage], (p.ScreenX + 289) * scale, (p.ScreenY + 22) * scale, gfxUI[spellImage].width * scale, gfxUI[spellImage].height * scale);
     }

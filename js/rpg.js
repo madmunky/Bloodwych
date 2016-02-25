@@ -112,8 +112,13 @@ function calculateAttack(att, def, tof) {
 					tmon = to.getMonster();
 					defense += to.stat.agi / 4.0;
 					defense -= to.getArmourClass();
-					defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
-					defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);
+					var def = to.getActiveSpellActionValue('defenseFactor');
+					if(def > 0) {
+						defense += to.activeSpell.power * def;
+					} else {
+						defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
+						defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);
+					}
 					defense += (6.0 + to.level) * 4.0;
 					if (!to.attacking) {
 						defense = defense * 1.1;
@@ -142,8 +147,13 @@ function calculateAttack(att, def, tof) {
 							tmon = to.getMonster();
 							defense += to.stat.agi / 4.0;
 							defense -= to.getArmourClass();
-							defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
-							defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);
+							var def = to.getActiveSpellActionValue('defenseFactor');
+							if(def > 0) {
+								defense += to.activeSpell.power * def;
+							} else {
+								defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
+								defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);
+							}
 							defense += (6.0 + to.level) * 4.0;
 							defExhaustion = Math.floor(Math.random() * 2) + 1;
 						} else { //monster

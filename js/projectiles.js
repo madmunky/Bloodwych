@@ -67,8 +67,19 @@ Projectile.prototype.move = function() {
 			var sid = null;
 			if(this.spell !== null) {
 				var sid = this.spell.id;
-				var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND || sid === SPELL_INFERNO || sid === SPELL_SPRAY);
-				var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE || sid === SPELL_NULLIFY || sid === SPELL_FIREPATH);
+				var sp = spellJson[sid]; //JSON
+				var apf = getObjectByKeys(sp, 'action', 'projectile', 'attackPowerFactor');
+				if(typeof sp !== "undefined" && typeof apf !== "undefined") {
+					var isDamage = (typeof this.spell === 'number' || apf !== 1.0);
+				} else {
+					var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND || sid === SPELL_INFERNO || sid === SPELL_SPRAY);
+				}
+				var mis = getObjectByKeys(sp, 'action', 'projectile', 'type');
+				if(typeof sp !== "undefined" && typeof mis !== "undefined") {
+					var isMissile = (mis === 'MISSILE');
+				} else {
+					var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE || sid === SPELL_NULLIFY || sid === SPELL_FIREPATH);
+				}
 			}
 			var pl = getPlayerAt(this.floor, this.x, this.y);
 			if(pl !== null) {
@@ -160,9 +171,17 @@ Projectile.prototype.die = function(snd) {
 }
 
 Projectile.prototype.action = function(tar) {
+	var id = this.spell.id;
 	var combat = calculateAttack(this, tar);
 	if(combat.length > 0) {
-		switch (this.spell.id) {
+		var sp = spellJson[id];
+		if(typeof sp !== "undefined") {
+			var ac = getObjectByKeys(sp, 'action');
+			if(typeof ac.paralyze !== "undefined" && ac.paralyze) {
+				id = SPELL_PARALYZE;
+			}
+		}
+		switch (id) {
 			case SPELL_PARALYZE:
 				if(tar instanceof Monster) {
 					tar.timerParalyze = combat[0].power;
