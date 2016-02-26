@@ -173,116 +173,117 @@ Projectile.prototype.die = function(snd) {
 Projectile.prototype.action = function(tar) {
 	var id = this.spell.id;
 	var combat = calculateAttack(this, tar);
+	var fac = 1.0;
 	if(combat.length > 0) {
 		var sp = spellJson[id];
 		if(typeof sp !== "undefined") {
-			var ac = getObjectByKeys(sp, 'action');
-			if(typeof ac.paralyze !== "undefined" && ac.paralyze) {
-				id = SPELL_PARALYZE;
+			if(tar instanceof Monster) {
+				executeSpell(id, tar, combat[0].power);
 			}
-		}
-		switch (id) {
-			case SPELL_PARALYZE:
-				if(tar instanceof Monster) {
-					tar.timerParalyze = combat[0].power;
-				}
-				break;
-			case SPELL_TERROR:
-				if(tar instanceof Monster) {
-					tar.timerTerror = combat[0].power;
-				}
-				break;
-			case SPELL_SPELLTAP:
-				var pw = combat[0].power;
-				if(tar instanceof Monster) {
-					var cht = tar.getChampion();
-					if(cht !== null) {
-						if(pw > cht.getSP()) {
-							pw = cht.getSP();
-						}
-						cht.addSP(-pw);
-					} else if(tar.type === MON_TYPE_CASTER || tar.type === MON_TYPE_DRONE_CASTER) {
-						tar.type--;
+		} else {
+			switch (id) {
+				case SPELL_PARALYZE:
+					if(tar instanceof Monster) {
+						tar.timerParalyze = combat[0].power * fac;
 					}
-				} else {
-					var def = combat[0].defender;
-					if(def !== null) {
-						if(pw > def.getSP()) {
-							pw = def.getSP();
-						}
-						def.addSP(-pw);
-						if(def.recruitment.playerId > -1) {
-							redrawUI(def.recruitment.playerId, UI_REDRAW_LEFT);
-						}
+					break;
+				case SPELL_TERROR:
+					if(tar instanceof Monster) {
+						tar.timerTerror = combat[0].power * fac;
 					}
-				}
-				if (typeof this.monster !== "undefined") {
-					var ch = this.monster.getChampion();
-					if(ch !== null) {
-						ch.addSP(pw);
-						if(ch.recruitment.playerId > -1) {
-							redrawUI(ch.recruitment.playerId, UI_REDRAW_LEFT);
+					break;
+				case SPELL_SPELLTAP:
+					var pw = combat[0].power * fac;
+					if(tar instanceof Monster) {
+						var cht = tar.getChampion();
+						if(cht !== null) {
+							if(pw > cht.getSP()) {
+								pw = cht.getSP();
+							}
+							cht.addSP(-pw);
+						} else if(tar.type === MON_TYPE_CASTER || tar.type === MON_TYPE_DRONE_CASTER) {
+							tar.type--;
 						}
-					}
-				}
-				break;
-			case SPELL_VIVIFY:
-				if (getMonsterAt(this.floor, this.x, this.y) === null) {
-					for(var i = item[towerThis].length - 1; i >= 0; i--) {
-						var it = item[towerThis][i];
-						if(it.location.tower === towerThis && it.location.floor === this.floor && it.location.x === this.x && it.location.y === this.y) {
-							var rv = itemJson[it.id].revive;
-							if (typeof rv !== "undefined") {
-								var c = CHAMPION_ID[rv.getVar()]; //it.id - 'ITEM_BLODWYN_RIP';
-								item[towerThis].splice(i, 1);
-								champion[c].stat.hp = 0;
-								champion[c].getMonster().floor = this.floor;
-								champion[c].getMonster().x = this.x;
-								champion[c].getMonster().y = this.y;
-								champion[c].getMonster().d = this.d;
-								champion[c].getMonster().hp = 0;
-								champion[c].getMonster().dead = false;
-								if (!champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
-									var p = player[champion[c].recruitment.playerId];
-									if (p.dead) {
-										champion[c].recruitment.attached = true;
-										var i = p.getChampionPosition(c);
-										p.exchangeChampionPosition(0, i);
-										p.championLeader = 0;
-										p.tower = towerThis;
-										p.floor = this.floor;
-										p.x = this.x;
-										p.y = this.y;
-										p.d = this.d;
-										p.dead = false;
-										p.updateChampions();
-										redrawUI(2);
-									}
-								}
-								return;
+					} else {
+						var def = combat[0].defender * fac;
+						if(def !== null) {
+							if(pw > def.getSP()) {
+								pw = def.getSP();
+							}
+							def.addSP(-pw);
+							if(def.recruitment.playerId > -1) {
+								redrawUI(def.recruitment.playerId, UI_REDRAW_LEFT);
 							}
 						}
 					}
-				}
-				if(tar instanceof Player) {
-					for(var c = 0; c < tar.champion.length; c++) {
-						var ch = tar.getChampion(c);
-						if(ch !== null && ch.getMonster().dead && ch.recruitment.attached) {
-							ch.stat.hp = 0;
-							ch.getMonster().dead = false;
-							redrawUI(2);
+					if (typeof this.monster !== "undefined") {
+						var ch = this.monster.getChampion();
+						if(ch !== null) {
+							ch.addSP(pw);
+							if(ch.recruitment.playerId > -1) {
+								redrawUI(ch.recruitment.playerId, UI_REDRAW_LEFT);
+							}
 						}
 					}
-					tar.updateChampions();
-				}
-				break;
-			case SPELL_CONFUSE:
-				var dr = Math.floor(Math.random() * 4);
-				tar.rotateTo(dr);
-				if(tar instanceof Player) {
-					tar.doEvent(false);
-				}
-				break;
+					break;
+				case SPELL_VIVIFY:
+					if (getMonsterAt(this.floor, this.x, this.y) === null) {
+						for(var i = item[towerThis].length - 1; i >= 0; i--) {
+							var it = item[towerThis][i];
+							if(it.location.tower === towerThis && it.location.floor === this.floor && it.location.x === this.x && it.location.y === this.y) {
+								var rv = itemJson[it.id].revive;
+								if (typeof rv !== "undefined") {
+									var c = CHAMPION_ID[rv.getVar()]; //it.id - 'ITEM_BLODWYN_RIP';
+									item[towerThis].splice(i, 1);
+									champion[c].stat.hp = 0;
+									champion[c].getMonster().floor = this.floor;
+									champion[c].getMonster().x = this.x;
+									champion[c].getMonster().y = this.y;
+									champion[c].getMonster().d = this.d;
+									champion[c].getMonster().hp = 0;
+									champion[c].getMonster().dead = false;
+									if (!champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
+										var p = player[champion[c].recruitment.playerId];
+										if (p.dead) {
+											champion[c].recruitment.attached = true;
+											var i = p.getChampionPosition(c);
+											p.exchangeChampionPosition(0, i);
+											p.championLeader = 0;
+											p.tower = towerThis;
+											p.floor = this.floor;
+											p.x = this.x;
+											p.y = this.y;
+											p.d = this.d;
+											p.dead = false;
+											p.updateChampions();
+											redrawUI(2);
+										}
+									}
+									return;
+								}
+							}
+						}
+					}
+					if(tar instanceof Player) {
+						for(var c = 0; c < tar.champion.length; c++) {
+							var ch = tar.getChampion(c);
+							if(ch !== null && ch.getMonster().dead && ch.recruitment.attached) {
+								ch.stat.hp = 0;
+								ch.getMonster().dead = false;
+								redrawUI(2);
+							}
+						}
+						tar.updateChampions();
+					}
+					break;
+				case SPELL_CONFUSE:
+					var dr = Math.floor(Math.random() * 4);
+					tar.rotateTo(dr);
+					if(tar instanceof Player) {
+						tar.doEvent(false);
+					}
+					break;
+			}
 		}
 	}
 }

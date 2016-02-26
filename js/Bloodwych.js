@@ -411,7 +411,7 @@ function godMode() {
         while (ch.levelUp > 0) {
             ch.gainLevel();
         }
-        ch.stat.hp = ch.stat.hpMax;
+        ch.stat.hp = 0;//ch.stat.hpMax;
         ch.stat.vit = ch.stat.vitMax;
         ch.stat.sp = ch.stat.spMax;
         for (var pg = 0; pg < SPELL_COLOUR_MAX; pg++) {

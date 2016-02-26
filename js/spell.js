@@ -266,6 +266,35 @@ function getSpellPower(id) {
 	}
 }
 
+function executeSpell(s, src, pow) {
+	var spl = spellJson[s];
+	if(typeof spl !== "undefined") { //JSON
+		var ac = spl.action;
+		var f = src.floor;
+		var x = src.x;
+		var y = src.y;
+		var d = src.d;
+		var xy = getOffsetByRotation(d);
+		var x1 = x + xy.x;
+		var y1 = y + xy.y;
+		if (src.champId > -1) {
+			var ch = champion[src.champId];
+			if(typeof ac.hpFactor !== "undefined") {
+				ch.addHP(pow * ac.hpFactor);
+			}
+			if(typeof ac.vitFactor !== "undefined") {
+				ch.addVit(pow * ac.vitFactor);
+			}
+			if(typeof ac.spFactor !== "undefined") {
+				ch.addSP(pow * ac.spFactor);
+			}
+		}
+		if(typeof ac.paralyzeFactor !== "undefined") {
+			src.timerParalyze = pow * ac.paralyzeFactor;
+		}
+	}
+}
+
 function castSpell(s, src, pw) {
 	var sp = getSpellById(s);
 	var pow = (Math.random() * pw * 0.25) + pw;
@@ -286,8 +315,20 @@ function castSpell(s, src, pw) {
 		var ac = spl.action;
 		if(typeof ac !== "undefined") {
 			if(typeof ac.type !== "undefined") {
-				if(ac.type === 'self' && typeof ch !== "undefined") {
+				if(ac.type === 'enchant' && typeof ch !== "undefined") {
 					ch.activateSpell(s, pow);
+				} else if (ac.type === 'self') {
+					executeSpell(s, src, pow);
+				} else if(ac.type === 'group') {
+					if(ch.recruitment.playerId > -1) {
+						var pl = player[ch.recruitment.playerId];
+						var chs = pl.getOrderedChampions();
+						for(var c in chs) {
+							if(chs[c].recruitment.attached) {
+								executeSpell(s, chs[c].getMonster(), pow);
+							}
+						}
+					}
 				} else if(ac.type === 'projectile') {
 					var pr = ac.projectile;
 					if(pr !== "undefined") {

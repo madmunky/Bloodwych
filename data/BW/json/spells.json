@@ -14,10 +14,10 @@
 				"row": 0
 			},
 			"action": {
-				"type": "self",
+				"type": "enchant",
 				"enchant": "ICON_SPELL_ARMOUR",
 				"durationFactor": 5.0,
-				"defenseFactor": 1
+				"defenseFactor": 0.1
 			}
 		},
 		{
@@ -44,7 +44,86 @@
 						"to": "SERPENT_ARROW"
 					}
 				},
-				"paralyze": true
+				"paralyzeFactor": 1.0
+			}
+		},
+		{
+			"id": "SPELL_COMPASS",
+			"name": "COMPASS",
+			"description": "NEVER GET LOST AGAIN",
+			"class": "CLASS_SERPENT",
+			"grade": 2,
+			"level": 2,
+			"power": 2,
+			"book": {
+				"symbols": "ISCR",
+				"page": 2,
+				"row": 6
+			},
+			"action": {
+				"type": "enchant",
+				"enchant": "ICON_SPELL_COMPASS_0",
+				"durationFactor": 5.0,
+				"directional": true
+			}
+		},
+		{
+			"id": "SPELL_LEVITATE",
+			"name": "LEVITATE",
+			"description": "A GENUINELY LIGHT SPELL",
+			"class": "CLASS_SERPENT",
+			"grade": 3,
+			"level": 2,
+			"power": 2,
+			"book": {
+				"symbols": "ITWE",
+				"page": 1,
+				"row": 5
+			},
+			"action": {
+				"type": "enchant",
+				"enchant": "ICON_SPELL_LEVITATE",
+				"durationFactor": 5.0,
+				"levitateFactor": 1.0
+			}
+		},
+		{
+			"id": "SPELL_WARPOWER",
+			"name": "WARPOWER",
+			"description": "YOU TOO CAN HAVE THE STRENGTH OF TEN",
+			"class": "CLASS_SERPENT",
+			"grade": 4,
+			"level": 3,
+			"power": 1,
+			"book": {
+				"symbols": "UDDU",
+				"page": 0,
+				"row": 7
+			},
+			"action": {
+				"type": "enchant",
+				"enchant": "ICON_SPELL_WARPOWER",
+				"durationFactor": 5.0,
+				"attackFactor": 0.1
+			}
+		},
+		{
+			"id": "SPELL_RENEW",
+			"name": "RENEW",
+			"description": "CURES EVERYTHING EXCEPT CRAMP",
+			"class": "CLASS_SERPENT",
+			"grade": 5,
+			"level": 3,
+			"power": 1,
+			"book": {
+				"symbols": "MIST",
+				"page": 2,
+				"row": 1
+			},
+			"action": {
+				"type": "group",
+				"durationFactor": 5.0,
+				"hpFactor": 1.0
 			}
 		}
 	]

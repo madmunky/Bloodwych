@@ -162,17 +162,17 @@ Player.revive = function (data) {
     p.communication = data.communication;
     p.frozen = data.frozen;
     return p;
-};
+}
 Player.prototype.getViewPortal = function () {
     this.Portal = this.PlayerCanvas.getContext("2d");
-};
+}
 Player.prototype.canMove = function (d) {
     var mv = canMove(this.floor, this.x, this.y, this.d, d);
     return mv === OBJECT_NONE || mv === OBJECT_STAIRS;
-};
+}
 Player.prototype.canMoveByWood = function (d) {
     return canMoveByWood(this.floor, this.x, this.y, this.d, d);
-};
+}
 Player.prototype.changeUpFloor = function () {
     //In bloodwych when the player moves floors they also moved 2 places forward
     //This function changes the players floor and moves the player forward 2x spaces
@@ -184,7 +184,7 @@ Player.prototype.changeUpFloor = function () {
         this.move(DIRECTION_NORTH);
     }
     this.redrawViewPort = true;
-};
+}
 Player.prototype.changeDownFloor = function () {
     //In bloodwych when the player moves floors they also moved 2 places forward
     //This function changes the players floor and moves the player forward 2x spaces
@@ -196,7 +196,7 @@ Player.prototype.changeDownFloor = function () {
         this.move(DIRECTION_NORTH);
     }
     this.redrawViewPort = true;
-};
+}
 //Take the map code which is in front of the player and see if the player can interact with it.
 Player.prototype.action = function () {
     if (!this.dead && !this.sleeping) {
@@ -249,7 +249,7 @@ Player.prototype.action = function () {
         }
     }
     return false;
-};
+}
 Player.prototype.alterObject = function (a, b, c) {
     if (debug) {
         var a1 = (parseInt(this.getBinaryView(15, 13, 3)) + a + 8) % 8;
@@ -263,7 +263,7 @@ Player.prototype.alterObject = function (a, b, c) {
             this.setBinaryView(15, 0, 8, '' + c1);
         }
     }
-};
+}
 Player.prototype.checkWoodenDoor = function (pos18) {
     if (pos18 === 18) {
         d = 2;
@@ -286,7 +286,7 @@ Player.prototype.checkWoodenDoor = function (pos18) {
         return true;
     }
     return false;
-};
+}
 //Sets a binary index on a hexadecimal string to a certain binary flag
 //'to' will be a binary string, e.g. '1010'
 Player.prototype.setBinaryView = function (pos18, index, length, to) {
@@ -295,7 +295,7 @@ Player.prototype.setBinaryView = function (pos18, index, length, to) {
         tower[towerThis].floor[this.floor].Map[xy.y][xy.x] = setHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[xy.y][xy.x], index, length, to);
     }
     //this.updateView();
-};
+}
 Player.prototype.getBinaryView = function (pos18, index, length) {
     var xy = posToCoordinates(pos18, this.x, this.y, this.d);
     try {
@@ -303,7 +303,7 @@ Player.prototype.getBinaryView = function (pos18, index, length) {
     } catch (e) {
         return '0001';
     }
-};
+}
 Player.prototype.setMovementData = function () {
     //tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX] = setHexToBinaryPosition(tower[this.lastTower].floor[this.lastFloor].Map[this.lastY][this.lastX], 8, 1, '0');
     if (!this.dead && !this.sleeping) {
@@ -313,9 +313,9 @@ Player.prototype.setMovementData = function () {
         this.lastFloor = this.floor;
         this.lastTower = towerThis;
     }
-};
+}
 Player.prototype.rotate = function (r) {
-    if (!this.dead && !this.sleeping) {
+    if (!this.dead && !this.sleeping && this.getCurseTimers() > 0) {
         if (r === -1) {
             highliteMovementArrow(this, 0);
         } else {
@@ -331,13 +331,24 @@ Player.prototype.rotate = function (r) {
         redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
         this.redrawViewPort = true;
     }
-};
+}
 Player.prototype.rotateTo = function (d) {
     this.d = (d + 4) % 4;
     redrawUI(this.id, UI_REDRAW_ACTIVESPELL);
-};
-Player.prototype.move = function (d) {
-    if (!this.dead && !this.sleeping) {
+}
+Player.prototype.getCurseTimers = function() {
+    var sp = 20;
+    for (var c = 0; c < this.champion.length; c++) {
+        var ch = this.getChampion(c);
+        var tm = ch.getMonster().getCurseTimers();
+        if(sp > tm) {
+            sp = tm;
+        }
+    }
+    return sp;
+}
+Player.prototype.move = function(d) {
+    if (!this.dead && !this.sleeping && this.getCurseTimers() > 0) {
         m = [1, 5, 4, 3];
         highliteMovementArrow(this, m[d]);
         this.moving = d;
@@ -355,7 +366,7 @@ Player.prototype.move = function (d) {
         }
         this.redrawViewPort = true;
     }
-};
+}
 Player.prototype.tryAttack = function (ch) {
     if (!this.dead && !this.sleeping && this.canMoveByWood(0)) {
         xy = getOffsetByRotation(this.d);
@@ -386,7 +397,7 @@ Player.prototype.tryAttack = function (ch) {
     }
     //pl.attack(null, false);
     return 0;
-};
+}
 Player.prototype.attack = function (ch, attack, target) {
     if (attack) {
         this.doneCommunication();
@@ -444,7 +455,7 @@ Player.prototype.attack = function (ch, attack, target) {
         }
         this.attacking = false;
     }
-};
+}
 Player.prototype.getView = function () {
     //This function takes the map file and stores the 20 positions required
     //to either draw the players view or objects which the player are likely to interact with
@@ -463,7 +474,7 @@ Player.prototype.getView = function () {
         view.push(newView);
     }
     return view;
-};
+}
 //mr = true : player moves
 //mr = false: player rotates
 Player.prototype.doEvent = function (mr) {
@@ -502,11 +513,11 @@ Player.prototype.doEvent = function (mr) {
         default:
             break;
     }
-};
+}
 Player.prototype.doPit = function () {
     var self = this;
     if (this.getBinaryView(18, 6, 2) === '1') {
-        if (this.getActiveSpellById(SPELL_LEVITATE).timer > 0) {
+        if (this.getActiveSpellActionValue('levitateFactor') > 0 || this.getActiveSpellById(SPELL_LEVITATE).timer > 0) {
             return true;
         }
         floor = this.floor - 1;
@@ -521,7 +532,7 @@ Player.prototype.doPit = function () {
         return true;
     }
     return false;
-};
+}
 Player.prototype.doFizzle = function () {
     if (this.getBinaryView(18, 13, 3) === '6' && this.getBinaryView(18, 6, 2) === '0') {
         for(var c = 0; c < this.champion.length; c++) {
@@ -544,7 +555,7 @@ Player.prototype.doStairs = function () {
     var x = this.x + fOff.x + off.x * 2;
     var y = this.y + fOff.y + off.y * 2;
     this.setPlayerPosition(floor, x, y, d);
-};
+}
 Player.prototype.setPlayerPosition = function (floor, x, y, d) {
     if (typeof floor !== "undefined" && floor >= 0 && floor < tower[towerThis].floor.length) {
         this.lastFloor = this.floor;
@@ -577,7 +588,7 @@ Player.prototype.setPlayerPosition = function (floor, x, y, d) {
         player[p].redrawViewPort = true;
     }
     //this.doEvent(true);
-};
+}
 Player.prototype.getAliveChampionCount = function () {
     var cnt = 0;
     for(var c = 0; c < this.champion.length; c++) {
@@ -1252,7 +1263,7 @@ Player.prototype.getItemsInRange = function (pos2) {
 }
 
 Player.prototype.castSpell = function (sb, ch, s) {
-    if (!this.dead) {
+    if (!this.dead && !this.sleeping && ch.getMonster().getCurseTimers() > 0) {
         if (typeof s === "undefined") {
             var s = false;
         }

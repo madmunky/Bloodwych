@@ -612,6 +612,10 @@ function drawActiveSpell(p) {
             var en = ac.enchant;
             if(typeof en !== "undefined") {
                 spellImage = en;
+                var dir = ac.directional; //compass
+                if(typeof dir !== "undefined") {
+                    spellImage = spellImage.replace('_0', '_' + p.d);
+                }
             }
         } else {
             switch (id) {
@@ -621,16 +625,16 @@ function drawActiveSpell(p) {
                 case SPELL_COMPASS:
                     switch (p.d) {
                         case DIRECTION_NORTH:
-                            spellImage = 'ICON_SPELL_COMPASS_NORTH';
+                            spellImage = 'ICON_SPELL_COMPASS_0';
                             break;
                         case DIRECTION_EAST:
-                            spellImage = 'ICON_SPELL_COMPASS_EAST';
+                            spellImage = 'ICON_SPELL_COMPASS_1';
                             break;
                         case DIRECTION_SOUTH:
-                            spellImage = 'ICON_SPELL_COMPASS_SOUTH';
+                            spellImage = 'ICON_SPELL_COMPASS_2';
                             break;
                         case DIRECTION_WEST:
-                            spellImage = 'ICON_SPELL_COMPASS_WEST';
+                            spellImage = 'ICON_SPELL_COMPASS_3';
                             break;
                     }
                     break;

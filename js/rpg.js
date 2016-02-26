@@ -57,14 +57,19 @@ function calculateAttack(att, def, tof) {
 					defChance = 0.5;
 				}
 				var wp = from.getWeaponPower(POCKET_LEFT_HAND); //weapon attack power
-				if (wp > 0) {
+				if (wp > 1.0) {
 					attack += wp;
 				} else {
 					attack += from.getWeaponPower(POCKET_RIGHT_HAND); //if no weapon in right hand, check left hand
 				}
 				attack = attack * (1.0 + from.stat.str / 2.0 + from.stat.agi / 4.0); //add strength and agility to attack points
-				attack += Math.floor(from.getActiveSpellById(SPELL_WARPOWER).power / 10.0);
-				attack += Math.floor(from.getActiveSpellById(SPELL_ENHANCE).power / 3.0);
+				var atf = from.getActiveSpellActionValue('attackFactor');
+				if(atf > 0) {
+					attack += from.activeSpell.power * atf;
+				} else {
+					attack += Math.floor(from.getActiveSpellById(SPELL_WARPOWER).power / 10.0);
+					attack += Math.floor(from.getActiveSpellById(SPELL_ENHANCE).power / 3.0);
+				}
 				attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
 				//hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
 			}

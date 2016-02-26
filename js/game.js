@@ -108,9 +108,10 @@ function timerAction() {
 			var att = 0;
 			for (var c = 0; c < pl.champion.length; c++) {
 				var ch = pl.getChampion(c);
+				var tm = ch.getMonster().getCurseTimers();
 				if (ch !== null) {
 					ch.recruitment.attackTimer++;
-					if (ch.recruitment.attackTimer % (ch.getAttackSpeed(20) * tmf) === 0) {
+					if (tm > 0 && ch.recruitment.attackTimer % (ch.getAttackSpeed(20) * tmf) === 0) {
 						if (pl.attacking) {
 							pl.tryAttack(ch);
 						}

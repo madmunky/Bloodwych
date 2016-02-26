@@ -817,13 +817,12 @@ Champion.prototype.checkSpell = function() {
 Champion.prototype.expireSpell = function() {
     var p = this.recruitment.playerId;
     this.activeSpell.timer = 0;
-    switch (this.activeSpell.id) {
+    /*switch (this.activeSpell.id) {
         case SPELL_ARMOUR:
             break;
         case SPELL_COMPASS:
             break;
         case SPELL_LEVITATE:
-            player[p].doPit();
             break;
         case SPELL_WARPOWER:
             break;
@@ -837,10 +836,11 @@ Champion.prototype.expireSpell = function() {
             break;
         default:
             break;
-    }
+    }*/
     this.activeSpell.id = -1;
     this.activeSpell.power = 0;
     this.activeSpell.action = undefined;
+    player[p].doPit();
     redrawUI(p, UI_REDRAW_RIGHT);
 }
 
