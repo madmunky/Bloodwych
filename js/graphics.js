@@ -265,6 +265,9 @@ function drawPlayersView(p) {
     } else if(!paused && !p.sleeping) {
         if (p.redrawViewPort){
             p.redrawViewPort = false;
+            if (debug && frontBuffer){
+                ctx.clearRect(285, 100, 400, 235);
+            }
             p.uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;
             myDIx(p.Portal, gfx["dungeon"]["background"], background[(p.x + p.y + p.d) % 2]);
             var il = ((p.getChampion(p.championLeader).prof === PROFESSION_CUTPURSE && cutpurseTrueview) || p.getActiveSpellById(SPELL_TRUEVIEW).timer > 0);
@@ -441,7 +444,10 @@ function drawPlayersView(p) {
                 }
         }
         p.Portal.save();
-        ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);
+        if (!frontBuffer){
+            ctx.drawImage(p.PlayerCanvas, p.PortalX, p.PortalY);
+        }
+
     }}
 }
 

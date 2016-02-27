@@ -758,9 +758,9 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
                     if (!returnImg) {
                         if ((doClip && part === IMAGE_CHA_LEG) || (doClip && part === IMAGE_CHA_MINI)) {
                             var t = clipCharacter(gfx1, pixToClip);
-                            player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
+                            myDIx(player.Portal, t, {sx:(offx + blur), sy: offy, w: t.width, h: t.height, x:0, y:0});
                         } else {
-                            player.Portal.drawImage(gfx1, (offx + blur) * scale, offy * scale, gfx1.width * scale, gfx1.height * scale);
+                            myDIx(player.Portal, gfx1, {sx:(offx + blur), sy: offy, w: gfx1.width, h: gfx1.height, x:0, y:0});
                         }
                     } else {
                         charContext.drawImage(gfx1, (offx + blur), offy, gfx1.width, gfx1.height);
@@ -771,9 +771,9 @@ function drawCharacter(m, dir, dist, player, offset, returnImg, doBlur, doClip, 
                         if (!returnImg) {
                             if (doClip && part === IMAGE_CHA_LEG) {
                                 var t = clipCharacter(gfx2, pixToClip);
-                                player.Portal.drawImage(t, (offx + blur) * scale, offy * scale, t.width * scale, t.height * scale);
+                                myDIx(player.Portal, t, {sx:(offx + blur), sy: offy, w: t.width, h: t.height, x:0, y:0});
                             } else {
-                                player.Portal.drawImage(gfx2, (offx + blur) * scale, offy * scale, gfx2.width * scale, gfx2.height * scale);
+                                myDIx(player.Portal, gfx2, {sx:(offx + blur), sy: offy, w: gfx2.width, h: gfx2.height, x:0, y:0});
                             }
                         } else {
                             charContext.drawImage(gfx2, (offx + blur), offy, gfx2.width, gfx2.height);
@@ -909,7 +909,7 @@ function drawMonster(m, dir, dist, player, offset, returnImg) {
                                                     if (returnImg){
                                                         charContext.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
                                                     }else{
-                                                        player.Portal.drawImage(gfx1, (offx - armoffx + blur) * scale, (offy - armoffy) * scale, gfx1.width * scale, gfx1.height * scale);
+                                                        myDIx(player.Portal,gfx1,{sx:(offx - armoffx + blur), sy: (offy - armoffy), w: gfx1.width, h: gfx1.height, x:0, y: 0})
                                                     }
                             if (dir2 > -1) {
                                 offx = 64 - Math.floor(gfx2.width * 0.5) + offset.x;
@@ -917,7 +917,7 @@ function drawMonster(m, dir, dist, player, offset, returnImg) {
                                                             if (returnImg){
                                                                 charContext.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
                                                             }else{
-                                                                player.Portal.drawImage(gfx2, (offx + armoffx + blur) * scale, (offy - armoffy) * scale, gfx2.width * scale, gfx2.height * scale);
+                                                                myDIx(player.Portal,gfx2,{sx:(offx - armoffx + blur), sy: (offy - armoffy), w: gfx2.width, h: gfx2.height, x:0, y: 0})
                                                             }
                             }
                         }

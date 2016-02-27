@@ -32,6 +32,7 @@ var gfxStage = 0;
 var startMenu = true;
 //var BOS = false;
 var WalkThroughWalls = false;
+var frontBuffer = false;
 
 //Setup some global variables for needed
 var VERSION = 0.50;

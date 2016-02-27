@@ -140,8 +140,18 @@ function setViewportScale(sp) {
 //}
 
 function myDIx(canvas, img, PosAry) {
+
+    if (debug && frontBuffer){
+        canvas = document.getElementById("game-port").getContext("2d")
+    }
+
     if (typeof canvas.drawImage !== "undefined" && typeof img !== "undefined" && img !== null) {
-        canvas.drawImage(img, PosAry.x, PosAry.y, PosAry.w, PosAry.h, (PosAry.sx * scale), (PosAry.sy * scale), PosAry.w * scale, PosAry.h * scale);
+        if (debug && frontBuffer){
+            canvas.drawImage(img, PosAry.x, PosAry.y, PosAry.w, PosAry.h, (PosAry.sx * scale) + 285, (PosAry.sy * scale) + 100, PosAry.w * scale, PosAry.h * scale);
+        }else{
+            canvas.drawImage(img, PosAry.x, PosAry.y, PosAry.w, PosAry.h, (PosAry.sx * scale), (PosAry.sy * scale), PosAry.w * scale, PosAry.h * scale);
+        }
+
     }
 }
 

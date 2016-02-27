@@ -204,6 +204,7 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
     initPlayers(singlePlayer, quickStart, p1_cid, p2_cid);
     if (god && !resumeLoadGame) {
         godMode();
+
     }
     progressScreen("INIT TOWER SWITCHES");
     initTowerSwitches();

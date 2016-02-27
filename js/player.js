@@ -1024,7 +1024,7 @@ Player.prototype.drawItem = function (it, distance, offset) {
                 var offx = 64 - Math.floor(iGfx.width * 0.5) + offset.x;
                 var offy = 77 - Math.floor(iGfx.height) - offset.y;
             }
-            this.Portal.drawImage(iGfx, offx * scale, offy * scale, iGfx.width * scale, iGfx.height * scale);
+            myDIx(this.Portal, iGfx, {sx: offx, sy: offy, w: iGfx.width, h: iGfx.height, x: 0, y: 0})
         }
     } catch (e) {
         "DRAW ITEM ERROR: " + e.toString()
@@ -1075,7 +1075,8 @@ Player.prototype.drawProjectile = function (pr, distance, offset) {
     if (typeof pGfx !== "undefined") {
         var offx = 64 - Math.floor(pGfx.width * 0.5) + offset.x;
         var offy = 77 - Math.floor(pGfx.height * 0.5) - offset.y;
-        this.Portal.drawImage(pGfx, offx * scale, offy * scale, pGfx.width * scale, pGfx.height * scale);
+        //this.Portal.drawImage(pGfx, offx * scale, offy * scale, pGfx.width * scale, pGfx.height * scale);
+        myDIx(this.Portal, pGfx, {sx:offx, sy:offy, w:pGfx.width, h:pGfx.height, x:0, y:0});
     }
 }
 Player.prototype.getActivePocketChampion = function () {

@@ -1094,7 +1094,7 @@ function showEndGame(p) {
         p.message(TEXT_ACCURSED_BLOODWYCH, colourData['GREEN'],0,100000);
         writeFontImage(TEXT_CONGRATS, (p.ScreenX+32.4) * scale, (p.ScreenY+6.5) * scale, colourData['PINK']);
         var t = drawMonster(getMonsterById(478),0,0,player[0],{x:0,y:10},true)
-        p.Portal.drawImage(t,0*scale,0*scale,t.width,t.height);
+        myDIx(p.Portal, t, {sx:0, sy:0, w:t.width, h:t.height, x:0,y:0});
         p.Portal.save()
     }
 
@@ -1124,12 +1124,15 @@ function showFairy(c, p) {
         //ctx.clearRect(p.ScreenX, p.ScreenY, 320 * scale, 8 * scale);
         //p.message(c.firstName + " MAY BUY A SPELL-PICK A CLASS", colourData['GREEN'], false, 3000);
         //writeFontImage(c.firstName + " MAY BUY A SPELL-PICK A CLASS", p.ScreenX, (p.ScreenY -10) * scale, colourData['GREEN']);
-        p.Portal.drawImage(gfxUI['FAIRIES'][0], 8 * scale, 5 * scale, gfxUI['FAIRIES'][0].width * scale, gfxUI['FAIRIES'][0].height * scale);
+        //p.Portal.drawImage(gfxUI['FAIRIES'][0], 8 * scale, 5 * scale, gfxUI['FAIRIES'][0].width * scale, gfxUI['FAIRIES'][0].height * scale);
+        myDXi(p.Portal, gfxUI['FAIRIES'][0], {sx:8, sy:5, w:gfxUI['FAIRIES'][0].width, h:gfxUI['FAIRIES'][0].height, x:0,y:0});
         for(var x = 0; x < 5; x++) {
             if (x < 4) {
-                p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+                //p.Portal.drawImage(gfxUI[80 + x], (17 + (x * 16)) * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+                myDIx(p.Portal, gfxUI[80 + x], {sx:(17 + (x * 16)), sy:50, w:gfxUI[80 + x].width, h:gfxUI[80 + x].height, x:0,y:0});
             } else {
-                p.Portal.drawImage(recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI['ICON_BACK'].width * scale, gfxUI['ICON_BACK'].height * scale);
+                //p.Portal.drawImage(recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI['ICON_BACK'].width * scale, gfxUI['ICON_BACK'].height * scale);
+                myDIx(p.Portal, recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), {sx:(32 + (x * 16)), sy:50, w:gfxUI['ICON_BACK'].width, h:gfxUI['ICON_BACK'].height, x:0,y:0});
             }
         }
     } else {
@@ -1155,7 +1158,8 @@ function showFairy(c, p) {
 
 function showFairySpellScreen(spellClass, p, c) {
 
-    p.Portal.drawImage(gfxUI['FAIRIES'][spellClass + 1], 8 * scale, 5 * scale, gfxUI['FAIRIES'][spellClass + 1].width * scale, gfxUI['FAIRIES'][spellClass + 1].height * scale);
+    //p.Portal.drawImage(gfxUI['FAIRIES'][spellClass + 1], 8 * scale, 5 * scale, gfxUI['FAIRIES'][spellClass + 1].width * scale, gfxUI['FAIRIES'][spellClass + 1].height * scale);
+    myDIx(p.Portal, gfxUI['FAIRIES'][spellClass + 1], {sx:8, sy:5, w:gfxUI['FAIRIES'][spellClass + 1].width, h:gfxUI['FAIRIES'][spellClass + 1].height, x:0, y:0});
 
     var mySpells = c.getUnlearntSpellsByColour(spellClass);
     var spellColour = null;
@@ -1193,7 +1197,8 @@ function showFairySpellScreen(spellClass, p, c) {
     } else {
         p.message(TEXT_ALL_I_HAVE + ch.firstName, colourData['GREEN'], false, 0);
     }
-    p.Portal.drawImage(recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI['ICON_BACK'].width * scale, gfxUI['ICON_BACK'].height * scale);
+    //p.Portal.drawImage(recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (4 * 16)) * scale, 50 * scale, gfxUI['ICON_BACK'].width * scale, gfxUI['ICON_BACK'].height * scale);
+    myDIx(p.Portal, recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), {sx:(32 + (4 * 16)), sy:50, w:gfxUI['ICON_BACK'].width, h:gfxUI['ICON_BACK'].height, x:0, y:0});
 }
 
 function showFairySpellDetailsScreen(spell, p, c) {
@@ -1201,7 +1206,8 @@ function showFairySpellDetailsScreen(spell, p, c) {
     var spellColour = [];
     var spellClass = spell.colour;
 
-    p.Portal.drawImage(gfxUI['FAIRIES'][spellClass + 1], 8 * scale, 5 * scale, gfxUI['FAIRIES'][spellClass + 1].width * scale, gfxUI['FAIRIES'][spellClass + 1].height * scale);
+    //p.Portal.drawImage(gfxUI['FAIRIES'][spellClass + 1], 8 * scale, 5 * scale, gfxUI['FAIRIES'][spellClass + 1].width * scale, gfxUI['FAIRIES'][spellClass + 1].height * scale);
+    myDIx(p.Portal, gfxUI['FAIRIES'][spellClass + 1], {sx:8, sy:5, w:gfxUI['FAIRIES'][spellClass + 1].width, h:gfxUI['FAIRIES'][spellClass + 1].height, x:0, y:0});
 
     /*switch (spellClass) {
 
@@ -1240,10 +1246,12 @@ function showFairySpellDetailsScreen(spell, p, c) {
     for(var x = 0; x < 5; x++) {
         if (x < 4) {
             if (x === spellClass) {
-                p.Portal.drawImage(gfxUI[80 + x], 17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+                //p.Portal.drawImage(gfxUI[80 + x], 17 * scale, 50 * scale, gfxUI[80 + x].width * scale, gfxUI[80 + x].height * scale);
+                myDIx(p.Portal, gfxUI[80 + x], {sx:17, sy:50, w:gfxUI[80 + x].width, h:gfxUI[80 + x].height, x:0,y:0});
             }
         } else {
-            p.Portal.drawImage(recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI['ICON_BACK'].width * scale, gfxUI['ICON_BACK'].height * scale);
+            //p.Portal.drawImage(recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), (32 + (x * 16)) * scale, 50 * scale, gfxUI['ICON_BACK'].width * scale, gfxUI['ICON_BACK'].height * scale);
+            myDIx(p.Portal, recolourUiGfx(gfxUI['ICON_BACK'], paletteData['DEFAULT_ITEM'][0], paletteData['PLAYER'][p.id][1]), {sx:(32 + (x * 16)), sy:50, w:gfxUI['ICON_BACK'].width, h:gfxUI['ICON_BACK'].height, x:0,y:0});
         }
     }
 
