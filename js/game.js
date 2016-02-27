@@ -3,7 +3,7 @@ Game.prototype = {
 
     init: function() {
         this.fps = 10;
-        this.step = 1;// / this.fps;
+        this.step = 1 / this.fps;
         this.reset();
         this.eventQueue = [];
     },
