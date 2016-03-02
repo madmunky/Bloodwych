@@ -121,7 +121,16 @@
 				"row": 1
 			},
 			"action": {
-				"type": "group",
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_ARROW",
+					"type": "MISSILE",
+					"sound": "SOUND_FLASH",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "CHAOS_ARROW"
+					}
+				},
 				"durationFactor": 5.0,
 				"hpFactor": 1.0
 			}
