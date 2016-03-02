@@ -1,51 +1,362 @@
 {
-	"itemDrops": [
-	],
-	"items": [
-		{
-			"id": "ITEM_SHORT_SWORD",
-			"name": "EXT SHORT SWORD",
-			"type": "ITEM_TYPE_WEAPON",
-			"gfx2": {
-				"icon": {
-					"id": "ITEM_SWORD_1"
-				},
-				"dungeon": {
-					"id": "ITEM_SWORD",
-					"recolour": {
-						"from": "DEFAULT_ITEM_DUN",
-						"to": ["RED", "RED_DARK", "GREY_LIGHT", "BLACK"]
-					}
-				}
-			},
-			"onAttack": {
-				"power": 4
-			}
-		},
-		{
-			"id": "ITEM_LONG_SWORD",
-			"name": "LONG SWORD",
-			"type": "ITEM_TYPE_WEAPON",
-			"gfx2": {
-				"icon": {
-					"id": "ITEM_SWORD_2",
-					"recolour": {
-						"from": ["GREEN"],
-						"to": ["YELLOW"]
-					}
-				},
-				"dungeon": {
-					"id": "ITEM_SWORD",
-					"recolour": {
-						"from": "DEFAULT_ITEM_DUN",
-						"to": ["BROWN", "RED_DARK", "GREY_LIGHT", "BLACK"]
-					}
-				}
-			},
-			"onAttack": {
-				"power": 5
-			}
-		}
-	]
+    "itemDrops": [
+    ],
+    "items": [
+        {
+            "id": "ITEM_LEATHER_SHIELD",
+            "name": "RUNE SHIELD",
+            "type": "ITEM_TYPE_SHIELD",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_RUNE_SHIELD",
+                    "recolour": {
+                        "from": ["GREEN"],
+                        "to": ["RED"]
+                    }
+                },
+                "dungeon": {
+                    "id": "ITEM_SMALL_SHIELD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "RED"]
+                    }
+                }
+            },
+            "onEquip": {
+                "allowedSlot": "ITEM_SHIELD",
+                "AC": 1
+            }
+        },
+        {
+            "id": "ITEM_BUCKLER",
+            "name": "RUNE SHIELD",
+            "type": "ITEM_TYPE_SHIELD",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_RUNE_SHIELD"
+                },
+                "dungeon": {
+                    "id": "ITEM_SMALL_SHIELD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "RED"]
+                    }
+                }
+            },
+            "onEquip": {
+                "allowedSlot": "ITEM_SHIELD",
+                "AC": 1
+            }
+        },
+        {
+            "id": "ITEM_RUNE_SHIELD",
+            "name": "RUNE SHIELD",
+            "type": "ITEM_TYPE_SHIELD",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_RUNE_SHIELD"
+                },
+                "dungeon": {
+                    "id": "ITEM_SMALL_SHIELD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "RED"]
+                    }
+                }
+            },
+            "onEquip": {
+                "allowedSlot": "ITEM_SHIELD",
+                "AC": 1
+            }
+        },
+        {
+            "id": "ITEM_LARGE_SHIELD",
+            "name": "WAR SHIELD",
+            "type": "ITEM_TYPE_SHIELD",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_WAR_SHIELD"
+                },
+                "dungeon": {
+                    "id": "ITEM_LARGE_SHIELD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["WHITE", "GREY_LIGHT", "GREY_MEDIUM", "BLACK"]
+                    }
+                }
+            },
+            "onEquip": {
+                "allowedSlot": "ITEM_SHIELD",
+                "allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
+                "AC": 3
+            }
+        },
+        {
+            "id": "ITEM_MOON_SHIELD",
+            "name": "DEMON SCALE",
+            "type": "ITEM_TYPE_SHIELD",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_DEMON_SCALE"
+                },
+                "dungeon": {
+                    "id": "ITEM_LARGE_SHIELD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["WHITE", "BLUE", "BLUE_DARK", "BLACK"]
+                    }
+                }
+            },
+            "onEquip": {
+                "allowedSlot": "ITEM_SHIELD",
+                "allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
+                "AC": 4
+            }
+        },
+        {
+            "id": "ITEM_DRAGON_SCALE",
+            "name": "BATTLE SOUL",
+            "type": "ITEM_TYPE_SHIELD",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_BATTLE_SOUL"
+                },
+                "dungeon": {
+                    "id": "ITEM_LARGE_SHIELD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["YELLOW", "PINK", "RED_DARK", "BLACK"]
+                    }
+                }
+            },
+            "onEquip": {
+                "allowedSlot": "ITEM_SHIELD",
+                "allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
+                "AC": 5
+            }
+        },
+        {
+            "id": "ITEM_WAR_SHIELD",
+            "name": "CHROMATIC PLATE",
+            "type": "ITEM_TYPE_SHIELD",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_CHROMATIC_PLATE"
+                },
+                "dungeon": {
+                    "id": "ITEM_LARGE_SHIELD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["WHITE", "GREEN", "GREEN_DARK", "BLACK"]
+                    }
+                }
+            },
+            "onEquip": {
+                "allowedSlot": "ITEM_SHIELD",
+                "allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
+                "AC": 7
+            }
+        },
+        {
+            "id": "ITEM_SHORT_SWORD",
+            "name": "ADAMANT SWORD",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_ADAMANT_SWORD"
+                },
+                "dungeon": {
+                    "id": "ITEM_SWORD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["GREEN", "GREEN_DARK", "GREY_LIGHT", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 4
+            }
+        },
+        {
+            "id": "ITEM_LONG_SWORD",
+            "name": "FLESHBANE",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_FLESHBANE"
+                },
+                "dungeon": {
+                    "id": "ITEM_SWORD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["YELLOW", "GREEN", "GREY_LIGHT", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 5
+            }
+        },
+        {
+            "id": "ITEM_MITHRIL_SWORD",
+            "name": "DEMON BLADE",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_DEMON_BLADE"
+                },
+                "dungeon": {
+                    "id": "ITEM_SWORD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["RED", "RED_DARK", "GREY_LIGHT", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 7
+            }
+        },
+        {
+            "id": "ITEM_FLESHBANE",
+            "name": "RUNE SWORD",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_RUNE_SWORD"
+                },
+                "dungeon": {
+                    "id": "ITEM_SWORD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["PINK", "RED", "GREY_LIGHT", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 11
+            }
+        },
+        {
+            "id": "ITEM_DEMON_BLADE",
+            "name": "SOUL SUCKER",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_SOUL_SUCKER"
+                },
+                "dungeon": {
+                    "id": "ITEM_SWORD",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 14
+            }
+        },
+        {
+            "id": "ITEM_BATTLE_AXE",
+            "name": "ADAMANT AXE",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_BATTLE_AXE"
+                },
+                "dungeon": {
+                    "id": "ITEM_AXE",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["GREEN", "GREEN_DARK", "GREEN_DARK", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 6
+            }
+        },
+        {
+            "id": "ITEM_MITHRIL_AXE",
+            "name": "OGRE'S AXE",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_OGRES_AXE"
+                },
+                "dungeon": {
+                    "id": "ITEM_AXE",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["BLUE", "BLUE_DARK", "GREY_LIGHT", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 8
+            }
+        },
+        {
+            "id": "ITEM_TROLLS_AXE",
+            "name": "DEATHBRINGER",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_DEATHBRINGER"
+                },
+                "dungeon": {
+                    "id": "ITEM_AXE",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["GREY_LIGHT", "GREY_MEDIUM", "YELLOW", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 10
+            }
+        },
+        {
+            "id": "ITEM_BRAINBITER",
+            "name": "DRAGON AXE",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_DRAGON_AXE"
+                },
+                "dungeon": {
+                    "id": "ITEM_AXE",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["RED", "RED_DARK", "RED", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 13
+            }
+        },
+        {
+            "id": "ITEM_DEATHBRINGER",
+            "name": "GREY AXE",
+            "type": "ITEM_TYPE_WEAPON",
+            "gfx2": {
+                "icon": {
+                    "id": "ITEM_GREY_AXE"
+                },
+                "dungeon": {
+                    "id": "ITEM_AXE",
+                    "recolour": {
+                        "from": "DEFAULT_ITEM_DUN",
+                        "to": ["GREY_LIGHT", "GREY_MEDIUM", "GREY_LIGHT", "BLACK"]
+                    }
+                }
+            },
+            "onAttack": {
+                "power": 16
+            }
+        }
+    ]
 }
 

@@ -573,7 +573,7 @@ Monster.prototype.die = function() {
             if (this.type !== MON_TYPE_DRONE && this.type !== MON_TYPE_DRONE_CASTER) {
                 var it = [];
                 for(var i = 0; i < POCKET_MAX + 1; i++) {
-                    if (this.pocket[i].id > 0) {
+                     if (this.pocket[i].id > 0 && typeof this.pocket !== 'undefined') {
                         it.push({
                             id: this.pocket[i].id,
                             quantity: this.pocket[i].quantity

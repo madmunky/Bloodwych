@@ -76,7 +76,7 @@ var GAME_BLOODWYCH = 0,
 var GAME_ID = ['BW', 'EXT', 'BOS', 'CUSTOM'];
 
 //sounds
-var soundEnabled = true;
+var soundEnabled = false;
 var SOUND_NONE = 0,
     SOUND_DOOR = 1,
     SOUND_ATTACK = 2,
