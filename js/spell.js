@@ -171,6 +171,10 @@ function getSpellBookPage(p) {
 }
 
 function getSpellPower(id) {
+	var sp = spellJson[id];
+	if(typeof sp !== "undefined" && typeof sp.power !== "undefined") {
+		return sp.power;
+	}
 	switch (id) {
 		case SPELL_ARMOUR:
 			return 1;
@@ -266,31 +270,101 @@ function getSpellPower(id) {
 	}
 }
 
-function executeSpell(s, src, pow) {
+function executeSpell(s, act, tar, pow) {
 	var spl = spellJson[s];
+	if(typeof pow === "undefined") {
+		pow = 0;
+	}
 	if(typeof spl !== "undefined") { //JSON
-		var ac = spl.action;
-		var f = src.floor;
-		var x = src.x;
-		var y = src.y;
-		var d = src.d;
+		if(typeof tar.attacker !== "undefined") {
+			var att = tar.attacker;
+			var def = tar.defender;
+			var pow = tar.power;
+			var dExh = tar.defExhaustion;
+			if(def instanceof Champion) {
+				tar = def.getMonster();
+			} else {
+				tar = def;
+			}
+		}
+		var f = tar.floor;
+		var x = tar.x;
+		var y = tar.y;
+		var d = tar.d;
 		var xy = getOffsetByRotation(d);
 		var x1 = x + xy.x;
 		var y1 = y + xy.y;
-		if (src.champId > -1) {
-			var ch = champion[src.champId];
-			if(typeof ac.hpFactor !== "undefined") {
-				ch.addHP(pow * ac.hpFactor);
-			}
-			if(typeof ac.vitFactor !== "undefined") {
-				ch.addVit(pow * ac.vitFactor);
-			}
-			if(typeof ac.spFactor !== "undefined") {
-				ch.addSP(pow * ac.spFactor);
+		if(typeof act.bounce !== "undefined" && act.bounce) { //arc bolt
+			var ob = getObject(f, x, y, d);
+			var obNext = canMove(f, x, y, d);
+			var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
+			if (obNext > OBJECT_MISC && !msc) {
+				var dNew = Math.floor(Math.random() * 2) * 2 + 1;
+				obNext = canMove(f, x, y, (d + dNew) % 4);
+				if (obNext > OBJECT_MISC) {
+					dNew = 4 - dNew;
+					obNext = canMove(f, x, y, (d + dNew) % 4);
+					if (obNext > OBJECT_MISC) {
+						dNew = 2;
+						obNext = canMove(f, x, y, (d + dNew) % 4);
+						if (obNext > OBJECT_MISC) {
+							res = true;
+						}
+					}
+				}
+				tar.d = (d + dNew) % 4;
 			}
 		}
-		if(typeof ac.paralyzeFactor !== "undefined") {
-			src.timerParalyze = pow * ac.paralyzeFactor;
+		var mob = act.setObject;
+		if(typeof mob !== "undefined") { //firepath, formwall, mindrock
+			if (getHexToBinaryPosition(tower[towerThis].floor[f].Map[y][x], 0, 16) === '0000') {
+				setDungeonHex(f, x, y, 13, 3, '7');
+				setDungeonHex(f, x, y, 6, 2, '' + SPELL_DUNGEON[mob]);
+				setDungeonHex(f, x, y, 0, 6, dec2hex(pow));
+				var tim = act.timer;
+				if(typeof tim !== "undefined" && tim) {
+					if(tar instanceof Projectile) {
+						setDungeonSpell(f, x, y, tar);
+					} else {
+						setDungeonSpell(f, x, y);
+					}
+				}
+			}
+		}
+		if(typeof act.damage !== "undefined" && act.damage && typeof att !== "undefined" && typeof def !== "undefined") { //damage spells
+			if (att !== null) {
+				var pl = att.isRecruitedBy();
+				var ch = att.getChampion();
+				att.doDamageTo(def, pow, dExh);
+				if (pl !== null && ch !== null) {
+					if (def instanceof Monster) {
+						pl.gainChampionXp(pow, ch);
+						if (def.dead) {
+							pl.gainChampionXp(128);
+						}
+					}
+				}
+			}
+		}
+		if(tar instanceof Monster) {
+			var ch = tar.getChampion();
+			if(ch !== null) {
+				if(typeof act.enchant !== "undefined") {
+					ch.activateSpell(s, pow);
+				}
+				if(typeof act.hpFactor !== "undefined") {
+					ch.addHP(pow * act.hpFactor);
+				}
+				if(typeof act.vitFactor !== "undefined") {
+					ch.addVit(pow * act.vitFactor);
+				}
+				if(typeof act.spFactor !== "undefined") {
+					ch.addSP(pow * act.spFactor);
+				}
+			}
+			if(typeof act.paralyzeFactor !== "undefined") {
+				tar.timerParalyze = pow * act.paralyzeFactor;
+			}
 		}
 	}
 }
@@ -315,20 +389,25 @@ function castSpell(s, src, pw) {
 		var ac = spl.action;
 		if(typeof ac !== "undefined") {
 			if(typeof ac.type !== "undefined") {
-				if(ac.type === 'enchant' && typeof ch !== "undefined") {
-					ch.activateSpell(s, pow);
-				} else if (ac.type === 'self') {
-					executeSpell(s, src, pow);
+				if (ac.type === 'self') {
+					executeSpell(s, ac, src, pow);
 				} else if(ac.type === 'group') {
 					if(ch.recruitment.playerId > -1) {
 						var pl = player[ch.recruitment.playerId];
 						var chs = pl.getOrderedChampions();
 						for(var c in chs) {
 							if(chs[c].recruitment.attached) {
-								executeSpell(s, chs[c].getMonster(), pow);
+								executeSpell(s, ac, chs[c].getMonster(), pow);
 							}
 						}
 					}
+				} else if(ac.type === 'front') {
+					executeSpell(s, ac, {
+						floor: f,
+						x: x1,
+						y: y1,
+						d: d
+					}, pow);
 				} else if(ac.type === 'projectile') {
 					var pr = ac.projectile;
 					if(pr !== "undefined") {
@@ -588,16 +667,19 @@ function castSpell(s, src, pw) {
 
 function setDungeonSpell(f, x, y, proj) {
 	var max = dungeonSpellList.length;
-	if(typeof proj === "undefined") {
-		proj = null;
+	var p = null;
+	var pid = null;
+	if(typeof proj !== "undefined") {
+		p = proj;
+		pid = proj.id;
 	}
 	dungeonSpellList[max] = {
 		tower: towerThis,
 		floor: f,
 		x: x,
 		y: y,
-		projectile: proj,
-		projectileId: proj.id
+		projectile: p,
+		projectileId: pid
 	};
 }
 

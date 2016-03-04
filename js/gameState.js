@@ -68,7 +68,9 @@ function loadGame(g) {
 			}
 		}
 		for(var s in dungeonSpellList) {
-			dungeonSpellList[s].projectile = getProjectileById(dungeonSpellList[s].tower, dungeonSpellList[s].projectileId);
+			if(dungeonSpellList[s] !== null) {
+				dungeonSpellList[s].projectile = getProjectileById(dungeonSpellList[s].tower, dungeonSpellList[s].projectileId);
+			}
 		}
 
 		//version control

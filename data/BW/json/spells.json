@@ -14,7 +14,7 @@
 				"row": 0
 			},
 			"action": {
-				"type": "enchant",
+				"type": "self",
 				"enchant": "ICON_SPELL_ARMOUR",
 				"durationFactor": 5.0,
 				"defenseFactor": 0.1
@@ -37,7 +37,7 @@
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_ARROW",
-					"type": "MISSILE",
+					"type": "SINGLE",
 					"sound": "SOUND_FLASH",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
@@ -61,7 +61,7 @@
 				"row": 6
 			},
 			"action": {
-				"type": "enchant",
+				"type": "self",
 				"enchant": "ICON_SPELL_COMPASS_0",
 				"durationFactor": 5.0,
 				"directional": true
@@ -81,7 +81,7 @@
 				"row": 5
 			},
 			"action": {
-				"type": "enchant",
+				"type": "self",
 				"enchant": "ICON_SPELL_LEVITATE",
 				"durationFactor": 5.0,
 				"levitateFactor": 1.0
@@ -101,7 +101,7 @@
 				"row": 7
 			},
 			"action": {
-				"type": "enchant",
+				"type": "self",
 				"enchant": "ICON_SPELL_WARPOWER",
 				"durationFactor": 5.0,
 				"attackFactor": 0.1
@@ -121,18 +121,84 @@
 				"row": 1
 			},
 			"action": {
+				"type": "group",
+				"hpFactor": 1.0
+			}
+		},
+		{
+			"id": "SPELL_ARC_BOLT",
+			"name": "ARC BOLT",
+			"description": "AN ELECTRIFYING EXPERIENCE",
+			"class": "CLASS_SERPENT",
+			"grade": 6,
+			"level": 4,
+			"power": 2,
+			"book": {
+				"symbols": "NISH",
+				"page": 3,
+				"row": 3
+			},
+			"action": {
 				"type": "projectile",
 				"projectile": {
-					"id": "PROJECTILE_ARROW",
-					"type": "MISSILE",
-					"sound": "SOUND_FLASH",
+					"id": "PROJECTILE_BIG",
+					"type": "MULTI",
+					"sound": "SOUND_EXPLODE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
-						"to": "CHAOS_ARROW"
+						"to": "SERPENT_BIG"
+					},
+					"onMove": {
+						"bounce": true
+					},
+					"onDeath": {
+						"damage": true
 					}
-				},
+				}
+			}
+		},
+		{
+			"id": "SPELL_FORMWALL",
+			"name": "FORMWALL",
+			"description": "FOR THOSE WHO LOVE WALLS",
+			"class": "CLASS_SERPENT",
+			"grade": 7,
+			"level": 5,
+			"power": 1,
+			"book": {
+				"symbols": "ACOU",
+				"page": 3,
+				"row": 4
+			},
+			"action": {
+				"type": "front",
+				"setObject": "WALL",
+				"timer": true
+			}
+		},
+
+
+
+		{
+			"id": "SPELL_DEFLECT",
+			"name": "DEFLECT",
+			"description": "A SPELL A DAY KEEPS AN ARROW AWAY",
+			"class": "CLASS_CHAOS",
+			"grade": 0,
+			"level": 1,
+			"power": 1,
+			"book": {
+				"symbols": "ANEE",
+				"page": 0,
+				"row": 4
+			},
+			"action": {
+				"type": "self",
+				"enchant": "ICON_SPELL_DEFLECT",
 				"durationFactor": 5.0,
-				"hpFactor": 1.0
+				"deflectProjectile": {
+					"type": "SINGLE"
+				}
 			}
 		}
 	]

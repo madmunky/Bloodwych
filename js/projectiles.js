@@ -67,22 +67,21 @@ Projectile.prototype.move = function() {
 			var sid = null;
 			if(this.spell !== null) {
 				var sid = this.spell.id;
-				var sp = spellJson[sid]; //JSON
-				var apf = getObjectByKeys(sp, 'action', 'projectile', 'attackPowerFactor');
-				if(typeof sp !== "undefined" && typeof apf !== "undefined") {
-					var isDamage = (typeof this.spell === 'number' || apf !== 1.0);
+				var sp = spellJson[sid];
+				if(typeof sp !== "undefined") { //JSON
+					var mis = getObjectByKeys(sp, 'action', 'projectile', 'type');
 				} else {
 					var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND || sid === SPELL_INFERNO || sid === SPELL_SPRAY);
 				}
-				var mis = getObjectByKeys(sp, 'action', 'projectile', 'type');
 				if(typeof sp !== "undefined" && typeof mis !== "undefined") {
-					var isMissile = (mis === 'MISSILE');
+					var isMissile = (mis === 'SINGLE');
 				} else {
 					var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE || sid === SPELL_NULLIFY || sid === SPELL_FIREPATH);
 				}
 			}
 			var pl = getPlayerAt(this.floor, this.x, this.y);
 			if(pl !== null) {
+				//var dfl = pl.getActiveSpellActionValue('deflectProjectile'); //!!!!!
 				if((pl.getActiveSpellById(SPELL_DEFLECT).timer > 0 || pl.getActiveSpellById(SPELL_PROTECT).timer > 0) && isMissile) { //Deflect makes missile-shaped spells to reverse direction
 					if(pl.getActiveSpellById(SPELL_DEFLECT).timer > 0) {
 						pl.getActiveSpellById(SPELL_DEFLECT).timer -= this.power;
@@ -96,24 +95,28 @@ Projectile.prototype.move = function() {
 					this.y += xy.y;
 					return true;
 				} else {
-					if(isDamage) {
-						this.attack(pl);
+					if(this.action(pl)) {
+						return true;
 					} else {
-						this.action(pl);
+						if(isDamage) {
+							this.attack(pl);
+						}
+						this.die(true);
+						return false;
 					}
-					this.die(true);
-					return false;
 				}
 			}
 			var mon = getMonsterAt(this.floor, this.x, this.y);
 			if (mon !== null) {
 				if(isDamage) {
 					this.attack(mon);
-				} else {
-					this.action(mon);
 				}
-				this.die();
-				return false;
+				if(this.action(mon)) {
+					return true;
+				} else {
+					this.die();
+					return false;
+				}
 			}
 		}
 		if(this.power === 0) {
@@ -145,6 +148,18 @@ Projectile.prototype.move = function() {
 				}
 			}
 		}
+		if(this.spell !== null) {
+			var id = this.spell.id;
+			var sp = spellJson[id];
+			if(typeof sp !== "undefined") { //JSON
+				var prj = getObjectByKeys(sp, 'action', 'projectile');
+				if(typeof prj !== "undefined") {
+					if(getMonsterAt(this.floor, this.x, this.y) === null) {
+						executeSpell(id, prj.onDeath, this, this.power);
+					}
+				}
+			}
+		}
 		this.dead = 2;
 		for(var p in player) { player[p].redrawViewPort = true;}
 		return false;
@@ -171,16 +186,28 @@ Projectile.prototype.die = function(snd) {
 }
 
 Projectile.prototype.action = function(tar) {
+	var res = false;
 	var id = this.spell.id;
-	var combat = calculateAttack(this, tar);
-	var fac = 1.0;
-	if(combat.length > 0) {
-		var sp = spellJson[id];
-		if(typeof sp !== "undefined") {
-			if(tar instanceof Monster) {
-				executeSpell(id, tar, combat[0].power);
+	var sp = spellJson[id];
+	if(typeof sp !== "undefined") { //JSON
+		var prj = getObjectByKeys(sp, 'action', 'projectile');
+		if(typeof prj !== "undefined") {
+			var typ = getObjectByKeys(prj, 'type');
+			if(typeof typ !== "undefined" && typ === 'MULTI') {
+				var combat = calculateAttack(this, tar, 'all');
+			} else {
+				var combat = calculateAttack(this, tar);
 			}
-		} else {
+			if(combat.length > 0) {
+				for(var c in combat) {
+					executeSpell(id, prj.onDeath, combat[c]);
+				}
+			}
+		}
+	} else {
+		var fac = 1.0;
+		var combat = calculateAttack(this, tar);
+		if(combat.length > 0) {
 			switch (id) {
 				case SPELL_PARALYZE:
 					if(tar instanceof Monster) {
@@ -286,15 +313,21 @@ Projectile.prototype.action = function(tar) {
 			}
 		}
 	}
+	return res;
 }
 
 Projectile.prototype.event = function() {
+	var res = false;
 	if(this.spell !== null && typeof this.spell !== 'number') {
+		var id = this.spell.id;
 		var ob = getObject(this.floor, this.x, this.y, this.d);
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
-		switch (this.spell.id) {
-			case SPELL_ARC_BOLT:
+		var mov = getObjectByKeys(spellJson[id], 'action', 'projectile', 'onMove');
+		if(typeof mov !== "undefined") { //JSON
+			executeSpell(id, mov, this, this.power);
+		} else {
+			if(id === SPELL_ARC_BOLT) {
 				if (obNext > OBJECT_MISC && !msc) {
 					var dNew = Math.floor(Math.random() * 2) * 2 + 1;
 					obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
@@ -305,22 +338,22 @@ Projectile.prototype.event = function() {
 							dNew = 2;
 							obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
 							if (obNext > OBJECT_MISC) {
-								return true;
+								res = true;
 							}
 						}
 					}
 					this.d = (this.d + dNew) % 4;
 				}
-				break;
-			case SPELL_FIREPATH:
+			}
+			if(id === SPELL_FIREPATH) {
 				if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
 					setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
 					setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
 					setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
 					setDungeonSpell(this.floor, this.x, this.y, this);
 				}
-				break;
-			case SPELL_BLAZE:
+			}
+			if(id === SPELL_BLAZE) {
 				if(this.palette === paletteData['BLAZE_BIG']) {
 					if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
 						setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
@@ -331,19 +364,19 @@ Projectile.prototype.event = function() {
 					if (obNext > OBJECT_NONE) {
 						this.palette = paletteData['DRAGON_BIG'];
 						this.d = (this.d + 2) % 4;
-						return true;
+						res = true;
 					}
 				} else {
 					//var xy = getOffsetByRotation(this.d);
 					if (canMoveByFirepath(this.floor, this.x, this.y) && !canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
 						this.d = (this.d + 2) % 4;
 						if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
-							return true;
+							res = true;
 						}
 					}
 				}
-				break;
-			case SPELL_INFERNO:
+			}
+			if(id === SPELL_INFERNO) {
 				if(this.palette === paletteData['BLAZE_BIG']) {
 					if(!canMoveByFirepath(this.floor, this.x, this.y)) {
 						if (getHexToBinaryPosition(tower[towerThis].floor[this.floor].Map[this.y][this.x], 0, 16) === '0000') {
@@ -362,7 +395,7 @@ Projectile.prototype.event = function() {
 									dNew = 2;
 									obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
 									if (obNext > OBJECT_MISC) {
-										return true;
+										res = true;
 									}
 								}
 							}
@@ -370,7 +403,7 @@ Projectile.prototype.event = function() {
 						}
 					} else {
 						this.palette = paletteData['DRAGON_BIG'];
-						return true;
+						res = true;
 					}
 				} else {
 					if (canMoveByFirepath(this.floor, this.x, this.y) && !canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
@@ -382,14 +415,14 @@ Projectile.prototype.event = function() {
 							if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
 								this.d = dLast;
 								if (!canMoveByFirepath(this.floor, this.x, this.y, this.d)) {
-									return true;
+									res = true;
 								}
 							}
 						}
 					}
 				}
-				break;
-			case SPELL_NULLIFY:
+			}
+			if(id === SPELL_NULLIFY) {
 				if(this.setBinaryView(18, 12, 1) === '1') {
 					this.setBinaryView(18, 12, 1, '0');
 				}
@@ -397,12 +430,10 @@ Projectile.prototype.event = function() {
 					this.setBinaryView(18, 0, 16, '0000');
 					deleteDungeonSpell(this.floor, this.x, this.y);
 				}
-				break;
-			default:
-				break;
+			}
 		}
 	}
-	return false;
+	return res;
 }
 
 Projectile.prototype.attack = function(target, prc) {
@@ -413,11 +444,11 @@ Projectile.prototype.attack = function(target, prc) {
 	if (typeof this.spell === 'number' || this.spell.id === SPELL_MISSILE) {
 		single = true;
 	}
-	for (var i = 3; i >= 0; i--) {
+	//for (var i = 3; i >= 0; i--) {
 		if (single) {
 			var combat = calculateAttack(this, target);
 		} else {
-			var combat = calculateAttack(this, target, i);
+			var combat = calculateAttack(this, target, 'all');
 		}
 		for(var com = 0; com < combat.length; com++) {
 			var att = combat[com].attacker;
@@ -463,10 +494,10 @@ Projectile.prototype.attack = function(target, prc) {
 				}
 			}
 		}
-		if (single) {
-			break;
-		}
-	}
+		//if (single) {
+		//	break;
+		//}
+	//}
 }
 
 Projectile.prototype.setBinaryView = function(pos18, index, length, to) {

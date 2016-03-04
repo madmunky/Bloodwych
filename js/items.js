@@ -22,9 +22,9 @@ Item.revive = function(data) {
 }
 
 Item.prototype.getPower = function(ac) {
-    var pw = getObjectByKeys(itemJson[this.id], 'power');
+    var pw = getObjectByKeys(itemJson[this.id], 'damage');
     if(typeof ac !== "undefined") {
-        pw = getObjectByKeys(itemJson[this.id], ac, 'power');
+        pw = getObjectByKeys(itemJson[this.id], ac, 'damage');
     }
     if(typeof pw !== "undefined") { //JSON
         return pw;
@@ -33,9 +33,9 @@ Item.prototype.getPower = function(ac) {
 }
 
 Item.prototype.getPowerFactor = function(ac) {
-    var pw = getObjectByKeys(itemJson[this.id], 'powerFactor');
+    var pw = getObjectByKeys(itemJson[this.id], 'damageFactor');
     if(typeof ac !== "undefined") {
-        pw = getObjectByKeys(itemJson[this.id], ac, 'powerFactor');
+        pw = getObjectByKeys(itemJson[this.id], ac, 'damageFactor');
     }
     if(typeof pw !== "undefined") { //JSON
         return pw;

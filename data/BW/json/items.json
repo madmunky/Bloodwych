@@ -1069,7 +1069,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 2
+				"damage": 2
 			}
 		},
 		{
@@ -1089,7 +1089,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 3
+				"damage": 3
 			}
 		},
 		{
@@ -1109,7 +1109,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 4
+				"damage": 4
 			}
 		},
 		{
@@ -1133,7 +1133,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 5
+				"damage": 5
 			}
 		},
 		{
@@ -1157,7 +1157,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 7
+				"damage": 7
 			}
 		},
 		{
@@ -1177,7 +1177,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 11
+				"damage": 11
 			}
 		},
 		{
@@ -1197,7 +1197,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 14
+				"damage": 14
 			}
 		},
 		{
@@ -1217,7 +1217,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 14,
+				"damage": 14,
 				"whileWearing": {
 					"id": "ITEM_CHAOS_GLOVES",
 					"powerFactor": 1.25
@@ -1245,7 +1245,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 6
+				"damage": 6
 			}
 		},
 		{
@@ -1269,7 +1269,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 8
+				"damage": 8
 			}
 		},
 		{
@@ -1289,7 +1289,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 10
+				"damage": 10
 			}
 		},
 		{
@@ -1309,7 +1309,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 13
+				"damage": 13
 			}
 		},
 		{
@@ -1329,7 +1329,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 16
+				"damage": 16
 			}
 		},
 		{
@@ -1353,7 +1353,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 4
+				"damage": 4
 			}
 		},
 		{
@@ -1377,7 +1377,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 7
+				"damage": 7
 			}
 		},
 		{
@@ -1401,7 +1401,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 10
+				"damage": 10
 			}
 		},
 
@@ -2078,7 +2078,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 4,
+				"damage": 4,
 				"shootId": ["ITEM_ARROWS", "ITEM_ELF_ARROWS"]
 			}
 		},
@@ -2103,7 +2103,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 7,
+				"damage": 7,
 				"shootType": ["ITEM_ARROWS", "ITEM_ELF_ARROWS"]
 			}
 		},
@@ -2120,7 +2120,7 @@
 				}
 			},
 			"onAttack": {
-				"power": 10,
+				"damage": 10,
 				"shootType": ["ITEM_ARROWS", "ITEM_ELF_ARROWS"]
 			}
 		},
@@ -2464,11 +2464,11 @@
 				}
 			},
 			"onAttack": {
-				"power": 16,
+				"damage": 16,
 				"castSpell": {
 					"id": "SPELL_FIREBALL",
 					"chance": 0.2,
-					"power": 30
+					"damage": 30
 				}
 			}
 		}

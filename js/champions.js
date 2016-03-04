@@ -222,8 +222,8 @@ Champion.prototype.getWeaponPower = function() {
                         var typ = getObjectByKeys(ww, 'type'); //item type that should be checked
                         var sl2 = getObjectByKeys(itemJson[it2.id], 'onEquip', 'allowedSlot'); //check in what slot this item is allowed (e.g. gloves in gloves slot)
                         if((typeof sl2 === "undefined" || sl2.getVar() === slot2[s2]) && (typeof id === "undefined" || id.getVar() === it2.id) && (typeof typ === "undefined" || typ.getVar() === it2.type)) {
-                            var p = getObjectByKeys(ww, 'power');
-                            var pf = getObjectByKeys(ww, 'powerFactor');
+                            var p = getObjectByKeys(ww, 'damage');
+                            var pf = getObjectByKeys(ww, 'damageFactor');
                             if(typeof p !== "undefined") {
                                 pow += p;
                             }
@@ -302,11 +302,11 @@ Champion.prototype.useItem = function(it, ac, param) {
     var pof = 1.0;
 
     //Get power
-    var pw2 = getObjectByKeys(use, 'power');
+    var pw2 = getObjectByKeys(use, 'damage');
     if(typeof pw2 !== "undefined") {
         pow = pw2;
     }
-    var pf2 = getObjectByKeys(use, 'powerFactor');
+    var pf2 = getObjectByKeys(use, 'damageFactor');
     if(typeof pf2 !== "undefined") {
         pof = pf2;
     }
@@ -355,7 +355,7 @@ Champion.prototype.useItem = function(it, ac, param) {
         if(typeof ch === "undefined" || Math.random() < ch) {
             var irc = getObjectByKeys(spl, 'addQuantity');
             if(it.quantity > 1 || typeof irc === "undefined" || irc >= 0) {
-                var pw = getObjectByKeys(spl, 'power');
+                var pw = getObjectByKeys(spl, 'damage');
                 if(typeof pw === "undefined") {
                     var pw = this.getSpellPower();
                 }
@@ -382,8 +382,8 @@ Champion.prototype.useItem = function(it, ac, param) {
             var imc = getObjectByKeys(use, 'changeSpell', 'manaCostFactor');
             var irc = getObjectByKeys(use, 'changeSpell', 'addQuantity');
             if(it.quantity > 1 || typeof irc === "undefined" || irc >= 0) {
-                var ip = getObjectByKeys(use, 'changeSpell', 'power');
-                var ipf = getObjectByKeys(use, 'changeSpell', 'powerFactor');
+                var ip = getObjectByKeys(use, 'changeSpell', 'damage');
+                var ipf = getObjectByKeys(use, 'changeSpell', 'damageFactor');
                 if(typeof ip !== "undefined") {
                     pow += ip;
                 }

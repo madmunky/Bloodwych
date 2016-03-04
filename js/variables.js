@@ -1692,6 +1692,13 @@ var SPELL_ARMOUR = 0,
     SPELL_VORTEX = 38,
     SPELL_RESTORE = 39;
 
+var SPELL_DUNGEON = {
+    'NONE': 0,
+    'FIRE': 1,
+    'FAKEWALL': 2,
+    'WALL': 3
+};
+
 //Exceptional spells
 SPELL_BLAZE_BALL = 40;
 
