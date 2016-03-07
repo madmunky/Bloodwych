@@ -69,7 +69,7 @@ function calculateAttack(att, def, tof) {
 					}
 					attack = attack * (1.0 + from.stat.str / 2.0 + from.stat.agi / 4.0); //add strength and agility to attack points
 					var atf = from.getActiveSpellActionValue('attackFactor');
-					if(atf > 0) {
+					if(typeof atf !== "undefined") {
 						attack += from.activeSpell.power * atf;
 					} else {
 						attack += Math.floor(from.getActiveSpellById(SPELL_WARPOWER).power / 10.0);
@@ -129,7 +129,7 @@ function calculateAttack(att, def, tof) {
 						defense += to.stat.agi / 4.0;
 						defense -= to.getArmourClass();
 						var def = to.getActiveSpellActionValue('defenseFactor');
-						if(def > 0) {
+						if(typeof def !== "undefined") {
 							defense += to.activeSpell.power * def;
 						} else {
 							defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
@@ -164,7 +164,7 @@ function calculateAttack(att, def, tof) {
 								defense += to.stat.agi / 4.0;
 								defense -= to.getArmourClass();
 								var df = to.getActiveSpellActionValue('defenseFactor');
-								if(df > 0) {
+								if(typeof df !== "undefined") {
 									defense += to.activeSpell.power * df;
 								} else {
 									defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);

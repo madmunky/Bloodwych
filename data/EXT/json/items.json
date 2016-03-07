@@ -23,7 +23,7 @@
                 }
             },
             "onEquip": {
-                "allowedSlot": "ITEM_SHIELD",
+                "allowedSlot": "POCKET_SHIELD",
                 "AC": 1
             }
         },
@@ -44,7 +44,7 @@
                 }
             },
             "onEquip": {
-                "allowedSlot": "ITEM_SHIELD",
+                "allowedSlot": "POCKET_SHIELD",
                 "AC": 1
             }
         },
@@ -65,7 +65,7 @@
                 }
             },
             "onEquip": {
-                "allowedSlot": "ITEM_SHIELD",
+                "allowedSlot": "POCKET_SHIELD",
                 "AC": 1
             }
         },
@@ -86,7 +86,7 @@
                 }
             },
             "onEquip": {
-                "allowedSlot": "ITEM_SHIELD",
+                "allowedSlot": "POCKET_SHIELD",
                 "allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
                 "AC": 3
             }
@@ -108,7 +108,7 @@
                 }
             },
             "onEquip": {
-                "allowedSlot": "ITEM_SHIELD",
+                "allowedSlot": "POCKET_SHIELD",
                 "allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
                 "AC": 4
             }
@@ -130,7 +130,7 @@
                 }
             },
             "onEquip": {
-                "allowedSlot": "ITEM_SHIELD",
+                "allowedSlot": "POCKET_SHIELD",
                 "allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
                 "AC": 5
             }
@@ -152,7 +152,7 @@
                 }
             },
             "onEquip": {
-                "allowedSlot": "ITEM_SHIELD",
+                "allowedSlot": "POCKET_SHIELD",
                 "allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
                 "AC": 7
             }

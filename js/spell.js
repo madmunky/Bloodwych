@@ -271,99 +271,171 @@ function getSpellPower(id) {
 }
 
 function executeSpell(s, act, tar, pow) {
-	var spl = spellJson[s];
-	if(typeof pow === "undefined") {
-		pow = 0;
-	}
-	if(typeof spl !== "undefined") { //JSON
-		if(typeof tar.attacker !== "undefined") {
-			var att = tar.attacker;
-			var def = tar.defender;
-			var pow = tar.power;
-			var dExh = tar.defExhaustion;
-			if(def instanceof Champion) {
-				tar = def.getMonster();
-			} else {
-				tar = def;
-			}
+	if(typeof act !== "undefined") {
+		var spl = spellJson[s];
+		if(typeof pow === "undefined") {
+			pow = 0;
 		}
-		var f = tar.floor;
-		var x = tar.x;
-		var y = tar.y;
-		var d = tar.d;
-		var xy = getOffsetByRotation(d);
-		var x1 = x + xy.x;
-		var y1 = y + xy.y;
-		if(typeof act.bounce !== "undefined" && act.bounce) { //arc bolt
-			var ob = getObject(f, x, y, d);
-			var obNext = canMove(f, x, y, d);
-			var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
-			if (obNext > OBJECT_MISC && !msc) {
-				var dNew = Math.floor(Math.random() * 2) * 2 + 1;
-				obNext = canMove(f, x, y, (d + dNew) % 4);
-				if (obNext > OBJECT_MISC) {
-					dNew = 4 - dNew;
+		if(typeof spl !== "undefined") { //JSON
+			if(typeof tar.attacker !== "undefined") {
+				var att = tar.attacker;
+				var def = tar.defender;
+				var pow = tar.power;
+				var dExh = tar.defExhaustion;
+				if(def instanceof Champion) {
+					tar = def.getMonster();
+				} else {
+					tar = def;
+				}
+			}
+			var f = tar.floor;
+			var x = tar.x;
+			var y = tar.y;
+			var d = tar.d;
+			var xy = getOffsetByRotation(d);
+			var x1 = x + xy.x;
+			var y1 = y + xy.y;
+			if(typeof act.bounce !== "undefined" && act.bounce) { //arc bolt
+				var ob = getObject(f, x, y, d);
+				var obNext = canMove(f, x, y, d);
+				var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
+				if (obNext > OBJECT_MISC && !msc) {
+					var dNew = Math.floor(Math.random() * 2) * 2 + 1;
 					obNext = canMove(f, x, y, (d + dNew) % 4);
 					if (obNext > OBJECT_MISC) {
-						dNew = 2;
+						dNew = 4 - dNew;
 						obNext = canMove(f, x, y, (d + dNew) % 4);
 						if (obNext > OBJECT_MISC) {
-							res = true;
+							dNew = 2;
+							obNext = canMove(f, x, y, (d + dNew) % 4);
+							if (obNext > OBJECT_MISC) {
+								res = true;
+							}
 						}
 					}
+					tar.d = (d + dNew) % 4;
 				}
-				tar.d = (d + dNew) % 4;
 			}
-		}
-		var mob = act.setObject;
-		if(typeof mob !== "undefined") { //firepath, formwall, mindrock
-			if (getHexToBinaryPosition(tower[towerThis].floor[f].Map[y][x], 0, 16) === '0000') {
-				setDungeonHex(f, x, y, 13, 3, '7');
-				setDungeonHex(f, x, y, 6, 2, '' + SPELL_DUNGEON[mob]);
-				setDungeonHex(f, x, y, 0, 6, dec2hex(pow));
-				var tim = act.timer;
-				if(typeof tim !== "undefined" && tim) {
-					if(tar instanceof Projectile) {
-						setDungeonSpell(f, x, y, tar);
-					} else {
-						setDungeonSpell(f, x, y);
+			var mob = act.setObject;
+			if(typeof mob !== "undefined") { //firepath, formwall, mindrock
+				if (getHexToBinaryPosition(tower[towerThis].floor[f].Map[y][x], 0, 16) === '0000') {
+					var tim = act.timer;
+					if(typeof tim !== "undefined" && tim > 0.0) {
+						tim *= SPELL_DUNGEON[mob];
 					}
-				}
-			}
-		}
-		if(typeof act.damage !== "undefined" && act.damage && typeof att !== "undefined" && typeof def !== "undefined") { //damage spells
-			if (att !== null) {
-				var pl = att.isRecruitedBy();
-				var ch = att.getChampion();
-				att.doDamageTo(def, pow, dExh);
-				if (pl !== null && ch !== null) {
-					if (def instanceof Monster) {
-						pl.gainChampionXp(pow, ch);
-						if (def.dead) {
-							pl.gainChampionXp(128);
+					setDungeonHex(f, x, y, 13, 3, '7');
+					setDungeonHex(f, x, y, 6, 2, '' + tim);
+					setDungeonHex(f, x, y, 0, 6, dec2hex(pow));
+					var tim = act.timer;
+					if(typeof tim !== "undefined" && tim > 0.0) {
+						if(tar instanceof Projectile) {
+							setDungeonSpell(f, x, y, tar);
+						} else {
+							setDungeonSpell(f, x, y);
 						}
 					}
 				}
 			}
-		}
-		if(tar instanceof Monster) {
-			var ch = tar.getChampion();
-			if(ch !== null) {
-				if(typeof act.enchant !== "undefined") {
-					ch.activateSpell(s, pow);
+			if(typeof act.damage !== "undefined" && act.damage && typeof att !== "undefined" && typeof def !== "undefined") { //damage spells
+				if (att !== null) {
+					var pl = att.isRecruitedBy();
+					var ch = att.getChampion();
+					att.doDamageTo(def, pow, dExh);
+					if (pl !== null && ch !== null) {
+						if (def instanceof Monster) {
+							pl.gainChampionXp(pow, ch);
+							if (def.dead) {
+								pl.gainChampionXp(128);
+							}
+						}
+					}
+				}
+			}
+			if(tar instanceof Monster) {
+				var ch = tar.getChampion();
+				if(ch !== null) {
+					if(typeof act.enchant !== "undefined") {
+						ch.activateSpell(s, pow);
+					}
+					var chi = act.changeItem; //alchemy
+					if(chi !== "undefined") {
+						var pck = chi.pocket;
+						var fTyp = chi.fromType;
+						var fId = chi.fromId;
+						if(pck !== "undefined" && pck.length > 0) {
+							for(var p in pck) {
+								var slot = pck[p].getVar();
+								var itm = itemJson[ch.pocket[slot].id];
+								if(typeof itm !== "undefined") {
+									if((typeof fTyp !== "undefined" && $.inArray(itm.type, fTyp) > -1) || (typeof fId !== "undefined" && $.inArray(itm.id, fId) > -1)) {
+										var tId = chi.toId;
+										if(typeof tId !== "undefined") {
+											var to = tId[Math.floor(Math.random() * tId.length)];
+											var it = parseItem(to);
+											var q = 1;
+											if(itemJson[it].type === 'ITEM_TYPE_STACKABLE') {
+												var qf = chi.toQuantityFactor;
+												if(typeof qf === "undefined") {
+													qf = 1.0;
+												}
+												q = Math.floor(Math.random() * pow * qf) + 1;
+												var slot2 = ch.findPocketItem(it);
+												if(slot2 !== null) {
+													var it2 = ch.pocket[slot2];
+													q = q + it2.quantity;
+													if(q > 99) {
+														q = 99;
+													}
+													it2.setPocketItem();
+												}
+											}
+											ch.pocket[slot].setPocketItem(to, q);
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				if(typeof act.steal !== "undefined" && act.steal) {
+					if(typeof act.hpFactor !== "undefined") {
+						if(pow > -tar.getHP() * act.hpFactor) {
+							pow = tar.getHP() + 1;
+						}
+						att.addHP(-pow * act.hpFactor);
+					}
+					if(typeof act.vitFactor !== "undefined") {
+						if(pow > -tar.getVit() * act.vitFactor) {
+							pow = tar.getVit();
+						}
+						att.addVit(-pow * act.vitFactor);
+					}
+					if(typeof act.spFactor !== "undefined") {
+						if(pow > -tar.getSP() * act.spFactor) {
+							pow = tar.getSP();
+						}
+						att.addSP(-pow * act.spFactor);
+					}
 				}
 				if(typeof act.hpFactor !== "undefined") {
-					ch.addHP(pow * act.hpFactor);
+					tar.addHP(pow * act.hpFactor);
 				}
 				if(typeof act.vitFactor !== "undefined") {
-					ch.addVit(pow * act.vitFactor);
+					tar.addVit(pow * act.vitFactor);
 				}
 				if(typeof act.spFactor !== "undefined") {
-					ch.addSP(pow * act.spFactor);
+					tar.addSP(pow * act.spFactor);
 				}
-			}
-			if(typeof act.paralyzeFactor !== "undefined") {
-				tar.timerParalyze = pow * act.paralyzeFactor;
+				if(typeof act.speedFactor !== "undefined") {
+					tar.timerSpeed = act.speedFactor;
+					if(act.speedFactor === 0.0) {
+						tar.timerParalyze = pow;
+					}
+				}
+				if(typeof act.terrorFactor !== "undefined") {
+					tar.timerTerror = pow * act.terrorFactor;
+				}
 			}
 		}
 	}

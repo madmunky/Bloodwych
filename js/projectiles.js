@@ -70,6 +70,7 @@ Projectile.prototype.move = function() {
 				var sp = spellJson[sid];
 				if(typeof sp !== "undefined") { //JSON
 					var mis = getObjectByKeys(sp, 'action', 'projectile', 'type');
+					var mid = getObjectByKeys(sp, 'id');
 				} else {
 					var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND || sid === SPELL_INFERNO || sid === SPELL_SPRAY);
 				}
@@ -81,19 +82,38 @@ Projectile.prototype.move = function() {
 			}
 			var pl = getPlayerAt(this.floor, this.x, this.y);
 			if(pl !== null) {
-				//var dfl = pl.getActiveSpellActionValue('deflectProjectile'); //!!!!!
-				if((pl.getActiveSpellById(SPELL_DEFLECT).timer > 0 || pl.getActiveSpellById(SPELL_PROTECT).timer > 0) && isMissile) { //Deflect makes missile-shaped spells to reverse direction
-					if(pl.getActiveSpellById(SPELL_DEFLECT).timer > 0) {
-						pl.getActiveSpellById(SPELL_DEFLECT).timer -= this.power;
-					}
-					if(pl.getActiveSpellById(SPELL_PROTECT).timer > 0) {
-						pl.getActiveSpellById(SPELL_PROTECT).timer -= this.power;
+				var dfl = pl.getActiveSpellActionValue('deflectProjectile');
+				if(typeof dfl !== "undefined") { //JSON
+					var dft = dfl.type;
+					var dfi = dfl.id;
+				}
+				var abs = pl.getActiveSpellActionValue('absorbProjectile');
+				if(typeof abs !== "undefined") { //JSON
+					var abt = abs.type;
+					var abi = abs.id;
+				}
+				if((typeof dfl !== "undefined" && (typeof dft === "undefined" || dft === mis) && (typeof dfi === "undefined" || dfi === mid)) || ((pl.getActiveSpellById(SPELL_DEFLECT).timer > 0 || pl.getActiveSpellById(SPELL_PROTECT).timer > 0) && isMissile)) { //Deflect makes missile-shaped spells to reverse direction
+					if(pl.getActiveSpellById().timer > 0) {
+						pl.getActiveSpellById().timer -= this.power;
 					}
 					this.d = (this.d + 2) % 2;
 					var xy = getOffsetByRotation(this.d);
 					this.x += xy.x;
 					this.y += xy.y;
 					return true;
+				} else if(typeof abs !== "undefined" && (typeof abt === "undefined" || abt === mis) && (typeof abi === "undefined" || abi === mid)) {
+					var abf = abs.absorbFactor;
+					if(typeof abf !== "undefined" && abf > 0.0) {
+						var tim = pl.getActiveSpellById().timer;
+						if(tim > 0) {
+							tim = tim - this.power * abf;
+							pl.getActiveSpellById().timer = tim;
+							this.power = this.power * (1.0 - abf);
+							if(tim < 0) {
+								this.power = -tim * abf;
+							}
+						}
+					}
 				} else {
 					if(this.action(pl)) {
 						return true;
@@ -232,7 +252,7 @@ Projectile.prototype.action = function(tar) {
 							tar.type--;
 						}
 					} else {
-						var def = combat[0].defender * fac;
+						var def = combat[0].defender;
 						if(def !== null) {
 							if(pw > def.getSP()) {
 								pw = def.getSP();

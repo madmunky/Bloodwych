@@ -20,7 +20,6 @@ function doKeyDown(e) {
                         break; //6
                     case KEYPAD_7:
                         if (!player[1].frozen) player[1].rotate(-1);
-                        if (!player[1].frozen) player[1].rotate(-1);
                         break; //7
                     case KEYPAD_9:
                         if (!player[1].frozen) player[1].rotate(1);

@@ -18,7 +18,7 @@
 			}
 		},
 		{
-			"id": "COINAGE",
+			"id": "ITEM_COINAGE",
 			"name": "COINAGE",
 			"type": "ITEM_TYPE_STACKABLE",
 			"gfx2": {
@@ -572,7 +572,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_ARMOUR",
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 3
 			}
 		},
@@ -597,7 +597,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_ARMOUR",
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 5
 			}
 		},
@@ -622,7 +622,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_ARMOUR",
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 7
 			}
 		},
@@ -647,7 +647,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_ARMOUR",
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 8
 			}
 		},
@@ -672,7 +672,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_ARMOUR",
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 11
 			}
 		},
@@ -697,7 +697,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_ARMOUR",
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 13
 			}
 		},
@@ -722,7 +722,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_ARMOUR",
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 15
 			}
 		},
@@ -747,7 +747,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_ARMOUR",
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 17
 			}
 		},
@@ -772,7 +772,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_ARMOUR",
+				"allowedSlot": "POCKET_ARMOUR",
 				"AC": 19
 			}
 		},
@@ -793,7 +793,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_SHIELD",
+				"allowedSlot": "POCKET_SHIELD",
 				"AC": 1
 			}
 		},
@@ -814,7 +814,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_SHIELD",
+				"allowedSlot": "POCKET_SHIELD",
 				"AC": 2
 			}
 		},
@@ -835,7 +835,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_SHIELD",
+				"allowedSlot": "POCKET_SHIELD",
 				"AC": 4
 			}
 		},
@@ -856,7 +856,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_SHIELD",
+				"allowedSlot": "POCKET_SHIELD",
 				"allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
 				"AC": 3
 			}
@@ -878,7 +878,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_SHIELD",
+				"allowedSlot": "POCKET_SHIELD",
 				"allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
 				"AC": 4
 			}
@@ -900,7 +900,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_SHIELD",
+				"allowedSlot": "POCKET_SHIELD",
 				"allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
 				"AC": 5
 			}
@@ -922,7 +922,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_SHIELD",
+				"allowedSlot": "POCKET_SHIELD",
 				"allowedProfession": ["PROFESSION_WARRIOR", "PROFESSION_ADVENTURER"],
 				"AC": 7
 			}
@@ -948,7 +948,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_GLOVES",
+				"allowedSlot": "POCKET_GLOVES",
 				"AC": 0
 			}
 		},
@@ -973,7 +973,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_GLOVES",
+				"allowedSlot": "POCKET_GLOVES",
 				"AC": 1
 			}
 		},
@@ -998,7 +998,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_GLOVES",
+				"allowedSlot": "POCKET_GLOVES",
 				"AC": 2
 			}
 		},
@@ -1023,7 +1023,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_GLOVES",
+				"allowedSlot": "POCKET_GLOVES",
 				"AC": 3
 			}
 		},
@@ -1048,7 +1048,7 @@
 				}
 			},
 			"onEquip": {
-				"allowedSlot": "ITEM_GLOVES",
+				"allowedSlot": "POCKET_GLOVES",
 				"AC": 4
 			}
 		},

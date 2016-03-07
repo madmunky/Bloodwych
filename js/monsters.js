@@ -30,6 +30,7 @@ function Monster(id, level, type, form, tower, floor, x, y, d, square, teamId, c
     //this.timerAttack = timerMaster;
     this.timerTerror = 0;
     this.timerParalyze = 0;
+    this.timerSpeed = 20;
     this.blur = 0;
     this.glow = 0;
     this.pocket = pocket;
@@ -77,6 +78,7 @@ Monster.prototype.toJSON = function() {
         timerMove: this.timerMove,
         timerTerror: this.timerTerror,
         timerParalyze: this.timerParalyze,
+        timerSpeed: this.timerSpeed,
         square: this.square,
         champId: this.champId,
         hp: this.hp
@@ -93,6 +95,7 @@ Monster.revive = function(data) {
     m.timerMove = data.timerMove;
     m.timerTerror = data.timerTerror;
     m.timerParalyze = data.timerParalyze;
+    m.timerSpeed = data.timerSpeed;
     m.hp = data.hp;
     for(var p in data.pocket) {
         data.pocket[p] = newPocketItem(data.pocket[p].id, data.pocket[p].quantity);
@@ -345,7 +348,48 @@ Monster.prototype.getDamage = function(dmg) {
 }
 
 Monster.prototype.getHP = function() {
+    var ch = this.getChampion();
+    if(ch !== null) {
+        return ch.getHP();
+    }
     return this.hp;
+}
+
+Monster.prototype.addHP = function(hp, safe) {
+    var ch = this.getChampion();
+    if(ch !== null) {
+        ch.addHP(hp, safe);
+    }
+}
+
+Monster.prototype.getVit = function() {
+    var ch = this.getChampion();
+    if(ch !== null) {
+        return ch.getVit();
+    }
+    return 0;
+}
+
+Monster.prototype.addVit = function(vit) {
+    var ch = this.getChampion();
+    if(ch !== null) {
+        ch.addVit(vit);
+    }
+}
+
+Monster.prototype.getSP = function() {
+    var ch = this.getChampion();
+    if(ch !== null) {
+        return ch.getSP();
+    }
+    return 0;
+}
+
+Monster.prototype.addSP = function(sp) {
+    var ch = this.getChampion();
+    if(ch !== null) {
+        ch.addSP(sp);
+    }
 }
 
 Monster.prototype.castSpell = function() {
@@ -393,13 +437,15 @@ Monster.prototype.followPlayer = function() {
         var rnd = Math.floor(Math.random() * 2);
         if (!player[0].dead && player[0].floor === this.floor && (typeof player[1] === 'undefined' || player[1].dead || Math.abs(player[0].x - this.x) + Math.abs(player[0].y - this.y) < Math.abs(player[1].x - this.x) + Math.abs(player[1].y - this.y))) {
             //player 1 is closer
-            if (player[0].x > this.x && (this.d === 1)) {
+            if (this.timerTerror > 0 && ((player[0].x > this.x && this.d === 3) || (player[0].x < this.x && this.d === 1) || (player[0].y > this.y && this.d === 0) || (player[0].y < this.y && this.d === 2))) {
                 return false;
-            } else if (player[0].x < this.x && (this.d === 3)) {
+            } else if (player[0].x > this.x && this.d === 1) {
                 return false;
-            } else if (player[0].y > this.y && (this.d === 2)) {
+            } else if (player[0].x < this.x && this.d === 3) {
                 return false;
-            } else if (player[0].y < this.y && (this.d === 0)) {
+            } else if (player[0].y > this.y && this.d === 2) {
+                return false;
+            } else if (player[0].y < this.y && this.d === 0) {
                 return false;
             } else if (rnd === 0) {
                 if (player[0].x >= this.x && (this.d === 0 || this.d === 2)) {
@@ -590,14 +636,16 @@ Monster.prototype.die = function() {
 
 //check timers for paralyze and terror, and return a timer factor for slowing the monster down or freezing the monster
 Monster.prototype.getCurseTimers = function() {
-    var fac = 20;
     if (this.timerParalyze > 0) {
-        fac = 0;
         this.timerParalyze--;
-    } else if (this.timerTerror > 0) {
-        fac = 5;
+    }
+    if (this.timerTerror > 0) {
         this.timerTerror--;
     }
+    if (this.timerParalyze === 0 && this.timerTerror === 0) {
+        this.timerSpeed = 20;
+    }
+    var fac = this.timerSpeed;
     return this.getSpeed(fac);
 }
 

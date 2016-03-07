@@ -90,6 +90,13 @@ Champion.prototype.getTrade = function() {
     return TEXT_TRADE[this.prof];
 }
 
+Champion.prototype.getPlayer = function() {
+    if(this.recruitment.playerId > -1) {
+        return player[this.recruitment.playerId];
+    }
+    return null;
+}
+
 Champion.prototype.getMonster = function() {
     return monster[TOWER_CHAMPIONS][this.id];
 }
@@ -121,21 +128,6 @@ Champion.prototype.doDamageTo = function(def, dmg, aExh, dExh) {
 //Damage is 'safe' when champ doesn't get killed by it (e.g. by low vitality)
 Champion.prototype.getDamage = function(dmg, safe) {
     this.addHP(-dmg, safe);
-    if (typeof safe === "undefined" || !safe) {
-        if (this.getHP() < 0) {
-            this.getMonster().die();
-        }
-        if (this.recruitment.playerId > -1 && this.recruitment.attached) {
-            if (!player[this.recruitment.playerId].attacking) {
-                this.writeAttackPoints(dmg, true);
-            }
-            player[this.recruitment.playerId].alertDamagedPlayer();
-            player[this.recruitment.playerId].checkDead();
-            player[this.recruitment.playerId].updateChampions();
-            player[this.recruitment.playerId].startDrawHitDamage(this.id, dmg);
-            redrawUI(this.recruitment.playerId);
-        }
-    }
 }
 
 Champion.prototype.getHP = function() {
@@ -154,6 +146,26 @@ Champion.prototype.addHP = function(hp, safe) {
         } else if (this.getHP() > this.stat.hpMax) {
             this.stat.hp = this.stat.hpMax;
         }
+        if(hp < 0) {
+            if (typeof safe === "undefined" || !safe) {
+                if (this.getHP() < 0) {
+                    this.getMonster().die();
+                }
+                if (this.recruitment.playerId > -1 && this.recruitment.attached) {
+                    if (!player[this.recruitment.playerId].attacking) {
+                        this.writeAttackPoints(-hp, true);
+                    }
+                    player[this.recruitment.playerId].alertDamagedPlayer();
+                    player[this.recruitment.playerId].checkDead();
+                    player[this.recruitment.playerId].updateChampions();
+                    player[this.recruitment.playerId].startDrawHitDamage(this.id, -hp);
+                    redrawUI(this.recruitment.playerId);
+                }
+            }
+        }
+        if(this.recruitment.playerId > -1) {
+            redrawUI(this.recruitment.playerId);
+        }
     }
 }
 
@@ -168,6 +180,9 @@ Champion.prototype.addVit = function(vit) {
             this.stat.vit = 0;
         } else if (this.getVit() > this.stat.vitMax) {
             this.stat.vit = this.stat.vitMax;
+        }
+        if(this.recruitment.playerId > -1) {
+            redrawUI(this.recruitment.playerId);
         }
     }
 }
@@ -184,6 +199,9 @@ Champion.prototype.addSP = function(sp) {
         } else if (this.getSP() > this.stat.spMax) {
             this.stat.sp = this.stat.spMax;
         }
+        if(this.recruitment.playerId > -1) {
+            redrawUI(this.recruitment.playerId);
+        }
     }
 }
 Champion.prototype.getFood = function() {
@@ -197,6 +215,9 @@ Champion.prototype.addFood = function(fd) {
             return true;
         } else if (this.getFood() > 200) {
             this.food = 200;
+        }
+        if(this.recruitment.playerId > -1) {
+            redrawUI(this.recruitment.playerId);
         }
         return false;
     }
@@ -547,9 +568,6 @@ Champion.prototype.gainLevel = function() {
 
 Champion.prototype.restoreStats = function() {
     var alertPlayer = false;
-    if (this.recruitment.playerId > -1) {
-        var p = player[this.recruitment.playerId];
-    }
     if (this !== null) {
         if (!monster[TOWER_CHAMPIONS][this.id].dead) {
             var it = this.getEquippedItems();
@@ -584,7 +602,8 @@ Champion.prototype.restoreStats = function() {
             }
         }
     }
-    if (typeof p !== "undefined") {
+    var p = this.getPlayer();
+    if (p !== null) {
         if (alertPlayer) {
             p.alertDamagedPlayer();
         }
@@ -643,9 +662,9 @@ Champion.prototype.getSpellInBookById = function(id) {
 }
 
 Champion.prototype.buySpell = function(sp) {
-    if (this.recruitment.playerId > -1) {
-        var p = player[this.recruitment.playerId];
-        var pk = this.findPocketItem('ITEM_COINAGE');
+    var p = this.getPlayer();
+    if (p !== null) {
+        var pk = this.findPocketItem(ITEM_COINAGE);
         if (this.consumePocketItem(pk, p.fairyDetails.spell.cost)) {
             this.addSpellToSpellBook(sp);
             this.spellUp--;
@@ -786,7 +805,7 @@ Champion.prototype.activateSpell = function(s, pow) {
     if(typeof sp !== "undefined") { //JSON
         var ac = sp.action;
         if(typeof ac !== "undefined") {
-            var dur = ac.durationFactor;
+            var dur = ac.timer;
             if(typeof dur !== "undefind") {
                 this.activeSpell.timer = pow * dur;
             }
@@ -869,7 +888,7 @@ Champion.prototype.getActiveSpellActionValue = function(ac) {
             return act[ac];
         }
     }
-    return 0;
+    return undefined;
 }
 
 Champion.prototype.selectSpell = function(id) {

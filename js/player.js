@@ -517,7 +517,7 @@ Player.prototype.doEvent = function (mr) {
 Player.prototype.doPit = function () {
     var self = this;
     if (this.getBinaryView(18, 6, 2) === '1') {
-        if (this.getActiveSpellActionValue('levitateFactor') > 0 || this.getActiveSpellById(SPELL_LEVITATE).timer > 0) {
+        if (typeof this.getActiveSpellActionValue('levitateFactor') !== "undefined" || this.getActiveSpellById(SPELL_LEVITATE).timer > 0) {
             return true;
         }
         floor = this.floor - 1;
@@ -1332,12 +1332,24 @@ Player.prototype.getActiveSpellById = function (id) {
     };
     for(var c = 0; c < this.champion.length; c++) {
         var ch = this.getChampion(c);
-        if (ch !== null && id === ch.activeSpell.id && ret.timer < ch.activeSpell.timer) {
+        if (ch !== null && (typeof id === "undefined" || id === ch.activeSpell.id) && ret.timer < ch.activeSpell.timer) {
             ret = ch.activeSpell;
         }
     }
     return ret;
 }
+
+Player.prototype.getActiveSpellActionValue = function(ac) {
+    for(var c = 0; c < this.champion.length; c++) {
+        var ch = this.getChampion(c);
+        var as = ch.getActiveSpellActionValue(ac);
+        if(typeof as !== "undefined") {
+            return as;
+        }
+    }
+    return undefined;
+}
+
 Player.prototype.getProjectilesInRange = function (pos2) {
     var projectilesInRange = [];
     var pos = -1;

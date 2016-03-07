@@ -16,7 +16,7 @@
 			"action": {
 				"type": "self",
 				"enchant": "ICON_SPELL_ARMOUR",
-				"durationFactor": 5.0,
+				"timer": 5.0,
 				"defenseFactor": 0.1
 			}
 		},
@@ -42,9 +42,11 @@
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": "SERPENT_ARROW"
+					},
+					"onDeath": {
+						"speedFactor": 0.0
 					}
-				},
-				"paralyzeFactor": 1.0
+				}
 			}
 		},
 		{
@@ -63,7 +65,7 @@
 			"action": {
 				"type": "self",
 				"enchant": "ICON_SPELL_COMPASS_0",
-				"durationFactor": 5.0,
+				"timer": 5.0,
 				"directional": true
 			}
 		},
@@ -83,7 +85,7 @@
 			"action": {
 				"type": "self",
 				"enchant": "ICON_SPELL_LEVITATE",
-				"durationFactor": 5.0,
+				"timer": 5.0,
 				"levitateFactor": 1.0
 			}
 		},
@@ -103,7 +105,7 @@
 			"action": {
 				"type": "self",
 				"enchant": "ICON_SPELL_WARPOWER",
-				"durationFactor": 5.0,
+				"timer": 5.0,
 				"attackFactor": 0.1
 			}
 		},
@@ -173,7 +175,7 @@
 			"action": {
 				"type": "front",
 				"setObject": "WALL",
-				"timer": true
+				"timer": 1.0
 			}
 		},
 
@@ -195,9 +197,115 @@
 			"action": {
 				"type": "self",
 				"enchant": "ICON_SPELL_DEFLECT",
-				"durationFactor": 5.0,
+				"timer": 5.0,
 				"deflectProjectile": {
-					"type": "SINGLE"
+					"type": "MULTI"
+				}
+			}
+		},
+		{
+			"id": "SPELL_TERROR",
+			"name": "TERROR",
+			"description": "BOO!",
+			"class": "CLASS_CHAOS",
+			"grade": 1,
+			"level": 2,
+			"power": 1,
+			"book": {
+				"symbols": "HADA",
+				"page": 0,
+				"row": 1
+			},
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_ARROW",
+					"type": "SINGLE",
+					"sound": "SOUND_FLASH",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "CHAOS_ARROW"
+					},
+					"onDeath": {
+						"terrorFactor": 1.0,
+						"speedFactor": 5.0
+					}
+				}
+			}
+		},
+		{
+			"id": "SPELL_ANTIMAGE",
+			"name": "ANTIMAGE",
+			"description": "NEVERMORE WORRY ABOUT SPELLCASTERS",
+			"class": "CLASS_CHAOS",
+			"grade": 2,
+			"level": 4,
+			"power": 1,
+			"book": {
+				"symbols": "RAWU",
+				"page": 1,
+				"row": 6
+			},
+			"action": {
+				"type": "self",
+				"enchant": "ICON_SPELL_ANTIMAGE",
+				"timer": 5.0,
+				"absorbProjectile": {
+					"type": "MULTI",
+					"absorbFactor": 1.0
+				}
+			}
+		},
+		{
+			"id": "SPELL_SPELLTAP",
+			"name": "SPELLTAP",
+			"description": "THE BANE OF ALL MAGIC USERS",
+			"class": "CLASS_CHAOS",
+			"grade": 3,
+			"level": 5,
+			"power": 1,
+			"book": {
+				"symbols": "APWH",
+				"page": 2,
+				"row": 7
+			},
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_ARROW",
+					"type": "SINGLE",
+					"sound": "SOUND_FLASH",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "GOLD_ARROW"
+					},
+					"onDeath": {
+						"steal": true,
+						"spFactor": -1.0
+					}
+				}
+			}
+		},
+		{
+			"id": "SPELL_ALCHEMY",
+			"name": "ALCHEMY",
+			"description": "THE HAND OF MIDAS",
+			"class": "CLASS_CHAOS",
+			"grade": 4,
+			"level": 5,
+			"power": 1,
+			"book": {
+				"symbols": "OWTE",
+				"page": 1,
+				"row": 3
+			},
+			"action": {
+				"type": "self",
+				"changeItem": {
+					"pocket": ["POCKET_LEFT_HAND", "POCKET_RIGHT_HAND"],
+					"fromType": ["ITEM_TYPE_WEAPON", "ITEM_TYPE_ARMOUR", "ITEM_TYPE_SHIELD", "ITEM_TYPE_GLOVES"],
+					"toId": ["ITEM_COINAGE"],
+					"toQuantityFactor": 0.1
 				}
 			}
 		}
