@@ -223,9 +223,11 @@ Champion.prototype.addFood = function(fd) {
     }
 }
 
-Champion.prototype.getWeaponPower = function() {
+Champion.prototype.getPower = function() {
     var pow = 0.0;
     var pof = 1.0;
+    var crt = 0.05;
+    var crb = 0.05;
     var slot = this.getEquippedItems(); //check all equipped items for attack power
     for(var s in slot) {
         var it = this.pocket[s];
@@ -254,10 +256,38 @@ Champion.prototype.getWeaponPower = function() {
                         }
                     }
                 }
+                var cr = getObjectByKeys(itemJson[it.id], 'onAttack', 'critical'); //check if there is a critical strike bonus on this item
+                if(typeof cr !== "undefined") {
+                    var pr = cr.profession;
+                    if(typeof pr !== "undefined") {
+                        for(var p in pr) {
+                            if(PROFESSION_ID[this.prof] === pr[p]) { //profession specific stat
+                                if(typeof cr.chance !== "undefined") {
+                                    crb += cr.chance;
+                                    if(typeof cr.backstab === "undefined" || !cr.backstab) {
+                                        crt += cr.chance;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    } else {
+                        if(typeof cr.chance !== "undefined") {
+                            crb += cr.chance;
+                            if(typeof cr.backstab === "undefined" || !cr.backstab) {
+                                crt += cr.chance;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
-    return (1.0 + 0.1 * pow) * pof;
+    return {
+        power: (1.0 + 0.1 * pow) * pof,
+        crit: crt,
+        critback: crb
+    }
 }
 
 Champion.prototype.hasRangedWeapon = function() {

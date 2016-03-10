@@ -54,26 +54,29 @@ function calculateAttack(att, def, tof) {
 					}
 				}
 				if(typeof def !== 'undefined') {
-					if (Math.floor(Math.random() * 20) >= 19) { //critical strike chance is 5%
-						critChance = 1.5;
-					}
 					fromDir = fmon.d;
-					if (from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === 'ITEM_DAGGER' || from.pocket[0].id === 'ITEM_STEALTH_BLADE') && att2.d === def.d) { //cutpurses can cut through 50% of the defense
-						defenseFactor *= 0.5;
-					}
-					var wp = from.getWeaponPower(POCKET_LEFT_HAND); //weapon attack power
-					if (wp > 1.0) {
+					var ran = Math.random();
+					var pw = from.getPower();
+					if(ran < pw.crit || (ran < pw.critback && att2.d === def.d)) {
+						critChance = 1.5;
+					} else if (from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === 'ITEM_DAGGER' || from.pocket[0].id === 'ITEM_STEALTH_BLADE') && att2.d === def.d) { //cutpurses can cut through 50% of the defense
+						critChance = 1.5;
+					}// else if (Math.floor(ran * 20) === 0) { //critical strike chance is 5%
+						//critChance = 1.5;
+					//}
+					attack += pw.power; //weapon attack power
+					/*if (wp > 1.0) {
 						attack += wp;
 					} else {
-						attack += from.getWeaponPower(POCKET_RIGHT_HAND); //if no weapon in right hand, check left hand
-					}
-					attack = attack * (1.0 + from.stat.str / 2.0 + from.stat.agi / 4.0); //add strength and agility to attack points
+						attack += from.getPower(POCKET_RIGHT_HAND); //if no weapon in right hand, check left hand
+					}*/
+					attack += (from.stat.str / 2.0) + (from.stat.agi / 4.0); //add strength to attack points
 					var atf = from.getActiveSpellActionValue('attackFactor');
 					if(typeof atf !== "undefined") {
 						attack += from.activeSpell.power * atf;
 					} else {
-						attack += Math.floor(from.getActiveSpellById(SPELL_WARPOWER).power / 10.0);
-						attack += Math.floor(from.getActiveSpellById(SPELL_ENHANCE).power / 3.0);
+						attack += from.getActiveSpellById(SPELL_WARPOWER).power / 10.0;
+						attack += from.getActiveSpellById(SPELL_ENHANCE).power / 3.0;
 					}
 					attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
 					//hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
@@ -85,7 +88,7 @@ function calculateAttack(att, def, tof) {
 					}
 					from = att.monster;
 					fmon = null;
-					attack += att.power;
+					attack += att.power * 0.75;
 					if(typeof att.spell !== "undefined") {
 						var df = getObjectByKeys(spellJson[att.spell.id], 'action', 'defenseFactor');
 						if(typeof df !== "undefined") {
@@ -102,7 +105,7 @@ function calculateAttack(att, def, tof) {
 					continue;
 				}
 				fromDir = from.d;
-				attack += 25 + from.level * 2;
+				attack += 20 + from.level * 2;
 			}
 
 			//Defender calculations
@@ -135,7 +138,8 @@ function calculateAttack(att, def, tof) {
 							defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
 							defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);
 						}
-						defense += (6.0 + to.level) * 4.0;
+						defense += 15;
+						//defense += (6.0 + to.level) * 4.0;
 						if (!to.attacking) {
 							defense = defense * 1.1;
 						}
@@ -170,10 +174,11 @@ function calculateAttack(att, def, tof) {
 									defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
 									defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);
 								}
-								defense += (6.0 + to.level) * 4.0;
+								defense += 15;
+								//defense += (6.0 + to.level) * 4.0;
 								defExhaustion = Math.floor(Math.random() * 2) + 1;
 							} else { //monster
-								defense += 35; // + to.level * 2;
+								defense += 15; // + to.level * 2;
 								//if (!to.attacking) {
 								//	defense = defense * 1.1;
 								//}
@@ -189,9 +194,9 @@ function calculateAttack(att, def, tof) {
 
 			//Final calculations
 			if (typeof from !== "undefined" && (fmon === null || !fmon.dead) && typeof to !== 'undefined' && (tmon === null || !tmon.dead)) {
-				var dmg = (attack - defenseFactor * defense) * critChance;
-				var lvl = (2.0 + from.level) * 2.0;
-				var power = Math.floor(Math.random() * lvl + dmg + lvl);
+				var power = attack * critChance - defenseFactor * defense;
+				//var lvl = (2.0 + from.level) * 2.0;
+				power = Math.floor(Math.random() * power * 0.5 + power * 0.5);
 				if (Math.random() > hit || power < 0) {
 					power = 0;
 				}

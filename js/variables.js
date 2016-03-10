@@ -345,6 +345,7 @@ var PROFESSION_MAX = 4,
     PROFESSION_WIZARD = 1,
     PROFESSION_ADVENTURER = 2,
     PROFESSION_CUTPURSE = 3;
+var PROFESSION_ID = ['WARRIOR', 'WIZARD', 'ADVENTURER', 'CUTPURSE'];
 
 var championData = new Array();
 var chamionPocketData = [];

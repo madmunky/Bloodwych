@@ -1069,7 +1069,12 @@
 				}
 			},
 			"onAttack": {
-				"damage": 2
+				"damage": 2,
+				"critical": {
+					"profession": ["CUTPURSE"],
+					"chance": 1.0,
+					"backstab": true
+				}
 			}
 		},
 		{
@@ -1089,7 +1094,12 @@
 				}
 			},
 			"onAttack": {
-				"damage": 3
+				"damage": 3,
+				"critical": {
+					"profession": ["CUTPURSE"],
+					"chance": 1.0,
+					"backstab": true
+				}
 			}
 		},
 		{
