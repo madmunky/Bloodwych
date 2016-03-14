@@ -331,6 +331,35 @@
 					"levelFactor": 0.2
 				}
 			}
+		},
+		{
+			"id": "SPELL_VIVIFY",
+			"name": "VIVIFY",
+			"description": "MAKES DEATH BUT A MINOR INCONVENIENCE",
+			"class": "CLASS_CHAOS",
+			"grade": 6,
+			"level": 7,
+			"power": 0,
+			"book": {
+				"symbols": "ILLH",
+				"page": 2,
+				"row": 2
+			},
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_ARROW",
+					"type": "SINGLE",
+					"sound": "SOUND_FLASH",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "CHAOS"
+					},
+					"onDeath": {
+						"revive": true
+					}
+				}
+			}
 		}
 	]
 }

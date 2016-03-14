@@ -284,7 +284,7 @@ function executeSpell(s, act, tar, pow) {
 				var dExh = tar.defExhaustion;
 				if(def instanceof Champion) {
 					tar = def.getMonster();
-				} else {
+				} else if(typeof def !== "undefined" && def !== null) {
 					tar = def;
 				}
 			}
@@ -316,6 +316,75 @@ function executeSpell(s, act, tar, pow) {
 					tar.d = (d + dNew) % 4;
 				}
 			}
+			var viv = act.revive;
+			if(typeof viv !== "undefined") { //vivify
+				if (getMonsterAt(f, x, y) === null) {
+					for(var i = item[towerThis].length - 1; i >= 0; i--) {
+						var it = item[towerThis][i];
+						if(it.location.tower === towerThis && it.location.floor === f && it.location.x === x && it.location.y === y) {
+							var rv = itemJson[it.id].revive;
+							if (typeof rv !== "undefined") {
+								var c = $.inArray(rv, CHAMPION_ID); //it.id - 'ITEM_BLODWYN_RIP';
+								if(c > -1) {
+									item[towerThis].splice(i, 1);
+									champion[c].stat.hp = 0;
+									champion[c].getMonster().floor = f;
+									champion[c].getMonster().x = x;
+									champion[c].getMonster().y = y;
+									champion[c].getMonster().d = d;
+									champion[c].getMonster().hp = 0;
+									champion[c].getMonster().dead = false;
+									if (!champion[c].recruitment.attached && champion[c].recruitment.playerId > -1) {
+										var p = player[champion[c].recruitment.playerId];
+										if (p.dead) {
+											champion[c].recruitment.attached = true;
+											var i = p.getChampionPosition(c);
+											p.exchangeChampionPosition(0, i);
+											p.championLeader = 0;
+											p.tower = towerThis;
+											p.floor = f;
+											p.x = x;
+											p.y = y;
+											p.d = d;
+											p.dead = false;
+											p.updateChampions();
+											redrawUI(2);
+										}
+									}
+									return;
+								}
+							}
+						}
+					}
+				}
+				/*if(tar instanceof Player) {
+					for(var c = 0; c < tar.champion.length; c++) {
+						var ch = tar.getChampion(c);
+						if(ch !== null && ch.getMonster().dead && ch.recruitment.attached) {
+							ch.stat.hp = 0;
+							ch.getMonster().dead = false;
+							redrawUI(2);
+						}
+					}
+					tar.updateChampions();
+				}*/
+				for(var p in player) {
+					var pl = player[p];
+					if (!pl.dead && f === pl.floor && x === pl.x && y === pl.y) {
+						for(var c = 0; c < pl.champion.length; c++) {
+							var ch1 = pl.getChampion(c);
+							if(ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
+								ch1.stat.hp = 0;
+								ch1.getMonster().dead = false;
+								redrawUI(2);
+							}
+						}
+						pl.updateChampions();
+						break;
+					}
+				}
+			}
+
 			var mob = act.setObject;
 			if(typeof mob !== "undefined") { //firepath, formwall, mindrock
 				if (getHexToBinaryPosition(tower[towerThis].floor[f].Map[y][x], 0, 16) === '0000') {
@@ -338,7 +407,7 @@ function executeSpell(s, act, tar, pow) {
 			}
 			var mon = act.setMonster;
 			if(typeof mon !== "undefined") { //summon, illusion
-				var ob = canMove(f, x, y, d);
+				var ob = getObject(f, x, y);
 				if (ob === OBJECT_CHARACTER || ob === OBJECT_PROJECTILE || ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR) {
 					//executeSpell(s, act, tar, pow);
 				} else if (ob === OBJECT_NONE) {
