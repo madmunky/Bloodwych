@@ -380,7 +380,7 @@ Champion.prototype.useItem = function(it, ac, param) {
                         id2 = getObjectByKeys(itemJson[it2.id], 'dungeon', 'id');
                     }
                     if(typeof id2 !== "undefined") {
-                        pow = pow * (1.0 + this.stat.str / 4.0 + this.stat.agi / 2.0) * 0.5 * pof;
+                        pow += this.stat.agi / 2.0 * pof;
                         var dTo = getObjectByKeys(itemJson[it2.id], 'projectile', 'recolour', 'to');
                         if(typeof dTo === "undefined") {
                             dTo = getObjectByKeys(itemJson[it2.id], 'dungeon', 'recolour', 'to');
