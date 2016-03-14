@@ -13,7 +13,7 @@ function calculateAttack(att, def, tof) {
 		var attack = 0; //attack points
 		var critChance = 1.0; //chance for a critical strike (2x hit)
 		var hit = 1.0; //chance for attacker for a successful hit
-		var defense = 0; //defense points
+		var defense = 25; //defense points
 		var defenseFactor = 1.0; //defense factor
 		var attExhaustion = 0; //attack exhaustion points. used to decrease vitality of attacker
 		var defExhaustion = 0; //defense exhaustion points. used to decrease vitality of defender
@@ -55,21 +55,6 @@ function calculateAttack(att, def, tof) {
 				}
 				if(typeof def !== 'undefined') {
 					fromDir = fmon.d;
-					var ran = Math.random();
-					var pw = from.getPower();
-					if(ran < pw.crit || (ran < pw.critback && att2.d === def.d)) {
-						critChance = 1.5;
-					} else if (from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === 'ITEM_DAGGER' || from.pocket[0].id === 'ITEM_STEALTH_BLADE') && att2.d === def.d) { //cutpurses can cut through 50% of the defense
-						critChance = 1.5;
-					}// else if (Math.floor(ran * 20) === 0) { //critical strike chance is 5%
-						//critChance = 1.5;
-					//}
-					attack += pw.power; //weapon attack power
-					/*if (wp > 1.0) {
-						attack += wp;
-					} else {
-						attack += from.getPower(POCKET_RIGHT_HAND); //if no weapon in right hand, check left hand
-					}*/
 					attack += (from.stat.str / 2.0) + (from.stat.agi / 4.0); //add strength to attack points
 					var atf = from.getActiveSpellActionValue('attackFactor');
 					if(typeof atf !== "undefined") {
@@ -78,6 +63,14 @@ function calculateAttack(att, def, tof) {
 						attack += from.getActiveSpellById(SPELL_WARPOWER).power / 10.0;
 						attack += from.getActiveSpellById(SPELL_ENHANCE).power / 3.0;
 					}
+					var ran = Math.random();
+					var pw = from.getPower();
+					if(ran < pw.crit || (ran < pw.critback && att2.d === def.d)) {
+						critChance = 1.5;
+					} else if (from.prof === PROFESSION_CUTPURSE && (from.pocket[0].id === 'ITEM_DAGGER' || from.pocket[0].id === 'ITEM_STEALTH_BLADE') && att2.d === def.d) { //cutpurses can cut through 50% of the defense
+						critChance = 1.5;
+					}
+					attack *= 1.0 + (0.05 * (4.0 + pw.power)) * pw.factor; //weapon attack power
 					attExhaustion = Math.floor(Math.random() * 2) + 1; //attack exhaustion
 					//hit = hit * (from.stat.vit / from.stat.vitMax + 0.75); //when vitality is low, attack chance is lower (75% hit chance when vitality is 0)
 				}
@@ -105,7 +98,7 @@ function calculateAttack(att, def, tof) {
 					continue;
 				}
 				fromDir = from.d;
-				attack += 20 + from.level * 2;
+				attack += 20 + from.level * 5;
 			}
 
 			//Defender calculations
@@ -138,7 +131,7 @@ function calculateAttack(att, def, tof) {
 							defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
 							defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);
 						}
-						defense += 15;
+						//defense += 25;
 						//defense += (6.0 + to.level) * 4.0;
 						if (!to.attacking) {
 							defense = defense * 1.1;
@@ -174,11 +167,11 @@ function calculateAttack(att, def, tof) {
 									defense += Math.floor(to.getActiveSpellById(SPELL_ARMOUR).power / 10.0);
 									defense += Math.floor(to.getActiveSpellById(SPELL_PROTECT).power / 10.0);
 								}
-								defense += 15;
+								//defense += 25;
 								//defense += (6.0 + to.level) * 4.0;
 								defExhaustion = Math.floor(Math.random() * 2) + 1;
 							} else { //monster
-								defense += 15; // + to.level * 2;
+								//defense += 25; // + to.level * 2;
 								//if (!to.attacking) {
 								//	defense = defense * 1.1;
 								//}
@@ -194,7 +187,7 @@ function calculateAttack(att, def, tof) {
 
 			//Final calculations
 			if (typeof from !== "undefined" && (fmon === null || !fmon.dead) && typeof to !== 'undefined' && (tmon === null || !tmon.dead)) {
-				var power = attack * critChance - defenseFactor * defense;
+				var power = (attack - defenseFactor * defense) * critChance;
 				//var lvl = (2.0 + from.level) * 2.0;
 				power = Math.floor(Math.random() * power * 0.5 + power * 0.5);
 				if (Math.random() > hit || power < 0) {

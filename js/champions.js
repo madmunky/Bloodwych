@@ -284,7 +284,8 @@ Champion.prototype.getPower = function() {
         }
     }
     return {
-        power: (1.0 + 0.1 * pow) * pof,
+        power: pow,
+        factor: pof,
         crit: crt,
         critback: crb
     }
@@ -352,26 +353,24 @@ Champion.prototype.useItem = function(it, ac, param) {
     var pow = 0.0;
     var pof = 1.0;
 
-    //Get power
-    var pw2 = getObjectByKeys(use, 'damage');
-    if(typeof pw2 !== "undefined") {
-        pow = pw2;
-    }
-    var pf2 = getObjectByKeys(use, 'damageFactor');
-    if(typeof pf2 !== "undefined") {
-        pof = pf2;
-    }
-
     //Use bow to shoot arrows
     var typ = getObjectByKeys(use, 'shootType');
     var id = getObjectByKeys(use, 'shootId');
-    if(typeof typ !=="undefined" || typeof id !=="undefined") {
+    if(typeof typ !== "undefined" || typeof id !== "undefined") {
         var hand = [POCKET_LEFT_HAND, POCKET_RIGHT_HAND];
         for(var h = 0; h < hand.length; h++) {
             var it2 = this.pocket[hand[h]];
             if((typeof id !== "undefined" && $.inArray(itemJson[it2.id].id, id) > -1) || (typeof typ !== "undefined" && it2.type === typ)) {
                 var sh = getObjectByKeys(itemJson[it2.id], 'onShoot');
                 if(typeof sh !== "undefined") {
+                    var pw2 = getObjectByKeys(use, 'damage');
+                    if(typeof pw2 !== "undefined") {
+                        pow += pw2;
+                    }
+                    var pf2 = getObjectByKeys(use, 'damageFactor');
+                    if(typeof pf2 !== "undefined") {
+                        pof *= pf2;
+                    }
                     var res = this.useItem(it2, 'onShoot');
                     pow += res.power;
                     pof *= res.powerFactor;
@@ -396,7 +395,20 @@ Champion.prototype.useItem = function(it, ac, param) {
                 }
             }
         }
+    } else {
+        //Get melee power
+        var pw2 = getObjectByKeys(use, 'damage');
+        if(typeof pw2 !== "undefined") {
+            pow += pw2;
+            suc = true;
+        }
+        var pf2 = getObjectByKeys(use, 'damageFactor');
+        if(typeof pf2 !== "undefined") {
+            pof *= pf2;
+            suc = true;
+        }
     }
+
 
     //Cast spell
     var spl = getObjectByKeys(use, 'castSpell');
@@ -419,6 +431,7 @@ Champion.prototype.useItem = function(it, ac, param) {
                     q = 1;
                 }
                 it.setQuantity(q);
+                suc = true;
             }
         }
     }
@@ -453,7 +466,7 @@ Champion.prototype.useItem = function(it, ac, param) {
                 }
                 it.setQuantity(q);
             }
-            suc = true
+            suc = true;
         }
     }
 

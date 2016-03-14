@@ -308,6 +308,29 @@
 					"toQuantityFactor": 0.1
 				}
 			}
+		},
+		{
+			"id": "SPELL_SUMMON",
+			"name": "SUMMON",
+			"description": "YOU'LL NEVER WALK ALONE",
+			"class": "CLASS_CHAOS",
+			"grade": 5,
+			"level": 6,
+			"power": 1,
+			"book": {
+				"symbols": "PLEO",
+				"page": 3,
+				"row": 5
+			},
+			"action": {
+				"type": "front",
+				"setMonster": {
+					"type": "MON_TYPE_DRONE",
+					"form": "MON_FORM_SUMMON",
+					"level": -10,
+					"levelFactor": 0.2
+				}
+			}
 		}
 	]
 }

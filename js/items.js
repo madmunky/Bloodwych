@@ -177,7 +177,7 @@ function initItems(t) {
         //TESTING
         if(debug) {
             if(t.id === TOWER_MOD0) {
-                item[t.id][item[t.id].length] = new Item('ITEM_DRAGON_RING', 4, {
+                item[t.id][item[t.id].length] = new Item('ITEM_DEATHBRINGER', 1, {
                     tower: t.id,
                     floor: 3,
                     x: 12,

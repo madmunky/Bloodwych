@@ -336,6 +336,44 @@ function executeSpell(s, act, tar, pow) {
 					}
 				}
 			}
+			var mon = act.setMonster;
+			if(typeof mon !== "undefined") { //summon, illusion
+				var ob = canMove(f, x, y, d);
+				if (ob === OBJECT_CHARACTER || ob === OBJECT_PROJECTILE || ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR) {
+					//executeSpell(s, act, tar, pow);
+				} else if (ob === OBJECT_NONE) {
+					var lvl = mon.level;
+					if(typeof lvl === "undefined") {
+						lvl = 0;
+					}
+					var lfc = mon.levelFactor;
+					if(typeof lfc === "undefined") {
+						lfc = 1.0;
+					}
+					var typ = mon.type;
+					if(typeof typ === "undefined") {
+						typ = "MON_TYPE_DRONE";
+					} else if(typeof typ === "string") {
+						typ = typ.getVar();
+					}
+					var frm = mon.form;
+					if(typeof frm === "undefined") {
+						frm = "MON_FORM_SUMMON";
+					} else if(typeof frm === "string") {
+						frm = frm.getVar();
+					}
+					var hp = mon.hp;
+					if(typeof hp === "undefined") {
+						hp = -1;
+					}
+					var max = monster[towerThis].length;
+					monster[towerThis][max] = new Monster(null, Math.floor(pow * lfc) + lvl, typ, frm, towerThis, f, x, y, d, (d + Math.floor(Math.random() * 2) + 2) % 4, 0, null, createPocketSlots(POCKET_MAX + 1));
+					if(hp > -1) {
+						monster[towerThis][max].hp = hp;
+					}
+					monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
+				}
+			}
 			if(typeof act.damage !== "undefined" && act.damage && typeof att !== "undefined" && typeof def !== "undefined") { //damage spells
 				if (att !== null) {
 					var pl = att.isRecruitedBy();
@@ -358,11 +396,11 @@ function executeSpell(s, act, tar, pow) {
 						ch.activateSpell(s, pow);
 					}
 					var chi = act.changeItem; //alchemy
-					if(chi !== "undefined") {
+					if(typeof chi !== "undefined") {
 						var pck = chi.pocket;
 						var fTyp = chi.fromType;
 						var fId = chi.fromId;
-						if(pck !== "undefined" && pck.length > 0) {
+						if(typeof pck !== "undefined" && pck.length > 0) {
 							for(var p in pck) {
 								var slot = pck[p].getVar();
 								var itm = itemJson[ch.pocket[slot].id];
@@ -568,7 +606,7 @@ function castSpell(s, src, pw) {
 					castSpell(SPELL_FIREBALL, src, pw);
 				} else if (ob === OBJECT_NONE) {
 					var max = monster[towerThis].length;
-					monster[towerThis][max] = new Monster(null, Math.floor(pow * 0.2) - 10, MON_TYPE_DRONE, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + Math.floor(Math.random() * 2) + 2) % 4, 0);
+					monster[towerThis][max] = new Monster(null, Math.floor(pow * 0.2) - 10, MON_TYPE_DRONE, MON_FORM_SUMMON, towerThis, f, x1, y1, d, (d + Math.floor(Math.random() * 2) + 2) % 4, 0, null, createPocketSlots(POCKET_MAX + 1));
 					monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
 				}
 				break;
@@ -673,7 +711,7 @@ function castSpell(s, src, pw) {
 					castSpell(SPELL_FIREBALL, src, pw);
 				} else if (ob === OBJECT_NONE) {
 					var max = monster[towerThis].length;
-					monster[towerThis][max] = new Monster(null, Math.floor(pow * 0.2) - 10, MON_TYPE_DRONE_CASTER, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, (d + Math.floor(Math.random() * 2) + 2) % 4, 0);
+					monster[towerThis][max] = new Monster(null, Math.floor(pow * 0.2) - 10, MON_TYPE_DRONE_CASTER, MON_FORM_ILLUSION, towerThis, f, x1, y1, d, (d + Math.floor(Math.random() * 2) + 2) % 4, 0, null, createPocketSlots(POCKET_MAX + 1));
 					monster[towerThis][max].hp = 0;
 					monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
 				}
