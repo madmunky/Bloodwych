@@ -13,13 +13,14 @@ GFX Beholder Fixes
 CHRIS
 ------
 UI  Finish communication (trading, charisma)
-UI  Add behemoth end screen
+UI  PORTRAITS in png file
+UI  Colours in uistuff.png
+COD Switch target undefined
 
 QUESTIONS FOR CHRIS
 -------------------
 End chamber: which crystal makes Behemoth spawn in the middle?
-How do items drop from Behemoth and Zendik?
-I need to know some easy-to-find (big or summon) monster positions, and their form/colour on the allMonsters list. E.g. all first monsters of every tower. Basically i need to know what formId/colour matches what level of the big monster.
+
 
 QUESTIONS FOR JORG
 ------------------

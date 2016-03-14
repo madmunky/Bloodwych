@@ -244,6 +244,43 @@ function grabUISprites(spriteSheetIMG) {
         ret[ui] = ImageArray[i];
     }
 
+    for (var item in uiJson){
+        var g;
+        if (typeof uiJson[item].gfx.recolour !== 'undefined'){
+            g = recolourSprite(grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false), uiJson[item].gfx.recolour.from, uiJson[item].gfx.recolour.to);
+        }else{
+            if (typeof uiJson[item].gfx.classColours !== 'undefined'){
+                if (uiJson[item].gfx.classColours){
+                    var extraColours = [];
+                    extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false), paletteData['DEFAULT_ITEM'], paletteData['SERPENT']));
+                    extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false), paletteData['DEFAULT_ITEM'], paletteData['CHAOS']));
+                    extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false), paletteData['DEFAULT_ITEM'], paletteData['DRAGON']));
+                    extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false), paletteData['DEFAULT_ITEM'], paletteData['MOON']));
+                    extraColours.push(recolourSprite(grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false), paletteData['DEFAULT_ITEM'], paletteData['SELECTED']));
+                    g = extraColours;
+                }
+            }else if (typeof uiJson[item].gfx.multiple !== 'undefined'){
+                var extraItems = [];
+
+                if (uiJson[item].gfx.multiple.direction == "x"){
+                    for (var x=0;x < uiJson[item].gfx.multiple.size;x++){
+                        extraItems.push(grabImageAt(spriteSheetIMG, uiJson[item].gfx.x+(x*uiJson[item].gfx.width), uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false));
+                    }
+                }else{
+                    for (var y=0;y < uiJson[item].gfx.multiple.size;y++){
+                        extraItems.push(grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y+(y*uiJson[item].gfx.height), uiJson[item].gfx.width, uiJson[item].gfx.height, false));
+                    }
+                }
+
+                g = extraItems;
+            }else{
+                g = grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false);
+            }
+        }
+
+        ret[uiJson[item].id] = g;
+    }
+
     return ret;
 
 }

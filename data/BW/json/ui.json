@@ -5,13 +5,1420 @@
             "gfx": {
                 "x":0,
                 "y":0,
-                "width":0,
-                "height":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_COIN",
+            "gfx": {
+                "x":16,
+                "y":0,
+                "width":16,
+                "height":16,
                 "recolour": {
-                    "from": "DEFAULT_ITEM",
-                    "to": ["PINK", "PINK", "PINK", "BLACK"]
-                },
-                "classColours":false;
+                    "from": ["YELLOW","PINK","WHITE","BLACK"],
+                    "to": ["PINK","BLACK","BLACK","BLACK"]
+                }
+            }
+        },
+        {
+            "id": "ITEM_COMMON_KEY",
+            "gfx": {
+                "x":32,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_ARROW",
+            "gfx": {
+                "x":48,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_ELF_ARROW",
+            "gfx": {
+                "x":64,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_GEM_GREY",
+            "gfx": {
+                "x":80,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_GEM_SERPENT",
+            "gfx": {
+                "x":96,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_GEM_CHAOS",
+            "gfx": {
+                "x":112,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_GEM_DRAGON",
+            "gfx": {
+                "x":128,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_GEM_MOON",
+            "gfx": {
+                "x":144,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_RING",
+            "gfx": {
+                "x":160,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_POTION",
+            "gfx": {
+                "x":176,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_KEY",
+            "gfx": {
+                "x":192,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_STAFF",
+            "gfx": {
+                "x":208,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_WAND",
+            "gfx": {
+                "x":224,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SHIELD_1",
+            "gfx": {
+                "x":240,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SHIELD_2",
+            "gfx": {
+                "x":256,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SHIELD_3",
+            "gfx": {
+                "x":272,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SHIELD_4",
+            "gfx": {
+                "x":288,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SHIELD_5",
+            "gfx": {
+                "x":304,
+                "y":0,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SHIELD_6",
+            "gfx": {
+                "x":0,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SHIELD_7",
+            "gfx": {
+                "x":16,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_AMOUR_LEATHER",
+            "gfx": {
+                "x":32,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_AMOUR_CHAIN",
+            "gfx": {
+                "x":48,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_AMOUR_PLATE",
+            "gfx": {
+                "x":64,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_PERMIT",
+            "gfx": {
+                "x":80,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_HAND_LEFT_AMOUR",
+            "gfx": {
+                "x":96,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_HAND_RIGHT_AMOUR",
+            "gfx": {
+                "x":112,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_DAGGER",
+            "gfx": {
+                "x":128,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_RING_SHINNY",
+            "gfx": {
+                "x":144,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SHORT_SWORD",
+            "gfx": {
+                "x":160,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_GEM_GREENISH",
+            "gfx": {
+                "x":176,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_GEM_BROWN",
+            "gfx": {
+                "x":192,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_GEM_TAN",
+            "gfx": {
+                "x":208,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SWORD_1",
+            "gfx": {
+                "x":224,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SWORD_2",
+            "gfx": {
+                "x":240,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SWORD_3",
+            "gfx": {
+                "x":256,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SWORD_4",
+            "gfx": {
+                "x":272,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SWORD_5",
+            "gfx": {
+                "x":288,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_AXE_1",
+            "gfx": {
+                "x":304,
+                "y":16,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_AXE_2",
+            "gfx": {
+                "x":0,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_AXE_3",
+            "gfx": {
+                "x":16,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_AXE_4",
+            "gfx": {
+                "x":32,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_BOW",
+            "gfx": {
+                "x":48,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_CROSS_BOW",
+            "gfx": {
+                "x":64,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_APPLE_1",
+            "gfx": {
+                "x":80,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_APPLE_2",
+            "gfx": {
+                "x":96,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_APPLE_3",
+            "gfx": {
+                "x":112,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_BISCUIT_1",
+            "gfx": {
+                "x":128,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_BISCUIT_2",
+            "gfx": {
+                "x":144,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_BISCUIT_3",
+            "gfx": {
+                "x":160,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_CHICKEN_1",
+            "gfx": {
+                "x":176,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_CHICKEN_2",
+            "gfx": {
+                "x":192,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_CHICKEN_3",
+            "gfx": {
+                "x":208,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_NEGG",
+            "gfx": {
+                "x":224,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_WATER_1",
+            "gfx": {
+                "x":240,
+                "y":32,
+                "width":16,
+                "height":16,
+                "recolour": {
+                    "from": ["BLACK", "BLACK", "BLACK", "GREEN"],
+                    "to": ["BLACK", "BLACK", "BLACK", "BLUE"]
+                }
+            }
+        },
+        {
+            "id": "ITEM_WATER_2",
+            "gfx": {
+                "x":256,
+                "y":32,
+                "width":16,
+                "height":16,
+                "recolour": {
+                    "from": ["BLACK", "BLACK", "BLACK", "GREEN"],
+                    "to": ["BLACK", "BLACK", "BLACK", "BLUE"]
+                }
+            }
+        },
+        {
+            "id": "ITEM_WATER_3",
+            "gfx": {
+                "x":272,
+                "y":32,
+                "width":16,
+                "height":16,
+                "recolour": {
+                    "from": ["BLACK", "BLACK", "BLACK", "GREEN"],
+                    "to": ["BLACK", "BLACK", "BLACK", "BLUE"]
+                }
+            }
+        },
+        {
+            "id": "ITEM_BONES",
+            "gfx": {
+                "x":288,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "DUMMY",
+            "gfx": {
+                "x":304,
+                "y":32,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_ARMOUR",
+            "gfx": {
+                "x":0,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_DEFLECT",
+            "gfx": {
+                "x":16,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_WARPOWER",
+            "gfx": {
+                "x":32,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_VANISH",
+            "gfx": {
+                "x":48,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_COMPASS_0",
+            "gfx": {
+                "x":64,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_COMPASS_1",
+            "gfx": {
+                "x":80,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_COMPASS_2",
+            "gfx": {
+                "x":96,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_COMPASS_3",
+            "gfx": {
+                "x":112,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_LEVITATE",
+            "gfx": {
+                "x":128,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_ANTIMAGE",
+            "gfx": {
+                "x":144,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_TRUEVIEW",
+            "gfx": {
+                "x":160,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_7",
+            "gfx": {
+                "x":176,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_GLOVE",
+            "gfx": {
+                "x":192,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_BLANK",
+            "gfx": {
+                "x":208,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_SLECTION",
+            "gfx": {
+                "x":224,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_0",
+            "gfx": {
+                "x":240,
+                "y":48,
+                "width":16,
+                "height":16,
+                "classColours":true
+            }
+        },
+        {
+            "id": "ITEM_1",
+            "gfx": {
+                "x":256,
+                "y":48,
+                "width":16,
+                "height":16,
+                "classColours":true
+            }
+        },
+        {
+            "id": "ITEM_2",
+            "gfx": {
+                "x":272,
+                "y":48,
+                "width":16,
+                "height":16,
+                "classColours":true
+            }
+        },
+        {
+            "id": "ITEM_3",
+            "gfx": {
+                "x":288,
+                "y":48,
+                "width":16,
+                "height":16,
+                "classColours":true
+            }
+        },
+        {
+            "id": "ICON_SPELL_0",
+            "gfx": {
+                "x":304,
+                "y":48,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ICON_SPELL_1",
+            "gfx": {
+                "x":0,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_2",
+            "gfx": {
+                "x":16,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_3",
+            "gfx": {
+                "x":32,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_4",
+            "gfx": {
+                "x":48,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_BOOK_DRAGON_LEFT",
+            "gfx": {
+                "x":64,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_BOOK_LEFT",
+            "gfx": {
+                "x":80,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_BOOK_RIGHT",
+            "gfx": {
+                "x":96,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_BOOK_DRAGON_RIGHT",
+            "gfx": {
+                "x":112,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_EMPTY_LEFT_HAND",
+            "gfx": {
+                "x":16,
+                "y":128,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_EMPTY_RIGHT_HAND",
+            "gfx": {
+                "x":144,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_EMPTY_ARMOUR",
+            "gfx": {
+                "x":160,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_EMPTY_LARGE_SHIELD",
+            "gfx": {
+                "x":176,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_EMPTY_SMALL_SHIELD",
+            "gfx": {
+                "x":192,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_PAUSE",
+            "gfx": {
+                "x":208,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SAVE",
+            "gfx": {
+                "x":224,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SLEEP",
+            "gfx": {
+                "x":240,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_BOOKOFSKULLS",
+            "gfx": {
+                "x":256,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_UNKNOWN",
+            "gfx": {
+                "x":272,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_POCKETS",
+            "gfx": {
+                "x":288,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_OPENDOOR",
+            "gfx": {
+                "x":304,
+                "y":64,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_BACK",
+            "gfx": {
+                "x":0,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SCROLL_UP",
+            "gfx": {
+                "x":16,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SCROLL_DOWN",
+            "gfx": {
+                "x":32,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_8",
+            "gfx": {
+                "x":48,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_9",
+            "gfx": {
+                "x":64,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_10",
+            "gfx": {
+                "x":80,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_11",
+            "gfx": {
+                "x":96,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_12",
+            "gfx": {
+                "x":112,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_13",
+            "gfx": {
+                "x":128,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_14",
+            "gfx": {
+                "x":144,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_15",
+            "gfx": {
+                "x":160,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SPELL_16",
+            "gfx": {
+                "x":176,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ICON_SELECTED",
+            "gfx": {
+                "x":192,
+                "y":80,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "SPELLBOOK_0",
+            "gfx": {
+                "x":94,
+                "y":97,
+                "width":94,
+                "height":62
+            }
+        },
+        {
+            "id": "SPELLBOOK_1",
+            "gfx": {
+                "x":188,
+                "y":97,
+                "width":94,
+                "height":62
+            }
+        },
+        {
+            "id": "SPELLBOOK_2",
+            "gfx": {
+                "x":282,
+                "y":97,
+                "width":94,
+                "height":62
+            }
+        },
+        {
+            "id": "SPELLBOOK_3",
+            "gfx": {
+                "x":376,
+                "y":97,
+                "width":94,
+                "height":62
+            }
+        },
+        {
+            "id": "SPELLBOOK_4",
+            "gfx": {
+                "x":470,
+                "y":97,
+                "width":94,
+                "height":62
+            }
+        },
+        {
+            "id": "PORTRAITS",
+            "gfx": {
+                "x":0,
+                "y":210,
+                "width":32,
+                "height":32,
+                "multiple": {
+                    "direction": "y",
+                    "size":16
+                }
+            }
+        },
+        {
+            "id": "GRAY_BAR",
+            "gfx": {
+                "x":285,
+                "y":201,
+                "width":95,
+                "height":8
+            }
+        },
+        {
+            "id": "SHIELD_CHARACTERS",
+            "gfx": {
+                "x":35,
+                "y":210,
+                "width":30,
+                "height":16,
+                "multiple": {
+                    "direction": "y",
+                    "size":16
+                }
+            }
+        },
+        {
+            "id": "SHIELD_TYPES",
+            "gfx": {
+                "x":165,
+                "y":210,
+                "width":28,
+                "height":11,
+                "multiple": {
+                    "direction": "y",
+                    "size":4
+                }
+            }
+        },
+        {
+            "id": "SHIELD_BOTTOM",
+            "gfx": {
+                "x":170,
+                "y":269,
+                "width":20,
+                "height":9
+            }
+        },
+        {
+            "id": "SHIELD_TOP",
+            "gfx": {
+                "x":164,
+                "y":279,
+                "width":30,
+                "height":5
+            }
+        },
+        {
+            "id": "SCRIPT",
+            "gfx": {
+                "x":197,
+                "y":212,
+                "width":94,
+                "height":87
+            }
+        },
+        {
+            "id": "FAIRIES",
+            "gfx": {
+                "x":303,
+                "y":215,
+                "width":31,
+                "height":41,
+                "multiple": {
+                    "direction": "x",
+                    "size":5
+                }
+            }
+        },
+        {
+            "id": "FOOD_POINTER",
+            "gfx": {
+                "x":93,
+                "y":176,
+                "width":4,
+                "height":3
+            }
+        },
+        {
+            "id": "MOVEMENT_0",
+            "gfx": {
+                "x":170,
+                "y":311,
+                "width":12,
+                "height":10
+            }
+        },
+        {
+            "id": "MOVEMENT_1",
+            "gfx": {
+                "x":187,
+                "y":311,
+                "width":16,
+                "height":9
+            }
+        },
+        {
+            "id": "MOVEMENT_2",
+            "gfx": {
+                "x":206,
+                "y":311,
+                "width":12,
+                "height":10
+            }
+        },
+        {
+            "id": "MOVEMENT_3",
+            "gfx": {
+                "x":170,
+                "y":326,
+                "width":11,
+                "height":11
+            }
+        },
+        {
+            "id": "MOVEMENT_4",
+            "gfx": {
+                "x":186,
+                "y":326,
+                "width":18,
+                "height":9
+            }
+        },
+        {
+            "id": "MOVEMENT_5",
+            "gfx": {
+                "x":207,
+                "y":326,
+                "width":11,
+                "height":11
+            }
+        },
+        {
+            "id": "CHARACTER_NAME_BLUE",
+            "gfx": {
+                "x":304,
+                "y":261,
+                "width":152,
+                "height":16
+            }
+        },
+        {
+            "id": "CHARACTER_NAME_RED",
+            "gfx": {
+                "x":304,
+                "y":278,
+                "width":152,
+                "height":16
+            }
+        },
+        {
+            "id": "CHARACTER_BOXES",
+            "gfx": {
+                "x":304,
+                "y":295,
+                "width":48,
+                "height":20
+            }
+        },
+        {
+            "id": "CHARACTER_SCROLL",
+            "gfx": {
+                "x":356,
+                "y":296,
+                "width":94,
+                "height":73
+            }
+        },
+        {
+            "id": "SCROLL_WAVE",
+            "gfx": {
+                "x":308,
+                "y":319,
+                "width":14,
+                "height":3
+            }
+        },
+        {
+            "id": "SHIELD",
+            "gfx": {
+                "x":0,
+                "y":161,
+                "width":30,
+                "height":41
+            }
+        },
+        {
+            "id": "ICON_SPELLBOOK",
+            "gfx": {
+                "x":31,
+                "y":162,
+                "width":37,
+                "height":22
+            }
+        },
+        {
+            "id": "ICON_SCROLL",
+            "gfx": {
+                "x":69,
+                "y":161,
+                "width":22,
+                "height":22
+            }
+        },
+        {
+            "id": "ICON_ATTACK",
+            "gfx": {
+                "x":92,
+                "y":162,
+                "width":28,
+                "height":11
+            }
+        },
+        {
+            "id": "CHAIN_VERT",
+            "gfx": {
+                "x":123,
+                "y":161,
+                "width":6,
+                "height":37
+            }
+        },
+        {
+            "id": "STATSBOX",
+            "gfx": {
+                "x":406,
+                "y":0,
+                "width":43,
+                "height":44
+            }
+        },
+        {
+            "id": "ICON_ARROWS_RED",
+            "gfx": {
+                "x":131,
+                "y":168,
+                "width":60,
+                "height":31
+            }
+        },
+        {
+            "id": "ICON_ARROWS_BLUE",
+            "gfx": {
+                "x":193,
+                "y":168,
+                "width":60,
+                "height":31
+            }
+        },
+        {
+            "id": "SHIELD_FILLED",
+            "gfx": {
+                "x":254,
+                "y":161,
+                "width":30,
+                "height":41
+            }
+        },
+        {
+            "id": "CHAIN_LONG",
+            "gfx": {
+                "x":287,
+                "y":194,
+                "width":92,
+                "height":6
+            }
+        },
+        {
+            "id": "CHARACTER_BOX",
+            "gfx": {
+                "x":324,
+                "y":1,
+                "width":48,
+                "height":44
+            }
+        },
+        {
+            "id": "POCKETBOX",
+            "gfx": {
+                "x":373,
+                "y":1,
+                "width":32,
+                "height":24
+            }
+        },
+        {
+            "id": "NAME_BLUE",
+            "gfx": {
+                "x":324,
+                "y":46,
+                "width":94,
+                "height":19
+            }
+        },
+        {
+            "id": "NAME_RED",
+            "gfx": {
+                "x":324,
+                "y":66,
+                "width":94,
+                "height":19
+            }
+        },
+        {
+            "id": "SHIELD_RED",
+            "gfx": {
+                "x":381,
+                "y":160,
+                "width":30,
+                "height":41
+            }
+        },
+        {
+            "id": "SHIELD_BLUE",
+            "gfx": {
+                "x":412,
+                "y":160,
+                "width":30,
+                "height":41
             }
         }
     ]
