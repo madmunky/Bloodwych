@@ -314,6 +314,7 @@ function processJSONFiles(item, result) {
         case 'Text':
             break;
         case 'UI':
+            uiJson = checkMergeJSON(uiJson, result.itemUI);
             break;
         case 'Sprites':
             spriteData = checkMergeJSON(spriteData, result);

@@ -1,1 +1,18 @@
-//all ui grabs & placements here, e.g. UI_GFX_POCKET_EMPTY
+{
+    "itemUI": [
+        {
+            "id": "ITEM_EMPTY",
+            "gfx": {
+                "x":0,
+                "y":0,
+                "width":0,
+                "height":0,
+                "recolour": {
+                    "from": "DEFAULT_ITEM",
+                    "to": ["PINK", "PINK", "PINK", "BLACK"]
+                },
+                "classColours":false;
+            }
+        }
+    ]
+}

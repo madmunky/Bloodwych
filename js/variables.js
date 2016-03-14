@@ -66,6 +66,7 @@ var audioFiles = [];
 var gameType = GAME_BLOODWYCH;
 var spriteData = [];
 var jsonLoaded = false;
+var uiJson;
 //var DataLocationPrefix;
 
 //GAME MODES
