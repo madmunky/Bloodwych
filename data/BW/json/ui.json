@@ -17,7 +17,7 @@
                 "width":16,
                 "height":16,
                 "recolour": {
-                    "from": ["YELLOW","PINK","WHITE","BLACK"],
+                    "from": ["YELLOW","BLACK","BLACK","BLACK"],
                     "to": ["PINK","BLACK","BLACK","BLACK"]
                 }
             }
@@ -505,11 +505,7 @@
                 "x":240,
                 "y":32,
                 "width":16,
-                "height":16,
-                "recolour": {
-                    "from": ["BLACK", "BLACK", "BLACK", "GREEN"],
-                    "to": ["BLACK", "BLACK", "BLACK", "BLUE"]
-                }
+                "height":16
             }
         },
         {
@@ -518,11 +514,7 @@
                 "x":256,
                 "y":32,
                 "width":16,
-                "height":16,
-                "recolour": {
-                    "from": ["BLACK", "BLACK", "BLACK", "GREEN"],
-                    "to": ["BLACK", "BLACK", "BLACK", "BLUE"]
-                }
+                "height":16
             }
         },
         {
@@ -531,11 +523,7 @@
                 "x":272,
                 "y":32,
                 "width":16,
-                "height":16,
-                "recolour": {
-                    "from": ["BLACK", "BLACK", "BLACK", "GREEN"],
-                    "to": ["BLACK", "BLACK", "BLACK", "BLUE"]
-                }
+                "height":16
             }
         },
         {

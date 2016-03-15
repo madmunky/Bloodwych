@@ -247,7 +247,15 @@ function grabUISprites(spriteSheetIMG) {
     for (var item in uiJson){
         var g;
         if (typeof uiJson[item].gfx.recolour !== 'undefined'){
-            g = recolourSprite(grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false), uiJson[item].gfx.recolour.from, uiJson[item].gfx.recolour.to);
+            var iFrom = getObjectByKeys(uiJson[item], 'gfx', 'recolour', 'from');
+            var iTo = getObjectByKeys(uiJson[item], 'gfx', 'recolour', 'to');
+            g = grabImageAt(spriteSheetIMG, uiJson[item].gfx.x, uiJson[item].gfx.y, uiJson[item].gfx.width, uiJson[item].gfx.height, false);
+            if(typeof iFrom !== "undefined" && typeof iTo !== "undefined") {
+                for(var f in iFrom) {
+                    g = recolourUiGfx(g, colourData[iFrom[f]], colourData[iTo[f]]);
+                }
+            }
+
         }else{
             if (typeof uiJson[item].gfx.classColours !== 'undefined'){
                 if (uiJson[item].gfx.classColours){
