@@ -15,11 +15,7 @@
                 "x":16,
                 "y":0,
                 "width":16,
-                "height":16,
-                "recolour": {
-                    "from": ["YELLOW","BLACK","BLACK","BLACK"],
-                    "to": ["PINK","BLACK","BLACK","BLACK"]
-                }
+                "height":16
             }
         },
         {
