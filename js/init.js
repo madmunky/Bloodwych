@@ -273,10 +273,10 @@ function checkMergeJSON(objStorage, objNewData){
                     }
                 }
                 if (!matched){
-                    newItems.push(objNewData[x]);
+                    newItems.push(objNewData[i]);
                 }
             }
-            objStorage.concat(newItems);
+            objStorage = objStorage.concat(newItems);
         }else{
             objStorage = objNewData;
         }

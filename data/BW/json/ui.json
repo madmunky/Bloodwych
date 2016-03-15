@@ -1085,7 +1085,7 @@
             "id": "PORTRAITS",
             "gfx": {
                 "x":0,
-                "y":210,
+                "y":204,
                 "width":32,
                 "height":32,
                 "multiple": {

@@ -1,0 +1,171 @@
+{
+    "itemUI": [
+        {
+            "id": "FAIRIES",
+            "gfx": {
+                "x":303,
+                "y":215,
+                "width":31,
+                "height":41,
+                "multiple": {
+                    "direction": "x",
+                    "size":6
+                }
+            }
+        },
+        {
+            "id": "ICON_SPELL_5",
+            "gfx": {
+                "x":145,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },
+        {
+            "id": "ITEM_RUNE_SHIELD",
+            "gfx": {
+                "x":161,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_WAR_SHIELD",
+            "gfx": {
+                "x":177,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_DEMON_SCALE",
+            "gfx": {
+                "x":193,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_BATTLE_SOUL",
+            "gfx": {
+                "x":209,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_CHROMATIC_PLATE",
+            "gfx": {
+                "x":225,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_ADAMANT_SWORD",
+            "gfx": {
+                "x":241,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_FLESHBANE",
+            "gfx": {
+                "x":257,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_DEMON_BLADE",
+            "gfx": {
+                "x":273,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_RUNE_SWORD",
+            "gfx": {
+                "x":289,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_SOUL_SUCKER",
+            "gfx": {
+                "x":305,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_ADAMANT_AXE",
+            "gfx": {
+                "x":321,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_BATTLE_AXE",
+            "gfx": {
+                "x":337,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_OGRES_AXE",
+            "gfx": {
+                "x":353,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_DEATHBRINGER",
+            "gfx": {
+                "x":369,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_DRAGON_AXE",
+            "gfx": {
+                "x":385,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ITEM_GREY_AXE",
+            "gfx": {
+                "x":401,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ICON_SPELL_PROTECT",
+            "gfx": {
+                "x":417,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        },{
+            "id": "ICON_SPELL_ENHANCE",
+            "gfx": {
+                "x":433,
+                "y":375,
+                "width":16,
+                "height":16
+            }
+        }
+    ]
+}
