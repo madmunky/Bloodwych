@@ -302,7 +302,7 @@ function drawSpellBook(p, ui, dr) {
 //
 //    }
 
-    ctx.drawImage(gfxUI['SPELLBOOK_0'], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI['SPELLBOOK_0'].width * scale, gfxUI['SPELLBOOK_0'].height * scale);
+    ctx.drawImage(gfxUI['SPELLBOOK'][0], p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI['SPELLBOOK'][0].width * scale, gfxUI['SPELLBOOK'][0].height * scale);
 
     var ch;
     var start = false;
@@ -435,11 +435,11 @@ function drawSpellBookPageTurn(p, ui, dr, timer, stop, full) {
     (function(p, ui, dr, stop) {
         p.timerSpellBookTurn = setTimeout(function() {
             drawSpellBook(p, ui, dr);
-            var sb = 'SPELLBOOK_' + ui;
+            var sb = gfxUI['SPELLBOOK'][ui];
             if (dr) {
-                ctx.drawImage(colourSpellPage(true, champion[p.champion[p.championLeader]], gfxUI[sb]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[sb].width * scale, gfxUI[sb].height * scale);
+                ctx.drawImage(colourSpellPage(true, champion[p.champion[p.championLeader]], sb), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, sb.width * scale, sb.height * scale);
             } else {
-                ctx.drawImage(colourSpellPage(false, champion[p.champion[p.championLeader]], gfxUI[sb]), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, gfxUI[sb].width * scale, gfxUI[sb].height * scale);
+                ctx.drawImage(colourSpellPage(false, champion[p.champion[p.championLeader]], sb), p.ScreenX + 226 * scale, (p.ScreenY - 1) * scale, sb.width * scale, sb.height * scale);
             }
             if (stop) {
                 (function(p, dr) {
