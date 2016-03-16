@@ -878,31 +878,20 @@ Champion.prototype.checkSpell = function() {
 
 Champion.prototype.expireSpell = function() {
     var p = this.recruitment.playerId;
+    var id = this.activeSpell.id;
+    if(id > -1) {
+        var act = getObjectByKeys(this.activeSpell.action, 'onComplete');
+        if(typeof act !== "undefined") {
+            executeSpell(this.activeSpell.id, act, this.getMonster(), this.activeSpell.power);
+        }
+    }
     this.activeSpell.timer = 0;
-    /*switch (this.activeSpell.id) {
-        case SPELL_ARMOUR:
-            break;
-        case SPELL_COMPASS:
-            break;
-        case SPELL_LEVITATE:
-            break;
-        case SPELL_WARPOWER:
-            break;
-        case SPELL_ANTIMAGE:
-            break;
-        case SPELL_TRUEVIEW:
-            break;
-        case SPELL_VANISH:
-            break;
-        case SPELL_PROTECT:
-            break;
-        default:
-            break;
-    }*/
     this.activeSpell.id = -1;
     this.activeSpell.power = 0;
     this.activeSpell.action = undefined;
-    player[p].doPit();
+    if(id > -1) {
+        player[p].doPit();
+    }
     redrawUI(p, UI_REDRAW_RIGHT);
 }
 

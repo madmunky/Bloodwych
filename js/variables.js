@@ -1459,6 +1459,7 @@ var DOOR_COMMON = 0,
 
 //spells
 var spellJson = [];
+var spellPartJson = [];
 var spell = new Array();
 var dungeonSpellTimer = 0;
 var dungeonSpellList = new Array();

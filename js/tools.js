@@ -447,3 +447,8 @@ function getVarArray(arr) {
 	}
 	return undefined;
 }
+
+function clone(o) {
+	var j = $.extend(true, {}, o);
+	return j;
+}

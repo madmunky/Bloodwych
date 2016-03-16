@@ -12,15 +12,14 @@ function Spell(colour, grade, name, description, symbols, level) {
 	this.row = pr.row;
 	this.power = getSpellPower(this.id);
 }
-
-Spell.prototype.toString = function() {
+Spell.prototype.toString = function () {
 	return '[colour:' + this.colour + ', grade:' + this.grade + ', name:' + this.name + ', description:' + this.description + ', level:' + this.level + ', cost:' + this.cost + ']';
 }
 
 function initSpells() {
-	for(var cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
+	for (var cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
 		spell[cl] = new Array();
-		for(var id = 0; id < SPELL_LEVEL_MAX; id++) {
+		for (var id = 0; id < SPELL_LEVEL_MAX; id++) {
 			var name = TEXT_SPELL_NAME[id + cl * SPELL_LEVEL_MAX];
 			var description = TEXT_SPELL_DESCRIPTION[id + cl * SPELL_LEVEL_MAX];
 			var symbols = TEXT_SPELL_BOOK[id + cl * SPELL_LEVEL_MAX];
@@ -28,7 +27,7 @@ function initSpells() {
 			spell[cl][id] = new Spell(cl, id, name, description, symbols, level);
 		}
 	}
-	for(var id = 0; id < spellJson.length; id++) {
+	for (var id = 0; id < spellJson.length; id++) {
 		var sp = spell[Math.floor(id / SPELL_LEVEL_MAX)][id % SPELL_LEVEL_MAX];
 		var n = spellJson[id].name;
 		var d = spellJson[id].description;
@@ -40,31 +39,31 @@ function initSpells() {
 		var pg = spellJson[id].book.page;
 		var r = spellJson[id].book.row;
 		sp.id = id;
-		if(typeof n !== "undefined") {
+		if (typeof n !== "undefined") {
 			sp.name = n;
 		}
-		if(typeof d !== "undefined") {
+		if (typeof d !== "undefined") {
 			sp.description = d;
 		}
-		if(typeof c !== "undefined") {
+		if (typeof c !== "undefined") {
 			sp.class = c.getVar();
 		}
-		if(typeof g !== "undefined") {
+		if (typeof g !== "undefined") {
 			sp.grade = g;
 		}
-		if(typeof l !== "undefined") {
+		if (typeof l !== "undefined") {
 			sp.level = l;
 		}
-		if(typeof pw !== "undefined") {
+		if (typeof pw !== "undefined") {
 			sp.power = pw;
 		}
-		if(typeof s !== "undefined") {
+		if (typeof s !== "undefined") {
 			sp.symbols = s;
 		}
-		if(typeof pg !== "undefined") {
+		if (typeof pg !== "undefined") {
 			sp.page = pg;
 		}
-		if(typeof r !== "undefined") {
+		if (typeof r !== "undefined") {
 			sp.row = r;
 		}
 	}
@@ -72,7 +71,7 @@ function initSpells() {
 
 function getSpellLevel(id) {
 	var s = spellJson[id];
-	if(typeof s !== "undefined") { //JSON
+	if (typeof s !== "undefined") { //JSON
 		return s.level;
 	}
 	var sl = [
@@ -84,7 +83,6 @@ function getSpellLevel(id) {
 	];
 	return sl[Math.floor(id / SPELL_LEVEL_MAX)][id % SPELL_LEVEL_MAX];
 }
-
 /*
 "ARMOUR",		"ARMOUR",	
 "TERROR",		"PARALYZE",
@@ -122,7 +120,6 @@ function getSpellLevel(id) {
 "BLAZE",		"VIVIFY",
 "MINDROCK"		"DISRUPT"
 */
-
 function getSpellPageAndRow(c, i) {
 	var sp = [
 		[0, 1, 2, 1, 0, 2, 3, 3],
@@ -157,22 +154,22 @@ function getSpellById(id) {
 
 function getSpellBookPage(p) {
 	var sb = new Array();
-	for(var cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
-		for(var id = 0; id < SPELL_LEVEL_MAX; id++) {
+	for (var cl = 0; cl < SPELL_COLOUR_MAX; cl++) {
+		for (var id = 0; id < SPELL_LEVEL_MAX; id++) {
 			var sp = spell[cl][id];
 			if (sp.page === p) {
 				sb.push(sp);
 			}
 		}
 	}
-	return sb.sort(function(a, b) {
+	return sb.sort(function (a, b) {
 		return (a.row - b.row);
 	});
 }
 
 function getSpellPower(id) {
 	var sp = spellJson[id];
-	if(typeof sp !== "undefined" && typeof sp.power !== "undefined") {
+	if (typeof sp !== "undefined" && typeof sp.power !== "undefined") {
 		return sp.power;
 	}
 	switch (id) {
@@ -192,7 +189,6 @@ function getSpellPower(id) {
 			return 2;
 		case SPELL_FORMWALL:
 			return 1;
-
 			//chaos
 		case SPELL_DEFLECT:
 			return 1;
@@ -210,7 +206,6 @@ function getSpellPower(id) {
 			return 1;
 		case SPELL_DISRUPT:
 			return 4;
-
 			//dragon
 		case SPELL_MISSILE:
 			return 2;
@@ -228,7 +223,6 @@ function getSpellPower(id) {
 			return 1;
 		case SPELL_BLAZE:
 			return 2;
-
 			//moon
 		case SPELL_BEGUILE:
 			return 2;
@@ -246,7 +240,6 @@ function getSpellPower(id) {
 			return 1;
 		case SPELL_WYCHWIND:
 			return 2;
-
 			//ancient
 		case SPELL_PROTECT:
 			return 1;
@@ -264,28 +257,31 @@ function getSpellPower(id) {
 			return 2;
 		case SPELL_RESTORE:
 			return 1;
-
 		default:
 			return 1;
 	}
 }
-
+//change onDeath to onComplete and move up
+//add onComplete to enchants
+//multi action
 function executeSpell(s, act, tar, pow) {
-	if(typeof act !== "undefined") {
+	if (typeof act !== "undefined") {
 		var spl = spellJson[s];
-		if(typeof pow === "undefined") {
+		if (typeof pow === "undefined") {
 			pow = 0;
 		}
-		if(typeof spl !== "undefined") { //JSON
-			if(typeof tar.attacker !== "undefined") {
+		if (typeof spl !== "undefined") { //JSON
+			if (typeof tar.attacker !== "undefined") {
 				var att = tar.attacker;
 				var def = tar.defender;
 				var pow = tar.power;
 				var dExh = tar.defExhaustion;
-				if(def instanceof Champion) {
+				if (def instanceof Champion) {
 					tar = def.getMonster();
-				} else if(typeof def !== "undefined" && def !== null) {
+				} else if (typeof def !== "undefined" && def !== null) {
 					tar = def;
+				} else if (typeof att !== "undefined" && att !== null) {
+					tar = att;
 				}
 			}
 			var f = tar.floor;
@@ -295,7 +291,7 @@ function executeSpell(s, act, tar, pow) {
 			var xy = getOffsetByRotation(d);
 			var x1 = x + xy.x;
 			var y1 = y + xy.y;
-			if(typeof act.bounce !== "undefined" && act.bounce) { //arc bolt
+			if (typeof act.bounce !== "undefined" && act.bounce) { //arc bolt
 				var ob = getObject(f, x, y, d);
 				var obNext = canMove(f, x, y, d);
 				var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
@@ -317,15 +313,15 @@ function executeSpell(s, act, tar, pow) {
 				}
 			}
 			var viv = act.revive;
-			if(typeof viv !== "undefined") { //vivify
+			if (typeof viv !== "undefined") { //vivify
 				if (getMonsterAt(f, x, y) === null) {
-					for(var i = item[towerThis].length - 1; i >= 0; i--) {
+					for (var i = item[towerThis].length - 1; i >= 0; i--) {
 						var it = item[towerThis][i];
-						if(it.location.tower === towerThis && it.location.floor === f && it.location.x === x && it.location.y === y) {
+						if (it.location.tower === towerThis && it.location.floor === f && it.location.x === x && it.location.y === y) {
 							var rv = itemJson[it.id].revive;
 							if (typeof rv !== "undefined") {
 								var c = $.inArray(rv, CHAMPION_ID); //it.id - 'ITEM_BLODWYN_RIP';
-								if(c > -1) {
+								if (c > -1) {
 									item[towerThis].splice(i, 1);
 									champion[c].stat.hp = 0;
 									champion[c].getMonster().floor = f;
@@ -351,7 +347,7 @@ function executeSpell(s, act, tar, pow) {
 											redrawUI(2);
 										}
 									}
-									return;
+									break;
 								}
 							}
 						}
@@ -368,15 +364,18 @@ function executeSpell(s, act, tar, pow) {
 					}
 					tar.updateChampions();
 				}*/
-				for(var p in player) {
+				for (var p in player) {
 					var pl = player[p];
 					if (!pl.dead && f === pl.floor && x === pl.x && y === pl.y) {
-						for(var c = 0; c < pl.champion.length; c++) {
+						for (var c = 0; c < pl.champion.length; c++) {
 							var ch1 = pl.getChampion(c);
-							if(ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
+							if (ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
 								ch1.stat.hp = 0;
 								ch1.getMonster().dead = false;
 								redrawUI(2);
+								if(typeof act.areaOfEffect !== "undefined" && act.areaOfEffect === 'single') {
+									break;
+								}
 							}
 						}
 						pl.updateChampions();
@@ -384,66 +383,66 @@ function executeSpell(s, act, tar, pow) {
 					}
 				}
 			}
-
 			var mob = act.setObject;
-			if(typeof mob !== "undefined") { //firepath, formwall, mindrock
+			if (typeof mob !== "undefined") { //firepath, formwall, mindrock
 				if (getHexToBinaryPosition(tower[towerThis].floor[f].Map[y][x], 0, 16) === '0000') {
 					var tim = act.timer;
-					if(typeof tim !== "undefined" && tim > 0.0) {
-						tim *= SPELL_DUNGEON[mob];
+					if (typeof tim !== "undefined" && tim > 0.0) {
+						pow *= tim;
 					}
 					setDungeonHex(f, x, y, 13, 3, '7');
-					setDungeonHex(f, x, y, 6, 2, '' + tim);
+					setDungeonHex(f, x, y, 6, 2, '' + SPELL_DUNGEON[mob]);
 					setDungeonHex(f, x, y, 0, 6, dec2hex(pow));
 					var tim = act.timer;
-					if(typeof tim !== "undefined" && tim > 0.0) {
-						if(tar instanceof Projectile) {
-							setDungeonSpell(f, x, y, tar);
+					if (typeof tim !== "undefined" && tim > 0.0) {
+						if (tar instanceof Projectile) {
+							setDungeonSpell(s, f, x, y, tar);
 						} else {
-							setDungeonSpell(f, x, y);
+							setDungeonSpell(s, f, x, y);
 						}
 					}
 				}
 			}
 			var mon = act.setMonster;
-			if(typeof mon !== "undefined") { //summon, illusion
+			if (typeof mon !== "undefined") { //summon, illusion
 				var ob = getObject(f, x, y);
 				if (ob === OBJECT_CHARACTER || ob === OBJECT_PROJECTILE || ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR) {
 					//executeSpell(s, act, tar, pow);
 				} else if (ob === OBJECT_NONE) {
 					var lvl = mon.level;
-					if(typeof lvl === "undefined") {
+					if (typeof lvl === "undefined") {
 						lvl = 0;
 					}
 					var lfc = mon.levelFactor;
-					if(typeof lfc === "undefined") {
+					if (typeof lfc === "undefined") {
 						lfc = 1.0;
 					}
 					var typ = mon.type;
-					if(typeof typ === "undefined") {
+					if (typeof typ === "undefined") {
 						typ = "MON_TYPE_DRONE";
-					} else if(typeof typ === "string") {
+					} else if (typeof typ === "string") {
 						typ = typ.getVar();
 					}
 					var frm = mon.form;
-					if(typeof frm === "undefined") {
+					if (typeof frm === "undefined") {
 						frm = "MON_FORM_SUMMON";
-					} else if(typeof frm === "string") {
+					} else if (typeof frm === "string") {
 						frm = frm.getVar();
 					}
 					var hp = mon.hp;
-					if(typeof hp === "undefined") {
+					if (typeof hp === "undefined") {
 						hp = -1;
 					}
 					var max = monster[towerThis].length;
 					monster[towerThis][max] = new Monster(null, Math.floor(pow * lfc) + lvl, typ, frm, towerThis, f, x, y, d, (d + Math.floor(Math.random() * 2) + 2) % 4, 0, null, createPocketSlots(POCKET_MAX + 1));
-					if(hp > -1) {
+					if (hp > -1) {
 						monster[towerThis][max].hp = hp;
 					}
 					monster[towerThis][max].doGesture(CHA_GESTURE_SPELLCASTING);
 				}
 			}
-			if(typeof act.damage !== "undefined" && act.damage && typeof att !== "undefined" && typeof def !== "undefined") { //damage spells
+			var dmg = act.damage;
+			if (typeof dmg !== "undefined" && dmg && typeof att !== "undefined" && typeof def !== "undefined") { //damage spells
 				if (att !== null) {
 					var pl = att.isRecruitedBy();
 					var ch = att.getChampion();
@@ -458,39 +457,60 @@ function executeSpell(s, act, tar, pow) {
 					}
 				}
 			}
-			if(tar instanceof Monster) {
+
+			var prt = act.castPart;
+			if(typeof prt !== "undefined" && prt.length > 0) {
+				for(p in prt) {
+					var id = prt[p].id;
+					if(typeof id !== "undefined") {
+						if(typeof prt[p].power !== "undefined") {
+							pow = prt[p].power;
+						}
+						var src = clone(tar);
+						var d = prt[p].direction;
+						if(typeof d !== "undefined") {
+							if(d === -1) {
+								d = Math.floor(Math.random() * 4);
+							}
+							src.d = (src.d + d) % 4;
+						}
+						castSpell(s, src, pow, id);
+					}
+				}
+			}
+			if (tar instanceof Monster) {
 				var ch = tar.getChampion();
-				if(ch !== null) {
-					if(typeof act.enchant !== "undefined") {
+				if (ch !== null) {
+					if (typeof act.enchant !== "undefined") {
 						ch.activateSpell(s, pow);
 					}
 					var chi = act.changeItem; //alchemy
-					if(typeof chi !== "undefined") {
+					if (typeof chi !== "undefined") {
 						var pck = chi.pocket;
 						var fTyp = chi.fromType;
 						var fId = chi.fromId;
-						if(typeof pck !== "undefined" && pck.length > 0) {
-							for(var p in pck) {
+						if (typeof pck !== "undefined" && pck.length > 0) {
+							for (var p in pck) {
 								var slot = pck[p].getVar();
 								var itm = itemJson[ch.pocket[slot].id];
-								if(typeof itm !== "undefined") {
-									if((typeof fTyp !== "undefined" && $.inArray(itm.type, fTyp) > -1) || (typeof fId !== "undefined" && $.inArray(itm.id, fId) > -1)) {
+								if (typeof itm !== "undefined") {
+									if ((typeof fTyp !== "undefined" && $.inArray(itm.type, fTyp) > -1) || (typeof fId !== "undefined" && $.inArray(itm.id, fId) > -1)) {
 										var tId = chi.toId;
-										if(typeof tId !== "undefined") {
+										if (typeof tId !== "undefined") {
 											var to = tId[Math.floor(Math.random() * tId.length)];
 											var it = parseItem(to);
 											var q = 1;
-											if(itemJson[it].type === 'ITEM_TYPE_STACKABLE') {
+											if (itemJson[it].type === 'ITEM_TYPE_STACKABLE') {
 												var qf = chi.toQuantityFactor;
-												if(typeof qf === "undefined") {
+												if (typeof qf === "undefined") {
 													qf = 1.0;
 												}
 												q = Math.floor(Math.random() * pow * qf) + 1;
 												var slot2 = ch.findPocketItem(it);
-												if(slot2 !== null) {
+												if (slot2 !== null) {
 													var it2 = ch.pocket[slot2];
 													q = q + it2.quantity;
-													if(q > 99) {
+													if (q > 99) {
 														q = 99;
 													}
 													it2.setPocketItem();
@@ -505,42 +525,42 @@ function executeSpell(s, act, tar, pow) {
 						}
 					}
 				}
-				if(typeof act.steal !== "undefined" && act.steal) {
-					if(typeof act.hpFactor !== "undefined") {
-						if(pow > -tar.getHP() * act.hpFactor) {
+				if (typeof act.steal !== "undefined" && act.steal) {
+					if (typeof act.hpFactor !== "undefined") {
+						if (pow > -tar.getHP() * act.hpFactor) {
 							pow = tar.getHP() + 1;
 						}
 						att.addHP(-pow * act.hpFactor);
 					}
-					if(typeof act.vitFactor !== "undefined") {
-						if(pow > -tar.getVit() * act.vitFactor) {
+					if (typeof act.vitFactor !== "undefined") {
+						if (pow > -tar.getVit() * act.vitFactor) {
 							pow = tar.getVit();
 						}
 						att.addVit(-pow * act.vitFactor);
 					}
-					if(typeof act.spFactor !== "undefined") {
-						if(pow > -tar.getSP() * act.spFactor) {
+					if (typeof act.spFactor !== "undefined") {
+						if (pow > -tar.getSP() * act.spFactor) {
 							pow = tar.getSP();
 						}
 						att.addSP(-pow * act.spFactor);
 					}
 				}
-				if(typeof act.hpFactor !== "undefined") {
+				if (typeof act.hpFactor !== "undefined") {
 					tar.addHP(pow * act.hpFactor);
 				}
-				if(typeof act.vitFactor !== "undefined") {
+				if (typeof act.vitFactor !== "undefined") {
 					tar.addVit(pow * act.vitFactor);
 				}
-				if(typeof act.spFactor !== "undefined") {
+				if (typeof act.spFactor !== "undefined") {
 					tar.addSP(pow * act.spFactor);
 				}
-				if(typeof act.speedFactor !== "undefined") {
+				if (typeof act.speedFactor !== "undefined") {
 					tar.timerSpeed = act.speedFactor;
-					if(act.speedFactor === 0.0) {
+					if (act.speedFactor === 0.0) {
 						tar.timerParalyze = pow;
 					}
 				}
-				if(typeof act.terrorFactor !== "undefined") {
+				if (typeof act.terrorFactor !== "undefined") {
 					tar.timerTerror = pow * act.terrorFactor;
 				}
 			}
@@ -548,7 +568,7 @@ function executeSpell(s, act, tar, pow) {
 	}
 }
 
-function castSpell(s, src, pw) {
+function castSpell(s, src, pw, part) {
 	var sp = getSpellById(s);
 	var pow = (Math.random() * pw * 0.25) + pw;
 	pow = Math.ceil(pow * sp.power);
@@ -564,41 +584,44 @@ function castSpell(s, src, pw) {
 		PrintLog('SPELLPOWER: ' + pow + ' ' + sp.power);
 	}
 	var spl = spellJson[s];
-	if(typeof spl !== "undefined") { //JSON
+	if(typeof part !== "undefined") {
+		spl = spellPartJson[part];
+	}
+	if (typeof spl !== "undefined") { //JSON
 		var ac = spl.action;
-		if(typeof ac !== "undefined") {
-			if(typeof ac.type !== "undefined") {
+		if (typeof ac !== "undefined") {
+			if (typeof ac.type !== "undefined") {
 				if (ac.type === 'self') {
 					executeSpell(s, ac, src, pow);
-				} else if(ac.type === 'group') {
-					if(ch.recruitment.playerId > -1) {
+				} else if (ac.type === 'group') {
+					if (typeof ch !== "undefined" && ch.recruitment.playerId > -1) {
 						var pl = player[ch.recruitment.playerId];
 						var chs = pl.getOrderedChampions();
-						for(var c in chs) {
-							if(chs[c].recruitment.attached) {
+						for (var c in chs) {
+							if (chs[c].recruitment.attached) {
 								executeSpell(s, ac, chs[c].getMonster(), pow);
 							}
 						}
 					}
-				} else if(ac.type === 'front') {
+				} else if (ac.type === 'front') {
 					executeSpell(s, ac, {
 						floor: f,
 						x: x1,
 						y: y1,
 						d: d
 					}, pow);
-				} else if(ac.type === 'projectile') {
+				} else if (ac.type === 'projectile') {
 					var pr = ac.projectile;
-					if(pr !== "undefined") {
+					if (pr !== "undefined") {
 						var id = pr.id;
 						var snd = pr.sound;
 						var to = paletteData['SERPENT_ARROW'];
 						var col = pr.recolour;
-						if(typeof col !== "undefined") {
+						if (typeof col !== "undefined") {
 							//var from = pr.recolour.from;
 							to = pr.recolour.to;
 						}
-						if(typeof snd === "undefined") {
+						if (typeof snd === "undefined") {
 							snd = 'SOUND_FLASH';
 						}
 						newProjectile(id, to, snd.getVar(), s, pow, f, x, y, d, src);
@@ -625,11 +648,11 @@ function castSpell(s, src, pw) {
 				ch.activateSpell(s, pow);
 				break;
 			case SPELL_RENEW:
-				if(ch.recruitment.playerId > -1) {
+				if (ch.recruitment.playerId > -1) {
 					var pl = player[ch.recruitment.playerId];
 					var chs = pl.getOrderedChampions();
-					for(var c in chs) {
-						if(chs[c].recruitment.attached) {
+					for (var c in chs) {
+						if (chs[c].recruitment.attached) {
 							chs[c].addHP(pow);
 						}
 					}
@@ -644,10 +667,9 @@ function castSpell(s, src, pw) {
 					src.setBinaryView(15, 6, 2, '3');
 					src.setBinaryView(15, 0, 6, dec2hex(pow));
 					var xy = posToCoordinates(15, x, y, d);
-					setDungeonSpell(f, xy.x, xy.y);
+					setDungeonSpell(s, f, xy.x, xy.y);
 				}
 				break;
-
 				//chaos
 			case SPELL_DEFLECT:
 				ch.activateSpell(s, pow);
@@ -663,9 +685,9 @@ function castSpell(s, src, pw) {
 				break;
 			case SPELL_ALCHEMY:
 				var validItems = ['ITEM_TYPE_WEAPON', 'ITEM_TYPE_ARMOUR', 'ITEM_TYPE_SHIELD', 'ITEM_TYPE_GLOVES'];
-				if(validItems.indexOf(ch.pocket[POCKET_LEFT_HAND].type) > -1) {
+				if (validItems.indexOf(ch.pocket[POCKET_LEFT_HAND].type) > -1) {
 					ch.pocket[POCKET_LEFT_HAND].setPocketItem('ITEM_COINAGE', pow);
-				} else if(validItems.indexOf(ch.pocket[POCKET_RIGHT_HAND].type) > -1) {
+				} else if (validItems.indexOf(ch.pocket[POCKET_RIGHT_HAND].type) > -1) {
 					ch.pocket[POCKET_RIGHT_HAND].setPocketItem('ITEM_COINAGE', pow);
 				}
 				break;
@@ -681,12 +703,12 @@ function castSpell(s, src, pw) {
 				break;
 			case SPELL_VIVIFY:
 				newProjectile('PROJECTILE_ARROW', paletteData['CHAOS'], SOUND_FLASH, s, 0, f, x, y, d, src);
-				for(var p in player) {
+				for (var p in player) {
 					var pl = player[p];
 					if (!pl.dead && f === pl.floor && x === pl.x && y === pl.y) {
-						for(var c = 0; c < pl.champion.length; c++) {
+						for (var c = 0; c < pl.champion.length; c++) {
 							var ch1 = pl.getChampion(c);
-							if(ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
+							if (ch1 !== null && ch1.getMonster().dead && ch1.recruitment.attached) {
 								ch1.stat.hp = 0;
 								ch1.getMonster().dead = false;
 								redrawUI(2);
@@ -700,7 +722,6 @@ function castSpell(s, src, pw) {
 			case SPELL_DISRUPT:
 				newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], SOUND_EXPLODE, s, pow, f, x, y, d, src);
 				break;
-
 				//dragon
 			case SPELL_MISSILE:
 				newProjectile('PROJECTILE_ARROW', paletteData['DRAGON_ARROW'], SOUND_ATTACK, s, pow, f, x, y, d, src);
@@ -715,23 +736,23 @@ function castSpell(s, src, pw) {
 				}
 				break;
 			case SPELL_VITALISE:
-				if(ch.recruitment.playerId > -1) {
+				if (ch.recruitment.playerId > -1) {
 					var pl = player[ch.recruitment.playerId];
 					var chs = pl.getOrderedChampions();
-					for(var c in chs) {
-						if(chs[c].recruitment.attached) {
+					for (var c in chs) {
+						if (chs[c].recruitment.attached) {
 							chs[c].addVit(pow);
 						}
 					}
 				}
 				break;
 			case SPELL_DISPELL:
-				if(src.setBinaryView(15, 12, 1) === '1') {
+				if (src.setBinaryView(15, 12, 1) === '1') {
 					src.setBinaryView(15, 12, 1, '0');
 				}
 				if (src.getBinaryView(15, 13, 3) === '7') {
 					src.setBinaryView(15, 0, 16, '0000');
-					deleteDungeonSpell(f, x1, y1);
+					deleteDungeonSpells(f, x1, y1);
 				}
 				break;
 			case SPELL_FIREBALL:
@@ -741,24 +762,23 @@ function castSpell(s, src, pw) {
 				newProjectile('PROJECTILE_ARROW', paletteData['DRAGON_ARROW'], SOUND_ATTACK, s, pow, f, x, y, d, src);
 				break;
 			case SPELL_RECHARGE:
-				if(ch.recruitment.playerId > -1) {
+				if (ch.recruitment.playerId > -1) {
 					var it = ch.getEquippedItems();
-		            for(var i = 0; i < it.length; i++) {
-		            	var qm = getObjectByKeys(itemJson[it[i].id], 'quantity');
-		            	if(typeof qm !== "undefined" && qm > 1 && it[i].quantity < qm) {
-		            		var q = it[i].quantity + Math.ceil(pow * 0.02);
-		            		if(q > qm) {
-		            			q = qm;
-		            		}
-		            		it[i].setQuantity(q);
-		            	}
-		            }
-		        }
+					for (var i = 0; i < it.length; i++) {
+						var qm = getObjectByKeys(itemJson[it[i].id], 'quantity');
+						if (typeof qm !== "undefined" && qm > 1 && it[i].quantity < qm) {
+							var q = it[i].quantity + Math.ceil(pow * 0.02);
+							if (q > qm) {
+								q = qm;
+							}
+							it[i].setQuantity(q);
+						}
+					}
+				}
 				break;
 			case SPELL_BLAZE:
 				newProjectile('PROJECTILE_BIG', paletteData['BLAZE_BIG'], SOUND_EXPLODE, s, pow, f, x, y, d, src);
 				break;
-
 				//moon
 			case SPELL_BEGUILE:
 				break;
@@ -802,30 +822,29 @@ function castSpell(s, src, pw) {
 				newProjectile('PROJECTILE_BIG', paletteData['MOON_BIG'], SOUND_EXPLODE, s, pow, f, x, y, (d + 1) % 4, src);
 				newProjectile('PROJECTILE_BIG', paletteData['MOON_BIG'], SOUND_EXPLODE, s, pow, f, x, y, (d + 3) % 4, src);
 				break;
-
 				//ancient
 			case SPELL_PROTECT:
 				ch.activateSpell(s, pow);
-				break; 
+				break;
 			case SPELL_PHASE:
 				var pl = player[ch.recruitment.playerId];
 				var ob = canMove(f, x, y, d, DIRECTION_NORTH);
 				var ob2 = canMove(f, x1, y1, d, DIRECTION_NORTH);
 				var x2 = x;
 				var y2 = y;
-				if(ob <= OBJECT_PROJECTILE && ob2 <= OBJECT_PIT) {
+				if (ob <= OBJECT_PROJECTILE && ob2 <= OBJECT_PIT) {
 					x2 = x2 + xy.x * 2;
 					y2 = y2 + xy.y * 2;
 					pl.setPlayerPosition(f, x2, y2);
 				}
 				newProjectile('NONE', paletteData['TELEPORT_FLASH'], SOUND_FLASH, -1, 0, f, x2, y2, d, null);
-				break; 
+				break;
 			case SPELL_ENHANCE:
 				ch.activateSpell(s, pow);
-				break; 
+				break;
 			case SPELL_INFERNO:
 				newProjectile('PROJECTILE_BIG', paletteData['BLAZE_BIG'], SOUND_EXPLODE, s, pow, f, x, y, d, src);
-				break; 
+				break;
 			case SPELL_NULLIFY:
 				newProjectile('PROJECTILE_ARROW', paletteData['DRAGON_ARROW'], SOUND_FLASH, s, pow, f, x, y, d, src);
 				break;
@@ -833,22 +852,22 @@ function castSpell(s, src, pw) {
 				newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], SOUND_EXPLODE, s, pow, f, x - xy.y, y - xy.x, d, src);
 				newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], SOUND_EXPLODE, s, pow, f, x, y, d, src);
 				newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], SOUND_EXPLODE, s, pow, f, x + xy.y, y + xy.x, d, src);
-				break; 
+				break;
 			case SPELL_VORTEX:
-				break; 
+				break;
 			case SPELL_RESTORE:
-				break; 
+				break;
 			default:
 				break;
 		}
 	}
 }
 
-function setDungeonSpell(f, x, y, proj) {
+function setDungeonSpell(sid, f, x, y, proj) {
 	var max = dungeonSpellList.length;
 	var p = null;
 	var pid = null;
-	if(typeof proj !== "undefined") {
+	if (typeof proj !== "undefined") {
 		p = proj;
 		pid = proj.id;
 	}
@@ -857,37 +876,54 @@ function setDungeonSpell(f, x, y, proj) {
 		floor: f,
 		x: x,
 		y: y,
+		spellId: sid,
 		projectile: p,
 		projectileId: pid
 	};
 }
 
 function getDungeonSpell(f, x, y) {
-	for(var d in dungeonSpellList) {
+	for (var d in dungeonSpellList) {
 		ds = dungeonSpellList[d];
-		if(ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
+		if (ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
 			return ds;
 		}
 	}
 	return null;
 }
 
-function deleteDungeonSpell(f, x, y) {
-	for(var d in dungeonSpellList) {
-		ds = dungeonSpellList[d];
-		if(ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
-			delete dungeonSpellList[d];
-		}
+function deleteDungeonSpells(f, x, y) {
+	for (var d in dungeonSpellList) {
+		deleteDungeonSpell(d, f, x, y);
 	}
 	return null;
 }
 
+function deleteDungeonSpell(d, f, x, y) {
+	ds = dungeonSpellList[d];
+	if (ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
+		var id = ds.spellId;
+		if (id > -1) {
+			var act = getObjectByKeys(spellJson[id], 'action', 'onComplete');
+			if (typeof act !== "undefined") {
+				executeSpell(id, act, {
+					floor: f,
+					x: x,
+					y: y,
+					d: Math.floor(Math.random() * 4)
+				}, 0);
+			}
+		}
+		delete dungeonSpellList[d];
+	}
+}
+
 function updateDungeonSpells() {
-	for(var s in dungeonSpellList) {
+	for (var s in dungeonSpellList) {
 		var ds = dungeonSpellList[s];
 		if (ds.tower === towerThis) {
-			if(ds.projectile !== null && typeof ds.projectile.spell !== 'number' && (ds.projectile.spell.id === SPELL_FIREPATH || ds.projectile.spell.id === SPELL_BLAZE || ds.projectile.spell.id === SPELL_INFERNO)) {
-				for(var p in player) {
+			if (ds.projectile !== null && typeof ds.projectile.spell !== 'number' && (ds.projectile.spell.id === SPELL_FIREPATH || ds.projectile.spell.id === SPELL_BLAZE || ds.projectile.spell.id === SPELL_INFERNO)) {
+				for (var p in player) {
 					if (ds.floor === player[p].floor && ds.x === player[p].x && ds.y === player[p].y) {
 						ds.projectile.attack(player[p]);
 					}
@@ -903,8 +939,9 @@ function updateDungeonSpells() {
 				tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x] = setHexToBinaryPosition(hex, 0, 6, dec2hex(tm));
 			} else {
 				tower[ds.tower].floor[ds.floor].Map[ds.y][ds.x] = setHexToBinaryPosition(hex, 0, 16, '0000');
-				delete dungeonSpellList[s];
+				deleteDungeonSpell(s, ds.floor, ds.x, ds.y);
 			}
 		}
 	}
 }
+

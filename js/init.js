@@ -310,6 +310,7 @@ function processJSONFiles(item, result) {
             break;
         case 'Spells':
             spellJson = checkMergeJSON(spellJson, result.spells);
+            spellPartJson = checkMergeJSON(spellPartJson, result.spellParts);
             break;
         case 'Text':
             break;

@@ -69,13 +69,13 @@ Projectile.prototype.move = function() {
 				var sid = this.spell.id;
 				var sp = spellJson[sid];
 				if(typeof sp !== "undefined") { //JSON
-					var mis = getObjectByKeys(sp, 'action', 'projectile', 'type');
+					var mis = getObjectByKeys(sp, 'action', 'onComplete', 'areaOfEffect');
 					var mid = getObjectByKeys(sp, 'id');
 				} else {
 					var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND || sid === SPELL_INFERNO || sid === SPELL_SPRAY);
 				}
 				if(typeof sp !== "undefined" && typeof mis !== "undefined") {
-					var isMissile = (mis === 'SINGLE');
+					var isMissile = (mis === 'single');
 				} else {
 					var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE || sid === SPELL_NULLIFY || sid === SPELL_FIREPATH);
 				}
@@ -84,12 +84,12 @@ Projectile.prototype.move = function() {
 			if(pl !== null) {
 				var dfl = pl.getActiveSpellActionValue('deflectProjectile');
 				if(typeof dfl !== "undefined") { //JSON
-					var dft = dfl.type;
+					var dft = dfl.areaOfEffect;
 					var dfi = dfl.id;
 				}
 				var abs = pl.getActiveSpellActionValue('absorbProjectile');
 				if(typeof abs !== "undefined") { //JSON
-					var abt = abs.type;
+					var abt = abs.areaOfEffect;
 					var abi = abs.id;
 				}
 				if((typeof dfl !== "undefined" && (typeof dft === "undefined" || dft === mis) && (typeof dfi === "undefined" || dfi === mid)) || ((pl.getActiveSpellById(SPELL_DEFLECT).timer > 0 || pl.getActiveSpellById(SPELL_PROTECT).timer > 0) && isMissile)) { //Deflect makes missile-shaped spells to reverse direction
@@ -172,10 +172,10 @@ Projectile.prototype.move = function() {
 			var id = this.spell.id;
 			var sp = spellJson[id];
 			if(typeof sp !== "undefined") { //JSON
-				var prj = getObjectByKeys(sp, 'action', 'projectile');
-				if(typeof prj !== "undefined") {
+				var act = getObjectByKeys(sp, 'action');
+				if(typeof act !== "undefined") {
 					if(getMonsterAt(this.floor, this.x, this.y) === null) {
-						executeSpell(id, prj.onDeath, this, this.power);
+						executeSpell(id, act.onComplete, this, this.power);
 					}
 				}
 			}
@@ -211,17 +211,17 @@ Projectile.prototype.action = function(tar) {
 		var id = this.spell.id;
 		var sp = spellJson[id];
 		if(typeof sp !== "undefined") { //JSON
-			var prj = getObjectByKeys(sp, 'action', 'projectile');
-			if(typeof prj !== "undefined") {
-				var typ = getObjectByKeys(prj, 'type');
-				if(typeof typ !== "undefined" && typ === 'MULTI') {
+			var act = getObjectByKeys(sp, 'action', 'onComplete');
+			if(typeof act !== "undefined") {
+				var typ = getObjectByKeys(act, 'areaOfEffect');
+				if(typeof typ !== "undefined" && typ === 'multi') {
 					var combat = calculateAttack(this, tar, 'all');
 				} else {
 					var combat = calculateAttack(this, tar);
 				}
 				if(combat.length > 0) {
 					for(var c in combat) {
-						executeSpell(id, prj.onDeath, combat[c]);
+						executeSpell(id, act, combat[c]);
 					}
 				}
 			}
@@ -345,11 +345,11 @@ Projectile.prototype.event = function() {
 		var ob = getObject(this.floor, this.x, this.y, this.d);
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
-		var mov = getObjectByKeys(spellJson[id], 'action', 'projectile', 'onMove');
+		var mov = getObjectByKeys(spellJson[id], 'action', 'onMove');
 		if(typeof mov !== "undefined") { //JSON
 			executeSpell(id, mov, this, this.power);
 		} else {
-			if(id === SPELL_ARC_BOLT) {
+			/*if(id === SPELL_ARC_BOLT) {
 				if (obNext > OBJECT_MISC && !msc) {
 					var dNew = Math.floor(Math.random() * 2) * 2 + 1;
 					obNext = canMove(this.floor, this.x, this.y, (this.d + dNew) % 4);
@@ -372,7 +372,7 @@ Projectile.prototype.event = function() {
 					setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
 					setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
 					setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
-					setDungeonSpell(this.floor, this.x, this.y, this);
+					setDungeonSpell(id, this.floor, this.x, this.y, this);
 				}
 			}
 			if(id === SPELL_BLAZE) {
@@ -381,7 +381,7 @@ Projectile.prototype.event = function() {
 						setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
 						setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
 						setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
-						setDungeonSpell(this.floor, this.x, this.y, this);
+						setDungeonSpell(id, this.floor, this.x, this.y, this);
 					}
 					if (obNext > OBJECT_NONE) {
 						this.palette = paletteData['DRAGON_BIG'];
@@ -405,7 +405,7 @@ Projectile.prototype.event = function() {
 							setDungeonHex(this.floor, this.x, this.y, 13, 3, '7');
 							setDungeonHex(this.floor, this.x, this.y, 6, 2, '1');
 							setDungeonHex(this.floor, this.x, this.y, 0, 6, dec2hex(this.power));
-							setDungeonSpell(this.floor, this.x, this.y, this);
+							setDungeonSpell(id, this.floor, this.x, this.y, this);
 						}
 						if (obNext > OBJECT_MISC && !msc) {
 							var dNew = Math.floor(Math.random() * 2) * 2 + 1;
@@ -450,9 +450,9 @@ Projectile.prototype.event = function() {
 				}
 				if (this.getBinaryView(18, 13, 3) === '7') {
 					this.setBinaryView(18, 0, 16, '0000');
-					deleteDungeonSpell(this.floor, this.x, this.y);
+					deleteDungeonSpells(this.floor, this.x, this.y);
 				}
-			}
+			}*/
 		}
 	}
 	return res;

@@ -37,15 +37,15 @@
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_ARROW",
-					"type": "SINGLE",
 					"sound": "SOUND_FLASH",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": "SERPENT_ARROW"
-					},
-					"onDeath": {
-						"speedFactor": 0.0
 					}
+				},
+				"onComplete": {
+					"areaOfEffect": "single",
+					"speedFactor": 0.0
 				}
 			}
 		},
@@ -144,18 +144,18 @@
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_BIG",
-					"type": "MULTI",
 					"sound": "SOUND_EXPLODE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": "SERPENT_BIG"
-					},
-					"onMove": {
-						"bounce": true
-					},
-					"onDeath": {
-						"damage": true
 					}
+				},
+				"onMove": {
+					"bounce": true
+				},
+				"onComplete": {
+					"areaOfEffect": "multi",
+					"damage": true
 				}
 			}
 		},
@@ -199,7 +199,7 @@
 				"enchant": "ICON_SPELL_DEFLECT",
 				"timer": 5.0,
 				"deflectProjectile": {
-					"type": "MULTI"
+					"areaOfEffect": "single"
 				}
 			}
 		},
@@ -220,16 +220,16 @@
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_ARROW",
-					"type": "SINGLE",
 					"sound": "SOUND_FLASH",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": "CHAOS_ARROW"
-					},
-					"onDeath": {
-						"terrorFactor": 1.0,
-						"speedFactor": 5.0
 					}
+				},
+				"onComplete": {
+					"areaOfEffect": "single",
+					"terrorFactor": 1.0,
+					"speedFactor": 5.0
 				}
 			}
 		},
@@ -251,7 +251,7 @@
 				"enchant": "ICON_SPELL_ANTIMAGE",
 				"timer": 5.0,
 				"absorbProjectile": {
-					"type": "MULTI",
+					"areaOfEffect": "multi",
 					"absorbFactor": 1.0
 				}
 			}
@@ -273,16 +273,16 @@
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_ARROW",
-					"type": "SINGLE",
 					"sound": "SOUND_FLASH",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": "GOLD_ARROW"
-					},
-					"onDeath": {
-						"steal": true,
-						"spFactor": -1.0
 					}
+				},
+				"onComplete": {
+					"areaOfEffect": "single",
+					"steal": true,
+					"spFactor": -1.0
 				}
 			}
 		},
@@ -349,17 +349,31 @@
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_ARROW",
-					"type": "SINGLE",
 					"sound": "SOUND_FLASH",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
 						"to": "CHAOS"
-					},
-					"onDeath": {
-						"revive": true
 					}
+				},
+				"onComplete": {
+					"revive": true,
+					"areaOfEffect": "multi",
+					"castPart": [
+						{
+							"id": "VIVIFY_SELF"
+						}
+					]
 				}
 			}
 		}
-	]
+	],
+
+	"spellParts": {
+		"VIVIFY_SELF": {
+			"action": {
+				"type": "group",
+				"revive": true
+			}
+		}
+	}
 }
