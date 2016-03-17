@@ -62,11 +62,11 @@ function doKeyDown(e) {
                     break;
                 case KEY_9:
                     if(soundEnabled) {
-                        pauseSound(SOUND_PCMUSIC);
+                        pauseSound('SOUND_PCMUSIC');
                         soundEnabled = false;
                     } else {
                         soundEnabled = true;
-                        resumeSound(SOUND_PCMUSIC);
+                        resumeSound('SOUND_PCMUSIC');
                     }
                     break;
                 case KEY_0:

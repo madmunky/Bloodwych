@@ -140,7 +140,7 @@ function initData() {
     gfx['character']['torsos'] = getCharacterSprite(NUMBER_OF_TORSOS, 'character', 'torsos', 17, 14, 17);
     gfxUI = grabUISprites(gfx['misc']['uistuff']);
     itemGfxD = initItemGfxD();
-    audioFiles = loadSounds();
+    //audioFiles = loadSounds();
     initMonsterPalettes();
     initArmourGfx();
     initMonsters();
@@ -255,7 +255,7 @@ function startGame(singlePlayer, quickStart, p1_cid, p2_cid) {
         }, 1500);
     }
     setTimeout(function () {
-        playSoundLoop(SOUND_PCMUSIC);
+        playSoundLoop('SOUND_PCMUSIC');
     }, 500);
 }
 
@@ -307,6 +307,8 @@ function processJSONFiles(item, result) {
             itemDropsJson = checkMergeJSON(itemDropsJson, result.itemDrops);
             break;
         case 'Sounds':
+            initSounds(result.sounds, item.id)
+            //soundJson = checkMergeJSON(soundJson, result.sounds);
             break;
         case 'Spells':
             spellJson = checkMergeJSON(spellJson, result.spells);

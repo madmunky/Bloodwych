@@ -212,7 +212,7 @@ Player.prototype.action = function () {
             if (o15 === OBJECT_SWITCH) {
                 this.setBinaryView(15, 5, 1);
                 switchAction(parseInt(getHexToBinaryPosition(this.getView()[15], 0, 5), 16).toString(10), this);
-                playSound(SOUND_SWITCH);
+                playSound('SOUND_SWITCH');
             } else if (o15 === OBJECT_GEM) {
                 gemAction(this);
             }
@@ -238,7 +238,7 @@ Player.prototype.action = function () {
                 }
                 if (this.getBinaryView(15, 1, 3) === '0' && this.getBinaryView(15, 11, 1) === '0') { //If unlocked, open/close door
                     this.setBinaryView(15, 7, 1);
-                    playSound(SOUND_DOOR);
+                    playSound('SOUND_DOOR');
                     //this.setBinaryView(15, 1, 3, '000'); //Will set the door to 'normal'
                 } else { //If locked, give lock message
                     this.message(TEXT_DOOR_LOCKED, colourData['GREEN']);
@@ -278,7 +278,7 @@ Player.prototype.checkWoodenDoor = function (pos18) {
         }
         if (this.getBinaryView(pos18, 11, 1) === '0') { //If unlocked, open/close door
             this.setBinaryView(pos18, ((5 + d - this.d) % 4) * 2 + 1, 1);
-            playSound(SOUND_DOOR);
+            playSound('SOUND_DOOR');
         } else if (this.getBinaryView(pos18, 11, 1) === '1') { //If locked, give lock message
             this.message(TEXT_DOOR_LOCKED, colourData['GREEN']);
         }
@@ -438,7 +438,7 @@ Player.prototype.attack = function (ch, attack, target) {
             }
             //}, att.recruitment.position * self.getAttackSpeed(400));
             att.getMonster().doGesture(CHA_GESTURE_ATTACKING);
-            playSound(SOUND_ATTACK);
+            playSound('SOUND_ATTACK');
             //})(combat, com);
         }
     } else {

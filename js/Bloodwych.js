@@ -183,10 +183,10 @@ function pauseGame(ps, colourTo) {
     canvas.style.background = colourTo;
 
     if (ps) {
-        pauseSound(SOUND_PCMUSIC);
+        pauseSound('SOUND_PCMUSIC');
         saveGame(99, 'autosave');
     } else {
-        resumeSound(SOUND_PCMUSIC);
+        resumeSound('SOUND_PCMUSIC');
         pausedByBrowser = false;
         for (var p in player) {
             player[p].uiCenterPanel.mode = UI_CENTER_PANEL_VIEWPORT;

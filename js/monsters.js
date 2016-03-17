@@ -312,7 +312,7 @@ Monster.prototype.attack = function(attack, target) {
             } else if (def instanceof Monster) {
                 PrintLog('MONSTER #' + att.id + ' HITS HITS MONSTER #' + def.id + ' FOR ' + pwr + '!');
             }
-            playSound(SOUND_ATTACK);
+            playSound('SOUND_ATTACK');
         }
         for(var p in player) {
             player[p].redrawViewPort = true;
@@ -612,7 +612,7 @@ Monster.prototype.die = function() {
             if (this.isRecruitedBy() === null || !ch.recruitment.attached) {
                 dropItem(ch.pocket[POCKET_HIDDEN].id, 1, this.floor, this.x, this.y, sq);
             } else {
-                playSound(SOUND_DEATH);
+                playSound('SOUND_DEATH');
             }
         } else {
             newProjectile('PROJECTILE_BIG', paletteData['MOON_BIG'], null, -1, 0, this.floor, this.x, this.y, 0, null);

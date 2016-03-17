@@ -384,7 +384,7 @@ Champion.prototype.useItem = function(it, ac, param) {
                         if(typeof dTo === "undefined") {
                             dTo = getObjectByKeys(itemJson[it2.id], 'dungeon', 'recolour', 'to');
                         }
-                        newProjectile(id2, dTo, SOUND_ATTACK, it2.id + 100, pow, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
+                        newProjectile(id2, dTo, 'SOUND_ATTACK', it2.id + 100, pow, this.getMonster().floor, this.getMonster().x, this.getMonster().y, this.getMonster().d, this.getMonster());
                         this.writeAttackPoints('shoot');
                         if (this.recruitment.playerId > -1) {
                             player[this.recruitment.playerId].redrawViewPort = true;
@@ -509,7 +509,7 @@ Champion.prototype.useItem = function(it, ac, param) {
         it.setPocketItem(ac1.getVar());
         suc = true;
     }
-    
+
     return {
         success: suc,
         power: pow,

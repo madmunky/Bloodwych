@@ -4,23 +4,20 @@
  * and open the template in the editor.
  */
 
-function loadSounds(){
-    var s = [];
-    var location = "data/BW/sounds/";
-    s.push(null);
-    s.push(new Audio(location+"door.wav"));
-    s.push(new Audio(location+"attack.wav"));
-    s.push(new Audio(location+"flash.wav"));
-    s.push(new Audio(location+"death.wav"));
-    s.push(new Audio(location+"explode.wav"));
-    s.push(new Audio(location+"switch.wav"));
-    s.push(new Audio(location+"pc_music_roland.mp3"));
-    return s;
+function initSounds(soundJson, path){
+
+    path = path.substring(0, path.indexOf('json')) + "sounds/"
+
+    for (var s in soundJson){
+        audioFiles[soundJson[s].id] = new Audio(path+soundJson[s].filename);
+    }
+
 }
+
 
 function playSound(soundName){
     if(soundEnabled) {
-        if(soundName !== SOUND_NONE) {
+        if(soundName !== 'SOUND_NONE') {
             audioFiles[soundName].src = audioFiles[soundName].src;
             audioFiles[soundName].play();
         }
@@ -29,7 +26,7 @@ function playSound(soundName){
 
 function playSoundLoop(soundName){
     if(soundEnabled) {
-        if(soundName !== SOUND_NONE) {
+        if(soundName !== 'SOUND_NONE') {
             audioFiles[soundName].src = audioFiles[soundName].src;
             audioFiles[soundName].loop = true;
             audioFiles[soundName].volume = 0.3

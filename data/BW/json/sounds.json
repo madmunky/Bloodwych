@@ -1,1 +1,36 @@
-//all sounds + soundfiles here, e.g. SOUND_DOOR, "data/EXT/sounds/door.wav"
+{
+    "sounds": [
+        {
+            "id": "SOUND_ATTACK",
+            "filename":"attack.wav"
+        },
+        {
+            "id": "SOUND_NONE",
+            "filename":""
+        },
+        {
+            "id": "SOUND_DOOR",
+            "filename":"door.wav"
+        },
+        {
+            "id": "SOUND_FLASH",
+            "filename":"flash.wav"
+        },
+        {
+            "id": "SOUND_DEATH",
+            "filename":"death.wav"
+        },
+        {
+            "id": "SOUND_EXPLODE",
+            "filename":"explode.wav"
+        },
+        {
+            "id": "SOUND_SWITCH",
+            "filename":"switch.wav"
+        },
+        {
+            "id": "SOUND_PCMUSIC",
+            "filename":"pc_music_roland.mp3"
+        }
+        ]
+}
