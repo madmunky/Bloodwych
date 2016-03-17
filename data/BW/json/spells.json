@@ -155,7 +155,7 @@
 				},
 				"onComplete": {
 					"areaOfEffect": "multi",
-					"damage": true
+					"damage": "normal"
 				}
 			}
 		},
@@ -365,6 +365,42 @@
 					]
 				}
 			}
+		},
+		{
+			"id": "SPELL_DISRUPT",
+			"name": "DISRUPT",
+			"description": "KNOWN TO SOME AS DEATHSTRIKE",
+			"class": "CLASS_CHAOS",
+			"grade": 7,
+			"level": 8,
+			"power": 4,
+			"book": {
+				"symbols": "ITHO",
+				"page": 3,
+				"row": 0
+			},
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_BIG",
+					"sound": "SOUND_EXPLODE",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "DISRUPT_BIG"
+					}
+				},
+				"onComplete": {
+					"areaOfEffect": "multi",
+					"damage": "fatal",
+					"castPart": [
+						{
+							"id": "TEST",
+							"power": 4,
+							"direction": 2
+						}
+					]
+				}
+			}
 		}
 	],
 
@@ -373,6 +409,30 @@
 			"action": {
 				"type": "group",
 				"revive": true
+			}
+		},
+		"TEST": {
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_BIG",
+					"sound": "SOUND_EXPLODE",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "CHAOS_BIG"
+					}
+				},
+				"onComplete": {
+					"areaOfEffect": "multi",
+					"damage": "fatal",
+					"castPart": [
+						{
+							"id": "TEST",
+							"power": 4,
+							"direction": 2
+						}
+					]
+				}
 			}
 		}
 	}

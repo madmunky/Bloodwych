@@ -442,10 +442,15 @@ function executeSpell(s, act, tar, pow) {
 				}
 			}
 			var dmg = act.damage;
-			if (typeof dmg !== "undefined" && dmg && typeof att !== "undefined" && typeof def !== "undefined") { //damage spells
-				if (att !== null) {
+			if (typeof dmg !== "undefined" && typeof att !== "undefined" && typeof def !== "undefined") { //damage spells
+				if (typeof att !== "undefined" && att !== null) {
 					var pl = att.isRecruitedBy();
 					var ch = att.getChampion();
+					if(dmg === "fatal") {
+						if(pow > 1 && pow < def.getHP()) {
+							pow = 1;
+						}
+					}
 					att.doDamageTo(def, pow, dExh);
 					if (pl !== null && ch !== null) {
 						if (def instanceof Monster) {
@@ -624,7 +629,7 @@ function castSpell(s, src, pw, part) {
 						if (typeof snd === "undefined") {
 							snd = 'SOUND_FLASH';
 						}
-						newProjectile(id, to, snd.getVar(), s, pow, f, x, y, d, src);
+						newProjectile(id, to, snd.getVar(), s, pow, f, x, y, d, src, ac);
 					}
 				}
 			}
