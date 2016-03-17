@@ -1,4 +1,4 @@
-function Projectile(id, type, palette, snd, s, power, tower, floor, x, y, d, m) {
+function Projectile(id, type, palette, snd, s, power, tower, floor, x, y, d, m, act) {
 	this.id = id;
 	this.type = type;
 	this.palette = palette;
@@ -15,6 +15,11 @@ function Projectile(id, type, palette, snd, s, power, tower, floor, x, y, d, m) 
 		this.spell = s - 100;
 	} else {
 		this.spell = getSpellById(s);
+	}
+	if(typeof act !== "undefined") {
+		this.action = act;
+	} else if(typeof spellJson[s] !== "undefined" && typeof spellJson[s].action !== "undefined") {
+		this.action = spellJson[s].action;
 	}
 	this.dead = 0;
 	this.timer = timerMaster;
@@ -43,11 +48,12 @@ Projectile.prototype.toJSON = function() {
 		s: this.s,
 		dead: this.dead,
 		timer: this.timer,
+		action: this.action
 	}
 }
 
 Projectile.revive = function(data) {
-	var p = new Projectile(data.id, data.type, data.palette, data.sound, data.s, data.power, data.tower, data.floor, data.x, data.y, data.d);
+	var p = new Projectile(data.id, data.type, data.palette, data.sound, data.s, data.power, data.tower, data.floor, data.x, data.y, data.d, data.action);
 	p.monster = getMonsterById(data.monster);
 	p.dead = data.dead;
 	p.timer = data.timer;
@@ -67,18 +73,22 @@ Projectile.prototype.move = function() {
 			var sid = null;
 			if(this.spell !== null) {
 				var sid = this.spell.id;
-				var sp = spellJson[sid];
+				var sp = this.action;
+				var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE || sid === SPELL_NULLIFY || sid === SPELL_FIREPATH);
 				if(typeof sp !== "undefined") { //JSON
-					var mis = getObjectByKeys(sp, 'action', 'onComplete', 'areaOfEffect');
-					var mid = getObjectByKeys(sp, 'id');
+					var mis = getObjectByKeys(sp, 'onComplete', 'areaOfEffect');
+					//var mid = getObjectByKeys(sp, 'id');
+					if(typeof mis !== "undefined") {
+						isMissile = (mis === 'single');
+					}
 				} else {
 					var isDamage = (typeof this.spell === 'number' || sid === SPELL_ARC_BOLT || sid === SPELL_DISRUPT || sid === SPELL_MISSILE || sid === SPELL_FIREBALL || sid === SPELL_FIREPATH || sid === SPELL_BLAZE || sid === SPELL_WYCHWIND || sid === SPELL_INFERNO || sid === SPELL_SPRAY);
 				}
-				if(typeof sp !== "undefined" && typeof mis !== "undefined") {
+				/*if(typeof sp !== "undefined" && typeof mis !== "undefined") {
 					var isMissile = (mis === 'single');
 				} else {
 					var isMissile = (sid === SPELL_PARALYZE || sid === SPELL_TERROR || sid === SPELL_SPELLTAP || sid === SPELL_MISSILE || sid === SPELL_CONFUSE || sid === SPELL_NULLIFY || sid === SPELL_FIREPATH);
-				}
+				}*/
 			}
 			var pl = getPlayerAt(this.floor, this.x, this.y);
 			if(pl !== null) {
@@ -92,7 +102,7 @@ Projectile.prototype.move = function() {
 					var abt = abs.areaOfEffect;
 					var abi = abs.id;
 				}
-				if((typeof dfl !== "undefined" && (typeof dft === "undefined" || dft === mis) && (typeof dfi === "undefined" || dfi === mid)) || ((pl.getActiveSpellById(SPELL_DEFLECT).timer > 0 || pl.getActiveSpellById(SPELL_PROTECT).timer > 0) && isMissile)) { //Deflect makes missile-shaped spells to reverse direction
+				if((typeof dfl !== "undefined" && (typeof dft === "undefined" || dft === mis) && (typeof dfi === "undefined" || dfi === this.type)) || ((pl.getActiveSpellById(SPELL_DEFLECT).timer > 0 || pl.getActiveSpellById(SPELL_PROTECT).timer > 0) && isMissile)) { //Deflect makes missile-shaped spells to reverse direction
 					if(pl.getActiveSpellById().timer > 0) {
 						pl.getActiveSpellById().timer -= this.power;
 					}
@@ -101,7 +111,7 @@ Projectile.prototype.move = function() {
 					this.x += xy.x;
 					this.y += xy.y;
 					return true;
-				} else if(typeof abs !== "undefined" && (typeof abt === "undefined" || abt === mis) && (typeof abi === "undefined" || abi === mid)) {
+				} else if(typeof abs !== "undefined" && (typeof abt === "undefined" || abt === mis) && (typeof abi === "undefined" || abi === this.type)) {
 					var abf = abs.absorbFactor;
 					if(typeof abf !== "undefined" && abf > 0.0) {
 						var tim = pl.getActiveSpellById().timer;
@@ -115,7 +125,7 @@ Projectile.prototype.move = function() {
 						}
 					}
 				} else {
-					if(this.action(pl)) {
+					if(this.doAction(pl)) {
 						return true;
 					} else {
 						if(isDamage) {
@@ -131,7 +141,7 @@ Projectile.prototype.move = function() {
 				if(isDamage) {
 					this.attack(mon);
 				}
-				if(this.action(mon)) {
+				if(this.doAction(mon)) {
 					return true;
 				} else {
 					this.die();
@@ -141,7 +151,7 @@ Projectile.prototype.move = function() {
 		}
 		if(this.power === 0) {
 			if(this.spell !== null) {
-				this.action();
+				this.doAction();
 			}
 			this.die();
 			return false;
@@ -170,13 +180,10 @@ Projectile.prototype.move = function() {
 		}
 		if(this.spell !== null) {
 			var id = this.spell.id;
-			var sp = spellJson[id];
-			if(typeof sp !== "undefined") { //JSON
-				var act = getObjectByKeys(sp, 'action');
-				if(typeof act !== "undefined") {
-					if(getMonsterAt(this.floor, this.x, this.y) === null) {
-						executeSpell(id, act.onComplete, this, this.power);
-					}
+			var act = this.action; //spellJson[id];
+			if(typeof act !== "undefined") { //JSON
+				if(getMonsterAt(this.floor, this.x, this.y) === null) {
+					executeSpell(id, act.onComplete, this, this.power);
 				}
 			}
 		}
@@ -205,13 +212,13 @@ Projectile.prototype.die = function(snd) {
 	for(var p in player) { player[p].redrawViewPort = true;}
 }
 
-Projectile.prototype.action = function(tar) {
+Projectile.prototype.doAction = function(tar) {
 	var res = false;
 	if(this.spell !== null && typeof this.spell !== 'number') {
 		var id = this.spell.id;
-		var sp = spellJson[id];
+		var sp = this.action; //spellJson[id];
 		if(typeof sp !== "undefined") { //JSON
-			var act = getObjectByKeys(sp, 'action', 'onComplete');
+			var act = getObjectByKeys(sp, 'onComplete');
 			if(typeof act !== "undefined") {
 				var typ = getObjectByKeys(act, 'areaOfEffect');
 				if(typeof typ !== "undefined" && typ === 'multi') {
@@ -345,7 +352,7 @@ Projectile.prototype.event = function() {
 		var ob = getObject(this.floor, this.x, this.y, this.d);
 		var obNext = canMove(this.floor, this.x, this.y, this.d);
 		var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
-		var mov = getObjectByKeys(spellJson[id], 'action', 'onMove');
+		var mov = getObjectByKeys(this.action, 'onMove');
 		if(typeof mov !== "undefined") { //JSON
 			executeSpell(id, mov, this, this.power);
 		} else {
@@ -502,7 +509,7 @@ Projectile.prototype.attack = function(target, prc) {
 				}
 			}
 			var dExh = Math.floor(combat[com].defExhaustion * prc);
-			if (att !== null) {
+			if (typeof att !== "undefined" && att !== null) {
 				var pl = att.isRecruitedBy();
 				var ch = att.getChampion();
 				att.doDamageTo(def, pwr, dExh);
@@ -536,7 +543,7 @@ Projectile.prototype.getBinaryView = function(pos18, index, length) {
     }
 };
 
-function newProjectile(type, palette, snd, s, power, f, x, y, d, m) {
+function newProjectile(type, palette, snd, s, power, f, x, y, d, m, act) {
 	if (typeof tower[towerThis].floor[f].Map[y] === "undefined" || typeof tower[towerThis].floor[f].Map[y][x] === "undefined") {
 		return false;
 	}
@@ -544,10 +551,10 @@ function newProjectile(type, palette, snd, s, power, f, x, y, d, m) {
 	if (s > -1) {
 		var xy = getOffsetByRotation(d);
 		if (canMove(f, x, y, d) !== OBJECT_WALL && canMove(f, x, y, d) !== OBJECT_WOOD) {
-			projectile[towerThis][pmax] = new Projectile(pmax, type, palette, snd, s, power, towerThis, f, x + xy.x, y + xy.y, d, m);
+			projectile[towerThis][pmax] = new Projectile(pmax, type, palette, snd, s, power, towerThis, f, x + xy.x, y + xy.y, d, m, act);
 		}
 	} else {
-		projectile[towerThis][pmax] = new Projectile(pmax, type, palette, snd, s, power, towerThis, f, x, y, d, m);
+		projectile[towerThis][pmax] = new Projectile(pmax, type, palette, snd, s, power, towerThis, f, x, y, d, m, act);
 	}
 	return true;
 }
