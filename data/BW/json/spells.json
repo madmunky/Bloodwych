@@ -358,9 +358,9 @@
 				"onComplete": {
 					"revive": true,
 					"areaOfEffect": "multi",
-					"castPart": [
+					"castSpellPart": [
 						{
-							"id": "VIVIFY_SELF"
+							"id": "VIVIFY"
 						}
 					]
 				}
@@ -391,27 +391,191 @@
 				},
 				"onComplete": {
 					"areaOfEffect": "multi",
-					"damage": "fatal",
-					"castPart": [
-						{
-							"id": "TEST",
-							"power": 4,
-							"direction": 2
-						}
-					]
+					"damage": "fatal"
+				}
+			}
+		},
+
+
+
+		{
+			"id": "SPELL_MISSILE",
+			"name": "MISSILE",
+			"description": "KNOWN TO SOME AS DEATHSTRIKE",
+			"class": "CLASS_DRAGON",
+			"grade": 0,
+			"level": 1,
+			"power": 2,
+			"book": {
+				"symbols": "TNER",
+				"page": 1,
+				"row": 0
+			},
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_ARROW",
+					"sound": "SOUND_ATTACK",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "DRAGON_ARROW"
+					}
+				},
+				"onComplete": {
+					"areaOfEffect": "single",
+					"damage": "normal"
+				}
+			}
+		},
+		{
+			"id": "SPELL_MAGELOCK",
+			"name": "MAGELOCK",
+			"description": "WHY BOTHER WITH ALL THOSE SILLY KEYS?",
+			"class": "CLASS_DRAGON",
+			"grade": 1,
+			"level": 2,
+			"power": 0,
+			"book": {
+				"symbols": "ITWE",
+				"page": 0,
+				"row": 5
+			},
+			"action": {
+				"type": "front",
+				"unlock": "DOOR_COMMON"
+			}
+		},
+		{
+			"id": "SPELL_VITALISE",
+			"name": "VITALISE",
+			"description": "YOU'LL NEVER FEEL SO GOOD",
+			"class": "CLASS_DRAGON",
+			"grade": 2,
+			"level": 2,
+			"power": 1,
+			"book": {
+				"symbols": "LITT",
+				"page": 0,
+				"row": 2
+			},
+			"action": {
+				"type": "group",
+				"vitFactor": 1.0
+			}
+		},
+		{
+			"id": "SPELL_DISPELL",
+			"name": "DISPELL",
+			"description": "WHAT MAGIC MAKES, MAGIC CAN DESTROY",
+			"class": "CLASS_DRAGON",
+			"grade": 3,
+			"level": 3,
+			"power": 1,
+			"book": {
+				"symbols": "LITT",
+				"page": 2,
+				"row": 3
+			},
+			"action": {
+				"type": "front",
+				"setObject": "NONE"
+			}
+		},
+		{
+			"id": "SPELL_FIREBALL",
+			"name": "FIREBALL",
+			"description": "A BLAST AT PARTIES",
+			"class": "CLASS_DRAGON",
+			"grade": 4,
+			"level": 3,
+			"power": 2,
+			"book": {
+				"symbols": "AVIN",
+				"page": 3,
+				"row": 1
+			},
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_BIG",
+					"sound": "SOUND_EXPLODE",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "DRAGON_BIG"
+					}
+				},
+				"onComplete": {
+					"areaOfEffect": "multi"
+				}
+			}
+		},
+		{
+			"id": "SPELL_FIREPATH",
+			"name": "FIREPATH",
+			"description": "LAY DOWN THE RED CARPET",
+			"class": "CLASS_DRAGON",
+			"grade": 5,
+			"level": 4,
+			"power": 2,
+			"book": {
+				"symbols": "AVIN",
+				"page": 2,
+				"row": 4
+			},
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_ARROW",
+					"sound": "SOUND_ATTACK",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "DRAGON_ARROW"
+					}
+				},
+				"onMove": {
+					"setObject": "FIRE",
+					"timer": 1.0
+				},
+				"onComplete": {
+					"areaOfEffect": "single",
+					"damage": "normal"
+				}
+			}
+		},
+		{
+			"id": "SPELL_RECHARGE",
+			"name": "RECHARGE",
+			"description": "BOOSTS THE FLATTEST OF RINGS!",
+			"class": "CLASS_DRAGON",
+			"grade": 6,
+			"level": 5,
+			"power": 1,
+			"book": {
+				"symbols": "DDUN",
+				"page": 1,
+				"row": 7
+			},
+			"action": {
+				"type": "self",
+				"changeItem": {
+					"pocket": ["POCKET_LEFT_HAND", "POCKET_RIGHT_HAND"],
+					"fromType": ["ITEM_TYPE_RING"],
+					"toQuantityFactor": 0.1
 				}
 			}
 		}
 	],
 
+
+
 	"spellParts": {
-		"VIVIFY_SELF": {
+		"VIVIFY": {
 			"action": {
 				"type": "group",
 				"revive": true
 			}
 		},
-		"TEST": {
+		"WYCHWIND": {
 			"action": {
 				"type": "projectile",
 				"projectile": {
@@ -423,15 +587,7 @@
 					}
 				},
 				"onComplete": {
-					"areaOfEffect": "multi",
-					"damage": "fatal",
-					"castPart": [
-						{
-							"id": "TEST",
-							"power": 4,
-							"direction": 2
-						}
-					]
+					"areaOfEffect": "multi"
 				}
 			}
 		}

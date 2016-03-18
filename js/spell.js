@@ -261,9 +261,9 @@ function getSpellPower(id) {
             return 1;
     }
 }
-//change onDeath to onComplete and move up
-//add onComplete to enchants
-//multi action
+
+//add onFail to execute when spell didnt do its effect
+//check projectile target's power
 function executeSpell(s, act, tar, pow) {
     if (typeof act !== "undefined") {
         var spl = spellJson[s];
@@ -271,7 +271,7 @@ function executeSpell(s, act, tar, pow) {
             pow = 0;
         }
         if (typeof spl !== "undefined") { //JSON
-            if (typeof tar.attacker !== "undefined") {
+            if (typeof tar.attacker !== "undefined") { //combat
                 var att = tar.attacker;
                 var def = tar.defender;
                 var pow = tar.power;
@@ -283,6 +283,8 @@ function executeSpell(s, act, tar, pow) {
                 } else if (typeof att !== "undefined" && att !== null) {
                     tar = att;
                 }
+            } else if(typeof tar.monster !== "undefined") { //projectile
+                var att = tar.monster;
             }
             var f = tar.floor;
             var x = tar.x;
@@ -353,17 +355,6 @@ function executeSpell(s, act, tar, pow) {
                         }
                     }
                 }
-                /*if(tar instanceof Player) {
-                    for(var c = 0; c < tar.champion.length; c++) {
-                        var ch = tar.getChampion(c);
-                        if(ch !== null && ch.getMonster().dead && ch.recruitment.attached) {
-                            ch.stat.hp = 0;
-                            ch.getMonster().dead = false;
-                            redrawUI(2);
-                        }
-                    }
-                    tar.updateChampions();
-                }*/
                 for (var p in player) {
                     var pl = player[p];
                     if (!pl.dead && f === pl.floor && x === pl.x && y === pl.y) {
@@ -383,9 +374,40 @@ function executeSpell(s, act, tar, pow) {
                     }
                 }
             }
+            var lck = act.unlock;
+            if(typeof lck !== "undefined") {
+                if(lck === 'DOOR_COMMON') { //magelock
+                    if (getDungeonHex(f, x - xy.x, y - xy.y, 13, 3) === '2' && getDungeonHex(f, x - xy.x, y - xy.y, ((5 + 2 - d) % 4) * 2) === '1') {
+                        setDungeonHex(f, x - xy.x, y - xy.y, 11, 1);
+                    } else if (getDungeonHex(f, x, y, 13, 3) === '2' && getDungeonHex(f, x, y, ((5 + 0 - d) % 4) * 2) === '1') {
+                        setDungeonHex(f, x, y, 11, 1);
+                    } else if (getDungeonHex(f, x, y, 13, 3) === '5' && getDungeonHex(f, x, y, 4) === '0') {
+                        setDungeonHex(f, x, y, 11, 1);
+                    }
+                } else { //solid doors
+                    var dun = getDungeonHex(f, x, y, 1, 3);
+                    lck = '' + lck.getVar();
+                    if (dun === '0' || dun === lck) {
+                        setDungeonHex(f, x, y, 11, 1);
+                        if(dun === '0') {
+                            setDungeonHex(f, x, y, 1, 3, lck);
+                        } else {
+                            setDungeonHex(f, x, y, 1, 3, '0');
+                        }
+                    }
+                }
+            }
             var mob = act.setObject;
-            if (typeof mob !== "undefined") { //firepath, formwall, mindrock
-                if (getHexToBinaryPosition(tower[towerThis].floor[f].Map[y][x], 0, 16) === '0000') {
+            if (typeof mob !== "undefined") { //change dungeon
+                if(mob === 'NONE') { //dispell
+                    if (getDungeonHex(f, x, y, 12, 1) === '1') {
+                        setDungeonHex(f, x, y, 12, 1, '0');
+                    }
+                    if (getDungeonHex(f, x, y, 13, 3) === '7') {
+                        setDungeonHex(f, x, y, 0, 16, '0000');
+                        deleteDungeonSpells(f, x, y);
+                    }
+                } else if (getDungeonHex(f, x, y, 0, 16) === '0000') { //firepath, formwall, mindrock
                     var tim = act.timer;
                     if (typeof tim !== "undefined" && tim > 0.0) {
                         pow *= tim;
@@ -446,7 +468,7 @@ function executeSpell(s, act, tar, pow) {
                 if (typeof att !== "undefined" && att !== null) {
                     var pl = att.isRecruitedBy();
                     var ch = att.getChampion();
-                    if(dmg === "fatal") {
+                    if(dmg === "fatal") { //when it is not fatal, it will only damage for 1 hit (disrupt)
                         if(pow > 1 && pow < def.getHP()) {
                             pow = 1;
                         }
@@ -463,7 +485,7 @@ function executeSpell(s, act, tar, pow) {
                 }
             }
 
-            var prt = act.castPart;
+            var prt = act.castSpellPart;
             if(typeof prt !== "undefined" && prt.length > 0) {
                 for(p in prt) {
                     var id = prt[p].id;
@@ -472,11 +494,26 @@ function executeSpell(s, act, tar, pow) {
                             pow = prt[p].power;
                         }
                         var src = clone(tar);
-                        var d = prt[p].direction;
-                        if(typeof d !== "undefined") {
-                            if(d === -1) {
-                                d = Math.floor(Math.random() * 4);
+                        var pos = prt[p].position;
+                        if(typeof pos !== "undefined") {
+                            var xy1 = getOffsetByRotation(src.d);
+                            var d = 0;
+                            var x = 0;
+                            var y = 0;
+                            if(typeof pos.d !== "undefined") {
+                                d = pos.d;
+                                if(pos.d === "random") {
+                                    d = Math.floor(Math.random() * 4);
+                                }
                             }
+                            if(typeof pos.x !== "undefined") {
+                                x = pos.x;
+                            }
+                            if(typeof pos.y !== "undefined") {
+                                y = pos.y;
+                            }
+                            src.x = src.x + (x * -xy1.y) + (y * -xy1.x);
+                            src.y = src.y + (x * xy1.x) + (y * -xy1.y);
                             src.d = (src.d + d) % 4;
                         }
                         castSpell(s, src, pow, id);
@@ -489,7 +526,7 @@ function executeSpell(s, act, tar, pow) {
                     if (typeof act.enchant !== "undefined") {
                         ch.activateSpell(s, pow);
                     }
-                    var chi = act.changeItem; //alchemy
+                    var chi = act.changeItem; //alchemy, recharge
                     if (typeof chi !== "undefined") {
                         var pck = chi.pocket;
                         var fTyp = chi.fromType;
@@ -501,11 +538,17 @@ function executeSpell(s, act, tar, pow) {
                                 if (typeof itm !== "undefined") {
                                     if ((typeof fTyp !== "undefined" && $.inArray(itm.type, fTyp) > -1) || (typeof fId !== "undefined" && $.inArray(itm.id, fId) > -1)) {
                                         var tId = chi.toId;
+                                        if(typeof tId === "undefined") {
+                                            tId = [null];
+                                        }
                                         if (typeof tId !== "undefined") {
                                             var to = tId[Math.floor(Math.random() * tId.length)];
+                                            if(to === null) { //same from as to
+                                                to = ch.pocket[slot].id;
+                                            }
                                             var it = parseItem(to);
                                             var q = 1;
-                                            if (itemJson[it].type === 'ITEM_TYPE_STACKABLE') {
+                                            if (typeof itemJson[it] !== "undefined" && (itemJson[it].type === 'ITEM_TYPE_STACKABLE') || typeof itemJson[it].quantity !== "undefined") {
                                                 var qf = chi.toQuantityFactor;
                                                 if (typeof qf === "undefined") {
                                                     qf = 1.0;
@@ -515,10 +558,16 @@ function executeSpell(s, act, tar, pow) {
                                                 if (slot2 !== null) {
                                                     var it2 = ch.pocket[slot2];
                                                     q = q + it2.quantity;
-                                                    if (q > 99) {
-                                                        q = 99;
-                                                    }
                                                     it2.setPocketItem();
+                                                }
+                                                var qm = itemJson[it].quantity;
+                                                if(typeof qm === "undefined") {
+                                                    qm = 99;
+                                                }
+                                                if(q < 0) {
+                                                    q = 0;
+                                                } else if(q > qm) {
+                                                    q = qm;
                                                 }
                                             }
                                             ch.pocket[slot].setPocketItem(to, q);
@@ -617,20 +666,25 @@ function castSpell(s, src, pw, part) {
                     }, pow);
                 } else if (ac.type === 'projectile') {
                     var pr = ac.projectile;
-                    if (pr !== "undefined") {
+                    if (typeof pr !== "undefined") {
                         var id = pr.id;
                         var snd = pr.sound;
-                        var to = paletteData['SERPENT_ARROW'];
                         var col = pr.recolour;
                         if (typeof col !== "undefined") {
-                            //var from = pr.recolour.from;
-                            to = pr.recolour.to;
+                            //var from = col.from;
+                            var to = col.to;
                         }
-                        if (typeof snd === "undefined") {
-                            snd = 'SOUND_FLASH';
-                        }
-                        newProjectile(id, to, snd.getVar(), s, pow, f, x, y, d, src, ac);
                     }
+                    if(typeof id === "undefined") {
+                        var id = 'PROJECTILE_ARROW';
+                    }
+                    if (typeof snd === "undefined") {
+                        var snd = 'SOUND_FLASH';
+                    }
+                    if(typeof to === "undefined") {
+                        var to = paletteData['SERPENT_ARROW'];
+                    }
+                    newProjectile(id, to, snd, s, pow, f, x, y, d, src, ac);
                 }
             }
         }
@@ -842,21 +896,21 @@ function castSpell(s, src, pw, part) {
                     y2 = y2 + xy.y * 2;
                     pl.setPlayerPosition(f, x2, y2);
                 }
-                newProjectile('NONE', paletteData['TELEPORT_FLASH'], SOUND_FLASH, -1, 0, f, x2, y2, d, null);
+                newProjectile('NONE', paletteData['TELEPORT_FLASH'], 'SOUND_FLASH', -1, 0, f, x2, y2, d, null);
                 break;
             case SPELL_ENHANCE:
                 ch.activateSpell(s, pow);
                 break;
             case SPELL_INFERNO:
-                newProjectile('PROJECTILE_BIG', paletteData['BLAZE_BIG'], SOUND_EXPLODE, s, pow, f, x, y, d, src);
+                newProjectile('PROJECTILE_BIG', paletteData['BLAZE_BIG'], 'SOUND_EXPLODE', s, pow, f, x, y, d, src);
                 break;
             case SPELL_NULLIFY:
-                newProjectile('PROJECTILE_ARROW', paletteData['DRAGON_ARROW'], SOUND_FLASH, s, pow, f, x, y, d, src);
+                newProjectile('PROJECTILE_ARROW', paletteData['DRAGON_ARROW'], 'SOUND_FLASH', s, pow, f, x, y, d, src);
                 break;
             case SPELL_SPRAY:
-                newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], SOUND_EXPLODE, s, pow, f, x - xy.y, y - xy.x, d, src);
-                newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], SOUND_EXPLODE, s, pow, f, x, y, d, src);
-                newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], SOUND_EXPLODE, s, pow, f, x + xy.y, y + xy.x, d, src);
+                newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], 'SOUND_EXPLODE', s, pow, f, x - xy.y, y - xy.x, d, src);
+                newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], 'SOUND_EXPLODE', s, pow, f, x, y, d, src);
+                newProjectile('PROJECTILE_BIG', paletteData['DISRUPT_BIG'], 'SOUND_EXPLODE', s, pow, f, x + xy.y, y + xy.x, d, src);
                 break;
             case SPELL_VORTEX:
                 break;
@@ -906,7 +960,7 @@ function deleteDungeonSpells(f, x, y) {
 
 function deleteDungeonSpell(d, f, x, y) {
     ds = dungeonSpellList[d];
-    if (ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
+    if (ds !== null && ds.tower === towerThis && ds.floor === f && ds.x === x && ds.y === y) {
         var id = ds.spellId;
         if (id > -1) {
             var act = getObjectByKeys(spellJson[id], 'action', 'onComplete');
@@ -926,7 +980,7 @@ function deleteDungeonSpell(d, f, x, y) {
 function updateDungeonSpells() {
     for (var s in dungeonSpellList) {
         var ds = dungeonSpellList[s];
-        if (ds.tower === towerThis) {
+        if (ds !== null && ds.tower === towerThis) {
             if (ds.projectile !== null && typeof ds.projectile.spell !== 'number' && (ds.projectile.spell.id === SPELL_FIREPATH || ds.projectile.spell.id === SPELL_BLAZE || ds.projectile.spell.id === SPELL_INFERNO)) {
                 for (var p in player) {
                     if (ds.floor === player[p].floor && ds.x === player[p].x && ds.y === player[p].y) {

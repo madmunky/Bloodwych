@@ -157,7 +157,7 @@ var COLOUR_GEM_SERPENT = 0,
 
 var CLASS_SERPENT = 0,
     CLASS_CHAOS = 1,
-    CLASS_DRAG = 2,
+    CLASS_DRAGON = 2,
     CLASS_MOON = 3,
     CLASS_ANCIENT = 4;
 
@@ -191,7 +191,7 @@ paletteData['PLAYER'][1] = [colourData['WHITE'], colourData['RED'], colourData['
 paletteData['CLASS'] = new Array();
 paletteData['CLASS'][CLASS_SERPENT] = colourData['GREEN'],
 paletteData['CLASS'][CLASS_CHAOS] = colourData['YELLOW'],
-paletteData['CLASS'][CLASS_DRAG] = colourData['RED'],
+paletteData['CLASS'][CLASS_DRAGON] = colourData['RED'],
 paletteData['CLASS'][CLASS_MOON] = colourData['BLUE'],
 paletteData['CLASS'][CLASS_ANCIENT] = colourData['PINK'];
 
@@ -1458,8 +1458,8 @@ var dungeonSpellTimer = 0;
 var dungeonSpellList = new Array();
 //var activeSpellTimer = 0;
 var SPELL_LEVEL_MAX = 8,
-    SPELL_COLOUR_MAX = 5,
-    SPELL_PAGE_MAX = 5;
+    SPELL_COLOUR_MAX = 4,
+    SPELL_PAGE_MAX = 4;
 
 //Serpent spells
 var SPELL_ARMOUR = 0,

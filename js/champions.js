@@ -352,6 +352,7 @@ Champion.prototype.useItem = function(it, ac, param) {
     var use = getObjectByKeys(itemJson[it.id], ac);
     var pow = 0.0;
     var pof = 1.0;
+    var cost = 1.0;
 
     //Use bow to shoot arrows
     var typ = getObjectByKeys(use, 'shootType');
@@ -513,7 +514,8 @@ Champion.prototype.useItem = function(it, ac, param) {
     return {
         success: suc,
         power: pow,
-        powerFactor: pof
+        powerFactor: pof,
+        costFactor: cost
     };
 }
 
@@ -971,14 +973,9 @@ Champion.prototype.getSpellPower = function(chance) {
     var pow = (this.selectedSpell.castSuccessful * 0.015 - 6.0 / (this.selectedSpell.cost + 6.0) + (this.stat.int + 5.0) * 0.015 - this.selectedSpell.ref.level * 0.15) + this.spellFatigue; // + (this.level - 1) * 0.1;
     if(typeof chance === "undefined" || !chance) {
         pow = Math.floor(pow * 10 + this.level * 4);
-        var it = this.getEquippedItems();
-        for(var i = 0; i < it.length; i++) { //wands
-            var res = this.useItem(it[i], 'onCastSpell', {spell: this.selectedSpell});
-            pow = (pow + res.power) * res.powerFactor;
-        }
     }
     if (debug){
-        PrintLog('pcast:' + this.selectedSpell.castSuccessful + ' scost:' + this.selectedSpell.cost + ' pint:' + this.stat.int + ' slvl:' + this.selectedSpell.ref.level + ' fat:' + this.spellFatigue + ' = res:' + res);
+        PrintLog('pcast:' + this.selectedSpell.castSuccessful + ' scost:' + this.selectedSpell.cost + ' pint:' + this.stat.int + ' slvl:' + this.selectedSpell.ref.level + ' fat:' + this.spellFatigue);
     }
     return pow;
 }

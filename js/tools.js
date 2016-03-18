@@ -193,7 +193,7 @@ function posToCoordinates(pos, x, y, d) {
 		y: newy
 	};
 }
-//Given a specific x and y, relative to another x, y and d(irection), return the position
+//Given a specific xt and yt, relative to another x, y and d(irection), return the position
 //Returns -1 when not in range of 0-19
 function coordinatesToPos(xt, yt, x, y, d) {
 	var pos = -1;

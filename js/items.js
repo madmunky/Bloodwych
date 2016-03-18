@@ -59,7 +59,9 @@ Item.prototype.setPocketItem = function(id, q, pas) {
     } else if (typeof q === "undefined") {
         q = 1;
     }
-    this.id = id;
+    if(id !== null) {
+        this.id = id;
+    }
     if(typeof pas !== "undefined" && pas) {
         this.quantity = q;
     } else {
@@ -70,7 +72,7 @@ Item.prototype.setPocketItem = function(id, q, pas) {
     this.location.x = 0;
     this.location.y = 0;
     this.location.square = 0;
-    this.type = getItemType(id);
+    this.type = getItemType(this.id);
 }
 
 Item.prototype.setQuantity = function(qty) {
@@ -109,7 +111,11 @@ Item.prototype.getGfx = function(dun) {
         var id2 = getObjectByKeys(qt[q], 'changeToItem');
         var app = getObjectByKeys(qt[q], 'appearanceOnly');
         if(typeof id2 !== "undefined" && this.quantity === val + 1 && app) {
-            it = itemJson[id2.getVar()];
+            it = getObjectRootByKey(itemJson, 'id', id2);
+            if(it.length > 0) {
+                it = it[0];
+            }
+            //it = itemJson[id2.getVar()];
         }
     }
     if(typeof dun !== "undefined" && dun) {
@@ -184,7 +190,7 @@ function initItems(t) {
                     y: 23,
                     square: 0
                 });
-                item[t.id][item[t.id].length] = new Item('ITEM_CHAOS_WAND', 1, {
+                item[t.id][item[t.id].length] = new Item('ITEM_CHAOS_RING', 2, {
                     tower: t.id,
                     floor: 3,
                     x: 12,
@@ -532,6 +538,8 @@ function parseItem(i) {
         }
     } else if(typeof i === 'number') {
         id = i;
+    } else if(i === null) {
+        id = null;
     }
     return id;
 }

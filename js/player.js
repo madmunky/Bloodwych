@@ -231,7 +231,7 @@ Player.prototype.action = function () {
                             this.setBinaryView(15, 11, 1);
                             this.setBinaryView(15, 1, 3, '0');
                         }
-                    } else if (key.getVar() === DOOR_COMMON) { //Use common key
+                    } else if (key === 'DOOR_COMMON') { //Use common key
                         this.consumeItemInHand();
                         this.setBinaryView(15, 11, 1);
                     }
@@ -272,7 +272,7 @@ Player.prototype.checkWoodenDoor = function (pos18) {
     }
     if (this.getBinaryView(pos18, 13, 3) === '2' && this.getBinaryView(pos18, ((5 + d - this.d) % 4) * 2) === '1') {
         var key = getObjectByKeys(itemJson[this.pocket.id], 'onUse', 'unlock');
-        if (typeof key !== "undefined" && key.getVar() === DOOR_COMMON) { //Use common key
+        if (typeof key !== "undefined" && key === 'DOOR_COMMON') { //Use common key
             this.consumeItemInHand();
             this.setBinaryView(pos18, 11, 1);
         }
@@ -1269,13 +1269,32 @@ Player.prototype.castSpell = function (sb, ch, s) {
             var s = false;
         }
         this.doneCommunication();
+        var pow = ch.getSpellPower();
         var cost = sb.cost;
+        var it = ch.getEquippedItems();
+        for(var i = 0; i < it.length; i++) { //wands
+            var res = ch.useItem(it[i], 'onCastSpell', {spell: ch.selectedSpell});
+            var pw = res.power;
+            var pf = res.powerFactor;
+            var cf = res.costFactor;
+            if(typeof pw === "undefined") {
+                pw = 0;
+            }
+            if(typeof pf === "undefined") {
+                pf = 1.0;
+            }
+            if(typeof cf === "undefined") {
+                cf = 1.0;
+            }
+            pow = (pow + pw) * pf;
+            cost = cost * cf;
+        }
+        pow = Math.round(pow);
+        cost = Math.round(cost);
         if (ch.stat.sp - cost >= 0) {
             if (this.doFizzle()) {
                 writeSpellInfoFont(this, TEXT_SPELL_FIZZLES, colourData['BLUE_DARK']); //spell fizzles
             } else if (Math.random() < ch.getSpellCastChance()) {
-                var it = ch.getEquippedItems();
-                var pow = ch.getSpellPower();
                 castSpell(sb.id, ch.getMonster(), pow);
                 sb.castSuccessful++;
                 if (!s) {
@@ -1318,7 +1337,7 @@ Player.prototype.castSpell = function (sb, ch, s) {
             col = paletteData['GREEN_ARROW'];
         }
         arr.setPocketItem(arr.id, arr.quantity - 1);
-        newProjectile('PROJECTILE_ARROW', col, SOUND_ATTACK, arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
+        newProjectile('PROJECTILE_ARROW', col, 'SOUND_ATTACK', arr.id + 100, pow * (1.0 + ch.stat.str / 4.0 + ch.stat.agi / 2.0), this.floor, this.x, this.y, this.d, ch.getMonster());
         ch.writeAttackPoints('shoot');
     }
 }*/
