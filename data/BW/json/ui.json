@@ -798,8 +798,8 @@
         {
             "id": "ITEM_EMPTY_LEFT_HAND",
             "gfx": {
-                "x":16,
-                "y":128,
+                "x":128,
+                "y":64,
                 "width":16,
                 "height":16
             }
