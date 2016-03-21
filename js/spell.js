@@ -273,6 +273,9 @@ function executeSpell(s, act, tar, pow) {
         if (typeof spl !== "undefined") { //JSON
             if (typeof tar.attacker !== "undefined") { //combat
                 var att = tar.attacker;
+                if(typeof att.monster !== "undefined") { //projectile
+                    att = att.monster;
+                }
                 var def = tar.defender;
                 var pow = tar.power;
                 var dExh = tar.defExhaustion;
@@ -283,8 +286,6 @@ function executeSpell(s, act, tar, pow) {
                 } else if (typeof att !== "undefined" && att !== null) {
                     tar = att;
                 }
-            } else if(typeof tar.monster !== "undefined") { //projectile
-                var att = tar.monster;
             }
             var f = tar.floor;
             var x = tar.x;
@@ -293,25 +294,34 @@ function executeSpell(s, act, tar, pow) {
             var xy = getOffsetByRotation(d);
             var x1 = x + xy.x;
             var y1 = y + xy.y;
-            if (typeof act.bounce !== "undefined" && act.bounce) { //arc bolt
-                var ob = getObject(f, x, y, d);
-                var obNext = canMove(f, x, y, d);
-                var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
-                if (obNext > OBJECT_MISC && !msc) {
-                    var dNew = Math.floor(Math.random() * 2) * 2 + 1;
-                    obNext = canMove(f, x, y, (d + dNew) % 4);
-                    if (obNext > OBJECT_MISC) {
-                        dNew = 4 - dNew;
+            if (typeof act.bounce !== "undefined") {
+                if(act.bounce === "WALL") { //arc bolt
+                    var ob = getObject(f, x, y, d);
+                    var obNext = canMove(f, x, y, d);
+                    var msc = (ob === OBJECT_MISC || ob === OBJECT_STAIRS || ob === OBJECT_DOOR);
+                    if (obNext > OBJECT_MISC && !msc) {
+                        var dNew = Math.floor(Math.random() * 2) * 2 + 1;
                         obNext = canMove(f, x, y, (d + dNew) % 4);
                         if (obNext > OBJECT_MISC) {
-                            dNew = 2;
+                            dNew = 4 - dNew;
                             obNext = canMove(f, x, y, (d + dNew) % 4);
                             if (obNext > OBJECT_MISC) {
-                                res = true;
+                                dNew = 2;
+                                obNext = canMove(f, x, y, (d + dNew) % 4);
+                                if (obNext > OBJECT_MISC) {
+                                    res = true;
+                                }
                             }
                         }
+                        tar.d = (d + dNew) % 4;
                     }
-                    tar.d = (d + dNew) % 4;
+                } else if(act.bounce === "FIRE") { //blaze
+                    if (canMoveByFirepath(f, x, y) && !canMoveByFirepath(f, x, y, d)) {
+                        tar.d = (d + 2) % 4;
+                        if (!canMoveByFirepath(f, x, y, d)) {
+                            res = true;
+                        }
+                    }
                 }
             }
             var viv = act.revive;

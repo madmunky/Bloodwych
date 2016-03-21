@@ -183,6 +183,7 @@ Projectile.prototype.move = function() {
 			var act = this.action; //spellJson[id];
 			if(typeof act !== "undefined") { //JSON
 				if(getMonsterAt(this.floor, this.x, this.y) === null) {
+					executeSpell(id, act.onFail, this, this.power);
 					executeSpell(id, act.onComplete, this, this.power);
 				}
 			}
@@ -218,7 +219,7 @@ Projectile.prototype.doAction = function(tar) {
 		var id = this.spell.id;
 		var sp = this.action; //spellJson[id];
 		if(typeof sp !== "undefined") { //JSON
-			var act = getObjectByKeys(sp, 'onComplete');
+			var act = sp.onComplete;
 			if(typeof act !== "undefined") {
 				var typ = getObjectByKeys(act, 'areaOfEffect');
 				if(typeof typ !== "undefined" && typ === 'multi') {

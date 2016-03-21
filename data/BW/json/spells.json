@@ -144,6 +144,7 @@
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_BIG",
+					"death": "PROJECTILE_EXPLODE",
 					"sound": "SOUND_EXPLODE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
@@ -151,7 +152,7 @@
 					}
 				},
 				"onMove": {
-					"bounce": true
+					"bounce": "WALL"
 				},
 				"onComplete": {
 					"areaOfEffect": "multi",
@@ -383,6 +384,7 @@
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_BIG",
+					"death": "PROJECTILE_EXPLODE",
 					"sound": "SOUND_EXPLODE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
@@ -498,6 +500,7 @@
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_BIG",
+					"death": "PROJECTILE_EXPLODE",
 					"sound": "SOUND_EXPLODE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
@@ -505,7 +508,8 @@
 					}
 				},
 				"onComplete": {
-					"areaOfEffect": "multi"
+					"areaOfEffect": "multi",
+					"damage": "normal"
 				}
 			}
 		},
@@ -560,7 +564,51 @@
 				"changeItem": {
 					"pocket": ["POCKET_LEFT_HAND", "POCKET_RIGHT_HAND"],
 					"fromType": ["ITEM_TYPE_RING"],
-					"toQuantityFactor": 0.1
+					"toQuantityFactor": 0.05
+				}
+			}
+		},
+		{
+			"id": "SPELL_BLAZE",
+			"name": "BLAZE",
+			"description": "NONE SHALL PASS THIS FIERY BLAST",
+			"class": "CLASS_DRAGON",
+			"grade": 7,
+			"level": 6,
+			"power": 2,
+			"book": {
+				"symbols": "FLIN",
+				"page": 3,
+				"row": 6
+			},
+			"action": {
+				"type": "projectile",
+				"projectile": {
+					"id": "PROJECTILE_BIG",
+					"death": "PROJECTILE_EXPLODE",
+					"sound": "SOUND_EXPLODE",
+					"recolour": {
+						"from": "DEFAULT_ITEM_DUN",
+						"to": "BLAZE_BIG"
+					}
+				},
+				"onMove": {
+					"setObject": "FIRE",
+					"timer": 1.0
+				},
+				"onComplete": {
+					"areaOfEffect": "multi",
+					"damage": "normal"
+				},
+				"onFail": {
+					"castSpellPart": [
+						{
+							"id": "BLAZE",
+							"position": {
+								"d": 2
+							}
+						}
+					]
 				}
 			}
 		}
@@ -575,19 +623,24 @@
 				"revive": true
 			}
 		},
-		"WYCHWIND": {
+		"BLAZE": {
 			"action": {
 				"type": "projectile",
 				"projectile": {
 					"id": "PROJECTILE_BIG",
+					"death": "PROJECTILE_EXPLODE",
 					"sound": "SOUND_EXPLODE",
 					"recolour": {
 						"from": "DEFAULT_ITEM_DUN",
-						"to": "CHAOS_BIG"
+						"to": "DRAGON_BIG"
 					}
 				},
+				"onMove": {
+					"bounce": "FIRE"
+				},
 				"onComplete": {
-					"areaOfEffect": "multi"
+					"areaOfEffect": "multi",
+					"damage": "normal"
 				}
 			}
 		}

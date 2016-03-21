@@ -1031,51 +1031,61 @@ Player.prototype.drawItem = function (it, distance, offset) {
     };
 }
 Player.prototype.drawProjectile = function (pr, distance, offset) {
-    var id = getObjectByKeys(itemJson[pr.spell], 'projectile', 'id');
-    if (typeof id === "undefined") {
-        id = getObjectByKeys(itemJson[pr.spell], 'dungeon', 'id');
-    }
-    if (typeof id !== "undefined" && pr.spell !== null && typeof pr.spell === 'number') { //JSON
-        var from = getObjectByKeys(itemJson[pr.spell], 'projectile', 'recolour', 'from');
-        var to = getObjectByKeys(itemJson[pr.spell], 'projectile', 'recolour', 'to');
+    var sp = pr.spell;
+    if(typeof pr !== "undefined" && sp !== null && typeof sp === 'number') { //item projectiles
+        var typ = getObjectByKeys(itemJson[sp], 'projectile', 'id');
+        if (typeof typ === "undefined") {
+            typ = getObjectByKeys(itemJson[sp], 'dungeon', 'id');
+        }
+        var pGfx = itemGfxD[typ][distance];
+        var from = getObjectByKeys(itemJson[sp], 'projectile', 'recolour', 'from');
+        var to = getObjectByKeys(itemJson[sp], 'projectile', 'recolour', 'to');
         if (typeof from === "undefined") {
-            from = getObjectByKeys(itemJson[pr.spell], 'dungeon', 'recolour', 'from');
+            from = getObjectByKeys(itemJson[sp], 'dungeon', 'recolour', 'from');
         }
         if (typeof to === "undefined") {
-            to = getObjectByKeys(itemJson[pr.spell], 'dungeon', 'recolour', 'to');
+            to = getObjectByKeys(itemJson[sp], 'dungeon', 'recolour', 'to');
         }
         if (pr.dead > 0) {
-            if (typeof getObjectByKeys(itemJson[pr.spell], 'death', 'id') !== "undefined") {
-                id = getObjectByKeys(itemJson[pr.spell], 'death', 'id');
+            if (typeof getObjectByKeys(itemJson[sp], 'death', 'id') !== "undefined") {
+                exp = getObjectByKeys(itemJson[sp], 'death', 'id');
+                pGfx = itemGfxD[exp][distance];
             }
-            if (typeof getObjectByKeys(itemJson[pr.spell], 'death', 'recolour', 'from') !== "undefined") {
-                from = getObjectByKeys(itemJson[pr.spell], 'death', 'recolour', 'from');
+            if (typeof getObjectByKeys(itemJson[sp], 'death', 'recolour', 'from') !== "undefined") {
+                from = getObjectByKeys(itemJson[sp], 'death', 'recolour', 'from');
             }
-            if (typeof getObjectByKeys(itemJson[pr.spell], 'death', 'recolour', 'to') !== "undefined") {
-                to = getObjectByKeys(itemJson[pr.spell], 'death', 'recolour', 'to');
+            if (typeof getObjectByKeys(itemJson[sp], 'death', 'recolour', 'to') !== "undefined") {
+                to = getObjectByKeys(itemJson[sp], 'death', 'recolour', 'to');
             }
         }
-        var pGfx = itemGfxD[id][distance];
-        if (typeof from !== "undefined" && typeof to !== "undefined") {
-            pGfx = recolourSprite(pGfx, from, to);
+    } else { //spell projectiles
+        var typ = pr.type;
+        if(sp === null) {
+            if(pr.dead > 0) {
+                typ = 'PROJECTILE_EXPLODE';
+            }
+            var pGfx = itemGfxD[typ][distance];
+        } else {
+            var pGfx = itemGfxD[typ][distance];
+            if(pr.dead > 0) {
+                var exp = getObjectByKeys(spellJson[sp.id], 'projectile', 'death');
+                if(typeof exp !== "undefined") {
+                    pGfx = itemGfxD[exp][distance];
+                } else {
+                    pGfx = undefined;
+                }
+            }
+            var from = getObjectByKeys(spellJson[sp.id], 'projectile', 'recolour', 'from');
         }
-    } else if (pr.type === 'PROJECTILE_ARROW' || pr.dead <= 0) {
-        if (pr.type !== 'NONE') {
-            var pGfx = itemGfxD[pr.type][distance];
+        if(typeof from === "undefined") {
+            var from = paletteData['DEFAULT_ITEM_DUN'];
         }
-        if (typeof pr.palette !== "undefined") {
-            pGfx = recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette);
-        }
-    } else {
-        var pGfx = itemGfxD['PROJECTILE_EXPLODE'][distance];
-        if (typeof pr.palette !== "undefined") {
-            pGfx = recolourSprite(pGfx, paletteData['DEFAULT_ITEM_DUN'], pr.palette);
-        }
+        var to = pr.palette;
     }
-    if (typeof pGfx !== "undefined") {
+    if(typeof pGfx !== "undefined") {
+        pGfx = recolourSprite(pGfx, from, to);
         var offx = 64 - Math.floor(pGfx.width * 0.5) + offset.x;
         var offy = 77 - Math.floor(pGfx.height * 0.5) - offset.y;
-        //this.Portal.drawImage(pGfx, offx * scale, offy * scale, pGfx.width * scale, pGfx.height * scale);
         myDIx(this.Portal, pGfx, {sx:offx, sy:offy, w:pGfx.width, h:pGfx.height, x:0, y:0});
     }
 }
