@@ -445,7 +445,7 @@ Champion.prototype.useItem = function(it, ac, param) {
         var icl = getObjectByKeys(use, 'changeSpell', 'class');
         if((typeof iid !== "undefined" && iid.getVar() === sp.id) || (typeof icl !== "undefined" && icl.getVar() === sp.colour)) {
             var imc = getObjectByKeys(use, 'changeSpell', 'manaCostFactor');
-            var irc = getObjectByKeys(use, 'changeSpell', 'addQuantity');
+            var irc = getObjectByKeys(use, 'addQuantity');
             if(it.quantity > 1 || typeof irc === "undefined" || irc >= 0) {
                 var ip = getObjectByKeys(use, 'changeSpell', 'damage');
                 var ipf = getObjectByKeys(use, 'changeSpell', 'damageFactor');
@@ -495,8 +495,8 @@ Champion.prototype.useItem = function(it, ac, param) {
         suc = true;
     }
 
-    //Change the stack
-    ac1 = getObjectByKeys(itemJson[it.id], ac, 'changeStack');
+    //Change quantity
+    ac1 = getObjectByKeys(itemJson[it.id], ac, 'addQuantity');
     if(typeof ac1 !=="undefined") {
         if(it.quantity + ac1 >= 0 && it.quantity + ac1 < 100) {
             it.setQuantity(it.quantity + ac1);
@@ -620,10 +620,10 @@ Champion.prototype.restoreStats = function() {
             var vi = 1.0;
             var sp = 1.0;
             for(var i = 0; i < it.length; i++) { //e.g. heal wand
-                if(typeof getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreStat') !== "undefined") {
-                    var fhp = getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreStat', 'addHPFactor');
-                    var fvi = getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreStat', 'addVitFactor');
-                    var fsp = getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreStat', 'addSPFactor');
+                if(typeof getObjectByKeys(itemJson[it[i].id], 'onEquip') !== "undefined") {
+                    var fhp = getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreHPFactor');
+                    var fvi = getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreVitFactor');
+                    var fsp = getObjectByKeys(itemJson[it[i].id], 'onEquip', 'restoreSPFactor');
                     if(typeof fhp !== "undefined") {
                         hp *= fhp;
                     }

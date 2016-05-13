@@ -1,6 +1,6 @@
 //General
-var god = true;
-var debug = true;
+var god = false;
+var debug = false;
 var mapEnabled = false;
 var iosDebug = false;
 var showFPS = false;

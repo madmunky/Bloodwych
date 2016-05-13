@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bloodwych HTML</title>
+    <script src="lib/jquery-2.1.1.min.js" type="text/javascript"></script>
+<!--	<script src="cordova.js" charset="utf-8" type="text/javascript"></script>-->
+    <script src="lib/watch.js" type="text/javascript"></script>
+    <script src="lib/jquery.tap.min.js" type="text/javascript"></script>
+    <script src="lib/jquery.caret.js" type="text/javascript"></script>
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+
+    <link rel="icon" sizes="128x128" href="images/icon.png" />
+    <link rel="icon" sizes="196x196" href="images/icon-high.png" />
+    <link rel="apple-touch-icon" sizes="128x128" href="images/icon.png" />
+    <link rel="apple-touch-icon" sizes="196x196" href="images/icon-high.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="128x128" href="images/icon.png" />
+    <link rel="apple-touch-startup-image" href="images/loading.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+
+<body>
+
+    <div class="content">
+        <div class="canvas-wrapper">
+            <canvas id="game-port" width="960" height="600" tabindex="1"></canvas>
+            <input type="text" class="save-game" id="save-game" maxlength="12" />
+        </div>
+    </div>
+
+    <script src="js/3rdparty/preloadjs-0.6.2.min.js" type="text/javascript"></script>
+    <script src="js/variables.js" type="text/javascript"></script>
+    <script src="js/variables.js" type="text/javascript"></script>
+    <script src="js/gameState.js" type="text/javascript"></script>
+    <script src="js/testing.js" type="text/javascript"></script>
+    <script src="js/font.js" type="text/javascript"></script>
+    <script src="js/graphicsStartup.js" type="text/javascript"></script>
+    <script src="js/graphicsInterface.js" type="text/javascript"></script>
+    <script src="js/rpg.js" type="text/javascript"></script>
+    <script src="js/graphicsCharacters.js" type="text/javascript"></script>
+    <script src="js/switches.js" type="text/javascript"></script>
+    <script src="js/Map.js" type="text/javascript"></script>
+    <script src="js/fileloader.js" type="text/javascript"></script>
+    <script src="js/items.js" type="text/javascript"></script>
+    <script src="js/champions.js" type="text/javascript"></script>
+    <script src="js/monsters.js" type="text/javascript"></script>
+    <script src="js/spell.js" type="text/javascript"></script>
+    <script src="js/projectiles.js" type="text/javascript"></script>
+    <script src="js/player.js" type="text/javascript"></script>
+    <script src="js/graphics.js" type="text/javascript"></script>
+    <script src="js/input.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/game.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/renderer.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/tools.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/Bloodwych.js" type="text/javascript"></script>
+    <script src="js/init.js" type="text/javascript"></script>
+    <script src="js/sounds.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+    var canvas = document.getElementById("game-port");
+    var ctx = canvas.getContext("2d");
+    canvas.addEventListener("mousemove", mouseXY, false);
+    </script>
+
+    <script>
+    document.ontouchstart = function(e) {
+        e.preventDefault();
+    }
+    $(document).ready(function() {
+        setViewportScale();
+    });
+    </script>
+
+</body>
+
+</html>

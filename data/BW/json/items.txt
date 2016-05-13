@@ -1,0 +1,74 @@
+*** itemDrops ***
+This is a list of items that can drop. Each 5 levels up for a monsters returns a higher item drop index.
+E.g. a monster with level 1 drops a random item from the first row. A monster with level 11 drops a random item from the third row.
+
+*** items ***
+id								the id of the item. Can be used as a reference at other items or spells.
+type							this is the item type, which groups together similar items. Can be used as reference.
+quantity						the (maximum) quantity of this item.
+gfx2							graphics
+	icon						the icon gfx
+		id						the icon gfx id. See ui.json
+		recolour				recolour the icon gfx
+			from[]				find these colours or palette to recolour. See colours.json and palettes.json
+			to[]				paint the 'from' colours to these colours or palette. See colours.json and palettes.json
+	dungeon						the dungeon gfx
+		id						the dungeon gfx id. See sprites.json
+		recolour				recolour the dungeon gfx
+			from[]				find these colours or palette to recolour. See colours.json and palettes.json
+			to[]				paint the 'from' colours to these colours or palette. See colours.json and palettes.json
+currency						used for coinage to indicate the value of one item
+onCastSpell						when casting a spell, this item will trigger an event.
+	changeSpell					change the spell that is cast, 
+		id
+		class
+		powerFactor
+		manaCostFactor
+revive							this is a "RIP" item that can revive a champion. See champions.json
+onUse*							this event is triggered when using the item, i.e. clicking on it when in active pocket.
+onShoot*						this event is triggered when this item is shot from combat. E.g. arrows.
+onEquip*						this event is triggered when this item it put in a pocket slot.
+onAttack*						this event is triggered when the combat is started and this item is in a hand.
+
+* For general events, see 1.
+
+*** 1. general events ***
+unlock							unlock a door with item. See APPENDIX 1.
+powerFactor						add this multiplier to the power, mainly when attacking
+changeToItem					change this item to a new item id
+addFood							add food value
+addHPMax						add health value, relative to the maximum. I.e. 1 means restore 100% health.
+addVitMax						add vitality value, relative to the maximum. I.e. 1 means restore 100% vitality.
+addSPMax						add spellpoint value, relative to the maximum. I.e. 1 means restore 100% spellpoints.
+AC								add armor class.
+allowedSlot						this item's event will only be triggered, when worn in this particular pocket slot id
+allowedProfession				this item's event will only be triggered, when worn by this particular champion profession 
+damage							the damage attack points
+shootId							will shoot this specific item id in hand
+shootType						will shoot this specific item type in hand
+critical						the critical damage condition. This overrules the default 5% critical strike chance with a new critical chance
+	profession					triggers a critical strike for this particular profession
+	chance						the critical strike chance
+	backstab					triggers a critical strike from behind
+whileWearing					will be triggered while wearing this item
+	id							the item id that should be worn
+	powerFactor					the power multiplier when this item is worn
+restoreHPFactor					restores extra health per stat restore tick, with this multiplier
+restoreVitFactor				restores extra vitality per stat restore tick, with this multiplier
+restoreSPFactor					restores extra spellpoints per stat restore tick, with this multiplier
+castSpell						cast a spell
+	id							this spell id is cast
+	chance						the chance of a successful spell cast
+	damage						the spell damage
+
+
+*** 2. spell events ***
+changeSpell						change the spell that is cast, 
+	id
+	class
+	powerFactor
+	manaCostFactor
+
+
+
+*** APPENDIX 1 ***

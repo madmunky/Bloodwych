@@ -75,7 +75,7 @@
 				}
 			},
 			"onShoot": {
-				"changeStack": -1,
+				"addQuantity": -1,
 				"powerFactor": 1.0
 			}
 		},
@@ -103,7 +103,7 @@
 				}
 			},
 			"onShoot": {
-				"changeStack": -1,
+				"addQuantity": -1,
 				"powerFactor": 1.2
 			}
 		},
@@ -2066,9 +2066,7 @@
 				}
 			},
 			"onEquip": {
-				"restoreStat": {
-					"addHPFactor": 2.0
-				}
+				"restoreHPFactor": 2.0
 			}
 		},
 		{
@@ -2089,7 +2087,7 @@
 			},
 			"onAttack": {
 				"damage": 4,
-				"shootId": ["ITEM_ARROWS", "ITEM_ELF_ARROWS"]
+				"shootType": ["ITEM_ARROWS", "ITEM_ELF_ARROWS"]
 			}
 		},
 		{
@@ -2326,10 +2324,10 @@
 			},
 			"quantity": 4,
 			"onCastSpell": {
+				"addQuantity": -1,
 				"changeSpell": {
 					"class": "CLASS_SERPENT",
-					"manaCostFactor": 0.0,
-					"addQuantity": -1
+					"manaCostFactor": 0.0
 				}
 			},
 			"onQuantity": [{
@@ -2360,10 +2358,10 @@
 			},
 			"quantity": 4,
 			"onCastSpell": {
+				"addQuantity": -1,
 				"changeSpell": {
 					"class": "CLASS_CHAOS",
-					"manaCostFactor": 0.0,
-					"addQuantity": -1
+					"manaCostFactor": 0.0
 				}
 			},
 			"onQuantity": [{
@@ -2394,10 +2392,10 @@
 			},
 			"quantity": 4,
 			"onCastSpell": {
+				"addQuantity": -1,
 				"changeSpell": {
 					"class": "CLASS_DRAGON",
-					"manaCostFactor": 0.0,
-					"addQuantity": -1
+					"manaCostFactor": 0.0
 				}
 			},
 			"onQuantity": [{
@@ -2428,10 +2426,10 @@
 			},
 			"quantity": 4,
 			"onCastSpell": {
+				"addQuantity": -1,
 				"changeSpell": {
 					"class": "CLASS_MOON",
-					"manaCostFactor": 0.0,
-					"addQuantity": -1
+					"manaCostFactor": 0.0
 				}
 			},
 			"onQuantity": [{
